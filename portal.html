@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>國小資訊科技｜教學駕駛艙入口</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0d2b;--surface:#1a1a3e;--panel:#252552;--c1:#00e5ff;--c2:#ffd740;--c3:#ff4081;--c4:#69ff47;--text:#e8e4f8;--dim:#7070a0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;min-height:100vh;padding:40px 20px}
+h1{font-family:'Press Start 2P',monospace;font-size:.9rem;color:var(--c1);text-align:center;margin-bottom:8px;line-height:1.6}
+.sub{text-align:center;color:var(--dim);font-size:.85rem;margin-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:900px;margin:0 auto}
+.card{background:var(--surface);border:3px solid var(--c2);padding:24px;box-shadow:6px 6px 0 #000;transition:.2s;text-decoration:none;color:var(--text);display:block}
+.card:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--c2)}
+.card .grade{font-size:.7rem;color:var(--c2);font-weight:700;margin-bottom:8px}
+.card h2{font-size:1.1rem;font-weight:900;margin-bottom:8px;line-height:1.4}
+.card p{font-size:.82rem;color:var(--dim);line-height:1.5}
+.card .arrow{color:var(--c1);font-size:1.2rem;margin-top:12px;display:block}
+footer{text-align:center;margin-top:40px;font-size:.75rem;color:var(--dim)}
+</style>
+</head>
+<body>
+<h1>IT COCKPIT</h1>
+<div class="sub">國小資訊科技教學駕駛艙入口</div>
+<div class="grid">
+  <a href="index.html" class="card">
+    <div class="grade">六年級｜AI 創作</div>
+    <h2>Gemini × Canva 影片創作</h2>
+    <p>使用 Gemini 生成圖片與音樂，在 Canva 製作完整影片的教學課程。</p>
+    <span class="arrow">前往駕駛艙 →</span>
+  </a>
+  <a href="canva-ai/index.html" class="card" style="border-color:var(--c1)">
+    <div class="grade" style="color:var(--c1)">六年級｜AI 設計</div>
+    <h2>Canva AI 魔法創作</h2>
+    <p>認識 Magic Media、提示詞技巧、文字生成圖片影片，以及其他 Canva AI 工具。</p>
+    <span class="arrow" style="color:var(--c2)">前往駕駛艙 →</span>
+  </a>
+</div>
+<footer>Powered by NotebookLM × Claude Code</footer>
+</body>
+</html>
