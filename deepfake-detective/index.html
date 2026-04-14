@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI假影片偵探社｜媒體識讀素養｜六年級教學駕駛艙</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===== BASE ===== */
+html { font-size: 18px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #fef9f0;
+  color: #2c2c2c;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+/* ===== CSS VARIABLES (comic-soft) ===== */
+:root {
+  --bg: #fef9f0;
+  --surface: #fff8ee;
+  --panel: #ffffff;
+  --c1: #ff6b6b;
+  --c2: #ffa94d;
+  --c3: #51cf66;
+  --c4: #339af0;
+  --c5: #cc5de8;
+  --text: #2c2c2c;
+  --dim: #868686;
+  --border: #2c2c2c;
+  --radius: 14px;
+  --shadow: 4px 4px 0 rgba(44,44,44,0.18);
+}
+.container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+/* ===== HEADER ===== */
+.site-header {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--panel);
+  border-bottom: 3px solid var(--border);
+  box-shadow: 0 4px 0 rgba(44,44,44,0.1);
+  padding: 12px 24px;
+}
+.header-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.header-icon { font-size: 2rem; }
+.header-texts { flex: 1; }
+.header-title { font-size: 1.5rem; font-weight: 900; color: var(--c1); }
+.header-sub { font-size: 0.9rem; color: var(--dim); }
+.progress-wrap { display: flex; align-items: center; gap: 10px; }
+.progress-label { font-size: 0.85rem; color: var(--dim); white-space: nowrap; }
+.progress-bar {
+  width: 180px; height: 16px;
+  background: #f0e8d8;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--c3), var(--c4));
+  transition: width 0.5s ease;
+  border-radius: 6px;
+}
+.progress-text { font-size: 0.85rem; font-weight: 700; color: var(--c3); }
+
+/* ===== MODE BAR ===== */
+.mode-bar {
+  background: #fff3cd;
+  border: 2px solid var(--c2);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  margin: 16px 0;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.mode-label { font-size: 1rem; font-weight: 700; }
+.mode-btn {
+  padding: 8px 20px;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.mode-btn.active { background: var(--c4); color: #fff; }
+.mode-btn:hover:not(.active) { background: var(--c1); color: #fff; }
+.teacher-badge {
+  background: var(--c5);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: none;
+}
+.teacher-badge.show { display: inline-block; }
+
+/* ===== OBJECTIVES ===== */
+.objectives {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+}
+.objectives h2 { font-size: 1.2rem; font-weight: 900; margin-bottom: 12px; }
+.obj-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.obj-chip {
+  padding: 8px 18px;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--surface);
+  box-shadow: 2px 2px 0 rgba(44,44,44,0.15);
+}
+.obj-chip.c1 { background: #ffe0e0; border-color: var(--c1); }
+.obj-chip.c2 { background: #fff3e0; border-color: var(--c2); }
+.obj-chip.c3 { background: #e8f9ee; border-color: var(--c3); }
+.obj-chip.c4 { background: #e0f0ff; border-color: var(--c4); }
+.obj-chip.c5 { background: #f3e8ff; border-color: var(--c5); }
+
+/* ===== STAGE NAV ===== */
+.stage-nav {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin: 16px 0;
+}
+.stage-pill {
+  padding: 10px 20px;
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  background: var(--panel);
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 0 rgba(44,44,44,0.12);
+}
+.stage-pill:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 rgba(44,44,44,0.2); }
+.stage-pill.s1 { border-color: var(--c1); }
+.stage-pill.s2 { border-color: var(--c2); }
+.stage-pill.s3 { border-color: var(--c3); }
+.stage-pill.s4 { border-color: var(--c4); }
+.stage-pill.s1.active { background: var(--c1); color: #fff; }
+.stage-pill.s2.active { background: var(--c2); color: #fff; }
+.stage-pill.s3.active { background: var(--c3); color: #fff; }
+.stage-pill.s4.active { background: var(--c4); color: #fff; }
+
+/* ===== SECTION ===== */
+.level-section {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  margin: 20px 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.section-header {
+  padding: 18px 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.stage-badge {
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #fff;
+  white-space: nowrap;
+}
+.s1-bg { background: var(--c1); }
+.s2-bg { background: var(--c2); }
+.s3-bg { background: var(--c3); }
+.s4-bg { background: var(--c4); }
+.section-title { font-size: 1.4rem; font-weight: 900; }
+.section-sub { font-size: 1rem; color: var(--dim); margin-top: 4px; }
+.section-body { padding: 0 24px 24px; }
+
+/* ===== STEPS CARD ===== */
+.steps-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+}
+.steps-card h4 { font-size: 1.05rem; font-weight: 900; margin-bottom: 12px; }
+.steps-list { list-style: none; }
+.steps-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e0d8c8;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.steps-list li:last-child { border-bottom: none; }
+.step-num {
+  min-width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--c1);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-num.n2 { background: var(--c2); color: #2c2c2c; }
+.step-num.n3 { background: var(--c3); }
+.step-num.n4 { background: var(--c4); }
+.step-num.n5 { background: var(--c5); }
+.tip-box {
+  background: #fff9e0;
+  border: 2px solid var(--c2);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  margin-top: 12px;
+}
+.tip-box::before { content: "💡 "; }
+
+/* ===== INFOGRAPHIC ===== */
+.infographic-frame {
+  width: 100%;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 16px 0;
+  aspect-ratio: 16/9;
+  background: #f5f0e8;
+  display: flex; align-items: center; justify-content: center;
+}
+.infographic-frame img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  loading: lazy;
+}
+.infographic-placeholder {
+  color: var(--dim);
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* ===== CANVAS SECTION ===== */
+.canvas-section {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+}
+.canvas-section h4 { font-size: 1.05rem; font-weight: 900; margin-bottom: 10px; }
+.canvas-hint { font-size: 0.95rem; color: var(--dim); margin-bottom: 12px; }
+canvas {
+  display: block;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  width: 100%;
+  cursor: pointer;
+  touch-action: none;
+}
+.canvas-controls {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+}
+.ctrl-btn {
+  padding: 8px 18px;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  background: var(--panel);
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.ctrl-btn:hover { background: var(--c4); color: #fff; transform: translateY(-1px); }
+.ctrl-btn.active { background: var(--c3); color: #fff; }
+
+/* ===== QUIZ ===== */
+.quiz-section {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+}
+.quiz-section h4 { font-size: 1.05rem; font-weight: 900; margin-bottom: 14px; }
+.quiz-item { margin-bottom: 20px; }
+.quiz-q { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+.quiz-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.quiz-opt {
+  padding: 10px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 700;
+  flex: 1 1 auto;
+  min-width: 120px;
+}
+.quiz-opt:hover:not(:disabled) { background: var(--c4); color: #fff; }
+.quiz-opt.correct { background: #e8f9ee; border-color: var(--c3); color: #2b8a3e; }
+.quiz-opt.wrong { background: #ffe0e0; border-color: var(--c1); color: #c92a2a; }
+.quiz-feedback {
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.ok { background: #e8f9ee; color: #2b8a3e; }
+.quiz-feedback.no { background: #ffe0e0; color: #c92a2a; }
+
+/* ===== TEACHER NOTE ===== */
+.teacher-only { display: none; }
+.teacher-mode .teacher-only { display: block; }
+.teacher-note {
+  background: #f3e8ff;
+  border: 2px solid var(--c5);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 12px 0;
+  font-size: 0.95rem;
+}
+.teacher-note::before { content: "👩‍🏫 教師提示："; font-weight: 900; }
+
+/* ===== PROJECT TASK ===== */
+.project-task {
+  background: #fff9e0;
+  border: 3px solid var(--c2);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+.project-task h3 { font-size: 1.4rem; font-weight: 900; margin-bottom: 14px; color: var(--c2); }
+.task-steps { list-style: none; }
+.task-steps li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+  font-size: 1rem;
+}
+.task-step-num {
+  min-width: 30px; height: 30px;
+  background: var(--c2);
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ===== NB SECTION ===== */
+.nb-section {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+.nb-section h3 { font-size: 1.4rem; font-weight: 900; margin-bottom: 18px; }
+.nb-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 24px; }
+.nb-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 2px 2px 0 rgba(44,44,44,0.1);
+}
+.nb-card h4 { font-size: 1rem; font-weight: 900; margin-bottom: 6px; }
+.nb-card p { font-size: 0.9rem; color: var(--dim); margin-bottom: 12px; }
+.nb-link {
+  display: inline-block;
+  padding: 6px 16px;
+  border: 2px solid var(--c4);
+  border-radius: 20px;
+  color: var(--c4);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.nb-link:hover { background: var(--c4); color: #fff; }
+.pipeline-flow {
+  background: #e0f0ff;
+  border: 2px solid var(--c4);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-size: 0.95rem;
+  margin: 16px 0;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+}
+.flow-step {
+  background: var(--c4);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.flow-arrow { color: var(--dim); font-size: 1.2rem; }
+
+/* ===== FAQ ===== */
+.faq-list { margin-top: 16px; }
+.faq-item {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--surface);
+  display: flex; justify-content: space-between; align-items: center;
+  user-select: none;
+}
+.faq-q::after { content: "▼"; font-size: 0.8rem; transition: transform 0.3s; }
+.faq-item.open .faq-q::after { transform: rotate(180deg); }
+.faq-a {
+  padding: 0 18px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s;
+}
+.faq-item.open .faq-a { max-height: 500px; padding: 14px 18px; }
+
+/* ===== VIDEO SECTION ===== */
+.video-section {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+.video-section h3 { font-size: 1.4rem; font-weight: 900; margin-bottom: 16px; }
+.video-wrap {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #111;
+}
+.video-wrap iframe { width: 100%; height: 100%; border: none; }
+.video-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #aaa;
+  font-size: 1rem;
+  gap: 8px;
+}
+
+/* ===== SLIDE GALLERY ===== */
+.slide-gallery {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 16px 0;
+}
+.slide-gallery h4 { font-size: 1.05rem; font-weight: 900; margin-bottom: 12px; }
+.slide-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.slide-thumb {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.slide-thumb:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.slide-thumb img { width: 100%; display: block; }
+
+/* ===== FLOATING TOOLS ===== */
+.float-panel {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.float-btn {
+  width: 52px; height: 52px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--panel);
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.float-btn:hover { transform: scale(1.1); }
+.float-modal {
+  position: fixed;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 310;
+  background: var(--panel);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  min-width: 200px;
+  box-shadow: 6px 6px 0 rgba(44,44,44,0.15);
+  display: none;
+}
+.float-modal.show { display: block; }
+.float-modal h4 { font-size: 1rem; font-weight: 900; margin-bottom: 12px; }
+.lottery-result {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-align: center;
+  padding: 10px;
+  color: var(--c1);
+}
+.timer-display {
+  font-size: 2.2rem;
+  font-weight: 900;
+  text-align: center;
+  color: var(--c4);
+  margin: 8px 0;
+}
+
+/* ===== DRAW TOOLBAR ===== */
+.draw-toolbar {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 300;
+  background: var(--panel);
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  padding: 10px 14px;
+  display: flex; gap: 8px; align-items: center;
+  box-shadow: var(--shadow);
+}
+.color-dot {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.color-dot:hover, .color-dot.active { transform: scale(1.2); border-width: 3px; }
+.draw-size {
+  font-size: 0.85rem;
+  color: var(--dim);
+  margin: 0 4px;
+}
+.draw-clear {
+  background: none;
+  border: 2px solid var(--c1);
+  color: var(--c1);
+  border-radius: 20px;
+  padding: 2px 12px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* ===== DRAW CANVAS (OVERLAY) ===== */
+#drawCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 250;
+  pointer-events: none;
+  display: none;
+}
+#drawCanvas.active { pointer-events: all; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  html { font-size: 16px; }
+  .container { padding: 12px; }
+  .header-title { font-size: 1.2rem; }
+  .float-panel { right: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- DRAW OVERLAY CANVAS -->
+<canvas id="drawCanvas"></canvas>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-icon">🕵️</div>
+    <div class="header-texts">
+      <div class="header-title">AI假影片偵探社：媒體識讀素養</div>
+      <div class="header-sub">六年級資訊科技｜4 關卡｜NotebookLM × Claude 生成</div>
+    </div>
+    <div class="progress-wrap">
+      <span class="progress-label">偵探等級</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- MODE BAR -->
+<div class="mode-bar">
+  <span class="mode-label">模式：</span>
+  <button class="mode-btn active" onclick="setMode('student')">學生模式</button>
+  <button class="mode-btn" onclick="teacherLogin()">教師模式</button>
+  <span class="teacher-badge" id="teacherBadge">🔓 教師模式已解鎖</span>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<div class="objectives">
+  <h2>本課學習目標</h2>
+  <div class="obj-chips">
+    <div class="obj-chip c1">🤖 認識Deepfake深偽技術原理</div>
+    <div class="obj-chip c2">🔍 掌握辨別AI假影片5大技巧</div>
+    <div class="obj-chip c3">✋ 學會SIFT查核法則</div>
+    <div class="obj-chip c4">📱 實際操作MyGoPen查核工具</div>
+    <div class="obj-chip c5">🛡️ 建立不轉傳假訊息的好習慣</div>
+  </div>
+</div>
+
+<!-- STAGE NAV -->
+<div class="stage-nav">
+  <button class="stage-pill s1" onclick="scrollToSection('sec1', this)">STAGE 1 認識Deepfake</button>
+  <button class="stage-pill s2" onclick="scrollToSection('sec2', this)">STAGE 2 辨別技巧</button>
+  <button class="stage-pill s3" onclick="scrollToSection('sec3', this)">STAGE 3 SIFT法則</button>
+  <button class="stage-pill s4" onclick="scrollToSection('sec4', this)">STAGE 4 MyGoPen實作</button>
+</div>
+
+<!-- ============================== -->
+<!-- STAGE 1：認識Deepfake深偽技術 -->
+<!-- ============================== -->
+<section class="level-section" id="sec1">
+  <div class="section-header" style="background:#fff0f0; border-bottom:2px solid #eee;">
+    <span class="stage-badge s1-bg">STAGE 1</span>
+    <div>
+      <div class="section-title">認識 Deepfake 深偽技術</div>
+      <div class="section-sub">什麼是AI假影片？它是怎麼做出來的？</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- 資訊圖表 -->
+    <div class="infographic-frame">
+      <img src="assets/01_deepfake_define.jpg" alt="認識Deepfake深偽技術資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...<br>（需先從NotebookLM下載並轉換）</div>'">
+    </div>
+
+    <!-- 步驟說明 -->
+    <div class="steps-card">
+      <h4>什麼是 Deepfake 深偽技術？</h4>
+      <ul class="steps-list">
+        <li>
+          <span class="step-num">1</span>
+          <div><strong>深偽 = 深度學習 + 偽造</strong>：Deepfake 是「Deep Learning（深度學習）」和「Fake（偽造）」合體的詞，就是用 AI 做出超逼真但假造的影片和聲音。</div>
+        </li>
+        <li>
+          <span class="step-num n2">2</span>
+          <div><strong>GAN 兩個 AI 在對抗</strong>：想像兩個 AI 機器人：「造假機器人」一直製造假圖片，「警察機器人」一直抓破綻。兩個互相磨練，最後「造假機器人」騙得連「警察機器人」都看不出來——就是 Deepfake 的原理！</div>
+        </li>
+        <li>
+          <span class="step-num n3">3</span>
+          <div><strong>4 種常見手法</strong>：
+            <br>① 換臉（把 A 的臉換成 B 的臉）
+            <br>② 人臉生成（做出不存在的人）
+            <br>③ 面部再現（把表情複製到另一個人身上）
+            <br>④ 語音模仿（複製口音和語調，讓人說沒說過的話）
+          </div>
+        </li>
+        <li>
+          <span class="step-num n4">4</span>
+          <div><strong>為什麼這麼危險？</strong>：Deepfake 被惡意使用時，可以讓人「說出」沒說過的話、做出沒做過的事，可能造成嚴重傷害，甚至觸犯法律！</div>
+        </li>
+      </ul>
+      <div class="tip-box">阿凱老師說：就像電影裡的「超級變臉面具」加「超級模仿秀」，AI 可以把任何人變成另一個人的樣子和聲音！</div>
+    </div>
+
+    <!-- 互動 Canvas：AI 名偵探眼鏡 -->
+    <div class="canvas-section">
+      <h4>互動練習：眼鏡偵探大挑戰</h4>
+      <p class="canvas-hint">點擊下方圖中的各個「可疑區域」，看看哪些地方是AI造假的破綻！</p>
+      <canvas id="canvas1" height="300"></canvas>
+      <div class="canvas-controls">
+        <button class="ctrl-btn" onclick="c1Start()">開始挑戰</button>
+        <button class="ctrl-btn" onclick="c1Reset()">重置</button>
+      </div>
+      <div id="c1Result" style="font-size:1rem; font-weight:700; margin-top:10px; color:var(--c3); display:none;"></div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>小偵探測驗 — STAGE 1</h4>
+      <div class="quiz-item">
+        <div class="quiz-q">Q1. Deepfake 這個詞是由哪兩個英文字合成的？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q1','A','A')">A. Deep Learning + Fake</button>
+          <button class="quiz-opt" onclick="checkQ('q1','B','A')">B. Deep Sea + Fake</button>
+          <button class="quiz-opt" onclick="checkQ('q1','C','A')">C. Deepwater + Face</button>
+          <button class="quiz-opt" onclick="checkQ('q1','D','A')">D. Design + Flake</button>
+        </div>
+        <div class="quiz-feedback" id="q1-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q2. 製作Deepfake的AI技術中，兩個互相競爭的AI分別叫做什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q2','A','A')">A. 生成器 + 判別器</button>
+          <button class="quiz-opt" onclick="checkQ('q2','B','A')">B. 老師 + 學生</button>
+          <button class="quiz-opt" onclick="checkQ('q2','C','A')">C. 攻擊者 + 防禦者</button>
+          <button class="quiz-opt" onclick="checkQ('q2','D','A')">D. 設計師 + 評審</button>
+        </div>
+        <div class="quiz-feedback" id="q2-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q3. 下列哪一種不是 Deepfake 的常見手法？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q3','A','D')">A. 換臉</button>
+          <button class="quiz-opt" onclick="checkQ('q3','B','D')">B. 語音模仿</button>
+          <button class="quiz-opt" onclick="checkQ('q3','C','D')">C. 人臉生成</button>
+          <button class="quiz-opt" onclick="checkQ('q3','D','D')">D. 真實錄音</button>
+        </div>
+        <div class="quiz-feedback" id="q3-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">介紹 GAN 時可用「兩隊同學互相比賽」來類比：一隊做假作業，一隊找錯誤，最後假作業越來越完美。課堂討論：如果你能做出任何人說話的假影片，你會用在哪裡？哪些用法是不對的？</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- STAGE 2：辨別AI假影片5大技巧 -->
+<!-- ============================== -->
+<section class="level-section" id="sec2">
+  <div class="section-header" style="background:#fff8e0; border-bottom:2px solid #eee;">
+    <span class="stage-badge s2-bg">STAGE 2</span>
+    <div>
+      <div class="section-title">辨別 AI 假影片 5 大技巧</div>
+      <div class="section-sub">小偵探的必備工具箱——看出 AI 的破綻！</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <div class="infographic-frame">
+      <img src="assets/02_detect_tricks.jpg" alt="辨別AI假影片5大技巧資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...</div>'">
+    </div>
+
+    <div class="steps-card">
+      <h4>辨別 AI 假影片的 5 個步驟</h4>
+      <ul class="steps-list">
+        <li>
+          <span class="step-num">1</span>
+          <div><strong>相信直覺（奇異谷效應）</strong>：看到影片覺得「哪裡怪怪的」就要提高警覺！這種不安感叫做「奇異谷效應」——影像看起來幾乎像人類，但就是哪裡怪。</div>
+        </li>
+        <li>
+          <span class="step-num n2">2</span>
+          <div><strong>檢查手部</strong>：放大看人物的手掌和手指。AI 最不擅長畫手！手指多一根、少一根，或長度很奇怪？那就可能是 AI 的傑作。</div>
+        </li>
+        <li>
+          <span class="step-num n3">3</span>
+          <div><strong>檢查眼睛與嘴巴</strong>：
+            <br>• 真人瞳孔是圓的，兩眼反光一致
+            <br>• 影片中的眨眼頻率很奇怪？
+            <br>• 嘴唇動作跟聲音不同步？<br>
+            以上都是 AI 的破綻！</div>
+        </li>
+        <li>
+          <span class="step-num n4">4</span>
+          <div><strong>找奇怪的文字或刺青</strong>：看衣服上的英文字、背景招牌、身上的刺青。AI 最不擅長文字！出現亂碼、扭曲的字母就是強烈警告訊號。</div>
+        </li>
+        <li>
+          <span class="step-num n5">5</span>
+          <div><strong>留意光線和陰影</strong>：找出光源（太陽或燈光）在哪，再看影子的方向。光從左來但影子也在左邊？窗戶反射跟周圍環境不符合？光影錯亂 = AI 做的！</div>
+        </li>
+      </ul>
+      <div class="tip-box">記憶口訣：直覺手眼字影子，AI破綻跑不了！</div>
+    </div>
+
+    <!-- 互動 Canvas：真假影片比較模擬 -->
+    <div class="canvas-section">
+      <h4>互動練習：真假比一比</h4>
+      <p class="canvas-hint">點擊各個特徵區塊，找出 AI 影片的破綻。答對全部就能解鎖徽章！</p>
+      <canvas id="canvas2" height="320"></canvas>
+      <div class="canvas-controls">
+        <button class="ctrl-btn" onclick="c2Check('hand')">🖐️ 檢查手部</button>
+        <button class="ctrl-btn" onclick="c2Check('eye')">👁️ 檢查眼睛</button>
+        <button class="ctrl-btn" onclick="c2Check('text')">🔤 找奇怪文字</button>
+        <button class="ctrl-btn" onclick="c2Check('light')">💡 看光影</button>
+        <button class="ctrl-btn" onclick="c2Reset()">重置</button>
+      </div>
+      <div id="c2Result" style="font-size:1rem; margin-top:10px; font-weight:700; display:none;"></div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>小偵探測驗 — STAGE 2</h4>
+      <div class="quiz-item">
+        <div class="quiz-q">Q4. 看到AI圖片時，手部最容易出現哪種破綻？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q4','A','B')">A. 手部顏色太深</button>
+          <button class="quiz-opt" onclick="checkQ('q4','B','B')">B. 手指數量或長度異常</button>
+          <button class="quiz-opt" onclick="checkQ('q4','C','B')">C. 手指太短</button>
+          <button class="quiz-opt" onclick="checkQ('q4','D','B')">D. 手掌太大</button>
+        </div>
+        <div class="quiz-feedback" id="q4-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q5. 辨別AI影片時，關於「眼睛」最重要的觀察點是什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q5','A','C')">A. 眼睛大小</button>
+          <button class="quiz-opt" onclick="checkQ('q5','B','C')">B. 眼睛的顏色</button>
+          <button class="quiz-opt" onclick="checkQ('q5','C','C')">C. 眨眼頻率和雙眼反光是否一致</button>
+          <button class="quiz-opt" onclick="checkQ('q5','D','C')">D. 眉毛的形狀</button>
+        </div>
+        <div class="quiz-feedback" id="q5-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q6. 為什麼背景招牌文字出現亂碼是AI的破綻？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q6','A','A')">A. AI不擅長理解和生成文字的正確邏輯</button>
+          <button class="quiz-opt" onclick="checkQ('q6','B','A')">B. AI不認識中文字</button>
+          <button class="quiz-opt" onclick="checkQ('q6','C','A')">C. 網路速度太慢導致文字模糊</button>
+          <button class="quiz-opt" onclick="checkQ('q6','D','A')">D. 影片解析度太低</button>
+        </div>
+        <div class="quiz-feedback" id="q6-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">準備3-5組真實圖片對比（一真一假），讓學生用平板實際觀察手指、眼睛、文字。可從 MyGoPen 查核彙整頁面找到真實案例（如 NASA 太空人照片、以色列情報總部被炸AI生成影像等）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- STAGE 3：SIFT查核法則 -->
+<!-- ============================== -->
+<section class="level-section" id="sec3">
+  <div class="section-header" style="background:#e8f9ee; border-bottom:2px solid #eee;">
+    <span class="stage-badge s3-bg">STAGE 3</span>
+    <div>
+      <div class="section-title">SIFT 查核法則：停看查找溯</div>
+      <div class="section-sub">網路時代的「停看聽」——4 個步驟護你不被騙</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <div class="infographic-frame">
+      <img src="assets/03_sift_method.jpg" alt="SIFT查核法則資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...</div>'">
+    </div>
+
+    <div class="steps-card">
+      <h4>SIFT 法則 4 個步驟</h4>
+      <ul class="steps-list">
+        <li>
+          <span class="step-num n3">S</span>
+          <div><strong>Stop 停一停！（最重要！）</strong>
+            <br>看到讓你覺得生氣、害怕或超驚訝的訊息時——<strong>先深呼吸，絕對不要馬上按轉傳！</strong>
+            <br>問問自己：「這有可能是假的嗎？」
+          </div>
+        </li>
+        <li>
+          <span class="step-num n4">I</span>
+          <div><strong>Investigate 調查來源</strong>
+            <br>這是誰說的？用「5W思考法」當小偵探：
+            <br>• Who：這是誰寫的？他是專家嗎？
+            <br>• What：這個網站的目的是什麼？
+            <br>• When：什麼時候發布的？有更新嗎？
+            <br>• Where：來源在哪裡？有出版者嗎？
+            <br>• Why：這資訊對我有沒有用？
+          </div>
+        </li>
+        <li>
+          <span class="step-num n2">F</span>
+          <div><strong>Find 尋找更多報導</strong>
+            <br>如果是大新聞，其他媒體也會報！
+            <br>打開瀏覽器搜尋相同關鍵字，看其他值得信任的媒體有沒有同樣的報導。
+          </div>
+        </li>
+        <li>
+          <span class="step-num">T</span>
+          <div><strong>Trace 溯源</strong>
+            <br>很多假訊息會拿舊的真實照片配上假故事（移花接木）！
+            <br>追蹤這張照片或這句話最早從哪裡來，原本的意思有沒有被亂改。
+          </div>
+        </li>
+      </ul>
+      <div class="tip-box">假訊息最常在 LINE、Facebook、TikTok 流傳！LINE 是封閉群組，錯誤訊息最難被指正，要特別小心！</div>
+    </div>
+
+    <!-- 互動 Canvas：SIFT 流程圖動畫 -->
+    <div class="canvas-section">
+      <h4>互動練習：SIFT 流程圖</h4>
+      <p class="canvas-hint">點擊各個 SIFT 步驟按鈕，觀察流程動畫！</p>
+      <canvas id="canvas3" height="260"></canvas>
+      <div class="canvas-controls">
+        <button class="ctrl-btn" onclick="c3Step(0)">✋ Stop</button>
+        <button class="ctrl-btn" onclick="c3Step(1)">🔍 Investigate</button>
+        <button class="ctrl-btn" onclick="c3Step(2)">📰 Find</button>
+        <button class="ctrl-btn" onclick="c3Step(3)">🔎 Trace</button>
+        <button class="ctrl-btn" onclick="c3Reset()">重置</button>
+      </div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>小偵探測驗 — STAGE 3</h4>
+      <div class="quiz-item">
+        <div class="quiz-q">Q7. 收到讓你很憤怒的驚人新聞時，SIFT 法則的第一步是什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q7','A','B')">A. 立刻轉傳給朋友</button>
+          <button class="quiz-opt" onclick="checkQ('q7','B','B')">B. 先停下來，不要急著分享</button>
+          <button class="quiz-opt" onclick="checkQ('q7','C','B')">C. 馬上回覆說是假的</button>
+          <button class="quiz-opt" onclick="checkQ('q7','D','B')">D. 大聲告訴旁邊的同學</button>
+        </div>
+        <div class="quiz-feedback" id="q7-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q8. SIFT 法則中的「I」（Investigate）代表什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q8','A','B')">A. 忽略這個訊息</button>
+          <button class="quiz-opt" onclick="checkQ('q8','B','B')">B. 調查訊息的來源</button>
+          <button class="quiz-opt" onclick="checkQ('q8','C','B')">C. 立刻轉傳</button>
+          <button class="quiz-opt" onclick="checkQ('q8','D','B')">D. 向老師報告</button>
+        </div>
+        <div class="quiz-feedback" id="q8-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q9. 假訊息「移花接木」是指什麼做法？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q9','A','C')">A. 把圖片塗改成其他顏色</button>
+          <button class="quiz-opt" onclick="checkQ('q9','B','C')">B. 完全捏造一件不存在的事</button>
+          <button class="quiz-opt" onclick="checkQ('q9','C','C')">C. 拿舊的真實照片配上假故事</button>
+          <button class="quiz-opt" onclick="checkQ('q9','D','C')">D. 把兩張照片合成在一起</button>
+        </div>
+        <div class="quiz-feedback" id="q9-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">情境練習：老師準備5則真假訊息（可用 MyGoPen 查核彙整頁面中的案例），讓學生用 SIFT 法則逐一分析。也可讓學生分享家長長輩群組收到的奇怪訊息，討論如何查核。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- STAGE 4：事實查核工具實作 -->
+<!-- ============================== -->
+<section class="level-section" id="sec4">
+  <div class="section-header" style="background:#e0f0ff; border-bottom:2px solid #eee;">
+    <span class="stage-badge s4-bg">STAGE 4</span>
+    <div>
+      <div class="section-title">事實查核工具實作：MyGoPen</div>
+      <div class="section-sub">LINE 上的謠言剋星——4步驟秒查真相！</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <div class="infographic-frame">
+      <img src="assets/04_mygopen_tool.jpg" alt="MyGoPen事實查核工具資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...</div>'">
+    </div>
+
+    <div class="steps-card">
+      <h4>使用 MyGoPen（麥擱騙）4 個步驟</h4>
+      <ul class="steps-list">
+        <li>
+          <span class="step-num n4">1</span>
+          <div><strong>加入 LINE 好友</strong>
+            <br>打開 LINE → 加入好友 → 搜尋 ID：<strong>@mygopen</strong>
+            <br>（或掃描 QR Code，免費使用！）
+          </div>
+        </li>
+        <li>
+          <span class="step-num n3">2</span>
+          <div><strong>把可疑訊息「轉傳」過去</strong>
+            <br>不管是文字訊息、圖片，還是影片——直接轉傳給 MyGoPen 的聊天室
+            <br>（文字、圖片、影片都可以查！）
+          </div>
+        </li>
+        <li>
+          <span class="step-num n2">3</span>
+          <div><strong>等待機器人「秒回」查證結果</strong>
+            <br>LINE 機器人馬上比對資料庫，瞬間回覆！
+            <br>• 點綠色按鈕 → 查看查證結果
+            <br>• 點橘色按鈕 → 把正確答案轉傳給親朋好友
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div><strong>機器人查不到？請真人幫你查！</strong>
+            <br>畫面往左滑 → 「前往真人查證」
+            <br>志工大哥哥大姊姊幫你親自調查（需稍微等候）
+          </div>
+        </li>
+      </ul>
+      <div class="tip-box">重要提醒：查不到不代表就是真的！MyGoPen 與具有國際 IFCN 認證的「台灣事實查核中心」合作，資料庫持續更新中！</div>
+    </div>
+
+    <!-- 互動 Canvas：MyGoPen 操作模擬 -->
+    <div class="canvas-section">
+      <h4>互動練習：模擬查核一則訊息</h4>
+      <p class="canvas-hint">按照步驟體驗 MyGoPen 的查核過程！</p>
+      <canvas id="canvas4" height="300"></canvas>
+      <div class="canvas-controls">
+        <button class="ctrl-btn" onclick="c4Step(1)">Step 1：加好友</button>
+        <button class="ctrl-btn" onclick="c4Step(2)">Step 2：轉傳訊息</button>
+        <button class="ctrl-btn" onclick="c4Step(3)">Step 3：查看結果</button>
+        <button class="ctrl-btn" onclick="c4Step(4)">Step 4：告知親友</button>
+        <button class="ctrl-btn" onclick="c4Reset()">重置</button>
+      </div>
+      <div id="c4Result" style="font-size:1rem; margin-top:10px; font-weight:700; display:none;"></div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>小偵探測驗 — STAGE 4</h4>
+      <div class="quiz-item">
+        <div class="quiz-q">Q10. 要加入 MyGoPen 的 LINE 帳號，應該搜尋什麼 ID？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q10','A','B')">A. @fakebuster</button>
+          <button class="quiz-opt" onclick="checkQ('q10','B','B')">B. @mygopen</button>
+          <button class="quiz-opt" onclick="checkQ('q10','C','B')">C. @cofacts</button>
+          <button class="quiz-opt" onclick="checkQ('q10','D','B')">D. @factcheck</button>
+        </div>
+        <div class="quiz-feedback" id="q10-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q11. 把訊息傳給 MyGoPen 後，機器人查不到怎麼辦？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q11','A','C')">A. 代表這則訊息是真的</button>
+          <button class="quiz-opt" onclick="checkQ('q11','B','C')">B. 不用管它，直接轉傳給親友</button>
+          <button class="quiz-opt" onclick="checkQ('q11','C','C')">C. 選擇「真人查證」服務，保持懷疑態度</button>
+          <button class="quiz-opt" onclick="checkQ('q11','D','C')">D. 立刻向警察報案</button>
+        </div>
+        <div class="quiz-feedback" id="q11-feedback"></div>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">Q12. 看到可疑的AI假影片時，「絕對不能做」的事情是什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQ('q12','A','D')">A. 傳給 MyGoPen 查核</button>
+          <button class="quiz-opt" onclick="checkQ('q12','B','D')">B. 告訴師長</button>
+          <button class="quiz-opt" onclick="checkQ('q12','C','D')">C. 用 SIFT 法則查核</button>
+          <button class="quiz-opt" onclick="checkQ('q12','D','D')">D. 未查核就立刻轉傳給所有人</button>
+        </div>
+        <div class="quiz-feedback" id="q12-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">實作練習：讓學生帶手機，實際在 LINE 加入 @mygopen，把老師準備的模擬訊息轉傳查核。可從 MyGoPen 官網找到歷史查核案例，讓學生看「這些曾經在 LINE 流傳的謠言，是怎麼被查核的」。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 今日實作任務 -->
+<div class="project-task">
+  <h3>今日實作任務</h3>
+  <ul class="task-steps">
+    <li>
+      <span class="task-step-num">1</span>
+      <div>在 LINE 搜尋並加入 MyGoPen（@mygopen）為好友</div>
+    </li>
+    <li>
+      <span class="task-step-num">2</span>
+      <div>把老師提供的 3 則「可疑訊息」分別傳給 MyGoPen，記錄查核結果（真/假/待查）</div>
+    </li>
+    <li>
+      <span class="task-step-num">3</span>
+      <div>找一張你覺得「可能是 AI 做的」圖片，用 5 大技巧觀察，並記錄你看到哪些破綻</div>
+    </li>
+    <li>
+      <span class="task-step-num">4</span>
+      <div>回家後，把「SIFT 查核法則」教給一位家人，幫助他們判斷一則長輩群組的訊息是否真實</div>
+    </li>
+  </ul>
+</div>
+
+<!-- NotebookLM 資源站 -->
+<div class="nb-section">
+  <h3>NotebookLM 資源站</h3>
+  <div class="nb-cards">
+    <div class="nb-card">
+      <h4>研究本（資料來源）</h4>
+      <p>包含 9 個網路來源，涵蓋 MyGoPen、台灣事實查核中心、PCPD 深偽技術指南等</p>
+      <a href="https://notebooklm.google.com/notebook/262d1be0-73d2-461f-aa04-86fce209cc8c" target="_blank" class="nb-link">開啟研究本</a>
+    </div>
+    <div class="nb-card">
+      <h4>精簡本（素材生成）</h4>
+      <p>包含精華教學筆記 + 主講者圖像，所有簡報、影片、資訊圖表均由此生成</p>
+      <a href="https://notebooklm.google.com/notebook/6255781a-1537-4391-9ac5-9080efac5393" target="_blank" class="nb-link">開啟精簡本</a>
+    </div>
+    <div class="nb-card">
+      <h4>台灣事實查核學苑</h4>
+      <p>免費教材「必修：辨識假訊息的識讀心法」，含 SIFT 法則與疑想查問戳工具</p>
+      <a href="https://school.tfc-taiwan.org.tw/learning-resources/media-literacy/" target="_blank" class="nb-link">開啟資源</a>
+    </div>
+  </div>
+
+  <div class="pipeline-flow">
+    <span class="flow-step">網路深度搜尋</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">研究本（9來源）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">5條精華萃取</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">精簡本（2來源）</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">NLM生成素材</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Claude生成HTML</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">GitHub Pages</span>
+  </div>
+
+  <!-- FAQ -->
+  <h4 style="margin-top:20px; margin-bottom:12px; font-size:1.05rem; font-weight:900;">常見問題 FAQ</h4>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Q1：為什麼 AI 可以做出這麼真的假影片？</div>
+      <div class="faq-a">因為 AI 使用「深度學習」技術，大量吸收分析某個人的真實照片、影片和聲音資料，像模仿高手一樣精準替換某人的面貌、聲音或動作。GAN（生成對抗網路）讓「造假機器人」和「判別機器人」互相競爭，最後造假達到令人難以分辨的程度。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Q2：我怎麼知道一個影片是假的？</div>
+      <div class="faq-a">用 5 個技巧：①相信直覺（感覺怪就提高警覺）；②檢查手部（AI常畫錯手指數量）；③檢查眼睛（眨眼頻率是否異常、唇動是否不同步）；④尋找奇怪文字（招牌或刺青出現亂碼）；⑤留意光影（影子方向跟光源是否矛盾）。搭配「5W思考法」冷靜分析。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Q3：看到假影片我應該怎麼辦？</div>
+      <div class="faq-a">第一步：絕對不要馬上轉傳！先「停一停，想一想」。第二步：把可疑影片或圖片直接轉傳給 MyGoPen（LINE ID：@mygopen），機器人秒回查證結果。如果發現是惡意深偽材料，告知身邊同學停止分享並刪除；若遭惡意針對，立即向師長求助。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Q4：事實查核中心是怎麼查到真相的？</div>
+      <div class="faq-a">事實查核中心（如 MyGoPen）擁有持續更新的龐大查核資料庫。收到不明圖片或影片時，先透過程式解析與影像辨識和過去查證過的內容比對。查不到就轉交「真人查證」團隊，由志工搜尋原始出處、分析背景資料，再結合具有國際 IFCN 認證的台灣事實查核中心資料確認真相。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Q5：AI 辨別假影片工具可靠嗎？</div>
+      <div class="faq-a">雖然 AI 查核已成趨勢，但專家警告：「AI 不是可靠的資訊來源」。AI 偵測工具有技術限制，不能百分之百依賴。最可靠的防護是大腦裡的「媒體識讀」能力，要學習用「SIFT」等識讀心法保持思辨態度。記住：查不到不代表是真的！</div>
+    </div>
+  </div>
+</div>
+
+<!-- 授課簡報展示 -->
+<div class="nb-section">
+  <h3>授課簡報（NotebookLM 生成）</h3>
+  <div class="slide-gallery">
+    <h4>簡報頁面</h4>
+    <div class="slide-thumbs" id="slideThumbs">
+      <!-- 動態填入簡報縮圖 -->
+      <div style="text-align:center; padding:40px; color:var(--dim); font-size:1rem; grid-column:1/-1;">
+        簡報圖片處理中，請稍候...<br>
+        （需先從 NotebookLM 下載 PDF 並轉換為 JPG）
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 自學影片 -->
+<div class="video-section">
+  <h3>學生自學影片（NotebookLM 生成）</h3>
+  <div class="video-wrap">
+    <!-- YouTube embed placeholder - 上傳後填入真實 video ID -->
+    <div class="video-placeholder">
+      <span style="font-size:3rem;">🎬</span>
+      <span>影片處理中...</span>
+      <span style="font-size:0.9rem; color:#666;">（需先上傳至 YouTube 後填入影片 ID）</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<!-- 浮動工具面板 -->
+<div class="float-panel">
+  <button class="float-btn" onclick="toggleLottery()" title="抽籤器">🎲</button>
+  <button class="float-btn" onclick="toggleTimer()" title="計時器">⏱️</button>
+  <button class="float-btn" onclick="toggleDraw()" title="畫筆工具" id="drawToggleBtn">✏️</button>
+</div>
+
+<!-- 抽籤器 Modal -->
+<div class="float-modal" id="lotteryModal">
+  <h4>抽籤器</h4>
+  <div class="lottery-result" id="lotteryResult">?</div>
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+    <button class="ctrl-btn" onclick="drawLot()">抽一個</button>
+    <button class="ctrl-btn" onclick="resetLot()">重置</button>
+  </div>
+  <div style="margin-top:8px; font-size:0.85rem; color:var(--dim);">座號 1–30</div>
+</div>
+
+<!-- 計時器 Modal -->
+<div class="float-modal" id="timerModal">
+  <h4>計時器</h4>
+  <div class="timer-display" id="timerDisplay">05:00</div>
+  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+    <button class="ctrl-btn" onclick="startTimer()">開始</button>
+    <button class="ctrl-btn" onclick="pauseTimer()">暫停</button>
+    <button class="ctrl-btn" onclick="resetTimer()">重置</button>
+  </div>
+  <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
+    <button class="ctrl-btn" onclick="setTime(3)">3分</button>
+    <button class="ctrl-btn" onclick="setTime(5)">5分</button>
+    <button class="ctrl-btn" onclick="setTime(10)">10分</button>
+  </div>
+</div>
+
+<!-- 畫筆工具列 -->
+<div class="draw-toolbar" id="drawToolbar" style="display:none;">
+  <span class="draw-size">🖊️</span>
+  <div class="color-dot active" style="background:#ff6b6b;" onclick="setPenColor('#ff6b6b',this)"></div>
+  <div class="color-dot" style="background:#ffa94d;" onclick="setPenColor('#ffa94d',this)"></div>
+  <div class="color-dot" style="background:#51cf66;" onclick="setPenColor('#51cf66',this)"></div>
+  <div class="color-dot" style="background:#339af0;" onclick="setPenColor('#339af0',this)"></div>
+  <div class="color-dot" style="background:#2c2c2c;" onclick="setPenColor('#2c2c2c',this)"></div>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+// ===== MODE =====
+let isTeacherMode = false;
+function setMode(m) {
+  isTeacherMode = (m === 'teacher');
+  document.body.classList.toggle('teacher-mode', isTeacherMode);
+  document.querySelectorAll('.mode-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && !isTeacherMode) || (i===1 && isTeacherMode));
+  });
+  document.getElementById('teacherBadge').classList.toggle('show', isTeacherMode);
+}
+function teacherLogin() {
+  const pw = prompt('請輸入教師密碼：');
+  if (pw === 'it2026') { setMode('teacher'); }
+  else if (pw !== null) { alert('密碼錯誤！'); }
+}
+
+// ===== SCROLL & PROGRESS =====
+const sectionIds = ['sec1','sec2','sec3','sec4'];
+function scrollToSection(id, btn) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  document.querySelectorAll('.stage-pill').forEach(p => p.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = Math.round((scrolled/total)*100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+}
+window.addEventListener('scroll', updateProgress);
+
+// ===== QUIZ =====
+const praises = ['🎉 太棒了！', '✨ 答對囉！', '🌟 你真厲害！', '🎊 完全正確！', '👏 厲害！'];
+function checkQ(qId, ans, correct) {
+  const allBtns = document.querySelectorAll(`[onclick^="checkQ('${qId}'"]`);
+  allBtns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`${qId}-feedback`);
+  fb.classList.add('show');
+  allBtns.forEach(b => {
+    const bAns = b.getAttribute('onclick').match(/checkQ\('[\w]+','([A-D])'/)[1];
+    if (bAns === correct) b.classList.add('correct');
+    if (bAns === ans && ans !== correct) b.classList.add('wrong');
+  });
+  if (ans === correct) {
+    fb.classList.add('ok');
+    fb.textContent = praises[Math.floor(Math.random()*praises.length)];
+  } else {
+    fb.classList.add('no');
+    const msgs = {
+      'q1':'答案是 A！Deepfake = Deep Learning（深度學習）+ Fake（偽造）',
+      'q2':'答案是 A！生成器負責造假，判別器負責找破綻，互相競爭讓AI越來越厲害',
+      'q3':'答案是 D！真實錄音是真的，不是Deepfake的手法',
+      'q4':'答案是 B！AI最不擅長畫手，手指數量或長度常常錯誤',
+      'q5':'答案是 C！眨眼頻率異常和雙眼反光不一致是AI影片的重要破綻',
+      'q6':'答案是 A！AI理解不了文字邏輯，所以招牌文字常常變成亂碼',
+      'q7':'答案是 B！SIFT的S=Stop，先停下來不要急著分享！',
+      'q8':'答案是 B！Investigate = 調查來源，搭配5W思考法',
+      'q9':'答案是 C！移花接木是用舊的真實照片配上假故事，讓人誤解',
+      'q10':'答案是 B！在LINE搜尋 @mygopen 就能加入麥擱騙',
+      'q11':'答案是 C！查不到不代表是真的！可以用真人查證服務，並繼續保持懷疑',
+      'q12':'答案是 D！未查核就轉傳是最危險的行為！可能讓假訊息繼續擴散'
+    };
+    fb.textContent = msgs[qId] || '答錯了，再想想看！';
+  }
+}
+
+// ===== FAQ =====
+function toggleFAQ(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+// ===== CANVAS 1：眼鏡偵探 =====
+let c1Canvas, c1Ctx, c1Found = [];
+const c1Spots = [
+  {x:0.2, y:0.3, r:50, label:'手部', color:'#ff6b6b', found:false},
+  {x:0.5, y:0.25, r:45, label:'眼睛', color:'#339af0', found:false},
+  {x:0.75, y:0.4, r:40, label:'文字', color:'#ffa94d', found:false},
+  {x:0.35, y:0.65, r:55, label:'光影', color:'#51cf66', found:false},
+];
+function initCanvas1() {
+  c1Canvas = document.getElementById('canvas1');
+  c1Ctx = c1Canvas.getContext('2d');
+  resizeC1();
+  drawC1();
+  c1Canvas.addEventListener('click', c1Click);
+  c1Canvas.addEventListener('touchend', e => {
+    e.preventDefault();
+    const t = e.changedTouches[0];
+    const rect = c1Canvas.getBoundingClientRect();
+    c1HandleClick((t.clientX - rect.left) * c1Canvas.width / rect.width, (t.clientY - rect.top) * c1Canvas.height / rect.height);
+  });
+}
+function resizeC1() {
+  const w = c1Canvas.offsetWidth;
+  c1Canvas.width = w;
+  c1Canvas.height = 300;
+}
+function c1Click(e) {
+  const rect = c1Canvas.getBoundingClientRect();
+  c1HandleClick((e.clientX - rect.left) * c1Canvas.width / rect.width, (e.clientY - rect.top) * c1Canvas.height / rect.height);
+}
+function c1HandleClick(mx, my) {
+  let hit = false;
+  c1Spots.forEach(s => {
+    const sx = s.x * c1Canvas.width, sy = s.y * c1Canvas.height;
+    const d = Math.hypot(mx - sx, my - sy);
+    if (d < s.r && !s.found) { s.found = true; hit = true; }
+  });
+  drawC1();
+  const found = c1Spots.filter(s => s.found).length;
+  const resultEl = document.getElementById('c1Result');
+  if (found === c1Spots.length) {
+    resultEl.style.display = 'block';
+    resultEl.textContent = '🎊 恭喜！你找到所有 4 個破綻！AI 假影片偵探徽章解鎖！';
+  }
+}
+function drawC1() {
+  if (!c1Ctx) return;
+  const w = c1Canvas.width, h = c1Canvas.height;
+  c1Ctx.clearRect(0, 0, w, h);
+  // 背景（模擬影片截圖）
+  c1Ctx.fillStyle = '#f0e8d8';
+  c1Ctx.fillRect(0, 0, w, h);
+  // 人物輪廓
+  c1Ctx.fillStyle = '#d4c4a8';
+  c1Ctx.beginPath();
+  c1Ctx.ellipse(w*0.5, h*0.55, w*0.2, h*0.35, 0, 0, Math.PI*2);
+  c1Ctx.fill();
+  c1Ctx.fillStyle = '#c8b896';
+  c1Ctx.beginPath();
+  c1Ctx.arc(w*0.5, h*0.22, h*0.15, 0, Math.PI*2);
+  c1Ctx.fill();
+  c1Ctx.fillStyle = '#333';
+  c1Ctx.font = `${h*0.06}px Noto Sans TC`;
+  c1Ctx.textAlign = 'right';
+  c1Ctx.fillText('AIMARKET', w*0.85, h*0.45);
+  // 破綻區域
+  c1Spots.forEach(s => {
+    const sx = s.x * w, sy = s.y * h;
+    if (s.found) {
+      c1Ctx.strokeStyle = s.color;
+      c1Ctx.lineWidth = 3;
+      c1Ctx.setLineDash([6,3]);
+      c1Ctx.beginPath();
+      c1Ctx.arc(sx, sy, s.r, 0, Math.PI*2);
+      c1Ctx.stroke();
+      c1Ctx.fillStyle = s.color;
+      c1Ctx.font = `bold ${h*0.055}px Noto Sans TC`;
+      c1Ctx.textAlign = 'center';
+      c1Ctx.fillText('✓ ' + s.label, sx, sy - s.r - 8);
+      c1Ctx.setLineDash([]);
+    } else {
+      c1Ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+      c1Ctx.lineWidth = 2;
+      c1Ctx.setLineDash([4,4]);
+      c1Ctx.beginPath();
+      c1Ctx.arc(sx, sy, s.r, 0, Math.PI*2);
+      c1Ctx.stroke();
+      c1Ctx.setLineDash([]);
+      c1Ctx.fillStyle = 'rgba(0,0,0,0.3)';
+      c1Ctx.font = `${h*0.045}px Noto Sans TC`;
+      c1Ctx.textAlign = 'center';
+      c1Ctx.fillText('?', sx, sy + 6);
+    }
+  });
+  c1Ctx.textAlign = 'left';
+  c1Ctx.setLineDash([]);
+}
+function c1Start() { c1Spots.forEach(s => s.found = false); drawC1(); document.getElementById('c1Result').style.display='none'; }
+function c1Reset() { c1Start(); }
+
+// ===== CANVAS 2：真假比一比 =====
+let c2Canvas, c2Ctx, c2Checked = {};
+const c2Items = {
+  hand: {label:'手部破綻', x:0.2, y:0.6, found:false, desc:'多出一根手指！'},
+  eye: {label:'眼睛破綻', x:0.5, y:0.25, found:false, desc:'眨眼頻率異常！'},
+  text: {label:'文字亂碼', x:0.75, y:0.4, found:false, desc:'招牌變亂碼！'},
+  light: {label:'光影錯亂', x:0.35, y:0.75, found:false, desc:'影子方向不對！'},
+};
+function initCanvas2() {
+  c2Canvas = document.getElementById('canvas2');
+  c2Ctx = c2Canvas.getContext('2d');
+  c2Canvas.width = c2Canvas.offsetWidth;
+  c2Canvas.height = 320;
+  drawC2();
+}
+function c2Check(type) {
+  if (c2Items[type]) c2Items[type].found = true;
+  drawC2();
+  const found = Object.values(c2Items).filter(i => i.found).length;
+  const res = document.getElementById('c2Result');
+  if (found === 4) {
+    res.style.display = 'block';
+    res.textContent = '🏆 全部破綻找到了！你是頂級媒體識讀偵探！';
+  }
+}
+function drawC2() {
+  if (!c2Ctx) return;
+  const w = c2Canvas.width, h = c2Canvas.height;
+  c2Ctx.clearRect(0, 0, w, h);
+  c2Ctx.fillStyle = '#f5f0e8';
+  c2Ctx.fillRect(0, 0, w, h);
+  c2Ctx.fillStyle = '#e0d4b8';
+  c2Ctx.fillRect(w*0.05, h*0.05, w*0.9, h*0.9);
+  c2Ctx.fillStyle = '#c8b896';
+  c2Ctx.beginPath();
+  c2Ctx.arc(w*0.5, h*0.2, h*0.13, 0, Math.PI*2);
+  c2Ctx.fill();
+  c2Ctx.fillStyle = '#d4c4a8';
+  c2Ctx.fillRect(w*0.35, h*0.32, w*0.3, h*0.45);
+  Object.values(c2Items).forEach(item => {
+    const sx = item.x * w, sy = item.y * h;
+    if (item.found) {
+      c2Ctx.fillStyle = 'rgba(255,107,107,0.15)';
+      c2Ctx.beginPath();
+      c2Ctx.arc(sx, sy, 50, 0, Math.PI*2);
+      c2Ctx.fill();
+      c2Ctx.strokeStyle = '#ff6b6b';
+      c2Ctx.lineWidth = 3;
+      c2Ctx.beginPath();
+      c2Ctx.arc(sx, sy, 50, 0, Math.PI*2);
+      c2Ctx.stroke();
+      c2Ctx.fillStyle = '#c92a2a';
+      c2Ctx.font = `bold ${h*0.05}px Noto Sans TC`;
+      c2Ctx.textAlign = 'center';
+      c2Ctx.fillText('❌ ' + item.desc, sx, sy - 58);
+    }
+  });
+  c2Ctx.textAlign = 'center';
+  c2Ctx.fillStyle = '#868686';
+  c2Ctx.font = `${h*0.045}px Noto Sans TC`;
+  c2Ctx.fillText('← 點擊上方按鈕，找出AI假影片的破綻 →', w*0.5, h*0.97);
+}
+function c2Reset() {
+  Object.values(c2Items).forEach(i => i.found = false);
+  document.getElementById('c2Result').style.display = 'none';
+  drawC2();
+}
+
+// ===== CANVAS 3：SIFT 流程圖 =====
+let c3Canvas, c3Ctx, c3ActiveStep = -1;
+const c3Steps = [
+  {letter:'S', title:'Stop', desc:'停下來！不要急著轉傳', color:'#ff6b6b'},
+  {letter:'I', title:'Investigate', desc:'調查訊息來源\n用5W思考法', color:'#ffa94d'},
+  {letter:'F', title:'Find', desc:'搜尋其他報導\n比對多方資訊', color:'#51cf66'},
+  {letter:'T', title:'Trace', desc:'追溯原始來源\n找出移花接木', color:'#339af0'},
+];
+function initCanvas3() {
+  c3Canvas = document.getElementById('canvas3');
+  c3Ctx = c3Canvas.getContext('2d');
+  c3Canvas.width = c3Canvas.offsetWidth;
+  c3Canvas.height = 260;
+  drawC3();
+}
+function c3Step(i) {
+  c3ActiveStep = i;
+  drawC3();
+}
+function c3Reset() { c3ActiveStep = -1; drawC3(); }
+function drawC3() {
+  if (!c3Ctx) return;
+  const w = c3Canvas.width, h = c3Canvas.height;
+  c3Ctx.clearRect(0, 0, w, h);
+  c3Ctx.fillStyle = '#fff8ee';
+  c3Ctx.fillRect(0, 0, w, h);
+  const bw = w/5, bh = h*0.55, by = h*0.15;
+  c3Steps.forEach((s, i) => {
+    const bx = (i*1.1 + 0.3) * bw;
+    const isActive = (i === c3ActiveStep);
+    c3Ctx.fillStyle = isActive ? s.color : '#e0d8c8';
+    c3Ctx.strokeStyle = s.color;
+    c3Ctx.lineWidth = 3;
+    c3Ctx.beginPath();
+    c3Ctx.roundRect(bx, by, bw*0.85, bh, 12);
+    c3Ctx.fill();
+    c3Ctx.stroke();
+    c3Ctx.fillStyle = isActive ? '#fff' : '#2c2c2c';
+    c3Ctx.font = `900 ${h*0.14}px Noto Sans TC`;
+    c3Ctx.textAlign = 'center';
+    c3Ctx.fillText(s.letter, bx + bw*0.425, by + bh*0.42);
+    c3Ctx.font = `700 ${h*0.07}px Noto Sans TC`;
+    c3Ctx.fillText(s.title, bx + bw*0.425, by + bh*0.65);
+    if (isActive) {
+      c3Ctx.fillStyle = '#2c2c2c';
+      c3Ctx.font = `${h*0.058}px Noto Sans TC`;
+      const lines = s.desc.split('\n');
+      lines.forEach((ln, li) => {
+        c3Ctx.fillText(ln, bx + bw*0.425, by + bh + h*0.1 + li * h*0.07);
+      });
+    }
+    if (i < c3Steps.length - 1) {
+      c3Ctx.fillStyle = '#868686';
+      c3Ctx.font = `${h*0.09}px Noto Sans TC`;
+      c3Ctx.fillText('→', bx + bw*0.93, by + bh*0.55);
+    }
+  });
+}
+
+// ===== CANVAS 4：MyGoPen 步驟模擬 =====
+let c4Canvas, c4Ctx, c4Step_n = 0;
+const c4Steps_data = [
+  {icon:'👥', title:'Step 1', desc:'LINE 搜尋 @mygopen\n點擊加入好友'},
+  {icon:'📤', title:'Step 2', desc:'把可疑訊息\n直接轉傳過去'},
+  {icon:'🤖', title:'Step 3', desc:'機器人秒回結果\n點綠色按鈕查看'},
+  {icon:'📢', title:'Step 4', desc:'把正確資訊\n分享給親友'},
+];
+function initCanvas4() {
+  c4Canvas = document.getElementById('canvas4');
+  c4Ctx = c4Canvas.getContext('2d');
+  c4Canvas.width = c4Canvas.offsetWidth;
+  c4Canvas.height = 300;
+  drawC4();
+}
+function c4Step(n) { c4Step_n = n; drawC4(); }
+function c4Reset() {
+  c4Step_n = 0;
+  document.getElementById('c4Result').style.display = 'none';
+  drawC4();
+}
+function drawC4() {
+  if (!c4Ctx) return;
+  const w = c4Canvas.width, h = c4Canvas.height;
+  c4Ctx.clearRect(0, 0, w, h);
+  c4Ctx.fillStyle = '#e0f0ff';
+  c4Ctx.fillRect(0, 0, w, h);
+  const bw = w / 5, bh = h * 0.55, by = h * 0.1;
+  c4Steps_data.forEach((s, i) => {
+    const bx = (i * 1.15 + 0.2) * bw;
+    const isActive = (i+1 === c4Step_n);
+    const isDone = (i+1 < c4Step_n);
+    c4Ctx.fillStyle = isDone ? '#51cf66' : (isActive ? '#339af0' : '#f5f0e8');
+    c4Ctx.strokeStyle = isDone ? '#2b8a3e' : (isActive ? '#1971c2' : '#ccc');
+    c4Ctx.lineWidth = 3;
+    c4Ctx.beginPath();
+    c4Ctx.roundRect(bx, by, bw*0.9, bh, 12);
+    c4Ctx.fill();
+    c4Ctx.stroke();
+    c4Ctx.font = `${h*0.12}px Noto Sans TC`;
+    c4Ctx.textAlign = 'center';
+    c4Ctx.fillText(isDone ? '✓' : s.icon, bx + bw*0.45, by + bh*0.38);
+    c4Ctx.fillStyle = '#2c2c2c';
+    c4Ctx.font = `700 ${h*0.065}px Noto Sans TC`;
+    c4Ctx.fillText(s.title, bx + bw*0.45, by + bh*0.62);
+    if (isActive) {
+      c4Ctx.font = `${h*0.055}px Noto Sans TC`;
+      s.desc.split('\n').forEach((ln, li) => {
+        c4Ctx.fillText(ln, bx + bw*0.45, by + bh + h*0.08 + li * h*0.065);
+      });
+    }
+    if (i < c4Steps_data.length - 1) {
+      c4Ctx.fillStyle = '#868686';
+      c4Ctx.font = `${h*0.08}px Noto Sans TC`;
+      c4Ctx.fillText('→', bx + bw*0.98, by + bh*0.55);
+    }
+  });
+  if (c4Step_n === 4) {
+    const res = document.getElementById('c4Result');
+    res.style.display = 'block';
+    res.style.color = 'var(--c3)';
+    res.textContent = '✅ 太棒了！你完成了完整的事實查核流程！';
+  }
+}
+
+// ===== LOTTERY =====
+let lotteryPool = Array.from({length:30}, (_, i) => i+1);
+function toggleLottery() {
+  const m = document.getElementById('lotteryModal');
+  document.getElementById('timerModal').classList.remove('show');
+  m.classList.toggle('show');
+}
+function drawLot() {
+  if (lotteryPool.length === 0) { lotteryPool = Array.from({length:30}, (_, i) => i+1); }
+  const idx = Math.floor(Math.random()*lotteryPool.length);
+  const num = lotteryPool.splice(idx, 1)[0];
+  document.getElementById('lotteryResult').textContent = num;
+}
+function resetLot() { lotteryPool = Array.from({length:30}, (_, i) => i+1); document.getElementById('lotteryResult').textContent = '?'; }
+
+// ===== TIMER =====
+let timerSec = 300, timerRunning = false, timerInterval;
+function toggleTimer() {
+  const m = document.getElementById('timerModal');
+  document.getElementById('lotteryModal').classList.remove('show');
+  m.classList.toggle('show');
+}
+function updateTimerDisplay() {
+  const m = Math.floor(timerSec/60), s = timerSec%60;
+  document.getElementById('timerDisplay').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    if (timerSec > 0) { timerSec--; updateTimerDisplay(); }
+    else { clearInterval(timerInterval); timerRunning = false; alert('時間到！'); }
+  }, 1000);
+}
+function pauseTimer() { clearInterval(timerInterval); timerRunning = false; }
+function resetTimer() { pauseTimer(); timerSec = 300; updateTimerDisplay(); }
+function setTime(m) { pauseTimer(); timerSec = m * 60; updateTimerDisplay(); }
+
+// ===== DRAW =====
+let drawActive = false, penColor = '#ff6b6b', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, lastX, lastY;
+function initDraw() {
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth;
+  drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e => { if (!drawActive) return; isDrawing=true; lastX=e.clientX; lastY=e.clientY; });
+  drawCanvas.addEventListener('mousemove', e => {
+    if (!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor;
+    drawCtx.lineWidth = penSize;
+    drawCtx.lineCap = 'round';
+    drawCtx.beginPath();
+    drawCtx.moveTo(lastX, lastY);
+    drawCtx.lineTo(e.clientX, e.clientY);
+    drawCtx.stroke();
+    lastX=e.clientX; lastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', () => isDrawing=false);
+  drawCanvas.addEventListener('touchstart', e => { if (!drawActive) return; e.preventDefault(); const t=e.touches[0]; isDrawing=true; lastX=t.clientX; lastY=t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e => {
+    if (!drawActive || !isDrawing) return; e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle = penColor;
+    drawCtx.lineWidth = penSize;
+    drawCtx.lineCap = 'round';
+    drawCtx.beginPath();
+    drawCtx.moveTo(lastX, lastY);
+    drawCtx.lineTo(t.clientX, t.clientY);
+    drawCtx.stroke();
+    lastX=t.clientX; lastY=t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', () => isDrawing=false);
+  window.addEventListener('resize', () => { drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight; });
+}
+function toggleDraw() {
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').style.display = drawActive ? 'flex' : 'none';
+  document.getElementById('drawToggleBtn').style.background = drawActive ? '#339af0' : '';
+}
+function setPenColor(c, el) {
+  penColor = c;
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing() { if (drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+
+// ===== INIT =====
+window.addEventListener('load', () => {
+  initCanvas1();
+  initCanvas2();
+  initCanvas3();
+  initCanvas4();
+  initDraw();
+  window.addEventListener('resize', () => {
+    resizeC1(); drawC1();
+    if (c2Canvas) { c2Canvas.width=c2Canvas.offsetWidth; drawC2(); }
+    if (c3Canvas) { c3Canvas.width=c3Canvas.offsetWidth; drawC3(); }
+    if (c4Canvas) { c4Canvas.width=c4Canvas.offsetWidth; drawC4(); }
+  });
+  // 動態載入簡報縮圖（如果assets資料夾有圖片）
+  loadSlideThumbs();
+});
+
+function loadSlideThumbs() {
+  const container = document.getElementById('slideThumbs');
+  const maxSlides = 15;
+  let found = 0;
+  const thumbs = [];
+  for (let i = 1; i <= maxSlides; i++) {
+    const img = new Image();
+    const num = String(i).padStart(2, '0');
+    img.src = `assets/slide_${num}.jpg`;
+    img.onload = () => {
+      found++;
+      const div = document.createElement('div');
+      div.className = 'slide-thumb';
+      div.innerHTML = `<img src="assets/slide_${num}.jpg" alt="簡報第${i}頁" loading="lazy">`;
+      thumbs[i] = div;
+      if (found >= 3) {
+        container.innerHTML = '';
+        thumbs.filter(Boolean).forEach(t => container.appendChild(t));
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
