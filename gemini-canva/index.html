@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Gemini × Canva 影片創作｜教學駕駛艙</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0d2b;--surface:#1a1a3e;--panel:#252552;
+  --c1:#00e5ff;--c2:#ffd740;--c3:#ff4081;--c4:#69ff47;
+  --text:#e8e4f8;--dim:#7070a0;
+  --ff-head:'Press Start 2P',monospace;
+  --ff-body:'Noto Sans TC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:18px}
+body{background:var(--bg);color:var(--text);font-family:var(--ff-body);font-size:1rem;line-height:1.7}
+#site-header{position:sticky;top:0;z-index:100;background:#0d0d2bcc;backdrop-filter:blur(10px);border-bottom:2px solid var(--c1);padding:10px 20px}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-title{font-size:14px;font-family:var(--ff-head);color:var(--c1);text-shadow:0 0 10px var(--c1)}
+.header-meta{font-size:15px;color:var(--dim)}
+.prog-wrap{flex:1;min-width:120px;max-width:200px}
+.prog-bar{height:8px;background:var(--surface);overflow:hidden;border:1px solid var(--dim)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--c4),var(--c1));width:0%;transition:width .5s}
+#mode-bar{background:var(--surface);border-bottom:1px solid var(--panel);padding:8px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.mode-btn{font-family:var(--ff-body);font-size:16px;padding:6px 16px;border:2px solid var(--dim);background:transparent;color:var(--dim);cursor:pointer;border-radius:4px;font-weight:700}
+.mode-btn.active{border-color:var(--c1);color:var(--c1);box-shadow:0 0 6px var(--c1)}
+.mode-hint{font-size:15px;color:var(--dim);margin-left:auto}
+#hero{position:relative;height:340px;overflow:hidden;border-bottom:4px solid var(--c2)}
+#hero img{width:100%;height:100%;object-fit:cover;object-position:top}
+#hero .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,#0d0d2bcc,#1a1a3e88)}
+#hero .hero-text{position:absolute;bottom:30px;left:30px;right:30px}
+#hero h1{font-family:var(--ff-head);font-size:clamp(14px,2.5vw,22px);color:#fff;text-shadow:2px 2px 0 var(--c1),4px 4px 0 #000;margin-bottom:8px}
+#hero .tag{display:inline-block;background:var(--c2);color:#000;font-family:var(--ff-head);font-size:9px;padding:4px 10px;margin-right:6px;margin-top:4px}
+#objectives{max-width:1100px;margin:24px auto;padding:0 20px}
+#objectives h2{font-family:var(--ff-head);font-size:12px;color:var(--c2);margin-bottom:14px}
+.obj-grid{display:flex;flex-wrap:wrap;gap:10px}
+.obj-chip{background:var(--panel);border:2px solid var(--c1);padding:10px 18px;font-size:16px;font-weight:700;color:var(--c1);display:flex;align-items:center;gap:8px}
+#section-nav{background:var(--surface);border-bottom:2px solid var(--panel);padding:12px 20px;position:sticky;top:54px;z-index:90;overflow-x:auto;white-space:nowrap}
+.nav-pills{display:inline-flex;gap:8px}
+.nav-pill{font-family:var(--ff-head);font-size:10px;padding:8px 16px;border:2px solid var(--dim);color:var(--dim);background:transparent;cursor:pointer;white-space:nowrap;transition:.2s}
+.nav-pill:hover,.nav-pill.active{border-color:var(--c2);color:var(--c2);box-shadow:0 0 8px var(--c2)}
+.level-section{max-width:1100px;margin:0 auto 48px;padding:0 20px}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px;background:var(--surface);border-left:6px solid var(--c1)}
+.stage-badge{font-family:var(--ff-head);font-size:10px;color:var(--bg);background:var(--c1);padding:6px 12px;flex-shrink:0}
+.section-header h2{font-size:22px;font-weight:900;color:var(--text)}
+.card{background:var(--panel);border:2px solid var(--surface);padding:22px;margin-bottom:16px}
+.card h3{font-size:17px;font-weight:900;color:var(--c2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card h3::before{content:'▶';color:var(--c1);font-size:11px}
+.step-list{list-style:none}
+.step-list li{padding:10px 0;border-bottom:1px solid var(--surface);display:flex;gap:12px;align-items:flex-start}
+.step-list li:last-child{border-bottom:none}
+.step-num{font-family:var(--ff-head);font-size:9px;color:var(--bg);background:var(--c4);padding:4px 8px;flex-shrink:0;margin-top:3px}
+.step-text{font-size:16px}
+.step-text b{color:var(--c1)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+.img-frame{border:4px solid var(--c1);box-shadow:4px 4px 0 var(--c2);overflow:hidden}
+.img-frame img{width:100%;height:auto;display:block}
+.canvas-section{background:var(--surface);border:2px solid var(--c3);padding:20px;margin-bottom:16px}
+.canvas-section h3{font-size:16px;font-weight:900;color:var(--c3);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.canvas-section h3::before{content:'🎮';font-size:14px}
+.prompt-builder{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+@media(max-width:600px){.prompt-builder{grid-template-columns:1fr}}
+.pb-group label{font-size:15px;color:var(--dim);margin-bottom:4px;display:block;font-weight:700}
+.pb-group select{width:100%;background:var(--panel);border:2px solid var(--dim);color:var(--text);padding:8px;font-size:16px;font-family:var(--ff-body);outline:none}
+.pb-group select:focus{border-color:var(--c1)}
+.prompt-output{background:var(--bg);border:2px solid var(--c1);padding:12px;font-size:16px;color:var(--c1);margin-top:10px;min-height:60px;line-height:1.6}
+.btn-primary{background:var(--c1);color:var(--bg);font-family:var(--ff-head);font-size:9px;padding:10px 20px;border:none;cursor:pointer;box-shadow:4px 4px 0 var(--c2);margin-top:10px;font-weight:900}
+.btn-primary:hover{background:var(--c2);box-shadow:2px 2px 0 var(--c1)}
+.quiz-section{background:var(--surface);border:2px solid var(--c4);padding:20px;margin-bottom:16px}
+.quiz-section h3{font-size:15px;font-weight:900;color:var(--c4);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.quiz-section h3::before{content:'📝';font-size:16px}
+.q-item{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--panel)}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-text{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.q-opts{grid-template-columns:1fr}}
+.q-opt{background:var(--panel);border:2px solid var(--dim);padding:10px 14px;cursor:pointer;font-size:16px;text-align:left;color:var(--text);font-family:var(--ff-body);transition:.15s;display:flex;gap:8px;align-items:center}
+.q-opt:hover{border-color:var(--c1);color:var(--c1)}
+.q-opt.correct{border-color:var(--c4)!important;background:#1a3a1a;color:var(--c4)!important}
+.q-opt.wrong{border-color:var(--c3)!important;background:#3a1a1a;color:var(--c3)!important}
+.q-opt-label{font-family:var(--ff-head);font-size:9px;background:var(--dim);color:var(--bg);padding:3px 6px;flex-shrink:0}
+.q-feedback{font-size:15px;margin-top:8px;padding:10px;display:none}
+.q-feedback.show{display:block}
+.teacher-only{display:none;background:#1a1a00;border:2px solid var(--c2);padding:16px;margin-bottom:16px}
+.teacher-only.show{display:block}
+.teacher-only h4{font-size:15px;color:var(--c2);margin-bottom:8px}
+.teacher-only ul{padding-left:20px;font-size:16px;line-height:2}
+#slideshow-section{max-width:1100px;margin:0 auto 48px;padding:0 20px}
+.slideshow-container{position:relative;background:var(--surface);border:4px solid var(--c1);padding:10px}
+#slide-img{width:100%;height:auto;display:block;max-height:560px;object-fit:contain;background:#000}
+.slide-controls{display:flex;align-items:center;gap:10px;padding:10px 0;flex-wrap:wrap}
+.slide-btn{background:var(--c1);color:var(--bg);font-family:var(--ff-head);font-size:10px;padding:10px 18px;border:none;cursor:pointer;box-shadow:3px 3px 0 #000}
+.slide-counter{font-family:var(--ff-head);font-size:11px;color:var(--c2);flex:1;text-align:center}
+.slide-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.slide-thumb{width:80px;height:45px;object-fit:cover;border:2px solid var(--dim);cursor:pointer;opacity:.6;transition:.15s}
+.slide-thumb:hover,.slide-thumb.active{border-color:var(--c1);opacity:1}
+#nlm-section{max-width:1100px;margin:0 auto 48px;padding:0 20px}
+.nlm-header{font-family:var(--ff-head);font-size:14px;color:var(--c3);margin-bottom:16px}
+.nlm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:20px}
+.nlm-card{background:var(--surface);border:2px solid var(--c3);padding:20px}
+.nlm-card h4{font-size:16px;font-weight:900;color:var(--c3);margin-bottom:8px}
+.nlm-card p{font-size:16px;color:var(--dim);margin-bottom:12px;line-height:1.7}
+.nlm-link{display:inline-block;background:var(--c3);color:var(--bg);font-family:var(--ff-head);font-size:10px;padding:10px 16px;text-decoration:none;box-shadow:3px 3px 0 #000;margin-right:8px}
+.nlm-link:hover{background:var(--c2);color:#000}
+.faq-section{background:var(--surface);border:2px solid var(--c2);padding:20px;margin-bottom:16px}
+.faq-section h3{font-size:15px;font-weight:900;color:var(--c2);margin-bottom:16px}
+.faq-item{border-bottom:1px solid var(--panel);padding:14px 0;cursor:pointer}
+.faq-item:last-child{border-bottom:none}
+.faq-q{font-size:17px;font-weight:700;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.faq-q::after{content:'▼';font-size:12px;color:var(--c2);flex-shrink:0;margin-top:4px;transition:.2s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{font-size:16px;color:var(--dim);margin-top:10px;padding:14px;background:var(--bg);border-left:3px solid var(--c2);display:none;line-height:1.8}
+.faq-item.open .faq-a{display:block}
+#float-tools{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.float-btn{width:52px;height:52px;border:none;cursor:pointer;font-size:22px;box-shadow:4px 4px 0 #000;display:flex;align-items:center;justify-content:center;transition:.15s}
+.float-btn:hover{transform:translate(-2px,-2px)}
+#btn-lottery{background:var(--c2)}
+#btn-timer{background:var(--c3)}
+#btn-draw{background:var(--c4);position:fixed;bottom:20px;left:20px;z-index:200;width:52px;height:52px;border:none;cursor:pointer;font-size:22px;box-shadow:4px 4px 0 #000}
+.modal{display:none;position:fixed;inset:0;z-index:300;background:#000a;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal-box{background:var(--surface);border:4px solid var(--c1);padding:24px;max-width:420px;width:90%;position:relative;box-shadow:8px 8px 0 #000}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;color:var(--dim);font-size:20px;cursor:pointer}
+.modal-box h3{font-family:var(--ff-head);font-size:13px;color:var(--c1);margin-bottom:16px}
+#lottery-result{font-family:var(--ff-head);font-size:48px;color:var(--c2);text-align:center;padding:20px;min-height:90px;display:flex;align-items:center;justify-content:center}
+.lottery-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+#timer-display{font-family:var(--ff-head);font-size:48px;color:var(--c3);text-align:center;padding:10px}
+.timer-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.timer-set{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.timer-set button{background:var(--panel);border:2px solid var(--dim);color:var(--text);padding:8px 14px;cursor:pointer;font-size:15px;font-weight:700}
+#draw-canvas{position:fixed;inset:0;z-index:251;display:none}
+#draw-toolbar{position:fixed;bottom:80px;left:10px;z-index:260;display:none;flex-direction:column;gap:6px;background:var(--surface);border:2px solid var(--c4);padding:10px}
+#draw-toolbar.show{display:flex}
+.color-dot{width:28px;height:28px;border:3px solid transparent;cursor:pointer}
+.color-dot.active{border-color:#fff}
+.draw-size{width:100px;margin:4px 0}
+.sim-screen{background:#111;border:3px solid var(--c1);padding:18px;font-size:16px;min-height:120px;margin-bottom:10px}
+.sim-step{display:none}
+.sim-step.active{display:block}
+.sim-step .highlight-box{background:var(--c2);color:#000;display:inline-block;padding:3px 10px;font-weight:700}
+.sim-step .arrow-hint{color:var(--c4);font-size:20px;margin-right:6px}
+.sim-nav{display:flex;gap:8px;align-items:center}
+.sim-progress{font-family:var(--ff-head);font-size:10px;color:var(--dim);margin-left:auto}
+.timeline-wrap{width:100%;overflow-x:auto;padding-bottom:8px}
+.timeline-bar{display:flex;height:70px;min-width:600px;border:2px solid var(--c1)}
+.tl-seg{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;font-weight:700;border-right:2px solid var(--bg);cursor:pointer;text-align:center;padding:4px;line-height:1.3;transition:opacity .2s}
+.tl-seg:last-child{border-right:none}
+.tl-time{font-family:var(--ff-head);font-size:8px;margin-top:2px}
+.tl-info{background:var(--panel);border:2px solid var(--c2);padding:12px;margin-top:10px;font-size:16px;min-height:50px;display:none}
+.tl-info.show{display:block}
+.flow-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:10px;justify-content:center}
+.flow-node{background:var(--panel);border:2px solid var(--c1);padding:10px 14px;font-size:14px;font-weight:700;color:var(--c1);text-align:center;transition:.3s;opacity:.4;min-width:80px;line-height:1.4}
+.flow-node.highlight{opacity:1;background:var(--c1);color:var(--bg);box-shadow:0 0 15px var(--c1)}
+.flow-arrow{font-size:16px;color:var(--c2);flex-shrink:0;opacity:.4;transition:.3s}
+.flow-arrow.highlight{opacity:1}
+footer{background:var(--surface);border-top:2px solid var(--panel);padding:20px;text-align:center;font-size:15px;color:var(--dim);margin-top:40px}
+footer a{color:var(--c1);text-decoration:none}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:var(--surface)}::-webkit-scrollbar-thumb{background:var(--dim)}
+</style>
+</head>
+<body>
+
+<header id="site-header">
+<div class="header-inner">
+  <div>
+    <div class="header-title">GEMINI × CANVA</div>
+    <div class="header-meta">六年級 資訊科技 ｜ 畢業影片創作</div>
+  </div>
+  <div class="prog-wrap">
+    <div style="font-family:var(--ff-head);font-size:10px;color:var(--c4);margin-bottom:4px">PROGRESS</div>
+    <div class="prog-bar"><div class="prog-fill" id="progress-fill"></div></div>
+  </div>
+</div>
+</header>
+
+<div id="mode-bar">
+  <button class="mode-btn active" id="btn-student" onclick="setStudent()">學生模式</button>
+  <button class="mode-btn" onclick="teacherPrompt()">教師模式 🔑</button>
+  <span class="mode-hint" id="mode-label">歡迎同學！開始你的 AI 影片創作之旅！🎬</span>
+</div>
+
+<section id="hero">
+  <img src="../assets/slide_01.jpg" alt="課程封面" loading="lazy">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <h1>Gemini × Canva<br>畢業影片創作</h1>
+    <span class="tag">六年級</span><span class="tag">AI 工具應用</span><span class="tag">媒體素養</span>
+  </div>
+</section>
+
+<section id="objectives">
+  <h2>TODAY'S MISSION</h2>
+  <div class="obj-grid">
+    <div class="obj-chip"><span>🤖</span>認識 Gemini AI 工具並能登入使用</div>
+    <div class="obj-chip"><span>✏️</span>撰寫有效的圖片生成提示詞</div>
+    <div class="obj-chip"><span>🖼️</span>用 Gemini 生成畢業主題圖片素材</div>
+    <div class="obj-chip"><span>📝</span>使用 Gemini 撰寫影片腳本</div>
+    <div class="obj-chip"><span>🎬</span>在 Canva 製作完整畢業影片</div>
+    <div class="obj-chip"><span>🔗</span>完成 Gemini→Canva 完整串接流程</div>
+  </div>
+</section>
+
+<div style="max-width:1100px;margin:0 auto 32px;padding:0 20px">
+  <div class="img-frame"><img src="../assets/slide_02.jpg" alt="今日學習路線圖" loading="lazy"></div>
+</div>
+
+<nav id="section-nav">
+<div class="nav-pills">
+  <button class="nav-pill active" onclick="navTo('sec1',this)">STAGE 1 認識Gemini</button>
+  <button class="nav-pill" onclick="navTo('sec2',this)">STAGE 2 提示詞技巧</button>
+  <button class="nav-pill" onclick="navTo('sec3',this)">STAGE 3 生成圖片</button>
+  <button class="nav-pill" onclick="navTo('sec4',this)">STAGE 4 撰寫腳本</button>
+  <button class="nav-pill" onclick="navTo('sec5',this)">STAGE 5 Canva製作</button>
+  <button class="nav-pill" onclick="navTo('sec6',this)">STAGE 6 串接輸出</button>
+</div>
+</nav>
+
+<!-- STAGE 1 -->
+<section class="level-section" id="sec1">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 1</span>
+    <h2>🤖 認識 Gemini</h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <h3>什麼是 Gemini？</h3>
+        <ul class="step-list">
+          <li><span class="step-num">01</span><span class="step-text">Google 開發的免費 AI 助理工具</span></li>
+          <li><span class="step-num">02</span><span class="step-text">網址：<b>gemini.google.com</b></span></li>
+          <li><span class="step-num">03</span><span class="step-text">功能：<b>生成圖片</b>、撰寫文字、回答問題</span></li>
+          <li><span class="step-num">04</span><span class="step-text">免費版每天可生成約 <b>15 張圖片</b>，記得省著用！</span></li>
+          <li><span class="step-num">05</span><span class="step-text">使用 <b>Google 帳號</b>登入即可</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚠️ 重要注意事項</h3>
+        <ul class="step-list">
+          <li><span class="step-num" style="background:var(--c3)">!</span><span class="step-text">不可輸入同學的真實照片、姓名、個人資料</span></li>
+          <li><span class="step-num" style="background:var(--c3)">!</span><span class="step-text">AI 生成內容只供學校作業，不能商業販售</span></li>
+          <li><span class="step-num" style="background:var(--c3)">!</span><span class="step-text">在老師指導下使用，有問題隨時發問</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="img-frame"><img src="../assets/slide_03.jpg" alt="認識Gemini" loading="lazy"></div>
+  </div>
+  <div class="canvas-section">
+    <h3>互動：Gemini 登入步驟模擬</h3>
+    <div class="sim-screen">
+      <div class="sim-step active" id="s1-step-0">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">🌐 瀏覽器網址列</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 輸入網址：<span class="highlight-box">gemini.google.com</span> 按 Enter</div>
+        <div style="color:var(--dim);margin-top:8px;font-size:15px">Step 1：開啟 Gemini 網站</div>
+      </div>
+      <div class="sim-step" id="s1-step-1">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">📄 Gemini 首頁</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 點選右上角 <span class="highlight-box">登入</span> 按鈕</div>
+        <div style="color:var(--dim);margin-top:8px;font-size:15px">Step 2：點擊登入</div>
+      </div>
+      <div class="sim-step" id="s1-step-2">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">🔐 Google 帳號登入</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 輸入 <span class="highlight-box">Google 帳號（學校 email）</span> → 輸入密碼 → 確認</div>
+        <div style="color:var(--dim);margin-top:8px;font-size:15px">Step 3：使用 Google 帳號</div>
+      </div>
+      <div class="sim-step" id="s1-step-3">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">✅ 登入成功！</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 看到 <span class="highlight-box">聊天對話框</span> 表示登入成功！可以開始使用了 🎉</div>
+        <div style="color:var(--c4);margin-top:8px;font-size:16px;font-weight:700">CLEAR！準備開始吧！</div>
+      </div>
+    </div>
+    <div class="sim-nav">
+      <button class="btn-primary" onclick="simPrev('s1')">◀ 上一步</button>
+      <button class="btn-primary" onclick="simNext('s1')">下一步 ▶</button>
+      <span class="sim-progress" id="s1-prog">1 / 4</span>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <h3>關卡測驗 — STAGE 1</h3>
+    <div class="q-item">
+      <div class="q-text">Q1. Gemini 是由哪家公司開發的工具？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'微軟開發的是 Bing AI，不是 Gemini！')"><span class="q-opt-label">A</span>微軟</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！Gemini 是 Google 開發的 AI 助理！')"><span class="q-opt-label">B</span>Google ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'Apple 沒有開發 Gemini 喔！')"><span class="q-opt-label">C</span>蘋果</button>
+        <button class="q-opt" onclick="answer(this,false,'Meta 沒有開發 Gemini！')"><span class="q-opt-label">D</span>Meta</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q2. 免費版 Gemini 每天大約可以生成幾張圖片？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'每天約15張，要省著用！')"><span class="q-opt-label">A</span>5 張</button>
+        <button class="q-opt" onclick="answer(this,false,'不是50張喔，只有約15張！')"><span class="q-opt-label">B</span>50 張</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！免費版每天約15張，要分幾天慢慢生成！')"><span class="q-opt-label">C</span>約 15 張 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'不是無限制！免費版每天約15張。')"><span class="q-opt-label">D</span>無限制</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q3. 使用 AI 工具時，絕對不能做的事是？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'輸入畢業主題是可以的！')"><span class="q-opt-label">A</span>輸入畢業影片主題</button>
+        <button class="q-opt" onclick="answer(this,false,'描述畫面風格沒問題！')"><span class="q-opt-label">B</span>描述卡通插畫風格</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！個資（姓名、照片）絕對不能輸入到 AI！')"><span class="q-opt-label">C</span>輸入同學真實姓名和照片 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'請 AI 幫寫腳本是可以的！')"><span class="q-opt-label">D</span>請 AI 幫忙寫腳本</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+  <div class="teacher-only" id="t1">
+    <h4>🎓 教師提示</h4>
+    <ul>
+      <li>提醒學生事先登入好 Google 帳號，節省課堂時間</li>
+      <li>重點強調個資保護：不可輸入真實照片、姓名</li>
+      <li>示範開啟 gemini.google.com，讓學生跟著操作</li>
+      <li>每天圖片額度有限，建議課前規劃好圖片清單</li>
+    </ul>
+  </div>
+</section>
+
+<!-- STAGE 2 -->
+<section class="level-section" id="sec2">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 2</span>
+    <h2>✏️ 提示詞技巧</h2>
+  </div>
+  <div class="two-col">
+    <div class="img-frame"><img src="../assets/01_提示詞技巧.jpg" alt="提示詞技巧" loading="lazy"></div>
+    <div>
+      <div class="card">
+        <h3>好的提示詞四要素</h3>
+        <ul class="step-list">
+          <li><span class="step-num" style="background:var(--c3)">主體</span><span class="step-text">要畫什麼？例：<b>穿畢業袍的小學生</b></span></li>
+          <li><span class="step-num" style="background:var(--c2);color:#000">風格</span><span class="step-text">畫面感覺？例：<b>溫馨水彩插畫</b></span></li>
+          <li><span class="step-num" style="background:var(--c1);color:#000">情感</span><span class="step-text">氣氛？例：<b>溫馨感人、歡樂活潑</b></span></li>
+          <li><span class="step-num" style="background:var(--c4);color:#000">色彩</span><span class="step-text">色調？例：<b>柔和暖色調</b></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="canvas-section">
+    <h3>互動：提示詞組合器</h3>
+    <div class="prompt-builder">
+      <div class="pb-group">
+        <label>🎭 主體（畫什麼？）</label>
+        <select id="pb-subject">
+          <option>穿畢業袍的小學生微笑揮手</option>
+          <option>一群同學在學校操場拍照</option>
+          <option>美麗的學校建築物外觀</option>
+          <option>師生握手道別的溫馨場景</option>
+          <option>畢業典禮舞台佈置氣球彩帶</option>
+        </select>
+      </div>
+      <div class="pb-group">
+        <label>🎨 風格（畫面感覺？）</label>
+        <select id="pb-style">
+          <option>溫馨水彩插畫</option>
+          <option>可愛卡通動漫風格</option>
+          <option>懷舊像素遊戲風</option>
+          <option>細膩寫實插圖風</option>
+          <option>簡約剪紙藝術風</option>
+        </select>
+      </div>
+      <div class="pb-group">
+        <label>💖 情感（氣氛是？）</label>
+        <select id="pb-mood">
+          <option>溫馨感人</option>
+          <option>歡樂活潑</option>
+          <option>正式莊重</option>
+          <option>懷舊復古</option>
+          <option>充滿希望與期待</option>
+        </select>
+      </div>
+      <div class="pb-group">
+        <label>🌈 色彩（用什麼顏色？）</label>
+        <select id="pb-color">
+          <option>柔和暖色調</option>
+          <option>鮮豔繽紛色彩</option>
+          <option>藍天白雲清新色</option>
+          <option>金色橘色節慶感</option>
+          <option>粉彩淡雅色系</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="buildPrompt()">▶ 生成提示詞！</button>
+    <div class="prompt-output" id="prompt-output">← 選好四個要素，點擊上方按鈕生成提示詞！</div>
+    <button class="btn-primary" onclick="copyPrompt()" style="background:var(--c4);color:#000;margin-left:8px">📋 複製提示詞</button>
+  </div>
+  <div class="quiz-section">
+    <h3>關卡測驗 — STAGE 2</h3>
+    <div class="q-item">
+      <div class="q-text">Q1. 好的提示詞需要包含哪四個要素？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'這些不是提示詞要素！記住：主體、風格、情感、色彩。')"><span class="q-opt-label">A</span>大小/重量/速度/形狀</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！主體+風格+情感+色彩，四要素缺一不可！')"><span class="q-opt-label">B</span>主體/風格/情感/色彩 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'這些不是提示詞要素！記住：主體、風格、情感、色彩。')"><span class="q-opt-label">C</span>名字/日期/地點/人數</button>
+        <button class="q-opt" onclick="answer(this,false,'這些不是提示詞要素！記住：主體、風格、情感、色彩。')"><span class="q-opt-label">D</span>語言/版本/格式/大小</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q2. 下列哪個是比較完整的提示詞？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'太模糊了！AI 不知道要畫什麼。')"><span class="q-opt-label">A</span>「畫一張圖」</button>
+        <button class="q-opt" onclick="answer(this,false,'太簡短，AI 需要更多細節！')"><span class="q-opt-label">B</span>「學生」</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！包含主體+風格+色彩，非常完整！')"><span class="q-opt-label">C</span>「穿畢業袍的學生，水彩插畫，暖色調，背景是學校」 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'只有風格，沒有主體！AI 不知道要畫什麼人或場景。')"><span class="q-opt-label">D</span>「卡通風格」</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+  <div class="teacher-only" id="t2">
+    <h4>🎓 教師提示</h4>
+    <ul>
+      <li>引導學生多試幾次不同提示詞，觀察結果的差異</li>
+      <li>讓學生比較「模糊提示詞」vs「詳細提示詞」的生成結果</li>
+      <li>鼓勵用提示詞組合器練習後，複製到 Gemini 試試看</li>
+    </ul>
+  </div>
+</section>
+
+<!-- STAGE 3 -->
+<section class="level-section" id="sec3">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 3</span>
+    <h2>🖼️ 生成畢業圖片素材</h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <h3>操作步驟</h3>
+        <ul class="step-list">
+          <li><span class="step-num">01</span><span class="step-text">前往 <b>gemini.google.com</b> 並登入</span></li>
+          <li><span class="step-num">02</span><span class="step-text">在對話框輸入你的<b>提示詞</b>（四要素！）</span></li>
+          <li><span class="step-num">03</span><span class="step-text">按下 <b>Enter</b>，等待 AI 生成（約10-30秒）</span></li>
+          <li><span class="step-num">04</span><span class="step-text">不滿意？<b>修改提示詞</b>再試一次</span></li>
+          <li><span class="step-num">05</span><span class="step-text">滿意了！點圖片 → 點 <b>「下載」</b></span></li>
+          <li><span class="step-num">06</span><span class="step-text">重複收集 <b>8-12 張</b>畢業主題素材</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="img-frame"><img src="../assets/02_生成圖片步驟.jpg" alt="生成圖片步驟" loading="lazy"></div>
+  </div>
+  <div class="img-frame" style="margin-bottom:16px"><img src="../assets/slide_06.jpg" alt="Gemini生成圖片" loading="lazy"></div>
+  <div class="quiz-section">
+    <h3>關卡測驗 — STAGE 3</h3>
+    <div class="q-item">
+      <div class="q-text">Q1. 用 Gemini 生成圖片後，要怎麼把圖片存到電腦？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'截圖畫質不佳，直接下載效果更好！')"><span class="q-opt-label">A</span>截圖</button>
+        <button class="q-opt" onclick="answer(this,false,'圖片不能直接複製貼上！')"><span class="q-opt-label">B</span>複製貼上</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！點圖片→下載，取得最高品質圖片！')"><span class="q-opt-label">C</span>點擊圖片→下載 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'列印出來是紙本，不是數位檔案！')"><span class="q-opt-label">D</span>列印</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q2. 製作2分鐘的畢業影片，建議準備幾張圖片素材？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'2張太少！至少要 8-12 張。')"><span class="q-opt-label">A</span>2 張</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！8-12 張剛好，每個場景配一張！')"><span class="q-opt-label">B</span>8-12 張 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'50張太多了！且免費版每天只有15張額度。')"><span class="q-opt-label">C</span>50 張以上</button>
+        <button class="q-opt" onclick="answer(this,false,'1張只能做一個場景，需要更多圖片！')"><span class="q-opt-label">D</span>1 張就夠</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+  <div class="teacher-only" id="t3">
+    <h4>🎓 教師提示</h4>
+    <ul>
+      <li>建議提前讓學生準備好提示詞清單，進課室後快速操作</li>
+      <li>示範在提示詞加入「高解析度、細節豐富」提升品質</li>
+      <li>下載圖片存在桌面或特定資料夾，方便後續上傳 Canva</li>
+    </ul>
+  </div>
+</section>
+
+<!-- STAGE 4 -->
+<section class="level-section" id="sec4">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 4</span>
+    <h2>📝 用 Gemini 撰寫影片腳本</h2>
+  </div>
+  <div class="two-col">
+    <div class="img-frame"><img src="../assets/03_腳本結構.jpg" alt="腳本結構" loading="lazy"></div>
+    <div>
+      <div class="card">
+        <h3>腳本是什麼？</h3>
+        <ul class="step-list">
+          <li><span class="step-num">📋</span><span class="step-text">腳本就像影片的「<b>劇本</b>」</span></li>
+          <li><span class="step-num">🖼️</span><span class="step-text">規劃每個<b>畫面要呈現什麼</b></span></li>
+          <li><span class="step-num">💬</span><span class="step-text">搭配什麼<b>文字或旁白</b></span></li>
+          <li><span class="step-num">🎵</span><span class="step-text">建議的<b>音樂和轉場效果</b></span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Gemini 指令範例</h3>
+        <div style="background:var(--bg);border:2px solid var(--c3);padding:14px;font-size:16px;line-height:1.8;color:var(--text)">
+          「請幫我寫一段<b style="color:var(--c1)">國小畢業紀念影片的腳本</b>，<br>影片約 <b style="color:var(--c1)">2 分鐘</b>，溫馨感人，<br>包含：入學回憶、班級活動、師生情誼、對未來的祝福，<br><b style="color:var(--c2)">請分段說明每個畫面和旁白文字</b>」
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="canvas-section">
+    <h3>互動：2 分鐘影片時間軸（點擊各段落）</h3>
+    <div class="timeline-wrap">
+      <div class="timeline-bar">
+        <div class="tl-seg" style="background:#1a3a3a;color:var(--c1)" onclick="showTL(0)">開場<span class="tl-time">0:00-0:15</span></div>
+        <div class="tl-seg" style="background:#2a1a3a;color:var(--c3)" onclick="showTL(1)">入學記憶<span class="tl-time">0:15-0:40</span></div>
+        <div class="tl-seg" style="background:#1a2a1a;color:var(--c4)" onclick="showTL(2)">成長點滴<span class="tl-time">0:40-1:10</span></div>
+        <div class="tl-seg" style="background:#3a2a1a;color:var(--c2)" onclick="showTL(3)">師生情誼<span class="tl-time">1:10-1:35</span></div>
+        <div class="tl-seg" style="background:#1a1a3a;color:var(--c1)" onclick="showTL(4)">展望未來<span class="tl-time">1:35-2:00</span></div>
+      </div>
+    </div>
+    <div class="tl-info" id="tl-0">🎬 <b>開場（0:00-0:15）</b>：片名出現、學校名稱、班級字幕，搭配輕快開場音樂。讓觀眾知道這是哪個班的畢業紀念影片。</div>
+    <div class="tl-info" id="tl-1">📚 <b>入學記憶（0:15-0:40）</b>：想像一年級剛入學的場景，放學校大門的圖片，旁白：「六年前，我們帶著期待踏進校園…」</div>
+    <div class="tl-info" id="tl-2">⭐ <b>成長點滴（0:40-1:10）</b>：班級活動、運動會、校外教學等回憶圖片，旁白描述六年來一起經歷的快樂時光。</div>
+    <div class="tl-info" id="tl-3">❤️ <b>師生情誼（1:10-1:35）</b>：感謝老師的畫面，旁白：「謝謝老師六年來的教導和陪伴，您是我們永遠的恩師…」</div>
+    <div class="tl-info" id="tl-4">🌟 <b>展望未來（1:35-2:00）</b>：充滿希望的畢業祝福圖片，片尾字幕，旁白：「帶著美好的回憶，我們出發去迎接嶄新的未來！」</div>
+  </div>
+  <div class="quiz-section">
+    <h3>關卡測驗 — STAGE 4</h3>
+    <div class="q-item">
+      <div class="q-text">Q1. 影片腳本的主要功能是什麼？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'腳本不是記分用的！')"><span class="q-opt-label">A</span>記錄分數</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！腳本就像劇本，規劃每個畫面和配套的旁白！')"><span class="q-opt-label">B</span>規劃每個畫面和旁白文字 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'腳本不是設定影片大小的！')"><span class="q-opt-label">C</span>設定影片大小</button>
+        <button class="q-opt" onclick="answer(this,false,'腳本不是調音量的！音量在 Canva 裡調整。')"><span class="q-opt-label">D</span>調整音量</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q2. Gemini 幫你生成腳本後，你不滿意第三段，應該怎麼做？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'不需要放棄！Gemini 可以根據你的要求修改。')"><span class="q-opt-label">A</span>放棄，自己寫</button>
+        <button class="q-opt" onclick="answer(this,false,'整段刪掉太可惜！請 AI 修改更好。')"><span class="q-opt-label">B</span>直接刪掉</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！告訴 Gemini「請把第三段改得更有趣」，它就會修改！')"><span class="q-opt-label">C</span>告訴 Gemini「請把第三段改得更有趣」 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'全部重寫太費時，局部修改更有效率！')"><span class="q-opt-label">D</span>整個腳本重新生成</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+  <div class="teacher-only" id="t4">
+    <h4>🎓 教師提示</h4>
+    <ul>
+      <li>讓學生先自己構想影片結構，再請 Gemini 幫忙潤色</li>
+      <li>強調「AI 是工具，不是替代品」：故事應是學生自己的想法</li>
+      <li>完成腳本後，對照腳本確認已下載對應的圖片素材</li>
+    </ul>
+  </div>
+</section>
+
+<!-- STAGE 5 -->
+<section class="level-section" id="sec5">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 5</span>
+    <h2>🎬 Canva 製作畢業影片</h2>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <h3>Canva 是什麼？</h3>
+        <ul class="step-list">
+          <li><span class="step-num">🌐</span><span class="step-text">免費線上設計工具：<b>canva.com</b></span></li>
+          <li><span class="step-num">📁</span><span class="step-text">可<b>上傳自己的圖片</b>素材</span></li>
+          <li><span class="step-num">🎞️</span><span class="step-text">豐富的<b>影片模板</b></span></li>
+          <li><span class="step-num">✨</span><span class="step-text">可加入<b>文字、音樂、動畫效果</b></span></li>
+          <li><span class="step-num">💾</span><span class="step-text"><b>自動儲存</b>到雲端，不怕遺失</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="img-frame"><img src="../assets/04_Canva製作流程.jpg" alt="Canva製作流程" loading="lazy"></div>
+  </div>
+  <div class="card">
+    <h3>影片製作完整步驟</h3>
+    <ul class="step-list">
+      <li><span class="step-num">01</span><span class="step-text">前往 <b>canva.com</b> 登入帳號</span></li>
+      <li><span class="step-num">02</span><span class="step-text">點「建立設計」→ 選「<b>影片</b>」（16:9 橫式）</span></li>
+      <li><span class="step-num">03</span><span class="step-text">點左側「<b>上傳</b>」→「上傳檔案」→ 選取 Gemini 圖片</span></li>
+      <li><span class="step-num">04</span><span class="step-text">按腳本順序<b>新增頁面</b>，把圖片拖曳到各頁面</span></li>
+      <li><span class="step-num">05</span><span class="step-text">點「<b>文字</b>」→ 輸入旁白，推薦字型 Noto Sans TC</span></li>
+      <li><span class="step-num">06</span><span class="step-text">點選元素 → 點「<b>動畫</b>」→ 選擇進場效果</span></li>
+      <li><span class="step-num">07</span><span class="step-text">點頁面底部<b>時間軸</b> → 設定每頁播放秒數（建議5-10秒）</span></li>
+      <li><span class="step-num">08</span><span class="step-text">點「<b>音訊</b>」→ 搜尋「畢業」→ 加入背景音樂</span></li>
+      <li><span class="step-num">09</span><span class="step-text">點頁面間箭頭 → 加入<b>轉場效果</b></span></li>
+      <li><span class="step-num">10</span><span class="step-text">預覽後，右上角「分享」→「下載」→ 選 <b>MP4 影片</b></span></li>
+    </ul>
+  </div>
+  <div class="img-frame" style="margin-bottom:16px"><img src="../assets/slide_10.jpg" alt="Canva操作示範" loading="lazy"></div>
+  <div class="canvas-section">
+    <h3>互動：Canva 製作步驟模擬</h3>
+    <div class="sim-screen">
+      <div class="sim-step active" id="s5-step-0">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">🌐 Canva 首頁</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 點選 <span class="highlight-box">建立設計</span> → 選「<span class="highlight-box">影片</span>」（16:9）</div>
+      </div>
+      <div class="sim-step" id="s5-step-1">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">📁 上傳圖片素材</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 左側工具列點 <span class="highlight-box">上傳</span> → 點「<span class="highlight-box">上傳檔案</span>」→ 選取 Gemini 圖片</div>
+      </div>
+      <div class="sim-step" id="s5-step-2">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">🖼️ 加入圖片</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 從上傳區 <span class="highlight-box">拖曳圖片</span> 到頁面，調整位置和大小</div>
+      </div>
+      <div class="sim-step" id="s5-step-3">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">✏️ 加入文字旁白</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 點選 <span class="highlight-box">文字</span> → 輸入旁白 → 字型選 <span class="highlight-box">Noto Sans TC</span></div>
+      </div>
+      <div class="sim-step" id="s5-step-4">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">🎵 加入背景音樂</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 點選 <span class="highlight-box">音訊</span> → 搜尋「畢業」或「感動」→ 點擊加入</div>
+      </div>
+      <div class="sim-step" id="s5-step-5">
+        <div style="color:var(--dim);font-size:15px;margin-bottom:8px">⬇️ 下載影片</div>
+        <div style="background:#1a3a1a;padding:10px"><span class="arrow-hint">→</span> 右上角 <span class="highlight-box">分享</span> → <span class="highlight-box">下載</span> → 選「<span class="highlight-box">MP4 影片</span>」→ 下載！</div>
+        <div style="color:var(--c4);margin-top:8px;font-size:16px;font-weight:700">CLEAR！畢業影片完成！🎉</div>
+      </div>
+    </div>
+    <div class="sim-nav">
+      <button class="btn-primary" onclick="simPrev('s5')">◀ 上一步</button>
+      <button class="btn-primary" onclick="simNext('s5')">下一步 ▶</button>
+      <span class="sim-progress" id="s5-prog">1 / 6</span>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <h3>關卡測驗 — STAGE 5</h3>
+    <div class="q-item">
+      <div class="q-text">Q1. 在 Canva 要上傳 Gemini 下載的圖片，要點選哪個功能？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'文字功能是加文字的，不是上傳圖片！')"><span class="q-opt-label">A</span>文字</button>
+        <button class="q-opt" onclick="answer(this,false,'音訊是加音樂的！')"><span class="q-opt-label">B</span>音訊</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！點「上傳」→「上傳檔案」就能上傳圖片！')"><span class="q-opt-label">C</span>上傳 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'範本是套現成設計的，不是上傳圖片！')"><span class="q-opt-label">D</span>範本</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q2. 如何調整 Canva 每個頁面的播放時長？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'音訊是設定音樂的，不是頁面時長！')"><span class="q-opt-label">A</span>點音訊設定</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！點頁面底部時間軸圖示，就能設定播放秒數！')"><span class="q-opt-label">B</span>點頁面底部時間軸→設定秒數 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'文字設定是調字型的，不是頁面時長！')"><span class="q-opt-label">C</span>點文字設定</button>
+        <button class="q-opt" onclick="answer(this,false,'動畫是設定進場效果的，不是頁面時長！')"><span class="q-opt-label">D</span>點動畫效果</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q3. 完成影片後，要下載成什麼格式？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'MP3 是音樂格式，不能播放影片！')"><span class="q-opt-label">A</span>MP3</button>
+        <button class="q-opt" onclick="answer(this,false,'JPG 是圖片格式，不是影片！')"><span class="q-opt-label">B</span>JPG</button>
+        <button class="q-opt" onclick="answer(this,false,'PDF 是文件格式，不是影片！')"><span class="q-opt-label">C</span>PDF</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！選「下載」→「MP4 影片」就對了！')"><span class="q-opt-label">D</span>MP4 ✓</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+  <div class="teacher-only" id="t5">
+    <h4>🎓 教師提示</h4>
+    <ul>
+      <li>建議讓學生先搜尋「畢業影片」模板，套用後再替換自己的素材</li>
+      <li>中文字型推薦：Noto Sans TC，免費且清晰易讀</li>
+      <li>音樂建議設定「淡入淡出」效果，影片更專業</li>
+      <li>下載前務必先預覽整部影片確認無誤</li>
+    </ul>
+  </div>
+</section>
+
+<!-- STAGE 6 -->
+<section class="level-section" id="sec6">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 6</span>
+    <h2>🔗 完整串接流程與輸出</h2>
+  </div>
+  <div class="img-frame" style="margin-bottom:16px"><img src="../assets/slide_12.jpg" alt="串接流程" loading="lazy"></div>
+  <div class="canvas-section">
+    <h3>互動：Gemini → Canva 完整流程動畫</h3>
+    <p style="font-size:16px;color:var(--dim);margin-bottom:12px">點擊「播放流程」看整個製作過程：</p>
+    <div class="flow-wrap" id="flow-wrap">
+      <div class="flow-node" id="fn0">🤖<br>Gemini<br>生成圖片</div>
+      <div class="flow-arrow" id="fa0">→</div>
+      <div class="flow-node" id="fn1">📝<br>Gemini<br>寫腳本</div>
+      <div class="flow-arrow" id="fa1">→</div>
+      <div class="flow-node" id="fn2">💾<br>下載到<br>電腦</div>
+      <div class="flow-arrow" id="fa2">→</div>
+      <div class="flow-node" id="fn3">☁️<br>上傳到<br>Canva</div>
+      <div class="flow-arrow" id="fa3">→</div>
+      <div class="flow-node" id="fn4">🎬<br>製作<br>影片</div>
+      <div class="flow-arrow" id="fa4">→</div>
+      <div class="flow-node" id="fn5">⬇️<br>下載<br>MP4</div>
+      <div class="flow-arrow" id="fa5">→</div>
+      <div class="flow-node" id="fn6">🎓<br>畢業影片<br>完成！</div>
+    </div>
+    <div style="margin-top:12px;text-align:center">
+      <button class="btn-primary" onclick="startFlow()">▶ 播放流程動畫</button>
+      <button class="btn-primary" onclick="resetFlow()" style="background:var(--panel);color:var(--text);margin-left:8px">↺ 重置</button>
+    </div>
+    <div id="flow-info" style="background:var(--panel);border:2px solid var(--c1);padding:12px;margin-top:12px;font-size:16px;display:none;min-height:48px"></div>
+  </div>
+  <div class="card">
+    <h3>重要注意事項</h3>
+    <ul class="step-list">
+      <li><span class="step-num">⏰</span><span class="step-text">免費版 Gemini 每天圖片生成有限制，<b>提前幾天準備</b></span></li>
+      <li><span class="step-num">🆓</span><span class="step-text">Canva 免費版功能已足夠，<b>不需要付費</b></span></li>
+      <li><span class="step-num">📐</span><span class="step-text">建議 <b>8-12 個頁面</b>，每頁 <b>5-10 秒</b></span></li>
+      <li><span class="step-num">👀</span><span class="step-text">下載前<b>先預覽</b>整部影片確認無誤</span></li>
+      <li><span class="step-num">💾</span><span class="step-text">記得取名：<b>班級_畢業影片_2026</b></span></li>
+      <li><span class="step-num">🔒</span><span class="step-text">個資保護：<b>不可輸入真實個資到 AI</b></span></li>
+    </ul>
+  </div>
+  <div class="quiz-section">
+    <h3>關卡測驗 — STAGE 6</h3>
+    <div class="q-item">
+      <div class="q-text">Q1. 完整製作畢業影片的正確順序是？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'順序不對！要先 Gemini 生成素材，再到 Canva 製作。')"><span class="q-opt-label">A</span>先開Canva→再開Gemini→下載</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！Gemini生成→下載→上傳Canva→製作→下載MP4！')"><span class="q-opt-label">B</span>Gemini生成圖片+腳本→下載→上傳Canva→製作→MP4 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'下載不是第一步！')"><span class="q-opt-label">C</span>先下載MP4→Gemini→Canva</button>
+        <button class="q-opt" onclick="answer(this,false,'Canva要在Gemini之後使用！')"><span class="q-opt-label">D</span>Canva→MP4→Gemini→圖片</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-item">
+      <div class="q-text">Q2. 如果 Canva 影片太大無法下載，怎麼解決？</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,false,'換電腦不能解決檔案太大的問題！')"><span class="q-opt-label">A</span>換一台電腦</button>
+        <button class="q-opt" onclick="answer(this,false,'選PDF格式存不了影片！')"><span class="q-opt-label">B</span>改存PDF格式</button>
+        <button class="q-opt" onclick="answer(this,true,'答對了！縮短影片長度或減少頁面，2分鐘影片約50-100MB。')"><span class="q-opt-label">C</span>縮短影片長度或減少頁面數量 ✓</button>
+        <button class="q-opt" onclick="answer(this,false,'刪音樂只能少一點，不能根本解決問題。')"><span class="q-opt-label">D</span>刪掉所有音樂</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+  <div class="teacher-only" id="t6">
+    <h4>🎓 教師提示</h4>
+    <ul>
+      <li>可以安排學生互相觀摩作品，給予正向回饋</li>
+      <li>提醒在影片結尾加上「班級名稱、拍攝年份、指導老師」</li>
+      <li>分享前再次確認沒有涉及個人隱私的內容</li>
+    </ul>
+  </div>
+</section>
+
+<div style="max-width:1100px;margin:0 auto 32px;padding:0 20px">
+  <div class="img-frame" style="margin-bottom:16px"><img src="../assets/slide_14.jpg" alt="完整流程回顧" loading="lazy"></div>
+  <div class="img-frame"><img src="../assets/slide_15.jpg" alt="課程結尾" loading="lazy"></div>
+</div>
+
+<!-- SLIDESHOW -->
+<section id="slideshow-section">
+  <div style="font-family:var(--ff-head);font-size:13px;color:var(--c1);margin-bottom:12px;padding:0 20px">SLIDE GALLERY — 授課簡報</div>
+  <div class="slideshow-container">
+    <img id="slide-img" src="../assets/slide_01.jpg" alt="簡報" loading="lazy">
+    <div class="slide-controls">
+      <button class="slide-btn" onclick="slideChange(-1)">◀ PREV</button>
+      <span class="slide-counter" id="slide-counter">1 / 15</span>
+      <button class="slide-btn" onclick="slideChange(1)">NEXT ▶</button>
+    </div>
+    <div class="slide-thumbs" id="slide-thumbs"></div>
+  </div>
+</section>
+
+<!-- NLM -->
+<section id="nlm-section">
+  <div class="nlm-header">NOTEBOOKLM RESOURCES</div>
+  <div class="nlm-grid">
+    <div class="nlm-card">
+      <h4>📓 教學筆記本</h4>
+      <p>本課程的 NotebookLM 筆記本，包含 Gemini × Canva 完整教學資料與 12 個網路來源。</p>
+      <a href="https://notebooklm.google.com/notebook/787f01ae-0732-4505-a38f-b9449289d715" target="_blank" class="nlm-link">開啟筆記本</a>
+    </div>
+    <div class="nlm-card">
+      <h4>🎙️ 音頻概覽</h4>
+      <p>在 NotebookLM 筆記本中生成「音頻概覽（Podcast）」，聆聽 AI 主播對本課程的對話摘要，適合自學複習。</p>
+      <a href="https://notebooklm.google.com/notebook/787f01ae-0732-4505-a38f-b9449289d715" target="_blank" class="nlm-link">生成音頻</a>
+    </div>
+    <div class="nlm-card">
+      <h4>🤖 Claude × NLM 生成說明</h4>
+      <p>本駕駛艙由 Claude AI 透過 NotebookLM CLI 自動生成。流程：深度搜尋→匯入來源→生成簡報與資訊圖表→轉換圖片→生成 HTML。</p>
+    </div>
+  </div>
+  <div class="faq-section">
+    <h3>常見問題 FAQ（來自 NotebookLM 查詢）</h3>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">為什麼 Gemini 突然停止生成圖片？</div>
+      <div class="faq-a">因為免費版的 Gemini 每天有約 15 張圖片的使用限制。建議提前分幾天慢慢收集需要的圖片，不要等到交作業前一天才趕著做。可以先把想生成的圖片清單寫好，有計劃地一天生成幾張。</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Gemini 畫出來的圖片跟我想像的差很多，或放到 Canva 很模糊？</div>
+      <div class="faq-a">通常是因為提示詞不夠清楚，或圖片被拉得太大了！提升技巧：下指令時要包含「主體、風格、情感氛圍和色彩」四個要素；在提示詞最後加上「高解析度、細節豐富」；把圖片放進 Canva 時，放大比例不要超過原本尺寸太多，才不會模糊。</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">可以把同學的照片或真實姓名輸入到 Gemini 嗎？</div>
+      <div class="faq-a">絕對不可以！這是最常見也最危險的錯誤。使用任何 AI 工具時，千萬不可以將自己或他人的姓名、真實照片、聯絡方式等個資輸入到 AI 裡面，以免資料外洩。可以請 AI 畫「戴眼鏡的六年級短髮男生」，但不能把同學真面目照片丟給它處理。</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">不小心把 Canva 的頁面關掉了，作品還在嗎？</div>
+      <div class="faq-a">別慌張！Canva 會自動把你做的東西儲存在雲端。只要你登入原本的帳號，隨時都能在首頁的「我的設計」找到你的作品！</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">影片太大無法下載怎麼辦？</div>
+      <div class="faq-a">試著縮短影片長度，或減少幾頁場景。通常2分鐘的溫馨畢業影片，檔案大小約50-100MB，用「MP4 影片」格式下載就能順利存到電腦。也可以嘗試減少動畫效果來縮小檔案大小。</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Gemini 生成的圖片有版權問題嗎？</div>
+      <div class="faq-a">用於學校作業和非商業用途是可以的，但不能拿去販售。製作畢業影片作為班級紀念用途完全沒問題。使用 Canva 內建的音樂庫是免費授權的，不需要擔心版權。</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Gemini × Canva 影片創作 ｜ 六年級資訊科技 ｜ 2026</div>
+  <div style="margin-top:6px">
+    NotebookLM 筆記本：<a href="https://notebooklm.google.com/notebook/787f01ae-0732-4505-a38f-b9449289d715" target="_blank">開啟</a>
+    ｜ 由 Claude AI × NotebookLM 自動生成
+  </div>
+</footer>
+
+<!-- FLOATING TOOLS -->
+<div id="float-tools">
+  <button class="float-btn" id="btn-lottery" onclick="openModal('modal-lottery')">🎲</button>
+  <button class="float-btn" id="btn-timer" onclick="openModal('modal-timer')">⏱️</button>
+</div>
+<button id="btn-draw" onclick="toggleDraw()">✏️</button>
+
+<!-- LOTTERY MODAL -->
+<div class="modal" id="modal-lottery">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-lottery')">✕</button>
+    <h3>LUCKY DRAW</h3>
+    <div id="lottery-result">?</div>
+    <div style="font-family:var(--ff-head);font-size:11px;color:var(--dim);text-align:center;margin-top:-10px">座號 1 - 30</div>
+    <div class="lottery-controls">
+      <button class="btn-primary" onclick="rollLottery()">🎲 抽籤！</button>
+      <button class="btn-primary" onclick="spinLottery()" style="background:var(--c3)">🌀 滾動抽</button>
+    </div>
+  </div>
+</div>
+
+<!-- TIMER MODAL -->
+<div class="modal" id="modal-timer">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-timer')">✕</button>
+    <h3>TIMER</h3>
+    <div id="timer-display">05:00</div>
+    <div class="timer-set">
+      <button onclick="setTimer(1)">1分</button>
+      <button onclick="setTimer(3)">3分</button>
+      <button onclick="setTimer(5)">5分</button>
+      <button onclick="setTimer(10)">10分</button>
+    </div>
+    <div class="timer-btns">
+      <button class="btn-primary" onclick="startTimer()">▶ 開始</button>
+      <button class="btn-primary" onclick="pauseTimer()" style="background:var(--c2);color:#000">⏸ 暫停</button>
+      <button class="btn-primary" onclick="resetTimer()" style="background:var(--panel);color:var(--text)">↺ 重置</button>
+    </div>
+  </div>
+</div>
+
+<!-- DRAW -->
+<canvas id="draw-canvas"></canvas>
+<div id="draw-toolbar">
+  <div class="color-dot active" style="background:#00e5ff" onclick="setColor('#00e5ff',this)"></div>
+  <div class="color-dot" style="background:#ffd740" onclick="setColor('#ffd740',this)"></div>
+  <div class="color-dot" style="background:#ff4081" onclick="setColor('#ff4081',this)"></div>
+  <div class="color-dot" style="background:#69ff47" onclick="setColor('#69ff47',this)"></div>
+  <div class="color-dot" style="background:#ffffff" onclick="setColor('#ffffff',this)"></div>
+  <input type="range" class="draw-size" min="2" max="20" value="4" id="brush-size">
+  <button style="background:var(--panel);border:2px solid var(--c3);color:var(--c3);padding:6px 10px;cursor:pointer;font-size:14px" onclick="clearDraw()">清除</button>
+</div>
+
+<script>
+// PROGRESS
+function updateProgress(){
+  var secs=['sec1','sec2','sec3','sec4','sec5','sec6'],v=0;
+  secs.forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<window.innerHeight*0.7)v++;});
+  document.getElementById('progress-fill').style.width=(v/secs.length*100)+'%';
+}
+window.addEventListener('scroll',updateProgress);
+
+// NAV
+function navTo(id,el){
+  var t=document.getElementById(id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.nav-pill').forEach(function(p){p.classList.remove('active');});
+  el.classList.add('active');
+}
+
+// MODE
+function setStudent(){
+  document.getElementById('btn-student').classList.add('active');
+  document.querySelectorAll('.teacher-only').forEach(function(el){el.classList.remove('show');});
+  document.getElementById('mode-label').textContent='歡迎同學！開始你的 AI 影片創作之旅！🎬';
+}
+function teacherPrompt(){
+  var pwd=prompt('請輸入教師密碼：');
+  if(pwd==='it2026'){
+    document.getElementById('btn-student').classList.remove('active');
+    document.querySelectorAll('.teacher-only').forEach(function(el){el.classList.add('show');});
+    document.getElementById('mode-label').textContent='教師模式啟動 👨‍🏫 — 教師筆記已顯示';
+  }else if(pwd!==null){alert('密碼錯誤！');}
+}
+
+// QUIZ
+function answer(btn,correct,msg){
+  var item=btn.closest('.q-item');
+  if(item.querySelector('.correct')||item.querySelector('.wrong'))return;
+  var fb=item.querySelector('.q-feedback');
+  if(correct){
+    btn.classList.add('correct');
+    fb.style.cssText='background:#1a3a1a;border-left:3px solid var(--c4);color:var(--c4);padding:8px;margin-top:6px';
+    fb.textContent='🎉 '+msg;
+  }else{
+    btn.classList.add('wrong');
+    item.querySelectorAll('.q-opt').forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').includes(',true,'))o.classList.add('correct');});
+    fb.style.cssText='background:#3a1a1a;border-left:3px solid var(--c3);color:var(--c3);padding:8px;margin-top:6px';
+    fb.textContent='😅 '+msg;
+  }
+  fb.classList.add('show');
+}
+
+// STEP SIM
+var simState={s1:{cur:0,total:4},s5:{cur:0,total:6}};
+function simNext(id){var s=simState[id];if(s.cur<s.total-1){document.getElementById(id+'-step-'+s.cur).classList.remove('active');s.cur++;document.getElementById(id+'-step-'+s.cur).classList.add('active');document.getElementById(id+'-prog').textContent=(s.cur+1)+' / '+s.total;}}
+function simPrev(id){var s=simState[id];if(s.cur>0){document.getElementById(id+'-step-'+s.cur).classList.remove('active');s.cur--;document.getElementById(id+'-step-'+s.cur).classList.add('active');document.getElementById(id+'-prog').textContent=(s.cur+1)+' / '+s.total;}}
+
+// PROMPT BUILDER
+function buildPrompt(){
+  var s=document.getElementById('pb-subject').value;
+  var st=document.getElementById('pb-style').value;
+  var m=document.getElementById('pb-mood').value;
+  var c=document.getElementById('pb-color').value;
+  document.getElementById('prompt-output').textContent='「'+s+'，'+st+'，'+m+'，'+c+'，背景是學校場景，高解析度細節豐富」';
+  document.getElementById('prompt-output').style.color='var(--c1)';
+}
+function copyPrompt(){
+  var t=document.getElementById('prompt-output').textContent;
+  if(t&&!t.startsWith('←')){navigator.clipboard.writeText(t).then(function(){alert('提示詞已複製！貼到 Gemini 試試看！');});}else{alert('請先點「生成提示詞」！');}
+}
+
+// TIMELINE
+function showTL(i){
+  for(var j=0;j<5;j++){var el=document.getElementById('tl-'+j);if(el)el.classList.remove('show');}
+  var t=document.getElementById('tl-'+i);if(t)t.classList.add('show');
+}
+
+// FLOW ANIMATION
+var flowTimer=null,flowStep=0;
+var flowInfos=['🤖 STEP 1：用 Gemini 生成畢業主題圖片（記得使用四要素提示詞！）','📝 STEP 2：用 Gemini 撰寫影片腳本（開場→記憶→成長→師生→未來）','💾 STEP 3：把圖片和腳本下載／複製到電腦備用','☁️ STEP 4：登入 Canva，點「上傳」把圖片素材上傳進去','🎬 STEP 5：按腳本在 Canva 製作影片（加文字、動畫、音樂、轉場）','⬇️ STEP 6：點「分享」→「下載」→ 選 MP4 格式下載影片','🎓 完成！你的 AI 畢業影片誕生了！記得取名 班級_畢業影片_2026'];
+function startFlow(){resetFlow();flowStep=0;flowTimer=setInterval(function(){if(flowStep>=7){clearInterval(flowTimer);return;}if(flowStep>0){document.getElementById('fn'+(flowStep-1)).classList.add('highlight');if(flowStep-1<6)document.getElementById('fa'+(flowStep-1)).classList.add('highlight');}var info=document.getElementById('flow-info');info.style.display='block';info.textContent=flowInfos[Math.min(flowStep,6)];flowStep++;},900);}
+function resetFlow(){clearInterval(flowTimer);flowStep=0;for(var i=0;i<7;i++){var el=document.getElementById('fn'+i);if(el)el.classList.remove('highlight');}for(var i=0;i<6;i++){var el=document.getElementById('fa'+i);if(el)el.classList.remove('highlight');}document.getElementById('flow-info').style.display='none';}
+
+// SLIDESHOW
+var slideIdx=1,slideTotal=15;
+var tc=document.getElementById('slide-thumbs');
+for(var i=1;i<=slideTotal;i++){(function(n){var th=document.createElement('img');th.src='assets/slide_'+String(n).padStart(2,'0')+'.jpg';th.alt='Slide '+n;th.className='slide-thumb';th.loading='lazy';if(n===1)th.classList.add('active');th.addEventListener('click',function(){goSlide(n);});tc.appendChild(th);})(i);}
+function goSlide(n){slideIdx=n;document.getElementById('slide-img').src='assets/slide_'+String(n).padStart(2,'0')+'.jpg';document.getElementById('slide-counter').textContent=n+' / '+slideTotal;document.querySelectorAll('.slide-thumb').forEach(function(t,i){t.classList.toggle('active',i===n-1);});}
+function slideChange(d){goSlide(Math.max(1,Math.min(slideTotal,slideIdx+d)));}
+
+// FAQ
+function toggleFaq(el){el.classList.toggle('open');}
+
+// MODAL
+function openModal(id){document.getElementById(id).classList.add('show');}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+window.addEventListener('click',function(e){if(e.target.classList.contains('modal'))e.target.classList.remove('show');});
+
+// LOTTERY
+var spinInterval=null;
+function rollLottery(){document.getElementById('lottery-result').textContent=Math.floor(Math.random()*30)+1;}
+function spinLottery(){clearInterval(spinInterval);var c=0;spinInterval=setInterval(function(){document.getElementById('lottery-result').textContent=Math.floor(Math.random()*30)+1;c++;if(c>20){clearInterval(spinInterval);document.getElementById('lottery-result').textContent=Math.floor(Math.random()*30)+1;}},80);}
+
+// TIMER
+var timerSecs=300,timerRunning=false,timerInterval=null;
+function updateTimerDisplay(){var m=Math.floor(timerSecs/60),s=timerSecs%60;document.getElementById('timer-display').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
+function setTimer(m){timerSecs=m*60;timerRunning=false;clearInterval(timerInterval);updateTimerDisplay();}
+function startTimer(){if(timerRunning)return;timerRunning=true;timerInterval=setInterval(function(){if(timerSecs<=0){clearInterval(timerInterval);timerRunning=false;alert('時間到！⏰');return;}timerSecs--;updateTimerDisplay();},1000);}
+function pauseTimer(){timerRunning=false;clearInterval(timerInterval);}
+function resetTimer(){pauseTimer();timerSecs=300;updateTimerDisplay();}
+
+// DRAW
+var drawing=false,drawActive=false,drawColor='#00e5ff',brushSize=4;
+var dc=document.getElementById('draw-canvas');
+var ctx=dc.getContext('2d');
+function resizeDraw(){dc.width=window.innerWidth;dc.height=window.innerHeight;}
+resizeDraw();window.addEventListener('resize',resizeDraw);
+function toggleDraw(){drawActive=!drawActive;dc.style.display=drawActive?'block':'none';document.getElementById('draw-toolbar').classList.toggle('show',drawActive);dc.style.cursor=drawActive?'crosshair':'default';}
+function getPos(e){var r=dc.getBoundingClientRect();if(e.touches)return{x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top};return{x:e.clientX-r.left,y:e.clientY-r.top};}
+dc.addEventListener('mousedown',function(e){drawing=true;var p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+dc.addEventListener('mousemove',function(e){if(!drawing)return;var p=getPos(e);ctx.lineTo(p.x,p.y);ctx.strokeStyle=drawColor;ctx.lineWidth=brushSize;ctx.lineCap='round';ctx.stroke();});
+dc.addEventListener('mouseup',function(){drawing=false;});
+dc.addEventListener('touchstart',function(e){e.preventDefault();drawing=true;var p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+dc.addEventListener('touchmove',function(e){e.preventDefault();if(!drawing)return;var p=getPos(e);ctx.lineTo(p.x,p.y);ctx.strokeStyle=drawColor;ctx.lineWidth=brushSize;ctx.lineCap='round';ctx.stroke();},{passive:false});
+dc.addEventListener('touchend',function(){drawing=false;});
+function setColor(c,el){drawColor=c;document.querySelectorAll('.color-dot').forEach(function(d){d.classList.remove('active');});el.classList.add('active');}
+document.getElementById('brush-size').addEventListener('input',function(){brushSize=parseInt(this.value);});
+function clearDraw(){ctx.clearRect(0,0,dc.width,dc.height);}
+</script>
+</body>
+</html>
