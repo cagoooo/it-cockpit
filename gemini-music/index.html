@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 音樂創作師：用 Gemini 做畢業歌曲｜六年級資訊科技</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===================== RESET & BASE ===================== */
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:18px;scroll-behavior:smooth;}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  line-height:1.7;
+  background:#0d0d2b;
+  color:#e8e4f8;
+  min-height:100vh;
+}
+
+/* ===================== CSS VARS (pixel-game) ===================== */
+:root{
+  --bg:#0d0d2b;
+  --surface:#1a1a3e;
+  --panel:#252552;
+  --c1:#00e5ff;
+  --c2:#ffd740;
+  --c3:#ff4081;
+  --c4:#69ff47;
+  --c5:#bb86fc;
+  --text:#e8e4f8;
+  --dim:#7070a0;
+  --border:2px solid rgba(255,255,255,0.12);
+  --pixel-shadow:4px 4px 0 #000;
+  --glow-c1:0 0 12px rgba(0,229,255,0.5);
+  --glow-c2:0 0 12px rgba(255,215,64,0.5);
+  --glow-c4:0 0 12px rgba(105,255,71,0.5);
+}
+
+/* ===================== LAYOUT ===================== */
+.container{max-width:1400px;margin:0 auto;padding:24px;}
+
+/* ===================== STICKY HEADER ===================== */
+.site-header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(13,13,43,0.97);
+  border-bottom:2px solid var(--c1);
+  box-shadow:0 2px 24px rgba(0,229,255,0.2);
+  padding:12px 0;
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;
+}
+.header-left{}
+.header-badge{
+  font-family:'Press Start 2P',monospace;
+  font-size:0.55rem;
+  color:var(--c2);
+  background:var(--surface);
+  border:2px solid var(--c2);
+  padding:5px 10px;
+  display:inline-block;
+  margin-bottom:6px;
+  box-shadow:var(--pixel-shadow);
+}
+.header-title{
+  font-size:1.3rem;font-weight:900;
+  color:var(--c1);
+  text-shadow:0 0 16px rgba(0,229,255,0.6);
+  line-height:1.3;
+}
+.header-sub{font-size:0.9rem;color:var(--dim);margin-top:2px;}
+
+/* progress bar */
+.progress-wrap{flex:1;min-width:200px;max-width:400px;}
+.progress-label{
+  font-size:0.8rem;color:var(--dim);
+  display:flex;justify-content:space-between;margin-bottom:4px;
+}
+.progress-bar-bg{
+  height:14px;background:var(--surface);
+  border:2px solid var(--c1);
+  border-radius:0;
+  box-shadow:var(--pixel-shadow);
+}
+.progress-bar-fill{
+  height:100%;background:linear-gradient(90deg,var(--c1),var(--c4));
+  width:0%;transition:width 0.5s ease;
+}
+
+/* mode toggle */
+.mode-bar{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+}
+.mode-btn{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:0.85rem;
+  padding:6px 16px;
+  border:2px solid var(--dim);
+  background:transparent;
+  color:var(--dim);
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.mode-btn.active{
+  border-color:var(--c1);color:var(--c1);
+  box-shadow:var(--glow-c1);
+}
+.mode-btn:hover{border-color:var(--c1);color:var(--c1);}
+
+/* ===================== HERO / INTRO ===================== */
+.hero{
+  background:linear-gradient(135deg,var(--surface) 0%,#1e1040 100%);
+  border:var(--border);
+  border-top:4px solid var(--c1);
+  padding:36px 32px;
+  margin-bottom:28px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(0,229,255,0.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-title{
+  font-size:1.5rem;font-weight:900;
+  color:var(--c1);
+  text-shadow:0 0 20px rgba(0,229,255,0.5);
+  margin-bottom:8px;
+}
+.hero-desc{font-size:1rem;color:var(--text);max-width:700px;margin-bottom:20px;}
+
+/* objectives */
+.obj-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+.obj-chip{
+  font-size:0.95rem;
+  padding:8px 18px;
+  border:2px solid;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:var(--pixel-shadow);
+  transition:transform 0.15s;
+}
+.obj-chip:hover{transform:translate(-2px,-2px);}
+.obj-chip.c1{border-color:var(--c1);color:var(--c1);}
+.obj-chip.c2{border-color:var(--c2);color:var(--c2);}
+.obj-chip.c3{border-color:var(--c3);color:var(--c3);}
+.obj-chip.c4{border-color:var(--c4);color:var(--c4);}
+.obj-chip.c5{border-color:var(--c5);color:var(--c5);}
+
+/* stage nav pills */
+.stage-nav{display:flex;flex-wrap:wrap;gap:8px;}
+.stage-pill{
+  font-size:0.9rem;padding:9px 20px;
+  background:var(--surface);
+  border:2px solid var(--dim);
+  color:var(--dim);
+  cursor:pointer;
+  text-decoration:none;
+  transition:all 0.2s;
+  box-shadow:var(--pixel-shadow);
+}
+.stage-pill:hover,.stage-pill.active{
+  border-color:var(--c1);color:var(--c1);
+  box-shadow:var(--glow-c1);
+}
+
+/* ===================== STAGE SECTION ===================== */
+.level-section{
+  margin-bottom:36px;
+  border:var(--border);
+  border-top:4px solid var(--c1);
+  background:var(--surface);
+  overflow:hidden;
+}
+.level-section:nth-child(2){border-top-color:var(--c2);}
+.level-section:nth-child(3){border-top-color:var(--c3);}
+.level-section:nth-child(4){border-top-color:var(--c4);}
+.level-section:nth-child(5){border-top-color:var(--c5);}
+
+.section-header{
+  padding:20px 24px;
+  display:flex;align-items:center;gap:16px;
+  background:linear-gradient(90deg,rgba(0,229,255,0.06) 0%,transparent 100%);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;
+  user-select:none;
+}
+.level-section:nth-child(2) .section-header{background:linear-gradient(90deg,rgba(255,215,64,0.06) 0%,transparent 100%);}
+.level-section:nth-child(3) .section-header{background:linear-gradient(90deg,rgba(255,64,129,0.06) 0%,transparent 100%);}
+.level-section:nth-child(4) .section-header{background:linear-gradient(90deg,rgba(105,255,71,0.06) 0%,transparent 100%);}
+.level-section:nth-child(5) .section-header{background:linear-gradient(90deg,rgba(187,134,252,0.06) 0%,transparent 100%);}
+
+.stage-badge{
+  font-family:'Press Start 2P',monospace;
+  font-size:0.55rem;
+  background:var(--c1);color:#000;
+  padding:7px 12px;
+  white-space:nowrap;
+  box-shadow:var(--pixel-shadow);
+  flex-shrink:0;
+}
+.level-section:nth-child(2) .stage-badge{background:var(--c2);}
+.level-section:nth-child(3) .stage-badge{background:var(--c3);}
+.level-section:nth-child(4) .stage-badge{background:var(--c4);}
+.level-section:nth-child(5) .stage-badge{background:var(--c5);}
+
+.section-title-wrap{}
+.section-title{font-size:1.3rem;font-weight:900;color:var(--text);}
+.section-sub{font-size:0.95rem;color:var(--dim);margin-top:2px;}
+.section-toggle{margin-left:auto;font-size:1.2rem;color:var(--dim);}
+
+.section-body{padding:24px;display:block;}
+.section-body.collapsed{display:none;}
+
+/* steps card */
+.steps-card{
+  background:var(--panel);
+  border:var(--border);
+  padding:20px 24px;
+  margin-bottom:20px;
+  box-shadow:var(--pixel-shadow);
+}
+.steps-card h4{font-size:1rem;color:var(--c1);margin-bottom:14px;font-weight:700;}
+.level-section:nth-child(2) .steps-card h4{color:var(--c2);}
+.level-section:nth-child(3) .steps-card h4{color:var(--c3);}
+.level-section:nth-child(4) .steps-card h4{color:var(--c4);}
+.level-section:nth-child(5) .steps-card h4{color:var(--c5);}
+
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.steps-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:1rem;line-height:1.7;
+}
+.step-num{
+  min-width:34px;height:34px;
+  background:var(--c1);color:#000;
+  font-weight:900;font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:var(--pixel-shadow);
+}
+.level-section:nth-child(2) .step-num{background:var(--c2);}
+.level-section:nth-child(3) .step-num{background:var(--c3);}
+.level-section:nth-child(4) .step-num{background:var(--c4);}
+.level-section:nth-child(5) .step-num{background:var(--c5);}
+
+.tip-box{
+  font-size:0.95rem;
+  padding:12px 16px;
+  border-left:4px solid var(--c2);
+  background:rgba(255,215,64,0.06);
+  margin-top:14px;
+  color:var(--c2);
+}
+
+/* infographic embed */
+.infographic-wrap{
+  margin-bottom:20px;
+  border:2px solid var(--panel);
+  box-shadow:var(--pixel-shadow);
+}
+.infographic-wrap img{
+  width:100%;height:auto;display:block;
+  loading:lazy;
+}
+
+/* canvas section */
+.canvas-section{
+  background:var(--panel);
+  border:var(--border);
+  padding:20px 24px;
+  margin-bottom:20px;
+  box-shadow:var(--pixel-shadow);
+}
+.canvas-section h4{font-size:1rem;color:var(--c4);margin-bottom:12px;font-weight:700;}
+.canvas-hint{font-size:0.9rem;color:var(--dim);margin-bottom:12px;}
+canvas{
+  width:100%;
+  border:2px solid rgba(255,255,255,0.12);
+  display:block;
+  cursor:crosshair;
+  background:#111128;
+  touch-action:none;
+}
+
+/* lyrics composer */
+.lyric-builder{display:flex;flex-direction:column;gap:10px;}
+.lyric-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.lyric-row label{font-size:0.9rem;color:var(--dim);min-width:70px;}
+.lyric-select,.lyric-input{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:0.95rem;
+  padding:8px 12px;
+  background:var(--surface);
+  border:2px solid var(--dim);
+  color:var(--text);
+  flex:1;min-width:140px;
+}
+.lyric-select:focus,.lyric-input:focus{outline:none;border-color:var(--c1);}
+.lyric-output{
+  background:var(--surface);
+  border:2px solid var(--c1);
+  padding:14px 16px;
+  font-size:0.95rem;
+  color:var(--c1);
+  min-height:60px;
+  font-style:italic;
+  white-space:pre-line;
+}
+.pixel-btn{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:0.95rem;
+  padding:10px 22px;
+  background:var(--c1);color:#000;
+  border:none;cursor:pointer;
+  font-weight:900;
+  box-shadow:var(--pixel-shadow);
+  transition:transform 0.1s;
+}
+.pixel-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000;}
+.pixel-btn.c2{background:var(--c2);}
+.pixel-btn.c3{background:var(--c3);}
+.pixel-btn.c4{background:var(--c4);}
+
+/* ===================== QUIZ ===================== */
+.quiz-section{
+  background:var(--panel);
+  border:var(--border);
+  padding:20px 24px;
+  margin-bottom:20px;
+  box-shadow:var(--pixel-shadow);
+}
+.quiz-section h4{
+  font-size:1rem;color:var(--c2);margin-bottom:16px;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+}
+.quiz-item{margin-bottom:20px;}
+.quiz-q{font-size:1rem;font-weight:700;margin-bottom:10px;line-height:1.6;}
+.quiz-opts{display:flex;flex-direction:column;gap:7px;}
+.quiz-opt{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:0.95rem;
+  padding:10px 16px;
+  background:var(--surface);
+  border:2px solid var(--dim);
+  color:var(--text);
+  cursor:pointer;
+  text-align:left;
+  transition:all 0.15s;
+  box-shadow:2px 2px 0 #000;
+}
+.quiz-opt:hover:not(:disabled){border-color:var(--c1);color:var(--c1);}
+.quiz-opt.correct{border-color:var(--c4);color:var(--c4);background:rgba(105,255,71,0.1);}
+.quiz-opt.wrong{border-color:var(--c3);color:var(--c3);background:rgba(255,64,129,0.1);}
+.quiz-opt:disabled{cursor:default;}
+.quiz-feedback{
+  margin-top:8px;font-size:0.95rem;font-weight:700;
+  padding:8px 14px;
+  border:2px solid;
+  display:none;
+}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.ok{border-color:var(--c4);color:var(--c4);background:rgba(105,255,71,0.08);}
+.quiz-feedback.ng{border-color:var(--c3);color:var(--c3);background:rgba(255,64,129,0.08);}
+
+/* ===================== TEACHER NOTES ===================== */
+.teacher-only{display:none;}
+.teacher-mode .teacher-only{display:block;}
+.teacher-note{
+  background:rgba(255,215,64,0.07);
+  border:2px dashed var(--c2);
+  padding:14px 18px;
+  font-size:0.95rem;
+  color:var(--c2);
+  margin-bottom:20px;
+}
+.teacher-note h5{font-size:0.95rem;margin-bottom:6px;font-weight:700;}
+
+/* ===================== PROJECT TASK ===================== */
+.project-section{
+  background:linear-gradient(135deg,var(--surface),#1e1040);
+  border:var(--border);
+  border-top:4px solid var(--c2);
+  padding:28px 32px;
+  margin-bottom:28px;
+  box-shadow:var(--pixel-shadow);
+}
+.project-section h3{font-size:1.3rem;font-weight:900;color:var(--c2);margin-bottom:16px;}
+.task-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+.task-card{
+  background:var(--panel);
+  border:2px solid var(--dim);
+  padding:16px;
+  box-shadow:var(--pixel-shadow);
+}
+.task-card .task-num{
+  font-family:'Press Start 2P',monospace;
+  font-size:0.5rem;color:var(--c2);margin-bottom:8px;
+}
+.task-card h4{font-size:0.95rem;font-weight:700;margin-bottom:6px;}
+.task-card p{font-size:0.9rem;color:var(--dim);}
+
+/* ===================== NLM RESOURCE ===================== */
+.nb-section{
+  background:var(--surface);
+  border:var(--border);
+  padding:28px 32px;
+  margin-bottom:28px;
+  box-shadow:var(--pixel-shadow);
+}
+.nb-section h3{font-size:1.3rem;font-weight:900;color:var(--c5);margin-bottom:20px;}
+.nb-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:28px;}
+.nb-card{
+  background:var(--panel);
+  border:2px solid var(--c5);
+  padding:18px;
+  box-shadow:var(--pixel-shadow);
+  transition:transform 0.15s;
+}
+.nb-card:hover{transform:translate(-2px,-2px);}
+.nb-card .nb-icon{font-size:1.5rem;margin-bottom:8px;}
+.nb-card h4{font-size:0.95rem;font-weight:700;margin-bottom:6px;color:var(--c5);}
+.nb-card p{font-size:0.9rem;color:var(--dim);}
+.nb-card a{color:var(--c1);font-size:0.9rem;}
+
+/* FAQ */
+.faq-section{margin-top:20px;}
+.faq-section h4{font-size:1rem;font-weight:700;color:var(--c2);margin-bottom:14px;}
+.faq-item{
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  margin-bottom:4px;
+}
+.faq-q{
+  font-size:1rem;
+  padding:12px 0;
+  cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:700;
+}
+.faq-q:hover{color:var(--c1);}
+.faq-a{
+  font-size:0.95rem;
+  color:var(--dim);
+  line-height:1.7;
+  max-height:0;overflow:hidden;
+  transition:max-height 0.3s ease,padding 0.3s;
+  padding:0 0;
+}
+.faq-a.open{max-height:400px;padding:0 0 14px 0;}
+
+/* ===================== VIDEO SECTION ===================== */
+.video-section{
+  background:var(--surface);
+  border:var(--border);
+  padding:28px 32px;
+  margin-bottom:28px;
+}
+.video-section h3{font-size:1.3rem;font-weight:900;color:var(--c3);margin-bottom:16px;}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+.video-card{background:var(--panel);border:var(--border);padding:16px;}
+.video-card h4{font-size:0.95rem;font-weight:700;margin-bottom:10px;color:var(--c3);}
+.video-placeholder{
+  background:#111128;
+  border:2px dashed var(--dim);
+  padding:40px;
+  text-align:center;
+  color:var(--dim);
+  font-size:0.9rem;
+}
+
+/* ===================== FLOATING TOOLS ===================== */
+.float-panel{
+  position:fixed;right:20px;bottom:100px;
+  display:flex;flex-direction:column;gap:10px;
+  z-index:300;
+}
+.float-btn{
+  width:52px;height:52px;
+  background:var(--panel);
+  border:2px solid var(--c1);
+  color:var(--c1);
+  font-size:1.3rem;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--pixel-shadow);
+  transition:transform 0.1s;
+}
+.float-btn:hover{transform:scale(1.08);}
+
+/* timer popup */
+.timer-popup,.lottery-popup{
+  position:fixed;right:80px;bottom:100px;
+  background:var(--panel);
+  border:2px solid var(--c1);
+  padding:16px 20px;
+  box-shadow:var(--pixel-shadow);
+  z-index:400;
+  min-width:200px;
+  display:none;
+}
+.timer-popup.open,.lottery-popup.open{display:block;}
+.timer-display{
+  font-family:'Press Start 2P',monospace;
+  font-size:1.5rem;color:var(--c1);
+  text-align:center;margin:10px 0;
+}
+.timer-controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.t-btn{
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:0.85rem;
+  padding:6px 14px;
+  background:var(--surface);border:2px solid var(--c1);
+  color:var(--c1);cursor:pointer;
+}
+.t-btn:hover{background:var(--c1);color:#000;}
+.lottery-display{
+  font-size:2rem;font-weight:900;
+  text-align:center;color:var(--c2);
+  margin:14px 0;
+}
+
+/* ===================== DRAW TOOL ===================== */
+.draw-panel{
+  position:fixed;left:12px;bottom:60px;
+  z-index:300;
+  display:none;
+}
+.draw-panel.open{display:flex;flex-direction:column;gap:6px;}
+.draw-overlay{
+  position:fixed;inset:0;
+  cursor:crosshair;
+  z-index:250;
+  pointer-events:none;
+  display:none;
+}
+.draw-overlay.active{pointer-events:auto;display:block;}
+.draw-colors{display:flex;gap:6px;align-items:center;}
+.color-dot{
+  width:28px;height:28px;
+  border:2px solid #000;
+  cursor:pointer;
+  box-shadow:2px 2px 0 #000;
+}
+.color-dot.selected{border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,0.6);}
+.draw-toggle{
+  position:fixed;left:12px;bottom:12px;
+  z-index:300;
+  width:52px;height:52px;
+  background:var(--panel);border:2px solid var(--c3);
+  color:var(--c3);font-size:1.3rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--pixel-shadow);
+}
+
+/* ===================== FOOTER ===================== */
+.site-footer{
+  text-align:center;padding:24px;
+  color:var(--dim);font-size:0.85rem;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== STICKY HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-badge">GRADE 6 · IT CLASS</div>
+      <div class="header-title">AI 音樂創作師：用 Gemini 做畢業歌曲</div>
+      <div class="header-sub">六年級資訊科技｜5 大關卡｜Gemini × Canva</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>學習進度</span>
+        <span id="progress-text">0 / 5 關卡</span>
+      </div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+    </div>
+    <div class="mode-bar">
+      <button class="mode-btn active" id="btn-student" onclick="setMode('student')">學生模式</button>
+      <button class="mode-btn" id="btn-teacher" onclick="setMode('teacher')">教師模式</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="container">
+<div class="hero">
+  <div class="hero-title">今天，你要成為 AI 音樂創作師！</div>
+  <div class="hero-desc">
+    用 Gemini 寫出你的畢業歌詞、讓 AI 幫你譜出 30 秒的專屬音樂，再放進 Canva 做成感人的畢業影片——全部你自己完成！
+  </div>
+  <div class="obj-grid">
+    <div class="obj-chip c1">🎤 學會對 AI 下提示詞指令</div>
+    <div class="obj-chip c2">🖼️ 用圖片引導音樂風格</div>
+    <div class="obj-chip c3">🎵 掌握 Gemini Lyria 生成音樂</div>
+    <div class="obj-chip c4">🎬 Canva 影片串接轉場</div>
+    <div class="obj-chip c5">🔒 了解 AI 創作與著作權</div>
+  </div>
+  <div class="stage-nav">
+    <a href="#sec1" class="stage-pill">STAGE 1 提示詞</a>
+    <a href="#sec2" class="stage-pill">STAGE 2 圖片引導</a>
+    <a href="#sec3" class="stage-pill">STAGE 3 生成音樂</a>
+    <a href="#sec4" class="stage-pill">STAGE 4 Canva 串接</a>
+    <a href="#sec5" class="stage-pill">STAGE 5 AI 倫理</a>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- STAGE 1: 提示詞工程 -->
+<!-- ======================================================= -->
+<div class="level-section" id="sec1">
+  <div class="section-header" onclick="toggleSection('sec1')">
+    <div class="stage-badge">STAGE 1</div>
+    <div class="section-title-wrap">
+      <div class="section-title">提示詞工程：讓 Gemini 寫出你的畢業歌詞</div>
+      <div class="section-sub">學習如何對 AI 下清楚的指令，生成專屬歌詞</div>
+    </div>
+    <div class="section-toggle" id="toggle-sec1">▼</div>
+  </div>
+  <div class="section-body" id="body-sec1">
+
+    <!-- 教師提示 -->
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h5>教師提示</h5>
+        先讓學生嘗試輸入簡單的提示詞（例如「寫一首歌」），觀察 Gemini 的回應，再引導他們加入更多細節。對比「模糊指令」和「精確指令」的結果，幫助學生體會提示詞的重要性。
+      </div>
+    </div>
+
+    <!-- 資訊圖表 -->
+    <div class="infographic-wrap">
+      <img src="assets/01_畢業歌詞創作指南.jpg" alt="STAGE 1 提示詞工程資訊圖表" loading="lazy">
+    </div>
+
+    <!-- 步驟說明 -->
+    <div class="steps-card">
+      <h4>操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span><span>開啟瀏覽器，進入 <strong>gemini.google.com</strong>（使用學校 Google 帳號登入）</span></li>
+        <li><span class="step-num">2</span><span>在對話框輸入提示詞，例如：<em>「請幫我寫一首畢業歌的歌詞，主題是感謝老師和同學，風格輕鬆溫暖，分成兩段主歌和一段副歌」</em></span></li>
+        <li><span class="step-num">3</span><span>閱讀 Gemini 回傳的歌詞草稿，看看符不符合你的想像</span></li>
+        <li><span class="step-num">4</span><span>繼續對話修改，例如：<em>「把第一段改得更感人一點」</em> 或 <em>「副歌加入我們一起長大的意象」</em></span></li>
+        <li><span class="step-num">5</span><span>滿意後，複製歌詞備用（大約 <strong>4–6 行</strong>，配合 30 秒音樂長度）</span></li>
+      </ol>
+      <div class="tip-box">
+        提示詞黃金法則：<strong>主題 ＋ 風格 ＋ 情緒 ＋ 段落結構</strong> 四要素描述越具體，AI 結果越好！
+      </div>
+    </div>
+
+    <!-- 互動：提示詞組合器 -->
+    <div class="canvas-section">
+      <h4>互動練習：提示詞組合器</h4>
+      <p class="canvas-hint">填入四個要素，組合出你的提示詞，試著讓 Gemini 寫出你想要的歌詞！</p>
+      <div class="lyric-builder">
+        <div class="lyric-row">
+          <label>🎯 主題</label>
+          <select class="lyric-select" id="l-theme">
+            <option value="感謝老師與同學">感謝老師與同學</option>
+            <option value="六年回憶與成長">六年回憶與成長</option>
+            <option value="告別小學迎接未來">告別小學迎接未來</option>
+            <option value="友情永遠不變">友情永遠不變</option>
+          </select>
+        </div>
+        <div class="lyric-row">
+          <label>🎨 風格</label>
+          <select class="lyric-select" id="l-style">
+            <option value="輕鬆溫暖">輕鬆溫暖</option>
+            <option value="感動抒情">感動抒情</option>
+            <option value="活潑歡快">活潑歡快</option>
+            <option value="深情懷念">深情懷念</option>
+          </select>
+        </div>
+        <div class="lyric-row">
+          <label>💛 情緒</label>
+          <select class="lyric-select" id="l-mood">
+            <option value="充滿希望">充滿希望</option>
+            <option value="溫暖感謝">溫暖感謝</option>
+            <option value="懷念不捨">懷念不捨</option>
+            <option value="開心慶祝">開心慶祝</option>
+          </select>
+        </div>
+        <div class="lyric-row">
+          <label>📝 結構</label>
+          <select class="lyric-select" id="l-struct">
+            <option value="兩段主歌、一段副歌">兩段主歌、一段副歌</option>
+            <option value="一段主歌、一段副歌">一段主歌、一段副歌</option>
+            <option value="純副歌四行">純副歌四行</option>
+          </select>
+        </div>
+        <button class="pixel-btn" onclick="buildPrompt()">組合提示詞</button>
+        <div class="lyric-output" id="lyric-out">（點擊「組合提示詞」按鈕，看看你的提示詞會長什麼樣子！）</div>
+      </div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>⭐ 關卡評量</h4>
+      <!-- Q1 -->
+      <div class="quiz-item" id="q1-1">
+        <div class="quiz-q">1. 下面哪個提示詞，最可能讓 Gemini 生成符合你期望的畢業歌詞？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q1-1',false)">A. 「寫一首歌」</button>
+          <button class="quiz-opt" onclick="answer(this,'q1-1',false)">B. 「寫一首關於畢業的歌」</button>
+          <button class="quiz-opt" onclick="answer(this,'q1-1',true)">C. 「請寫一首溫暖感人的畢業歌詞，感謝老師與同學，分主歌兩段和副歌一段，語氣適合小學生」</button>
+          <button class="quiz-opt" onclick="answer(this,'q1-1',false)">D. 「請 AI 幫我做任何事情」</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q1-1"></div>
+      </div>
+      <!-- Q2 -->
+      <div class="quiz-item" id="q1-2">
+        <div class="quiz-q">2. 如果第一次生成的歌詞不符合你的想法，你應該怎麼做？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q1-2',false)">A. 放棄，AI 就是這樣</button>
+          <button class="quiz-opt" onclick="answer(this,'q1-2',true)">B. 繼續對話，告訴 AI 哪裡要修改</button>
+          <button class="quiz-opt" onclick="answer(this,'q1-2',false)">C. 重新登入帳號</button>
+          <button class="quiz-opt" onclick="answer(this,'q1-2',false)">D. 換一個網站</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q1-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- STAGE 2: 圖片引導音樂 -->
+<!-- ======================================================= -->
+<div class="level-section" id="sec2">
+  <div class="section-header" onclick="toggleSection('sec2')">
+    <div class="stage-badge">STAGE 2</div>
+    <div class="section-title-wrap">
+      <div class="section-title">圖片引導音樂：用視覺感染 AI</div>
+      <div class="section-sub">選擇圖片影響 Gemini 生成音樂的情緒風格</div>
+    </div>
+    <div class="section-toggle" id="toggle-sec2">▼</div>
+  </div>
+  <div class="section-body" id="body-sec2">
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h5>教師提示</h5>
+        準備 3–4 張色調不同的圖片（例如：夕陽暖橘、冷藍天空、高對比黑白），讓學生猜猜上傳不同圖片後，Gemini 會生成什麼風格的音樂。可以實際示範操作讓學生看到差異。
+      </div>
+    </div>
+
+    <!-- 資訊圖表 -->
+    <div class="infographic-wrap">
+      <img src="assets/02_圖片引導音樂風格.jpg" alt="STAGE 2 圖片引導音樂風格資訊圖表" loading="lazy">
+    </div>
+
+    <!-- 步驟 -->
+    <div class="steps-card">
+      <h4>操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span><span>從你的照片中選一張<strong>能反映畢業情感</strong>的圖片（班級合照、校園、藍天）</span></li>
+        <li><span class="step-num">2</span><span>觀察圖片的<strong>色調</strong>：暖色系→歡快溫暖；冷色系→抒情深沉；高對比→節奏感強</span></li>
+        <li><span class="step-num">3</span><span>也可以先讓 Gemini 幫你<strong>畫一張圖</strong>：輸入「畫一張溫暖的國小畢業典禮插圖，藍天白雲，學生們快樂揮手」</span></li>
+        <li><span class="step-num">4</span><span>把選好的圖片<strong>儲存到電腦</strong>，等等上傳到 Gemini 生成音樂時使用</span></li>
+      </ol>
+      <div class="tip-box">
+        顏色＝情緒：想讓音樂更歡樂，選暖色調的圖片；想讓音樂更深情，選帶有藍色調或夕陽的圖片！
+      </div>
+    </div>
+
+    <!-- 互動：顏色情緒對應器 Canvas -->
+    <div class="canvas-section">
+      <h4>互動練習：圖片色調與音樂情緒對應</h4>
+      <p class="canvas-hint">點擊色彩方塊，看看不同色調會帶出什麼音樂情緒！</p>
+      <canvas id="canvas-color" height="220"></canvas>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>⭐ 關卡評量</h4>
+      <div class="quiz-item" id="q2-1">
+        <div class="quiz-q">1. 如果你想生成一段「溫暖感動、充滿希望」的畢業音樂，最適合上傳哪種圖片？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q2-1',false)">A. 冷藍色調、下雨的照片</button>
+          <button class="quiz-opt" onclick="answer(this,'q2-1',true)">B. 橘黃色夕陽、同學笑著揮手的照片</button>
+          <button class="quiz-opt" onclick="answer(this,'q2-1',false)">C. 高對比的黑白照片</button>
+          <button class="quiz-opt" onclick="answer(this,'q2-1',false)">D. 隨便選一張就好，沒有差別</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q2-1"></div>
+      </div>
+      <div class="quiz-item" id="q2-2">
+        <div class="quiz-q">2. 關於 Gemini 生成音樂的「圖片功能」，以下哪個說法是對的？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q2-2',false)">A. 圖片只是裝飾，不影響音樂</button>
+          <button class="quiz-opt" onclick="answer(this,'q2-2',false)">B. 只能上傳黑白圖片</button>
+          <button class="quiz-opt" onclick="answer(this,'q2-2',true)">C. 圖片的色彩和氛圍會影響 AI 生成音樂的情緒和風格</button>
+          <button class="quiz-opt" onclick="answer(this,'q2-2',false)">D. 圖片越大，音樂越好聽</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q2-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- STAGE 3: Gemini 生成音樂 -->
+<!-- ======================================================= -->
+<div class="level-section" id="sec3">
+  <div class="section-header" onclick="toggleSection('sec3')">
+    <div class="stage-badge">STAGE 3</div>
+    <div class="section-title-wrap">
+      <div class="section-title">Gemini Lyria：生成你的 30 秒專屬音樂</div>
+      <div class="section-sub">掌握 Lyria 3 完整操作流程，免費版每次生成 30 秒</div>
+    </div>
+    <div class="section-toggle" id="toggle-sec3">▼</div>
+  </div>
+  <div class="section-body" id="body-sec3">
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h5>教師提示</h5>
+        先請學生上 gemini.google.com 找看看是否有音樂生成按鈕。如果找不到，請在對話框輸入「幫我生成音樂」。提醒學生：在歌詞前加上 <strong>Lyrics:</strong> 這個關鍵字，Gemini 才會把它唱出來！
+      </div>
+    </div>
+
+    <!-- 資訊圖表 -->
+    <div class="infographic-wrap">
+      <img src="assets/03_Gemini生成音樂步驟.jpg" alt="STAGE 3 Gemini生成音樂步驟資訊圖表" loading="lazy">
+    </div>
+
+    <!-- 步驟 -->
+    <div class="steps-card">
+      <h4>操作步驟（5 步驟完成！）</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span><span>在 Gemini 對話框旁找到「<strong>生成音樂</strong>」工具，或直接輸入「幫我生成音樂」</span></li>
+        <li><span class="step-num">2</span><span>在提示詞框輸入音樂風格描述：<em>「Lyrics: [你的歌詞] 溫暖感人的鋼琴旋律，輕柔童聲合唱，節奏輕快帶懷念感」</em></span></li>
+        <li><span class="step-num">3</span><span>點擊「<strong>上傳圖片</strong>」，上傳 STAGE 2 選好的圖片</span></li>
+        <li><span class="step-num">4</span><span>按下「<strong>生成</strong>」，等待 10–20 秒，然後播放試聽</span></li>
+        <li><span class="step-num">5</span><span>滿意後點「<strong>下載</strong>」儲存 .mp3 或 .wav 檔案到電腦</span></li>
+      </ol>
+      <div class="tip-box">
+        關鍵字訣：歌詞前記得加 <strong>Lyrics:</strong>！不想讓 AI 唱歌、只要背景音樂的話，加上「<strong>純器樂演奏</strong>」四個字！
+      </div>
+    </div>
+
+    <!-- 互動：音樂風格提示詞模擬器 Canvas -->
+    <div class="canvas-section">
+      <h4>互動練習：音樂風格切換模擬器</h4>
+      <p class="canvas-hint">點擊不同的音樂風格，看看提示詞如何變化，感受不同風格的差異！</p>
+      <canvas id="canvas-music" height="240"></canvas>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>⭐ 關卡評量</h4>
+      <div class="quiz-item" id="q3-1">
+        <div class="quiz-q">1. 使用免費版 Gemini 生成音樂，每次最多可以生成幾秒的音樂？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q3-1',false)">A. 10 秒</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-1',false)">B. 60 秒</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-1',true)">C. 30 秒</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-1',false)">D. 3 分鐘</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q3-1"></div>
+      </div>
+      <div class="quiz-item" id="q3-2">
+        <div class="quiz-q">2. 如果你想讓 Gemini 把你寫的歌詞配上旋律唱出來，你要在歌詞前面加上什麼關鍵字？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q3-2',false)">A. Song:</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-2',true)">B. Lyrics:</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-2',false)">C. Music:</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-2',false)">D. 不用加任何字</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q3-2"></div>
+      </div>
+      <div class="quiz-item" id="q3-3">
+        <div class="quiz-q">3. 如果你要求 AI「生成一首跟周杰倫一模一樣的歌」，結果通常會怎樣？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q3-3',false)">A. 完美複製周杰倫的歌</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-3',true)">B. 因為版權保護，生成的結果會很平淡；應該改成描述「他的音樂特色」</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-3',false)">C. 系統會直接報錯</button>
+          <button class="quiz-opt" onclick="answer(this,'q3-3',false)">D. 生成出比周杰倫更好的音樂</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q3-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- STAGE 4: Canva 影片串接 -->
+<!-- ======================================================= -->
+<div class="level-section" id="sec4">
+  <div class="section-header" onclick="toggleSection('sec4')">
+    <div class="stage-badge">STAGE 4</div>
+    <div class="section-title-wrap">
+      <div class="section-title">Canva 影片串接：把音樂和圖片變成影片！</div>
+      <div class="section-sub">上傳音樂、排列圖片、加入轉場效果，輸出 MP4</div>
+    </div>
+    <div class="section-toggle" id="toggle-sec4">▼</div>
+  </div>
+  <div class="section-body" id="body-sec4">
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h5>教師提示</h5>
+        讓學生先用 3–5 張圖片練習，不需要太多素材。重點在於讓他們學會：① 拖曳圖片到時間軸 ② 點選兩個片段中間的 + 號加轉場 ③ 上傳音樂並對齊。可以先做老師的示範版讓學生參考。
+      </div>
+    </div>
+
+    <!-- 資訊圖表 -->
+    <div class="infographic-wrap">
+      <img src="assets/04_Canva影片串接.jpg" alt="STAGE 4 Canva影片串接資訊圖表" loading="lazy">
+    </div>
+
+    <!-- 步驟 -->
+    <div class="steps-card">
+      <h4>操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span><span>登入 <strong>canva.com</strong>，點選「影片」→ 新增空白影片（16:9 比例）</span></li>
+        <li><span class="step-num">2</span><span>左側「上傳」→ 上傳照片，<strong>拖曳圖片</strong>到時間軸，每張約 3–5 秒</span></li>
+        <li><span class="step-num">3</span><span>點選兩張照片中間的「<strong>+</strong>」符號 → 選擇轉場效果（淡入淡出、滑動、圓形縮放）</span></li>
+        <li><span class="step-num">4</span><span>時間軸下方「<strong>+ 音訊</strong>」→ 上傳 Gemini 下載的音樂檔，拖曳對齊</span></li>
+        <li><span class="step-num">5</span><span>右上角「分享」→「下載」→ 選 <strong>MP4 格式</strong> 儲存</span></li>
+      </ol>
+      <div class="tip-box">
+        時間軸建議：0–3 秒封面 → 3–18 秒歌詞圖片（每段5秒）→ 18–25 秒快速切換 → 25–30 秒結尾字卡
+      </div>
+    </div>
+
+    <!-- 互動：時間軸模擬器 Canvas -->
+    <div class="canvas-section">
+      <h4>互動練習：30 秒時間軸模擬器</h4>
+      <p class="canvas-hint">點擊時間軸上的片段，查看建議內容；點「播放」看看時間流動的感覺！</p>
+      <canvas id="canvas-timeline" height="200"></canvas>
+      <div style="text-align:center;margin-top:10px;">
+        <button class="pixel-btn c4" onclick="playTimeline()">▶ 播放預覽</button>
+        <button class="pixel-btn" onclick="resetTimeline()" style="background:var(--dim);color:#000;">重置</button>
+      </div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>⭐ 關卡評量</h4>
+      <div class="quiz-item" id="q4-1">
+        <div class="quiz-q">1. 在 Canva 中，要在兩個片段之間加入轉場效果，應該點哪裡？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q4-1',false)">A. 點選影片片段本身</button>
+          <button class="quiz-opt" onclick="answer(this,'q4-1',true)">B. 點選兩個片段中間的「+」符號</button>
+          <button class="quiz-opt" onclick="answer(this,'q4-1',false)">C. 在上方工具列找「轉場」</button>
+          <button class="quiz-opt" onclick="answer(this,'q4-1',false)">D. 直接拖曳圖片重疊</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q4-1"></div>
+      </div>
+      <div class="quiz-item" id="q4-2">
+        <div class="quiz-q">2. 從 Canva 下載影片時，應該選擇哪種格式，才能在大多數裝置上播放？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q4-2',false)">A. PDF</button>
+          <button class="quiz-opt" onclick="answer(this,'q4-2',false)">B. PNG</button>
+          <button class="quiz-opt" onclick="answer(this,'q4-2',true)">C. MP4</button>
+          <button class="quiz-opt" onclick="answer(this,'q4-2',false)">D. GIF</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q4-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- STAGE 5: AI 倫理 -->
+<!-- ======================================================= -->
+<div class="level-section" id="sec5">
+  <div class="section-header" onclick="toggleSection('sec5')">
+    <div class="stage-badge">STAGE 5</div>
+    <div class="section-title-wrap">
+      <div class="section-title">AI 倫理與著作權：負責任的創作者</div>
+      <div class="section-sub">了解 AI 生成音樂的版權規則，學習負責任地使用 AI</div>
+    </div>
+    <div class="section-toggle" id="toggle-sec5">▼</div>
+  </div>
+  <div class="section-body" id="body-sec5">
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h5>教師提示</h5>
+        可以問學生：「如果你辛苦畫了一幅畫，有人把它改一下說是自己畫的，你有什麼感覺？」用這個問題引導他們思考版權的意義，再延伸到 AI 生成內容的使用規範。
+      </div>
+    </div>
+
+    <!-- 資訊圖表 -->
+    <div class="infographic-wrap">
+      <img src="assets/05_AI倫理著作權.jpg" alt="STAGE 5 AI倫理著作權資訊圖表" loading="lazy">
+    </div>
+
+    <!-- 步驟 -->
+    <div class="steps-card">
+      <h4>三個重要原則</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span><span><strong>Gemini 生成的音樂</strong>可以用在學校作業和個人用途，但不能拿去賣錢或假裝是「你自己創作」的原創音樂</span></li>
+        <li><span class="step-num">2</span><span><strong>他人的照片</strong>未經同意不能放進影片（包括同學的照片），要先徵得本人同意</span></li>
+        <li><span class="step-num">3</span><span>分享影片前，告知<strong>影片中出現的所有人</strong>，並確認他們願意被公開</span></li>
+      </ol>
+      <div class="tip-box">
+        記住：你是「AI 的導演」，不是「AI 的複製機」。有創意的提示詞 ＋ 負責任的使用，才是真正的 AI 音樂創作師！
+      </div>
+    </div>
+
+    <!-- 互動 Canvas：DO / DON'T 判斷遊戲 -->
+    <div class="canvas-section">
+      <h4>互動練習：AI 倫理判斷遊戲</h4>
+      <p class="canvas-hint">讀完每個情境，判斷是「可以」還是「不行」，累積你的分數！</p>
+      <div id="ethics-game" style="padding:10px 0;">
+        <div id="ethics-q-box" style="background:var(--surface);border:2px solid var(--c5);padding:20px;margin-bottom:14px;font-size:1rem;min-height:70px;"></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="pixel-btn c4" onclick="ethicsAnswer(true)">可以</button>
+          <button class="pixel-btn c3" onclick="ethicsAnswer(false)" style="background:var(--c3);">不行</button>
+        </div>
+        <div id="ethics-result" style="margin-top:12px;font-size:0.95rem;color:var(--c4);min-height:30px;font-weight:700;"></div>
+        <div style="margin-top:8px;font-size:0.9rem;color:var(--dim);">分數：<span id="ethics-score">0</span> / <span id="ethics-total">0</span></div>
+      </div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>⭐ 關卡評量</h4>
+      <div class="quiz-item" id="q5-1">
+        <div class="quiz-q">1. 用 Gemini 生成的音樂，下面哪種用法是合適的？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q5-1',true)">A. 用在學校的畢業影片，和同學一起欣賞</button>
+          <button class="quiz-opt" onclick="answer(this,'q5-1',false)">B. 上傳到音樂平台銷售賺錢</button>
+          <button class="quiz-opt" onclick="answer(this,'q5-1',false)">C. 謊稱「這是我自己作曲的」去參加比賽</button>
+          <button class="quiz-opt" onclick="answer(this,'q5-1',false)">D. 偷偷把同學的照片放進影片不告知</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q5-1"></div>
+      </div>
+      <div class="quiz-item" id="q5-2">
+        <div class="quiz-q">2. 在畢業影片裡放了班上 30 個同學的照片，分享到社群媒體前，你應該怎麼做？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,'q5-2',false)">A. 直接發布，反正大家都是朋友</button>
+          <button class="quiz-opt" onclick="answer(this,'q5-2',false)">B. 問一個同學，如果他同意就代表全班同意</button>
+          <button class="quiz-opt" onclick="answer(this,'q5-2',true)">C. 告知影片中的每位同學，確認他們同意被公開</button>
+          <button class="quiz-opt" onclick="answer(this,'q5-2',false)">D. 先發了再說，有問題再刪</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q5-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- 授課簡報輪播 -->
+<!-- ======================================================= -->
+<div style="background:var(--surface);border:var(--border);border-top:4px solid var(--c1);padding:28px 32px;margin-bottom:28px;box-shadow:var(--pixel-shadow);">
+  <h3 style="font-size:1.3rem;font-weight:900;color:var(--c1);margin-bottom:16px;">授課簡報（阿凱老師版）</h3>
+  <div style="position:relative;background:#111128;border:2px solid var(--panel);">
+    <img id="slide-img" src="assets/slide_01.jpg" alt="投影片 1" loading="lazy"
+      style="width:100%;height:auto;display:block;max-height:600px;object-fit:contain;">
+    <!-- prev / next -->
+    <button onclick="slideNav(-1)" style="position:absolute;left:0;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:none;color:#fff;font-size:2rem;padding:12px 16px;cursor:pointer;">&#8249;</button>
+    <button onclick="slideNav(1)"  style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:none;color:#fff;font-size:2rem;padding:12px 16px;cursor:pointer;">&#8250;</button>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;">
+    <span style="font-size:0.9rem;color:var(--dim);">第 <span id="slide-cur">1</span> / 15 頁</span>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+      <script>for(let i=1;i<=15;i++) document.write(`<button onclick="gotoSlide(${i})" id="sdot${i}" style="width:28px;height:28px;background:${i===1?'var(--c1)':'var(--surface)'};border:2px solid ${i===1?'var(--c1)':'var(--dim)'};color:${i===1?'#000':'var(--dim)'};font-size:0.75rem;cursor:pointer;">${i}</button>`);</script>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- 今日實作任務 -->
+<!-- ======================================================= -->
+<div class="project-section">
+  <h3>今日實作任務：製作你的畢業音樂影片</h3>
+  <div class="task-steps">
+    <div class="task-card">
+      <div class="task-num">TASK 01</div>
+      <h4>用 Gemini 寫歌詞</h4>
+      <p>輸入完整提示詞，生成 4–6 行畢業歌詞，修改到滿意為止</p>
+    </div>
+    <div class="task-card">
+      <div class="task-num">TASK 02</div>
+      <h4>選擇或生成圖片</h4>
+      <p>選 3–5 張圖片，或用 Gemini 生成，色調要符合歌詞情緒</p>
+    </div>
+    <div class="task-card">
+      <div class="task-num">TASK 03</div>
+      <h4>生成 30 秒音樂</h4>
+      <p>上傳歌詞（加 Lyrics:）和圖片，生成音樂並下載 mp3</p>
+    </div>
+    <div class="task-card">
+      <div class="task-num">TASK 04</div>
+      <h4>Canva 串接影片</h4>
+      <p>排列圖片、加轉場、放入音樂，下載 MP4 格式完成作品</p>
+    </div>
+    <div class="task-card">
+      <div class="task-num">TASK 05</div>
+      <h4>分享與欣賞</h4>
+      <p>班級互相觀賞作品，分享製作過程中最有趣的地方</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- NotebookLM 資源站 -->
+<!-- ======================================================= -->
+<div class="nb-section">
+  <h3>NotebookLM 資源站</h3>
+  <div class="nb-cards">
+    <div class="nb-card">
+      <div class="nb-icon">📚</div>
+      <h4>AI 音樂創作師筆記本</h4>
+      <p>80+ 個網路來源，包含 Gemini Lyria 官方教學、Canva 影片製作指南</p>
+      <a href="https://notebooklm.google.com/notebook/605dd69d-1fc3-4f16-a78a-9bf1e3237bab" target="_blank">開啟筆記本 →</a>
+    </div>
+    <div class="nb-card">
+      <div class="nb-icon">🎵</div>
+      <h4>Gemini Lyria 官方說明</h4>
+      <p>Google 官方的 Lyria 3 提示詞技巧，含黃金提示詞公式</p>
+      <a href="https://deepmind.google/models/lyria/prompt-guide/" target="_blank">查看說明 →</a>
+    </div>
+    <div class="nb-card">
+      <div class="nb-icon">🎬</div>
+      <h4>Canva 影片製作教學</h4>
+      <p>Canva 官方幫助中心，影片編輯、轉場、音訊上傳完整說明</p>
+      <a href="https://www.canva.com/help/create-edit-videos/" target="_blank">查看說明 →</a>
+    </div>
+  </div>
+
+  <!-- NLM 生成流程 -->
+  <div style="background:var(--panel);border:var(--border);padding:20px;margin-bottom:24px;box-shadow:var(--pixel-shadow);">
+    <h4 style="font-size:1rem;color:var(--c5);margin-bottom:12px;font-weight:700;">本頁面生成流程</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:0.9rem;color:var(--dim);">
+      <span style="background:var(--c1);color:#000;padding:4px 10px;font-weight:700;">深度研究</span>
+      <span>→</span>
+      <span style="background:var(--surface);border:1px solid var(--dim);padding:4px 10px;">80 個來源匯入</span>
+      <span>→</span>
+      <span style="background:var(--surface);border:1px solid var(--dim);padding:4px 10px;">NotebookLM 分析</span>
+      <span>→</span>
+      <span style="background:var(--c4);color:#000;padding:4px 10px;font-weight:700;">Claude 生成駕駛艙</span>
+      <span>→</span>
+      <span style="background:var(--c2);color:#000;padding:4px 10px;font-weight:700;">GitHub Pages 發布</span>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <h4>常見問題 FAQ</h4>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        為什麼我的 Gemini 沒有「生成音樂」按鈕？<span>▼</span>
+      </div>
+      <div class="faq-a">
+        Lyria 3 功能需要最新版 Gemini，請確認在 gemini.google.com 登入，瀏覽器已更新。如果找不到按鈕，可以直接在對話框輸入「幫我生成音樂」，通常就能喚醒音樂功能！
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        30 秒的音樂太短，可以讓它更長嗎？<span>▼</span>
+      </div>
+      <div class="faq-a">
+        免費版只能生成 30 秒。在 Canva 裡，可以把同一段音樂「循環播放（Loop）」，或生成 2–3 段不同的音樂片段，下載後在 Canva 裡依序串接在一起，就能變成更長的完整作品！
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        做出來的音樂聽起來很普通，不符合預期怎麼辦？<span>▼</span>
+      </div>
+      <div class="faq-a">
+        修改提示詞！用「黃金公式」：指定<strong>樂器</strong>（例如鋼琴、吉他）＋ <strong>情緒</strong>（溫暖、感動）＋ <strong>節奏</strong>（慢板、輕快）＋ <strong>用途</strong>（畢業典禮背景音樂）。描述越具體，生成出來的音樂就越好！可以無限次重新生成哦。
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        我想做周杰倫風格的音樂，為什麼做出來很平淡？<span>▼</span>
+      </div>
+      <div class="faq-a">
+        Gemini 有版權保護機制，直接輸入歌手名字，AI 為了避免侵犯版權，會把結果變得很平淡！解決方法：不要寫名字，改成描述他的音樂特色。例如：不要寫「周杰倫的歌」，改寫成「融合中國風樂器與饒舌節奏的華語流行曲」，效果會好很多！
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        在 Canva 裡怎麼讓圖片和音樂對齊？<span>▼</span>
+      </div>
+      <div class="faq-a">
+        點選時間軸上的音訊條（橘色長條），可以左右拖曳對齊起始點；點選圖片片段的左右邊緣，可以拖曳調整顯示時間長短。建議先把音樂對齊到最開始，再調整每張圖片的長度來配合。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- 自學影片 -->
+<!-- ======================================================= -->
+<div class="video-section">
+  <h3>學生自學影片</h3>
+  <div class="video-grid">
+    <div class="video-card">
+      <h4>完整教學影片（NotebookLM 生成）</h4>
+      <video preload="none" controls style="width:100%;" poster="">
+        <source src="assets/影片概覽.mp4" type="video/mp4">
+        <div class="video-placeholder">影片下載後會出現在這裡</div>
+      </video>
+    </div>
+    <div class="video-card">
+      <h4>Gemini 生成音樂示範影片</h4>
+      <div class="video-placeholder">
+        可請老師提供 YouTube 示範影片連結嵌入於此
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 課程連結（教師模式） -->
+<div class="teacher-only">
+  <div style="background:var(--panel);border:2px dashed var(--c2);padding:24px;margin-bottom:28px;">
+    <h3 style="font-size:1.1rem;color:var(--c2);margin-bottom:12px;">延伸資源（教師模式）</h3>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:0.95rem;color:var(--dim);">
+      <li>• Gemini Lyria 官方提示詞指南：<a href="https://blog.google/products/and-platforms/products/gemini/tips-prompting-lyria-3/" target="_blank" style="color:var(--c1);">Google Blog</a></li>
+      <li>• NotebookLM 筆記本：<a href="https://notebooklm.google.com/notebook/605dd69d-1fc3-4f16-a78a-9bf1e3237bab" target="_blank" style="color:var(--c1);">開啟查看</a></li>
+      <li>• 課綱連結：A-E-A1 科技素養、資訊系統、資訊科技與人類社會</li>
+      <li>• 評量方式：作品完成度（影片輸出 50%）+ 過程記錄（25%）+ 同儕互評（25%）</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  AI 音樂創作師：用 Gemini 做畢業歌曲｜六年級資訊科技教學駕駛艙<br>
+  由 NotebookLM + Claude Code 自動生成 · 部署於 GitHub Pages
+</footer>
+
+<!-- ===== FLOATING TOOLS ===== -->
+<div class="float-panel">
+  <button class="float-btn" onclick="toggleTimer()" title="計時器">⏱</button>
+  <button class="float-btn" onclick="toggleLottery()" title="抽籤">🎲</button>
+</div>
+
+<!-- Timer -->
+<div class="timer-popup" id="timer-popup">
+  <div style="font-size:0.85rem;color:var(--dim);margin-bottom:6px;">課堂計時器</div>
+  <div class="timer-display" id="timer-display">05:00</div>
+  <div class="timer-controls">
+    <button class="t-btn" onclick="setTimer(3)">3 分</button>
+    <button class="t-btn" onclick="setTimer(5)">5 分</button>
+    <button class="t-btn" onclick="setTimer(10)">10 分</button>
+    <button class="t-btn" onclick="toggleTimerRun()" id="timer-run-btn">開始</button>
+    <button class="t-btn" onclick="resetTimer()">重置</button>
+  </div>
+</div>
+
+<!-- Lottery -->
+<div class="lottery-popup" id="lottery-popup">
+  <div style="font-size:0.85rem;color:var(--dim);margin-bottom:6px;">座號抽籤（1–30）</div>
+  <div class="lottery-display" id="lottery-result">?</div>
+  <div style="text-align:center;">
+    <button class="pixel-btn c2" onclick="runLottery()">抽！</button>
+  </div>
+</div>
+
+<!-- Draw toggle -->
+<button class="draw-toggle" onclick="toggleDraw()" title="畫筆工具">✏️</button>
+<div class="draw-panel" id="draw-panel">
+  <div class="draw-colors">
+    <div class="color-dot selected" style="background:#00e5ff" onclick="setDrawColor('#00e5ff',this)"></div>
+    <div class="color-dot" style="background:#ffd740" onclick="setDrawColor('#ffd740',this)"></div>
+    <div class="color-dot" style="background:#ff4081" onclick="setDrawColor('#ff4081',this)"></div>
+    <div class="color-dot" style="background:#69ff47" onclick="setDrawColor('#69ff47',this)"></div>
+    <div class="color-dot" style="background:#ffffff" onclick="setDrawColor('#ffffff',this)"></div>
+    <button style="font-size:0.8rem;padding:4px 8px;background:var(--surface);border:1px solid var(--dim);color:var(--dim);cursor:pointer;" onclick="clearDraw()">清除</button>
+  </div>
+</div>
+<canvas id="draw-overlay" class="draw-overlay"></canvas>
+
+<!-- ===== TEACHER PASSWORD MODAL ===== -->
+<div id="teacher-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:500;align-items:center;justify-content:center;">
+  <div style="background:var(--panel);border:2px solid var(--c2);padding:32px;max-width:360px;width:90%;box-shadow:var(--pixel-shadow);">
+    <h3 style="font-size:1.1rem;color:var(--c2);margin-bottom:16px;">教師模式認證</h3>
+    <input type="password" id="teacher-pw" placeholder="輸入教師密碼"
+      style="width:100%;padding:12px;background:var(--surface);border:2px solid var(--dim);color:var(--text);font-size:1rem;margin-bottom:12px;">
+    <div style="display:flex;gap:8px;">
+      <button class="pixel-btn c2" onclick="checkPw()">確認</button>
+      <button class="pixel-btn" style="background:var(--dim);color:#000;" onclick="cancelTeacher()">取消</button>
+    </div>
+    <div id="pw-error" style="color:var(--c3);font-size:0.9rem;margin-top:8px;"></div>
+  </div>
+</div>
+
+<script>
+// ===================== MODE =====================
+let currentMode = 'student';
+function setMode(m) {
+  if(m === 'teacher' && currentMode !== 'teacher') {
+    document.getElementById('teacher-modal').style.display='flex';
+    document.getElementById('teacher-pw').focus();
+    return;
+  }
+  if(m === 'student') {
+    currentMode = 'student';
+    document.body.classList.remove('teacher-mode');
+    document.getElementById('btn-student').classList.add('active');
+    document.getElementById('btn-teacher').classList.remove('active');
+  }
+}
+function checkPw() {
+  const pw = document.getElementById('teacher-pw').value;
+  if(pw === 'it2026') {
+    currentMode = 'teacher';
+    document.body.classList.add('teacher-mode');
+    document.getElementById('btn-teacher').classList.add('active');
+    document.getElementById('btn-student').classList.remove('active');
+    document.getElementById('teacher-modal').style.display='none';
+    document.getElementById('teacher-pw').value='';
+    document.getElementById('pw-error').textContent='';
+  } else {
+    document.getElementById('pw-error').textContent='密碼錯誤，請再試一次';
+  }
+}
+function cancelTeacher() {
+  document.getElementById('teacher-modal').style.display='none';
+  document.getElementById('teacher-pw').value='';
+  document.getElementById('pw-error').textContent='';
+}
+document.getElementById('teacher-pw').addEventListener('keydown', e=>{ if(e.key==='Enter') checkPw(); });
+
+// ===================== SECTION TOGGLE =====================
+function toggleSection(id) {
+  const body = document.getElementById('body-'+id);
+  const tog  = document.getElementById('toggle-'+id);
+  if(body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    tog.textContent='▼';
+  } else {
+    body.classList.add('collapsed');
+    tog.textContent='▶';
+  }
+}
+
+// ===================== PROGRESS =====================
+const completedStages = new Set();
+function markStage(s) {
+  completedStages.add(s);
+  const pct = (completedStages.size/5)*100;
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-text').textContent = completedStages.size+' / 5 關卡';
+}
+
+// ===================== QUIZ =====================
+const encouragements = ['太棒了！你答對了！','答對囉！你好厲害！','完美！繼續加油！','你真厲害，全對了！'];
+function answer(btn, qid, isCorrect) {
+  const container = document.getElementById(qid);
+  const btns = container.querySelectorAll('.quiz-opt');
+  const fb   = document.getElementById('fb-'+qid);
+  btns.forEach(b => b.disabled=true);
+  if(isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = encouragements[Math.floor(Math.random()*encouragements.length)];
+    fb.className = 'quiz-feedback show ok';
+    // check if stage done
+    const secNum = qid.charAt(1);
+    const sectionQs = document.querySelectorAll(`#sec${secNum} .quiz-item`);
+    let allDone = true;
+    sectionQs.forEach(qi => {
+      const anyCorrect = qi.querySelector('.quiz-opt.correct');
+      if(!anyCorrect) allDone = false;
+    });
+    if(allDone) markStage('s'+secNum);
+  } else {
+    btn.classList.add('wrong');
+    const correctBtn = Array.from(btns).find(b=>b.getAttribute('onclick').includes(',true)'));
+    if(correctBtn) correctBtn.classList.add('correct');
+    fb.textContent = '這次差一點！正確答案已標示，下次加油！';
+    fb.className = 'quiz-feedback show ng';
+  }
+}
+
+// ===================== LYRIC BUILDER =====================
+function buildPrompt() {
+  const theme  = document.getElementById('l-theme').value;
+  const style  = document.getElementById('l-style').value;
+  const mood   = document.getElementById('l-mood').value;
+  const struct = document.getElementById('l-struct').value;
+  const prompt = `請幫我寫一首畢業歌的歌詞：\n主題：${theme}\n風格：${style}\n情緒：${mood}\n結構：${struct}\n要求：適合國小學生，每段歌詞不超過4行，語言親切溫暖。`;
+  document.getElementById('lyric-out').textContent = prompt;
+}
+
+// ===================== CANVAS: COLOR-MOOD =====================
+(function(){
+  const cvs = document.getElementById('canvas-color');
+  if(!cvs) return;
+  function draw(){
+    const W = cvs.offsetWidth; cvs.width=W; cvs.height=220;
+    const ctx = cvs.getContext('2d');
+    ctx.clearRect(0,0,W,220);
+    const items=[
+      {color:'#ffb347',bg:'linear-gradient',label:'暖橘黃',music:'歡快、溫暖、充滿希望',mood:'HAPPY'},
+      {color:'#4fc3f7',label:'冷藍色',music:'抒情、深沉、思念感',mood:'CALM'},
+      {color:'#b39ddb',label:'紫羅蘭',music:'神秘、夢幻、優雅感',mood:'DREAM'},
+      {color:'#888888',label:'高對比灰',music:'節奏強烈、緊張感',mood:'BEAT'},
+    ];
+    const pw = W/4;
+    items.forEach((item,i)=>{
+      ctx.fillStyle = item.color;
+      ctx.fillRect(i*pw+4,4,pw-8,140);
+      ctx.fillStyle='#000';
+      ctx.globalAlpha=0.3;
+      ctx.fillRect(i*pw+4,4,pw-8,140);
+      ctx.globalAlpha=1;
+      // label
+      ctx.fillStyle='#fff';
+      ctx.font='bold 16px "Noto Sans TC"';
+      ctx.textAlign='center';
+      ctx.fillText(item.label, i*pw+pw/2, 80);
+      ctx.font='12px "Noto Sans TC"';
+      ctx.fillStyle='#e8e4f8';
+      ctx.fillText(item.mood, i*pw+pw/2, 100);
+      // music desc
+      ctx.fillStyle='#b0b0d0';
+      ctx.font='11px "Noto Sans TC"';
+      const words = item.music.split('、');
+      words.forEach((w,j)=> ctx.fillText(w, i*pw+pw/2, 158+j*18));
+    });
+    ctx.font='bold 14px "Noto Sans TC"';
+    ctx.fillStyle='#7070a0';
+    ctx.textAlign='center';
+    ctx.fillText('點擊色塊查看對應音樂情緒 →', W/2, 208);
+  }
+  draw();
+  window.addEventListener('resize',draw);
+  cvs.addEventListener('click', e=>{
+    const rect=cvs.getBoundingClientRect();
+    const x=(e.clientX-rect.left)*(cvs.width/rect.width);
+    const pw=cvs.width/4;
+    const idx=Math.floor(x/pw);
+    const msgs=['暖橘黃：生成「歡快溫暖」的音樂，適合活潑的畢業歌！','冷藍色：生成「抒情深沉」的音樂，帶有懷念感！','紫羅蘭：生成「夢幻優雅」的音樂，像童話故事！','高對比：生成「節奏強烈」的音樂，充滿活力！'];
+    if(msgs[idx]) alert(msgs[idx]);
+  });
+})();
+
+// ===================== CANVAS: MUSIC STYLES =====================
+(function(){
+  const cvs = document.getElementById('canvas-music');
+  if(!cvs) return;
+  const styles = [
+    {name:'鋼琴抒情',color:'#00e5ff',prompt:'溫暖感人的鋼琴旋律，輕柔童聲合唱，慢板，適合小學畢業'},
+    {name:'吉他流行',color:'#ffd740',prompt:'輕快的木吉他伴奏，活潑流行曲風，中板節奏，充滿青春'},
+    {name:'管弦氣勢',color:'#ff4081',prompt:'宏大的管弦樂，弦樂與銅管搭配，充滿希望的壯闊感'},
+    {name:'電子輕鬆',color:'#69ff47',prompt:'輕鬆的電子鼓節拍，加入合成器音效，歡樂的派對感'},
+  ];
+  let selectedIdx = -1;
+  function draw(){
+    const W=cvs.offsetWidth; cvs.width=W; cvs.height=240;
+    const ctx=cvs.getContext('2d');
+    ctx.clearRect(0,0,W,240);
+    const pw=W/4;
+    styles.forEach((s,i)=>{
+      const active = i===selectedIdx;
+      ctx.fillStyle = active?s.color:'#252552';
+      ctx.fillRect(i*pw+4,4,pw-8,100);
+      if(!active){ctx.strokeStyle=s.color;ctx.lineWidth=2;ctx.strokeRect(i*pw+4,4,pw-8,100);}
+      ctx.fillStyle = active?'#000':'#e8e4f8';
+      ctx.font='bold 15px "Noto Sans TC"';
+      ctx.textAlign='center';
+      ctx.fillText(s.name, i*pw+pw/2, 58);
+      if(active){
+        ctx.fillStyle='#000';
+        ctx.font='11px "Noto Sans TC"';
+        ctx.fillText('已選！', i*pw+pw/2, 80);
+      }
+    });
+    if(selectedIdx>=0){
+      const s=styles[selectedIdx];
+      ctx.fillStyle='#1a1a3e';
+      ctx.fillRect(4,112,W-8,118);
+      ctx.strokeStyle=s.color;ctx.lineWidth=2;
+      ctx.strokeRect(4,112,W-8,118);
+      ctx.fillStyle=s.color;
+      ctx.font='bold 14px "Noto Sans TC"';
+      ctx.textAlign='left';
+      ctx.fillText('提示詞範例：',14,138);
+      ctx.fillStyle='#e8e4f8';
+      ctx.font='13px "Noto Sans TC"';
+      // wrap text
+      const words=s.prompt; let line=''; let y=158;
+      for(let c of words){
+        const test=line+c;
+        if(ctx.measureText(test).width>W-30){
+          ctx.fillText(line,14,y); line=c; y+=20;
+        } else { line=test; }
+      }
+      ctx.fillText(line,14,y);
+    } else {
+      ctx.fillStyle='#7070a0';ctx.font='14px "Noto Sans TC"';
+      ctx.textAlign='center';
+      ctx.fillText('點擊上方風格，查看對應的提示詞範例',W/2,168);
+    }
+  }
+  draw();
+  window.addEventListener('resize',draw);
+  cvs.addEventListener('click',e=>{
+    const rect=cvs.getBoundingClientRect();
+    const x=(e.clientX-rect.left)*(cvs.width/rect.width);
+    const y=(e.clientY-rect.top)*(cvs.height/rect.height);
+    if(y<108){
+      const pw=cvs.width/4;
+      selectedIdx=Math.floor(x/pw);
+      draw();
+    }
+  });
+})();
+
+// ===================== CANVAS: TIMELINE =====================
+let tlProgress = 0, tlRunning = false, tlAnim = null;
+const tlSegments = [
+  {label:'封面',duration:3,color:'#bb86fc',desc:'班級名稱 / 年份字卡'},
+  {label:'主歌①',duration:5,color:'#00e5ff',desc:'第一段歌詞圖片'},
+  {label:'主歌②',duration:5,color:'#00c8e8',desc:'第二段歌詞圖片'},
+  {label:'副歌',duration:5,color:'#ff4081',desc:'最感動的班級合照'},
+  {label:'快切',duration:7,color:'#ffd740',desc:'多張快速切換懷念鏡頭'},
+  {label:'結尾',duration:5,color:'#69ff47',desc:'感謝字卡 / 再見畫面'},
+];
+const tlTotal = 30;
+
+function drawTimeline(){
+  const cvs = document.getElementById('canvas-timeline');
+  if(!cvs) return;
+  const W=cvs.offsetWidth; cvs.width=W; cvs.height=200;
+  const ctx=cvs.getContext('2d');
+  ctx.clearRect(0,0,W,200);
+  let x=8;
+  const barH=60, barY=50;
+  const totalW=W-16;
+  const scale=totalW/tlTotal;
+  tlSegments.forEach(seg=>{
+    const sw=seg.duration*scale;
+    ctx.fillStyle=seg.color;
+    ctx.fillRect(x,barY,sw-4,barH);
+    ctx.fillStyle='#000';
+    ctx.font='bold 12px "Noto Sans TC"';
+    ctx.textAlign='center';
+    ctx.fillText(seg.label,x+sw/2-2,barY+20);
+    ctx.font='10px "Noto Sans TC"';
+    ctx.fillText(seg.duration+'秒',x+sw/2-2,barY+38);
+    x+=sw;
+  });
+  // time axis
+  ctx.fillStyle='#7070a0'; ctx.font='11px "Noto Sans TC"';
+  for(let t=0;t<=30;t+=5){
+    const tx=8+t*scale;
+    ctx.fillStyle='#7070a0'; ctx.textAlign='center';
+    ctx.fillText(t+'s',tx,barY+barH+18);
+    ctx.fillStyle='rgba(255,255,255,0.15)';
+    ctx.fillRect(tx-1,barY,2,barH);
+  }
+  // progress needle
+  if(tlProgress>0){
+    const nx=8+tlProgress*scale;
+    ctx.fillStyle='#fff';
+    ctx.fillRect(nx-2,barY-10,4,barH+20);
+    ctx.font='bold 14px "Noto Sans TC"';
+    ctx.fillStyle='#fff'; ctx.textAlign='center';
+    ctx.fillText(Math.round(tlProgress)+'s',nx,barY-14);
+  }
+  // info
+  ctx.fillStyle='#e8e4f8'; ctx.font='13px "Noto Sans TC"'; ctx.textAlign='left';
+  ctx.fillText('點擊片段查看內容說明',8,170);
+}
+drawTimeline();
+window.addEventListener('resize',drawTimeline);
+
+document.getElementById('canvas-timeline')?.addEventListener('click',e=>{
+  const cvs=document.getElementById('canvas-timeline');
+  const rect=cvs.getBoundingClientRect();
+  const x=(e.clientX-rect.left)*(cvs.width/rect.width)-8;
+  const scale=(cvs.width-16)/30;
+  let cum=0;
+  for(const seg of tlSegments){
+    const sw=seg.duration*scale;
+    if(x>=cum&&x<cum+sw){ alert(`「${seg.label}」（${seg.duration}秒）\n建議內容：${seg.desc}`); break; }
+    cum+=sw;
+  }
+});
+
+function playTimeline(){
+  if(tlRunning) return;
+  tlRunning=true; tlProgress=0;
+  const step=()=>{
+    tlProgress+=0.15;
+    if(tlProgress>=30){ tlProgress=30; tlRunning=false; drawTimeline(); return; }
+    drawTimeline();
+    tlAnim=requestAnimationFrame(step);
+  };
+  tlAnim=requestAnimationFrame(step);
+}
+function resetTimeline(){ cancelAnimationFrame(tlAnim); tlProgress=0; tlRunning=false; drawTimeline(); }
+
+// ===================== ETHICS GAME =====================
+const ethicsQs = [
+  {q:'把 Gemini 生成的音樂放進班級畢業影片，在教室播放給同學看。',ans:true,exp:'可以！用於學校活動和個人欣賞是允許的。'},
+  {q:'把 Gemini 生成的音樂上傳到串流平台，說是自己原創作品並賺取版稅。',ans:false,exp:'不行！不能假裝是原創作品，也不能用 AI 生成內容商業獲利。'},
+  {q:'把班上同學的照片放進畢業影片，上傳到 YouTube 前，先問過照片裡的每位同學。',ans:true,exp:'可以！事先徵得同意，是尊重他人隱私的好做法。'},
+  {q:'直接用別人的手機照片，沒有得到許可就放進影片分享。',ans:false,exp:'不行！使用他人的照片需要取得許可。'},
+  {q:'在課堂作業中說明「這段音樂是用 Gemini AI 生成的」。',ans:true,exp:'可以！透明地標示 AI 的使用，是誠實負責的行為！'},
+];
+let ethicsIdx=0, ethicsRight=0, ethicsTotal=0;
+function loadEthicsQ(){
+  if(ethicsIdx>=ethicsQs.length){ ethicsIdx=0; ethicsRight=0; }
+  document.getElementById('ethics-q-box').textContent = '情境 '+(ethicsIdx+1)+'：'+ethicsQs[ethicsIdx].q;
+  document.getElementById('ethics-result').textContent='';
+}
+function ethicsAnswer(val){
+  const q=ethicsQs[ethicsIdx];
+  ethicsTotal++;
+  if(val===q.ans){ ethicsRight++; document.getElementById('ethics-result').style.color='var(--c4)'; document.getElementById('ethics-result').textContent='正確！'+q.exp; }
+  else { document.getElementById('ethics-result').style.color='var(--c3)'; document.getElementById('ethics-result').textContent='這次不對！'+q.exp; }
+  document.getElementById('ethics-score').textContent=ethicsRight;
+  document.getElementById('ethics-total').textContent=ethicsTotal;
+  ethicsIdx++;
+  setTimeout(loadEthicsQ,2000);
+}
+loadEthicsQ();
+
+// ===================== FAQ =====================
+function toggleFaq(el){
+  const ans=el.nextElementSibling;
+  const arrow=el.querySelector('span');
+  ans.classList.toggle('open');
+  arrow.textContent=ans.classList.contains('open')?'▲':'▼';
+}
+
+// ===================== TIMER =====================
+let timerSecs=300, timerRunning=false, timerInterval=null;
+function toggleTimer(){ document.getElementById('timer-popup').classList.toggle('open'); }
+function setTimer(m){ timerSecs=m*60; clearInterval(timerInterval); timerRunning=false; document.getElementById('timer-run-btn').textContent='開始'; updateTimerDisplay(); }
+function toggleTimerRun(){
+  if(timerRunning){ clearInterval(timerInterval); timerRunning=false; document.getElementById('timer-run-btn').textContent='繼續'; }
+  else {
+    timerRunning=true; document.getElementById('timer-run-btn').textContent='暫停';
+    timerInterval=setInterval(()=>{ timerSecs--; if(timerSecs<=0){ timerSecs=0; clearInterval(timerInterval); timerRunning=false; document.getElementById('timer-run-btn').textContent='開始'; alert('時間到！'); } updateTimerDisplay(); },1000);
+  }
+}
+function resetTimer(){ clearInterval(timerInterval); timerRunning=false; document.getElementById('timer-run-btn').textContent='開始'; timerSecs=300; updateTimerDisplay(); }
+function updateTimerDisplay(){ const m=Math.floor(timerSecs/60).toString().padStart(2,'0'); const s=(timerSecs%60).toString().padStart(2,'0'); document.getElementById('timer-display').textContent=m+':'+s; }
+updateTimerDisplay();
+
+// ===================== LOTTERY =====================
+function toggleLottery(){ document.getElementById('lottery-popup').classList.toggle('open'); }
+function runLottery(){
+  let cnt=0;
+  const iv=setInterval(()=>{
+    document.getElementById('lottery-result').textContent=Math.floor(Math.random()*30)+1;
+    cnt++;
+    if(cnt>20){ clearInterval(iv); }
+  },60);
+}
+
+// ===================== SLIDE NAV =====================
+let slideIdx = 1;
+function gotoSlide(n) {
+  slideIdx = Math.max(1, Math.min(15, n));
+  const num = slideIdx.toString().padStart(2,'0');
+  document.getElementById('slide-img').src = 'assets/slide_'+num+'.jpg';
+  document.getElementById('slide-img').alt = '投影片 '+slideIdx;
+  document.getElementById('slide-cur').textContent = slideIdx;
+  for(let i=1;i<=15;i++){
+    const btn = document.getElementById('sdot'+i);
+    if(btn){
+      btn.style.background = i===slideIdx?'var(--c1)':'var(--surface)';
+      btn.style.borderColor = i===slideIdx?'var(--c1)':'var(--dim)';
+      btn.style.color = i===slideIdx?'#000':'var(--dim)';
+    }
+  }
+}
+function slideNav(dir){ gotoSlide(slideIdx+dir); }
+
+// ===================== DRAW TOOL =====================
+let drawActive=false, drawing=false, drawColor='#00e5ff', lastX=0, lastY=0;
+const drawOverlay=document.getElementById('draw-overlay');
+const dctx=drawOverlay.getContext('2d');
+
+function resizeDrawOverlay(){
+  const W=window.innerWidth, H=document.body.scrollHeight;
+  drawOverlay.style.width=W+'px'; drawOverlay.style.height=H+'px';
+  drawOverlay.width=W; drawOverlay.height=H;
+}
+window.addEventListener('resize',resizeDrawOverlay);
+resizeDrawOverlay();
+
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawOverlay.classList.toggle('active',drawActive);
+  document.getElementById('draw-panel').classList.toggle('open',drawActive);
+}
+function setDrawColor(c,el){
+  drawColor=c;
+  document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function clearDraw(){ dctx.clearRect(0,0,drawOverlay.width,drawOverlay.height); }
+
+drawOverlay.addEventListener('mousedown',e=>{ drawing=true; lastX=e.clientX; lastY=e.clientY+window.scrollY; });
+drawOverlay.addEventListener('mousemove',e=>{
+  if(!drawing) return;
+  dctx.beginPath(); dctx.strokeStyle=drawColor; dctx.lineWidth=4; dctx.lineCap='round';
+  dctx.moveTo(lastX,lastY); dctx.lineTo(e.clientX,e.clientY+window.scrollY); dctx.stroke();
+  lastX=e.clientX; lastY=e.clientY+window.scrollY;
+});
+drawOverlay.addEventListener('mouseup',()=>drawing=false);
+drawOverlay.addEventListener('mouseleave',()=>drawing=false);
+
+drawOverlay.addEventListener('touchstart',e=>{
+  e.preventDefault(); drawing=true;
+  lastX=e.touches[0].clientX; lastY=e.touches[0].clientY+window.scrollY;
+},{passive:false});
+drawOverlay.addEventListener('touchmove',e=>{
+  e.preventDefault(); if(!drawing) return;
+  dctx.beginPath(); dctx.strokeStyle=drawColor; dctx.lineWidth=4; dctx.lineCap='round';
+  dctx.moveTo(lastX,lastY); dctx.lineTo(e.touches[0].clientX,e.touches[0].clientY+window.scrollY); dctx.stroke();
+  lastX=e.touches[0].clientX; lastY=e.touches[0].clientY+window.scrollY;
+},{passive:false});
+drawOverlay.addEventListener('touchend',()=>drawing=false);
+</script>
+</body>
+</html>
