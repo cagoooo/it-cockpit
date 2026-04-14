@@ -469,29 +469,98 @@ canvas {
   gap: 8px;
 }
 
-/* ===== SLIDE GALLERY ===== */
-.slide-gallery {
+/* ===== SLIDE PLAYER ===== */
+.slide-player {
   background: var(--surface);
   border: 2px solid var(--border);
   border-radius: var(--radius);
   padding: 16px;
   margin: 16px 0;
 }
-.slide-gallery h4 { font-size: 1.05rem; font-weight: 900; margin-bottom: 12px; }
-.slide-thumbs {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 10px;
-}
-.slide-thumb {
-  border: 2px solid var(--border);
-  border-radius: 8px;
+.slide-player-main {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #111;
+  border-radius: 10px;
   overflow: hidden;
-  cursor: pointer;
-  transition: all 0.2s;
+  margin-bottom: 12px;
 }
-.slide-thumb:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-.slide-thumb img { width: 100%; display: block; }
+.slide-player-main img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.slide-nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff; border: none; cursor: pointer;
+  font-size: 1.4rem; padding: 10px 16px;
+  border-radius: 8px; transition: background 0.2s;
+  z-index: 2;
+}
+.slide-nav:hover { background: rgba(0,0,0,0.85); }
+.slide-nav.prev { left: 8px; }
+.slide-nav.next { right: 8px; }
+.slide-fs-btn {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(0,0,0,0.5); color: #fff;
+  border: none; cursor: pointer; font-size: 1.1rem;
+  padding: 6px 10px; border-radius: 6px; z-index: 2;
+  transition: background 0.2s;
+}
+.slide-fs-btn:hover { background: rgba(0,0,0,0.85); }
+.slide-counter {
+  text-align: center; font-size: 1rem;
+  color: var(--dim); margin-bottom: 10px;
+  font-weight: 700;
+}
+.slide-strip {
+  display: flex; gap: 6px;
+  overflow-x: auto; padding: 4px 2px;
+  scrollbar-width: thin;
+}
+.slide-strip::-webkit-scrollbar { height: 4px; }
+.slide-strip::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.slide-strip-thumb {
+  flex: 0 0 96px;
+  border: 3px solid transparent;
+  border-radius: 6px; overflow: hidden;
+  cursor: pointer; transition: all 0.2s;
+  opacity: 0.55;
+}
+.slide-strip-thumb.active { border-color: var(--c1); opacity: 1; box-shadow: 0 0 8px rgba(255,107,107,0.4); }
+.slide-strip-thumb:hover { opacity: 0.88; }
+.slide-strip-thumb img { width: 100%; display: block; }
+
+/* Fullscreen overlay */
+.slide-fullscreen-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.95); z-index: 9999;
+  flex-direction: column; align-items: center; justify-content: center;
+}
+.slide-fullscreen-overlay.open { display: flex; }
+.slide-fullscreen-overlay img {
+  max-width: 95vw; max-height: 88vh; object-fit: contain;
+  border-radius: 8px;
+}
+.slide-fs-close {
+  position: absolute; top: 16px; right: 20px;
+  background: none; border: none; color: #fff;
+  font-size: 2rem; cursor: pointer; line-height: 1;
+}
+.slide-fs-counter {
+  color: #ccc; font-size: 1rem; margin-top: 10px;
+}
+.slide-fs-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.15); color: #fff;
+  border: none; cursor: pointer; font-size: 2rem;
+  padding: 12px 20px; border-radius: 8px;
+}
+.slide-fs-nav.prev { left: 16px; }
+.slide-fs-nav.next { right: 16px; }
 
 /* ===== FLOATING TOOLS ===== */
 .float-panel {
@@ -1170,31 +1239,38 @@ canvas {
   </div>
 </div>
 
-<!-- 授課簡報展示 -->
+<!-- 授課簡報播放器 -->
 <div class="nb-section">
   <h3>授課簡報（NotebookLM 生成）</h3>
-  <div class="slide-gallery">
-    <h4>簡報頁面</h4>
-    <div class="slide-thumbs" id="slideThumbs">
-      <!-- 動態填入簡報縮圖 -->
-      <div style="text-align:center; padding:40px; color:var(--dim); font-size:1rem; grid-column:1/-1;">
-        簡報圖片處理中，請稍候...<br>
-        （需先從 NotebookLM 下載 PDF 並轉換為 JPG）
-      </div>
+  <div class="slide-player">
+    <div class="slide-player-main" id="slideMain">
+      <img id="slideMainImg" src="assets/slide_01.jpg" alt="簡報第1頁">
+      <button class="slide-nav prev" onclick="slideNav(-1)">◀</button>
+      <button class="slide-nav next" onclick="slideNav(1)">▶</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶</button>
     </div>
+    <div class="slide-counter" id="slideCounter">1 / 15</div>
+    <div class="slide-strip" id="slideStrip"></div>
   </div>
+</div>
+
+<!-- 全螢幕播放 Overlay -->
+<div class="slide-fullscreen-overlay" id="slideOverlay">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
+  <button class="slide-fs-nav prev" onclick="slideNav(-1, true)">◀</button>
+  <img id="slideOverlayImg" src="assets/slide_01.jpg" alt="簡報全螢幕">
+  <button class="slide-fs-nav next" onclick="slideNav(1, true)">▶</button>
+  <div class="slide-fs-counter" id="slideOverlayCounter">1 / 15</div>
 </div>
 
 <!-- 自學影片 -->
 <div class="video-section">
   <h3>學生自學影片（NotebookLM 生成）</h3>
   <div class="video-wrap">
-    <!-- YouTube embed placeholder - 上傳後填入真實 video ID -->
-    <div class="video-placeholder">
-      <span style="font-size:3rem;">🎬</span>
-      <span>影片處理中...</span>
-      <span style="font-size:0.9rem; color:#666;">（需先上傳至 YouTube 後填入影片 ID）</span>
-    </div>
+    <video controls preload="none" style="width:100%;height:100%;background:#000;display:block;">
+      <source src="assets/影片概覽_compressed.mp4" type="video/mp4">
+      您的瀏覽器不支援影片播放。
+    </video>
   </div>
 </div>
 
@@ -1711,31 +1787,64 @@ window.addEventListener('load', () => {
     if (c3Canvas) { c3Canvas.width=c3Canvas.offsetWidth; drawC3(); }
     if (c4Canvas) { c4Canvas.width=c4Canvas.offsetWidth; drawC4(); }
   });
-  // 動態載入簡報縮圖（如果assets資料夾有圖片）
-  loadSlideThumbs();
+  initSlidePlayer();
 });
 
-function loadSlideThumbs() {
-  const container = document.getElementById('slideThumbs');
-  const maxSlides = 15;
-  let found = 0;
-  const thumbs = [];
-  for (let i = 1; i <= maxSlides; i++) {
-    const img = new Image();
+// ===== 簡報播放器 =====
+let slideTotal = 15;
+let slideCurrent = 1;
+
+function initSlidePlayer() {
+  const strip = document.getElementById('slideStrip');
+  if (!strip) return;
+  strip.innerHTML = '';
+  for (let i = 1; i <= slideTotal; i++) {
     const num = String(i).padStart(2, '0');
-    img.src = `assets/slide_${num}.jpg`;
-    img.onload = () => {
-      found++;
-      const div = document.createElement('div');
-      div.className = 'slide-thumb';
-      div.innerHTML = `<img src="assets/slide_${num}.jpg" alt="簡報第${i}頁" loading="lazy">`;
-      thumbs[i] = div;
-      if (found >= 3) {
-        container.innerHTML = '';
-        thumbs.filter(Boolean).forEach(t => container.appendChild(t));
-      }
-    };
+    const div = document.createElement('div');
+    div.className = 'slide-strip-thumb' + (i === 1 ? ' active' : '');
+    div.id = `sthumb_${i}`;
+    div.onclick = () => goSlide(i);
+    div.innerHTML = `<img src="assets/slide_${num}.jpg" alt="第${i}頁" loading="lazy">`;
+    strip.appendChild(div);
   }
+  goSlide(1);
+  // 鍵盤左右鍵
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('slideOverlay').classList.contains('open')) {
+      if (e.key === 'ArrowLeft') slideNav(-1, true);
+      if (e.key === 'ArrowRight') slideNav(1, true);
+      if (e.key === 'Escape') closeSlideFullscreen();
+    }
+  });
+}
+
+function goSlide(n) {
+  slideCurrent = Math.max(1, Math.min(slideTotal, n));
+  const num = String(slideCurrent).padStart(2, '0');
+  const src = `assets/slide_${num}.jpg`;
+  document.getElementById('slideMainImg').src = src;
+  document.getElementById('slideOverlayImg').src = src;
+  document.getElementById('slideCounter').textContent = `${slideCurrent} / ${slideTotal}`;
+  document.getElementById('slideOverlayCounter').textContent = `${slideCurrent} / ${slideTotal}`;
+  // 更新縮圖 strip active 狀態
+  document.querySelectorAll('.slide-strip-thumb').forEach((el, idx) => {
+    el.classList.toggle('active', idx + 1 === slideCurrent);
+  });
+  // 自動捲動縮圖 strip 到目前頁
+  const thumb = document.getElementById(`sthumb_${slideCurrent}`);
+  if (thumb) thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function slideNav(dir, inOverlay) {
+  goSlide(slideCurrent + dir);
+}
+
+function openSlideFullscreen() {
+  document.getElementById('slideOverlay').classList.add('open');
+}
+
+function closeSlideFullscreen() {
+  document.getElementById('slideOverlay').classList.remove('open');
 }
 </script>
 </body>
