@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#0d0d2b"/>
+  <!-- cyan border -->
+  <rect x="0" y="0" width="32" height="32" fill="none" stroke="#00e5ff" stroke-width="1.5"/>
+  <!-- Letter I (cyan) -->
+  <rect x="4"  y="8"  width="7" height="2"  fill="#00e5ff"/>
+  <rect x="6"  y="10" width="3" height="11" fill="#00e5ff"/>
+  <rect x="4"  y="21" width="7" height="2"  fill="#00e5ff"/>
+  <!-- Letter T (yellow) -->
+  <rect x="13" y="8"  width="14" height="2"  fill="#ffd740"/>
+  <rect x="18" y="10" width="4"  height="13" fill="#ffd740"/>
+</svg>
