@@ -1058,9 +1058,9 @@ canvas{
     <button onclick="slideNav(1)"  style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:none;color:#fff;font-size:2rem;padding:12px 16px;cursor:pointer;">&#8250;</button>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;">
-    <span style="font-size:0.9rem;color:var(--dim);">第 <span id="slide-cur">1</span> / 15 頁</span>
+    <span style="font-size:0.9rem;color:var(--dim);">第 <span id="slide-cur">1</span> / 12 頁</span>
     <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
-      <script>for(let i=1;i<=15;i++) document.write(`<button onclick="gotoSlide(${i})" id="sdot${i}" style="width:28px;height:28px;background:${i===1?'var(--c1)':'var(--surface)'};border:2px solid ${i===1?'var(--c1)':'var(--dim)'};color:${i===1?'#000':'var(--dim)'};font-size:0.75rem;cursor:pointer;">${i}</button>`);</script>
+      <script>for(let i=1;i<=12;i++) document.write(`<button onclick="gotoSlide(${i})" id="sdot${i}" style="width:28px;height:28px;background:${i===1?'var(--c1)':'var(--surface)'};border:2px solid ${i===1?'var(--c1)':'var(--dim)'};color:${i===1?'#000':'var(--dim)'};font-size:0.75rem;cursor:pointer;">${i}</button>`);</script>
     </div>
   </div>
 </div>
@@ -1657,12 +1657,12 @@ function runLottery(){
 // ===================== SLIDE NAV =====================
 let slideIdx = 1;
 function gotoSlide(n) {
-  slideIdx = Math.max(1, Math.min(15, n));
+  slideIdx = Math.max(1, Math.min(12, n));
   const num = slideIdx.toString().padStart(2,'0');
   document.getElementById('slide-img').src = 'assets/slide_'+num+'.jpg';
   document.getElementById('slide-img').alt = '投影片 '+slideIdx;
   document.getElementById('slide-cur').textContent = slideIdx;
-  for(let i=1;i<=15;i++){
+  for(let i=1;i<=12;i++){
     const btn = document.getElementById('sdot'+i);
     if(btn){
       btn.style.background = i===slideIdx?'var(--c1)':'var(--surface)';
