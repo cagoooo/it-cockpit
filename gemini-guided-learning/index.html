@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini 引導式學習｜六年級資訊科技教學駕駛艙</title>
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/gemini-guided-learning/">
+<meta property="og:title" content="Gemini 引導式學習｜六年級資訊科技教學駕駛艙">
+<meta property="og:description" content="用 Gemini『引導式學習』模式，讓 AI 變成專屬家教：不直接給答案，一步步帶你真正學會。PARTS 提示詞框架 × 4 種互動技巧 × 課堂與自學活動。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/gemini-guided-learning/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/gemini-guided-learning/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#0d0d2b; --surface:#1a1a3e; --panel:#252552; --panel2:#2f2f66;
+  --c1:#00e5ff; --c2:#ffd740; --c3:#ff4081; --c4:#69ff47; --c5:#b388ff;
+  --text:#e8e4f8; --dim:#7070a0; --line:rgba(255,255,255,.08);
+  --shadow-px:4px 4px 0 rgba(0,0,0,.45);
+  --glow:0 0 14px rgba(0,229,255,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  min-height:100vh;
+  background-image:
+    radial-gradient(circle at 20% 10%,rgba(0,229,255,.08),transparent 40%),
+    radial-gradient(circle at 80% 90%,rgba(255,64,129,.08),transparent 40%),
+    radial-gradient(circle at 50% 50%,rgba(105,255,71,.04),transparent 50%);
+}
+.pixel-font{font-family:'Press Start 2P',monospace;letter-spacing:.04em}
+
+/* Header */
+#site-header{
+  position:sticky;top:0;z-index:100;
+  background:linear-gradient(180deg,#0d0d2b 85%,rgba(13,13,43,.6));
+  border-bottom:2px solid var(--c1);
+  backdrop-filter:blur(10px);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:12px 24px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.site-logo{
+  display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);
+}
+.logo-emoji{font-size:2rem;filter:drop-shadow(0 0 8px var(--c1))}
+.logo-title{font-weight:900;font-size:1.1rem;line-height:1.2}
+.logo-sub{font-size:.7rem;color:var(--dim);font-family:'Press Start 2P',monospace}
+.header-meta{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.meta-chip{
+  padding:6px 14px;border:2px solid var(--c2);color:var(--c2);
+  font-size:.8rem;font-weight:700;background:rgba(255,215,64,.08);
+}
+.meta-chip.green{border-color:var(--c4);color:var(--c4);background:rgba(105,255,71,.08)}
+.meta-chip.pink{border-color:var(--c3);color:var(--c3);background:rgba(255,64,129,.08)}
+
+/* Progress bar */
+.progress-wrap{max-width:1400px;margin:0 auto;padding:0 24px 10px}
+.progress-label{font-size:.8rem;color:var(--dim);margin-bottom:4px;display:flex;justify-content:space-between}
+.progress-bar{height:8px;background:var(--surface);overflow:hidden;border:1px solid var(--c1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c4),var(--c1),var(--c3));width:0%;transition:width .4s ease}
+
+/* Mode bar */
+#mode-bar{
+  max-width:1400px;margin:0 auto;padding:12px 24px;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+  border-bottom:1px dashed var(--line);
+}
+.mode-btn{
+  padding:8px 18px;border:2px solid var(--c1);background:transparent;color:var(--c1);
+  font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:all .2s;
+}
+.mode-btn.active{background:var(--c1);color:var(--bg);box-shadow:var(--shadow-px)}
+.mode-btn:hover{background:rgba(0,229,255,.15)}
+.mode-hint{color:var(--dim);font-size:.85rem;margin-left:auto}
+
+/* Container */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Hero */
+#hero{
+  display:grid;grid-template-columns:1fr 1.2fr;gap:24px;margin-bottom:24px;
+  background:var(--surface);border:2px solid var(--c1);padding:24px;box-shadow:var(--shadow-px);
+}
+@media(max-width:900px){#hero{grid-template-columns:1fr}}
+.hero-text h1{font-size:1.8rem;font-weight:900;line-height:1.3;margin-bottom:12px}
+.hero-text .sub{color:var(--c2);font-size:1rem;margin-bottom:16px}
+.hero-text .desc{font-size:1rem;line-height:1.8}
+.hero-img-frame{
+  border:2px solid var(--c2);background:#000;overflow:hidden;
+  min-height:280px;display:flex;align-items:center;justify-content:center;
+}
+.hero-img-frame img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Objectives */
+#objectives{
+  background:var(--panel);padding:20px;border:2px solid var(--c4);margin-bottom:24px;box-shadow:var(--shadow-px);
+}
+#objectives h2{font-size:1.3rem;margin-bottom:12px;color:var(--c4)}
+.obj-chips{display:flex;flex-wrap:wrap;gap:10px}
+.obj-chip{
+  padding:8px 18px;background:rgba(105,255,71,.12);border:1.5px solid var(--c4);
+  color:var(--text);font-size:1rem;font-weight:500;
+}
+
+/* Section nav */
+#section-nav{
+  position:sticky;top:70px;z-index:50;
+  background:rgba(13,13,43,.95);backdrop-filter:blur(8px);
+  padding:12px 0;margin-bottom:20px;border-bottom:1px solid var(--line);
+}
+.stage-pills{display:flex;gap:10px;flex-wrap:wrap;max-width:1400px;margin:0 auto;padding:0 24px}
+.stage-pill{
+  padding:10px 20px;background:var(--surface);border:2px solid var(--c3);
+  color:var(--c3);font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;transition:all .2s;
+}
+.stage-pill:hover{background:var(--c3);color:#fff}
+.stage-pill.done{border-color:var(--c4);color:var(--c4);background:rgba(105,255,71,.1)}
+.stage-pill.done::after{content:" ✓"}
+
+/* Level sections */
+.level-section{
+  background:var(--surface);border:2px solid var(--c1);padding:24px;margin-bottom:24px;
+  box-shadow:var(--shadow-px);scroll-margin-top:150px;
+}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.stage-badge{
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  padding:7px 14px;background:var(--c3);color:#fff;letter-spacing:.1em;
+}
+.section-header h2{font-size:1.4rem;font-weight:900}
+
+/* Two column */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px}
+@media(max-width:900px){.two-col{grid-template-columns:1fr}}
+
+/* Card */
+.card{
+  background:var(--panel);border:2px solid var(--line);padding:18px;
+  margin-bottom:16px;
+}
+.card h3{font-size:1.1rem;margin-bottom:12px;color:var(--c2)}
+.card h4{font-size:1.05rem;margin-bottom:8px;color:var(--c1)}
+
+/* Step list */
+.step-list{list-style:none}
+.step-list li{
+  display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;
+  font-size:1rem;line-height:1.7;
+}
+.step-num{
+  flex-shrink:0;min-width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--c1);color:#000;font-weight:900;font-size:.9rem;
+  font-family:'Press Start 2P',monospace;
+}
+.step-text{flex:1}
+.step-text b{color:var(--c2)}
+
+/* Image frame */
+.img-frame{
+  border:2px solid var(--c2);background:#000;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.img-frame img{width:100%;height:auto;display:block}
+
+/* Canvas / interactive area */
+.canvas-section{
+  background:var(--panel2);border:2px dashed var(--c4);padding:20px;margin:18px 0;
+}
+.canvas-section h3{font-size:1.15rem;margin-bottom:14px;color:var(--c4)}
+
+/* Tip box */
+.tip-box{
+  background:rgba(255,215,64,.08);border-left:4px solid var(--c2);
+  padding:14px 18px;margin:12px 0;font-size:.95rem;line-height:1.7;
+}
+.tip-box.warn{border-left-color:var(--c3);background:rgba(255,64,129,.08)}
+.tip-box.good{border-left-color:var(--c4);background:rgba(105,255,71,.08)}
+
+/* Prompt builder */
+.pb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:12px}
+.pb-group label{
+  display:block;font-size:.85rem;color:var(--c1);margin-bottom:5px;font-weight:700;
+}
+.pb-group select, .pb-group input{
+  width:100%;padding:9px 12px;background:var(--bg);
+  border:2px solid var(--c1);color:var(--text);font-family:inherit;font-size:.95rem;
+}
+.prompt-output{
+  background:#000;border:2px solid var(--c4);padding:16px;
+  font-size:1rem;line-height:1.8;min-height:80px;margin-top:10px;
+  font-family:'Noto Sans TC',monospace;
+}
+.btn-primary{
+  padding:10px 22px;background:var(--c1);color:#000;
+  border:none;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+  box-shadow:var(--shadow-px);margin:4px 2px;
+}
+.btn-primary:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 rgba(0,0,0,.55)}
+
+/* Simulator screen */
+.sim-screen{
+  background:#1a3a1a;border:2px solid var(--c4);padding:18px;min-height:120px;
+  font-family:monospace;font-size:.95rem;line-height:1.8;margin-bottom:10px;
+}
+.sim-step{display:none}
+.sim-step.active{display:block}
+.sim-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sim-progress{color:var(--dim);font-size:.9rem}
+.arrow-hint{color:var(--c1);font-weight:700}
+.highlight-box{background:var(--c2);color:#000;padding:2px 6px;font-weight:700}
+
+/* Quiz */
+.quiz-section{
+  background:var(--panel);border:2px solid var(--c3);padding:18px;margin:18px 0;
+}
+.quiz-section h3{color:var(--c3);font-size:1.15rem;margin-bottom:14px}
+.q-item{margin-bottom:20px}
+.q-text{font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.q-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.q-opt{
+  padding:10px 16px;background:var(--surface);border:2px solid var(--line);
+  color:var(--text);cursor:pointer;font-family:inherit;font-size:.95rem;
+  text-align:left;transition:all .2s;
+}
+.q-opt:hover{border-color:var(--c1);background:var(--panel2)}
+.q-opt.correct{border-color:var(--c4);background:rgba(105,255,71,.2);color:var(--c4)}
+.q-opt.wrong{border-color:var(--c3);background:rgba(255,64,129,.2);color:var(--c3)}
+.q-opt-label{
+  display:inline-block;min-width:22px;font-weight:900;color:var(--c2);margin-right:6px;
+}
+.q-feedback{
+  margin-top:10px;padding:10px;font-size:.95rem;display:none;
+  background:var(--bg);border-left:3px solid var(--c1);
+}
+.q-feedback.show{display:block}
+
+/* Teacher only */
+.teacher-only{
+  display:none;background:rgba(255,215,64,.07);border:2px dashed var(--c2);
+  padding:16px;margin-top:16px;
+}
+.teacher-only h4{color:var(--c2);margin-bottom:8px;font-size:1.05rem}
+.teacher-only ul{padding-left:20px;font-size:.95rem;line-height:1.7}
+.teacher-mode .teacher-only{display:block}
+
+/* Slide player */
+#slideshow-section{
+  background:var(--surface);border:2px solid var(--c2);padding:24px;margin-bottom:24px;
+  box-shadow:var(--shadow-px);
+}
+#slideshow-section h2{color:var(--c2);font-size:1.4rem;margin-bottom:14px}
+.slide-player-main{
+  position:relative;background:#000;border:2px solid var(--c1);overflow:hidden;aspect-ratio:16/9;
+}
+.slide-player-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,.6);color:#fff;border:none;padding:18px 12px;
+  font-size:1.3rem;cursor:pointer;
+}
+.slide-nav.prev{left:0}
+.slide-nav.next{right:0}
+.slide-nav:hover{background:var(--c1);color:#000}
+.slide-fs-btn{
+  position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);
+  color:#fff;border:none;padding:6px 12px;cursor:pointer;font-size:.9rem;
+}
+.slide-fs-btn:hover{background:var(--c2);color:#000}
+.slide-counter{
+  position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.6);
+  color:var(--c1);padding:4px 10px;font-family:'Press Start 2P',monospace;font-size:.65rem;
+}
+.slide-strip{
+  display:flex;gap:6px;overflow-x:auto;padding:12px 0 4px;
+  scrollbar-width:thin;scrollbar-color:var(--c1) var(--bg);
+}
+.slide-strip-thumb{
+  flex-shrink:0;width:110px;height:62px;border:2px solid var(--line);
+  background:#000;overflow:hidden;cursor:pointer;transition:all .2s;
+}
+.slide-strip-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.slide-strip-thumb:hover{border-color:var(--c1)}
+.slide-strip-thumb.active{border-color:var(--c4);box-shadow:0 0 8px var(--c4)}
+.slide-fullscreen-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;
+  display:none;align-items:center;justify-content:center;padding:40px;
+}
+.slide-fullscreen-overlay.show{display:flex}
+.slide-fs-img{max-width:100%;max-height:100%;object-fit:contain}
+.slide-fs-close{
+  position:absolute;top:20px;right:20px;background:var(--c3);color:#fff;
+  border:none;font-size:1.6rem;padding:10px 16px;cursor:pointer;font-weight:900;
+}
+
+/* Video section */
+#video-section{
+  background:var(--surface);border:2px solid var(--c4);padding:24px;margin-bottom:24px;
+  box-shadow:var(--shadow-px);
+}
+#video-section h2{color:var(--c4);font-size:1.4rem;margin-bottom:14px}
+.video-wrap{position:relative;aspect-ratio:16/9;background:#000;border:2px solid var(--c1)}
+.video-wrap iframe{width:100%;height:100%;border:none;display:block}
+
+/* NotebookLM Resources */
+#nlm-section{
+  background:var(--surface);border:2px solid var(--c5);padding:24px;margin-bottom:24px;
+  box-shadow:var(--shadow-px);
+}
+#nlm-section h2{color:var(--c5);font-size:1.4rem;margin-bottom:14px}
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:18px}
+.nb-card{
+  background:var(--panel);border:2px solid var(--c5);padding:16px;
+  transition:all .2s;text-decoration:none;color:var(--text);display:block;
+}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-px)}
+.nb-card h4{color:var(--c5);font-size:1rem;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.6}
+
+/* FAQ */
+.faq-section h3{color:var(--c2);font-size:1.2rem;margin-bottom:12px;margin-top:16px}
+.faq-item{
+  background:var(--panel);border:1px solid var(--line);margin-bottom:8px;
+}
+.faq-q{
+  padding:14px 18px;cursor:pointer;font-size:1rem;font-weight:700;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.faq-q:hover{color:var(--c2)}
+.faq-q::after{content:"＋";color:var(--c2);font-weight:700;transition:transform .2s}
+.faq-item.open .faq-q::after{content:"－"}
+.faq-a{
+  padding:0 18px;max-height:0;overflow:hidden;transition:all .3s;
+  font-size:.95rem;line-height:1.8;color:var(--text);
+}
+.faq-item.open .faq-a{padding:0 18px 14px;max-height:600px}
+
+/* Project task */
+#project-task{
+  background:linear-gradient(135deg,var(--panel),var(--panel2));
+  border:2px solid var(--c3);padding:24px;margin-bottom:24px;box-shadow:var(--shadow-px);
+}
+#project-task h2{color:var(--c3);font-size:1.4rem;margin-bottom:14px}
+.task-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.task-step{
+  background:var(--bg);border:2px solid var(--c1);padding:18px;position:relative;
+}
+.task-step-num{
+  position:absolute;top:-14px;left:12px;background:var(--c1);color:#000;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;padding:5px 10px;
+}
+.task-step h4{color:var(--c1);font-size:1rem;margin-bottom:6px;margin-top:4px}
+.task-step p{font-size:.9rem;color:var(--text);line-height:1.7}
+
+/* Float tools */
+#float-tools{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.float-btn{
+  width:54px;height:54px;border-radius:0;background:var(--c1);color:#000;
+  border:2px solid #000;font-size:1.3rem;cursor:pointer;font-family:inherit;
+  box-shadow:var(--shadow-px);transition:transform .15s;
+}
+.float-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,.55)}
+.float-btn.pink{background:var(--c3);color:#fff}
+.float-btn.green{background:var(--c4);color:#000}
+.float-btn.yellow{background:var(--c2);color:#000}
+.tool-panel{
+  position:fixed;right:90px;bottom:20px;width:320px;
+  background:var(--surface);border:2px solid var(--c1);padding:18px;
+  display:none;z-index:200;box-shadow:var(--shadow-px);
+}
+.tool-panel.show{display:block}
+.tool-panel h4{color:var(--c1);margin-bottom:10px;font-size:1rem;display:flex;justify-content:space-between;align-items:center}
+.tool-panel h4 .close{cursor:pointer;color:var(--c3);font-weight:900}
+.tool-panel input, .tool-panel textarea{
+  width:100%;padding:8px 10px;background:var(--bg);border:1.5px solid var(--c1);
+  color:var(--text);font-family:inherit;margin-bottom:8px;font-size:.95rem;
+}
+.lottery-result{
+  background:var(--bg);border:2px solid var(--c4);padding:14px;margin-top:8px;
+  font-size:1.3rem;text-align:center;font-weight:900;color:var(--c4);min-height:54px;
+  display:flex;align-items:center;justify-content:center;
+}
+.timer-display{
+  font-family:'Press Start 2P',monospace;font-size:1.6rem;text-align:center;
+  background:var(--bg);padding:18px;border:2px solid var(--c2);color:var(--c2);
+  margin-bottom:8px;
+}
+
+/* Footer */
+footer{
+  text-align:center;padding:30px 24px;color:var(--dim);font-size:.85rem;
+  border-top:1px solid var(--line);margin-top:30px;
+}
+footer a{color:var(--c1);text-decoration:none}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--c1);border:2px solid var(--bg)}
+
+/* PARTS cards */
+.parts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}
+.parts-card{
+  background:var(--bg);border:2px solid var(--c1);padding:14px;text-align:center;
+}
+.parts-card .letter{
+  font-family:'Press Start 2P',monospace;font-size:1.6rem;color:var(--c2);margin-bottom:6px;
+}
+.parts-card .name{font-size:1rem;font-weight:700;color:var(--c1);margin-bottom:4px}
+.parts-card .desc{font-size:.85rem;color:var(--text);line-height:1.6}
+
+/* Ghost / Do / Dont */
+.dodont-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media(max-width:700px){.dodont-grid{grid-template-columns:1fr}}
+.dodont-col{padding:14px;border:2px solid;background:var(--bg)}
+.dodont-col.do{border-color:var(--c4);color:var(--c4)}
+.dodont-col.dont{border-color:var(--c3);color:var(--c3)}
+.dodont-col h4{margin-bottom:8px}
+.dodont-col ul{list-style:none;color:var(--text)}
+.dodont-col ul li{padding:6px 0;font-size:.95rem;line-height:1.6;border-bottom:1px dashed var(--line)}
+.dodont-col ul li:last-child{border-bottom:none}
+.dodont-col ul li::before{content:attr(data-icon);margin-right:6px}
+
+/* 4 skills tabs */
+.skills-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.skill-tab{
+  padding:10px 18px;background:var(--bg);border:2px solid var(--c1);
+  color:var(--c1);font-family:inherit;font-size:.95rem;font-weight:700;
+  cursor:pointer;
+}
+.skill-tab.active{background:var(--c1);color:#000}
+.skill-panel{display:none;background:var(--bg);border:2px solid var(--c1);padding:18px}
+.skill-panel.active{display:block}
+.skill-panel .demo{
+  background:var(--surface);padding:14px;margin-top:10px;
+  border-left:3px solid var(--c2);font-size:.95rem;line-height:1.8;
+}
+.skill-panel .demo .you{color:var(--c4)}
+.skill-panel .demo .ai{color:var(--c1)}
+
+/* Scenario cards */
+.scene-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.scene-card{
+  background:var(--bg);border:2px solid var(--c5);padding:16px;
+}
+.scene-card h4{color:var(--c5);margin-bottom:8px;font-size:1rem}
+.scene-card .copy-prompt{
+  background:var(--surface);border:1.5px dashed var(--c2);padding:12px;
+  margin-top:10px;font-size:.9rem;line-height:1.7;position:relative;
+}
+.scene-card .copy-btn{
+  position:absolute;top:6px;right:6px;background:var(--c2);color:#000;
+  border:none;padding:3px 8px;font-size:.75rem;font-weight:700;cursor:pointer;
+}
+
+/* Avoid breaking inline inputs */
+input, select, textarea, button{font-family:inherit}
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="site-logo">
+      <span class="logo-emoji">🎓</span>
+      <div>
+        <div class="logo-title">IT COCKPIT</div>
+        <div class="logo-sub">GUIDED LEARNING</div>
+      </div>
+    </a>
+    <div class="header-meta">
+      <span class="meta-chip">六年級｜資訊科技</span>
+      <span class="meta-chip green">A-E-A1</span>
+      <span class="meta-chip pink">2 節課</span>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>🎮 冒險進度</span><span id="prog-text">STAGE 0 / 6</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+  </div>
+</header>
+
+<!-- Mode bar -->
+<div id="mode-bar">
+  <button class="mode-btn active" id="mode-student" onclick="setMode('student')">👨‍🎓 學生模式</button>
+  <button class="mode-btn" id="mode-teacher" onclick="setMode('teacher')">👩‍🏫 教師模式</button>
+  <span class="mode-hint">教師模式密碼：<b>it2026</b>（會顯示各關卡教學提示）</span>
+</div>
+
+<main class="container">
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-text">
+      <h1>🧙‍♂️ Gemini 引導式學習<br>你的專屬 AI 家教</h1>
+      <div class="sub">不直接給答案，一步步帶你真正學會！</div>
+      <div class="desc">
+        想像 Gemini 幫你請了一位超有耐心的魔法家教：他不會直接把答案丟給你，而是把難題切成小關卡，
+        用<b style="color:var(--c2)">蘇格拉底提問法</b>反問你、陪你思考，讓你從「拿到答案」升級到「真的學會」。
+        課堂上用得到，<b style="color:var(--c4)">回家也能繼續自學</b>，從此學習不再卡關！
+      </div>
+    </div>
+    <div class="hero-img-frame">
+      <img src="assets/01_core_diff.jpg" alt="Gemini 引導式學習" loading="eager">
+    </div>
+  </section>
+
+  <!-- Objectives -->
+  <section id="objectives">
+    <h2>🎯 學習目標</h2>
+    <div class="obj-chips">
+      <span class="obj-chip">🧠 理解引導式學習的意義</span>
+      <span class="obj-chip">🚀 能獨立開啟引導式學習</span>
+      <span class="obj-chip">✍️ 掌握 PARTS 提示詞框架</span>
+      <span class="obj-chip">💬 熟悉 4 種互動方式</span>
+      <span class="obj-chip">🛡️ 認識地雷與隱私保護</span>
+      <span class="obj-chip">🏠 能回家持續自學</span>
+    </div>
+  </section>
+
+  <!-- Section nav -->
+  <nav id="section-nav">
+    <div class="stage-pills">
+      <a href="#sec1" class="stage-pill" data-sec="sec1">🧩 STAGE 1｜什麼是引導式學習</a>
+      <a href="#sec2" class="stage-pill" data-sec="sec2">🚪 STAGE 2｜開啟步驟</a>
+      <a href="#sec3" class="stage-pill" data-sec="sec3">✍️ STAGE 3｜PARTS 框架</a>
+      <a href="#sec4" class="stage-pill" data-sec="sec4">💬 STAGE 4｜4 種互動</a>
+      <a href="#sec5" class="stage-pill" data-sec="sec5">⚠️ STAGE 5｜地雷與須知</a>
+      <a href="#sec6" class="stage-pill" data-sec="sec6">🏠 STAGE 6｜課堂＋回家</a>
+    </div>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section class="level-section" id="sec1">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 1</span>
+      <h2>🧩 什麼是 Gemini 引導式學習？</h2>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <h3>🔍 核心定義</h3>
+          <p style="font-size:1rem;line-height:1.8">
+            Gemini 裡一個特別的學習模式，背後是 Google 專門訓練的 <b style="color:var(--c2)">LearnLM</b> 學習模型，
+            由教育專家、腦神經科學家一起打造，專門為「<b style="color:var(--c4)">教會學生</b>」而設計。
+          </p>
+        </div>
+        <div class="card">
+          <h3>🧠 為什麼要這樣設計？</h3>
+          <ul class="step-list">
+            <li><span class="step-num" style="background:var(--c2);color:#000">💡</span><span class="step-text">大腦只有在<b>主動思考</b>時，才會把知識記牢</span></li>
+            <li><span class="step-num" style="background:var(--c3)">⚠️</span><span class="step-text">AI 直接給答案，就像吃飯不嚼直接吞 → <b>肚子飽了卻沒吸收</b></span></li>
+            <li><span class="step-num" style="background:var(--c4);color:#000">📚</span><span class="step-text">MIT 研究：讓 AI 幫忙思考的學生，<b>反而記不住也學不會</b></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="img-frame"><img src="assets/01_core_diff.jpg" alt="引導式學習概念圖" loading="lazy"></div>
+    </div>
+
+    <div class="canvas-section">
+      <h3>🎮 互動：比一比，兩種模式差在哪？</h3>
+      <div class="dodont-grid">
+        <div class="dodont-col dont">
+          <h4>🤖 一般 Gemini（百科全書）</h4>
+          <ul>
+            <li data-icon="📖">一問就給一大篇答案</li>
+            <li data-icon="⚡">適合<b>快速查資料</b></li>
+            <li data-icon="❌">不會反問你、不測試你</li>
+            <li data-icon="😴">大腦沒運動，<b>容易忘</b></li>
+          </ul>
+        </div>
+        <div class="dodont-col do">
+          <h4>🧙 引導式學習（耐心老師）</h4>
+          <ul>
+            <li data-icon="🔍">把難題<b>切成小關卡</b></li>
+            <li data-icon="❓">用蘇格拉底提問法反問你</li>
+            <li data-icon="✅">測試你有沒有懂，再教下一步</li>
+            <li data-icon="🎯">適合<b>真正學會新知識</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip-box good">
+        <b>💡 小提醒：</b>兩種模式都有用處！查資料用一般 Gemini，<b>學新東西</b>一定要打開「引導式學習」。
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>關卡測驗 — STAGE 1</h3>
+      <div class="q-item">
+        <div class="q-text">Q1. 下面哪個情境最適合使用「引導式學習」？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'查成語只是查資料，用一般 Gemini 就好。')"><span class="q-opt-label">A</span>快速查一個成語的意思</button>
+          <button class="q-opt" onclick="answer(this,true,'答對了！要真的學會一個新觀念，就要用引導式學習！')"><span class="q-opt-label">B</span>真的想學會光合作用怎麼運作 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'看氣象用天氣 App 即可，不用 AI。')"><span class="q-opt-label">C</span>看今天天氣預報</button>
+          <button class="q-opt" onclick="answer(this,false,'抄作業大忌！而且引導式學習也不會直接幫你做。')"><span class="q-opt-label">D</span>幫我把全部作業寫完</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q2. 驅動「引導式學習」的是 Google 哪一個模型？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'BERT 是比較早期的語言模型，不是這個。')"><span class="q-opt-label">A</span>BERT</button>
+          <button class="q-opt" onclick="answer(this,false,'DeepMind 是研究團隊名稱，不是學習模型。')"><span class="q-opt-label">B</span>DeepMind</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！LearnLM 是 Google 專為教育設計的「超級學習大腦」。')"><span class="q-opt-label">C</span>LearnLM ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'ChatGPT 是 OpenAI 的，不是 Google。')"><span class="q-opt-label">D</span>ChatGPT</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only" id="t1">
+      <h4>🎓 教師提示</h4>
+      <ul>
+        <li>引導學生討論：「為什麼直接拿答案反而學不會？」讓他們說出自己的經驗</li>
+        <li>可以舉例：背數學公式 vs 自己推導過程，哪一種記得久？</li>
+        <li>強調「引導式學習」不是限制，而是「讓大腦運動」的健身房</li>
+        <li>若學生質疑速度慢，提醒：考試時你需要的是「真的會」，不是「當時抄到」</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="level-section" id="sec2">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 2</span>
+      <h2>🚪 如何開啟引導式學習？</h2>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <h3>💻 電腦網頁版</h3>
+          <ul class="step-list">
+            <li><span class="step-num">01</span><span class="step-text">打開瀏覽器，輸入 <b>gemini.google.com</b></span></li>
+            <li><span class="step-num">02</span><span class="step-text">用 <b>Google 帳號</b>登入（<b style="color:var(--c4)">學校帳號最安全</b>）</span></li>
+            <li><span class="step-num">03</span><span class="step-text">在畫面下方對話框底下的工具選項，點擊「<b>引導式學習</b>」按鈕</span></li>
+            <li><span class="step-num">04</span><span class="step-text">點「＋」可以<b>上傳課本照片、手寫筆記、PDF</b>一起學！</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>📱 手機 App 版</h3>
+          <ul class="step-list">
+            <li><span class="step-num" style="background:var(--c3)">01</span><span class="step-text">下載 <b>Google Gemini App</b>（Play / App Store）</span></li>
+            <li><span class="step-num" style="background:var(--c3)">02</span><span class="step-text">打開並登入</span></li>
+            <li><span class="step-num" style="background:var(--c3)">03</span><span class="step-text">在對話框找到「<b>學習</b>（Learn）」選項</span></li>
+            <li><span class="step-num" style="background:var(--c3)">04</span><span class="step-text">直接用<b>手機相機拍下</b>課本或筆記上傳，超方便！</span></li>
+          </ul>
+        </div>
+        <div class="tip-box"><b>💡 切換提醒：</b>同一次對話中可以隨時開關！關掉後會回到一般模式直接給答案。</div>
+      </div>
+      <div class="img-frame"><img src="assets/02_open_steps.jpg" alt="開啟步驟圖" loading="lazy"></div>
+    </div>
+
+    <div class="canvas-section">
+      <h3>🎮 互動：跟我一起按！電腦版開啟模擬</h3>
+      <div class="sim-screen">
+        <div class="sim-step active" id="s2-step-0">
+          <div style="color:var(--dim);font-size:.9rem;margin-bottom:8px">🌐 瀏覽器網址列</div>
+          <div><span class="arrow-hint">→</span> 輸入：<span class="highlight-box">gemini.google.com</span> 按 Enter</div>
+          <div style="color:var(--dim);margin-top:10px;font-size:.9rem">Step 1：前往 Gemini 網站</div>
+        </div>
+        <div class="sim-step" id="s2-step-1">
+          <div style="color:var(--dim);font-size:.9rem;margin-bottom:8px">🔐 登入畫面</div>
+          <div><span class="arrow-hint">→</span> 點右上角<span class="highlight-box">登入</span> → 選擇<span class="highlight-box">學校 Google 帳號</span> → 輸入密碼</div>
+          <div style="color:var(--dim);margin-top:10px;font-size:.9rem">Step 2：用學校帳號登入（最安全）</div>
+        </div>
+        <div class="sim-step" id="s2-step-2">
+          <div style="color:var(--dim);font-size:.9rem;margin-bottom:8px">💬 對話框</div>
+          <div><span class="arrow-hint">→</span> 在對話框下方，找到工具選項中的<span class="highlight-box">🎓 引導式學習</span>按鈕點一下</div>
+          <div style="color:var(--dim);margin-top:10px;font-size:.9rem">Step 3：開啟「引導式學習」模式</div>
+        </div>
+        <div class="sim-step" id="s2-step-3">
+          <div style="color:var(--dim);font-size:.9rem;margin-bottom:8px">📎 加料區</div>
+          <div><span class="arrow-hint">→</span> 點左側<span class="highlight-box">＋</span>，可以上傳<b>課本照片、筆記 PDF</b>給 AI 一起教你</div>
+          <div style="color:var(--dim);margin-top:10px;font-size:.9rem">Step 4（進階）：上傳你的學習材料</div>
+        </div>
+        <div class="sim-step" id="s2-step-4">
+          <div style="color:var(--dim);font-size:.9rem;margin-bottom:8px">✅ 準備好了！</div>
+          <div><span class="arrow-hint">→</span> 現在輸入你想學的主題，Gemini 就會變成你的耐心家教 🎉</div>
+          <div style="color:var(--c4);margin-top:10px;font-size:1rem;font-weight:700">CLEAR！開始冒險吧！</div>
+        </div>
+      </div>
+      <div class="sim-nav">
+        <button class="btn-primary" onclick="simPrev('s2')">◀ 上一步</button>
+        <button class="btn-primary" onclick="simNext('s2')">下一步 ▶</button>
+        <span class="sim-progress" id="s2-prog">1 / 5</span>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>關卡測驗 — STAGE 2</h3>
+      <div class="q-item">
+        <div class="q-text">Q1. 在<b>電腦</b>上要用引導式學習，正確的網址是？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'那是一般搜尋引擎，不是 Gemini。')"><span class="q-opt-label">A</span>google.com</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！gemini.google.com 是官方 Gemini 網址。')"><span class="q-opt-label">B</span>gemini.google.com ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'那是 OpenAI 的 ChatGPT，不是 Gemini。')"><span class="q-opt-label">C</span>chat.openai.com</button>
+          <button class="q-opt" onclick="answer(this,false,'沒有這個網址喔！')"><span class="q-opt-label">D</span>learn.google.com</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q2. 為什麼建議用<b>學校 Google 帳號</b>而不是個人 Gmail？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'速度其實差不多。')"><span class="q-opt-label">A</span>學校帳號比較快</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！學校帳號的對話 Google 保證不會被人看、不拿去訓練 AI，未滿 13 歲也能用。')"><span class="q-opt-label">B</span>隱私受保護，且不限年齡 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'免費跟個人 Gmail 一樣，不是重點。')"><span class="q-opt-label">C</span>只有學校帳號免費</button>
+          <button class="q-opt" onclick="answer(this,false,'功能其實相同。')"><span class="q-opt-label">D</span>功能比較多</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q3. 用手機版時，有一個大優點是？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'手機螢幕反而小，不是優勢。')"><span class="q-opt-label">A</span>螢幕比較大</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！手機相機直接拍課本/筆記上傳，超級方便！')"><span class="q-opt-label">B</span>可以用相機直接拍課本上傳 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'手機版沒有更聰明，是同一個 AI。')"><span class="q-opt-label">C</span>AI 會變得比較聰明</button>
+          <button class="q-opt" onclick="answer(this,false,'跟電腦版都是免費。')"><span class="q-opt-label">D</span>比電腦版免費</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only" id="t2">
+      <h4>🎓 教師提示</h4>
+      <ul>
+        <li>上課前先確認學校教育帳號已啟用 Gemini for Education</li>
+        <li>若部分學生用個人帳號，提醒 13 歲年齡限制，請家長陪同使用</li>
+        <li>示範「上傳課本照片」功能，學生會驚呼連連</li>
+        <li>提醒學生：「關掉引導式學習 = Gemini 直接給答案」，學習時一定要打開</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="level-section" id="sec3">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 3</span>
+      <h2>✍️ PARTS：寫出好主題的秘密武器</h2>
+    </div>
+    <div class="two-col">
+      <div class="img-frame"><img src="assets/03_parts_framework.jpg" alt="PARTS 框架圖" loading="lazy"></div>
+      <div>
+        <div class="card">
+          <h3>🗝️ PARTS 五大元素</h3>
+          <div class="parts-grid">
+            <div class="parts-card"><div class="letter">P</div><div class="name">Persona</div><div class="desc">身份<br>我是誰</div></div>
+            <div class="parts-card"><div class="letter">A</div><div class="name">Act</div><div class="desc">動作<br>要 AI 做什麼</div></div>
+            <div class="parts-card"><div class="letter">R</div><div class="name">Recipient</div><div class="desc">對象<br>說給誰聽</div></div>
+            <div class="parts-card"><div class="letter">T</div><div class="name">Theme</div><div class="desc">主題<br>要學什麼</div></div>
+            <div class="parts-card"><div class="letter">S</div><div class="name">Structure</div><div class="desc">結構<br>想要的格式</div></div>
+          </div>
+          <div class="tip-box good">
+            <b>🎯 PARTS 範例：</b><br>
+            我是（P）<b>國小六年級學生</b>，請（A）<b>引導我</b>學會（T）<b>光合作用</b>，
+            用（R）<b>我能聽懂的簡單語言</b>，（S）<b>分 3 步驟並每步驟考我一題</b>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-section">
+      <h3>🎮 互動：PARTS 提示詞組合器</h3>
+      <div class="pb-grid">
+        <div class="pb-group">
+          <label>P｜我是誰</label>
+          <select id="pb-p">
+            <option>國小六年級學生</option>
+            <option>對科學有興趣的小五生</option>
+            <option>英文初學者</option>
+            <option>數學想進步的學生</option>
+          </select>
+        </div>
+        <div class="pb-group">
+          <label>A｜要 AI 做什麼</label>
+          <select id="pb-a">
+            <option>引導我</option>
+            <option>教我</option>
+            <option>出題考我</option>
+            <option>用比喻解釋給我</option>
+          </select>
+        </div>
+        <div class="pb-group">
+          <label>T｜主題</label>
+          <input id="pb-t" type="text" value="光合作用怎麼運作">
+        </div>
+        <div class="pb-group">
+          <label>R｜說給誰聽</label>
+          <select id="pb-r">
+            <option>我能聽懂的簡單語言</option>
+            <option>就像教 5 歲小朋友那樣</option>
+            <option>搭配生活中的例子</option>
+            <option>配合動畫或圖示</option>
+          </select>
+        </div>
+        <div class="pb-group">
+          <label>S｜結構/格式</label>
+          <select id="pb-s">
+            <option>分 3 步驟，每步驟考我一題</option>
+            <option>先問我懂多少，再慢慢帶我</option>
+            <option>最後出 3 題選擇題驗收</option>
+            <option>附上一個真實生活的例子</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="buildParts()">▶ 組合 PARTS 提示詞</button>
+      <button class="btn-primary" style="background:var(--c2);color:#000" onclick="copyParts()">📋 複製</button>
+      <div class="prompt-output" id="parts-output">← 選好五個元素，點「組合 PARTS 提示詞」生成！</div>
+    </div>
+
+    <div class="canvas-section" style="border-color:var(--c3)">
+      <h3 style="color:var(--c3)">✅ 好的主題 vs ❌ 不好的主題</h3>
+      <div class="dodont-grid">
+        <div class="dodont-col do">
+          <h4>✅ 好（AI 會開心教你）</h4>
+          <ul>
+            <li data-icon="👍">我是六年級，明天自然小考考光合作用，可以教我它怎麼運作嗎？</li>
+            <li data-icon="👍">我對歷史有興趣，帶我認識羅馬帝國的衰亡</li>
+            <li data-icon="👍">我攝影初學者，想學手機構圖，從基礎開始教</li>
+            <li data-icon="👍">請陪我模擬速食店點餐英文對話</li>
+          </ul>
+        </div>
+        <div class="dodont-col dont">
+          <h4>❌ 不好（AI 會拒絕直接做）</h4>
+          <ul>
+            <li data-icon="🚫">這題數學答案是什麼？</li>
+            <li data-icon="🚫">幫我寫一篇 500 字作文</li>
+            <li data-icon="🚫">直接告訴我答案，不要問我問題</li>
+            <li data-icon="🚫">把這份作業全部做完</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>關卡測驗 — STAGE 3</h3>
+      <div class="q-item">
+        <div class="q-text">Q1. PARTS 的 T 代表什麼？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'Time 不是 PARTS 之一。')"><span class="q-opt-label">A</span>Time 時間</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！Theme = 你想學的主題。')"><span class="q-opt-label">B</span>Theme 主題 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'Tool 不是 PARTS 之一。')"><span class="q-opt-label">C</span>Tool 工具</button>
+          <button class="q-opt" onclick="answer(this,false,'Task 不是 PARTS 之一（A 才是 Act）。')"><span class="q-opt-label">D</span>Task 任務</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q2. 下面哪一個「不是」AI 會拒絕做的請求？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'這是抄捷徑，AI 會拒絕直接做。')"><span class="q-opt-label">A</span>幫我寫完作文</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！這是好的引導式學習請求，AI 會開心教你。')"><span class="q-opt-label">B</span>我六年級，請引導我學光合作用，最後出題考我 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'AI 鼓勵你思考，不會直接給答案。')"><span class="q-opt-label">C</span>直接告訴我答案</button>
+          <button class="q-opt" onclick="answer(this,false,'這一樣是要 AI 代寫。')"><span class="q-opt-label">D</span>把題目答案給我就好</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only" id="t3">
+      <h4>🎓 教師提示</h4>
+      <ul>
+        <li>用 PARTS 組合器讓學生即時生成提示詞，實作感立刻拉滿</li>
+        <li>先示範「不好的」提示詞被 AI 反問/拒絕，再示範完整 PARTS 的效果差異</li>
+        <li>提醒：只有「T 主題」是主觀的，PARS 四個可以當套版快速使用</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="level-section" id="sec4">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 4</span>
+      <h2>💬 4 種互動必殺技</h2>
+    </div>
+    <div class="two-col">
+      <div class="img-frame"><img src="assets/04_four_skills.jpg" alt="四種互動" loading="lazy"></div>
+      <div>
+        <div class="card">
+          <h3>💡 學習不卡關的秘訣</h3>
+          <p style="font-size:1rem;line-height:1.8">
+            AI 開始教你以後，別呆呆坐著！記住這 <b style="color:var(--c2)">4 種互動必殺技</b>，
+            你就能讓 AI 完全照你的步調、用你最懂的方式陪你學。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-section">
+      <h3>🎮 互動：切換看看四種技巧怎麼用</h3>
+      <div class="skills-tabs">
+        <button class="skill-tab active" onclick="showSkill(0)">① 勇敢回答</button>
+        <button class="skill-tab" onclick="showSkill(1)">② 請它簡單說</button>
+        <button class="skill-tab" onclick="showSkill(2)">③ 請它出題</button>
+        <button class="skill-tab" onclick="showSkill(3)">④ 延伸學習</button>
+      </div>
+
+      <div class="skill-panel active" id="sk-0">
+        <h4 style="color:var(--c1)">① 勇敢回答 AI 的反問</h4>
+        <p>AI 教完一個小觀念後會反問你，<b>用自己的話</b>回答，不要怕答錯！答錯 AI 不會生氣，它會<b>換個方式再教一次</b>。</p>
+        <div class="demo">
+          <div class="ai">🤖 AI：<b>光合作用需要哪三個東西？</b>你試著想想看。</div>
+          <div class="you">🙋 你：光？水？土壤？</div>
+          <div class="ai">🤖 AI：答對兩個！第三個不是土壤喔，讓我給你線索：你在呼吸時會吐出什麼氣體？</div>
+          <div class="you">🙋 你：二氧化碳！</div>
+          <div class="ai">🤖 AI：太棒了！就是它！陽光＋水＋二氧化碳 → 葡萄糖＋氧氣 🎉</div>
+        </div>
+      </div>
+
+      <div class="skill-panel" id="sk-1">
+        <h4 style="color:var(--c1)">② 聽不懂，請 AI 換簡單方式說</h4>
+        <p>千萬別硬撐！直接告訴 AI：</p>
+        <ul class="step-list">
+          <li><span class="step-num">⑴</span><span class="step-text">「用教 <b>5 歲小朋友</b>的方式再說一次」</span></li>
+          <li><span class="step-num">⑵</span><span class="step-text">「可以用<b>生活中的例子</b>說明嗎？」</span></li>
+          <li><span class="step-num">⑶</span><span class="step-text">「請給我一個<b>比喻</b>」</span></li>
+        </ul>
+        <div class="demo">
+          <div class="you">🙋 你：我聽不懂「對流」是什麼。</div>
+          <div class="ai">🤖 AI：想像廚房煮熱湯，熱的湯往上跑，冷的湯往下沉，一直轉圈圈 → 這就是對流！</div>
+        </div>
+      </div>
+
+      <div class="skill-panel" id="sk-2">
+        <h4 style="color:var(--c1)">③ 覺得懂了，請 AI 出題考你</h4>
+        <p>別以為「聽懂」＝「學會」！一定要驗收：</p>
+        <ul class="step-list">
+          <li><span class="step-num">⑴</span><span class="step-text">「我覺得聽懂了！請出 <b>3 題選擇題</b>考我」</span></li>
+          <li><span class="step-num">⑵</span><span class="step-text">「幫我把重點做成<b>複習字卡</b>」</span></li>
+        </ul>
+        <div class="demo">
+          <div class="you">🙋 你：請出 3 題光合作用的選擇題考我。</div>
+          <div class="ai">🤖 AI：好！Q1. 光合作用主要發生在植物的哪個部位？A.根 B.莖 C.葉 D.花 — 答完我會告訴你對不對並解釋。</div>
+        </div>
+      </div>
+
+      <div class="skill-panel" id="sk-3">
+        <h4 style="color:var(--c1)">④ 太有趣了，請 AI 延伸學習</h4>
+        <p>學完不要停下來！追著問下去：</p>
+        <ul class="step-list">
+          <li><span class="step-num">⑴</span><span class="step-text">「這太有趣了！在現實生活中有什麼<b>應用</b>嗎？」</span></li>
+          <li><span class="step-num">⑵</span><span class="step-text">順著 AI 推薦的新主題繼續探索 → <b>變成小達人</b>！</span></li>
+        </ul>
+        <div class="demo">
+          <div class="you">🙋 你：光合作用在生活中有什麼應用？</div>
+          <div class="ai">🤖 AI：1. 溫室種菜需要光 2. 水族箱要有水草製氧 3. 太陽能板模仿葉子吸光的原理。接下來想深入哪一個？</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>關卡測驗 — STAGE 4</h3>
+      <div class="q-item">
+        <div class="q-text">Q1. AI 反問你一個問題時，最好的反應是？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'停下來思考其實很好，但更好的是動手回答！')"><span class="q-opt-label">A</span>不要理它</button>
+          <button class="q-opt" onclick="answer(this,false,'直接跳過等於放棄學習。')"><span class="q-opt-label">B</span>請它跳過這題</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！用自己的話回答，答錯 AI 會換個方式再教！')"><span class="q-opt-label">C</span>用自己的話勇敢回答 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'直接要答案會被 AI 反問喔！')"><span class="q-opt-label">D</span>要求它直接給答案</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q2. 聽不懂 AI 的解釋時，最有效的方式是？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'換工具 AI 還是一樣會用差不多的解釋。')"><span class="q-opt-label">A</span>關掉換另一個 AI</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！請它「用教 5 歲小孩」或「用生活例子」說一次！')"><span class="q-opt-label">B</span>請它用 5 歲小孩方式再說 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'假裝懂不但沒學到還會誤解。')"><span class="q-opt-label">C</span>假裝聽懂繼續</button>
+          <button class="q-opt" onclick="answer(this,false,'直接抄沒有學習效果。')"><span class="q-opt-label">D</span>抄一下然後收尾</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only" id="t4">
+      <h4>🎓 教師提示</h4>
+      <ul>
+        <li>讓學生分組實作：A 組練「回答反問」，B 組練「請換簡單方式」，C 組練「出題」，D 組練「延伸」。最後互相分享成果</li>
+        <li>特別強調：答錯沒關係，AI 不會笑你，這就是安全的學習環境</li>
+        <li>提醒學生：聽懂 ≠ 會 → 一定要用「請它出題」驗收</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section class="level-section" id="sec5">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 5</span>
+      <h2>⚠️ 3 大地雷 × 免費版須知</h2>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <h3 style="color:var(--c3)">💣 地雷 1：把 AI 當代寫機器</h3>
+          <p style="font-size:1rem;line-height:1.8">學不到東西、品質也差，老師和家長一看就知道。<b style="color:var(--c4)">引導式學習的重點是「學會」，不是「交差」！</b></p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c3)">💣 地雷 2：洩漏個人隱私</h3>
+          <p style="font-size:1rem;line-height:1.8"><b>真實姓名、家裡地址、電話、密碼、同學的照片</b> → 通通不能輸入！就算是學校帳號也要謹慎。</p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c3)">💣 地雷 3：把 AI 當人類朋友</h3>
+          <p style="font-size:1rem;line-height:1.8">AI 沒有感情、不會思考，它是「<b>猜</b>」出答案的。<b>不能取代真實朋友、家人和老師</b>。有心事請找真的人！</p>
+        </div>
+      </div>
+      <div class="img-frame"><img src="assets/05_traps.jpg" alt="地雷與須知" loading="lazy"></div>
+    </div>
+
+    <div class="canvas-section" style="border-color:var(--c2)">
+      <h3 style="color:var(--c2)">🪄 AI 會講錯話（幻覺 Hallucination）怎麼辦？</h3>
+      <p style="font-size:1rem;line-height:1.8;margin-bottom:12px">
+        AI 不是百科全書，是靠規律「猜」答案，<b>偶爾會一本正經胡說八道</b>。解決方法：
+      </p>
+      <ul class="step-list">
+        <li><span class="step-num" style="background:var(--c2);color:#000">✓</span><span class="step-text">用 Gemini 回答下方的 <b>Google「G」驗證按鈕</b>（double-check）自動查證</span></li>
+        <li><span class="step-num" style="background:var(--c2);color:#000">✓</span><span class="step-text">懷疑時<b>翻課本、用搜尋確認</b></span></li>
+        <li><span class="step-num" style="background:var(--c2);color:#000">✓</span><span class="step-text">絕對不要<b>全部照單全收</b></span></li>
+      </ul>
+    </div>
+
+    <div class="canvas-section" style="border-color:var(--c1)">
+      <h3 style="color:var(--c1)">💰 免費版限制與技術問題</h3>
+      <div class="dodont-grid">
+        <div class="dodont-col do">
+          <h4>✅ 好消息</h4>
+          <ul>
+            <li data-icon="💸">引導式學習<b>完全免費</b>，無限次使用</li>
+            <li data-icon="🎓"><b>學校帳號</b>對話不被看、不被訓練 AI</li>
+            <li data-icon="📵">電腦、平板、手機都能用</li>
+            <li data-icon="🎙️">支援語音輸入、拍照上傳</li>
+          </ul>
+        </div>
+        <div class="dodont-col dont" style="border-color:var(--c2);color:var(--c2)">
+          <h4>⚠️ 須注意</h4>
+          <ul>
+            <li data-icon="👶">一般 Gmail 需<b>滿 13 歲</b>才能用</li>
+            <li data-icon="🏫">學校帳號不限年齡（需管理員開啟）</li>
+            <li data-icon="🔄">網路斷線：重新整理，紀錄還在</li>
+            <li data-icon="⏳">系統忙碌（500/503）：等 1-2 分鐘再試</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>關卡測驗 — STAGE 5</h3>
+      <div class="q-item">
+        <div class="q-text">Q1. 下列哪一個<b>絕對不能</b>輸入到 AI？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'這是公開的事實，沒關係。')"><span class="q-opt-label">A</span>台灣的首都是哪裡</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！真實姓名、地址、電話都是隱私，絕不輸入！')"><span class="q-opt-label">B</span>我家地址和電話 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'學習內容完全可以問。')"><span class="q-opt-label">C</span>光合作用怎麼運作</button>
+          <button class="q-opt" onclick="answer(this,false,'出題是很棒的請求！')"><span class="q-opt-label">D</span>請幫我出 5 題自然題</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q2. AI 偶爾會胡說八道，這叫做什麼現象？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'那是不舒服，不是 AI 現象。')"><span class="q-opt-label">A</span>感冒</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！幻覺 Hallucination，記得用 Google「G」驗證！')"><span class="q-opt-label">B</span>幻覺 Hallucination ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'病毒是電腦安全問題，不是 AI 回答問題。')"><span class="q-opt-label">C</span>病毒</button>
+          <button class="q-opt" onclick="answer(this,false,'當機是完全不能用，這裡是講答錯。')"><span class="q-opt-label">D</span>當機</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q3. 遇到 AI 回答有點怪，最好的做法是？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'完全相信 AI 是不對的！')"><span class="q-opt-label">A</span>完全相信它</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！用「G」驗證 + 翻課本對照，養成查證習慣！')"><span class="q-opt-label">B</span>按「G」驗證 + 翻課本確認 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'完全不用也太極端，學會查證才實用。')"><span class="q-opt-label">C</span>從此不用 AI</button>
+          <button class="q-opt" onclick="answer(this,false,'AI 會持續進步，但我們自己也要會查證。')"><span class="q-opt-label">D</span>罵 AI 一頓</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only" id="t5">
+      <h4>🎓 教師提示</h4>
+      <ul>
+        <li>示範一次「G 驗證」按鈕的使用，讓學生看見 Google 搜尋如何交叉驗證</li>
+        <li>可以故意丟一個冷門主題讓 AI 回答，示範它的幻覺，藉此建立查證意識</li>
+        <li>強調數位公民素養：隱私保護、版權尊重、AI 不取代人際互動</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 6 -->
+  <section class="level-section" id="sec6">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 6</span>
+      <h2>🏠 課堂活動 × 回家自學</h2>
+    </div>
+    <div class="two-col">
+      <div class="img-frame"><img src="assets/06_scenarios.jpg" alt="實戰場景" loading="lazy"></div>
+      <div>
+        <div class="card">
+          <h3>🎒 課堂 4 個互動活動</h3>
+          <ul class="step-list">
+            <li><span class="step-num" style="background:var(--c1);color:#000">A</span><span class="step-text"><b>全班挑戰大魔王題</b>（15 分）：全班一起用引導式學習闖一題進階題</span></li>
+            <li><span class="step-num" style="background:var(--c3)">B</span><span class="step-text"><b>筆記急救站</b>（考前複習）：拍下手寫筆記上傳，請 AI 檢查並出題</span></li>
+            <li><span class="step-num" style="background:var(--c2);color:#000">C</span><span class="step-text"><b>蘇格拉底探究</b>（10+5 分）：個人闖關最不懂的觀念，分享「被 AI 問倒」的經驗</span></li>
+            <li><span class="step-num" style="background:var(--c4);color:#000">D</span><span class="step-text"><b>變身出題老師</b>：請 AI 把重點變 5 題選擇題，小組互換考對方</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-section" style="border-color:var(--c5)">
+      <h3 style="color:var(--c5)">📝 回家自學 3 個超好用提示詞（直接複製貼上！）</h3>
+      <div class="scene-grid">
+        <div class="scene-card">
+          <h4>🎯 客製化段考複習</h4>
+          <p style="font-size:.95rem;line-height:1.7">最適合：考前週末，把弱點補起來</p>
+          <div class="copy-prompt" id="prompt-a">
+            <button class="copy-btn" onclick="copyPrompt('prompt-a')">📋</button>
+            我下週有自然段考，「生態系與食物鏈」特別弱。請幫我制定簡單的複習計畫，並一次一個觀念帶我複習，每個觀念講完後考我一題。
+          </div>
+        </div>
+        <div class="scene-card">
+          <h4>🌍 零壓力外語對話</h4>
+          <p style="font-size:.95rem;line-height:1.7">最適合：準備英文口說、想練聽力</p>
+          <div class="copy-prompt" id="prompt-b">
+            <button class="copy-btn" onclick="copyPrompt('prompt-b')">📋</button>
+            我想練習英文對話，請扮演速食店店員先開口問我，我回覆後請先用中文糾正我的文法，再繼續英文對話。
+          </div>
+        </div>
+        <div class="scene-card">
+          <h4>🍲 生活翻譯機</h4>
+          <p style="font-size:.95rem;line-height:1.7">最適合：抽象概念聽不懂時</p>
+          <div class="copy-prompt" id="prompt-c">
+            <button class="copy-btn" onclick="copyPrompt('prompt-c')">📋</button>
+            我正在讀「熱的傳導、對流、輻射」，搞不清楚差別。請用「在廚房煮湯」的生活例子解釋，解釋完出個情境題讓我猜是哪一種。
+          </div>
+        </div>
+        <div class="scene-card">
+          <h4>✨ 進階：興趣探索</h4>
+          <p style="font-size:.95rem;line-height:1.7">最適合：週末想學新東西、變達人</p>
+          <div class="copy-prompt" id="prompt-d">
+            <button class="copy-btn" onclick="copyPrompt('prompt-d')">📋</button>
+            我對攝影初學有興趣，請先問我已經知道什麼，再安排 5 週的學習計畫，第一週從「怎麼拿穩手機＋構圖三分法」開始，最後出一個實作任務。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>關卡測驗 — STAGE 6</h3>
+      <div class="q-item">
+        <div class="q-text">Q1. 考前複習，用引導式學習最有效的方法是？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'自己隨便背效率低。')"><span class="q-opt-label">A</span>自己硬背課本</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！說出弱點 + 請它邊講邊考，超有效！')"><span class="q-opt-label">B</span>告訴 AI 哪個單元弱，請它一次一觀念帶我複習並考題 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'抄答案考試還是不會。')"><span class="q-opt-label">C</span>叫 AI 把考題答案全給我</button>
+          <button class="q-opt" onclick="answer(this,false,'看影片被動吸收效果比較差。')"><span class="q-opt-label">D</span>看影片兩小時</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+      <div class="q-item">
+        <div class="q-text">Q2. 回家沒有老師，遇到觀念聽不懂怎麼辦？</div>
+        <div class="q-opts">
+          <button class="q-opt" onclick="answer(this,false,'放著不管隔天會更不懂！')"><span class="q-opt-label">A</span>跳過不管</button>
+          <button class="q-opt" onclick="answer(this,true,'答對！請 AI 用生活例子比喻＋出題驗收，在家也能學得好！')"><span class="q-opt-label">B</span>打開引導式學習，請它用生活例子解釋＋出題驗收 ✓</button>
+          <button class="q-opt" onclick="answer(this,false,'直接給答案你還是不會。')"><span class="q-opt-label">C</span>直接 Google 找答案抄</button>
+          <button class="q-opt" onclick="answer(this,false,'隱私不能洩漏！')"><span class="q-opt-label">D</span>把題目連同真名寄給 AI</button>
+        </div>
+        <div class="q-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only" id="t6">
+      <h4>🎓 教師提示</h4>
+      <ul>
+        <li>把 4 個提示詞印成書籤/貼紙，學生可以回家貼在書桌</li>
+        <li>指派「本週自學任務」：用引導式學習學一個你最想會的東西，下週分享</li>
+        <li>家長溝通：介紹引導式學習不是「讓 AI 寫作業」，是「讓 AI 當家教」</li>
+        <li>每 2 週追蹤一次：你最近問了 AI 什麼？有沒有被問倒過？</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Project task -->
+  <section id="project-task">
+    <h2>🎯 今日實作任務</h2>
+    <p style="font-size:1.05rem;margin-bottom:16px">
+      請按照下列 4 個步驟，用引導式學習完成一次完整的自學體驗，並把你的提示詞和 AI 回答截圖交給老師！
+    </p>
+    <div class="task-grid">
+      <div class="task-step">
+        <div class="task-step-num">STEP 01</div>
+        <h4>🚪 開啟引導式學習</h4>
+        <p>在 gemini.google.com 登入學校帳號，點開「引導式學習」按鈕</p>
+      </div>
+      <div class="task-step">
+        <div class="task-step-num">STEP 02</div>
+        <h4>✍️ 用 PARTS 寫主題</h4>
+        <p>用 P+A+R+T+S 組合一個你真的想學的主題（自然、社會、英文都可以）</p>
+      </div>
+      <div class="task-step">
+        <div class="task-step-num">STEP 03</div>
+        <h4>💬 實作 4 種互動</h4>
+        <p>回答反問 → 不懂時請它換簡單說 → 請它出題 → 延伸一個應用情境</p>
+      </div>
+      <div class="task-step">
+        <div class="task-step-num">STEP 04</div>
+        <h4>📸 截圖分享</h4>
+        <p>把最有收穫的一段對話截圖，並寫下 3 行反思：「我學到什麼？」「哪裡被問倒？」「回家想用它學什麼？」</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide player -->
+  <section id="slideshow-section">
+    <h2>🎞️ 授課簡報（點縮圖換頁｜點全螢幕放大）</h2>
+    <div class="slide-player-main" id="slide-main">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="slide">
+      <button class="slide-nav prev" onclick="slideNav(-1)">◀</button>
+      <button class="slide-nav next" onclick="slideNav(1)">▶</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+      <span class="slide-counter" id="slide-counter">1 / 1</span>
+    </div>
+    <div class="slide-strip" id="slide-strip"></div>
+  </section>
+
+  <div class="slide-fullscreen-overlay" id="slide-fs">
+    <img class="slide-fs-img" id="slide-fs-img" src="">
+    <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
+  </div>
+
+  <!-- Video section -->
+  <section id="video-section">
+    <h2>🎬 學生自學影片</h2>
+    <p style="font-size:1rem;color:var(--dim);margin-bottom:12px">
+      📺 由 NotebookLM AI 生成，建議<b>倍速觀看</b>，看不懂的地方暫停、搭配上方關卡一起複習。
+    </p>
+    <div class="video-wrap">
+      <iframe id="yt-iframe" src="" title="Gemini 引導式學習教學影片"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- NotebookLM Resources -->
+  <section id="nlm-section">
+    <h2>📚 NotebookLM 資源站</h2>
+    <p style="font-size:1rem;margin-bottom:16px">
+      本課程的所有素材（簡報、影片、資訊圖表）都是用 <b style="color:var(--c5)">NotebookLM</b> 生成。
+      點擊下方連結查看完整筆記本，也可以延伸自己的筆記本！
+    </p>
+    <div class="nb-grid">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/835753d0-9027-41c5-b46b-935fe3678aee" target="_blank" rel="noopener">
+        <h4>📘 本單元筆記本</h4>
+        <p>完整教材精華文字＋阿凱老師主講者檔，點進去可以再生成自己的簡報/音訊！</p>
+      </a>
+      <a class="nb-card" href="https://notebooklm.google.com" target="_blank" rel="noopener">
+        <h4>🧪 NotebookLM 首頁</h4>
+        <p>Google 的 AI 筆記本工具，支援上傳 PDF/文件自動生成簡報、音訊、心智圖</p>
+      </a>
+      <a class="nb-card" href="https://gemini.google.com" target="_blank" rel="noopener">
+        <h4>🚪 打開 Gemini</h4>
+        <p>直接開始你的引導式學習！記得打開對話框下的「引導式學習」按鈕</p>
+      </a>
+    </div>
+
+    <div class="faq-section">
+      <h3>❓ 常見問題 FAQ</h3>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q1：為什麼 AI 不直接給我答案？這樣不是很慢嗎？</div>
+        <div class="faq-a">直接抄答案最快，但大腦就沒運動到喔！MIT 研究發現，讓 AI 幫你做的學生反而學不會。引導式學習把難題切成小關卡，雖然多花一點時間，但當你自己想出答案，那種「我懂了！」的成就感超棒，考試時也不會忘記。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q2：引導式學習跟普通 Gemini 聊天有什麼差別？</div>
+        <div class="faq-a">普通 Gemini 像百科全書，一問就給一大篇答案，適合快速查資料。引導式學習像有耐心的老師，會反問你、測試你、一步步教。如果是要「學習」新知識、準備考試，一定要選引導式學習，才能真的變聰明。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q3：我怕打字太慢跟不上 AI，怎麼辦？</div>
+        <div class="faq-a">別擔心！AI 超有耐心絕對不會催你，沒有時間限制。對話框旁有「麥克風」圖示，可以直接用說的，AI 幫你把語音變成文字。也可以用手機拍下題目直接上傳。打錯字或文法錯誤，AI 都聽得懂你的意思。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q4：如果 AI 講的內容我聽不懂，該怎麼繼續問？</div>
+        <div class="faq-a">勇敢跟它說：「這太難了，可以用教 5 歲小孩的方式再說一次嗎？」或「舉一個生活中的例子給我聽」。AI 還會自動找圖片、圖表、YouTube 影片幫你。答錯沒關係，AI 不會笑你，它會換個方式一直重新解釋直到你完全搞懂。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q5：我可以用手機嗎？還是一定要用電腦？</div>
+        <div class="faq-a">電腦、平板、手機通通可以！電腦在 gemini.google.com 網頁使用；手機下載 Google Gemini App（Android 和 iPhone 都有）。用手機還有個大優點：可以用相機直接拍下課本或手寫筆記傳給 AI 請它教你，超級方便。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q6：老師說回家才能用，我自己在家要怎麼打開這個功能？</div>
+        <div class="faq-a">回家請爸媽借你電腦或手機，打開 gemini.google.com 或 App。登入帳號後在對話框下方找到「引導式學習」（手機版是「學習」），點下去就能開始。記得，一般個人 Google 帳號要滿 13 歲才能用喔！</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Floating tools -->
+<div id="float-tools">
+  <button class="float-btn yellow" onclick="togglePanel('lottery')" title="抽籤">🎲</button>
+  <button class="float-btn green" onclick="togglePanel('timer')" title="計時">⏱️</button>
+  <button class="float-btn pink" onclick="scrollTop()" title="回頂">⬆</button>
+</div>
+
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽籤 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <p style="font-size:.85rem;color:var(--dim);margin-bottom:6px">輸入名單（用逗號分隔）</p>
+  <textarea id="lot-input" rows="3" placeholder="小明,小華,小美,阿凱,阿傑">小明,小華,小美,阿凱,阿傑,小安,小柔,小晴</textarea>
+  <button class="btn-primary" onclick="doLottery()">🎰 抽一位！</button>
+  <div class="lottery-result" id="lot-out">等待抽籤...</div>
+</div>
+
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timer-disp">00:00</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="tmSet(60)">1 分鐘</button>
+    <button class="btn-primary" onclick="tmSet(180)">3 分鐘</button>
+    <button class="btn-primary" onclick="tmSet(300)">5 分鐘</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:6px">
+    <button class="btn-primary" style="background:var(--c4);color:#000" onclick="tmStart()">▶ 開始</button>
+    <button class="btn-primary" style="background:var(--c3)" onclick="tmStop()">⏸ 暫停</button>
+    <button class="btn-primary" style="background:var(--dim)" onclick="tmReset()">↻</button>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 IT COCKPIT｜六年級資訊科技教學駕駛艙｜Made with ❤ using NotebookLM + Gemini</p>
+  <p style="margin-top:6px"><a href="../index.html">← 回主頁</a>｜<a href="https://gemini.google.com" target="_blank" rel="noopener">🚪 打開 Gemini</a></p>
+</footer>
+
+<script>
+// Mode switching
+function setMode(m){
+  if(m==='teacher'){
+    const p=prompt('輸入教師密碼：');
+    if(p!=='it2026'){alert('密碼錯誤！');return;}
+    document.body.classList.add('teacher-mode');
+    document.getElementById('mode-teacher').classList.add('active');
+    document.getElementById('mode-student').classList.remove('active');
+  } else {
+    document.body.classList.remove('teacher-mode');
+    document.getElementById('mode-student').classList.add('active');
+    document.getElementById('mode-teacher').classList.remove('active');
+  }
+}
+
+// Quiz answer
+function answer(btn, correct, feedback){
+  const item = btn.closest('.q-item');
+  const opts = item.querySelectorAll('.q-opt');
+  opts.forEach(o => o.disabled = true);
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = item.querySelector('.q-feedback');
+  fb.textContent = feedback;
+  fb.classList.add('show');
+  fb.style.borderLeftColor = correct ? 'var(--c4)' : 'var(--c3)';
+  if(correct) markStageVisited(item.closest('.level-section').id);
+}
+
+// Stage progress
+const stageSet = new Set();
+function markStageVisited(id){
+  if(!id) return;
+  stageSet.add(id);
+  const total=6, done=stageSet.size;
+  document.getElementById('prog-fill').style.width = (done/total*100)+'%';
+  document.getElementById('prog-text').textContent = 'STAGE ' + done + ' / 6';
+  document.querySelectorAll('.stage-pill').forEach(p=>{
+    if(p.dataset.sec===id) p.classList.add('done');
+  });
+}
+
+// Sim (STAGE 2 five steps)
+const simMax = {s2: 5};
+const simCur = {s2: 0};
+function simShow(id, n){
+  simCur[id] = n;
+  for(let i=0;i<simMax[id];i++){
+    const el = document.getElementById(id+'-step-'+i);
+    if(el) el.classList.toggle('active', i===n);
+  }
+  document.getElementById(id+'-prog').textContent = (n+1)+' / '+simMax[id];
+}
+function simNext(id){
+  const max = simMax[id]-1;
+  simShow(id, Math.min(simCur[id]+1, max));
+}
+function simPrev(id){
+  simShow(id, Math.max(simCur[id]-1, 0));
+}
+
+// PARTS builder
+function buildParts(){
+  const p = document.getElementById('pb-p').value;
+  const a = document.getElementById('pb-a').value;
+  const t = document.getElementById('pb-t').value || '（請填主題）';
+  const r = document.getElementById('pb-r').value;
+  const s = document.getElementById('pb-s').value;
+  const txt = '我是'+p+'，請'+a+'，讓我學會「'+t+'」，用'+r+'，' + s + '。';
+  document.getElementById('parts-output').innerText = txt;
+}
+function copyParts(){
+  const txt = document.getElementById('parts-output').innerText;
+  if(!txt || txt.startsWith('←')){alert('請先按「組合 PARTS 提示詞」！');return;}
+  navigator.clipboard.writeText(txt).then(()=>alert('已複製！快去 gemini.google.com 貼上試試 🎉'));
+}
+
+// Copy any prompt by id
+function copyPrompt(id){
+  const el = document.getElementById(id);
+  const txt = el.innerText.replace('📋','').trim();
+  navigator.clipboard.writeText(txt).then(()=>alert('已複製！'));
+}
+
+// Skills tabs
+function showSkill(n){
+  document.querySelectorAll('.skill-tab').forEach((t,i)=>t.classList.toggle('active', i===n));
+  document.querySelectorAll('.skill-panel').forEach((p,i)=>p.classList.toggle('active', i===n));
+}
+
+// FAQ
+function toggleFaq(q){
+  q.parentElement.classList.toggle('open');
+}
+
+// Float panels
+function togglePanel(name){
+  document.querySelectorAll('.tool-panel').forEach(p=>{
+    if(p.id==='panel-'+name) p.classList.toggle('show');
+    else p.classList.remove('show');
+  });
+}
+
+// Scroll top
+function scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}
+
+// Lottery
+function doLottery(){
+  const names = document.getElementById('lot-input').value.split(/[,，\s]+/).filter(n=>n.trim());
+  if(!names.length){alert('請輸入名單！');return;}
+  const out = document.getElementById('lot-out');
+  let i=0;
+  const timer = setInterval(()=>{out.textContent = names[i%names.length]; i++;}, 60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    out.textContent = '🌟 ' + names[Math.floor(Math.random()*names.length)] + ' 🌟';
+  }, 1500);
+}
+
+// Timer
+let tmSec=0, tmTotal=0, tmInt=null;
+function tmSet(s){tmTotal=s;tmSec=s;updateTimer()}
+function updateTimer(){
+  const m=String(Math.floor(tmSec/60)).padStart(2,'0');
+  const s=String(tmSec%60).padStart(2,'0');
+  document.getElementById('timer-disp').textContent = m+':'+s;
+}
+function tmStart(){
+  if(tmInt) return;
+  if(tmSec<=0){alert('請先選擇時間！');return;}
+  tmInt = setInterval(()=>{
+    if(tmSec<=0){
+      clearInterval(tmInt);tmInt=null;
+      document.getElementById('timer-disp').textContent='⏰ 時間到！';
+      return;
+    }
+    tmSec--; updateTimer();
+  }, 1000);
+}
+function tmStop(){if(tmInt){clearInterval(tmInt);tmInt=null}}
+function tmReset(){tmStop();tmSec=tmTotal;updateTimer()}
+
+// Slide player — populated at runtime from SLIDE_LIST
+let SLIDE_LIST = []; // filled by inline assignment below, then initSlidePlayer
+let curSlide = 0;
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((s,i)=>{
+    const t = document.createElement('div');
+    t.className = 'slide-strip-thumb' + (i===0?' active':'');
+    t.innerHTML = '<img src="'+s+'" loading="lazy" alt="slide '+(i+1)+'">';
+    t.onclick = ()=>goSlide(i);
+    strip.appendChild(t);
+  });
+  if(SLIDE_LIST.length){
+    document.getElementById('slide-current').src = SLIDE_LIST[0];
+    document.getElementById('slide-counter').textContent = '1 / ' + SLIDE_LIST.length;
+  }
+}
+function goSlide(n){
+  if(n<0 || n>=SLIDE_LIST.length) return;
+  curSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = (n+1)+' / '+SLIDE_LIST.length;
+  document.querySelectorAll('.slide-strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  const active = document.querySelector('.slide-strip-thumb.active');
+  if(active) active.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+}
+function slideNav(d){goSlide(curSlide+d)}
+function openSlideFullscreen(){
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs').classList.add('show');
+}
+function closeSlideFullscreen(){document.getElementById('slide-fs').classList.remove('show')}
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('slide-fs').classList.contains('show')) return;
+  if(e.key==='ArrowLeft') slideNav(-1);
+  if(e.key==='ArrowRight') slideNav(1);
+  if(e.key==='Escape') closeSlideFullscreen();
+});
+
+// YouTube embed URL will be injected at build time
+const YT_EMBED = 'https://www.youtube.com/embed/DN7meY95LB4';
+if(YT_EMBED && !YT_EMBED.includes('__')) {
+  document.getElementById('yt-iframe').src = YT_EMBED;
+} else {
+  document.getElementById('yt-iframe').outerHTML =
+    '<div style="padding:40px;text-align:center;color:var(--dim)">🎬 學生自學影片即將上架到 YouTube，敬請期待！</div>';
+}
+
+// SLIDES list — 12 pages converted from NotebookLM slide deck
+SLIDE_LIST = [
+  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg',
+  'assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg',
+  'assets/slide_09.jpg','assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg'
+];
+initSlidePlayer();
+</script>
+</body>
+</html>

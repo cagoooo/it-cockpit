@@ -1,0 +1,7 @@
+{
+  "video_id": "DN7meY95LB4",
+  "watch_url": "https://www.youtube.com/watch?v=DN7meY95LB4",
+  "embed_url": "https://www.youtube.com/embed/DN7meY95LB4",
+  "title": "Gemini 引導式學習｜六年級資訊科技 - NotebookLM教學影片",
+  "privacy": "unlisted"
+}
