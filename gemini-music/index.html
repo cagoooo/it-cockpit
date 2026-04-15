@@ -547,14 +547,15 @@ canvas{
   display:none;
 }
 .draw-panel.open{display:flex;flex-direction:column;gap:6px;}
+/* 畫筆 canvas：永遠存在、永遠透明，只切換 pointer-events。
+   千萬別用 display: none/block 切換（某些瀏覽器 / force-dark-mode 會渲染成黑色遮擋畫面）*/
 .draw-overlay{
   position:fixed;inset:0;
-  cursor:crosshair;
   z-index:250;
   pointer-events:none;
-  display:none;
+  background:transparent;
 }
-.draw-overlay.active{pointer-events:auto;display:block;}
+.draw-overlay.active{pointer-events:auto;cursor:crosshair;}
 .draw-colors{display:flex;gap:6px;align-items:center;}
 .color-dot{
   width:28px;height:28px;
