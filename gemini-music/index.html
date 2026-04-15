@@ -1208,18 +1208,29 @@ canvas{
 <!-- ======================================================= -->
 <div class="video-section">
   <h3>學生自學影片</h3>
-  <div class="video-grid">
-    <div class="video-card">
-      <h4>完整教學影片（NotebookLM 生成）</h4>
-      <video preload="none" controls style="width:100%;" poster="">
-        <source src="assets/影片概覽.mp4" type="video/mp4">
-        <div class="video-placeholder">影片下載後會出現在這裡</div>
-      </video>
-    </div>
-    <div class="video-card">
-      <h4>Gemini 生成音樂示範影片</h4>
-      <div class="video-placeholder">
-        可請老師提供 YouTube 示範影片連結嵌入於此
+  <div class="video-grid" style="grid-template-columns:1fr;">
+    <div class="video-card" style="padding:0;overflow:hidden;">
+      <div style="padding:16px 16px 8px;">
+        <h4 style="margin:0 0 4px;">🎬 完整教學影片（AI 自動生成）</h4>
+        <p style="font-size:0.85rem;color:var(--dim);margin:0;">「用 AI 做出屬於我們班的畢業歌」— 由 NotebookLM 生成，適合學生課前預習、課後複習</p>
+      </div>
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+        <iframe
+          src="https://www.youtube.com/embed/1gRf_0IJ-no?rel=0&modestbranding=1"
+          title="AI 音樂創作師：用 Gemini 做畢業歌曲｜六年級資訊科技 NotebookLM教學影片"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div style="padding:10px 16px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <span style="font-size:0.8rem;color:var(--dim);">⏱ 約 5 分鐘</span>
+        <span style="font-size:0.8rem;color:var(--dim);">•</span>
+        <span style="font-size:0.8rem;color:var(--dim);">🔒 不公開影片（點連結才能觀看）</span>
+        <a href="https://www.youtube.com/watch?v=1gRf_0IJ-no" target="_blank"
+           style="margin-left:auto;font-size:0.85rem;color:var(--c1);text-decoration:none;">
+          在 YouTube 開啟 ↗
+        </a>
       </div>
     </div>
   </div>
