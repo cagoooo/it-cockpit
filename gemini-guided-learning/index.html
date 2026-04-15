@@ -1318,7 +1318,7 @@ input, select, textarea, button{font-family:inherit}
 <div id="float-tools">
   <button class="float-btn yellow" onclick="togglePanel('lottery')" title="抽籤">🎲</button>
   <button class="float-btn green" onclick="togglePanel('timer')" title="計時">⏱️</button>
-  <button class="float-btn pink" onclick="scrollTop()" title="回頂">⬆</button>
+  <button class="float-btn pink" onclick="goTop()" title="回頂">⬆</button>
 </div>
 
 <div class="tool-panel" id="panel-lottery">
@@ -1453,7 +1453,7 @@ function togglePanel(name){
 }
 
 // Scroll top
-function scrollTop(){window.scrollTo({top:0,behavior:'smooth'})}
+function goTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
 // Lottery
 function doLottery(){
