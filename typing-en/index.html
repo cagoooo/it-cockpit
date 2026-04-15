@@ -1659,6 +1659,11 @@ function goSlide(n){
   document.querySelectorAll('.slide-strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
   const active = document.querySelector('.slide-strip-thumb.active');
   if(active) active.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  // 全螢幕開啟時同步更新大圖
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+  }
 }
 function slideNav(d){goSlide(curSlide+d)}
 function openSlideFullscreen(){
