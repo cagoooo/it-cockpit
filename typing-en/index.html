@@ -1467,13 +1467,13 @@ let mtList = [];
 let mtIdx = 0;
 let mtErrors = 0;
 let mtTotal = 0;
-function loadWord(level){
+function loadWord(level, autoFocus=true){
   mtList = WORD_SETS[level].slice(0,8);
   mtIdx = 0;
   mtErrors = 0;
   mtTotal = 0;
   document.getElementById('mt-input').value='';
-  document.getElementById('mt-input').focus();
+  if(autoFocus) document.getElementById('mt-input').focus();
   showCurrentWord();
   updateMtStats();
 }
@@ -1706,7 +1706,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
   renderKeyboard();
   renderHands();
   initJC();
-  loadWord('home');
+  loadWord('home', false);
   wpmReset();
   initSlidePlayer();
 });
