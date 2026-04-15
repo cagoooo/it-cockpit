@@ -63,6 +63,8 @@ body {
   display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
 }
 .header-icon { font-size: 2rem; }
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:2px solid var(--c2);background:transparent;color:var(--c2);text-decoration:none;font-weight:700;font-size:0.85rem;letter-spacing:1px;transition:.2s;white-space:nowrap;box-shadow:3px 3px 0 rgba(44,44,44,0.3)}
+.home-btn:hover{background:var(--c2);color:var(--panel);transform:translate(-1px,-1px)}
 .header-texts { flex: 1; }
 .header-title { font-size: 1.5rem; font-weight: 900; color: var(--c1); }
 .header-sub { font-size: 0.9rem; color: var(--dim); }
@@ -698,6 +700,7 @@ canvas {
 <!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
     <div class="header-icon">🕵️</div>
     <div class="header-texts">
       <div class="header-title">AI假影片偵探社：媒體識讀素養</div>

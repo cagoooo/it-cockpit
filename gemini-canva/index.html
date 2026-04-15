@@ -34,6 +34,8 @@ html{scroll-behavior:smooth;font-size:18px}
 body{background:var(--bg);color:var(--text);font-family:var(--ff-body);font-size:1rem;line-height:1.7}
 #site-header{position:sticky;top:0;z-index:100;background:#0d0d2bcc;backdrop-filter:blur(10px);border-bottom:2px solid var(--c1);padding:10px 20px}
 .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:2px solid var(--c2);background:transparent;color:var(--c2);text-decoration:none;font-family:var(--ff-head);font-size:10px;letter-spacing:1px;transition:.2s;white-space:nowrap;box-shadow:3px 3px 0 #000}
+.home-btn:hover{background:var(--c2);color:var(--bg);transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
 .header-title{font-size:14px;font-family:var(--ff-head);color:var(--c1);text-shadow:0 0 10px var(--c1)}
 .header-meta{font-size:15px;color:var(--dim)}
 .prog-wrap{flex:1;min-width:120px;max-width:200px}
@@ -181,6 +183,7 @@ footer a{color:var(--c1);text-decoration:none}
 
 <header id="site-header">
 <div class="header-inner">
+  <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
   <div>
     <div class="header-title">GEMINI × CANVA</div>
     <div class="header-meta">六年級 資訊科技 ｜ 畢業影片創作</div>

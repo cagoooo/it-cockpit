@@ -37,6 +37,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 
 /* HEADER */
 .site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--c1);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 4px 20px rgba(0,229,255,.15)}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:2px solid var(--c2);background:transparent;color:var(--c2);text-decoration:none;font-weight:700;font-size:.85rem;letter-spacing:1px;transition:.2s;white-space:nowrap;box-shadow:3px 3px 0 #000}
+.home-btn:hover{background:var(--c2);color:#000;transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
 .header-title{font-size:1.5rem;font-weight:900;color:var(--c1)}
 .header-sub{font-size:1rem;color:var(--c2);margin-left:8px}
 .grade-badge{background:var(--c2);color:#000;font-weight:700;padding:4px 12px;font-size:.9rem;border:2px solid #000;box-shadow:2px 2px 0 #000}
@@ -272,6 +274,7 @@ canvas{display:block;width:100%;height:auto;touch-action:none}
 
 <!-- HEADER -->
 <header class="site-header">
+  <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
   <div>
     <div class="header-title">✦ Canva AI 魔法創作</div>
     <div class="header-sub">六年級資訊科技｜魔法媒體工具完整教學</div>

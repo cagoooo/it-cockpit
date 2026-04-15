@@ -69,6 +69,8 @@ body{
   flex-wrap:wrap;
 }
 .header-left{}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:2px solid var(--c2);background:transparent;color:var(--c2);text-decoration:none;font-family:'Press Start 2P',monospace;font-size:0.55rem;letter-spacing:1px;transition:.2s;white-space:nowrap;box-shadow:var(--pixel-shadow)}
+.home-btn:hover{background:var(--c2);color:var(--bg);transform:translate(-1px,-1px)}
 .header-badge{
   font-family:'Press Start 2P',monospace;
   font-size:0.55rem;
@@ -585,6 +587,7 @@ canvas{
 <header class="site-header">
   <div class="header-inner">
     <div class="header-left">
+      <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁" style="margin-bottom:6px">← IT COCKPIT</a>
       <div class="header-badge">GRADE 6 · IT CLASS</div>
       <div class="header-title">AI 音樂創作師：用 Gemini 做畢業歌曲</div>
       <div class="header-sub">六年級資訊科技｜5 大關卡｜Gemini × Canva</div>
