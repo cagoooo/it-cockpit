@@ -385,6 +385,16 @@ body{
 .float-btn.pink{background:var(--c3);color:#fff}
 .float-btn.green{background:var(--c4);color:#000}
 .float-btn.yellow{background:var(--c2);color:#000}
+/* 畫筆工具（永遠透明 canvas + 底部工具列）*/
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:var(--surface);border:2px solid var(--c1);padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-px)}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .dt-label{font-size:.85rem;color:var(--dim)}
+.draw-toolbar .color-dot{width:26px;height:26px;border:2px solid #000;cursor:pointer;padding:0;transition:.2s}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor}
+.draw-toolbar .draw-clear{background:transparent;border:2px solid var(--c3);color:var(--c3);padding:4px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem}
+.draw-toolbar .draw-clear:hover{background:var(--c3);color:#fff}
 .tool-panel{
   position:fixed;right:90px;bottom:20px;width:320px;
   background:var(--surface);border:2px solid var(--c1);padding:18px;
@@ -1318,7 +1328,20 @@ input, select, textarea, button{font-family:inherit}
 <div id="float-tools">
   <button class="float-btn yellow" onclick="togglePanel('lottery')" title="抽籤">🎲</button>
   <button class="float-btn green" onclick="togglePanel('timer')" title="計時">⏱️</button>
-  <button class="float-btn pink" onclick="goTop()" title="回頂">⬆</button>
+  <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn" onclick="goTop()" title="回頂">⬆</button>
+</div>
+
+<!-- 畫筆 canvas + 工具列 -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span class="dt-label">🖊️</span>
+  <button class="color-dot active" style="background:#00e5ff" onclick="setPenColor('#00e5ff',this)" title="青色"></button>
+  <button class="color-dot" style="background:#ffd740" onclick="setPenColor('#ffd740',this)" title="黃色"></button>
+  <button class="color-dot" style="background:#ff4081" onclick="setPenColor('#ff4081',this)" title="粉紅"></button>
+  <button class="color-dot" style="background:#69ff47" onclick="setPenColor('#69ff47',this)" title="綠色"></button>
+  <button class="color-dot" style="background:#b388ff" onclick="setPenColor('#b388ff',this)" title="紫色"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
 </div>
 
 <div class="tool-panel" id="panel-lottery">
@@ -1465,6 +1488,49 @@ function togglePanel(name){
 
 // Scroll top
 function goTop(){window.scrollTo({top:0,behavior:'smooth'})}
+
+// Draw tool（永遠透明 overlay + pointer-events 切換）
+let drawActive=false, penColor='#00e5ff', penSize=4;
+let drawCanvas, drawCtx, isDrawing=false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth;
+  drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e=>{ if(!drawActive)return; isDrawing=true; dLastX=e.clientX; dLastY=e.clientY; });
+  drawCanvas.addEventListener('mousemove', e=>{
+    if(!drawActive||!isDrawing) return;
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX,dLastY); drawCtx.lineTo(e.clientX,e.clientY); drawCtx.stroke();
+    dLastX=e.clientX; dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', ()=> isDrawing=false);
+  drawCanvas.addEventListener('touchstart', e=>{ if(!drawActive)return; e.preventDefault(); const t=e.touches[0]; isDrawing=true; dLastX=t.clientX; dLastY=t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e=>{
+    if(!drawActive||!isDrawing)return; e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX,dLastY); drawCtx.lineTo(t.clientX,t.clientY); drawCtx.stroke();
+    dLastX=t.clientX; dLastY=t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', ()=> isDrawing=false);
+  window.addEventListener('resize', ()=>{
+    drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight;
+  });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c4)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+initDraw();
 
 // Lottery（號碼模式，支援不重複抽）
 let lotPool = [];
