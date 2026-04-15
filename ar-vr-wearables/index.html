@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR/VR 科技穿戴設備探索｜六年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/ar-vr-wearables/">
+<meta property="og:title" content="AR/VR 科技穿戴設備探索｜六年級資訊科技">
+<meta property="og:description" content="Meta Ray-Ban、HTC VIVE Eagle、Rokid Glass、Meta Quest 3、Apple Vision Pro 五款穿戴裝置大 PK，加上自製 Google Cardboard VR 與 Quiver AR 卡片動手做。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/ar-vr-wearables/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/ar-vr-wearables/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   Neon Tech 主題 - AR/VR 穿戴式設備探索
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#0a0a1e; --surface:#111130; --panel:#1a1a40; --panel2:#222255;
+  --c1:#00ff88;  /* 主色 亮綠 */
+  --c2:#0088ff;  /* 次色 電藍 */
+  --c3:#aa44ff;  /* 紫 */
+  --c4:#ffcc00;  /* 警告黃 */
+  --c5:#ff4488;  /* 粉紅 */
+  --text:#e0f0ff; --dim:#7088b0; --bright:#ffffff;
+  --glow-c1:0 0 12px rgba(0,255,136,.5);
+  --glow-c2:0 0 12px rgba(0,136,255,.5);
+  --glow-c3:0 0 12px rgba(170,68,255,.5);
+}
+
+html{font-size:18px; scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;
+  background-image:
+    radial-gradient(at 10% 0%,rgba(0,255,136,.08) 0%,transparent 50%),
+    radial-gradient(at 90% 100%,rgba(0,136,255,.08) 0%,transparent 50%),
+    linear-gradient(180deg,#0a0a1e 0%,#08081a 100%);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* 網格背景 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,255,136,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,136,.03) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════════ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(17,17,48,.92);backdrop-filter:blur(10px);
+  border-bottom:2px solid var(--c1);box-shadow:0 2px 20px rgba(0,255,136,.3);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;
+  border:2px solid var(--c2);background:transparent;color:var(--c2);
+  text-decoration:none;font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.85rem;letter-spacing:1px;
+  transition:.2s;white-space:nowrap;
+  box-shadow:0 0 8px rgba(0,136,255,.4);
+}
+.home-btn:hover{
+  background:var(--c2);color:var(--bg);
+  transform:translateY(-2px);
+  box-shadow:0 4px 16px rgba(0,136,255,.6);
+}
+
+.header-title-group{flex:1;min-width:260px;}
+.header-title{
+  font-size:1.5rem;font-weight:900;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  text-shadow:none;
+}
+.header-sub{font-size:.95rem;color:var(--dim);margin-top:2px;
+  font-family:'JetBrains Mono',monospace;}
+.header-sub strong{color:var(--c1);}
+
+.mode-bar{display:flex;align-items:center;gap:10px;}
+.mode-btn{
+  padding:7px 14px;border:2px solid var(--c3);
+  background:transparent;color:var(--c3);
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.85rem;
+  cursor:pointer;transition:.2s;
+}
+.mode-btn.active,.mode-btn:hover{
+  background:var(--c3);color:var(--bg);
+  box-shadow:0 0 12px rgba(170,68,255,.5);
+}
+
+/* 進度條 */
+.progress-bar{
+  height:5px;background:var(--panel);position:relative;overflow:hidden;
+}
+.progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  box-shadow:0 0 10px var(--c1);
+  transition:width .6s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════════ */
+.hero{
+  max-width:1400px;margin:30px auto 40px;padding:0 24px;
+  position:relative;z-index:1;
+}
+.hero-inner{
+  background:linear-gradient(135deg,var(--surface) 0%,var(--panel) 100%);
+  border:2px solid var(--c1);padding:32px 36px;
+  box-shadow:0 0 40px rgba(0,255,136,.25),inset 0 0 30px rgba(0,136,255,.1);
+  position:relative;
+}
+.hero-inner::before{
+  content:"";position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;
+  background:linear-gradient(45deg,var(--c1),var(--c2),var(--c3),var(--c1));
+  z-index:-1;opacity:.4;background-size:400% 400%;
+  animation:gradShift 8s ease infinite;
+}
+@keyframes gradShift{
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
+.hero h1{
+  font-size:2rem;font-weight:900;margin-bottom:8px;
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.hero-desc{font-size:1rem;color:var(--text);margin:14px 0 22px;line-height:1.8;}
+.obj-chips{display:flex;flex-wrap:wrap;gap:10px;}
+.obj-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;
+  background:var(--panel2);border:1px solid var(--c1);color:var(--c1);
+  font-size:.95rem;font-weight:700;font-family:'JetBrains Mono',monospace;
+  box-shadow:0 0 8px rgba(0,255,136,.3);
+}
+.obj-chip .ico{font-size:1.1rem;}
+
+/* ═══════════════════════════════════════════════════════════════
+   Stage 導覽
+   ═══════════════════════════════════════════════════════════════ */
+.stage-nav{
+  max-width:1400px;margin:0 auto 40px;padding:0 24px;
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
+  position:relative;z-index:1;
+}
+.stage-pill{
+  padding:10px 20px;
+  background:var(--panel);border:2px solid var(--c2);color:var(--c2);
+  text-decoration:none;font-weight:700;font-size:.95rem;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.5px;
+  transition:.2s;cursor:pointer;
+}
+.stage-pill:hover{
+  background:var(--c2);color:var(--bg);
+  box-shadow:0 0 12px rgba(0,136,255,.5);
+  transform:translateY(-2px);
+}
+.stage-pill.done{border-color:var(--c1);color:var(--c1);}
+.stage-pill.done::after{content:" ✓";}
+
+/* ═══════════════════════════════════════════════════════════════
+   STAGE / SECTION
+   ═══════════════════════════════════════════════════════════════ */
+.level-section{
+  max-width:1400px;margin:0 auto 60px;padding:0 24px;
+  position:relative;z-index:1;scroll-margin-top:90px;
+}
+.section-header{
+  display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;
+}
+.stage-badge{
+  display:inline-block;
+  padding:8px 14px;
+  background:var(--c1);color:var(--bg);
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+  font-size:.8rem;letter-spacing:2px;white-space:nowrap;
+  box-shadow:0 0 12px rgba(0,255,136,.5);
+}
+.section-title{font-size:1.5rem;font-weight:900;color:var(--c1);margin-bottom:4px;}
+.section-sub{font-size:1rem;color:var(--dim);}
+
+.stage-hero-img{
+  width:100%;max-height:540px;object-fit:contain;
+  background:var(--panel);border:2px solid var(--c2);
+  box-shadow:0 0 20px rgba(0,136,255,.3);
+  margin-bottom:24px;cursor:zoom-in;transition:.2s;
+}
+.stage-hero-img:hover{box-shadow:0 0 30px rgba(0,136,255,.5);}
+
+/* 步驟卡 */
+.steps-card{
+  background:var(--surface);border:2px solid var(--c2);
+  padding:22px 26px;margin-bottom:22px;
+  box-shadow:0 4px 20px rgba(0,0,0,.4),inset 0 0 15px rgba(0,136,255,.05);
+}
+.steps-card h4{
+  font-size:1.05rem;color:var(--c2);font-weight:700;
+  margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--panel2);
+  display:flex;align-items:center;gap:10px;
+}
+.steps-card h4 .ico{font-size:1.3rem;}
+.steps-list{list-style:none;}
+.steps-list li{
+  display:flex;gap:14px;padding:10px 0;
+  font-size:1rem;line-height:1.7;
+}
+.steps-list li:not(:last-child){border-bottom:1px dashed rgba(0,136,255,.15);}
+.step-num{
+  min-width:34px;height:34px;border-radius:50%;
+  background:var(--c1);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.9rem;
+  flex-shrink:0;box-shadow:0 0 8px rgba(0,255,136,.4);
+}
+.step-body{flex:1;}
+.step-body strong{color:var(--c1);}
+
+.tip-box{
+  background:rgba(255,204,0,.1);border-left:4px solid var(--c4);
+  padding:14px 18px;margin:16px 0;
+  font-size:.95rem;color:var(--text);
+}
+.tip-box strong{color:var(--c4);}
+
+/* ═══════════════════════════════════════════════════════════════
+   CANVAS 互動區
+   ═══════════════════════════════════════════════════════════════ */
+.canvas-section{
+  background:var(--surface);border:2px solid var(--c3);
+  padding:22px 26px;margin:22px 0;
+  box-shadow:0 4px 20px rgba(0,0,0,.4),inset 0 0 15px rgba(170,68,255,.05);
+}
+.canvas-section h4{
+  font-size:1.1rem;color:var(--c3);font-weight:700;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+
+/* AR/VR 分類器 */
+.classifier-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px;}
+.classifier-zone{
+  background:var(--panel);border:2px dashed var(--dim);
+  padding:16px;min-height:150px;text-align:center;
+  transition:.2s;
+}
+.classifier-zone.drag-over{background:var(--panel2);border-style:solid;}
+.classifier-zone h5{color:var(--c2);font-size:1rem;margin-bottom:10px;}
+.classifier-zone h5 .tag{
+  display:inline-block;padding:2px 8px;font-size:.75rem;
+  background:var(--c2);color:var(--bg);margin-left:6px;
+}
+.classifier-items{display:flex;flex-wrap:wrap;gap:8px;min-height:40px;justify-content:center;}
+.dev-chip{
+  display:inline-block;padding:6px 12px;
+  background:var(--panel2);border:1px solid var(--c1);color:var(--c1);
+  font-size:.85rem;font-weight:700;cursor:grab;user-select:none;
+  transition:.15s;
+}
+.dev-chip:active{cursor:grabbing;transform:scale(.95);}
+.dev-chip.correct{background:var(--c1);color:var(--bg);border-color:var(--c1);
+  box-shadow:0 0 8px rgba(0,255,136,.4);}
+.dev-chip.wrong{background:var(--c5);color:var(--bright);border-color:var(--c5);animation:shake .3s;}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-4px);}
+  75%{transform:translateX(4px);}
+}
+.classifier-feedback{margin-top:12px;text-align:center;font-size:.95rem;min-height:24px;}
+.classifier-feedback.ok{color:var(--c1);}
+.classifier-feedback.err{color:var(--c5);}
+
+/* 設備規格 PK 表 */
+.spec-pk{overflow-x:auto;margin-top:16px;}
+.spec-table{width:100%;min-width:900px;border-collapse:collapse;font-size:.92rem;}
+.spec-table th,.spec-table td{
+  padding:10px 12px;text-align:left;
+  border-bottom:1px solid var(--panel2);
+}
+.spec-table th{
+  background:var(--panel);color:var(--c2);font-weight:700;
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;
+  position:sticky;top:0;
+}
+.spec-table tr:hover td{background:rgba(0,255,136,.05);}
+.spec-table .dev-name{color:var(--c1);font-weight:700;}
+.spec-table .price-high{color:var(--c5);font-weight:700;}
+.spec-table .price-mid{color:var(--c4);font-weight:700;}
+.spec-table .price-low{color:var(--c1);font-weight:700;}
+
+.pk-picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.pk-btn{
+  padding:8px 14px;border:2px solid var(--c2);
+  background:transparent;color:var(--c2);
+  font-weight:700;font-size:.9rem;cursor:pointer;transition:.15s;
+  font-family:'JetBrains Mono',monospace;
+}
+.pk-btn:hover,.pk-btn.active{background:var(--c2);color:var(--bg);}
+
+/* 價格視覺化 */
+.price-viz{display:flex;flex-direction:column;gap:12px;margin-top:16px;}
+.price-row{display:grid;grid-template-columns:180px 1fr 120px;gap:12px;align-items:center;}
+.price-row .name{font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--text);}
+.price-bar-wrap{background:var(--panel);height:34px;position:relative;overflow:hidden;}
+.price-bar{
+  height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));
+  box-shadow:inset 0 0 10px rgba(255,255,255,.2);
+  transition:width 1s ease;width:0;
+}
+.price-row.vision .price-bar{background:linear-gradient(90deg,var(--c4),var(--c5));}
+.price-val{color:var(--c1);font-weight:700;text-align:right;font-family:'JetBrains Mono',monospace;font-size:.95rem;}
+
+/* Cardboard 拖曳排序 */
+.cardboard-sort{margin-top:16px;}
+.cardboard-sort p{margin-bottom:12px;color:var(--dim);font-size:.95rem;}
+.sort-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.sort-item{
+  background:var(--panel);border:1px solid var(--c2);padding:12px 16px;
+  display:flex;align-items:center;gap:12px;cursor:grab;user-select:none;
+  transition:.15s;
+}
+.sort-item.dragging{opacity:.5;}
+.sort-item.drop-target{border-color:var(--c1);background:var(--panel2);}
+.sort-order-num{
+  min-width:28px;height:28px;border-radius:50%;
+  background:var(--c2);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;
+  font-family:'JetBrains Mono',monospace;
+}
+.sort-item.correct{border-color:var(--c1);background:rgba(0,255,136,.1);}
+.sort-item.correct .sort-order-num{background:var(--c1);}
+.sort-item .grip{color:var(--dim);font-size:1.1rem;}
+.sort-feedback{margin-top:12px;text-align:center;font-weight:700;}
+.sort-feedback.ok{color:var(--c1);}
+.sort-feedback.err{color:var(--c5);}
+
+/* Quiver 掃描模擬 */
+.quiver-sim{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;}
+@media (max-width:700px){.quiver-sim{grid-template-columns:1fr;}}
+.quiver-paper{
+  background:#fff;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--c2);position:relative;overflow:hidden;cursor:crosshair;
+}
+.quiver-paper::before{
+  content:"🦋";font-size:6rem;opacity:.15;position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.quiver-paper canvas{position:absolute;inset:0;width:100%;height:100%;}
+.quiver-paper .paper-hint{
+  position:absolute;bottom:8px;left:8px;right:8px;
+  color:#333;font-size:.8rem;text-align:center;
+  background:rgba(255,255,255,.8);padding:4px;
+}
+.quiver-screen{
+  background:var(--panel);border:2px solid var(--c3);
+  aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.quiver-screen canvas{position:absolute;inset:0;}
+.quiver-screen .status{
+  position:absolute;top:8px;left:8px;padding:4px 10px;
+  background:rgba(0,0,0,.5);color:var(--c1);font-size:.8rem;
+  font-family:'JetBrains Mono',monospace;
+}
+.quiver-controls{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+.quiver-color{width:30px;height:30px;border:2px solid #000;cursor:pointer;transition:.15s;}
+.quiver-color.active{transform:scale(1.15);box-shadow:0 0 8px currentColor;}
+.quiver-btn{
+  padding:8px 16px;background:var(--c1);color:var(--bg);
+  border:none;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;
+  font-size:.9rem;
+}
+.quiver-btn:hover{background:var(--c2);}
+
+/* AR/VR 眼鏡發想器 */
+.invention-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+@media (max-width:700px){.invention-form{grid-template-columns:1fr;}}
+.field-group{display:flex;flex-direction:column;gap:6px;}
+.field-group label{
+  font-size:.85rem;color:var(--c2);font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+}
+.field-group input,.field-group select,.field-group textarea{
+  padding:10px 12px;background:var(--panel);border:1px solid var(--panel2);
+  color:var(--text);font-family:inherit;font-size:.95rem;
+  transition:.15s;
+}
+.field-group input:focus,.field-group select:focus,.field-group textarea:focus{
+  outline:none;border-color:var(--c1);box-shadow:0 0 6px rgba(0,255,136,.4);
+}
+.field-group textarea{min-height:70px;resize:vertical;}
+.invention-form button{
+  grid-column:1/-1;
+  padding:12px;background:var(--c3);color:var(--bright);
+  border:none;font-weight:700;font-family:'JetBrains Mono',monospace;
+  font-size:1rem;cursor:pointer;letter-spacing:1px;
+  transition:.15s;
+}
+.invention-form button:hover{background:var(--c1);color:var(--bg);}
+
+.invention-card{
+  margin-top:16px;padding:24px;
+  background:linear-gradient(135deg,var(--panel) 0%,var(--surface) 100%);
+  border:2px solid var(--c3);
+  box-shadow:0 0 24px rgba(170,68,255,.3);
+  display:none;
+}
+.invention-card.show{display:block;animation:fadeInUp .4s;}
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.invention-card h5{
+  font-size:1.3rem;color:var(--c3);font-weight:900;margin-bottom:8px;
+  background:linear-gradient(90deg,var(--c1),var(--c3));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.invention-card .tag-line{color:var(--dim);font-size:.9rem;margin-bottom:14px;}
+.invention-card .desc{font-size:1rem;line-height:1.8;color:var(--text);}
+.invention-card .specs{
+  margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;
+}
+.invention-card .spec-tag{
+  padding:4px 10px;background:var(--panel2);border:1px solid var(--c1);
+  color:var(--c1);font-size:.85rem;font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   QUIZ
+   ═══════════════════════════════════════════════════════════════ */
+.quiz-section{
+  background:var(--surface);border:2px solid var(--c4);
+  padding:22px 26px;margin:22px 0;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.quiz-section h4{
+  font-size:1.1rem;color:var(--c4);font-weight:700;
+  margin-bottom:16px;display:flex;align-items:center;gap:10px;
+}
+.quiz-q{
+  background:var(--panel);padding:16px 20px;margin-bottom:16px;
+  border-left:4px solid var(--c4);
+}
+.quiz-q-text{font-size:1.05rem;font-weight:700;margin-bottom:12px;color:var(--text);}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media (max-width:700px){.quiz-opts{grid-template-columns:1fr;}}
+.quiz-opt{
+  padding:12px 16px;background:var(--panel2);border:2px solid var(--panel2);
+  color:var(--text);cursor:pointer;font-size:.95rem;
+  text-align:left;transition:.15s;font-family:inherit;
+}
+.quiz-opt:hover{border-color:var(--c2);}
+.quiz-opt.correct{background:rgba(0,255,136,.2);border-color:var(--c1);color:var(--c1);}
+.quiz-opt.wrong{background:rgba(255,68,136,.2);border-color:var(--c5);color:var(--c5);}
+.quiz-opt:disabled{cursor:default;}
+.quiz-feedback{margin-top:12px;padding:10px 14px;font-size:.95rem;display:none;}
+.quiz-feedback.ok{background:rgba(0,255,136,.1);color:var(--c1);border-left:3px solid var(--c1);display:block;}
+.quiz-feedback.err{background:rgba(255,68,136,.1);color:var(--c5);border-left:3px solid var(--c5);display:block;}
+
+/* ═══════════════════════════════════════════════════════════════
+   教師提示
+   ═══════════════════════════════════════════════════════════════ */
+.teacher-note{
+  background:rgba(170,68,255,.08);border:1px dashed var(--c3);
+  padding:14px 18px;margin-top:16px;
+  font-size:.95rem;color:var(--text);
+}
+.teacher-note::before{
+  content:"👨‍🏫 教師 Tips：";color:var(--c3);font-weight:700;display:block;margin-bottom:6px;
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;
+}
+.teacher-only{display:none;}
+body.teacher-mode .teacher-only{display:block;}
+
+/* ═══════════════════════════════════════════════════════════════
+   簡報播放器
+   ═══════════════════════════════════════════════════════════════ */
+.slide-section{max-width:1400px;margin:0 auto 48px;padding:0 24px;position:relative;z-index:1;}
+.slide-section > h3{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.85rem;color:var(--c1);letter-spacing:2px;
+  margin-bottom:16px;
+}
+.slide-player{
+  background:var(--surface);border:2px solid var(--c1);
+  box-shadow:0 0 24px rgba(0,255,136,.25);
+}
+.slide-player-main{
+  position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;
+}
+.slide-player-main img{
+  width:100%;height:100%;object-fit:contain;display:block;
+}
+.slide-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:44px;background:rgba(0,255,136,.8);color:var(--bg);
+  border:none;font-size:1.4rem;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.15s;
+}
+.slide-nav:hover{background:var(--c1);box-shadow:0 0 16px var(--c1);}
+.slide-nav.prev{left:16px;}
+.slide-nav.next{right:16px;}
+.slide-fs-btn{
+  position:absolute;top:12px;right:12px;
+  background:rgba(0,0,0,.7);border:1px solid var(--c1);color:var(--c1);
+  padding:6px 12px;cursor:pointer;font-size:.85rem;
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+}
+.slide-fs-btn:hover{background:var(--c1);color:var(--bg);}
+.slide-counter{
+  position:absolute;bottom:12px;left:12px;
+  padding:4px 10px;background:rgba(0,0,0,.7);color:var(--c1);
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;
+}
+.slide-strip{
+  display:flex;gap:6px;padding:10px;background:var(--panel);
+  overflow-x:auto;scrollbar-width:thin;
+}
+.slide-strip-thumb{
+  width:110px;aspect-ratio:16/9;flex-shrink:0;cursor:pointer;
+  border:2px solid transparent;transition:.15s;
+}
+.slide-strip-thumb:hover{border-color:var(--c2);}
+.slide-strip-thumb.active{border-color:var(--c1);box-shadow:0 0 8px var(--c1);}
+.slide-strip-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+
+.slide-fullscreen-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:500;
+  display:none;align-items:center;justify-content:center;
+}
+.slide-fullscreen-overlay.show{display:flex;}
+.slide-fs-img{max-width:95%;max-height:90%;object-fit:contain;}
+.slide-fs-close{
+  position:absolute;top:16px;right:16px;
+  background:var(--c5);color:var(--bright);border:none;
+  width:44px;height:44px;font-size:1.3rem;cursor:pointer;font-weight:700;
+}
+.slide-fs-close:hover{background:var(--c1);color:var(--bg);}
+.slide-fs-counter{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  padding:6px 14px;background:rgba(0,0,0,.7);color:var(--c1);
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NLM 自學影片
+   ═══════════════════════════════════════════════════════════════ */
+.nlm-video-section{max-width:1400px;margin:0 auto 48px;padding:0 24px;position:relative;z-index:1;}
+.nlm-video-section h3{
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--c3);
+  letter-spacing:2px;margin-bottom:16px;
+}
+.video-wrap{
+  background:var(--surface);border:2px solid var(--c3);
+  box-shadow:0 0 24px rgba(170,68,255,.25);overflow:hidden;
+}
+.video-ratio{position:relative;padding-top:56.25%;width:100%;}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.video-no-id{
+  padding:60px 30px;text-align:center;font-size:1rem;color:var(--text);
+  background:var(--panel);border:2px dashed var(--dim);min-height:320px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+}
+.video-no-id .big{font-size:2.5rem;}
+.video-no-id a{color:var(--c1);text-decoration:none;border-bottom:1px solid var(--c1);}
+.video-no-id a:hover{color:var(--c2);border-color:var(--c2);}
+.video-meta{
+  background:var(--panel);border-top:2px solid var(--c3);
+  padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.nlm-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--c3);color:var(--bright);
+  font-size:.8rem;font-weight:700;padding:4px 12px;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.5px;
+}
+.video-hint{font-size:.9rem;color:var(--dim);}
+
+/* ═══════════════════════════════════════════════════════════════
+   NotebookLM 資源站
+   ═══════════════════════════════════════════════════════════════ */
+.nb-section{max-width:1400px;margin:0 auto 48px;padding:0 24px;position:relative;z-index:1;}
+.nb-section > h3{
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--c2);
+  letter-spacing:2px;margin-bottom:16px;
+}
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:24px;}
+.nb-card{
+  background:var(--surface);border:2px solid var(--c2);padding:18px 22px;
+  text-decoration:none;color:var(--text);transition:.2s;
+  box-shadow:0 0 12px rgba(0,136,255,.2);
+}
+.nb-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,136,255,.4);}
+.nb-card h4{font-size:1rem;color:var(--c2);font-weight:700;margin-bottom:6px;}
+.nb-card p{font-size:.9rem;color:var(--dim);}
+
+.nb-flow{
+  background:var(--panel);padding:22px 26px;margin-bottom:24px;
+  border-left:4px solid var(--c1);
+}
+.nb-flow h4{color:var(--c1);font-size:1.05rem;margin-bottom:12px;}
+.nb-flow ol{margin-left:20px;font-size:.95rem;line-height:1.9;}
+.nb-flow code{
+  background:var(--panel2);padding:2px 8px;color:var(--c2);
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;
+}
+
+.faq{background:var(--surface);border:2px solid var(--c4);padding:22px 26px;}
+.faq > h4{color:var(--c4);font-size:1.1rem;margin-bottom:14px;}
+.faq-item{
+  border-bottom:1px solid var(--panel2);padding:14px 0;
+}
+.faq-item:last-child{border-bottom:none;}
+.faq-q{
+  font-size:1rem;font-weight:700;color:var(--c4);cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+}
+.faq-q::after{content:"＋";color:var(--c4);font-size:1.2rem;transition:.2s;}
+.faq-item.open .faq-q::after{transform:rotate(45deg);}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .4s ease;
+  font-size:.95rem;line-height:1.8;color:var(--text);
+}
+.faq-item.open .faq-a{max-height:500px;padding-top:12px;}
+
+/* ═══════════════════════════════════════════════════════════════
+   浮動工具面板
+   ═══════════════════════════════════════════════════════════════ */
+#float-tools{
+  position:fixed;right:18px;bottom:18px;z-index:400;
+  display:flex;flex-direction:column;gap:10px;
+}
+.float-btn{
+  width:50px;height:50px;border-radius:50%;
+  background:var(--c1);color:var(--bg);
+  border:none;font-size:1.3rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,255,136,.5);
+  transition:.2s;display:flex;align-items:center;justify-content:center;
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-btn.blue{background:var(--c2);box-shadow:0 4px 16px rgba(0,136,255,.5);}
+.float-btn.purple{background:var(--c3);box-shadow:0 4px 16px rgba(170,68,255,.5);}
+.float-btn.pink{background:var(--c5);color:var(--bright);box-shadow:0 4px 16px rgba(255,68,136,.5);}
+.float-btn.yellow{background:var(--c4);color:var(--bg);box-shadow:0 4px 16px rgba(255,204,0,.5);}
+
+.tool-panel{
+  position:fixed;right:18px;bottom:90px;z-index:400;width:300px;
+  background:var(--surface);border:2px solid var(--c1);padding:16px;
+  box-shadow:0 8px 32px rgba(0,255,136,.3);display:none;
+}
+.tool-panel.show{display:block;}
+.tool-panel h4{
+  color:var(--c1);font-size:1rem;margin-bottom:12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.tool-panel .close{cursor:pointer;color:var(--dim);font-size:1.2rem;}
+.tool-panel .close:hover{color:var(--c5);}
+.btn-primary{
+  padding:10px;background:var(--c1);color:var(--bg);border:none;
+  font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.9rem;
+  transition:.15s;
+}
+.btn-primary:hover{background:var(--c2);}
+.lottery-result{
+  margin-top:14px;padding:16px;background:var(--panel);color:var(--c1);
+  text-align:center;font-weight:700;font-size:1.6rem;
+  font-family:'JetBrains Mono',monospace;
+  box-shadow:inset 0 0 12px rgba(0,255,136,.1);
+}
+
+.timer-display{
+  font-size:3rem;font-weight:700;color:var(--c1);text-align:center;
+  font-family:'JetBrains Mono',monospace;margin:14px 0;
+  text-shadow:0 0 12px var(--c1);
+}
+.timer-controls{display:flex;gap:8px;margin-top:10px;}
+.timer-controls button{flex:1;}
+.timer-preset{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.timer-preset button{
+  padding:5px 10px;background:transparent;border:1px solid var(--c2);color:var(--c2);
+  cursor:pointer;font-size:.8rem;font-family:inherit;
+}
+.timer-preset button:hover{background:var(--c2);color:var(--bg);}
+
+/* 畫筆工具 */
+#drawCanvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:250;pointer-events:none;background:transparent;
+}
+#drawCanvas.active{pointer-events:all;cursor:crosshair;}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;z-index:300;
+  background:var(--surface);border:2px solid var(--c1);padding:10px 14px;
+  display:none;gap:8px;align-items:center;box-shadow:0 0 16px rgba(0,255,136,.3);
+}
+.draw-toolbar.show{display:flex;}
+.draw-toolbar .color-dot{
+  width:26px;height:26px;border:2px solid #000;cursor:pointer;padding:0;transition:.2s;
+}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor;}
+.draw-toolbar .draw-clear{
+  background:transparent;border:2px solid var(--c5);color:var(--c5);
+  padding:5px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;
+}
+.draw-toolbar .draw-clear:hover{background:var(--c5);color:var(--bright);}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+footer{
+  max-width:1400px;margin:40px auto 30px;padding:20px 24px;
+  text-align:center;color:var(--dim);font-size:.85rem;
+  border-top:1px solid var(--panel2);position:relative;z-index:1;
+}
+footer a{color:var(--c1);text-decoration:none;}
+footer a:hover{color:var(--c2);}
+
+/* 響應式 */
+@media (max-width:700px){
+  html{font-size:16px;}
+  .hero h1{font-size:1.5rem;}
+  .classifier-wrap{grid-template-columns:1fr;}
+  .price-row{grid-template-columns:110px 1fr 90px;}
+  .price-row .name{font-size:.85rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title-group">
+      <div class="header-title">AR/VR 科技穿戴設備探索</div>
+      <div class="header-sub"><strong>六年級</strong> · 資訊科技 · <strong>E-E-A1 / K-6-1</strong> · NEON TECH 風格</div>
+    </div>
+    <div class="mode-bar">
+      <button class="mode-btn active" id="mode-stu" onclick="switchMode('student')">學生模式</button>
+      <button class="mode-btn" id="mode-tch" onclick="switchMode('teacher')">教師模式</button>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>🥽 歡迎進入 AR/VR 未來眼鏡的世界！</h1>
+    <p class="hero-desc">
+      你以為只有《鋼鐵人》才能在空中操作虛擬螢幕嗎？現在，<strong style="color:var(--c1)">Meta Ray-Ban Display、HTC VIVE Eagle、Rokid Glass、Meta Quest 3、Apple Vision Pro</strong> 五款超酷穿戴設備已經走進我們的生活。這堂課，老師會帶你一次搞懂 AR 擴增實境、VR 虛擬實境、MR 混合實境的差別，比較各款神奇眼鏡，還要自己動手做一個「Google Cardboard 紙盒 VR 眼鏡」+ 玩轉「Quiver AR 卡片」！
+    </p>
+    <div class="obj-chips">
+      <span class="obj-chip"><span class="ico">🎯</span>認識 AR / VR / MR / XR</span>
+      <span class="obj-chip"><span class="ico">🕶️</span>五款穿戴設備規格 PK</span>
+      <span class="obj-chip"><span class="ico">🛠️</span>自製 Cardboard VR 紙盒</span>
+      <span class="obj-chip"><span class="ico">🦋</span>Quiver AR 著色卡體驗</span>
+      <span class="obj-chip"><span class="ico">👀</span>視力保健 eye 眼 6 原則</span>
+      <span class="obj-chip"><span class="ico">💡</span>發明自己的 AR/VR 眼鏡</span>
+    </div>
+  </div>
+</section>
+
+<!-- Stage 導覽 -->
+<nav class="stage-nav">
+  <a href="#sec1" class="stage-pill" data-stage="1">STAGE 01 · AR vs VR 解密</a>
+  <a href="#sec2" class="stage-pill" data-stage="2">STAGE 02 · AR 眼鏡三雄</a>
+  <a href="#sec3" class="stage-pill" data-stage="3">STAGE 03 · VR/MR 頭戴 PK</a>
+  <a href="#sec4" class="stage-pill" data-stage="4">STAGE 04 · 動手做 VR&AR</a>
+  <a href="#sec5" class="stage-pill" data-stage="5">STAGE 05 · 安全與發明</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     STAGE 1 - AR vs VR 概念解密
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="sec1" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 01</span>
+    <div>
+      <h2 class="section-title">🌈 AR vs VR 概念解密</h2>
+      <p class="section-sub">AR 是糖霜裝飾、VR 是神奇眼罩、MR 是兩者合體！</p>
+    </div>
+  </div>
+
+  <img src="assets/01_ar-vs-vr.jpg" alt="AR 與 VR 科技指南" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+
+  <div class="steps-card">
+    <h4><span class="ico">📘</span>核心概念一次搞懂</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>AR 擴增實境</strong>：在真實世界「疊加」虛擬資訊。就像蛋糕上的糖霜，或透明玻璃貼紙。<em style="color:var(--c2)">例子：Pokémon GO、Instagram 濾鏡、IKEA Place 虛擬傢俱</em></div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>VR 虛擬實境</strong>：真實世界「完全被遮蔽」，進入 100% 電腦生成的 3D 世界。就像戴上神奇眼罩，瞬間被傳送到外太空或深海。</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>MR 混合實境</strong>：AR 升級版，虛擬物品能「跟真實物品互相互動」。虛擬球碰到真實桌子會反彈，像 Apple Vision Pro 就能做到。</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>XR 延伸實境</strong>：AR + VR + MR 的「總稱」，就像「水果」包含蘋果、香蕉、橘子。</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>空間運算（Spatial Computing）</strong>：整個房間變成超大螢幕，用眼神、手勢、聲音直接操作。Apple 把 Vision Pro 定位為空間運算設備。</div></li>
+      <li><span class="step-num">6</span><div class="step-body"><strong>HMD vs 智慧眼鏡</strong>：HMD 像潛水面罩（Meta Quest、Vision Pro），智慧眼鏡像日常眼鏡（Meta Ray-Ban、VIVE Eagle、Rokid）。</div></li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 記憶小訣竅：</strong>AR = <strong>A</strong>dded <strong>R</strong>eality（加上去的現實），VR = <strong>V</strong>irtual <strong>R</strong>eality（虛擬現實），MR = <strong>M</strong>ixed（混合）、XR = e<strong>X</strong>tended（延伸全部）。
+  </div>
+
+  <div class="canvas-section">
+    <h4><span>🎮</span>互動練習：把設備放進正確的分類！</h4>
+    <p style="color:var(--dim);margin-bottom:12px;font-size:.95rem;">拖曳 5 款設備到正確的類別區域：</p>
+    <div class="classifier-wrap">
+      <div class="classifier-zone" data-type="ar" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropDev(event,'ar')">
+        <h5>AR 智慧眼鏡 <span class="tag">透視型</span></h5>
+        <div class="classifier-items" id="zone-ar"></div>
+      </div>
+      <div class="classifier-zone" data-type="vr" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropDev(event,'vr')">
+        <h5>VR/MR 頭戴裝置 <span class="tag">沉浸型</span></h5>
+        <div class="classifier-items" id="zone-vr"></div>
+      </div>
+      <div class="classifier-zone" data-type="pool" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropDev(event,'pool')">
+        <h5>⬇️ 待分類</h5>
+        <div class="classifier-items" id="zone-pool"></div>
+      </div>
+    </div>
+    <div class="classifier-feedback" id="clsFeedback">把所有設備拖到對的位置 → 全部正確才會變綠色！</div>
+  </div>
+
+  <div class="quiz-section" data-stage="1">
+    <h4><span>📝</span>關卡小測驗</h4>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q1. 玩《Pokémon GO》時，在手機螢幕上看到虛擬寶可夢出現在公園草地上，這屬於哪一類技術？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,true,'答對！AR 把虛擬物件疊加在真實世界，Pokémon GO 就是最經典的例子！')">A. AR 擴增實境</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不是喔！VR 是完全遮住真實世界，Pokémon GO 你還看得到公園的草地，所以屬於 AR。')">B. VR 虛擬實境</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不是喔！空間運算是用眼/手勢在 3D 空間直接操作，像 Vision Pro。')">C. 空間運算</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不是喔！XR 是總稱，具體到遊戲範例要選 AR。')">D. XR 延伸實境</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q2. 下列哪一個敘述最能形容 MR 混合實境？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！這是 VR 的特色。MR 虛擬和真實會互動。')">A. 完全看不到真實世界</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！這是一般 AR，MR 更進一步，虛擬物件會和真實物件互動。')">B. 虛擬圖案平放在現實上</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！虛擬球能和真實桌子互動反彈，就是 MR 的最大特色。')">C. 虛擬球能碰到真實桌子反彈</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！這是頭戴顯示器（HMD）的特色，不是 MR 的核心概念。')">D. 戴在頭上的大面罩</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q3. XR（延伸實境）這個詞的意思是什麼？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！X-ray 是醫學用語，和科技穿戴無關。')">A. X 光檢查</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！XR 是 AR、VR、MR 的總稱，像「水果」包含所有種類。')">B. AR + VR + MR 的總稱</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！Apple Vision Pro 屬於 MR / 空間運算，是 XR 的一員，但不是等號。')">C. Apple Vision Pro 的別名</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！Xbox 是遊戲主機，跟 XR 無關。')">D. Xbox 遊戲</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    引導點：用「糖霜/蛋糕」比喻一定要配動手畫示意圖。可以請學生現場玩手機 Instagram 濾鏡驗證 AR 的定義，最能引起共鳴。對高程度學生可延伸討論「為什麼 Apple 不叫 Vision Pro 是 MR 頭盔而叫空間運算設備？」
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     STAGE 2 - AR 智慧眼鏡三雄 PK
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="sec2" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--c2);box-shadow:0 0 12px rgba(0,136,255,.5);">STAGE 02</span>
+    <div>
+      <h2 class="section-title" style="color:var(--c2);">🕶️ AR 智慧眼鏡三雄 PK</h2>
+      <p class="section-sub">Meta Ray-Ban、HTC VIVE Eagle、Rokid Glass 各有什麼必殺技？</p>
+    </div>
+  </div>
+
+  <img src="assets/02_smart-glasses.jpg" alt="三款熱門智慧眼鏡性能比較" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+
+  <div class="steps-card">
+    <h4><span class="ico">🥇</span>Meta Ray-Ban Display｜輕巧時尚的日常 AR 助理</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>重量</strong> 69g（約 4 顆雞蛋）｜<strong>價格</strong> NT$25,000（美金 799 起）｜<strong>電池</strong> 6 小時</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>顯示</strong>：右鏡片單眼彩色 waveguide，600×600 像素，5000 nits 超亮顯示（在陽光下也清楚）</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>控制</strong>：神經腕帶（sEMG）偵測手腕肌肉電訊號 → 手指隔空捏合或滑動即可操作，非常新奇！</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>AI</strong>：Meta AI，能對話、辨識物體、即時翻譯</div></li>
+    </ol>
+  </div>
+
+  <div class="steps-card">
+    <h4><span class="ico">🥈</span>HTC VIVE Eagle｜台灣之光 AI 眼鏡</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>重量</strong> 48.8g（戴久也不累）｜<strong>價格</strong> NT$15,600｜<strong>電池</strong> 音樂 4.5 小時、待機 36 小時</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>無螢幕</strong>：專注於聲音、AI 與拍攝。<strong>鏡片</strong> Zeiss UV400 防護</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>AI</strong>：Google Gemini + OpenAI GPT（beta）雙引擎，支援繁體中文，可翻譯、查天氣、VIVE AI Notes 錄音逐字稿</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>隱私保護</strong>：LED 指示燈亮起才會拍攝，LED 被遮住或眼鏡沒戴好會自動停用相機</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>安全加密</strong>：AES-256 加密、資料本地儲存，不會用於 AI 訓練</div></li>
+    </ol>
+  </div>
+
+  <div class="steps-card">
+    <h4><span class="ico">🥉</span>Rokid Glass｜行動生產力與翻譯神器</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>重量</strong> 49g｜<strong>價格</strong> NT$10,000（美金 279-499）｜有充電盒可充 10 次</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>顯示</strong>：Micro-LED 雙眼綠光 480×398，可顯示導航、翻譯、提詞</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>AI</strong>：基於 ChatGPT 模型，<strong>支援 89 種語言即時翻譯</strong>（出國旅行超好用！）</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>控制</strong>：「Hi Rokid」語音喚醒 + 拍照鍵 + 觸控板 + 手勢 + 專屬手機 App</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>特色</strong>：智能提詞器（演講用）、AR 導航、健康監測、支援近視定制鏡片</div></li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <strong>🌟 誰適合誰：</strong>愛時尚的選 Meta Ray-Ban、重中文的選 VIVE Eagle、常出國需翻譯的選 Rokid Glass。三款都有輕量化設計（都在 49-69g 之間），和一般眼鏡差不多，不會造成脖子負擔。
+  </div>
+
+  <div class="canvas-section">
+    <h4><span>⚔️</span>互動 PK：五款設備規格大比拼！</h4>
+    <div class="pk-picker">
+      <button class="pk-btn active" onclick="showPK('all',this)">全部顯示</button>
+      <button class="pk-btn" onclick="showPK('weight',this)">最輕巧</button>
+      <button class="pk-btn" onclick="showPK('price',this)">最便宜</button>
+      <button class="pk-btn" onclick="showPK('ai',this)">最強 AI</button>
+      <button class="pk-btn" onclick="showPK('display',this)">最佳顯示</button>
+    </div>
+    <div class="spec-pk">
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>設備</th><th>類型</th><th>重量</th><th>價格 (NT$)</th>
+            <th>顯示</th><th>控制方式</th><th>AI 助理</th><th>適合誰</th>
+          </tr>
+        </thead>
+        <tbody id="pkTbody">
+          <tr data-best="ai display">
+            <td class="dev-name">Meta Ray-Ban Display</td><td>AR 眼鏡</td><td>69g</td><td class="price-mid">25,000</td>
+            <td>單眼彩色 waveguide</td><td>神經腕帶+語音</td><td>Meta AI</td><td>時尚族</td>
+          </tr>
+          <tr data-best="weight ai">
+            <td class="dev-name">HTC VIVE Eagle</td><td>AI 眼鏡</td><td>48.8g</td><td class="price-mid">15,600</td>
+            <td>無螢幕</td><td>按鍵+語音+觸控</td><td>Gemini+GPT</td><td>華語使用者</td>
+          </tr>
+          <tr data-best="weight price">
+            <td class="dev-name">Rokid Glass</td><td>AR 眼鏡</td><td>49g</td><td class="price-low">10,000</td>
+            <td>Micro-LED 雙眼綠光</td><td>語音+觸控+手勢</td><td>ChatGPT 89 語</td><td>翻譯族</td>
+          </tr>
+          <tr data-best="price display">
+            <td class="dev-name">Meta Quest 3</td><td>VR/MR 頭戴</td><td>515g</td><td class="price-low">10,000-20,000</td>
+            <td>4K LCD</td><td>手把+手勢</td><td>無</td><td>遊戲玩家</td>
+          </tr>
+          <tr data-best="display">
+            <td class="dev-name">Apple Vision Pro</td><td>MR 空間運算</td><td>600-800g</td><td class="price-high">115,000+</td>
+            <td>2300 萬像素 Micro-OLED</td><td>眼控+捏合</td><td>Siri</td><td>專業工作者</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-section" data-stage="2">
+    <h4><span>📝</span>關卡小測驗</h4>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q1. HTC VIVE Eagle 最特別的隱私保護機制是什麼？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！VIVE Eagle 支援雲端和本地混合。')">A. 不會連接網路</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！LED 燈被遮擋或眼鏡沒戴好 → 相機自動失效，完全防偷拍！')">B. LED 被遮住相機會自動失效</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！它有相機功能喔，只是有 LED 警示燈。')">C. 沒有相機功能</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！按一下是拍照，長按或特定操作才會一直錄。')">D. 按一下就會錄影 24 小時</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q2. Meta Ray-Ban Display 的「神經腕帶」工作原理是什麼？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！它不是量血壓的裝置。')">A. 量血壓</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！它不是計步器（雖然 Apple Watch 有類似功能）。')">B. 計算步數</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！sEMG 感測手腕肌肉電訊號，就能「隔空」用手指操作！')">C. 感測手腕肌肉電訊號</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！這是 Apple Vision Pro 的眼控操作特色。')">D. 追蹤眼球移動</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q3. Rokid Glass 最厲害的功能是支援幾種語言的即時翻譯？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！Rokid 支援更多語言。')">A. 10 種</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！Rokid 支援更多語言。')">B. 50 種</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！Rokid 支援 89 種語言的即時翻譯，幾乎所有語言都能通！')">C. 89 種</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！89 種已經很多了，不過確實沒達到 200 種。')">D. 200 種</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    可用的延伸問題：「如果你要出國旅遊，你會選哪一款眼鏡？為什麼？」「台灣品牌 HTC 推出的 VIVE Eagle 有什麼優勢？」讓學生了解國產科技的亮點。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     STAGE 3 - VR/MR 頭戴裝置大對決
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="sec3" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--c3);box-shadow:0 0 12px rgba(170,68,255,.5);">STAGE 03</span>
+    <div>
+      <h2 class="section-title" style="color:var(--c3);">🎮 VR/MR 頭戴裝置大對決</h2>
+      <p class="section-sub">Meta Quest 3 vs Apple Vision Pro：平民 vs 頂級的世紀對決</p>
+    </div>
+  </div>
+
+  <img src="assets/03_vr-mr-devices.jpg" alt="虛擬實境裝置規格對決" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+
+  <div class="steps-card">
+    <h4><span class="ico">🎯</span>Meta Quest 3｜走入大眾家庭的平價 MR</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>重量</strong> 515g｜<strong>價格</strong> NT$10,000-20,000（美金 499.99 起）</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>獨立運作</strong>：不用連接電腦或主機，開機就能玩！</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>顯示</strong>：4K+ LCD，2064×2208 像素/單眼，110° 廣角視野</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>彩色穿透（Passthrough）</strong>：透過前方相機把真實世界拍進螢幕，玩 MR 遊戲（虛擬物品「進入」客廳）</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>控制</strong>：2 個 Touch Plus 手把（有按鈕、搖桿、扳機、觸覺回饋）+ 手部追蹤（可脫下手把直接用手）</div></li>
+      <li><span class="step-num">6</span><div class="step-body"><strong>豐富 VR 遊戲</strong>：Beat Saber 節奏光劍、Pistol Whip 射擊、虛擬實驗室、歷史重現等</div></li>
+    </ol>
+  </div>
+
+  <div class="steps-card">
+    <h4><span class="ico">🏆</span>Apple Vision Pro｜頂級的空間運算革命</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>重量</strong> 600-800g｜<strong>價格</strong> NT$115,000+（美金 3,499 起）</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>材質</strong>：鋁合金 + 玻璃（奢華手感），不是塑膠</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>顯示</strong>：Micro-OLED 2300 萬像素，每隻眼睛 3660×3142，畫面接近肉眼看到真實世界</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>晶片</strong>：M5（10 核 CPU+GPU+16 核 Neural Engine）+ R1（12ms 超低延遲）雙晶片協作</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>感測器</strong>：12 顆鏡頭 + LiDAR + TrueDepth + 4 顆眼動追蹤相機 + 認證虹膜（Optic ID）</div></li>
+      <li><span class="step-num">6</span><div class="step-body"><strong>操作</strong>：無手把！「看著目標 + 手指輕捏」即完成點擊，Siri 語音輔助</div></li>
+      <li><span class="step-num">7</span><div class="step-body"><strong>電池</strong>：外掛電池（綁腰上）2-3 小時</div></li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <strong>💰 為什麼 Vision Pro 這麼貴？</strong>答案是「頂級零件堆疊」：高密度 Micro-OLED 顯示、雙晶片、LiDAR、眼動追蹤、鋁合金+玻璃、Optic ID 認證……幾乎把整台「超級電腦」塞進頭盔。Meta Quest 3 則用塑膠殼+LCD+單晶片，價格只要 Vision Pro 的 10%。
+  </div>
+
+  <div class="canvas-section">
+    <h4><span>📊</span>互動視覺化：五款設備價格大 PK</h4>
+    <p style="color:var(--dim);margin-bottom:12px;font-size:.95rem;">條形圖長度代表價格，一目了然！</p>
+    <div class="price-viz">
+      <div class="price-row"><div class="name">Rokid Glass</div>
+        <div class="price-bar-wrap"><div class="price-bar" data-price="10000"></div></div>
+        <div class="price-val">NT$ 10,000</div></div>
+      <div class="price-row"><div class="name">Meta Quest 3</div>
+        <div class="price-bar-wrap"><div class="price-bar" data-price="15000"></div></div>
+        <div class="price-val">NT$ 15,000</div></div>
+      <div class="price-row"><div class="name">VIVE Eagle</div>
+        <div class="price-bar-wrap"><div class="price-bar" data-price="15600"></div></div>
+        <div class="price-val">NT$ 15,600</div></div>
+      <div class="price-row"><div class="name">Meta Ray-Ban</div>
+        <div class="price-bar-wrap"><div class="price-bar" data-price="25000"></div></div>
+        <div class="price-val">NT$ 25,000</div></div>
+      <div class="price-row vision"><div class="name">Vision Pro</div>
+        <div class="price-bar-wrap"><div class="price-bar" data-price="115000"></div></div>
+        <div class="price-val">NT$ 115,000</div></div>
+    </div>
+    <p style="margin-top:14px;font-size:.85rem;color:var(--dim);text-align:center;">
+      🧮 Vision Pro 一台 = Rokid Glass × 11 台 = Meta Quest 3 × 7 台！
+    </p>
+  </div>
+
+  <div class="quiz-section" data-stage="3">
+    <h4><span>📝</span>關卡小測驗</h4>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q1. Apple Vision Pro 的「彩色 Micro-OLED」顯示螢幕總共有多少像素？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！Vision Pro 的顯示高出這數字幾十倍。')">A. 100 萬</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！還要再高。')">B. 500 萬</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！2300 萬像素，畫面幾乎跟肉眼看到真實世界一樣清晰！')">C. 2300 萬</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！這數字太誇張了，其他設備都沒有這麼多。')">D. 1 億</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q2. Meta Quest 3 的「彩色穿透」（Passthrough）功能是什麼？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,true,'答對！前方相機拍真實世界→傳到螢幕，就能把虛擬物件「放進」客廳玩 MR！')">A. 相機拍真實世界傳到螢幕內</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！電影播放只是其中一個功能，Passthrough 是指現實+虛擬融合。')">B. 能播放 VR 電影</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！它需要有線電源或本身電池，不算無線充電。')">C. 無線充電</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！它採獨立運作，可以脫離電腦。')">D. 要接電腦才能玩</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q3. Apple Vision Pro 最大的操作創新是什麼？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！它沒有手把控制器！這是 Meta Quest 3 的特色。')">A. 超大手把</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！眼睛看著目標 + 手指捏合就能操作，不需要任何手把！')">B. 眼控+手指捏合</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！它是獨立運作，不需要連手機。')">C. 要連 iPhone 才能用</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！Vision Pro 非常高科技，沒有語音助理是不可能的（有 Siri）。')">D. 沒有語音助理</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    延伸討論：「你覺得 Vision Pro 的 11 萬元定價合理嗎？」可以帶學生分析成本（Micro-OLED 據估算單螢幕就超過 US$700），再討論「科技產品的價格是否等於價值？」
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     STAGE 4 - 動手做 Cardboard VR + Quiver AR
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="sec4" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--c4);color:var(--bg);box-shadow:0 0 12px rgba(255,204,0,.5);">STAGE 04</span>
+    <div>
+      <h2 class="section-title" style="color:var(--c4);">🛠️ 動手做：Cardboard VR + Quiver AR</h2>
+      <p class="section-sub">不用花大錢！自製 VR 眼鏡 + AR 魔法著色體驗</p>
+    </div>
+  </div>
+
+  <img src="assets/04_diy-guide.jpg" alt="自製 VR 與 AR 攻略" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+
+  <div class="steps-card">
+    <h4><span class="ico">📦</span>活動一：自製 Google Cardboard VR 眼鏡（6 步驟）</h4>
+    <p style="margin-bottom:12px;color:var(--dim);font-size:.95rem;"><strong style="color:var(--c4);">材料</strong>：厚紙板、45mm 焦距雙凸透鏡 × 2、美工刀 + 鐵尺 + 切割墊、剪刀、熱熔膠或雙面膠、魔鬼氈、橡皮筋、Google Cardboard 官方紙型 PDF</p>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>準備紙型</strong>：Google 搜尋「Google Cardboard 紙型 PDF」下載並列印 A4</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>貼上紙板</strong>：用口紅膠將紙型貼在厚紙板（麥片盒、披薩盒乾淨部分都可以）</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>切割</strong>：美工刀 + 切割墊沿外框切下，挖眼睛與鼻子洞 <strong style="color:var(--c5)">（必須請大人協助！）</strong></div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>摺疊</strong>：鐵尺壓住紅線（摺線），用原子筆刻一下再摺，立體結構就出現了</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>裝鏡片</strong>：兩片 45mm 凸透鏡嵌入圓孔，凸面朝手機方向</div></li>
+      <li><span class="step-num">6</span><div class="step-body"><strong>合上魔鬼氈</strong>：貼好蓋子魔鬼氈，手機 VR 畫面中心線對準紙盒隔板，立刻進入 360° 虛擬世界！</div></li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <strong>🎯 成功關鍵：</strong>(1) 鏡片一定要 <strong>45mm 焦距</strong>（其他焦距會糊）；(2) 手機 VR 畫面的 <strong>中心分隔線必須對準紙盒中間隔板</strong>（鼻樑位置）；(3) 近視同學可戴著近視眼鏡觀看。推薦 App：Google Cardboard 官方、YouTube VR、VR Roller Coasters、Fulldive VR。
+  </div>
+
+  <div class="steps-card">
+    <h4><span class="ico">🦋</span>活動二：Quiver AR 著色卡片體驗（4 步驟）</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>下載列印</strong>：前往 <code style="background:var(--panel2);padding:2px 6px;color:var(--c2);">quivervision.com</code> 下載 Quiver 著色頁（300+ 種主題），列印 A4</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>發揮創意塗色</strong>：拿出彩色筆/蠟筆/色鉛筆，自由塗色（塗什麼顏色，3D 動畫就是什麼顏色）</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>打開 Quiver App</strong>：手機/平板下載 <strong>Quiver - 3D Coloring App</strong>（iOS/Android 免費），按相機按鈕</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>掃描見證奇蹟</strong>：先掃描紙上 QR Code → 整張圖紙 → 你塗的顏色會 3D 立體「跳」出來，還能點擊互動！</div></li>
+    </ol>
+    <p style="margin-top:14px;color:var(--c2);font-size:.95rem;"><strong>🎓 課堂應用</strong>：細胞結構、立體幾何、動物生命週期、ABC 英文字母、恐龍等，都能變成 3D 動畫讓學生互動！</p>
+  </div>
+
+  <div class="canvas-section">
+    <h4><span>🧩</span>互動練習：把 Cardboard 組裝步驟拖曳到正確順序</h4>
+    <p style="color:var(--dim);margin-bottom:12px;font-size:.95rem;">下列 6 個步驟順序錯了，請上下拖曳排到正確順序：</p>
+    <div class="cardboard-sort">
+      <ul class="sort-list" id="sortList">
+        <!-- 動態產生 -->
+      </ul>
+      <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;">
+        <button class="btn-primary" onclick="checkSort()">✓ 檢查答案</button>
+        <button class="btn-primary" style="background:var(--c3)" onclick="shuffleSort()">↻ 重新打亂</button>
+      </div>
+      <div class="sort-feedback" id="sortFeedback"></div>
+    </div>
+  </div>
+
+  <div class="canvas-section">
+    <h4><span>🎨</span>互動練習：Quiver AR 魔法掃描模擬</h4>
+    <p style="color:var(--dim);margin-bottom:12px;font-size:.95rem;">在左邊的白紙上塗色，再按「📷 掃描」，右邊螢幕會出現你塗的顏色的 3D 蝴蝶！</p>
+    <div class="quiver-sim">
+      <div class="quiver-paper" id="quiverPaper">
+        <canvas id="paperCanvas" width="400" height="300"></canvas>
+        <div class="paper-hint">👆 在蝴蝶上自由塗色</div>
+      </div>
+      <div class="quiver-screen">
+        <canvas id="arCanvas" width="400" height="300"></canvas>
+        <div class="status" id="arStatus">⚪ 等待掃描</div>
+      </div>
+      <div class="quiver-controls">
+        <span style="color:var(--dim);font-size:.85rem;align-self:center;">🖊️ 選色：</span>
+        <button class="quiver-color active" style="background:#ff4488" onclick="setQuiverColor('#ff4488',this)"></button>
+        <button class="quiver-color" style="background:#ffcc00" onclick="setQuiverColor('#ffcc00',this)"></button>
+        <button class="quiver-color" style="background:#00ff88" onclick="setQuiverColor('#00ff88',this)"></button>
+        <button class="quiver-color" style="background:#0088ff" onclick="setQuiverColor('#0088ff',this)"></button>
+        <button class="quiver-color" style="background:#aa44ff" onclick="setQuiverColor('#aa44ff',this)"></button>
+        <button class="quiver-btn" onclick="clearPaper()">🗑️ 清除</button>
+        <button class="quiver-btn" onclick="scanQuiver()">📷 掃描</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section" data-stage="4">
+    <h4><span>📝</span>關卡小測驗</h4>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q1. 自製 Cardboard VR 眼鏡時，鏡片的焦距要選多少公厘的凸透鏡？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！25mm 太短，畫面會模糊。')">A. 25mm</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！Google Cardboard 官方建議 45mm 焦距雙凸透鏡，畫面才清晰。')">B. 45mm</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！100mm 太長，焦距不對會糊。')">C. 100mm</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！200mm 差太多了，畫面會完全失焦。')">D. 200mm</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q2. Cardboard VR 眼鏡組裝成功後，畫面還是模糊的，最可能是什麼原因？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！紙板顏色對焦距沒影響。')">A. 紙板顏色不對</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！手機螢幕的 VR 畫面中心分隔線必須對齊紙盒中間的隔板。')">B. 手機沒對齊中心分隔線</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！手機亮度太亮只會刺眼，不會讓畫面模糊。')">C. 手機亮度太亮</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！App 不用付費版，免費就能看 VR 影片。')">D. App 沒購買付費版</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q3. Quiver AR 的運作原理是什麼？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！手機鏡頭只是拍攝，真正的 AR 魔法是辨識+3D 動畫。')">A. 手機鏡頭有特殊功能</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！Quiver App 辨識圖案 + 讀取你塗的顏色 → 產生相同顏色的 3D 動畫！')">B. App 辨識圖案，把你塗的顏色變成 3D 動畫</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！不需要 3D 眼鏡，手機/平板螢幕直接顯示。')">C. 要戴特殊 3D 眼鏡</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！紙有一般列印出來就好，不需要特殊紙張。')">D. 紙張有特殊化學物質</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    實作時間規劃：Cardboard 完整組裝約 40-50 分鐘（建議分兩堂課）；Quiver 可與美術課/自然課合作（塗色 20 分鐘 + 掃描 10 分鐘）。記得事先讓學生帶手機或安排共用平板，並確認已下載 App。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     STAGE 5 - 安全守則 + AR/VR 發明家
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="sec5" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--c5);color:var(--bright);box-shadow:0 0 12px rgba(255,68,136,.5);">STAGE 05</span>
+    <div>
+      <h2 class="section-title" style="color:var(--c5);">🛡️ 安全守則 + AR/VR 發明家</h2>
+      <p class="section-sub">保護眼睛、尊重隱私，發揮想像力創造自己的未來眼鏡！</p>
+    </div>
+  </div>
+
+  <img src="assets/05_safety.jpg" alt="AR/VR 探險家安全手冊" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+
+  <div class="steps-card">
+    <h4><span class="ico">👀</span>視力保健「eye 眼 6 原則」（台中榮總建議）</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>戶外活動 120 分鐘</strong>：每天至少 2 小時戶外，是最有效的近視預防方法</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>每日看螢幕 &lt; 1 小時</strong>：手機+電視+平板+電腦總和</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>每 30 分鐘休息 10 分鐘</strong>：看遠處放鬆眼部肌肉</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>充分休息</strong>：每天睡滿 8-9 小時，眼睛才能修復</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>均衡飲食</strong>：多吃胡蘿蔔、深綠色蔬菜、藍莓等護眼食物</div></li>
+      <li><span class="step-num">6</span><div class="step-body"><strong>定期視力檢查</strong>：每半年去眼科檢查一次</div></li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <strong>🌀 動暈症（Motion Sickness）：</strong>眼睛看到畫面高速移動，身體卻沒動 → 大腦訊息矛盾 → 頭暈想吐。預防方法：從慢速遊戲開始、一覺得暈立刻閉眼脫下頭盔休息 10 分鐘、單次不超過 30 分鐘。
+  </div>
+
+  <div class="steps-card">
+    <h4><span class="ico">📷</span>智慧眼鏡隱私保護機制</h4>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><div class="step-body"><strong>LED 警示燈</strong>：Meta、VIVE Eagle、Rokid 都有明亮指示燈，拍照錄影時會亮起</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>VIVE Eagle 安全鎖</strong>：LED 被遮擋或眼鏡沒戴好 → 相機自動失效，完全防偷拍</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>AES-256 加密</strong>：VIVE Eagle 所有資料本地加密儲存，不會用於 AI 訓練</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>當個有禮貌的數位公民</strong>：拍別人之前一定要先詢問，不偷拍、不惡作劇</div></li>
+    </ol>
+  </div>
+
+  <div class="canvas-section">
+    <h4><span>💡</span>AR/VR 眼鏡發明家：設計你自己的未來眼鏡！</h4>
+    <p style="color:var(--dim);margin-bottom:12px;font-size:.95rem;">如果你能發明一副 AR/VR 眼鏡，你想做什麼功能？填入以下欄位並按下「🔥 啟動發明」！</p>
+    <div class="invention-form">
+      <div class="field-group">
+        <label>🏷️ 眼鏡名稱（例：超能翻譯眼鏡）</label>
+        <input id="invName" type="text" placeholder="為你的發明取個酷名字" maxlength="20">
+      </div>
+      <div class="field-group">
+        <label>🎨 外型風格</label>
+        <select id="invStyle">
+          <option>運動型流線</option>
+          <option>復古圓框</option>
+          <option>未來科技機甲</option>
+          <option>可愛動物造型</option>
+          <option>隱形透明</option>
+          <option>變色龍色彩</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>⚡ 超能力 1（核心功能）</label>
+        <input id="invSkill1" type="text" placeholder="例：即時翻譯 / X 光視覺 / 情緒偵測" maxlength="30">
+      </div>
+      <div class="field-group">
+        <label>🔋 超能力 2（輔助功能）</label>
+        <input id="invSkill2" type="text" placeholder="例：水下拍照 / 自動字幕 / 心情偵測" maxlength="30">
+      </div>
+      <div class="field-group" style="grid-column:1/-1">
+        <label>📝 介紹你的發明（一句話告訴大家它為什麼很酷）</label>
+        <textarea id="invDesc" placeholder="例：戴上它，再也不用擔心聽不懂外國人講話，還可以看到藏在牆壁裡的驚喜！"></textarea>
+      </div>
+      <button onclick="generateInvention()">🔥 啟動發明！</button>
+    </div>
+    <div class="invention-card" id="invCard">
+      <h5 id="invCardName">超能翻譯眼鏡</h5>
+      <div class="tag-line" id="invCardStyle">未來科技機甲 · AR 擴增實境</div>
+      <div class="desc" id="invCardDesc">戴上它...</div>
+      <div class="specs" id="invCardSpecs"></div>
+    </div>
+  </div>
+
+  <div class="quiz-section" data-stage="5">
+    <h4><span>📝</span>關卡小測驗</h4>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q1. 玩 VR 感覺頭暈想吐時，最正確的處理方法是？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！強迫自己玩會更暈，甚至可能嘔吐。')">A. 硬撐繼續玩</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！立刻閉眼 + 脫下頭盔 + 休息 10 分鐘，最有效。')">B. 立刻閉眼脫下頭盔休息</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！這些無法解決動暈症的根本原因。')">C. 喝水或吃東西</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！洗臉治標不治本，要停止 VR 體驗才行。')">D. 趕快去洗臉</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q2. 根據 eye 眼 6 原則，每玩螢幕多久就該休息 10 分鐘？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！10 分鐘太短，可以撐久一點。')">A. 10 分鐘</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！每 30 分鐘必須休息 10 分鐘，讓眼睛肌肉放鬆。')">B. 30 分鐘</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！1 小時不休息會傷眼睛。')">C. 1 小時</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！2 小時太久了，早就眼睛疲勞。')">D. 2 小時</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q">
+      <div class="quiz-q-text">Q3. 看到同學戴著 AR 智慧眼鏡，你怎麼知道他有沒有在拍照？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,false,'不對！從外型看不出來，但可以看 LED 燈。')">A. 看眼鏡是什麼牌子</button>
+        <button class="quiz-opt" onclick="ans(this,true,'答對！Meta、VIVE Eagle、Rokid 在拍攝時都會亮 LED 警示燈，這是隱私保護機制。')">B. 看鏡框上的 LED 燈有沒有亮</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！沒辦法聽到聲音。')">C. 聽有沒有「咔嚓」聲</button>
+        <button class="quiz-opt" onclick="ans(this,false,'不對！直接搶別人東西不禮貌，且違法。應該先詢問對方。')">D. 搶過眼鏡來看</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    「AR/VR 眼鏡發明家」可以串聯國語寫作、美術設計、科技資訊三個領域，作為跨科目的總結活動。請學生把發想卡印出來貼在公佈欄，票選「最有創意」「最實用」「最酷炫」獎。
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     授課簡報播放器
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide-section">
+  <h3>▶ LESSON SLIDE DECK</h3>
+  <div class="slide-player">
+    <div class="slide-player-main">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+      <button class="slide-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+      <button class="slide-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+      <div class="slide-counter"><span id="slide-cur">1</span> / <span id="slide-total">12</span></div>
+    </div>
+    <div class="slide-strip" id="slideStrip"></div>
+  </div>
+</section>
+
+<div class="slide-fullscreen-overlay" id="slide-fs">
+  <img class="slide-fs-img" id="slide-fs-img" src="assets/slide_01.jpg" alt="全螢幕">
+  <div class="slide-fs-counter" id="slide-fs-counter">1 / 12</div>
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     NLM 自學影片（Fallback：影片建置中）
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="nlm-video-section">
+  <h3>▶ SELF-STUDY VIDEO</h3>
+  <div class="video-wrap">
+    <div class="video-ratio">
+      <iframe
+        src="https://www.youtube.com/embed/T6yLFvTySv4?rel=0&modestbranding=1"
+        title="AR/VR 科技穿戴設備探索 NotebookLM 教學影片"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+    <div class="video-meta">
+      <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+      <span class="video-hint">💡 建議戴耳機觀看，可搭配下方簡報一起複習</span>
+      <a href="https://www.youtube.com/watch?v=T6yLFvTySv4" target="_blank" rel="noopener"
+         style="margin-left:auto;color:var(--c3);font-size:.85rem;text-decoration:none;font-family:'JetBrains Mono',monospace;">
+        ↗ 在 YouTube 開啟
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     NotebookLM 資源站
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="nb-section">
+  <h3>▶ NOTEBOOKLM RESOURCE HUB</h3>
+  <div class="nb-grid">
+    <a href="https://notebooklm.google.com/notebook/41c951df-6864-4e03-8dc3-6e6dfba56d6b" target="_blank" rel="noopener" class="nb-card">
+      <h4>📘 精簡筆記本</h4>
+      <p>主教材 + 研究精華 + 主講者，生成所有素材的單一來源</p>
+    </a>
+    <a href="https://notebooklm.google.com/notebook/72730576-7a85-4531-a1bd-e61ad0ac3f6b" target="_blank" rel="noopener" class="nb-card">
+      <h4>📚 深度研究本</h4>
+      <p>60 個權威來源（Apple/Meta/HTC/Rokid 官網、PCMag、台中榮總等）</p>
+    </a>
+    <a href="https://notebooklm.google.com/" target="_blank" rel="noopener" class="nb-card">
+      <h4>🎨 NotebookLM Studio</h4>
+      <p>用你自己的筆記本製作簡報、影片、資訊圖表、音訊等</p>
+    </a>
+  </div>
+
+  <div class="nb-flow">
+    <h4>🔧 本頁如何由 AI 生成？</h4>
+    <ol>
+      <li>主教材（AR/VR科技穿戴式設備比較.pdf）+ 兩份 PPTX + 主講者.pdf 上傳至 NotebookLM</li>
+      <li>啟動「深度網路研究」<code>research_start deep mode</code>，找到 60 個權威來源</li>
+      <li>對研究本執行 5 個 <code>notebook_query</code> 萃取教學精華</li>
+      <li>精華整合成 text 加入精簡本 → 精簡本共 4 個來源</li>
+      <li>精簡本同時生成：1 份授課簡報、1 份自學影片、5 張資訊圖表</li>
+      <li>Claude Code 整合所有素材，生成這份互動式教學駕駛艙 HTML</li>
+    </ol>
+  </div>
+
+  <div class="faq">
+    <h4>❓ 國小六年級最常問的 6 個問題</h4>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q1. 為什麼玩 VR 會覺得頭暈、想吐？</div>
+      <div class="faq-a">因為你的「眼睛」和「身體」在吵架！眼睛看到畫面高速移動，但身體其實坐著不動，大腦收到矛盾訊息就會「動暈」。剛開始玩選慢速遊戲，覺得暈立刻閉眼脫下頭盔休息 10 分鐘。</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q2. AR 和 VR 到底哪個比較酷？</div>
+      <div class="faq-a">各有各的酷！VR 像任意門（完全沉浸另一個世界），AR 像魔法變物（疊加在真實世界）。VR 適合大型遊戲、虛擬旅遊，AR 適合日常生活（走路看導航、拍照濾鏡）。兩個都超級酷！</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q3. 學校以後都會用到這些設備嗎？</div>
+      <div class="faq-a">會越來越普及！虛擬實驗室安全解剖青蛙、歷史課穿越時空、數學 3D 幾何互動。但目前受限於：(1) 設備昂貴；(2) 網路基礎要強；(3) 老師需要時間學習操作。隨著科技進步，你們在中學或大學一定能用到！</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q4. 自製 Cardboard 怎麼做才不會看不清楚？</div>
+      <div class="faq-a">兩個關鍵：(1) <strong>鏡片焦距一定要 45mm</strong>（其他焦距會模糊）；(2) <strong>手機 VR 畫面的中心線要對準紙盒中間隔板</strong>（鼻樑位置）。另外，近視同學可戴著近視眼鏡使用。</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q5. Apple Vision Pro 為什麼這麼貴（超過 11 萬）？</div>
+      <div class="faq-a">因為它像把超級電腦戴在臉上！鋁合金+玻璃製造、M5+R1 雙晶片、12 顆鏡頭、2300 萬像素 Micro-OLED 顯示（畫面接近肉眼）、Optic ID 虹膜認證。頂尖零件堆疊起來才這麼貴。</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q6. AR 智慧眼鏡會偷拍我嗎？</div>
+      <div class="faq-a">別擔心！Meta Ray-Ban、VIVE Eagle、Rokid 都有 <strong>明亮 LED 指示燈</strong>警示拍攝中。VIVE Eagle 更有安全鎖：LED 被遮擋或眼鏡沒戴好 → 相機自動失效。當然，自己也要尊重他人，拍照前先詢問！</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     浮動工具面板
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="float-tools">
+  <button class="float-btn" onclick="togglePanel('lottery')" title="抽籤器">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn pink" onclick="toggleDraw()" id="drawToggleBtn" title="畫筆標註">✏️</button>
+  <button class="float-btn purple" onclick="goTop()" title="回到頂部">⬆️</button>
+</div>
+
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c5);color:#fff">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="tool-panel" id="panel-timer" style="border-color:var(--c2)">
+  <h4 style="color:var(--c2)">⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-preset">
+    <button onclick="setTimerSec(60)">1 分鐘</button>
+    <button onclick="setTimerSec(180)">3 分鐘</button>
+    <button onclick="setTimerSec(300)">5 分鐘</button>
+    <button onclick="setTimerSec(600)">10 分鐘</button>
+    <button onclick="setTimerSec(1200)">20 分鐘</button>
+  </div>
+  <div class="timer-display" id="timerDisplay">05:00</div>
+  <div class="timer-controls">
+    <button class="btn-primary" onclick="timerStart()">▶ 開始</button>
+    <button class="btn-primary" style="background:var(--c4);color:var(--bg)" onclick="timerPause()">⏸ 暫停</button>
+    <button class="btn-primary" style="background:var(--c5);color:#fff" onclick="timerReset()">↻ 重置</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff4488" onclick="setPenColor('#ff4488',this)"></button>
+  <button class="color-dot" style="background:#ffcc00" onclick="setPenColor('#ffcc00',this)"></button>
+  <button class="color-dot" style="background:#00ff88" onclick="setPenColor('#00ff88',this)"></button>
+  <button class="color-dot" style="background:#0088ff" onclick="setPenColor('#0088ff',this)"></button>
+  <button class="color-dot" style="background:#ffffff" onclick="setPenColor('#ffffff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<footer>
+  📘 六年級資訊科技 · AR/VR 科技穿戴設備探索 · Created with ❤️ + NotebookLM AI<br>
+  <a href="https://notebooklm.google.com/notebook/41c951df-6864-4e03-8dc3-6e6dfba56d6b" target="_blank">📂 精簡本</a> ·
+  <a href="https://notebooklm.google.com/notebook/72730576-7a85-4531-a1bd-e61ad0ac3f6b" target="_blank">📚 研究本</a> ·
+  <a href="../index.html">🏠 IT COCKPIT</a>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   模式切換 / 進度條
+   ═══════════════════════════════════════════════════════════════ */
+function switchMode(m){
+  if(m==='teacher'){
+    const pw=prompt('請輸入教師密碼：');
+    if(pw!=='it2026'){alert('密碼錯誤！');return;}
+    document.body.classList.add('teacher-mode');
+    document.getElementById('mode-stu').classList.remove('active');
+    document.getElementById('mode-tch').classList.add('active');
+  } else {
+    document.body.classList.remove('teacher-mode');
+    document.getElementById('mode-stu').classList.add('active');
+    document.getElementById('mode-tch').classList.remove('active');
+  }
+}
+
+let stageDone=new Set();
+function updateProgress(){
+  const pct=stageDone.size*20;
+  document.getElementById('progFill').style.width=pct+'%';
+  document.querySelectorAll('.stage-pill').forEach(p=>{
+    const s=parseInt(p.dataset.stage);
+    p.classList.toggle('done',stageDone.has(s));
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Quiz
+   ═══════════════════════════════════════════════════════════════ */
+const OKS=['🎉 太棒了！答對囉！','✨ 正確！你真厲害！','🌟 完美！繼續加油！','💪 厲害！這題答對了！'];
+function randOK(){return OKS[Math.floor(Math.random()*OKS.length)];}
+function ans(btn,correct,msg){
+  const parent=btn.closest('.quiz-q');
+  const opts=parent.querySelectorAll('.quiz-opt');
+  const fb=parent.querySelector('.quiz-feedback');
+  opts.forEach(o=>o.disabled=true);
+  if(correct){
+    btn.classList.add('correct');
+    fb.className='quiz-feedback ok';
+    fb.textContent=randOK()+' '+msg;
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o=>{if(o.getAttribute('onclick').includes('true'))o.classList.add('correct');});
+    fb.className='quiz-feedback err';
+    fb.textContent='💭 '+msg;
+  }
+  // 檢查關卡是否全部答對
+  const section=parent.closest('.level-section');
+  const stage=parseInt(section.id.replace('sec',''));
+  const allQs=section.querySelectorAll('.quiz-q');
+  const allOK=Array.from(allQs).every(q=>q.querySelector('.quiz-feedback.ok'));
+  if(allOK && !stageDone.has(stage)){
+    stageDone.add(stage);
+    updateProgress();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   圖片 zoom
+   ═══════════════════════════════════════════════════════════════ */
+function zoomImage(img){
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:600;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';
+  const big=document.createElement('img');
+  big.src=img.src;
+  big.style.cssText='max-width:95%;max-height:90%;object-fit:contain;';
+  overlay.appendChild(big);
+  overlay.onclick=()=>overlay.remove();
+  document.body.appendChild(overlay);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AR/VR 分類器
+   ═══════════════════════════════════════════════════════════════ */
+const DEVS=[
+  {n:'Meta Ray-Ban',type:'ar'},
+  {n:'VIVE Eagle',type:'ar'},
+  {n:'Rokid Glass',type:'ar'},
+  {n:'Meta Quest 3',type:'vr'},
+  {n:'Apple Vision Pro',type:'vr'}
+];
+function initClassifier(){
+  const pool=document.getElementById('zone-pool');
+  pool.innerHTML='';
+  DEVS.forEach((d,i)=>{
+    const chip=document.createElement('div');
+    chip.className='dev-chip';
+    chip.draggable=true;
+    chip.textContent=d.n;
+    chip.dataset.idx=i;
+    chip.dataset.type=d.type;
+    chip.addEventListener('dragstart',e=>{
+      e.dataTransfer.setData('text/plain',i);
+    });
+    pool.appendChild(chip);
+  });
+  document.getElementById('clsFeedback').className='classifier-feedback';
+  document.getElementById('clsFeedback').textContent='把所有設備拖到對的位置 → 全部正確才會變綠色！';
+}
+function dropDev(e,zone){
+  e.preventDefault();
+  const t=e.currentTarget;
+  t.classList.remove('drag-over');
+  const idx=e.dataTransfer.getData('text/plain');
+  const chip=document.querySelector(`.dev-chip[data-idx="${idx}"]`);
+  if(!chip)return;
+  const items=t.querySelector('.classifier-items');
+  items.appendChild(chip);
+  chip.classList.remove('correct','wrong');
+  if(zone!=='pool'){
+    if(DEVS[idx].type===zone){
+      chip.classList.add('correct');
+    } else {
+      chip.classList.add('wrong');
+      setTimeout(()=>chip.classList.remove('wrong'),400);
+    }
+  }
+  // 檢查全部
+  const pool=document.getElementById('zone-pool').children.length;
+  const allCorrect=Array.from(document.querySelectorAll('.dev-chip')).every(c=>c.classList.contains('correct'));
+  const fb=document.getElementById('clsFeedback');
+  if(pool===0 && allCorrect){
+    fb.className='classifier-feedback ok';
+    fb.textContent='🌟 完美！你已經完全分辨 AR 眼鏡 vs VR/MR 頭戴裝置！';
+  } else if(pool===0){
+    fb.className='classifier-feedback err';
+    fb.textContent='🤔 全部放好了，但還有錯誤喔！檢查一下哪個拿錯位置了。';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PK 表篩選
+   ═══════════════════════════════════════════════════════════════ */
+function showPK(type,btn){
+  document.querySelectorAll('.pk-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#pkTbody tr').forEach(tr=>{
+    if(type==='all'){tr.style.display='';return;}
+    const best=tr.dataset.best||'';
+    tr.style.display=best.includes(type)?'':'none';
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   價格視覺化動畫
+   ═══════════════════════════════════════════════════════════════ */
+function animatePriceViz(){
+  const max=115000;
+  document.querySelectorAll('.price-bar').forEach((bar,i)=>{
+    setTimeout(()=>{
+      const price=parseInt(bar.dataset.price);
+      bar.style.width=(price/max*100)+'%';
+    },i*150);
+  });
+}
+const priceObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){animatePriceViz();priceObserver.disconnect();}
+  });
+},{threshold:.3});
+
+/* ═══════════════════════════════════════════════════════════════
+   Cardboard 排序
+   ═══════════════════════════════════════════════════════════════ */
+const SORT_STEPS=[
+  {id:1,text:'🔍 Google 搜尋「Cardboard 紙型 PDF」下載並列印 A4'},
+  {id:2,text:'📋 用口紅膠將紙型貼在厚紙板上'},
+  {id:3,text:'✂️ 美工刀沿外框切下（請大人協助！）'},
+  {id:4,text:'📐 鐵尺壓紅線摺出立體結構'},
+  {id:5,text:'🔵 凸透鏡片嵌入圓孔（凸面朝手機）'},
+  {id:6,text:'🔗 魔鬼氈固定蓋子，手機對準中心線體驗 VR'}
+];
+function shuffleSort(){
+  const list=document.getElementById('sortList');
+  const arr=[...SORT_STEPS];
+  // 保證不是原順序
+  while(true){
+    for(let i=arr.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    if(arr.some((it,i)=>it.id!==i+1))break;
+  }
+  list.innerHTML='';
+  arr.forEach(it=>{
+    const li=document.createElement('li');
+    li.className='sort-item';
+    li.draggable=true;
+    li.dataset.id=it.id;
+    li.innerHTML=`<span class="grip">⋮⋮</span><span class="sort-order-num">?</span><span>${it.text}</span>`;
+    li.addEventListener('dragstart',e=>{
+      li.classList.add('dragging');
+      e.dataTransfer.setData('text/plain',it.id);
+    });
+    li.addEventListener('dragend',()=>li.classList.remove('dragging'));
+    li.addEventListener('dragover',e=>{
+      e.preventDefault();
+      const dragging=document.querySelector('.sort-item.dragging');
+      if(dragging && dragging!==li){
+        const rect=li.getBoundingClientRect();
+        const mid=rect.top+rect.height/2;
+        if(e.clientY<mid){li.parentNode.insertBefore(dragging,li);}
+        else{li.parentNode.insertBefore(dragging,li.nextSibling);}
+      }
+    });
+    list.appendChild(li);
+  });
+  // 重置數字
+  updateSortNums();
+  document.getElementById('sortFeedback').textContent='';
+  document.getElementById('sortFeedback').className='sort-feedback';
+}
+function updateSortNums(){
+  document.querySelectorAll('#sortList .sort-item').forEach((li,i)=>{
+    li.querySelector('.sort-order-num').textContent=i+1;
+  });
+}
+function checkSort(){
+  updateSortNums();
+  const items=document.querySelectorAll('#sortList .sort-item');
+  let allCorrect=true;
+  items.forEach((li,i)=>{
+    const expected=i+1;
+    const actual=parseInt(li.dataset.id);
+    if(actual===expected){
+      li.classList.add('correct');
+    } else {
+      li.classList.remove('correct');
+      allCorrect=false;
+    }
+  });
+  const fb=document.getElementById('sortFeedback');
+  if(allCorrect){
+    fb.className='sort-feedback ok';
+    fb.textContent='🎉 全部正確！你已經掌握 Cardboard VR 組裝流程！';
+  } else {
+    fb.className='sort-feedback err';
+    fb.textContent='💪 還有一些順序不對，拖曳調整一下再試試！';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Quiver AR 模擬
+   ═══════════════════════════════════════════════════════════════ */
+let quiverColor='#ff4488';
+let paperCtx, arCtx;
+let paperHistory=[]; // 記錄塗過的色彩
+let isPaperDrawing=false, pLastX, pLastY;
+
+function initQuiverSim(){
+  const paper=document.getElementById('paperCanvas');
+  paperCtx=paper.getContext('2d');
+  paperCtx.lineCap='round';
+  // 畫一個淡色的蝴蝶輪廓（讓學生塗色）
+  drawButterflyOutline();
+
+  paper.addEventListener('mousedown',e=>{
+    isPaperDrawing=true;
+    const rect=paper.getBoundingClientRect();
+    pLastX=(e.clientX-rect.left)*paper.width/rect.width;
+    pLastY=(e.clientY-rect.top)*paper.height/rect.height;
+  });
+  paper.addEventListener('mousemove',e=>{
+    if(!isPaperDrawing)return;
+    const rect=paper.getBoundingClientRect();
+    const x=(e.clientX-rect.left)*paper.width/rect.width;
+    const y=(e.clientY-rect.top)*paper.height/rect.height;
+    paperCtx.strokeStyle=quiverColor;
+    paperCtx.lineWidth=14;
+    paperCtx.beginPath();
+    paperCtx.moveTo(pLastX,pLastY);
+    paperCtx.lineTo(x,y);
+    paperCtx.stroke();
+    paperHistory.push(quiverColor);
+    pLastX=x;pLastY=y;
+  });
+  paper.addEventListener('mouseup',()=>isPaperDrawing=false);
+  paper.addEventListener('mouseleave',()=>isPaperDrawing=false);
+  paper.addEventListener('touchstart',e=>{
+    e.preventDefault();
+    isPaperDrawing=true;
+    const t=e.touches[0];
+    const rect=paper.getBoundingClientRect();
+    pLastX=(t.clientX-rect.left)*paper.width/rect.width;
+    pLastY=(t.clientY-rect.top)*paper.height/rect.height;
+  },{passive:false});
+  paper.addEventListener('touchmove',e=>{
+    if(!isPaperDrawing)return;
+    e.preventDefault();
+    const t=e.touches[0];
+    const rect=paper.getBoundingClientRect();
+    const x=(t.clientX-rect.left)*paper.width/rect.width;
+    const y=(t.clientY-rect.top)*paper.height/rect.height;
+    paperCtx.strokeStyle=quiverColor;
+    paperCtx.lineWidth=14;
+    paperCtx.beginPath();
+    paperCtx.moveTo(pLastX,pLastY);
+    paperCtx.lineTo(x,y);
+    paperCtx.stroke();
+    paperHistory.push(quiverColor);
+    pLastX=x;pLastY=y;
+  },{passive:false});
+  paper.addEventListener('touchend',()=>isPaperDrawing=false);
+
+  arCtx=document.getElementById('arCanvas').getContext('2d');
+  drawARScreenIdle();
+}
+
+function drawButterflyOutline(){
+  // 白底 + 灰色蝴蝶輪廓
+  paperCtx.fillStyle='#fff';
+  paperCtx.fillRect(0,0,400,300);
+  paperCtx.strokeStyle='#888';
+  paperCtx.lineWidth=2.5;
+  // 左翅
+  paperCtx.beginPath();
+  paperCtx.ellipse(130,130,70,60,0,0,Math.PI*2);
+  paperCtx.stroke();
+  // 右翅
+  paperCtx.beginPath();
+  paperCtx.ellipse(270,130,70,60,0,0,Math.PI*2);
+  paperCtx.stroke();
+  // 身體
+  paperCtx.beginPath();
+  paperCtx.ellipse(200,130,12,70,0,0,Math.PI*2);
+  paperCtx.stroke();
+  // 觸鬚
+  paperCtx.beginPath();
+  paperCtx.moveTo(196,68);paperCtx.quadraticCurveTo(180,40,170,30);
+  paperCtx.moveTo(204,68);paperCtx.quadraticCurveTo(220,40,230,30);
+  paperCtx.stroke();
+  paperHistory=[];
+}
+
+function drawARScreenIdle(){
+  arCtx.fillStyle='#1a1a40';
+  arCtx.fillRect(0,0,400,300);
+  arCtx.fillStyle='#7088b0';
+  arCtx.font='14px sans-serif';
+  arCtx.textAlign='center';
+  arCtx.fillText('📷 請先塗色再按「掃描」',200,150);
+  arCtx.fillText('您的 3D 蝴蝶會在這裡出現',200,172);
+}
+
+function setQuiverColor(c,el){
+  quiverColor=c;
+  document.querySelectorAll('.quiver-color').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function clearPaper(){
+  drawButterflyOutline();
+  drawARScreenIdle();
+  document.getElementById('arStatus').textContent='⚪ 等待掃描';
+}
+
+function scanQuiver(){
+  const status=document.getElementById('arStatus');
+  if(paperHistory.length<10){
+    status.textContent='⚠️ 請先塗色！';
+    return;
+  }
+  // 取得最常用的顏色
+  const counts={};
+  paperHistory.forEach(c=>counts[c]=(counts[c]||0)+1);
+  const mainColor=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0];
+  // 模擬掃描動畫
+  status.textContent='🔍 掃描中...';
+  arCtx.fillStyle='#1a1a40';
+  arCtx.fillRect(0,0,400,300);
+  let frame=0;
+  const scanAnim=setInterval(()=>{
+    arCtx.fillStyle='#1a1a40';
+    arCtx.fillRect(0,0,400,300);
+    arCtx.strokeStyle=mainColor;
+    arCtx.lineWidth=2;
+    arCtx.strokeRect(50+frame*5,50,300-frame*10,200-frame*7);
+    frame++;
+    if(frame>14){
+      clearInterval(scanAnim);
+      drawAR3DButterfly(mainColor);
+      status.textContent='✨ 3D 動畫出現啦！';
+    }
+  },60);
+}
+
+function drawAR3DButterfly(color){
+  arCtx.fillStyle='#1a1a40';
+  arCtx.fillRect(0,0,400,300);
+  // 3D 效果：畫多層蝴蝶帶陰影
+  let t=0;
+  clearInterval(window._arAnim);
+  window._arAnim=setInterval(()=>{
+    arCtx.fillStyle='#1a1a40';
+    arCtx.fillRect(0,0,400,300);
+    const scale=1+Math.sin(t*0.05)*0.08;
+    const yOff=Math.sin(t*0.08)*6;
+    // 陰影
+    arCtx.save();
+    arCtx.translate(200,150+yOff);
+    arCtx.scale(scale,scale);
+    arCtx.fillStyle='rgba(0,0,0,.4)';
+    arCtx.beginPath();arCtx.ellipse(-70,0,70,60,0,0,Math.PI*2);arCtx.fill();
+    arCtx.beginPath();arCtx.ellipse(70,0,70,60,0,0,Math.PI*2);arCtx.fill();
+    // 翅膀
+    arCtx.fillStyle=color;
+    arCtx.beginPath();arCtx.ellipse(-70,-4,70,60,0,0,Math.PI*2);arCtx.fill();
+    arCtx.beginPath();arCtx.ellipse(70,-4,70,60,0,0,Math.PI*2);arCtx.fill();
+    // 亮點
+    arCtx.fillStyle='rgba(255,255,255,.35)';
+    arCtx.beginPath();arCtx.ellipse(-70,-20,28,20,0,0,Math.PI*2);arCtx.fill();
+    arCtx.beginPath();arCtx.ellipse(70,-20,28,20,0,0,Math.PI*2);arCtx.fill();
+    // 身體
+    arCtx.fillStyle='#222';
+    arCtx.beginPath();arCtx.ellipse(0,-4,12,70,0,0,Math.PI*2);arCtx.fill();
+    // 觸鬚
+    arCtx.strokeStyle='#222';arCtx.lineWidth=2.5;
+    arCtx.beginPath();
+    arCtx.moveTo(-4,-62);arCtx.quadraticCurveTo(-20,-92,-30,-102);
+    arCtx.moveTo(4,-62);arCtx.quadraticCurveTo(20,-92,30,-102);
+    arCtx.stroke();
+    arCtx.restore();
+    t++;
+  },33);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AR/VR 眼鏡發明家
+   ═══════════════════════════════════════════════════════════════ */
+function generateInvention(){
+  const name=document.getElementById('invName').value.trim()||'超能酷眼鏡';
+  const style=document.getElementById('invStyle').value;
+  const s1=document.getElementById('invSkill1').value.trim()||'即時翻譯';
+  const s2=document.getElementById('invSkill2').value.trim()||'遠距視訊';
+  const desc=document.getElementById('invDesc').value.trim()||'這副眼鏡讓你的日常生活充滿驚喜！';
+
+  document.getElementById('invCardName').textContent=name;
+  document.getElementById('invCardStyle').textContent=style+' · '+(Math.random()>0.5?'AR 擴增實境':'MR 混合實境');
+  document.getElementById('invCardDesc').textContent=desc;
+
+  const specs=document.getElementById('invCardSpecs');
+  specs.innerHTML='';
+  const types=['⚡ '+s1,'🔋 '+s2,
+    '👁️ '+(Math.random()>0.5?'眼球追蹤':'手勢感應'),
+    '🎙️ AI 語音助理',
+    '🔒 '+(Math.random()>0.5?'隱私 LED 保護':'臉部辨識解鎖'),
+    '⚖️ '+(Math.floor(Math.random()*50)+40)+'g 輕量設計'];
+  types.forEach(t=>{
+    const s=document.createElement('span');
+    s.className='spec-tag';
+    s.textContent=t;
+    specs.appendChild(s);
+  });
+  document.getElementById('invCard').classList.add('show');
+  document.getElementById('invCard').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   簡報播放器
+   ═══════════════════════════════════════════════════════════════ */
+const TOTAL_SLIDES=12;
+const SLIDE_LIST=[];
+for(let i=1;i<=TOTAL_SLIDES;i++){
+  SLIDE_LIST.push(`assets/slide_${String(i).padStart(2,'0')}.jpg`);
+}
+let curSlide=0;
+function initSlidePlayer(){
+  const strip=document.getElementById('slideStrip');
+  SLIDE_LIST.forEach((src,i)=>{
+    const div=document.createElement('div');
+    div.className='slide-strip-thumb'+(i===0?' active':'');
+    div.innerHTML=`<img src="${src}" loading="lazy" alt="slide ${i+1}">`;
+    div.onclick=()=>goSlide(i);
+    strip.appendChild(div);
+  });
+  document.getElementById('slide-total').textContent=TOTAL_SLIDES;
+}
+function goSlide(n){
+  if(n<0||n>=TOTAL_SLIDES)return;
+  curSlide=n;
+  document.getElementById('slide-current').src=SLIDE_LIST[n];
+  document.getElementById('slide-cur').textContent=n+1;
+  document.querySelectorAll('.slide-strip-thumb').forEach((t,i)=>{
+    t.classList.toggle('active',i===n);
+    if(i===n)t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  });
+  const fs=document.getElementById('slide-fs');
+  if(fs&&fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src=SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent=(n+1)+' / '+TOTAL_SLIDES;
+  }
+}
+function slideNav(dir){goSlide(curSlide+dir);}
+function openSlideFullscreen(){
+  const fs=document.getElementById('slide-fs');
+  document.getElementById('slide-fs-img').src=SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent=(curSlide+1)+' / '+TOTAL_SLIDES;
+  fs.classList.add('show');
+}
+function closeSlideFullscreen(){document.getElementById('slide-fs').classList.remove('show');}
+document.addEventListener('keydown',e=>{
+  const fs=document.getElementById('slide-fs');
+  if(fs.classList.contains('show')){
+    if(e.key==='Escape')closeSlideFullscreen();
+    if(e.key==='ArrowLeft')slideNav(-1);
+    if(e.key==='ArrowRight')slideNav(1);
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   浮動工具面板
+   ═══════════════════════════════════════════════════════════════ */
+function togglePanel(id){
+  document.querySelectorAll('.tool-panel').forEach(p=>{
+    if(p.id==='panel-'+id)p.classList.toggle('show');
+    else p.classList.remove('show');
+  });
+}
+function goTop(){window.scrollTo({top:0,behavior:'smooth'});}
+
+/* 抽籤器 */
+let lotPool=[];
+function refillLotPool(){
+  const min=parseInt(document.getElementById('lot-min').value)||1;
+  const max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max)return false;
+  lotPool=[];for(let i=min;i<=max;i++)lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique=document.getElementById('lot-unique').checked;
+  const min=parseInt(document.getElementById('lot-min').value)||1;
+  const max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max){alert('最小號必須 ≤ 最大號！');return;}
+  if(unique && lotPool.length===0)refillLotPool();
+  const out=document.getElementById('lot-out');
+  const timer=setInterval(()=>{
+    const n=Math.floor(Math.random()*(max-min+1))+min;
+    out.textContent=n+' 號';
+  },60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length===0)refillLotPool();
+      const idx=Math.floor(Math.random()*lotPool.length);
+      num=lotPool.splice(idx,1)[0];
+    } else {
+      num=Math.floor(Math.random()*(max-min+1))+min;
+    }
+    out.textContent='🌟 '+num+' 號 🌟';
+  },1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent='等待抽號...';
+}
+
+/* 計時器 */
+let timerSec=300, timerOrig=300, timerInt=null;
+function fmtTime(s){
+  const m=Math.floor(s/60),sec=s%60;
+  return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+}
+function updateTimerUI(){document.getElementById('timerDisplay').textContent=fmtTime(timerSec);}
+function setTimerSec(s){timerPause();timerSec=timerOrig=s;updateTimerUI();}
+function timerStart(){
+  if(timerInt)return;
+  timerInt=setInterval(()=>{
+    if(timerSec<=0){
+      clearInterval(timerInt);timerInt=null;
+      alert('⏰ 時間到！');return;
+    }
+    timerSec--;updateTimerUI();
+  },1000);
+}
+function timerPause(){if(timerInt){clearInterval(timerInt);timerInt=null;}}
+function timerReset(){timerPause();timerSec=timerOrig;updateTimerUI();}
+
+/* 畫筆工具 */
+let drawActive=false, penColor='#ff4488', penSize=4;
+let drawCanvas, drawCtx, isDrawing=false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas=document.getElementById('drawCanvas');
+  drawCtx=drawCanvas.getContext('2d');
+  drawCanvas.width=window.innerWidth;
+  drawCanvas.height=window.innerHeight;
+  drawCanvas.addEventListener('mousedown',e=>{
+    if(!drawActive)return;
+    isDrawing=true;dLastX=e.clientX;dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mousemove',e=>{
+    if(!drawActive||!isDrawing)return;
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(e.clientX,e.clientY);drawCtx.stroke();
+    dLastX=e.clientX;dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup',()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart',e=>{
+    if(!drawActive)return;
+    e.preventDefault();
+    const t=e.touches[0];
+    isDrawing=true;dLastX=t.clientX;dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchmove',e=>{
+    if(!drawActive||!isDrawing)return;
+    e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(t.clientX,t.clientY);drawCtx.stroke();
+    dLastX=t.clientX;dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+  window.addEventListener('resize',()=>{
+    const img=drawCtx.getImageData(0,0,drawCanvas.width,drawCanvas.height);
+    drawCanvas.width=window.innerWidth;drawCanvas.height=window.innerHeight;
+    drawCtx.putImageData(img,0,0);
+  });
+}
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').style.background=drawActive?'var(--c4)':'';
+  document.getElementById('drawToggleBtn').style.color=drawActive?'var(--bg)':'';
+}
+function setPenColor(c,el){
+  penColor=c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){if(drawCtx)drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height);}
+
+/* ═══════════════════════════════════════════════════════════════
+   初始化
+   ═══════════════════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded',()=>{
+  initSlidePlayer();
+  initClassifier();
+  shuffleSort();
+  initQuiverSim();
+  initDraw();
+  updateTimerUI();
+  priceObserver.observe(document.querySelector('.price-viz'));
+});
+</script>
+
+</body>
+</html>
