@@ -563,6 +563,16 @@ canvas{
   box-shadow:2px 2px 0 #000;
 }
 .color-dot.selected{border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,0.6);}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.8);color:var(--c1);border:2px solid var(--c1);padding:6px 14px;cursor:pointer;font-size:.85rem;font-weight:700;z-index:5;font-family:inherit}
+.slide-fs-btn:hover{background:var(--c1);color:#000}
+.slide-fs{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;align-items:center;justify-content:center}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:95vw;max-height:95vh;display:block}
+.slide-fs-close{position:absolute;top:20px;right:30px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;padding:8px 16px;font-family:inherit}
+.slide-fs-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);color:#fff;border:none;width:56px;height:56px;font-size:2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;transition:.2s}
+.slide-fs-nav:hover{background:rgba(255,255,255,.28)}
+.slide-fs-nav.prev{left:20px}.slide-fs-nav.next{right:20px}
+.slide-fs-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:#fff;padding:6px 14px;font-size:.85rem}
 .draw-toggle{
   position:fixed;left:12px;bottom:12px;
   z-index:300;
@@ -1072,9 +1082,18 @@ canvas{
   <div style="position:relative;background:#111128;border:2px solid var(--panel);">
     <img id="slide-img" src="assets/slide_01.jpg" alt="投影片 1" loading="lazy"
       style="width:100%;height:auto;display:block;max-height:600px;object-fit:contain;">
+    <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
     <!-- prev / next -->
     <button onclick="slideNav(-1)" style="position:absolute;left:0;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:none;color:#fff;font-size:2rem;padding:12px 16px;cursor:pointer;">&#8249;</button>
     <button onclick="slideNav(1)"  style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:none;color:#fff;font-size:2rem;padding:12px 16px;cursor:pointer;">&#8250;</button>
+  </div>
+  <!-- 簡報全螢幕疊加層 -->
+  <div class="slide-fs" id="slide-fs">
+    <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
+    <button class="slide-fs-nav prev" onclick="slideNav(-1)">‹</button>
+    <img id="slide-fs-img" src="" alt="簡報全螢幕">
+    <button class="slide-fs-nav next" onclick="slideNav(1)">›</button>
+    <span class="slide-fs-counter" id="slide-fs-counter">1 / 12</span>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;">
     <span style="font-size:0.9rem;color:var(--dim);">第 <span id="slide-cur">1</span> / 12 頁</span>
@@ -1689,7 +1708,8 @@ let slideIdx = 1;
 function gotoSlide(n) {
   slideIdx = Math.max(1, Math.min(12, n));
   const num = slideIdx.toString().padStart(2,'0');
-  document.getElementById('slide-img').src = 'assets/slide_'+num+'.jpg';
+  const src = 'assets/slide_'+num+'.jpg';
+  document.getElementById('slide-img').src = src;
   document.getElementById('slide-img').alt = '投影片 '+slideIdx;
   document.getElementById('slide-cur').textContent = slideIdx;
   for(let i=1;i<=12;i++){
@@ -1700,8 +1720,27 @@ function gotoSlide(n) {
       btn.style.color = i===slideIdx?'#000':'var(--dim)';
     }
   }
+  // 全螢幕開啟時同步更新大圖與頁碼
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = src;
+    document.getElementById('slide-fs-counter').textContent = slideIdx+' / 12';
+  }
 }
 function slideNav(dir){ gotoSlide(slideIdx+dir); }
+function openSlideFullscreen(){
+  const num = slideIdx.toString().padStart(2,'0');
+  document.getElementById('slide-fs-img').src = 'assets/slide_'+num+'.jpg';
+  document.getElementById('slide-fs-counter').textContent = slideIdx+' / 12';
+  document.getElementById('slide-fs').classList.add('show');
+}
+function closeSlideFullscreen(){ document.getElementById('slide-fs').classList.remove('show'); }
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('slide-fs').classList.contains('show')) return;
+  if(e.key==='ArrowLeft') slideNav(-1);
+  if(e.key==='ArrowRight') slideNav(1);
+  if(e.key==='Escape') closeSlideFullscreen();
+});
 
 // ===================== DRAW TOOL =====================
 let drawActive=false, drawing=false, drawColor='#00e5ff', lastX=0, lastY=0;

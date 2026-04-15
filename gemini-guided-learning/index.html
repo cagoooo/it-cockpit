@@ -1322,11 +1322,22 @@ input, select, textarea, button{font-family:inherit}
 </div>
 
 <div class="tool-panel" id="panel-lottery">
-  <h4>🎲 隨機抽籤 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
-  <p style="font-size:.85rem;color:var(--dim);margin-bottom:6px">輸入名單（用逗號分隔）</p>
-  <textarea id="lot-input" rows="3" placeholder="小明,小華,小美,阿凱,阿傑">小明,小華,小美,阿凱,阿傑,小安,小柔,小晴</textarea>
-  <button class="btn-primary" onclick="doLottery()">🎰 抽一位！</button>
-  <div class="lottery-result" id="lot-out">等待抽籤...</div>
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c3)" title="重置不重複池">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
 </div>
 
 <div class="tool-panel" id="panel-timer">
@@ -1455,17 +1466,42 @@ function togglePanel(name){
 // Scroll top
 function goTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
-// Lottery
+// Lottery（號碼模式，支援不重複抽）
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
 function doLottery(){
-  const names = document.getElementById('lot-input').value.split(/[,，\s]+/).filter(n=>n.trim());
-  if(!names.length){alert('請輸入名單！');return;}
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){alert('最小號必須 ≤ 最大號！');return;}
+  if(unique && lotPool.length === 0) refillLotPool();
   const out = document.getElementById('lot-out');
-  let i=0;
-  const timer = setInterval(()=>{out.textContent = names[i%names.length]; i++;}, 60);
+  const timer = setInterval(()=>{
+    const n = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = n + ' 號';
+  }, 60);
   setTimeout(()=>{
     clearInterval(timer);
-    out.textContent = '🌟 ' + names[Math.floor(Math.random()*names.length)] + ' 🌟';
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max-min+1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
   }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
 }
 
 // Timer
@@ -1517,6 +1553,11 @@ function goSlide(n){
   document.querySelectorAll('.slide-strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
   const active = document.querySelector('.slide-strip-thumb.active');
   if(active) active.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  // 全螢幕開啟時同步更新大圖
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+  }
 }
 function slideNav(d){goSlide(curSlide+d)}
 function openSlideFullscreen(){

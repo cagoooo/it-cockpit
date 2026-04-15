@@ -115,6 +115,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-body);font-size
 .slide-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .slide-thumb{width:80px;height:45px;object-fit:cover;border:2px solid var(--dim);cursor:pointer;opacity:.6;transition:.15s}
 .slide-thumb:hover,.slide-thumb.active{border-color:var(--c1);opacity:1}
+.slide-fs-btn{position:absolute;top:16px;right:16px;background:rgba(0,0,0,.8);color:#fff;border:2px solid var(--c2);padding:6px 14px;cursor:pointer;font-family:var(--ff-head);font-size:10px;z-index:5}
+.slide-fs-btn:hover{background:var(--c2);color:var(--bg)}
+.slide-fs{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;align-items:center;justify-content:center}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:95vw;max-height:95vh;display:block}
+.slide-fs-close{position:absolute;top:20px;right:30px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;padding:8px 16px;font-family:inherit}
+.slide-fs-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);color:#fff;border:none;width:56px;height:56px;font-size:2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;transition:.2s}
+.slide-fs-nav:hover{background:rgba(255,255,255,.28)}
+.slide-fs-nav.prev{left:20px}.slide-fs-nav.next{right:20px}
+.slide-fs-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);color:#fff;padding:6px 14px;font-family:var(--ff-head);font-size:10px}
 #nlm-section{max-width:1100px;margin:0 auto 48px;padding:0 20px}
 .nlm-header{font-family:var(--ff-head);font-size:14px;color:var(--c3);margin-bottom:16px}
 .nlm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:20px}
@@ -774,6 +784,7 @@ footer a{color:var(--c1);text-decoration:none}
   <div style="font-family:var(--ff-head);font-size:13px;color:var(--c1);margin-bottom:12px;padding:0 20px">SLIDE GALLERY — 授課簡報</div>
   <div class="slideshow-container">
     <img id="slide-img" src="../assets/slide_01.jpg" alt="簡報" loading="lazy">
+    <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
     <div class="slide-controls">
       <button class="slide-btn" onclick="slideChange(-1)">◀ PREV</button>
       <span class="slide-counter" id="slide-counter">1 / 15</span>
@@ -782,6 +793,15 @@ footer a{color:var(--c1);text-decoration:none}
     <div class="slide-thumbs" id="slide-thumbs"></div>
   </div>
 </section>
+
+<!-- 簡報全螢幕疊加層 -->
+<div class="slide-fs" id="slide-fs">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
+  <button class="slide-fs-nav prev" onclick="slideChange(-1)">‹</button>
+  <img id="slide-fs-img" src="" alt="簡報全螢幕">
+  <button class="slide-fs-nav next" onclick="slideChange(1)">›</button>
+  <span class="slide-fs-counter" id="slide-fs-counter">1 / 15</span>
+</div>
 
 <!-- NLM -->
 <section id="nlm-section">
@@ -976,8 +996,11 @@ function resetFlow(){clearInterval(flowTimer);flowStep=0;for(var i=0;i<7;i++){va
 var slideIdx=1,slideTotal=15;
 var tc=document.getElementById('slide-thumbs');
 for(var i=1;i<=slideTotal;i++){(function(n){var th=document.createElement('img');th.src='assets/slide_'+String(n).padStart(2,'0')+'.jpg';th.alt='Slide '+n;th.className='slide-thumb';th.loading='lazy';if(n===1)th.classList.add('active');th.addEventListener('click',function(){goSlide(n);});tc.appendChild(th);})(i);}
-function goSlide(n){slideIdx=n;document.getElementById('slide-img').src='assets/slide_'+String(n).padStart(2,'0')+'.jpg';document.getElementById('slide-counter').textContent=n+' / '+slideTotal;document.querySelectorAll('.slide-thumb').forEach(function(t,i){t.classList.toggle('active',i===n-1);});}
+function goSlide(n){slideIdx=n;var src='assets/slide_'+String(n).padStart(2,'0')+'.jpg';document.getElementById('slide-img').src=src;document.getElementById('slide-counter').textContent=n+' / '+slideTotal;document.querySelectorAll('.slide-thumb').forEach(function(t,i){t.classList.toggle('active',i===n-1);});var fs=document.getElementById('slide-fs');if(fs&&fs.classList.contains('show')){document.getElementById('slide-fs-img').src=src;document.getElementById('slide-fs-counter').textContent=n+' / '+slideTotal;}}
 function slideChange(d){goSlide(Math.max(1,Math.min(slideTotal,slideIdx+d)));}
+function openSlideFullscreen(){var src='assets/slide_'+String(slideIdx).padStart(2,'0')+'.jpg';document.getElementById('slide-fs-img').src=src;document.getElementById('slide-fs-counter').textContent=slideIdx+' / '+slideTotal;document.getElementById('slide-fs').classList.add('show');}
+function closeSlideFullscreen(){document.getElementById('slide-fs').classList.remove('show');}
+document.addEventListener('keydown',function(e){if(!document.getElementById('slide-fs').classList.contains('show'))return;if(e.key==='ArrowLeft')slideChange(-1);if(e.key==='ArrowRight')slideChange(1);if(e.key==='Escape')closeSlideFullscreen();});
 
 // FAQ
 function toggleFaq(el){el.classList.toggle('open');}
