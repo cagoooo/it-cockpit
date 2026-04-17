@@ -1,0 +1,7 @@
+{
+  "video_id": "gWjckMMBqQc",
+  "watch_url": "https://www.youtube.com/watch?v=gWjckMMBqQc",
+  "embed_url": "https://www.youtube.com/embed/gWjckMMBqQc",
+  "title": "嗨！電腦新朋友｜三年級資訊科技 - NotebookLM教學影片",
+  "privacy": "unlisted"
+}
