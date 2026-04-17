@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scratch 遊戲設計師｜五年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/scratch-game/">
+<meta property="og:title" content="Scratch 遊戲設計師｜五年級資訊科技">
+<meta property="og:description" content="一步一步用 Scratch 積木做出「水果接接樂」遊戲！認識 9 種顏色積木，從角色設計到計分系統完整教學。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/scratch-game/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/scratch-game/og-image.png">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a1e;--surface:#111130;--panel:#1a1a40;
+  --c1:#00ff88;--c2:#0088ff;--c3:#aa44ff;--c4:#ffcc00;--c5:#ff4466;
+  --text:#e0f0ff;--dim:#5060a0;
+  --shadow:0 4px 20px rgba(0,0,0,.4);
+  --glow1:0 0 12px rgba(0,255,136,.25);
+  --glow2:0 0 12px rgba(0,136,255,.25);
+  --sb-motion:#4C97FF;--sb-looks:#9966FF;--sb-sound:#CF63CF;
+  --sb-events:#FFBF00;--sb-control:#FFAB19;--sb-sensing:#5CB1D6;
+  --sb-operators:#59C059;--sb-variables:#FF8C1A;--sb-myblocks:#FF6680;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;line-height:1.7;min-height:100vh}
+a{color:var(--c1);text-decoration:none}
+.container{max-width:1400px;margin:0 auto;padding:0 24px}
+
+/* ── Header ── */
+.site-header{position:sticky;top:0;z-index:200;background:rgba(10,10,30,.92);backdrop-filter:blur(12px);border-bottom:2px solid var(--c1);padding:10px 24px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:2px solid var(--c4);background:transparent;color:var(--c4);font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;letter-spacing:1px;white-space:nowrap;transition:.2s}
+.home-btn:hover{background:var(--c4);color:var(--bg);transform:translate(-1px,-1px)}
+.header-title{font-size:1.1rem;font-weight:900;color:var(--c1);white-space:nowrap}
+.header-grade{font-size:.85rem;color:var(--c4);background:rgba(255,204,0,.12);padding:3px 10px;border-radius:4px;white-space:nowrap}
+.progress-wrap{flex:1;min-width:120px;display:flex;align-items:center;gap:8px}
+.progress-bar{flex:1;height:8px;background:var(--panel);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .4s;border-radius:4px}
+.progress-txt{font-size:.8rem;color:var(--dim);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+
+/* ── Mode Toggle ── */
+.mode-bar{background:var(--surface);border-bottom:1px solid rgba(255,255,255,.06);padding:8px 24px;text-align:center}
+.mode-bar button{background:transparent;border:2px solid var(--dim);color:var(--dim);padding:5px 16px;font-family:inherit;font-size:.85rem;cursor:pointer;transition:.2s;margin:0 4px;border-radius:4px}
+.mode-bar button.active{border-color:var(--c1);color:var(--c1);background:rgba(0,255,136,.08)}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:48px 24px 32px}
+.hero-emoji{font-size:3rem;margin-bottom:12px}
+.hero h2{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--c1);letter-spacing:.08em;margin-bottom:8px}
+.hero h3{font-size:1.5rem;font-weight:900;margin-bottom:10px}
+.hero p{color:var(--dim);font-size:1rem;max-width:700px;margin:0 auto}
+
+/* ── Objectives ── */
+.obj-section{padding:0 24px 32px}
+.obj-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1400px;margin:0 auto}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:var(--surface);border:2px solid var(--panel);border-radius:6px;font-size:.95rem;transition:.2s}
+.obj-chip:hover{border-color:var(--c1);box-shadow:var(--glow1)}
+.obj-chip .icon{font-size:1.1rem}
+
+/* ── Stage Nav ── */
+.stage-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 24px 40px;max-width:1400px;margin:0 auto}
+.stage-pill{padding:8px 18px;background:var(--surface);border:2px solid var(--panel);border-radius:6px;font-size:.9rem;cursor:pointer;transition:.2s;color:var(--dim)}
+.stage-pill:hover,.stage-pill.active{border-color:var(--c1);color:var(--c1);box-shadow:var(--glow1)}
+.stage-pill.done{border-color:var(--c4);color:var(--c4)}
+
+/* ── Stage Section ── */
+.level-section{padding:48px 24px;max-width:1400px;margin:0 auto}
+.section-header{margin-bottom:28px}
+.stage-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--bg);background:var(--c1);padding:5px 14px;letter-spacing:.1em;margin-bottom:10px;border-radius:3px}
+.section-title{font-size:1.4rem;font-weight:900;margin-bottom:6px}
+.section-sub{font-size:1rem;color:var(--dim)}
+
+/* ── Steps Card ── */
+.steps-card{background:var(--surface);border:2px solid var(--panel);border-radius:8px;padding:24px;margin-bottom:24px;box-shadow:var(--shadow)}
+.steps-card h4{font-size:1.05rem;font-weight:700;margin-bottom:16px;color:var(--c2);display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:1rem;line-height:1.7}
+.steps-list li:last-child{border-bottom:none}
+.step-num{counter-increment:step;min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:var(--c2);color:#fff;font-size:.85rem;font-weight:700;border-radius:50%;flex-shrink:0;margin-top:2px}
+.step-num::after{content:counter(step)}
+
+/* ── Scratch Block Inline ── */
+.sb{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:5px;font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap;box-shadow:0 2px 0 rgba(0,0,0,.22);vertical-align:middle;margin:1px 2px;line-height:1.5}
+.sb.motion{background:var(--sb-motion)}
+.sb.looks{background:var(--sb-looks)}
+.sb.sound{background:var(--sb-sound)}
+.sb.events{background:var(--sb-events);color:#333}
+.sb.control{background:var(--sb-control);color:#333}
+.sb.sensing{background:var(--sb-sensing)}
+.sb.operators{background:var(--sb-operators)}
+.sb.variables{background:var(--sb-variables)}
+.sb.myblocks{background:var(--sb-myblocks)}
+
+/* ── Code Stack (block assembly view) ── */
+.code-stack{background:#0d0d28;border:2px solid var(--c2);border-radius:8px;padding:16px 20px;margin:14px 0;overflow-x:auto;box-shadow:inset 0 0 30px rgba(0,136,255,.06)}
+.code-stack .cs-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--dim);margin-bottom:10px;letter-spacing:.05em}
+.cs-line{padding:3px 0;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.cs-line.i1{padding-left:24px}
+.cs-line.i2{padding-left:48px}
+.cs-line.i3{padding-left:72px}
+.cs-connector{width:3px;height:12px;background:var(--dim);margin-left:16px;border-radius:2px}
+
+/* ── Block Category Card ── */
+.block-cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:16px 0}
+.block-cat{padding:14px;border-radius:8px;text-align:center;cursor:pointer;transition:.2s;border:2px solid transparent;opacity:.85}
+.block-cat:hover{opacity:1;transform:translateY(-2px)}
+.block-cat .bc-color{width:36px;height:36px;border-radius:6px;margin:0 auto 8px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.block-cat .bc-name{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:4px}
+.block-cat .bc-en{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.6)}
+.block-cat.revealed{border-color:rgba(255,255,255,.3);opacity:1}
+
+/* ── Tip Box ── */
+.tip-box{background:rgba(0,255,136,.06);border-left:4px solid var(--c1);padding:14px 18px;margin:14px 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.tip-box.warn{background:rgba(255,68,102,.06);border-color:var(--c5)}
+.tip-box.info{background:rgba(0,136,255,.06);border-color:var(--c2)}
+
+/* ── Quiz ── */
+.quiz-section{margin-top:20px}
+.quiz-card{background:var(--surface);border:2px solid var(--panel);border-radius:8px;padding:20px;margin-bottom:14px}
+.quiz-q{font-size:1.05rem;font-weight:700;margin-bottom:12px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--panel);border:2px solid transparent;padding:10px 16px;border-radius:6px;font-family:inherit;font-size:.95rem;color:var(--text);cursor:pointer;transition:.2s;text-align:left}
+.quiz-opt:hover{border-color:var(--c2);background:rgba(0,136,255,.08)}
+.quiz-card.answered .quiz-opt{pointer-events:none;opacity:.6}
+.quiz-card.answered .quiz-opt.correct{opacity:1;border-color:var(--c1);background:rgba(0,255,136,.1);color:#fff}
+.quiz-card.answered .quiz-opt.wrong{opacity:1;border-color:var(--c5);background:rgba(255,68,102,.1)}
+.quiz-feedback{margin-top:10px;padding:10px 14px;border-radius:6px;font-size:.95rem;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{background:rgba(0,255,136,.08);color:var(--c1)}
+.quiz-feedback.wrong{background:rgba(255,68,102,.08);color:var(--c5)}
+
+/* ── Teacher Note ── */
+.teacher-note{background:rgba(170,68,255,.06);border:2px dashed var(--c3);border-radius:8px;padding:18px;margin-top:16px}
+.teacher-note h4{color:var(--c3);font-size:1rem;margin-bottom:8px}
+.teacher-note p,.teacher-note li{font-size:.95rem;color:var(--dim);line-height:1.7}
+
+/* ── Interactive Area ── */
+.interact-area{background:var(--surface);border:2px solid var(--c3);border-radius:8px;padding:24px;margin:20px 0;box-shadow:0 0 20px rgba(170,68,255,.08)}
+.interact-area h4{font-size:1.05rem;font-weight:700;color:var(--c3);margin-bottom:14px}
+.ia-btn{background:var(--c3);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s}
+.ia-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.ia-btn.green{background:var(--c1);color:var(--bg)}
+.ia-btn.blue{background:var(--c2)}
+.ia-btn.orange{background:var(--sb-control);color:#333}
+.ia-btn.red{background:var(--c5)}
+.ia-display{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;text-align:center;padding:20px;color:var(--c4);margin:12px 0}
+
+/* ── Block Reference Table ── */
+.ref-table{width:100%;border-collapse:collapse;margin:16px 0}
+.ref-table th{background:var(--panel);color:var(--c1);font-size:.9rem;padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace}
+.ref-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.95rem;vertical-align:top}
+.ref-table tr:hover{background:rgba(0,255,136,.03)}
+
+/* ── FAQ ── */
+.faq-item{border-bottom:1px solid rgba(255,255,255,.06);padding:16px 0}
+.faq-q{font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--c4)}
+.faq-q::before{content:'▶';font-size:.7rem;transition:transform .2s}
+.faq-item.open .faq-q::before{transform:rotate(90deg)}
+.faq-a{display:none;padding:10px 0 0 22px;font-size:.95rem;color:var(--dim);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+/* ── Project Task ── */
+.project-section{background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,136,255,.06));border:2px solid var(--c1);border-radius:12px;padding:28px;margin:32px auto;max-width:1400px}
+.project-section h3{font-size:1.2rem;font-weight:900;color:var(--c1);margin-bottom:14px}
+.project-checklist{list-style:none}
+.project-checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:1rem}
+.project-checklist input[type="checkbox"]{width:20px;height:20px;accent-color:var(--c1);flex-shrink:0;margin-top:3px}
+
+/* ── Floating Tools ── */
+#float-tools{position:fixed;right:20px;bottom:20px;z-index:400;display:flex;flex-direction:column;gap:8px}
+.float-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--c1);background:var(--surface);color:var(--c1);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;box-shadow:var(--shadow)}
+.float-btn:hover{background:var(--c1);color:var(--bg);transform:scale(1.08)}
+.float-btn.pink{border-color:var(--c5);color:var(--c5)}
+.float-btn.pink:hover{background:var(--c5);color:#fff}
+.float-btn.purple{border-color:var(--c3);color:var(--c3)}
+.float-btn.purple:hover{background:var(--c3);color:#fff}
+.float-btn.yellow{border-color:var(--c4);color:var(--c4)}
+.float-btn.yellow:hover{background:var(--c4);color:var(--bg)}
+
+.tool-panel{position:fixed;right:80px;bottom:20px;z-index:400;width:320px;background:var(--surface);border:2px solid var(--c1);border-radius:10px;padding:20px;box-shadow:var(--shadow);display:none}
+.tool-panel.show{display:block}
+.tool-panel h4{font-size:1rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.tool-panel .close{cursor:pointer;color:var(--dim);font-size:1.1rem}
+.tool-panel .close:hover{color:var(--c5)}
+
+/* Timer */
+.timer-display{font-family:'JetBrains Mono',monospace;font-size:2.2rem;text-align:center;color:var(--c4);padding:12px 0}
+.timer-btns{display:flex;gap:6px;flex-wrap:wrap}
+.timer-btns button{flex:1;padding:8px;border:2px solid var(--c2);background:transparent;color:var(--c2);font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:4px;transition:.2s}
+.timer-btns button:hover{background:var(--c2);color:#fff}
+.timer-presets{display:flex;gap:6px;margin-top:8px}
+.timer-presets button{padding:5px 10px;border:1px solid var(--dim);background:transparent;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.8rem;cursor:pointer;border-radius:3px;transition:.2s}
+.timer-presets button:hover{border-color:var(--c4);color:var(--c4)}
+
+/* Lottery */
+.lottery-result{font-family:'JetBrains Mono',monospace;font-size:2rem;text-align:center;color:var(--c4);padding:14px 0;min-height:60px}
+.lot-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap}
+.lot-row input[type="number"]{width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit;border-radius:3px}
+.lot-row label{display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer}
+.lot-btns{display:flex;gap:6px}
+.lot-btns button{flex:1;padding:8px;border:2px solid var(--c1);background:var(--c1);color:var(--bg);font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;border-radius:4px;transition:.2s}
+.lot-btns button:hover{filter:brightness(1.1)}
+.lot-btns .reset-btn{background:transparent;color:var(--c5);border-color:var(--c5)}
+
+/* ── Drawing Pen ── */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:var(--surface);border:2px solid var(--c1);padding:10px 14px;display:none;gap:8px;align-items:center;border-radius:8px;box-shadow:var(--shadow)}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:28px;height:28px;border:2px solid rgba(255,255,255,.3);cursor:pointer;padding:0;transition:.2s;border-radius:50%}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 10px currentColor;border-color:#fff}
+.draw-toolbar .draw-clear{background:transparent;border:2px solid var(--c5);color:var(--c5);padding:4px 14px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;border-radius:4px}
+.draw-toolbar .draw-clear:hover{background:var(--c5);color:#fff}
+
+/* ── Scroll Top ── */
+#goTopBtn{position:fixed;left:20px;bottom:80px;z-index:400;width:42px;height:42px;border-radius:50%;border:2px solid var(--dim);background:var(--surface);color:var(--dim);font-size:1rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:.2s}
+#goTopBtn:hover{border-color:var(--c1);color:var(--c1)}
+
+/* ── Footer ── */
+.site-footer{text-align:center;padding:32px 24px;font-size:.85rem;color:var(--dim);border-top:1px solid rgba(255,255,255,.04)}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  html{font-size:16px}
+  .header-inner{gap:8px}
+  .header-title{font-size:.95rem}
+  .progress-wrap{min-width:80px}
+  .hero h3{font-size:1.3rem}
+  .block-cat-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+  .tool-panel{right:10px;bottom:70px;width:calc(100vw - 20px)}
+  .code-stack{padding:12px}
+  .cs-line.i1{padding-left:16px}
+  .cs-line.i2{padding-left:32px}
+  .cs-line.i3{padding-left:48px}
+}
+</style>
+</head>
+<body>
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="site-header">
+<div class="header-inner">
+  <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+  <span class="header-title">🎮 Scratch 遊戲設計師</span>
+  <span class="header-grade">五年級｜程式設計</span>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-txt" id="progressTxt">0 / 6</span>
+  </div>
+</div>
+</header>
+
+<!-- ═══════════════ MODE BAR ═══════════════ -->
+<div class="mode-bar">
+  <button class="active" onclick="setMode('student')">👨‍🎓 學生模式</button>
+  <button onclick="setMode('teacher')">👩‍🏫 教師模式</button>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-emoji">🍎🧺🎮</div>
+  <h2>SCRATCH GAME DESIGNER</h2>
+  <h3>用積木拼出一個超好玩的「水果接接樂」遊戲！</h3>
+  <p>今天我們要從零開始，一步一步用 Scratch 的彩色積木做出一個完整的接水果遊戲。準備好了嗎？</p>
+</section>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<section class="obj-section">
+<div class="obj-grid">
+  <div class="obj-chip"><span class="icon">🧩</span> 認識 9 種顏色的積木分類</div>
+  <div class="obj-chip"><span class="icon">🎭</span> 設計遊戲角色與舞台</div>
+  <div class="obj-chip"><span class="icon">⌨️</span> 用鍵盤控制角色移動</div>
+  <div class="obj-chip"><span class="icon">🔄</span> 學會「分身」讓水果掉落</div>
+  <div class="obj-chip"><span class="icon">⭐</span> 建立計分與生命系統</div>
+  <div class="obj-chip"><span class="icon">🎵</span> 加入音效完成遊戲</div>
+</div>
+</section>
+
+<!-- ═══════════════ STAGE NAV ═══════════════ -->
+<nav class="stage-nav" id="stageNav">
+  <div class="stage-pill active" onclick="scrollToStage(1)">1 積木家族</div>
+  <div class="stage-pill" onclick="scrollToStage(2)">2 遊戲角色</div>
+  <div class="stage-pill" onclick="scrollToStage(3)">3 鍵盤操控</div>
+  <div class="stage-pill" onclick="scrollToStage(4)">4 水果掉落</div>
+  <div class="stage-pill" onclick="scrollToStage(5)">5 碰撞計分</div>
+  <div class="stage-pill" onclick="scrollToStage(6)">6 音效完成</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 1: 認識積木家族
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec1">
+<div class="section-header">
+  <span class="stage-badge">STAGE 1</span>
+  <h2 class="section-title">🧩 積木家族大集合</h2>
+  <p class="section-sub">每種顏色的積木都有不同的超能力！先來認識它們</p>
+</div>
+
+<div class="steps-card">
+  <h4>📖 Scratch 積木分類</h4>
+  <p style="font-size:1rem;color:var(--dim);margin-bottom:16px">Scratch 把所有積木依功能分成不同顏色，就像超級英雄團隊一樣，每個顏色負責不同的任務：</p>
+  <div class="block-cat-grid" id="blockCatGrid">
+    <div class="block-cat" style="background:rgba(76,151,255,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-motion)"></div>
+      <div class="bc-name">🔵 動作</div>
+      <div class="bc-en">Motion</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">讓角色移動、轉彎、滑行</div>
+    </div>
+    <div class="block-cat" style="background:rgba(153,102,255,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-looks)"></div>
+      <div class="bc-name">🟣 外觀</div>
+      <div class="bc-en">Looks</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">改變造型、說話、顯示/隱藏</div>
+    </div>
+    <div class="block-cat" style="background:rgba(207,99,207,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-sound)"></div>
+      <div class="bc-name">🩷 音效</div>
+      <div class="bc-en">Sound</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">播放聲音、改變音量音調</div>
+    </div>
+    <div class="block-cat" style="background:rgba(255,191,0,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-events)"></div>
+      <div class="bc-name">🟡 事件</div>
+      <div class="bc-en">Events</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">觸發程式的開關（點旗、按鍵）</div>
+    </div>
+    <div class="block-cat" style="background:rgba(255,171,25,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-control)"></div>
+      <div class="bc-name">🟠 控制</div>
+      <div class="bc-en">Control</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">重複、判斷、等待、分身</div>
+    </div>
+    <div class="block-cat" style="background:rgba(92,177,214,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-sensing)"></div>
+      <div class="bc-name">🔵 偵測</div>
+      <div class="bc-en">Sensing</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">碰到東西？按了什麼鍵？</div>
+    </div>
+    <div class="block-cat" style="background:rgba(89,192,89,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-operators)"></div>
+      <div class="bc-name">🟢 運算</div>
+      <div class="bc-en">Operators</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">加減乘除、隨機數、比較大小</div>
+    </div>
+    <div class="block-cat" style="background:rgba(255,140,26,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-variables)"></div>
+      <div class="bc-name">🟧 變數</div>
+      <div class="bc-en">Variables</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">記錄分數、生命值等數字</div>
+    </div>
+    <div class="block-cat" style="background:rgba(255,102,128,.12)" onclick="revealBlock(this)">
+      <div class="bc-color" style="background:var(--sb-myblocks)"></div>
+      <div class="bc-name">🩷 函式積木</div>
+      <div class="bc-en">My Blocks</div>
+      <div class="bc-desc" style="display:none;font-size:.85rem;color:var(--dim);margin-top:6px">自己定義新積木（進階）</div>
+    </div>
+  </div>
+  <p style="font-size:.9rem;color:var(--dim);margin-top:12px">👆 點擊每張卡片看說明！今天做遊戲會用到大部分的積木家族喔！</p>
+</div>
+
+<div class="tip-box info">
+  💡 <strong>記住口訣：</strong>藍色管移動、紫色管外觀、黃色管觸發、橘色管控制、淺藍管偵測、綠色管運算、深橘管變數！
+</div>
+
+<!-- Stage 1 Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" data-stage="1">
+    <p class="quiz-q">Q1. 想讓角色往右移動 10 步，要找哪個顏色的積木？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟣 紫色（外觀）</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">🔵 藍色（動作）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟡 黃色（事件）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟢 綠色（運算）</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+  <div class="quiz-card" data-stage="1">
+    <p class="quiz-q">Q2. 「如果⋯那麼」這種判斷積木是什麼顏色？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">🔵 淺藍色（偵測）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟢 綠色（運算）</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">🟠 橘色（控制）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟧 深橘色（變數）</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師提示</h4>
+  <p>建議先讓學生自由探索 Scratch 介面 3 分鐘，觀察左側積木區的顏色分類。可以請學生數一數總共有幾種顏色。強調「顏色 = 功能分類」的概念，不需要記住每個積木的用途，用到時自然會學會。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 2: 準備遊戲角色
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec2">
+<div class="section-header">
+  <span class="stage-badge">STAGE 2</span>
+  <h2 class="section-title">🎭 準備遊戲角色與舞台</h2>
+  <p class="section-sub">設計你的遊戲世界：背景、籃子和水果</p>
+</div>
+
+<div class="steps-card">
+  <h4>🌐 Step A — 打開 Scratch</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>打開瀏覽器，前往 <strong>scratch.mit.edu</strong>，點選上方「創建」</div></li>
+    <li><div class="step-num"></div><div>你會看到一隻橘色的貓咪（小貓是 Scratch 的預設角色）。我們的遊戲不需要貓咪，先在右下角的角色清單中，對貓咪<strong>按右鍵 → 刪除</strong></div></li>
+  </ol>
+</div>
+
+<div class="steps-card">
+  <h4>🎨 Step B — 選擇背景</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>點擊右下角「舞台」區域的「選個背景」按鈕（藍色山的圖示）</div></li>
+    <li><div class="step-num"></div><div>推薦選擇 <strong>Blue Sky</strong> 或 <strong>Colorful City</strong>（在「戶外」分類中找）</div></li>
+    <li><div class="step-num"></div><div>背景會立刻套用到舞台上，你可以隨時更換！</div></li>
+  </ol>
+</div>
+
+<div class="steps-card">
+  <h4>🧺 Step C — 加入籃子角色</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>點擊右下角「選個角色」按鈕（貓咪臉 + 加號圖示）</div></li>
+    <li><div class="step-num"></div><div>搜尋 <strong>「Bowl」</strong> 或 <strong>「Plate」</strong>（碗/盤子可以當籃子用）</div></li>
+    <li><div class="step-num"></div><div>找不到喜歡的？點「繪畫」自己畫一個籃子！用長方形 + 弧形組合</div></li>
+    <li><div class="step-num"></div><div>把角色名稱改成 <strong>Basket</strong>（在角色資訊區點名字就能改）</div></li>
+  </ol>
+</div>
+
+<div class="steps-card">
+  <h4>🍎 Step D — 加入水果角色</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>再按一次「選個角色」，搜尋 <strong>「Apple」</strong> 選一顆蘋果</div></li>
+    <li><div class="step-num"></div><div>把角色名稱改成 <strong>Fruit</strong></div></li>
+    <li><div class="step-num"></div><div>想要多種水果？在「造型」分頁中，點「選個造型」搜尋 <strong>Bananas</strong>、<strong>Orange</strong> 加入更多造型！後面會用到</div></li>
+  </ol>
+</div>
+
+<div class="tip-box">
+  🎯 <strong>設計細節：</strong>確認角色大小適中 — 籃子大約佔畫面寬度的 1/6，水果比籃子小一點。可以在角色資訊的「大小」欄位調整（籃子建議 80-100，水果建議 50-70）。
+</div>
+
+<!-- Stage 2 Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" data-stage="2">
+    <p class="quiz-q">Q1. 在 Scratch 中，遊戲的背景圖片叫什麼？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">角色（Sprite）</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">背景（Backdrop）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">造型（Costume）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">音效（Sound）</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+  <div class="quiz-card" data-stage="2">
+    <p class="quiz-q">Q2. 一個角色可以有好幾種不同的「外型」，在 Scratch 中叫做？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">背景（Backdrop）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">分身（Clone）</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">造型（Costume）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">變數（Variable）</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師提示</h4>
+  <p>這個階段建議給學生 5-8 分鐘自由發揮設計角色和背景。可以鼓勵學生自己繪畫角色增加成就感。提醒學生先完成基本角色（籃子 + 1 種水果），進階造型可以最後再加。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 3: 鍵盤操控籃子
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec3">
+<div class="section-header">
+  <span class="stage-badge">STAGE 3</span>
+  <h2 class="section-title">⌨️ 鍵盤操控籃子</h2>
+  <p class="section-sub">用方向鍵讓籃子左右移動接水果！</p>
+</div>
+
+<div class="steps-card">
+  <h4>🎯 目標：讓籃子用 ← → 方向鍵左右移動</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:12px">先點選右下角角色清單中的 <strong>Basket</strong>（確認是籃子被選中，邊框會變藍色），然後照以下步驟組裝積木：</p>
+
+  <div class="code-stack">
+    <div class="cs-title">📦 BASKET 籃子的程式</div>
+    <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+    <div class="cs-line"><span class="sb motion">定位到 x: 0 y: -150</span></div>
+    <div class="cs-line"><span class="sb control">重複無限次</span></div>
+    <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb sensing">按下 [右→] 鍵?</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i2"><span class="sb motion">x 改變 (10)</span></div>
+    <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb sensing">按下 [左←] 鍵?</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i2"><span class="sb motion">x 改變 (-10)</span></div>
+  </div>
+</div>
+
+<div class="steps-card">
+  <h4>🔧 組裝步驟（照順序做）</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>在左邊積木區點 <span class="sb events">事件</span>（黃色），拖出 <span class="sb events">當 ⚑ 被點擊</span> 到程式區</div></li>
+    <li><div class="step-num"></div><div>點 <span class="sb motion">動作</span>（藍色），拖出 <span class="sb motion">定位到 x: 0 y: -150</span> 接在下面。這讓籃子每次開始都在畫面下方中間</div></li>
+    <li><div class="step-num"></div><div>點 <span class="sb control">控制</span>（橘色），拖出 <span class="sb control">重複無限次</span> 接在下面。這讓程式一直不停檢查按鍵</div></li>
+    <li><div class="step-num"></div><div>從 <span class="sb control">控制</span> 拖出 <span class="sb control">如果⋯那麼</span> 放進「重複無限次」裡面</div></li>
+    <li><div class="step-num"></div><div>點 <span class="sb sensing">偵測</span>（淺藍色），把 <span class="sb sensing">按下 [空白] 鍵?</span> 拖到「如果」後面的六角形空格中，然後把 [空白] 改成 <strong>[右→]</strong></div></li>
+    <li><div class="step-num"></div><div>從 <span class="sb motion">動作</span> 拖出 <span class="sb motion">x 改變 (10)</span> 放進第一個「如果⋯那麼」裡面</div></li>
+    <li><div class="step-num"></div><div>重複步驟 4-6 做第二個「如果⋯那麼」：偵測 <strong>[左←]</strong> 鍵，<span class="sb motion">x 改變 (-10)</span></div></li>
+    <li><div class="step-num"></div><div>按綠色旗子 ⚑ 測試！籃子應該可以用 ← → 鍵左右移動了 🎉</div></li>
+  </ol>
+</div>
+
+<div class="tip-box">
+  💡 <strong>設計細節：</strong>x 改變 10 代表每次按鍵往右移 10 步。想讓籃子移動更快？把 10 改成 15 或 20 試試看！數字越大移動越快。
+</div>
+
+<div class="tip-box warn">
+  ⚠️ <strong>常見問題：</strong>如果按方向鍵沒反應，檢查你有沒有先點擊舞台（讓 Scratch 視窗取得焦點），然後再按方向鍵。
+</div>
+
+<!-- Stage 3 Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" data-stage="3">
+    <p class="quiz-q">Q1. 想讓角色一直不停地檢查按鍵，要用哪個積木？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb control" style="font-size:.8rem">等待 (1) 秒</span></button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)"><span class="sb control" style="font-size:.8rem">重複無限次</span></button>
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb control" style="font-size:.8rem">重複 (10) 次</span></button>
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb events" style="font-size:.8rem">當 ⚑ 被點擊</span></button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+  <div class="quiz-card" data-stage="3">
+    <p class="quiz-q">Q2. x 改變 (-10) 會讓角色往哪個方向移動？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">往右 →</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">往左 ←</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">往上 ↑</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">往下 ↓</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師提示</h4>
+  <p>此階段引入「事件驅動」概念 — 程式不斷檢查條件（有沒有按鍵），有的話就執行動作。這是遊戲程式的核心邏輯。可以請學生嘗試把 10 改成不同數字（5、20、50），體會「參數」對行為的影響。y:-150 是舞台底部附近，可讓學生理解座標系統（x 左右、y 上下）。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 4: 水果分身掉落
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec4">
+<div class="section-header">
+  <span class="stage-badge">STAGE 4</span>
+  <h2 class="section-title">🍎 水果從天而降！</h2>
+  <p class="section-sub">用「分身」積木讓水果不斷出現、往下掉</p>
+</div>
+
+<div class="steps-card">
+  <h4>💡 什麼是「分身」？</h4>
+  <p style="font-size:1rem;line-height:1.8;margin-bottom:12px">想像你是影分身之術的忍者 🥷 — 你只有一個本體，但可以製造出很多分身。在 Scratch 中，<span class="sb control">建立 [自己] 的分身</span> 就是讓一個角色不斷複製自己！</p>
+  <p style="font-size:.95rem;color:var(--dim)">我們的水果角色（Fruit）只需要一個，但用分身就能讓畫面上同時出現很多顆水果 🍎🍎🍎</p>
+</div>
+
+<div class="steps-card">
+  <h4>📦 水果的程式（共兩段）</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:12px">先在右下角點選 <strong>Fruit</strong> 角色，然後組裝以下兩段程式：</p>
+
+  <div class="code-stack">
+    <div class="cs-title">📦 程式一：不斷製造分身</div>
+    <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+    <div class="cs-line"><span class="sb looks">隱藏</span></div>
+    <div class="cs-line"><span class="sb control">重複無限次</span></div>
+    <div class="cs-line i1"><span class="sb control">建立 [自己] 的分身</span></div>
+    <div class="cs-line i1"><span class="sb control">等待 (2) 秒</span></div>
+  </div>
+
+  <div class="code-stack" style="margin-top:16px">
+    <div class="cs-title">📦 程式二：每個分身的行為</div>
+    <div class="cs-line"><span class="sb control">當分身產生</span></div>
+    <div class="cs-line"><span class="sb looks">顯示</span></div>
+    <div class="cs-line"><span class="sb motion">定位到 x:</span> <span class="sb operators">隨機取數 (-200) 到 (200)</span> <span class="sb motion">y: (170)</span></div>
+    <div class="cs-line"><span class="sb control">重複無限次</span></div>
+    <div class="cs-line i1"><span class="sb motion">y 改變 (-3)</span></div>
+    <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb operators">( y 座標 ) &lt; (-170)</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i2"><span class="sb control">分身刪除</span></div>
+  </div>
+</div>
+
+<div class="steps-card">
+  <h4>🔧 組裝步驟</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div><strong>程式一：</strong>拖出 <span class="sb events">當 ⚑ 被點擊</span>，接上 <span class="sb looks">隱藏</span>（紫色外觀區），再接 <span class="sb control">重複無限次</span></div></li>
+    <li><div class="step-num"></div><div>在重複裡面放 <span class="sb control">建立 [自己] 的分身</span>（橘色控制區），再放 <span class="sb control">等待 (2) 秒</span>（每 2 秒產生一顆新水果）</div></li>
+    <li><div class="step-num"></div><div><strong>程式二：</strong>另外拖出一個 <span class="sb control">當分身產生</span>（橘色帽子形狀），這是第二段獨立的程式</div></li>
+    <li><div class="step-num"></div><div>接上 <span class="sb looks">顯示</span>，再接 <span class="sb motion">定位到 x: __ y: __</span></div></li>
+    <li><div class="step-num"></div><div>x 的位置用 <span class="sb operators">隨機取數 (-200) 到 (200)</span>（從綠色運算區拖進去），y 輸入 <strong>170</strong>（畫面最上方）</div></li>
+    <li><div class="step-num"></div><div>接上 <span class="sb control">重複無限次</span>，裡面放 <span class="sb motion">y 改變 (-3)</span>（讓水果一直往下掉）</div></li>
+    <li><div class="step-num"></div><div>再放一個 <span class="sb control">如果⋯那麼</span>，條件是 <span class="sb operators">( y 座標 ) &lt; (-170)</span>，裡面放 <span class="sb control">分身刪除</span>（掉到最底就消失）</div></li>
+    <li><div class="step-num"></div><div>按 ⚑ 測試！你應該看到水果不斷從上方隨機位置往下掉 🍎⬇️</div></li>
+  </ol>
+</div>
+
+<div class="tip-box">
+  💡 <strong>設計細節：</strong>等待秒數控制水果出現的頻率（2 秒一顆）。y 改變 -3 控制掉落速度。後面的 STAGE 6 會教你怎麼讓速度越來越快！
+</div>
+
+<div class="tip-box info">
+  🎨 <strong>進階挑戰：</strong>在「當分身產生」後面加一行 <span class="sb looks">造型換成 [隨機]</span>，這樣每顆分身水果會隨機出現不同造型（蘋果、香蕉、橘子）！需要先在「造型」分頁加入多種水果造型。
+</div>
+
+<!-- Stage 4 Interactive: Clone Counter -->
+<div class="interact-area">
+  <h4>🧪 互動體驗：分身機器</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:14px">點按鈕模擬分身的產生和消失，觀察「分身數量」的變化：</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+    <button class="ia-btn orange" onclick="simClone('add')">🍎 產生分身 +1</button>
+    <button class="ia-btn red" onclick="simClone('del')">💥 分身刪除 -1</button>
+    <button class="ia-btn blue" onclick="simClone('reset')">↻ 重置</button>
+  </div>
+  <div class="ia-display" id="cloneDisplay">分身數量：0</div>
+  <div id="cloneFruits" style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;min-height:40px"></div>
+</div>
+
+<!-- Stage 4 Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" data-stage="4">
+    <p class="quiz-q">Q1. 「建立自己的分身」積木是什麼顏色？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">🔵 藍色（動作）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟡 黃色（事件）</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">🟠 橘色（控制）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟢 綠色（運算）</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+  <div class="quiz-card" data-stage="4">
+    <p class="quiz-q">Q2.「隨機取數 (-200) 到 (200)」的功能是什麼？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">固定讓水果出現在正中間</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">讓每顆水果出現在不同的隨機位置</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">讓水果的大小隨機變化</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">讓水果的顏色隨機變化</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師提示</h4>
+  <p>「分身」是本課最重要的概念。可以用「影印機」比喻：本體是原稿（隱藏起來不動），分身是影印出來的副本（出現在隨機位置然後往下掉）。常見錯誤：學生忘記在程式一加「隱藏」，導致本體也出現在畫面上。提醒：程式一控制「工廠」（不斷產出分身），程式二控制「每個產品」的行為。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 5: 碰撞偵測與計分
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec5">
+<div class="section-header">
+  <span class="stage-badge">STAGE 5</span>
+  <h2 class="section-title">⭐ 碰撞偵測與計分系統</h2>
+  <p class="section-sub">碰到籃子就加分！建立分數和生命值</p>
+</div>
+
+<div class="steps-card">
+  <h4>💡 什麼是「變數」？</h4>
+  <p style="font-size:1rem;line-height:1.8">變數就像一個<strong>可以記住數字的小盒子</strong>📦。遊戲裡的「分數」和「生命」都需要用變數來記錄。盒子上面寫著名字（例如「分數」），裡面放著一個數字（例如 0），你可以隨時改變裡面的數字。</p>
+</div>
+
+<div class="steps-card">
+  <h4>🔧 Step A — 建立變數</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>點左邊積木區的 <span class="sb variables">變數</span>（深橘色分類）</div></li>
+    <li><div class="step-num"></div><div>點「建立一個變數」按鈕，輸入名稱 <strong>分數</strong>，選「適用於所有角色」，按確定</div></li>
+    <li><div class="step-num"></div><div>再建一個變數，名稱 <strong>生命</strong></div></li>
+    <li><div class="step-num"></div><div>舞台左上角會自動出現「分數」和「生命」的顯示！</div></li>
+  </ol>
+</div>
+
+<div class="steps-card">
+  <h4>📦 Step B — 初始化（在 Basket 籃子角色加入）</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:10px">在 STAGE 3 的籃子程式最前面加上變數初始化：</p>
+  <div class="code-stack">
+    <div class="cs-title">📦 BASKET 籃子程式（更新版）</div>
+    <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+    <div class="cs-line" style="border-left:3px solid var(--c1);padding-left:8px"><span class="sb variables">變數 [分數] 設為 (0)</span> <span style="color:var(--c1);font-size:.8rem">← 新增！</span></div>
+    <div class="cs-line" style="border-left:3px solid var(--c1);padding-left:8px"><span class="sb variables">變數 [生命] 設為 (3)</span> <span style="color:var(--c1);font-size:.8rem">← 新增！</span></div>
+    <div class="cs-line"><span class="sb motion">定位到 x: 0 y: -150</span></div>
+    <div class="cs-line"><span class="sb control">重複無限次</span></div>
+    <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb sensing">按下 [右→] 鍵?</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i2"><span class="sb motion">x 改變 (10)</span></div>
+    <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb sensing">按下 [左←] 鍵?</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i2"><span class="sb motion">x 改變 (-10)</span></div>
+  </div>
+</div>
+
+<div class="steps-card">
+  <h4>📦 Step C — 碰撞偵測（更新 Fruit 的「程式二」）</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:10px">在 Fruit 角色的「當分身產生」程式中，加入碰撞判斷：</p>
+  <div class="code-stack">
+    <div class="cs-title">📦 FRUIT 分身程式（更新版）</div>
+    <div class="cs-line"><span class="sb control">當分身產生</span></div>
+    <div class="cs-line"><span class="sb looks">顯示</span></div>
+    <div class="cs-line"><span class="sb motion">定位到 x:</span> <span class="sb operators">隨機取數 (-200) 到 (200)</span> <span class="sb motion">y: (170)</span></div>
+    <div class="cs-line"><span class="sb control">重複無限次</span></div>
+    <div class="cs-line i1"><span class="sb motion">y 改變 (-3)</span></div>
+    <div class="cs-line i1" style="border-left:3px solid var(--c1);padding-left:8px;margin-left:-4px"><span class="sb control">如果</span> <span class="sb sensing">碰到 [Basket]?</span> <span class="sb control">那麼</span> <span style="color:var(--c1);font-size:.8rem">← 新增！</span></div>
+    <div class="cs-line i2" style="border-left:3px solid var(--c1);padding-left:8px;margin-left:20px"><span class="sb variables">變數 [分數] 改變 (1)</span></div>
+    <div class="cs-line i2" style="border-left:3px solid var(--c1);padding-left:8px;margin-left:20px"><span class="sb control">分身刪除</span></div>
+    <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb operators">( y 座標 ) &lt; (-170)</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i2" style="border-left:3px solid var(--c5);padding-left:8px;margin-left:20px"><span class="sb variables">變數 [生命] 改變 (-1)</span> <span style="color:var(--c5);font-size:.8rem">← 新增！</span></div>
+    <div class="cs-line i2" style="border-left:3px solid var(--c5);padding-left:8px;margin-left:20px"><span class="sb control">如果</span> <span class="sb operators">(生命) = (0)</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i3" style="border-left:3px solid var(--c5);padding-left:8px;margin-left:44px"><span class="sb control">停止 [全部]</span></div>
+    <div class="cs-line i2"><span class="sb control">分身刪除</span></div>
+  </div>
+</div>
+
+<div class="tip-box">
+  💡 <strong>設計邏輯：</strong>水果碰到籃子 → 分數 +1 → 消失。水果掉到底部 → 生命 -1 → 如果生命歸零就 Game Over → 消失。
+</div>
+
+<!-- Stage 5 Interactive: Score Simulator -->
+<div class="interact-area">
+  <h4>🧪 互動體驗：計分模擬器</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:14px">模擬遊戲中的計分與生命系統，體驗「變數」如何運作：</p>
+  <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:14px">
+    <div style="text-align:center">
+      <div style="font-size:.85rem;color:var(--sb-variables)">⭐ 分數</div>
+      <div class="ia-display" id="simScore" style="font-size:2.4rem;color:var(--c1);padding:8px 0">0</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-size:.85rem;color:var(--c5)">❤️ 生命</div>
+      <div class="ia-display" id="simLives" style="font-size:2.4rem;color:var(--c5);padding:8px 0">3</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <button class="ia-btn green" onclick="simGame('catch')">🧺 接到水果！+1</button>
+    <button class="ia-btn red" onclick="simGame('miss')">💔 水果掉地！-1</button>
+    <button class="ia-btn blue" onclick="simGame('reset')">↻ 重新開始</button>
+  </div>
+  <div id="simMsg" style="text-align:center;font-size:1rem;margin-top:10px;min-height:28px"></div>
+</div>
+
+<!-- Stage 5 Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" data-stage="5">
+    <p class="quiz-q">Q1. 「變數 [分數] 改變 (1)」這個積木的意思是？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">把分數設定為 1</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">把分數加 1（在原本的基礎上 +1）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">把分數乘以 1</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">如果分數等於 1 就執行</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+  <div class="quiz-card" data-stage="5">
+    <p class="quiz-q">Q2. 要偵測水果有沒有碰到籃子，用的是哪個積木？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb motion" style="font-size:.8rem">碰到邊緣就反彈</span></button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)"><span class="sb sensing" style="font-size:.8rem">碰到 [Basket]?</span></button>
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb operators" style="font-size:.8rem">(分數) = (1)</span></button>
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb variables" style="font-size:.8rem">變數 [分數] 設為 (1)</span></button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師提示</h4>
+  <p>「設為」vs「改變」是學生最容易搞混的：「設為 0」是直接把盒子裡的數字換成 0（通常用在初始化）；「改變 1」是在現有數字上加 1。可以用「計算機清除 C 鍵 vs + 鍵」來比喻。建議讓學生玩一下計分模擬器理解概念。注意碰撞偵測的積木名稱必須和角色名稱完全一致（Basket），大小寫也要對。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 6: 音效特效大完成
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec6">
+<div class="section-header">
+  <span class="stage-badge">STAGE 6</span>
+  <h2 class="section-title">🎵 音效特效大完成！</h2>
+  <p class="section-sub">加上聲光效果，讓遊戲超有感！最後發表你的作品</p>
+</div>
+
+<div class="steps-card">
+  <h4>🔊 Step A — 加入音效</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>點選 <strong>Fruit</strong> 角色，切換到上方的「音效」分頁</div></li>
+    <li><div class="step-num"></div><div>點左下角「選個音效」，搜尋 <strong>Collect</strong> 或 <strong>Pop</strong>（接到水果的音效）</div></li>
+    <li><div class="step-num"></div><div>再搜尋 <strong>Oops</strong> 或 <strong>Buzz</strong>（水果掉地的音效）</div></li>
+    <li><div class="step-num"></div><div>回到「程式」分頁，在碰到籃子的地方加上 <span class="sb sound">播放音效 [Collect]</span>：</div></li>
+  </ol>
+
+  <div class="code-stack">
+    <div class="cs-title">📦 在碰到 Basket 的「如果」裡面加入音效</div>
+    <div class="cs-line"><span class="sb control">如果</span> <span class="sb sensing">碰到 [Basket]?</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i1"><span class="sb variables">變數 [分數] 改變 (1)</span></div>
+    <div class="cs-line i1" style="border-left:3px solid var(--c1);padding-left:8px"><span class="sb sound">播放音效 [Collect]</span> <span style="color:var(--c1);font-size:.8rem">← 新增！</span></div>
+    <div class="cs-line i1"><span class="sb control">分身刪除</span></div>
+  </div>
+
+  <div class="code-stack" style="margin-top:12px">
+    <div class="cs-title">📦 在掉到底部的「如果」裡面加入音效</div>
+    <div class="cs-line"><span class="sb control">如果</span> <span class="sb operators">( y 座標 ) &lt; (-170)</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i1" style="border-left:3px solid var(--c1);padding-left:8px"><span class="sb sound">播放音效 [Oops]</span> <span style="color:var(--c1);font-size:.8rem">← 新增！</span></div>
+    <div class="cs-line i1"><span class="sb variables">變數 [生命] 改變 (-1)</span></div>
+    <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb operators">(生命) = (0)</span> <span class="sb control">那麼</span></div>
+    <div class="cs-line i2"><span class="sb control">停止 [全部]</span></div>
+    <div class="cs-line i1"><span class="sb control">分身刪除</span></div>
+  </div>
+</div>
+
+<div class="steps-card">
+  <h4>✨ Step B — 加入特效（選做）</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>接到水果時，在 <span class="sb sound">播放音效</span> 下面加 <span class="sb looks">圖像效果 [顏色] 改變 (25)</span>（籃子會閃光！需要在 Basket 角色中用廣播觸發）</div></li>
+    <li><div class="step-num"></div><div>Game Over 時，在 <span class="sb control">停止 [全部]</span> 前面加 <span class="sb looks">說出 [Game Over! 🎮] (2) 秒</span>（水果角色顯示 Game Over 訊息）</div></li>
+    <li><div class="step-num"></div><div><strong>進階挑戰 — 速度加快：</strong>建立一個新變數 <strong>速度</strong>，初始值設為 3。把 <span class="sb motion">y 改變 (-3)</span> 改成 <span class="sb motion">y 改變</span> <span class="sb operators">(0) - (速度)</span>。再加一個 <span class="sb control">如果</span> <span class="sb operators">(分數) 除以 (10) 的餘數 = (0)</span>，就 <span class="sb variables">變數 [速度] 改變 (1)</span>（每得 10 分加快一點！）</div></li>
+  </ol>
+</div>
+
+<div class="steps-card">
+  <h4>🚀 Step C — 發表你的作品</h4>
+  <ol class="steps-list">
+    <li><div class="step-num"></div><div>點上方「檔案」→「儲存到電腦」先存一份備份（.sb3 檔案）</div></li>
+    <li><div class="step-num"></div><div>如果有 Scratch 帳號：點右上角「分享」按鈕 → 輸入專案名稱和說明 → 按「分享」</div></li>
+    <li><div class="step-num"></div><div>分享後你會得到一個網址，把它貼到班級群組讓同學玩你做的遊戲！🎉</div></li>
+    <li><div class="step-num"></div><div>讓同學玩完後給你回饋：太難還是太簡單？分數容易拿嗎？根據回饋調整數字（速度、等待秒數、生命數）</div></li>
+  </ol>
+</div>
+
+<div class="tip-box">
+  🎮 <strong>完成了！</strong>你的「水果接接樂」遊戲已經有：鍵盤控制 ✓ 水果掉落 ✓ 碰撞偵測 ✓ 計分系統 ✓ 生命值 ✓ 音效 ✓。這就是一個完整的遊戲！
+</div>
+
+<!-- Stage 6 Interactive: Game Test Checklist -->
+<div class="interact-area">
+  <h4>✅ 遊戲測試清單</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:14px">按 ⚑ 開始測試，每項通過就打勾：</p>
+  <ul class="project-checklist" style="list-style:none">
+    <li><input type="checkbox"> 按 ← → 鍵，籃子可以左右移動</li>
+    <li><input type="checkbox"> 水果從上方不同位置掉下來</li>
+    <li><input type="checkbox"> 水果碰到籃子會消失，分數 +1</li>
+    <li><input type="checkbox"> 水果掉到底部會消失，生命 -1</li>
+    <li><input type="checkbox"> 接到水果有音效</li>
+    <li><input type="checkbox"> 生命歸零時遊戲停止</li>
+    <li><input type="checkbox"> 再按一次 ⚑ 可以重新開始（分數歸零、生命回到 3）</li>
+  </ul>
+</div>
+
+<!-- Stage 6 Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" data-stage="6">
+    <p class="quiz-q">Q1. 想在接到水果時播放音效，要用哪個顏色的積木？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟡 黃色（事件）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟣 紫色（外觀）</button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)">🩷 粉紅色（音效）</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">🟢 綠色（運算）</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+  <div class="quiz-card" data-stage="6">
+    <p class="quiz-q">Q2. 要讓遊戲完全停止（Game Over），用什麼積木？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb looks" style="font-size:.8rem">隱藏</span></button>
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb control" style="font-size:.8rem">等待 (999) 秒</span></button>
+      <button class="quiz-opt" data-correct="true" onclick="checkQuiz(this)"><span class="sb control" style="font-size:.8rem">停止 [全部]</span></button>
+      <button class="quiz-opt" onclick="checkQuiz(this)"><span class="sb events" style="font-size:.8rem">當 ⚑ 被點擊</span></button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師提示</h4>
+  <p>最後 10 分鐘建議讓學生互相試玩作品並給回饋。可以提問：「你覺得遊戲太難還是太簡單？可以調整哪些數字讓它更好玩？」引導學生理解：改變程式中的數字（等待秒數、移動速度、生命數量）就是在做「遊戲平衡設計」。這堂課使用了全部 8 種顏色的積木（動作、外觀、音效、事件、控制、偵測、運算、變數），是很好的綜合練習。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     TODAY'S PROJECT
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-top:32px;padding-bottom:32px">
+<div class="project-section">
+  <h3>🏆 今日實作任務：水果接接樂</h3>
+  <p style="font-size:1rem;color:var(--dim);margin-bottom:16px">完成以下所有項目，你就是 Scratch 遊戲設計師！</p>
+  <ul class="project-checklist">
+    <li><input type="checkbox"> 建立遊戲舞台（背景 + 籃子 + 水果角色）</li>
+    <li><input type="checkbox"> 籃子可以用 ← → 鍵左右移動</li>
+    <li><input type="checkbox"> 水果從隨機位置不斷掉落（使用分身）</li>
+    <li><input type="checkbox"> 碰到籃子加分、掉到地上扣生命</li>
+    <li><input type="checkbox"> 加入音效（接到 / 掉落各一種）</li>
+    <li><input type="checkbox"> 生命歸零時 Game Over</li>
+    <li><input type="checkbox"> 🌟 進階：多種水果造型隨機出現</li>
+    <li><input type="checkbox"> 🌟 進階：分數越高速度越快</li>
+  </ul>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     BLOCK REFERENCE TABLE
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:32px">
+<div class="steps-card">
+  <h4>📋 Scratch 積木速查表（本課使用的積木）</h4>
+  <div style="overflow-x:auto">
+  <table class="ref-table">
+    <thead>
+      <tr><th>分類</th><th>積木</th><th>用途</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="sb events" style="font-size:.8rem">事件</span></td><td>當 ⚑ 被點擊</td><td>遊戲開始的觸發點</td></tr>
+      <tr><td><span class="sb motion" style="font-size:.8rem">動作</span></td><td>定位到 x: __ y: __</td><td>設定角色的起始位置</td></tr>
+      <tr><td><span class="sb motion" style="font-size:.8rem">動作</span></td><td>x 改變 (10) / (-10)</td><td>讓角色左右移動</td></tr>
+      <tr><td><span class="sb motion" style="font-size:.8rem">動作</span></td><td>y 改變 (-3)</td><td>讓水果往下掉</td></tr>
+      <tr><td><span class="sb looks" style="font-size:.8rem">外觀</span></td><td>顯示 / 隱藏</td><td>控制角色是否出現在畫面</td></tr>
+      <tr><td><span class="sb looks" style="font-size:.8rem">外觀</span></td><td>說出 [文字] (N) 秒</td><td>Game Over 顯示訊息</td></tr>
+      <tr><td><span class="sb sound" style="font-size:.8rem">音效</span></td><td>播放音效 [名稱]</td><td>接到 / 掉落的音效回饋</td></tr>
+      <tr><td><span class="sb control" style="font-size:.8rem">控制</span></td><td>重複無限次</td><td>讓程式不斷執行（遊戲迴圈）</td></tr>
+      <tr><td><span class="sb control" style="font-size:.8rem">控制</span></td><td>如果⋯那麼</td><td>判斷條件是否成立</td></tr>
+      <tr><td><span class="sb control" style="font-size:.8rem">控制</span></td><td>等待 (N) 秒</td><td>控制水果出現的頻率</td></tr>
+      <tr><td><span class="sb control" style="font-size:.8rem">控制</span></td><td>建立 [自己] 的分身</td><td>複製角色（產生新水果）</td></tr>
+      <tr><td><span class="sb control" style="font-size:.8rem">控制</span></td><td>當分身產生</td><td>定義每個分身的行為</td></tr>
+      <tr><td><span class="sb control" style="font-size:.8rem">控制</span></td><td>分身刪除</td><td>讓水果消失</td></tr>
+      <tr><td><span class="sb control" style="font-size:.8rem">控制</span></td><td>停止 [全部]</td><td>Game Over 停止遊戲</td></tr>
+      <tr><td><span class="sb sensing" style="font-size:.8rem">偵測</span></td><td>按下 [鍵] 鍵?</td><td>偵測玩家按了哪個鍵</td></tr>
+      <tr><td><span class="sb sensing" style="font-size:.8rem">偵測</span></td><td>碰到 [角色]?</td><td>偵測水果有沒有碰到籃子</td></tr>
+      <tr><td><span class="sb operators" style="font-size:.8rem">運算</span></td><td>隨機取數 (A) 到 (B)</td><td>讓水果出現在隨機位置</td></tr>
+      <tr><td><span class="sb operators" style="font-size:.8rem">運算</span></td><td>( ) &lt; ( ) / ( ) = ( )</td><td>比較數字（y座標、生命值）</td></tr>
+      <tr><td><span class="sb variables" style="font-size:.8rem">變數</span></td><td>變數 [名稱] 設為 (N)</td><td>初始化分數和生命</td></tr>
+      <tr><td><span class="sb variables" style="font-size:.8rem">變數</span></td><td>變數 [名稱] 改變 (N)</td><td>分數 +1 或生命 -1</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FAQ
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:40px">
+<div class="steps-card">
+  <h4>❓ 常見問題 FAQ</h4>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 水果只掉一次就不掉了？</div>
+    <div class="faq-a">檢查程式一有沒有用 <span class="sb control">重複無限次</span> 包住「建立分身」和「等待 2 秒」。如果忘了包，就只會產生一個分身。另外確認「等待秒數」不要太大（建議 1-3 秒）。</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 水果碰到籃子但分數沒有加？</div>
+    <div class="faq-a">確認 <span class="sb sensing">碰到 [Basket]?</span> 的名字和你的籃子角色名稱完全一樣（包含大小寫）。如果你的角色叫 basket（小寫），偵測裡也要選 basket。建議統一使用 Basket（大寫 B）。</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 遊戲結束後按 ⚑ 重新開始，分數沒有歸零？</div>
+    <div class="faq-a">檢查 Basket 籃子的程式最前面有沒有 <span class="sb variables">變數 [分數] 設為 (0)</span> 和 <span class="sb variables">變數 [生命] 設為 (3)</span>。每次按 ⚑ 時這兩行會把變數重新歸零。</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 按方向鍵但籃子不動？</div>
+    <div class="faq-a">先點一下 Scratch 舞台畫面（讓視窗取得焦點），再按方向鍵。也要確認你選的是 Basket 角色再寫程式。最後檢查 <span class="sb control">重複無限次</span> 有沒有把兩個「如果」都包在裡面。</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 我想讓遊戲越來越難，怎麼做？</div>
+    <div class="faq-a">建立一個「速度」變數，初始值 3。把 y 改變 (-3) 改成 y 改變 (0 - 速度)。然後在分數每增加 10 分時，讓速度 +1。也可以縮短「等待秒數」讓水果出現得更頻繁。</div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  IT COCKPIT｜Scratch 遊戲設計師｜五年級資訊科技<br>
+  Powered by Claude Code
+</footer>
+
+<!-- ═══════════════ FLOATING TOOLS ═══════════════ -->
+<div id="float-tools">
+  <button class="float-btn yellow" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+  <button class="float-btn" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn purple" onclick="goTopAction()" title="回頂端" id="goTopBtn" style="display:flex;position:static;width:48px;height:48px">⬆</button>
+</div>
+
+<!-- Lottery Panel -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div class="lot-row">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1">
+    <span>號</span>
+    <label><input type="checkbox" id="lot-unique" checked> 不重複</label>
+  </div>
+  <div class="lot-btns">
+    <button onclick="doLottery()">🎰 抽一個</button>
+    <button class="reset-btn" onclick="resetLottery()">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<!-- Timer Panel -->
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timerDisplay">00:00</div>
+  <div class="timer-btns">
+    <button onclick="timerAction('start')">▶ 開始</button>
+    <button onclick="timerAction('pause')">⏸ 暫停</button>
+    <button onclick="timerAction('reset')">↻ 重置</button>
+  </div>
+  <div class="timer-presets">
+    <button onclick="timerPreset(60)">1 min</button>
+    <button onclick="timerPreset(180)">3 min</button>
+    <button onclick="timerPreset(300)">5 min</button>
+    <button onclick="timerPreset(600)">10 min</button>
+  </div>
+</div>
+
+<!-- Drawing Canvas + Toolbar -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff4466" onclick="setPenColor('#ff4466',this)"></button>
+  <button class="color-dot" style="background:#ffcc00" onclick="setPenColor('#ffcc00',this)"></button>
+  <button class="color-dot" style="background:#00ff88" onclick="setPenColor('#00ff88',this)"></button>
+  <button class="color-dot" style="background:#0088ff" onclick="setPenColor('#0088ff',this)"></button>
+  <button class="color-dot" style="background:#fff" onclick="setPenColor('#fff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+/* ── Mode Toggle ── */
+function setMode(m){
+  const btns=document.querySelectorAll('.mode-bar button');
+  if(m==='teacher'){
+    const pw=prompt('請輸入教師密碼：');
+    if(pw!=='it2026'){alert('密碼錯誤');return}
+    document.body.classList.add('teacher-mode');
+    btns[0].classList.remove('active');btns[1].classList.add('active');
+  }else{
+    document.body.classList.remove('teacher-mode');
+    btns[1].classList.remove('active');btns[0].classList.add('active');
+  }
+}
+
+/* ── Progress Tracking ── */
+const stagesDone=new Set();
+function updateProgress(stageNum){
+  stagesDone.add(String(stageNum));
+  const pct=Math.round(stagesDone.size/6*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressTxt').textContent=stagesDone.size+' / 6';
+  const pills=document.querySelectorAll('.stage-pill');
+  stagesDone.forEach(s=>{const i=parseInt(s)-1;if(pills[i])pills[i].classList.add('done')});
+}
+
+/* ── Stage Navigation ── */
+function scrollToStage(n){
+  const el=document.getElementById('sec'+n);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.stage-pill').forEach((p,i)=>{
+    p.classList.toggle('active',i===n-1);
+  });
+}
+
+/* ── Quiz ── */
+function checkQuiz(el){
+  const card=el.closest('.quiz-card');
+  if(card.classList.contains('answered'))return;
+  card.classList.add('answered');
+  const correct=el.dataset.correct==='true';
+  const fb=card.querySelector('.quiz-feedback');
+  if(correct){
+    el.classList.add('correct');
+    const msgs=['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','👏 完全正確！','💯 滿分！'];
+    fb.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    fb.className='quiz-feedback show correct';
+    updateProgress(card.dataset.stage);
+  }else{
+    el.classList.add('wrong');
+    const correctBtn=card.querySelector('[data-correct="true"]');
+    if(correctBtn)correctBtn.classList.add('correct');
+    fb.textContent='💡 沒關係！正確答案已標出來囉，記住它吧！';
+    fb.className='quiz-feedback show wrong';
+  }
+}
+
+/* ── Block Category Reveal ── */
+function revealBlock(el){
+  el.classList.add('revealed');
+  const desc=el.querySelector('.bc-desc');
+  if(desc)desc.style.display='block';
+}
+
+/* ── Clone Counter Interactive ── */
+let cloneCount=0;
+function simClone(action){
+  const display=document.getElementById('cloneDisplay');
+  const fruitsDiv=document.getElementById('cloneFruits');
+  if(action==='add'){
+    cloneCount++;
+    const f=document.createElement('span');
+    f.textContent=['🍎','🍌','🍊','🍇','🍓'][Math.floor(Math.random()*5)];
+    f.style.cssText='font-size:1.6rem;transition:transform .3s;display:inline-block';
+    f.style.transform='scale(0)';
+    fruitsDiv.appendChild(f);
+    requestAnimationFrame(()=>f.style.transform='scale(1)');
+  }else if(action==='del'&&cloneCount>0){
+    cloneCount--;
+    const last=fruitsDiv.lastElementChild;
+    if(last){last.style.transform='scale(0)';setTimeout(()=>last.remove(),300)}
+  }else if(action==='reset'){
+    cloneCount=0;fruitsDiv.innerHTML='';
+  }
+  display.textContent='分身數量：'+cloneCount;
+}
+
+/* ── Score Simulator Interactive ── */
+let simScoreVal=0,simLivesVal=3;
+function simGame(action){
+  const scoreEl=document.getElementById('simScore');
+  const livesEl=document.getElementById('simLives');
+  const msgEl=document.getElementById('simMsg');
+  if(action==='reset'){
+    simScoreVal=0;simLivesVal=3;msgEl.textContent='';msgEl.style.color='';
+    scoreEl.textContent='0';livesEl.textContent='3';return;
+  }
+  if(simLivesVal<=0){msgEl.textContent='💀 Game Over！按「重新開始」再來一次';msgEl.style.color='var(--c5)';return}
+  if(action==='catch'){
+    simScoreVal++;scoreEl.textContent=simScoreVal;
+    const msgs=['🎉 接到了！','✨ 好棒！','🍎 +1 分！','⭐ 讚！'];
+    msgEl.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    msgEl.style.color='var(--c1)';
+    scoreEl.style.transform='scale(1.3)';setTimeout(()=>scoreEl.style.transform='scale(1)',200);
+  }else if(action==='miss'){
+    simLivesVal--;livesEl.textContent=simLivesVal;
+    msgEl.textContent=simLivesVal>0?'💔 掉了！還剩 '+simLivesVal+' 條命':'💀 Game Over！';
+    msgEl.style.color='var(--c5)';
+    livesEl.style.transform='scale(1.3)';setTimeout(()=>livesEl.style.transform='scale(1)',200);
+  }
+}
+
+/* ── FAQ Toggle ── */
+/* handled by inline onclick on .faq-item */
+
+/* ── Floating Tool Panels ── */
+let openPanel='';
+function togglePanel(name){
+  if(openPanel===name){
+    document.getElementById('panel-'+name).classList.remove('show');openPanel='';
+  }else{
+    if(openPanel)document.getElementById('panel-'+openPanel).classList.remove('show');
+    document.getElementById('panel-'+name).classList.add('show');openPanel=name;
+  }
+}
+
+/* ── Lottery (Number Mode) ── */
+let lotPool=[];
+function refillLotPool(){
+  const min=parseInt(document.getElementById('lot-min').value)||1;
+  const max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max)return false;
+  lotPool=[];for(let i=min;i<=max;i++)lotPool.push(i);return true;
+}
+function doLottery(){
+  const unique=document.getElementById('lot-unique').checked;
+  const min=parseInt(document.getElementById('lot-min').value)||1;
+  const max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max){alert('最小號必須 ≤ 最大號！');return}
+  if(unique&&lotPool.length===0)refillLotPool();
+  if(unique&&lotPool.length===0){alert('已全部抽完！按 ↻ 重置');return}
+  const out=document.getElementById('lot-out');
+  const timer=setInterval(()=>{
+    out.textContent=(Math.floor(Math.random()*(max-min+1))+min)+' 號';
+    out.style.color='var(--c2)';
+  },60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    let num;
+    if(unique){
+      const idx=Math.floor(Math.random()*lotPool.length);
+      num=lotPool.splice(idx,1)[0];
+    }else{
+      num=Math.floor(Math.random()*(max-min+1))+min;
+    }
+    out.textContent='🌟 '+num+' 號 🌟';
+    out.style.color='var(--c4)';
+  },1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent='等待抽號...';
+  document.getElementById('lot-out').style.color='var(--c4)';
+}
+
+/* ── Timer ── */
+let timerSec=0,timerMax=0,timerInterval=null,timerRunning=false;
+function timerRender(){
+  const m=String(Math.floor(timerSec/60)).padStart(2,'0');
+  const s=String(timerSec%60).padStart(2,'0');
+  document.getElementById('timerDisplay').textContent=m+':'+s;
+  if(timerMax>0&&timerSec<=0){
+    clearInterval(timerInterval);timerRunning=false;
+    document.getElementById('timerDisplay').style.color='var(--c5)';
+    try{new Audio('data:audio/wav;base64,UklGRl9vT19teleF...').play()}catch(e){}
+  }
+}
+function timerAction(a){
+  if(a==='start'&&!timerRunning){
+    timerRunning=true;
+    document.getElementById('timerDisplay').style.color='var(--c4)';
+    timerInterval=setInterval(()=>{
+      if(timerMax>0){timerSec--;if(timerSec<0)timerSec=0}else{timerSec++}
+      timerRender();
+    },1000);
+  }else if(a==='pause'){
+    clearInterval(timerInterval);timerRunning=false;
+  }else if(a==='reset'){
+    clearInterval(timerInterval);timerRunning=false;timerSec=0;timerMax=0;
+    document.getElementById('timerDisplay').style.color='var(--c4)';
+    timerRender();
+  }
+}
+function timerPreset(sec){
+  clearInterval(timerInterval);timerRunning=false;
+  timerSec=sec;timerMax=sec;
+  document.getElementById('timerDisplay').style.color='var(--c4)';
+  timerRender();
+}
+
+/* ── Drawing Pen ── */
+let drawActive=false,penColor='#ff4466',penSize=4;
+let drawCanvas,drawCtx,isDrawing=false,dLastX,dLastY;
+function initDraw(){
+  drawCanvas=document.getElementById('drawCanvas');
+  drawCtx=drawCanvas.getContext('2d');
+  function resize(){drawCanvas.width=window.innerWidth;drawCanvas.height=window.innerHeight}
+  resize();
+  drawCanvas.addEventListener('mousedown',e=>{if(!drawActive)return;isDrawing=true;dLastX=e.clientX;dLastY=e.clientY});
+  drawCanvas.addEventListener('mousemove',e=>{
+    if(!drawActive||!isDrawing)return;
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(e.clientX,e.clientY);drawCtx.stroke();
+    dLastX=e.clientX;dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup',()=>isDrawing=false);
+  drawCanvas.addEventListener('mouseleave',()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart',e=>{if(!drawActive)return;e.preventDefault();const t=e.touches[0];isDrawing=true;dLastX=t.clientX;dLastY=t.clientY},{passive:false});
+  drawCanvas.addEventListener('touchmove',e=>{
+    if(!drawActive||!isDrawing)return;e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(t.clientX,t.clientY);drawCtx.stroke();
+    dLastX=t.clientX;dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+  window.addEventListener('resize',resize);
+}
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').style.background=drawActive?'var(--c1)':'';
+  document.getElementById('drawToggleBtn').style.color=drawActive?'var(--bg)':'';
+  document.getElementById('drawToggleBtn').style.borderColor=drawActive?'var(--c1)':'';
+}
+function setPenColor(c,el){
+  penColor=c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){if(drawCtx)drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height)}
+
+/* ── Scroll to Top ── */
+function goTopAction(){window.scrollTo({top:0,behavior:'smooth'})}
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  initDraw();
+  refillLotPool();
+  timerRender();
+});
+</script>
+</body>
+</html>
