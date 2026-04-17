@@ -986,11 +986,86 @@ body.teacher-mode .teacher-only{display:block}
 </section>
 
 <!-- ═══════════════════════════════════════════════════
+     SLIDE PLAYER — 授課簡報
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:32px">
+<div class="steps-card" style="border-color:var(--c4)">
+  <h4 style="color:var(--c4)">📊 授課簡報（NotebookLM AI 生成）</h4>
+  <div class="slide-player">
+    <div class="slide-main" style="position:relative;background:#000;border:2px solid var(--c4);border-radius:6px;overflow:hidden;cursor:pointer" onclick="openSlideFS()">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="簡報" style="width:100%;display:block" loading="lazy">
+      <button class="slide-nav prev" onclick="event.stopPropagation();slideNav(-1)" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);color:#fff;border:none;font-size:1.4rem;padding:8px 12px;cursor:pointer;border-radius:4px">◀</button>
+      <button class="slide-nav next" onclick="event.stopPropagation();slideNav(1)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);color:#fff;border:none;font-size:1.4rem;padding:8px 12px;cursor:pointer;border-radius:4px">▶</button>
+      <div id="slide-counter" style="position:absolute;left:12px;bottom:10px;background:rgba(0,0,0,.7);color:var(--c4);font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:3px 10px;border-radius:3px">1 / 13</div>
+      <div style="position:absolute;right:12px;bottom:10px;background:rgba(0,0,0,.7);color:var(--dim);font-size:.75rem;padding:3px 10px;border-radius:3px">🔍 點擊全螢幕</div>
+    </div>
+    <div class="slide-strip" style="display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin-top:8px">
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Slide Fullscreen Overlay -->
+<div id="slide-fs" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.95);align-items:center;justify-content:center;cursor:pointer" onclick="closeSlideFS()">
+  <img id="slide-fs-img" src="" alt="" style="max-width:96vw;max-height:92vh;object-fit:contain">
+  <div id="slide-fs-counter" style="position:fixed;left:20px;bottom:20px;color:var(--c4);font-family:'JetBrains Mono',monospace;font-size:.9rem"></div>
+  <button onclick="event.stopPropagation();closeSlideFS()" style="position:fixed;right:20px;top:20px;background:transparent;border:2px solid #fff;color:#fff;font-size:1.2rem;padding:6px 14px;cursor:pointer;border-radius:4px">✕ ESC</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     VIDEO — 學生自學影片
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:32px">
+<div class="steps-card" style="border-color:var(--c5)">
+  <h4 style="color:var(--c5)">▶ 學生自學影片（NotebookLM AI 生成）</h4>
+  <div id="video-wrap">
+    <div class="video-no-id" style="padding:40px 20px;text-align:center;font-size:.95rem;color:var(--dim);border:2px dashed var(--dim);border-radius:8px">
+      🎬 自學影片已生成，YouTube 嵌入處理中。<br>
+      <a href="https://notebooklm.google.com/notebook/e915c730-8313-4b7e-8d10-77f06e36e22f" target="_blank" rel="noopener">點此直接在 NotebookLM 觀看影片</a>
+    </div>
+  </div>
+  <div style="margin-top:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <span style="display:inline-flex;align-items:center;gap:6px;background:var(--c5);color:#fff;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:4px">🤖 NotebookLM AI 生成</span>
+    <span style="font-size:.9rem;color:var(--dim)">💡 建議用耳機觀看，可搭配上方簡報一起複習</span>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     NLM RESOURCE STATION
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:40px">
+<div class="steps-card">
+  <h4>📚 NotebookLM 資源站</h4>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0">
+    <a href="https://notebooklm.google.com/notebook/e915c730-8313-4b7e-8d10-77f06e36e22f" target="_blank" rel="noopener" style="background:var(--panel);padding:16px;border-radius:8px;border:2px solid var(--c2);text-decoration:none;transition:.2s;display:block">
+      <div style="font-size:1.3rem;margin-bottom:6px">📓</div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--c2)">教學筆記本</div>
+      <div style="font-size:.85rem;color:var(--dim)">完整教材 + AI 問答</div>
+    </a>
+    <a href="https://notebooklm.google.com/notebook/e915c730-8313-4b7e-8d10-77f06e36e22f" target="_blank" rel="noopener" style="background:var(--panel);padding:16px;border-radius:8px;border:2px solid var(--c4);text-decoration:none;transition:.2s;display:block">
+      <div style="font-size:1.3rem;margin-bottom:6px">📊</div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--c4)">授課簡報</div>
+      <div style="font-size:.85rem;color:var(--dim)">13 頁含主講者插畫</div>
+    </a>
+    <a href="https://notebooklm.google.com/notebook/e915c730-8313-4b7e-8d10-77f06e36e22f" target="_blank" rel="noopener" style="background:var(--panel);padding:16px;border-radius:8px;border:2px solid var(--c5);text-decoration:none;transition:.2s;display:block">
+      <div style="font-size:1.3rem;margin-bottom:6px">🎬</div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--c5)">自學影片</div>
+      <div style="font-size:.85rem;color:var(--dim)">AI 語音動畫講解</div>
+    </a>
+  </div>
+  <div style="margin-top:16px;padding:14px;background:rgba(0,136,255,.06);border-left:4px solid var(--c2);border-radius:0 8px 8px 0">
+    <p style="font-size:.95rem;color:var(--dim);line-height:1.7">🔗 <strong>NLM 串接流程：</strong>教學文字 + 主講者.pdf → NotebookLM 精簡本 → AI 自動生成簡報與影片 → Claude Code 下載處理 → 嵌入教學駕駛艙 → GitHub Pages 上線</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
      FOOTER
      ═══════════════════════════════════════════════════ -->
 <footer class="site-footer">
   IT COCKPIT｜Scratch 遊戲設計師｜五年級資訊科技<br>
-  Powered by Claude Code
+  Powered by NotebookLM × Claude Code
 </footer>
 
 <!-- ═══════════════ FLOATING TOOLS ═══════════════ -->
@@ -1295,9 +1370,59 @@ function clearDrawing(){if(drawCtx)drawCtx.clearRect(0,0,drawCanvas.width,drawCa
 /* ── Scroll to Top ── */
 function goTopAction(){window.scrollTo({top:0,behavior:'smooth'})}
 
+/* ── Slide Player ── */
+const SLIDE_COUNT=13;
+const SLIDE_LIST=[];
+for(let i=1;i<=SLIDE_COUNT;i++) SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.jpg');
+let curSlide=0;
+function goSlide(n){
+  if(n<0)n=SLIDE_LIST.length-1;
+  if(n>=SLIDE_LIST.length)n=0;
+  curSlide=n;
+  document.getElementById('slide-current').src=SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent=(n+1)+' / '+SLIDE_LIST.length;
+  document.querySelectorAll('.slide-strip .s-thumb').forEach((t,i)=>{
+    t.style.borderColor=i===n?'var(--c4)':'transparent';
+    t.style.opacity=i===n?'1':'0.5';
+  });
+  const fs=document.getElementById('slide-fs');
+  if(fs&&fs.style.display==='flex'){
+    document.getElementById('slide-fs-img').src=SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent=(n+1)+' / '+SLIDE_LIST.length;
+  }
+}
+function slideNav(dir){goSlide(curSlide+dir)}
+function openSlideFS(){
+  const fs=document.getElementById('slide-fs');
+  fs.style.display='flex';
+  document.getElementById('slide-fs-img').src=SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent=(curSlide+1)+' / '+SLIDE_LIST.length;
+}
+function closeSlideFS(){document.getElementById('slide-fs').style.display='none'}
+function initSlidePlayer(){
+  const strip=document.querySelector('.slide-strip');
+  if(!strip)return;
+  SLIDE_LIST.forEach((src,i)=>{
+    const img=document.createElement('img');
+    img.src=src;img.alt='Slide '+(i+1);
+    img.className='s-thumb';
+    img.loading='lazy';
+    img.style.cssText='height:60px;border-radius:4px;cursor:pointer;border:2px solid transparent;opacity:0.5;transition:.2s;flex-shrink:0';
+    if(i===0){img.style.borderColor='var(--c4)';img.style.opacity='1'}
+    img.onclick=()=>goSlide(i);
+    strip.appendChild(img);
+  });
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight')slideNav(1);
+  else if(e.key==='ArrowLeft')slideNav(-1);
+  else if(e.key==='Escape')closeSlideFS();
+});
+
 /* ── Init ── */
 document.addEventListener('DOMContentLoaded',()=>{
   initDraw();
+  initSlidePlayer();
   refillLotPool();
   timerRender();
 });
