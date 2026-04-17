@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>嗨！電腦新朋友｜教學駕駛艙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fef3f8; --surface:#fff0f6; --panel:#ffffff;
+  --c1:#ff85b3; --c2:#ffd54f; --c3:#6cb4ff; --c4:#7be495; --c5:#c49dff;
+  --text:#2a2244; --dim:#8878aa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;min-height:100vh;overflow-x:hidden;line-height:1.7}
+
+/* ==================== HEADER ==================== */
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--c1);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.home-btn{text-decoration:none;color:var(--c1);font-weight:900;font-size:.95rem;padding:6px 14px;border:2px solid var(--c1);border-radius:10px;white-space:nowrap;transition:.2s}
+.home-btn:hover{background:var(--c1);color:#fff}
+.header-title{font-size:1.5rem;font-weight:900;color:var(--c1)}
+.header-sub{font-size:.9rem;color:var(--dim);margin-top:2px}
+.grade-badge{background:var(--c2);color:var(--text);font-weight:700;padding:4px 14px;font-size:.9rem;border-radius:20px;white-space:nowrap}
+.progress-bar-wrap{flex:1;min-width:200px;max-width:400px}
+.progress-label{font-size:.85rem;color:var(--dim);margin-bottom:4px}
+.progress-bar{height:14px;background:var(--surface);border:2px solid var(--dim);border-radius:10px;position:relative;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c4));width:0%;transition:width .5s ease;border-radius:10px}
+.progress-text{font-size:.8rem;color:var(--c1);margin-top:2px;text-align:right;font-weight:700}
+
+/* ==================== MODE BAR ==================== */
+.mode-bar{background:var(--surface);border-bottom:2px solid var(--c5);padding:8px 20px;display:flex;align-items:center;gap:12px;font-size:.9rem;flex-wrap:wrap}
+.mode-btn{padding:6px 16px;border:2px solid;cursor:pointer;font-weight:700;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;transition:.2s;border-radius:12px;background:transparent}
+.mode-btn.student{border-color:var(--c4);color:var(--c4)}
+.mode-btn.student.active{background:var(--c4);color:#fff}
+.mode-btn.teacher{border-color:var(--c5);color:var(--c5)}
+.mode-btn.teacher.active{background:var(--c5);color:#fff}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+.mode-pw-wrap{display:flex;gap:6px;align-items:center}
+.mode-pw-wrap input{background:var(--panel);border:2px solid var(--dim);color:var(--text);padding:5px 10px;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;width:110px;border-radius:10px}
+
+/* ==================== CONTAINER ==================== */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* ==================== OBJECTIVES ==================== */
+.objectives{background:var(--panel);border:3px solid var(--c2);padding:20px;margin-bottom:24px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.08);position:relative}
+.objectives::before{content:'LEARNING GOALS';font-size:.7rem;font-weight:900;letter-spacing:2px;color:var(--c2);position:absolute;top:-10px;left:20px;background:var(--panel);padding:0 10px;border-radius:8px}
+.obj-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.obj-chip{padding:10px 18px;border:2px solid;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:8px;border-radius:24px;background:var(--bg);transition:.2s}
+.obj-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.obj-chip:nth-child(1){border-color:var(--c1);color:var(--c1)}
+.obj-chip:nth-child(2){border-color:var(--c2);color:#b8860b}
+.obj-chip:nth-child(3){border-color:var(--c3);color:var(--c3)}
+.obj-chip:nth-child(4){border-color:var(--c4);color:#3d9b5a}
+
+/* ==================== STAGE NAVIGATION ==================== */
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.stage-pill{padding:10px 20px;border:3px solid var(--dim);color:var(--dim);cursor:pointer;font-size:1rem;font-weight:700;transition:.2s;background:var(--panel);border-radius:24px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.stage-pill:hover,.stage-pill.active{border-color:var(--c1);color:var(--c1);box-shadow:0 4px 16px rgba(255,133,179,.25)}
+.stage-pill:nth-child(2).active{border-color:var(--c3);color:var(--c3);box-shadow:0 4px 16px rgba(108,180,255,.25)}
+.stage-pill:nth-child(3).active{border-color:var(--c5);color:var(--c5);box-shadow:0 4px 16px rgba(196,157,255,.25)}
+.stage-pill:nth-child(4).active{border-color:var(--c4);color:var(--c4);box-shadow:0 4px 16px rgba(123,228,149,.25)}
+
+/* ==================== SECTION ==================== */
+.level-section{margin-bottom:40px;border:3px solid var(--c1);background:var(--panel);padding:24px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.08);position:relative}
+.level-section:nth-of-type(2){border-color:var(--c3)}
+.level-section:nth-of-type(3){border-color:var(--c5)}
+.level-section:nth-of-type(4){border-color:var(--c4)}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.stage-badge{font-size:.75rem;font-weight:900;padding:6px 14px;color:#fff;display:inline-block;border-radius:12px;letter-spacing:1px}
+.stage-badge.s1{background:var(--c1)}
+.stage-badge.s2{background:var(--c3)}
+.stage-badge.s3{background:var(--c5)}
+.stage-badge.s4{background:var(--c4)}
+.section-title{font-size:1.4rem;font-weight:900;color:var(--text)}
+.section-sub{font-size:1rem;color:var(--dim);margin-top:4px}
+
+/* ==================== STEPS CARD ==================== */
+.steps-card{background:var(--bg);border:2px solid var(--c1);padding:18px;margin-bottom:20px;border-radius:16px}
+.steps-card.blue{border-color:var(--c3)}
+.steps-card.purple{border-color:var(--c5)}
+.steps-card.green{border-color:var(--c4)}
+.steps-card h4{color:var(--c1);font-size:1rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.steps-card.blue h4{color:var(--c3)}
+.steps-card.purple h4{color:var(--c5)}
+.steps-card.green h4{color:var(--c4)}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.steps-list li{display:flex;align-items:flex-start;gap:10px;font-size:1rem;line-height:1.7}
+.step-num{min-width:30px;height:30px;background:var(--c1);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;border-radius:50%}
+.steps-card.blue .step-num{background:var(--c3)}
+.steps-card.purple .step-num{background:var(--c5)}
+.steps-card.green .step-num{background:var(--c4)}
+.step-warning{background:rgba(255,100,100,.1);border:2px solid #ff6464;border-radius:12px;padding:10px 14px;margin-top:8px;font-weight:700;color:#d32f2f}
+.tip-box{background:rgba(255,213,79,.15);border-left:4px solid var(--c2);border-radius:0 12px 12px 0;padding:12px 16px;margin-top:12px;font-size:.95rem}
+.tip-box strong{color:#b8860b}
+
+/* ==================== CANVAS SECTION ==================== */
+.canvas-section{margin-bottom:20px}
+.canvas-section h4{color:var(--c2);font-size:1.05rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:900}
+.canvas-wrap{background:var(--bg);border:3px solid var(--c2);border-radius:16px;position:relative;overflow:hidden}
+.canvas-controls{padding:10px;display:flex;gap:8px;flex-wrap:wrap;background:var(--surface);border-radius:0 0 13px 13px}
+.ctrl-btn{padding:8px 16px;border:2px solid;cursor:pointer;font-size:.9rem;font-weight:700;font-family:'Noto Sans TC',sans-serif;transition:.15s;border-radius:12px;background:transparent}
+.ctrl-btn.primary{border-color:var(--c1);color:var(--c1)}
+.ctrl-btn.primary:hover{background:var(--c1);color:#fff}
+.ctrl-btn.secondary{border-color:var(--c4);color:var(--c4)}
+.ctrl-btn.secondary:hover{background:var(--c4);color:#fff}
+.ctrl-btn.danger{border-color:#ff6464;color:#ff6464}
+.ctrl-btn.danger:hover{background:#ff6464;color:#fff}
+.ctrl-btn.blue{border-color:var(--c3);color:var(--c3)}
+.ctrl-btn.blue:hover{background:var(--c3);color:#fff}
+
+/* ==================== MATCHING GAME ==================== */
+.match-game{padding:20px;background:var(--bg);border-radius:13px}
+.match-grid{display:grid;grid-template-columns:1fr 80px 1fr;gap:10px;align-items:start}
+.match-parts{display:flex;flex-direction:column;gap:12px}
+.match-part{background:var(--panel);border:3px solid var(--dim);border-radius:16px;padding:14px;text-align:center;font-size:2rem;min-height:80px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;transition:.3s}
+.match-part.highlight{border-color:var(--c2);box-shadow:0 0 12px rgba(255,213,79,.4)}
+.match-part.matched{border-color:var(--c4);background:rgba(123,228,149,.1)}
+.match-part .part-hint{font-size:.7rem;color:var(--dim);margin-top:2px}
+.match-arrows{display:flex;flex-direction:column;align-items:center;justify-content:space-around;min-height:380px;font-size:1.2rem;color:var(--dim)}
+.match-labels{display:flex;flex-direction:column;gap:12px}
+.match-label{background:var(--c2);color:var(--text);border:3px solid #e6b800;border-radius:16px;padding:14px;text-align:center;font-size:1rem;font-weight:700;cursor:grab;min-height:80px;display:flex;align-items:center;justify-content:center;transition:.3s;user-select:none}
+.match-label:active{cursor:grabbing;transform:scale(1.05)}
+.match-label.dragging{opacity:.5}
+.match-label.placed{background:var(--c4);border-color:#4caf50;color:#fff;cursor:default}
+.match-drop{background:var(--surface);border:3px dashed var(--dim);border-radius:16px;padding:14px;text-align:center;font-size:.9rem;color:var(--dim);min-height:80px;display:flex;align-items:center;justify-content:center;transition:.3s}
+.match-drop.hover{border-color:var(--c2);background:rgba(255,213,79,.15)}
+.match-drop.filled{border-style:solid;border-color:var(--c4);background:rgba(123,228,149,.1);color:var(--c4);font-weight:700;font-size:1rem}
+.match-celebrate{text-align:center;font-size:1.3rem;font-weight:900;color:var(--c1);padding:16px;display:none;animation:celebrate-bounce 0.6s ease}
+@keyframes celebrate-bounce{0%{transform:scale(0.5);opacity:0}50%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+
+/* ==================== BOOT SIMULATION ==================== */
+.boot-sim{padding:20px;background:var(--bg);border-radius:13px}
+.computer-illustration{position:relative;width:100%;max-width:500px;margin:0 auto 16px;text-align:center}
+.computer-svg{width:100%;max-width:400px;height:auto}
+.boot-steps{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
+.boot-step-btn{padding:10px 16px;border:2px solid var(--dim);color:var(--dim);cursor:pointer;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;background:var(--panel);transition:.3s;border-radius:12px;font-weight:700}
+.boot-step-btn.active{border-color:var(--c3);color:var(--c3);background:rgba(108,180,255,.1)}
+.boot-step-btn.done{border-color:var(--c4);color:#fff;background:var(--c4)}
+.boot-step-btn.wrong{border-color:#ff6464;color:#ff6464;animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.boot-display{background:var(--panel);border:2px solid var(--c3);border-radius:12px;padding:16px;min-height:60px;font-size:1rem;line-height:1.7;text-align:center}
+.boot-display .boot-title{color:var(--c3);font-weight:900;font-size:1.1rem;margin-bottom:6px}
+.boot-display .boot-desc{color:var(--text)}
+.boot-display .boot-hint{color:var(--c2);font-size:.9rem;margin-top:8px;font-style:italic}
+
+/* ==================== MINI PAINT ==================== */
+.mini-paint{padding:16px;background:var(--bg);border-radius:13px}
+.paint-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.paint-color{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:.2s}
+.paint-color.active{border-color:var(--text);transform:scale(1.15);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.paint-tool{padding:8px 14px;border:2px solid var(--dim);border-radius:12px;cursor:pointer;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;background:var(--panel);color:var(--text);font-weight:700;transition:.2s}
+.paint-tool.active{border-color:var(--c5);color:var(--c5);background:rgba(196,157,255,.1)}
+.paint-canvas-wrap{border:3px solid var(--c5);border-radius:12px;overflow:hidden;background:#fff;cursor:crosshair}
+.paint-canvas-wrap canvas{display:block;width:100%;touch-action:none}
+
+/* ==================== POSTURE CHECK ==================== */
+.posture-check{padding:20px;background:var(--bg);border-radius:13px}
+.posture-figure{position:relative;width:100%;max-width:450px;margin:0 auto 16px}
+.posture-svg{width:100%;height:auto}
+.posture-hotspot{position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(255,133,179,.3);border:3px solid var(--c1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.3s;animation:pulse-spot 2s infinite}
+.posture-hotspot.checked{background:rgba(123,228,149,.3);border-color:var(--c4);animation:none}
+@keyframes pulse-spot{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.posture-info{background:var(--panel);border:2px solid var(--c4);border-radius:12px;padding:16px;min-height:60px;font-size:1rem;line-height:1.7;transition:.3s}
+.posture-progress{text-align:center;font-size:1rem;color:var(--dim);margin-top:12px;font-weight:700}
+
+/* ==================== QUIZ ==================== */
+.quiz-section{margin-bottom:20px;background:var(--bg);border:2px solid var(--c4);padding:18px;border-radius:16px}
+.quiz-section h4{color:var(--c4);font-size:1.05rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;font-weight:900}
+.quiz-item{margin-bottom:20px}
+.quiz-q{font-size:1.05rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{padding:10px 16px;border:2px solid var(--dim);cursor:pointer;font-size:1rem;font-family:'Noto Sans TC',sans-serif;text-align:left;background:var(--panel);color:var(--text);transition:.2s;width:100%;border-radius:12px}
+.quiz-opt:hover{border-color:var(--c3);color:var(--c3);background:rgba(108,180,255,.05)}
+.quiz-opt.correct{border-color:var(--c4);background:rgba(123,228,149,.15);color:#2e7d32}
+.quiz-opt.wrong{border-color:#ff6464;background:rgba(255,100,100,.1);color:#d32f2f}
+.quiz-feedback{margin-top:8px;padding:10px 14px;font-size:.95rem;font-weight:700;display:none;border-radius:12px}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{color:#2e7d32;background:rgba(123,228,149,.15);border-left:4px solid var(--c4)}
+.quiz-feedback.wrong{color:#d32f2f;background:rgba(255,100,100,.1);border-left:4px solid #ff6464}
+
+/* ==================== TEACHER NOTE ==================== */
+.teacher-note{background:rgba(196,157,255,.08);border:2px dashed var(--c5);padding:16px;margin-top:16px;font-size:.95rem;border-radius:16px}
+.teacher-note h5{color:var(--c5);margin-bottom:8px;font-size:.95rem}
+
+/* ==================== PROJECT TASK ==================== */
+.project-task{background:linear-gradient(135deg,rgba(255,133,179,.1),rgba(255,213,79,.1),rgba(108,180,255,.1));border:3px solid var(--c2);padding:24px;margin-bottom:40px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.project-task h3{color:var(--c1);font-size:1.3rem;margin-bottom:12px;font-weight:900}
+.project-task p{font-size:1rem;line-height:1.8;margin-bottom:12px}
+.project-task ol{padding-left:24px;font-size:1rem;line-height:2}
+.project-task .task-note{background:var(--panel);border:2px solid var(--c4);border-radius:12px;padding:12px 16px;margin-top:12px;font-weight:700;color:#2e7d32;font-size:1.05rem}
+
+/* ==================== NLM SECTION ==================== */
+.nb-section{background:var(--panel);border:3px solid var(--c3);padding:24px;margin-bottom:40px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.08);position:relative}
+.nb-section::before{content:'NOTEBOOKLM RESOURCE STATION';font-size:.6rem;font-weight:900;letter-spacing:2px;color:var(--c3);position:absolute;top:-10px;left:20px;background:var(--panel);padding:0 10px;border-radius:8px}
+.nb-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px}
+.nb-card{background:var(--bg);border:3px solid var(--c5);padding:16px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.06);transition:.2s}
+.nb-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.nb-card h4{color:var(--c5);font-size:1rem;margin-bottom:8px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.6;margin-bottom:10px}
+.nb-card a{color:var(--c3);font-size:.9rem;text-decoration:none;border-bottom:1px solid var(--c3);word-break:break-all;transition:.2s}
+.nb-card a:hover{color:var(--c1)}
+.nlm-workflow{background:var(--bg);border:2px solid var(--c3);border-radius:16px;padding:16px;margin-bottom:16px}
+.nlm-workflow h4{color:var(--c3);margin-bottom:10px;font-size:1rem}
+.nlm-workflow p{font-size:.9rem;line-height:1.7;color:var(--text)}
+.faq-section{background:var(--bg);border:2px solid var(--c2);padding:18px;margin-top:16px;border-radius:16px}
+.faq-section h4{color:#b8860b;font-size:1.05rem;margin-bottom:14px}
+.faq-item{border-bottom:1px solid rgba(136,120,170,.2);padding-bottom:14px;margin-bottom:14px}
+.faq-item:last-child{border-bottom:none;margin-bottom:0}
+.faq-q{font-weight:700;font-size:1rem;margin-bottom:6px;cursor:pointer;color:var(--c1);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.faq-q::after{content:'v';font-size:.75rem;transition:.3s;font-weight:900;color:var(--dim)}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{font-size:.95rem;line-height:1.7;color:var(--dim);display:none;padding-top:8px}
+.faq-item.open .faq-a{display:block;color:var(--text)}
+
+/* ==================== SLIDE VIEWER ==================== */
+.slide-viewer{margin-bottom:40px}
+.slide-viewer h3{color:var(--c1);font-size:1.1rem;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--c1);font-weight:900}
+.slide-main{position:relative;background:var(--surface);border:3px solid var(--c1);border-radius:16px;overflow:hidden;margin-bottom:8px}
+.slide-main img{width:100%;display:block;transition:.3s}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.85);border:2px solid var(--c1);color:var(--c1);font-size:1.4rem;width:44px;height:44px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;border-radius:50%}
+.slide-nav-btn:hover{background:var(--c1);color:#fff}
+.slide-nav-btn.prev{left:8px}
+.slide-nav-btn.next{right:8px}
+.slide-counter{text-align:center;font-size:.9rem;color:var(--dim);margin-bottom:8px;font-weight:700}
+.slide-thumbs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+.slide-thumb{min-width:80px;height:48px;object-fit:cover;cursor:pointer;border:2px solid var(--dim);opacity:.6;transition:.2s;border-radius:8px}
+.slide-thumb.active,.slide-thumb:hover{border-color:var(--c1);opacity:1}
+.slide-fullscreen{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:500;align-items:center;justify-content:center;flex-direction:column}
+.slide-fullscreen.show{display:flex}
+.slide-fullscreen img{max-width:95vw;max-height:85vh;object-fit:contain;border-radius:8px}
+.slide-fullscreen .slide-nav-btn{position:fixed}
+.slide-fullscreen .slide-nav-btn.prev{left:16px;top:50%}
+.slide-fullscreen .slide-nav-btn.next{right:16px;top:50%}
+.slide-fullscreen-close{position:fixed;top:16px;right:16px;background:var(--c1);color:#fff;border:none;font-size:1.2rem;width:44px;height:44px;cursor:pointer;border-radius:50%;font-family:'Noto Sans TC',sans-serif;z-index:501}
+.slide-fullscreen-counter{position:fixed;bottom:20px;color:#fff;font-size:1rem;font-weight:700}
+
+/* ==================== VIDEO SECTION ==================== */
+.video-section{margin-bottom:40px}
+.video-section h3{color:var(--c3);font-size:1.1rem;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--c3);font-weight:900}
+.video-placeholder{background:var(--surface);border:3px dashed var(--dim);border-radius:16px;padding:60px 20px;text-align:center;color:var(--dim);font-size:1.2rem}
+.video-placeholder span{font-size:3rem;display:block;margin-bottom:12px}
+
+/* ==================== FLOATING TOOLS ==================== */
+.float-tools-toggle{position:fixed;bottom:20px;right:20px;width:52px;height:52px;border:3px solid var(--c1);background:var(--panel);cursor:pointer;font-size:1.4rem;display:flex;align-items:center;justify-content:center;transition:.3s;border-radius:50%;z-index:400;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.float-tools-toggle:hover{background:var(--c1);color:#fff}
+.float-tools{position:fixed;bottom:80px;right:20px;display:none;flex-direction:column;gap:10px;z-index:400}
+.float-tools.show{display:flex}
+.float-btn{width:52px;height:52px;border:3px solid;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:.15s;border-radius:50%;background:var(--panel);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.float-btn.lottery{border-color:var(--c2);color:#b8860b}
+.float-btn.lottery:hover{background:var(--c2);color:#fff}
+.float-btn.timer{border-color:var(--c3);color:var(--c3)}
+.float-btn.timer:hover{background:var(--c3);color:#fff}
+.float-btn.draw{border-color:var(--c5);color:var(--c5)}
+.float-btn.draw:hover{background:var(--c5);color:#fff}
+.float-btn.gotop{border-color:var(--c4);color:var(--c4)}
+.float-btn.gotop:hover{background:var(--c4);color:#fff}
+
+/* ==================== MODALS ==================== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:450;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--panel);border:4px solid var(--c2);padding:28px;min-width:300px;max-width:440px;text-align:center;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.modal-box h3{color:var(--c1);font-size:1.1rem;margin-bottom:16px}
+.lottery-num{font-size:3.5rem;font-weight:900;color:var(--c1);margin:20px 0;min-height:80px;display:flex;align-items:center;justify-content:center}
+.lottery-spin{animation:spin-num .1s linear infinite}
+@keyframes spin-num{to{opacity:.5}}
+.lottery-history{font-size:.85rem;color:var(--dim);margin-top:10px;min-height:24px;word-wrap:break-word}
+.timer-display{font-size:2.8rem;font-weight:900;color:var(--c3);margin:16px 0;font-variant-numeric:tabular-nums}
+.timer-controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.modal-close{margin-top:16px;padding:8px 24px;border:2px solid var(--dim);color:var(--dim);background:transparent;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-size:.9rem;border-radius:12px;transition:.2s}
+.modal-close:hover{border-color:var(--c1);color:var(--c1)}
+.timer-custom{display:flex;gap:6px;align-items:center;justify-content:center;margin-top:10px}
+.timer-custom input{width:70px;padding:6px;border:2px solid var(--dim);border-radius:10px;text-align:center;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text)}
+
+/* ==================== DRAWING CANVAS ==================== */
+.draw-canvas-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:250;pointer-events:none}
+.draw-canvas-overlay.active{pointer-events:auto}
+.draw-canvas-overlay canvas{width:100%;height:100%;display:block}
+.draw-toolbar{position:fixed;bottom:20px;left:20px;z-index:300;display:none;gap:8px;background:var(--panel);border:3px solid var(--c5);padding:10px;flex-wrap:wrap;max-width:320px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.draw-toolbar.active{display:flex}
+.color-swatch{width:30px;height:30px;border:3px solid transparent;cursor:pointer;border-radius:50%;transition:.2s}
+.color-swatch.active{border-color:var(--text);transform:scale(1.15)}
+.draw-ctrl-btn{padding:5px 12px;border:2px solid var(--dim);color:var(--dim);font-size:.8rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;background:transparent;border-radius:10px;transition:.2s}
+.draw-ctrl-btn:hover{border-color:var(--c5);color:var(--c5)}
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--c1);border-radius:10px}
+
+/* ==================== FOOTER ==================== */
+.site-footer{text-align:center;padding:24px;font-size:.85rem;color:var(--dim);border-top:2px solid var(--surface);margin-top:40px}
+.nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:2px solid var(--c3);padding:5px 14px;font-size:.85rem;color:var(--c3);margin-top:8px;border-radius:20px}
+
+/* ==================== RESPONSIVE ==================== */
+@media(max-width:768px){
+  html{font-size:16px}
+  .site-header{padding:8px 12px;gap:10px}
+  .header-title{font-size:1.2rem}
+  .container{padding:14px}
+  .level-section{padding:16px}
+  .match-grid{grid-template-columns:1fr;gap:14px}
+  .match-arrows{display:none}
+  .obj-chips{gap:6px}
+  .obj-chip{padding:8px 12px;font-size:.9rem}
+  .stage-nav{gap:6px}
+  .stage-pill{padding:8px 14px;font-size:.9rem}
+  .nb-cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <a href="../index.html" class="home-btn">&larr; IT COCKPIT</a>
+  <div>
+    <div class="header-title">嗨！電腦新朋友</div>
+    <div class="header-sub">三年級資訊科技教學駕駛艙</div>
+  </div>
+  <span class="grade-badge">三年級</span>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">今日學習進度</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0 / 4 關卡</div>
+  </div>
+</header>
+
+<!-- ==================== MODE BAR ==================== -->
+<div class="mode-bar">
+  <span>模式：</span>
+  <button class="mode-btn student active" onclick="setMode('student')">學生模式</button>
+  <div class="mode-pw-wrap">
+    <input type="password" id="teacherPw" placeholder="教師密碼" onkeydown="if(event.key==='Enter')checkTeacher()">
+    <button class="mode-btn teacher" onclick="checkTeacher()">教師模式</button>
+  </div>
+</div>
+
+<!-- ==================== MAIN ==================== -->
+<main class="container">
+
+  <!-- OBJECTIVES -->
+  <div class="objectives">
+    <div style="font-size:1.05rem;font-weight:900;margin-bottom:8px">今天的學習目標</div>
+    <div class="obj-chips">
+      <div class="obj-chip">🖥️ 認識電腦家族</div>
+      <div class="obj-chip">⚡ 學會開關機</div>
+      <div class="obj-chip">🎨 小畫家初體驗</div>
+      <div class="obj-chip">💪 養成好習慣</div>
+    </div>
+  </div>
+
+  <!-- STAGE NAV -->
+  <div class="stage-nav">
+    <div class="stage-pill active" onclick="scrollToSec('sec1',this)">STAGE 1 - 認識電腦家族</div>
+    <div class="stage-pill" onclick="scrollToSec('sec2',this)">STAGE 2 - 電腦開機與關機</div>
+    <div class="stage-pill" onclick="scrollToSec('sec3',this)">STAGE 3 - 我是小畫家</div>
+    <div class="stage-pill" onclick="scrollToSec('sec4',this)">STAGE 4 - 電腦使用好習慣</div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- ===== STAGE 1: 認識電腦家族 ===== -->
+  <!-- ========================================== -->
+  <section class="level-section" id="sec1">
+    <div class="section-header">
+      <span class="stage-badge s1">STAGE 1</span>
+      <div>
+        <div class="section-title">認識電腦家族</div>
+        <div class="section-sub">來看看電腦的每個好朋友都長什麼樣子吧！</div>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <h4>認識電腦家族的四位成員</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span><strong>大腦主機</strong>：電腦的「大腦」，負責思考和記憶。想像成有很多抽屜的櫃子，放著遊戲、卡通和照片</span></li>
+        <li><span class="step-num">2</span><span><strong>亮亮臉螢幕</strong>：電腦的「臉」，像電視機把畫面顯示出來。可顯示文字、圖畫、影片、遊戲</span></li>
+        <li><span class="step-num">3</span><span><strong>指揮官滑鼠</strong>：我們的「魔杖」。單擊＝選取、雙擊＝打開、右鍵＝秘密選單、滾輪＝上下移動</span></li>
+        <li><span class="step-num">4</span><span><strong>打字機鍵盤</strong>：和電腦溝通的工具。重要按鍵：Enter 換行、Backspace 橡皮擦、Space 空格、Shift 魔法鍵</span></li>
+      </ul>
+      <div class="tip-box"><strong>小提示：</strong>電腦就像一個團隊，每個成員都很重要，少了誰都不行唷！</div>
+    </div>
+
+    <!-- Interactive: Computer Parts Matching -->
+    <div class="canvas-section">
+      <h4>互動遊戲：電腦零件配對大挑戰！</h4>
+      <div class="canvas-wrap">
+        <div class="match-game" id="matchGame">
+          <p style="text-align:center;margin-bottom:14px;color:var(--dim);font-size:.95rem">把右邊的名牌拖到對應的零件旁邊吧！</p>
+          <div class="match-grid">
+            <!-- Parts (left) -->
+            <div class="match-parts" id="matchParts">
+              <div class="match-part" data-part="case" id="part-case">
+                <span style="font-size:2.5rem">🖥️</span>
+                <span class="part-hint">負責思考和記憶</span>
+                <div class="match-drop" data-accept="case" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">拖到這裡</div>
+              </div>
+              <div class="match-part" data-part="monitor" id="part-monitor">
+                <span style="font-size:2.5rem">🖵</span>
+                <span class="part-hint">顯示畫面的臉</span>
+                <div class="match-drop" data-accept="monitor" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">拖到這裡</div>
+              </div>
+              <div class="match-part" data-part="mouse" id="part-mouse">
+                <span style="font-size:2.5rem">🖱️</span>
+                <span class="part-hint">可以點擊和拖動</span>
+                <div class="match-drop" data-accept="mouse" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">拖到這裡</div>
+              </div>
+              <div class="match-part" data-part="keyboard" id="part-keyboard">
+                <span style="font-size:2.5rem">⌨️</span>
+                <span class="part-hint">可以打字溝通</span>
+                <div class="match-drop" data-accept="keyboard" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">拖到這裡</div>
+              </div>
+            </div>
+            <!-- Arrows -->
+            <div class="match-arrows">
+              <span>&larr;</span><span>&larr;</span><span>&larr;</span><span>&larr;</span>
+            </div>
+            <!-- Labels (right, draggable) -->
+            <div class="match-labels" id="matchLabels">
+              <!-- Will be shuffled by JS -->
+            </div>
+          </div>
+          <div class="match-celebrate" id="matchCelebrate">🎉 太厲害了！你認識電腦家族的所有成員了！🎉</div>
+          <div style="text-align:center;margin-top:10px">
+            <button class="ctrl-btn primary" onclick="resetMatch()">重新開始</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz S1 -->
+    <div class="quiz-section">
+      <h4>小測驗：認識電腦家族</h4>
+      <div class="quiz-item" id="q1_1">
+        <div class="quiz-q">Q1. 電腦的「大腦」是指哪個零件？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q1_1',0,1)">A) 螢幕</button>
+          <button class="quiz-opt" onclick="checkQ('q1_1',1,1)">B) 主機</button>
+          <button class="quiz-opt" onclick="checkQ('q1_1',2,1)">C) 鍵盤</button>
+          <button class="quiz-opt" onclick="checkQ('q1_1',3,1)">D) 滑鼠</button>
+        </div>
+        <div class="quiz-feedback" id="q1_1_fb"></div>
+      </div>
+      <div class="quiz-item" id="q1_2">
+        <div class="quiz-q">Q2. 想要打開一個程式，滑鼠應該怎麼操作？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q1_2',0,2)">A) 單擊一下</button>
+          <button class="quiz-opt" onclick="checkQ('q1_2',1,2)">B) 按右鍵</button>
+          <button class="quiz-opt" onclick="checkQ('q1_2',2,2)">C) 雙擊兩下</button>
+          <button class="quiz-opt" onclick="checkQ('q1_2',3,2)">D) 滾動滾輪</button>
+        </div>
+        <div class="quiz-feedback" id="q1_2_fb"></div>
+      </div>
+      <div class="quiz-item" id="q1_3">
+        <div class="quiz-q">Q3. 鍵盤上的 Backspace 鍵的功能是？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q1_3',0,2)">A) 換行</button>
+          <button class="quiz-opt" onclick="checkQ('q1_3',1,2)">B) 空格</button>
+          <button class="quiz-opt" onclick="checkQ('q1_3',2,2)">C) 刪除文字</button>
+          <button class="quiz-opt" onclick="checkQ('q1_3',3,2)">D) 大小寫切換</button>
+        </div>
+        <div class="quiz-feedback" id="q1_3_fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>教師備註</h5>
+      <p>可準備電腦零件圖卡，讓學生在教室中找到對應的實體設備並配對</p>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- ===== STAGE 2: 電腦開機與關機 ===== -->
+  <!-- ========================================== -->
+  <section class="level-section" id="sec2">
+    <div class="section-header">
+      <span class="stage-badge s2">STAGE 2</span>
+      <div>
+        <div class="section-title">電腦開機與關機</div>
+        <div class="section-sub">學會正確的開機和關機步驟，保護我們的電腦朋友！</div>
+      </div>
+    </div>
+
+    <div class="steps-card blue">
+      <h4>開關機七步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span><strong>開機第一步</strong>：先開螢幕！找到螢幕上的電源按鈕，輕輕按一下讓螢幕亮起來</span></li>
+        <li><span class="step-num">2</span><span><strong>開機第二步</strong>：按主機電源！按下主機的電源開關，聽到風扇轉動聲音</span></li>
+        <li><span class="step-num">3</span><span><strong>開機第三步</strong>：耐心等待！螢幕出現畫面，等進入桌面就可以使用了</span></li>
+        <li><span class="step-num">4</span><span><strong>關機第一步</strong>：點左下角「開始」選單（像窗戶的圖案）</span></li>
+        <li><span class="step-num">5</span><span><strong>關機第二步</strong>：找到「關機」按鈕點一下</span></li>
+        <li><span class="step-num">6</span><span><strong>關機第三步</strong>：等主機燈光完全熄滅，最後才關螢幕</span></li>
+      </ul>
+      <div class="step-warning">
+        ⚠️ 危險警告：絕對不能直接拔插頭！電腦會「生氣」壞掉唷！
+      </div>
+    </div>
+
+    <!-- Interactive: Boot Simulation -->
+    <div class="canvas-section">
+      <h4>互動模擬：開機關機步驟練習</h4>
+      <div class="canvas-wrap" style="border-color:var(--c3)">
+        <div class="boot-sim" id="bootSim">
+          <div class="computer-illustration">
+            <!-- Computer SVG illustration -->
+            <svg class="computer-svg" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+              <!-- Monitor -->
+              <rect x="80" y="20" width="240" height="170" rx="12" fill="#e3f2fd" stroke="#6cb4ff" stroke-width="3" id="svgMonitor"/>
+              <rect x="95" y="35" width="210" height="130" rx="6" fill="#1a1a2e" id="svgScreen"/>
+              <text x="200" y="105" text-anchor="middle" fill="#555" font-size="14" id="svgScreenText">按照正確順序點擊按鈕</text>
+              <!-- Monitor button -->
+              <circle cx="200" cy="195" r="6" fill="#ccc" stroke="#999" stroke-width="2" id="svgMonitorBtn"/>
+              <!-- Monitor stand -->
+              <rect x="170" y="205" width="60" height="15" rx="3" fill="#90a4ae"/>
+              <rect x="150" y="218" width="100" height="8" rx="4" fill="#78909c"/>
+              <!-- PC Case -->
+              <rect x="10" y="60" width="55" height="160" rx="8" fill="#fff3e0" stroke="#ff85b3" stroke-width="3" id="svgCase"/>
+              <!-- Case power button -->
+              <circle cx="37" cy="90" r="10" fill="#eee" stroke="#ccc" stroke-width="2" id="svgCaseBtn"/>
+              <text x="37" y="94" text-anchor="middle" fill="#999" font-size="10">O</text>
+              <!-- Case LED -->
+              <circle cx="37" cy="115" r="4" fill="#ddd" id="svgCaseLED"/>
+              <!-- Keyboard -->
+              <rect x="100" y="255" width="200" height="40" rx="8" fill="#f5f5f5" stroke="#c49dff" stroke-width="2" id="svgKeyboard"/>
+              <text x="200" y="280" text-anchor="middle" fill="#999" font-size="10">鍵盤</text>
+              <!-- Mouse -->
+              <ellipse cx="340" cy="275" rx="20" ry="28" fill="#f5f5f5" stroke="#7be495" stroke-width="2" id="svgMouse"/>
+              <line x1="340" y1="255" x2="340" y2="265" stroke="#ccc" stroke-width="1.5"/>
+              <!-- Windows icon placeholder -->
+              <rect x="100" y="148" width="16" height="16" rx="2" fill="transparent" stroke="transparent" id="svgStartBtn"/>
+            </svg>
+          </div>
+          <p style="text-align:center;margin-bottom:12px;color:var(--dim);font-size:.95rem" id="bootInstruction">點擊正確的步驟按鈕，按照順序完成開機 / 關機！</p>
+          <div class="boot-steps" id="bootSteps">
+            <button class="boot-step-btn" onclick="tryBootStep(0)">1. 開螢幕</button>
+            <button class="boot-step-btn" onclick="tryBootStep(1)">2. 開主機</button>
+            <button class="boot-step-btn" onclick="tryBootStep(2)">3. 等待桌面</button>
+            <button class="boot-step-btn" onclick="tryBootStep(3)">4. 點開始</button>
+            <button class="boot-step-btn" onclick="tryBootStep(4)">5. 點關機</button>
+            <button class="boot-step-btn" onclick="tryBootStep(5)">6. 等燈滅</button>
+            <button class="boot-step-btn" onclick="tryBootStep(6)">7. 關螢幕</button>
+          </div>
+          <div class="boot-display" id="bootDisplay">
+            <div class="boot-title">準備好了嗎？</div>
+            <div class="boot-desc">請按照正確順序，一步一步完成開機和關機的流程！</div>
+            <div class="boot-hint">提示：先想想開機要先開什麼？</div>
+          </div>
+          <div style="text-align:center;margin-top:10px">
+            <button class="ctrl-btn blue" onclick="resetBoot()">重新開始</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz S2 -->
+    <div class="quiz-section">
+      <h4>小測驗：開機與關機</h4>
+      <div class="quiz-item" id="q2_1">
+        <div class="quiz-q">Q1. 開機時應該先打開什麼？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q2_1',0,1)">A) 主機</button>
+          <button class="quiz-opt" onclick="checkQ('q2_1',1,1)">B) 螢幕</button>
+          <button class="quiz-opt" onclick="checkQ('q2_1',2,1)">C) 鍵盤</button>
+          <button class="quiz-opt" onclick="checkQ('q2_1',3,1)">D) 滑鼠</button>
+        </div>
+        <div class="quiz-feedback" id="q2_1_fb"></div>
+      </div>
+      <div class="quiz-item" id="q2_2">
+        <div class="quiz-q">Q2. 為什麼不能直接拔掉插頭關機？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q2_2',0,2)">A) 電費會增加</button>
+          <button class="quiz-opt" onclick="checkQ('q2_2',1,2)">B) 螢幕會變色</button>
+          <button class="quiz-opt" onclick="checkQ('q2_2',2,2)">C) 會損壞硬碟等硬體</button>
+          <button class="quiz-opt" onclick="checkQ('q2_2',3,2)">D) 滑鼠會壞掉</button>
+        </div>
+        <div class="quiz-feedback" id="q2_2_fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>教師備註</h5>
+      <p>讓學生實際操作一次開機和關機，老師在旁指導</p>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- ===== STAGE 3: 我是小畫家 ===== -->
+  <!-- ========================================== -->
+  <section class="level-section" id="sec3">
+    <div class="section-header">
+      <span class="stage-badge s3">STAGE 3</span>
+      <div>
+        <div class="section-title">我是小畫家</div>
+        <div class="section-sub">用小畫家來畫出你的想像世界吧！</div>
+      </div>
+    </div>
+
+    <div class="steps-card purple">
+      <h4>小畫家工具大集合</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span><strong>開啟小畫家</strong>：點「開始」選單 → 搜尋「小畫家」或「Paint」→ 點擊開啟</span></li>
+        <li><span class="step-num">2</span><span><strong>筆刷工具</strong>：像真的畫筆，可以自由畫線條和塗顏色</span></li>
+        <li><span class="step-num">3</span><span><strong>形狀工具</strong>：畫圓形、方形、三角形等幾何圖形。按住 Shift 可以畫完美正圓正方</span></li>
+        <li><span class="step-num">4</span><span><strong>油漆桶</strong>：選好顏色後點擊封閉圖形內部，快速填滿顏色。注意圖形不能有缺口！</span></li>
+        <li><span class="step-num">5</span><span><strong>直線＋曲線</strong>：按住 Shift 畫筆直的線。曲線要先畫直線再拉彎兩次</span></li>
+        <li><span class="step-num">6</span><span><strong>橡皮擦</strong>：擦掉畫錯的地方。放大鏡可以放大畫面看清楚細節</span></li>
+        <li><span class="step-num">7</span><span><strong>魔法技巧</strong>：Ctrl + 滾輪放大縮小畫面！</span></li>
+      </ul>
+    </div>
+
+    <!-- Interactive: Mini Paint -->
+    <div class="canvas-section">
+      <h4>來畫畫看！迷你小畫家</h4>
+      <div class="canvas-wrap" style="border-color:var(--c5)">
+        <div class="mini-paint" id="miniPaint">
+          <div class="paint-toolbar">
+            <div class="paint-color active" style="background:#ff85b3" onclick="setPaintColor('#ff85b3',this)" title="粉紅"></div>
+            <div class="paint-color" style="background:#ffd54f" onclick="setPaintColor('#ffd54f',this)" title="黃色"></div>
+            <div class="paint-color" style="background:#6cb4ff" onclick="setPaintColor('#6cb4ff',this)" title="藍色"></div>
+            <div class="paint-color" style="background:#7be495" onclick="setPaintColor('#7be495',this)" title="綠色"></div>
+            <div class="paint-color" style="background:#2a2244" onclick="setPaintColor('#2a2244',this)" title="黑色"></div>
+            <span style="width:1px;height:30px;background:var(--dim);margin:0 4px"></span>
+            <button class="paint-tool active" data-tool="pencil" onclick="setPaintTool('pencil',this)">✏️ 畫筆</button>
+            <button class="paint-tool" data-tool="rect" onclick="setPaintTool('rect',this)">⬜ 方形</button>
+            <button class="paint-tool" data-tool="circle" onclick="setPaintTool('circle',this)">⭕ 圓形</button>
+            <span style="width:1px;height:30px;background:var(--dim);margin:0 4px"></span>
+            <button class="ctrl-btn danger" onclick="clearPaint()" style="font-size:.85rem;padding:6px 12px">清除全部</button>
+          </div>
+          <div class="paint-canvas-wrap">
+            <canvas id="paintCanvas" width="800" height="400"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz S3 -->
+    <div class="quiz-section">
+      <h4>小測驗：小畫家高手</h4>
+      <div class="quiz-item" id="q3_1">
+        <div class="quiz-q">Q1. 用小畫家畫一個完美的「正圓形」，要搭配哪個按鍵？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q3_1',0,2)">A) Enter</button>
+          <button class="quiz-opt" onclick="checkQ('q3_1',1,2)">B) Ctrl</button>
+          <button class="quiz-opt" onclick="checkQ('q3_1',2,2)">C) Shift</button>
+          <button class="quiz-opt" onclick="checkQ('q3_1',3,2)">D) Space</button>
+        </div>
+        <div class="quiz-feedback" id="q3_1_fb"></div>
+      </div>
+      <div class="quiz-item" id="q3_2">
+        <div class="quiz-q">Q2. 用油漆桶填色時，結果整個背景都變色了，可能是什麼原因？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q3_2',0,1)">A) 顏色選錯了</button>
+          <button class="quiz-opt" onclick="checkQ('q3_2',1,1)">B) 圖形有缺口</button>
+          <button class="quiz-opt" onclick="checkQ('q3_2',2,1)">C) 滑鼠壞了</button>
+          <button class="quiz-opt" onclick="checkQ('q3_2',3,1)">D) 電腦當機</button>
+        </div>
+        <div class="quiz-feedback" id="q3_2_fb"></div>
+      </div>
+      <div class="quiz-item" id="q3_3">
+        <div class="quiz-q">Q3. 想要把畫面放大看清楚細節，可以用什麼操作？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q3_3',0,2)">A) 按 Enter</button>
+          <button class="quiz-opt" onclick="checkQ('q3_3',1,2)">B) 按 Space</button>
+          <button class="quiz-opt" onclick="checkQ('q3_3',2,2)">C) Ctrl + 滾輪</button>
+          <button class="quiz-opt" onclick="checkQ('q3_3',3,2)">D) 按 Shift</button>
+        </div>
+        <div class="quiz-feedback" id="q3_3_fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>教師備註</h5>
+      <p>建議先讓學生畫「彩色玻璃」（直線交叉 + 填色），再進階畫「我的小屋」</p>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- ===== STAGE 4: 電腦使用好習慣 ===== -->
+  <!-- ========================================== -->
+  <section class="level-section" id="sec4">
+    <div class="section-header">
+      <span class="stage-badge s4">STAGE 4</span>
+      <div>
+        <div class="section-title">電腦使用好習慣</div>
+        <div class="section-sub">保護眼睛和身體，做個健康的電腦小達人！</div>
+      </div>
+    </div>
+
+    <div class="steps-card green">
+      <h4>健康使用電腦七守則</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span><strong>坐姿三直角</strong>：膝蓋直角＋大腿和背部直角＋手肘直角。雙腳平踩地面</span></li>
+        <li><span class="step-num">2</span><span><strong>螢幕距離</strong>：眼睛和螢幕保持一隻手臂的距離（45-60 公分）</span></li>
+        <li><span class="step-num">3</span><span><strong>20-20-20 護眼法則</strong>：看螢幕 20 分鐘 → 遠望 6 公尺外景物 → 看 20 秒</span></li>
+        <li><span class="step-num">4</span><span>每 30 分鐘要讓眼睛休息 10 分鐘！多眨眼保持濕潤</span></li>
+        <li><span class="step-num">5</span><span>不在電腦旁吃東西喝水（電腦怕水會短路）</span></li>
+        <li><span class="step-num">6</span><span>輕輕使用鍵盤滑鼠，有問題舉手問老師</span></li>
+        <li><span class="step-num">7</span><span><strong>下課前</strong>：正確關機 → 收拾桌面 → 椅子排整齊</span></li>
+      </ul>
+    </div>
+
+    <!-- Interactive: Posture Check -->
+    <div class="canvas-section">
+      <h4>互動檢查：正確坐姿大發現！</h4>
+      <div class="canvas-wrap" style="border-color:var(--c4)">
+        <div class="posture-check" id="postureCheck">
+          <p style="text-align:center;margin-bottom:14px;color:var(--dim);font-size:.95rem">點擊閃爍的圓點，學習正確的電腦坐姿！</p>
+          <div class="posture-figure" id="postureFigure">
+            <!-- Posture SVG -->
+            <svg class="posture-svg" viewBox="0 0 450 380" xmlns="http://www.w3.org/2000/svg">
+              <!-- Desk -->
+              <rect x="180" y="200" width="260" height="10" rx="3" fill="#d7ccc8"/>
+              <rect x="190" y="210" width="8" height="120" fill="#bcaaa4"/>
+              <rect x="430" y="210" width="8" height="120" fill="#bcaaa4"/>
+              <!-- Monitor on desk -->
+              <rect x="280" y="120" width="120" height="80" rx="6" fill="#e3f2fd" stroke="#6cb4ff" stroke-width="2"/>
+              <rect x="290" y="128" width="100" height="60" rx="3" fill="#1a1a2e"/>
+              <rect x="325" y="200" width="30" height="10" fill="#90a4ae"/>
+              <!-- Chair -->
+              <rect x="70" y="220" width="100" height="10" rx="3" fill="#ffccbc"/>
+              <rect x="60" y="150" width="12" height="80" rx="3" fill="#ffccbc"/>
+              <rect x="80" y="320" width="10" height="20" fill="#bcaaa4"/>
+              <rect x="155" y="320" width="10" height="20" fill="#bcaaa4"/>
+              <!-- Person (sitting) -->
+              <!-- Head -->
+              <circle cx="120" cy="110" r="25" fill="#ffe0b2" stroke="#ffab91" stroke-width="2"/>
+              <!-- Eyes -->
+              <circle cx="112" cy="106" r="3" fill="#2a2244"/>
+              <circle cx="128" cy="106" r="3" fill="#2a2244"/>
+              <!-- Smile -->
+              <path d="M112 118 Q120 126 128 118" stroke="#ff85b3" stroke-width="2" fill="none"/>
+              <!-- Body -->
+              <rect x="95" y="135" width="50" height="70" rx="8" fill="#bbdefb"/>
+              <!-- Arms -->
+              <line x1="145" y1="155" x2="200" y2="195" stroke="#ffe0b2" stroke-width="12" stroke-linecap="round"/>
+              <line x1="95" y1="155" x2="75" y2="190" stroke="#ffe0b2" stroke-width="12" stroke-linecap="round"/>
+              <!-- Legs -->
+              <line x1="100" y1="205" x2="90" y2="280" stroke="#bbdefb" stroke-width="14" stroke-linecap="round"/>
+              <line x1="140" y1="205" x2="150" y2="280" stroke="#bbdefb" stroke-width="14" stroke-linecap="round"/>
+              <!-- Feet -->
+              <rect x="75" y="280" width="30" height="10" rx="5" fill="#795548"/>
+              <rect x="140" y="280" width="30" height="10" rx="5" fill="#795548"/>
+              <!-- Keyboard on desk -->
+              <rect x="200" y="190" width="80" height="10" rx="3" fill="#e0e0e0" stroke="#bbb" stroke-width="1"/>
+              <!-- Mouse on desk -->
+              <ellipse cx="310" cy="195" rx="10" ry="12" fill="#e0e0e0" stroke="#bbb" stroke-width="1"/>
+              <!-- Angle indicators (visual hints) -->
+              <!-- Back angle arc -->
+              <path d="M80 200 Q80 170 95 155" stroke="var(--c1)" stroke-width="2" fill="none" stroke-dasharray="4,4" opacity="0.5"/>
+              <!-- Knee angle arc -->
+              <path d="M90 260 Q115 260 130 280" stroke="var(--c3)" stroke-width="2" fill="none" stroke-dasharray="4,4" opacity="0.5"/>
+              <!-- Arm angle arc -->
+              <path d="M145 170 Q160 180 170 195" stroke="var(--c5)" stroke-width="2" fill="none" stroke-dasharray="4,4" opacity="0.5"/>
+            </svg>
+            <!-- Hotspots -->
+            <div class="posture-hotspot" style="top:28%;left:14%" data-spot="back" onclick="checkPosture('back',this)" title="背部直角">1</div>
+            <div class="posture-hotspot" style="top:68%;left:22%" data-spot="knee" onclick="checkPosture('knee',this)" title="膝蓋直角">2</div>
+            <div class="posture-hotspot" style="top:40%;left:36%" data-spot="arm" onclick="checkPosture('arm',this)" title="手肘直角">3</div>
+            <div class="posture-hotspot" style="top:22%;left:58%" data-spot="eyes" onclick="checkPosture('eyes',this)" title="眼睛距離">4</div>
+            <div class="posture-hotspot" style="top:78%;left:18%" data-spot="feet" onclick="checkPosture('feet',this)" title="雙腳平踩">5</div>
+          </div>
+          <div class="posture-info" id="postureInfo">
+            <div style="text-align:center;color:var(--dim)">點擊上圖的圓點，了解正確坐姿的每個要點！</div>
+          </div>
+          <div class="posture-progress" id="postureProgress">已檢查：0 / 5 個要點</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz S4 -->
+    <div class="quiz-section">
+      <h4>小測驗：好習慣大挑戰</h4>
+      <div class="quiz-item" id="q4_1">
+        <div class="quiz-q">Q1. 坐在電腦前，身體要維持幾個「直角」？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q4_1',0,2)">A) 一個</button>
+          <button class="quiz-opt" onclick="checkQ('q4_1',1,2)">B) 兩個</button>
+          <button class="quiz-opt" onclick="checkQ('q4_1',2,2)">C) 三個</button>
+          <button class="quiz-opt" onclick="checkQ('q4_1',3,2)">D) 四個</button>
+        </div>
+        <div class="quiz-feedback" id="q4_1_fb"></div>
+      </div>
+      <div class="quiz-item" id="q4_2">
+        <div class="quiz-q">Q2. 「20-20-20」護眼法則中，看螢幕多久要休息？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q4_2',0,1)">A) 10 分鐘</button>
+          <button class="quiz-opt" onclick="checkQ('q4_2',1,1)">B) 20 分鐘</button>
+          <button class="quiz-opt" onclick="checkQ('q4_2',2,1)">C) 30 分鐘</button>
+          <button class="quiz-opt" onclick="checkQ('q4_2',3,1)">D) 60 分鐘</button>
+        </div>
+        <div class="quiz-feedback" id="q4_2_fb"></div>
+      </div>
+      <div class="quiz-item" id="q4_3">
+        <div class="quiz-q">Q3. 為什麼電腦教室不能帶水？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQ('q4_3',0,2)">A) 怕滑倒</button>
+          <button class="quiz-opt" onclick="checkQ('q4_3',1,2)">B) 怕弄髒桌子</button>
+          <button class="quiz-opt" onclick="checkQ('q4_3',2,2)">C) 水可能讓電腦短路損壞</button>
+          <button class="quiz-opt" onclick="checkQ('q4_3',3,2)">D) 老師規定的</button>
+        </div>
+        <div class="quiz-feedback" id="q4_3_fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>教師備註</h5>
+      <p>可以讓學生互相檢查坐姿，養成好習慣</p>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- ===== TODAY'S PRACTICE TASK ===== -->
+  <!-- ========================================== -->
+  <div class="project-task">
+    <h3>今日實作任務：畫出你的電腦好朋友！</h3>
+    <p>用小畫家畫一幅「我和電腦好朋友」的圖畫，畫面中要包含：</p>
+    <ol>
+      <li>至少 2 個電腦零件（主機、螢幕、滑鼠或鍵盤）</li>
+      <li>幫它們畫上可愛的表情</li>
+      <li>用油漆桶填上你喜歡的顏色</li>
+      <li>寫上你想對電腦說的一句話</li>
+    </ol>
+    <div class="task-note">完成後舉手讓老師看你的作品！</div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- ===== NOTEBOOKLM RESOURCE SECTION ===== -->
+  <!-- ========================================== -->
+  <div class="nb-section">
+    <h3 style="font-size:1.1rem;font-weight:900;margin-bottom:16px;color:var(--c3)">NotebookLM 教學資源站</h3>
+
+    <div class="nb-cards">
+      <div class="nb-card">
+        <h4>筆記本</h4>
+        <p>課程完整筆記與 AI 互動問答</p>
+        <a href="https://notebooklm.google.com/notebook/aa790a23-d004-4500-9cc0-59adb5069a77" target="_blank">開啟 NotebookLM 筆記本 &rarr;</a>
+      </div>
+      <div class="nb-card">
+        <h4>研究筆記本</h4>
+        <p>深度研究資料與延伸閱讀</p>
+        <a href="https://notebooklm.google.com/notebook/760be338-f29a-449c-a850-939757fb5e89" target="_blank">開啟研究筆記本 &rarr;</a>
+      </div>
+      <div class="nb-card">
+        <h4>教學簡報 PDF</h4>
+        <p>課堂教學簡報下載</p>
+        <a href="#" target="_blank">下載教學簡報 &rarr;</a>
+      </div>
+    </div>
+
+    <div class="nlm-workflow">
+      <h4>這個頁面是怎麼做出來的？</h4>
+      <p>老師先把教學資料上傳到 Google NotebookLM，讓 AI 整理出重點和問答。接著使用 NotebookLM 生成教學簡報、研究筆記，最後用 Claude Code 自動產生這個互動教學駕駛艙網頁。整個過程結合了 AI 工具，讓備課更快速、教學更有趣！</p>
+    </div>
+
+    <div class="faq-section">
+      <h4>學生常見問題解答（由 NotebookLM AI 整理）</h4>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q1. 為什麼開機要先開螢幕再開主機？</div>
+        <div class="faq-a">先開螢幕才能看到電腦的「自我檢查」畫面。就像你起床要先睜開眼睛，才能看到周圍的東西一樣！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q2. 可以直接拔插頭關機嗎？</div>
+        <div class="faq-a">絕對不行！直接拔插頭就像你正在寫作業時突然被人搶走本子，電腦裡面正在工作的硬碟會受傷損壞，裡面的資料也可能不見唷！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q3. 為什麼電腦教室不能喝水？</div>
+        <div class="faq-a">電腦是精密的電器產品，裡面有很多細小的電路。水流進去會讓電路「短路」，就像把水倒在手機上一樣，電腦會嚴重損壞！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q4. 眼睛痠痠流眼淚怎麼辦？</div>
+        <div class="faq-a">記得 20-20-20 法則！看螢幕 20 分鐘就要休息，看 6 公尺外的東西 20 秒。平常也要多眨眼，讓眼睛保持濕潤。如果很不舒服，一定要告訴老師！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q5. 坐姿的三個直角是哪三個？</div>
+        <div class="faq-a">第一個是膝蓋的直角（小腿和大腿呈 90 度），第二個是大腿和背部的直角（坐直不駝背），第三個是手肘的直角（打字時手肘自然彎曲 90 度）。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q6. 鍵盤和滑鼠為什麼叫輸入設備？</div>
+        <div class="faq-a">因為它們幫我們把指令「送進去」給電腦！就像你用嘴巴說話告訴別人事情，鍵盤和滑鼠就是我們跟電腦「說話」的工具，把我們的想法輸入到電腦裡面。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- ===== SLIDE PLAYER ===== -->
+  <!-- ========================================== -->
+  <div class="slide-viewer">
+    <h3>教學簡報</h3>
+    <div class="slide-main" ondblclick="openSlideFullscreen()">
+      <img src="assets/slide_01.jpg" id="slideImg" alt="教學簡報" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:60px 20px;text-align:center;color:var(--dim)\'>簡報圖片載入中...</div>'">
+      <button class="slide-nav-btn prev" onclick="changeSlide(-1)">&lsaquo;</button>
+      <button class="slide-nav-btn next" onclick="changeSlide(1)">&rsaquo;</button>
+    </div>
+    <div class="slide-counter" id="slideCounter">1 / 20</div>
+    <div class="slide-thumbs" id="slideThumbs"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- ===== VIDEO SECTION ===== -->
+  <!-- ========================================== -->
+  <div class="video-section">
+    <h3>教學影片</h3>
+    <div class="video-placeholder" id="videoContainer">
+      <span>🎬</span>
+      影片製作中，敬請期待！
+    </div>
+  </div>
+
+</main>
+
+<!-- ==================== SLIDE FULLSCREEN ==================== -->
+<div class="slide-fullscreen" id="slideFullscreen">
+  <button class="slide-fullscreen-close" onclick="closeSlideFullscreen()">X</button>
+  <img src="" id="slideFullscreenImg" alt="簡報全螢幕">
+  <button class="slide-nav-btn prev" onclick="changeSlide(-1)" style="position:fixed;left:16px;top:50%">&lsaquo;</button>
+  <button class="slide-nav-btn next" onclick="changeSlide(1)" style="position:fixed;right:16px;top:50%">&rsaquo;</button>
+  <div class="slide-fullscreen-counter" id="slideFullscreenCounter">1 / 20</div>
+</div>
+
+<!-- ==================== LOTTERY MODAL ==================== -->
+<div class="modal-overlay" id="lotteryModal">
+  <div class="modal-box">
+    <h3>🎲 隨機抽號</h3>
+    <div class="lottery-num" id="lotteryNum">&mdash;</div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <button class="ctrl-btn primary" onclick="startLottery()">開始抽籤</button>
+      <button class="ctrl-btn secondary" onclick="stopLottery()">停止</button>
+      <button class="ctrl-btn danger" onclick="resetLottery()">重置</button>
+    </div>
+    <div style="font-size:.85rem;color:var(--dim);margin-top:10px">座號 1 ~ 30（不重複）</div>
+    <div class="lottery-history" id="lotteryHistory"></div>
+    <button class="modal-close" onclick="closeModal('lotteryModal')">關閉</button>
+  </div>
+</div>
+
+<!-- ==================== TIMER MODAL ==================== -->
+<div class="modal-overlay" id="timerModal">
+  <div class="modal-box">
+    <h3>⏱ 計時器</h3>
+    <div class="timer-display" id="timerDisplay">01:00</div>
+    <div class="timer-controls">
+      <button class="ctrl-btn primary" onclick="setTimer(60)">1 分鐘</button>
+      <button class="ctrl-btn primary" onclick="setTimer(180)">3 分鐘</button>
+      <button class="ctrl-btn primary" onclick="setTimer(300)">5 分鐘</button>
+    </div>
+    <div class="timer-custom">
+      <input type="number" id="timerCustom" min="1" max="60" value="5" placeholder="分鐘">
+      <span style="font-size:.9rem;color:var(--dim)">分鐘</span>
+      <button class="ctrl-btn blue" onclick="setTimer(parseInt(document.getElementById('timerCustom').value||5)*60)" style="font-size:.85rem;padding:6px 10px">設定</button>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap">
+      <button class="ctrl-btn secondary" onclick="startTimer()">開始</button>
+      <button class="ctrl-btn danger" onclick="pauseTimer()">暫停</button>
+      <button class="ctrl-btn" style="border-color:var(--dim);color:var(--dim)" onclick="resetTimer()">重設</button>
+    </div>
+    <button class="modal-close" onclick="closeModal('timerModal')">關閉</button>
+  </div>
+</div>
+
+<!-- ==================== FLOATING TOOLS ==================== -->
+<button class="float-tools-toggle" id="floatToggle" onclick="toggleFloatTools()" title="教學工具">🛠️</button>
+<div class="float-tools" id="floatTools">
+  <button class="float-btn lottery" onclick="openModal('lotteryModal')" title="抽號碼">🎲</button>
+  <button class="float-btn timer" onclick="openModal('timerModal')" title="計時器">⏱️</button>
+  <button class="float-btn draw" onclick="toggleDraw()" title="畫筆標註">✏️</button>
+  <button class="float-btn gotop" onclick="goTop()" title="回到頂部">🔝</button>
+</div>
+
+<!-- ==================== DRAWING OVERLAY ==================== -->
+<div class="draw-canvas-overlay" id="drawWrap">
+  <canvas id="drawCanvas"></canvas>
+</div>
+<div class="draw-toolbar" id="drawToolbar">
+  <div class="color-swatch active" style="background:#ff85b3" onclick="setDrawColor('#ff85b3',this)" title="粉紅"></div>
+  <div class="color-swatch" style="background:#ffd54f" onclick="setDrawColor('#ffd54f',this)" title="黃色"></div>
+  <div class="color-swatch" style="background:#6cb4ff" onclick="setDrawColor('#6cb4ff',this)" title="藍色"></div>
+  <div class="color-swatch" style="background:#7be495" onclick="setDrawColor('#7be495',this)" title="綠色"></div>
+  <div class="color-swatch" style="background:#2a2244" onclick="setDrawColor('#2a2244',this)" title="深色"></div>
+  <button class="draw-ctrl-btn" onclick="clearDrawCanvas()">清除</button>
+  <button class="draw-ctrl-btn" onclick="toggleDraw()">結束</button>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  <div>嗨！電腦新朋友｜三年級資訊科技教學駕駛艙</div>
+  <div class="nlm-badge">Powered by NotebookLM x Claude Code</div>
+</footer>
+
+<script>
+/* ================================================================
+   嗨！電腦新朋友 - Teaching Cockpit JavaScript
+   ================================================================ */
+
+// ===================== QUIZ SYSTEM =====================
+const praise = [
+  '🎉 太棒了！完全正確！',
+  '好厲害！答對了！',
+  '🌟 你好棒！繼續加油！',
+  '🎊 完美！你掌握了！',
+  '答對囉！超厲害的！'
+];
+let scores = {};
+const totalQ = 11;
+const completedStages = new Set();
+
+const explains = {
+  'q1_1': '正確答案是 B。主機負責思考和記憶所有事情，就像電腦的大腦一樣！',
+  'q1_2': '正確答案是 C。快速按兩下左鍵（雙擊）就能打開程式唷！',
+  'q1_3': '正確答案是 C。Backspace 就像橡皮擦，可以刪掉打錯的字！',
+  'q2_1': '正確答案是 B。先開螢幕才能看到電腦的「自我檢查」畫面！',
+  'q2_2': '正確答案是 C。直接斷電會損壞負責記憶的硬碟，電腦會生重病！',
+  'q3_1': '正確答案是 C。按住 Shift 畫橢圓就會變成完美的正圓形！',
+  'q3_2': '正確答案是 B。圖形有缺口，顏料就會「漏出去」填滿整個背景！',
+  'q3_3': '正確答案是 C。按住 Ctrl 再轉動滾輪就能放大縮小畫面！',
+  'q4_1': '正確答案是 C。膝蓋、大腿和背部、手肘各一個直角，共三個！',
+  'q4_2': '正確答案是 B。每看 20 分鐘要遠望 6 公尺外景物 20 秒！',
+  'q4_3': '正確答案是 C。水流進鍵盤或主機會讓電腦短路，生重病！'
+};
+
+function checkQ(qid, chosen, correct) {
+  if (scores[qid] !== undefined) return;
+  var item = document.getElementById(qid);
+  var btns = item.querySelectorAll('.quiz-opt');
+  var fb = document.getElementById(qid + '_fb');
+
+  for (var i = 0; i < btns.length; i++) btns[i].disabled = true;
+  btns[correct - 1].classList.add('correct');
+
+  if (chosen === correct - 1) {
+    scores[qid] = 1;
+    btns[chosen].classList.add('correct');
+    fb.className = 'quiz-feedback show correct';
+    fb.textContent = praise[Math.floor(Math.random() * praise.length)];
+  } else {
+    scores[qid] = 0;
+    btns[chosen].classList.add('wrong');
+    fb.className = 'quiz-feedback show wrong';
+    fb.textContent = explains[qid] || '再想想看，下次一定行！';
+  }
+
+  // Track stage completion
+  var stage = qid.split('_')[0];
+  var stageQids = Object.keys(scores).filter(function(k) { return k.startsWith(stage); });
+  var stageTotal = document.querySelectorAll('#sec' + stage.charAt(1) + ' .quiz-item').length;
+  if (stageQids.length >= stageTotal) {
+    completedStages.add(parseInt(stage.charAt(1)));
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  var stagesCompleted = completedStages.size;
+  var pct = Math.round(stagesCompleted / 4 * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = stagesCompleted + ' / 4 關卡';
+}
+
+// ===================== MODE =====================
+function setMode(m) {
+  if (m === 'student') {
+    document.body.classList.remove('teacher-mode');
+    document.querySelector('.mode-btn.student').classList.add('active');
+    document.querySelector('.mode-btn.teacher').classList.remove('active');
+  }
+}
+
+function checkTeacher() {
+  if (document.getElementById('teacherPw').value === 'it2026') {
+    document.body.classList.add('teacher-mode');
+    document.querySelector('.mode-btn.teacher').classList.add('active');
+    document.querySelector('.mode-btn.student').classList.remove('active');
+  } else {
+    alert('密碼錯誤！請輸入正確的教師密碼。');
+  }
+}
+
+// ===================== STAGE NAV =====================
+function scrollToSec(id, el) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  var pills = document.querySelectorAll('.stage-pill');
+  for (var i = 0; i < pills.length; i++) pills[i].classList.remove('active');
+  el.classList.add('active');
+}
+
+// ===================== SLIDE PLAYER =====================
+var SLIDE_LIST = [];
+for (var si = 1; si <= 18; si++) {
+  SLIDE_LIST.push('assets/slide_' + String(si).padStart(2, '0') + '.jpg');
+}
+var curSlide = 1;
+var totalSlides = SLIDE_LIST.length;
+
+function initSlides() {
+  var thumbs = document.getElementById('slideThumbs');
+  if (!thumbs) return;
+  for (var i = 0; i < totalSlides; i++) {
+    var img = document.createElement('img');
+    img.src = SLIDE_LIST[i];
+    img.className = 'slide-thumb' + (i === 0 ? ' active' : '');
+    img.loading = 'lazy';
+    img.alt = 'slide ' + (i + 1);
+    img.setAttribute('data-idx', i + 1);
+    img.onclick = (function(n) { return function() { goSlide(n); }; })(i + 1);
+    thumbs.appendChild(img);
+  }
+}
+
+function changeSlide(d) { goSlide(curSlide + d); }
+
+function goSlide(n) {
+  curSlide = Math.max(1, Math.min(totalSlides, n));
+  var mainImg = document.getElementById('slideImg');
+  if (mainImg) mainImg.src = SLIDE_LIST[curSlide - 1];
+  document.getElementById('slideCounter').textContent = curSlide + ' / ' + totalSlides;
+
+  // Sync thumbnails
+  var thumbs = document.querySelectorAll('.slide-thumb');
+  for (var i = 0; i < thumbs.length; i++) {
+    thumbs[i].classList.toggle('active', i + 1 === curSlide);
+  }
+  if (thumbs[curSlide - 1]) {
+    thumbs[curSlide - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  // Sync fullscreen
+  var fsImg = document.getElementById('slideFullscreenImg');
+  if (fsImg) fsImg.src = SLIDE_LIST[curSlide - 1];
+  var fsCtr = document.getElementById('slideFullscreenCounter');
+  if (fsCtr) fsCtr.textContent = curSlide + ' / ' + totalSlides;
+}
+
+function openSlideFullscreen() {
+  var fs = document.getElementById('slideFullscreen');
+  var fsImg = document.getElementById('slideFullscreenImg');
+  fsImg.src = SLIDE_LIST[curSlide - 1];
+  document.getElementById('slideFullscreenCounter').textContent = curSlide + ' / ' + totalSlides;
+  fs.classList.add('show');
+}
+
+function closeSlideFullscreen() {
+  document.getElementById('slideFullscreen').classList.remove('show');
+}
+
+// Keyboard support for slides
+document.addEventListener('keydown', function(e) {
+  var fs = document.getElementById('slideFullscreen');
+  if (fs && fs.classList.contains('show')) {
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    else if (e.key === 'ArrowRight') changeSlide(1);
+    else if (e.key === 'Escape') closeSlideFullscreen();
+  }
+});
+
+// ===================== VIDEO =====================
+var youtube_video_id = '';
+
+// ===================== MATCHING GAME =====================
+var matchLabelsData = [
+  { id: 'case', text: '大腦主機' },
+  { id: 'monitor', text: '亮亮臉螢幕' },
+  { id: 'mouse', text: '指揮官滑鼠' },
+  { id: 'keyboard', text: '打字機鍵盤' }
+];
+var matchedCount = 0;
+var draggedLabel = null;
+
+function initMatch() {
+  matchedCount = 0;
+  var container = document.getElementById('matchLabels');
+  container.innerHTML = '';
+  document.getElementById('matchCelebrate').style.display = 'none';
+
+  // Reset drop zones
+  var drops = document.querySelectorAll('.match-drop');
+  for (var i = 0; i < drops.length; i++) {
+    drops[i].textContent = '拖到這裡';
+    drops[i].className = 'match-drop';
+  }
+  // Reset parts
+  var parts = document.querySelectorAll('.match-part');
+  for (var i = 0; i < parts.length; i++) {
+    parts[i].classList.remove('matched');
+  }
+
+  // Shuffle labels
+  var shuffled = matchLabelsData.slice();
+  for (var i = shuffled.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = shuffled[i];
+    shuffled[i] = shuffled[j];
+    shuffled[j] = tmp;
+  }
+
+  for (var i = 0; i < shuffled.length; i++) {
+    var label = document.createElement('div');
+    label.className = 'match-label';
+    label.textContent = shuffled[i].text;
+    label.setAttribute('data-label', shuffled[i].id);
+    label.draggable = true;
+    label.addEventListener('dragstart', handleDragStart);
+    label.addEventListener('dragend', handleDragEnd);
+    // Touch support
+    label.addEventListener('touchstart', handleTouchStart, { passive: false });
+    label.addEventListener('touchmove', handleTouchMove, { passive: false });
+    label.addEventListener('touchend', handleTouchEnd, { passive: false });
+    container.appendChild(label);
+  }
+}
+
+function handleDragStart(e) {
+  draggedLabel = this;
+  this.classList.add('dragging');
+  e.dataTransfer.setData('text/plain', this.getAttribute('data-label'));
+}
+
+function handleDragEnd(e) {
+  this.classList.remove('dragging');
+  draggedLabel = null;
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  this.classList.add('hover');
+}
+
+function handleDragLeave(e) {
+  this.classList.remove('hover');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  this.classList.remove('hover');
+  var labelId = e.dataTransfer.getData('text/plain');
+  var accept = this.getAttribute('data-accept');
+
+  if (labelId === accept) {
+    this.textContent = matchLabelsData.find(function(m) { return m.id === labelId; }).text;
+    this.classList.add('filled');
+    if (draggedLabel) {
+      draggedLabel.classList.add('placed');
+      draggedLabel.draggable = false;
+    }
+    // Mark part as matched
+    document.getElementById('part-' + accept).classList.add('matched');
+    matchedCount++;
+    if (matchedCount >= 4) {
+      document.getElementById('matchCelebrate').style.display = 'block';
+    }
+  } else {
+    // Wrong match - brief shake
+    this.style.borderColor = '#ff6464';
+    var self = this;
+    setTimeout(function() { self.style.borderColor = ''; }, 500);
+  }
+}
+
+// Touch drag support for matching game
+var touchDragEl = null;
+var touchClone = null;
+
+function handleTouchStart(e) {
+  if (this.classList.contains('placed')) return;
+  e.preventDefault();
+  touchDragEl = this;
+  var rect = this.getBoundingClientRect();
+  touchClone = this.cloneNode(true);
+  touchClone.style.position = 'fixed';
+  touchClone.style.width = rect.width + 'px';
+  touchClone.style.zIndex = '9999';
+  touchClone.style.opacity = '0.8';
+  touchClone.style.pointerEvents = 'none';
+  document.body.appendChild(touchClone);
+  var t = e.touches[0];
+  touchClone.style.left = (t.clientX - rect.width / 2) + 'px';
+  touchClone.style.top = (t.clientY - 20) + 'px';
+  this.classList.add('dragging');
+}
+
+function handleTouchMove(e) {
+  if (!touchClone) return;
+  e.preventDefault();
+  var t = e.touches[0];
+  touchClone.style.left = (t.clientX - touchClone.offsetWidth / 2) + 'px';
+  touchClone.style.top = (t.clientY - 20) + 'px';
+}
+
+function handleTouchEnd(e) {
+  if (!touchClone || !touchDragEl) return;
+  e.preventDefault();
+  var t = e.changedTouches[0];
+  document.body.removeChild(touchClone);
+  touchClone = null;
+  touchDragEl.classList.remove('dragging');
+
+  // Find drop target
+  var drops = document.querySelectorAll('.match-drop');
+  for (var i = 0; i < drops.length; i++) {
+    var rect = drops[i].getBoundingClientRect();
+    if (t.clientX >= rect.left && t.clientX <= rect.right &&
+        t.clientY >= rect.top && t.clientY <= rect.bottom) {
+      var labelId = touchDragEl.getAttribute('data-label');
+      var accept = drops[i].getAttribute('data-accept');
+      if (labelId === accept) {
+        drops[i].textContent = matchLabelsData.find(function(m) { return m.id === labelId; }).text;
+        drops[i].classList.add('filled');
+        touchDragEl.classList.add('placed');
+        touchDragEl.draggable = false;
+        document.getElementById('part-' + accept).classList.add('matched');
+        matchedCount++;
+        if (matchedCount >= 4) {
+          document.getElementById('matchCelebrate').style.display = 'block';
+        }
+      } else {
+        drops[i].style.borderColor = '#ff6464';
+        var d = drops[i];
+        setTimeout(function() { d.style.borderColor = ''; }, 500);
+      }
+      break;
+    }
+  }
+  touchDragEl = null;
+}
+
+function resetMatch() {
+  initMatch();
+}
+
+// ===================== BOOT SIMULATION =====================
+var bootStep = 0;
+var bootTotalSteps = 7;
+var bootMessages = [
+  {
+    title: '第 1 步：開螢幕！',
+    desc: '找到螢幕上的電源按鈕，輕輕按一下。螢幕亮起來了！',
+    hint: '先讓螢幕「睜開眼睛」才能看到畫面唷'
+  },
+  {
+    title: '第 2 步：開主機！',
+    desc: '按下主機的電源開關，聽到風扇「呼呼」轉動的聲音。',
+    hint: '主機開始工作了，電腦正在「起床」'
+  },
+  {
+    title: '第 3 步：耐心等待桌面出現！',
+    desc: '螢幕出現各種畫面，等進入桌面就可以使用了。',
+    hint: '電腦在做「自我檢查」，別急唷'
+  },
+  {
+    title: '第 4 步：點「開始」選單！',
+    desc: '要關機啦！點左下角像窗戶的圖案，這就是「開始」選單。',
+    hint: '看到左下角的 Windows 圖示了嗎？'
+  },
+  {
+    title: '第 5 步：點「關機」按鈕！',
+    desc: '在選單中找到「關機」按鈕，點一下。',
+    hint: '電腦開始準備「睡覺」了'
+  },
+  {
+    title: '第 6 步：等燈光熄滅！',
+    desc: '等主機上的燈光完全熄滅，表示電腦已經安全關機。',
+    hint: '要有耐心，等燈完全滅才算關好'
+  },
+  {
+    title: '第 7 步：最後關螢幕！',
+    desc: '主機完全關閉後，才關掉螢幕的電源。大功告成！',
+    hint: '跟開機相反，最後才關螢幕！'
+  }
+];
+
+function tryBootStep(idx) {
+  var btns = document.querySelectorAll('#bootSteps .boot-step-btn');
+  if (idx === bootStep) {
+    btns[idx].classList.add('done');
+    btns[idx].classList.remove('active');
+    var msg = bootMessages[idx];
+    document.getElementById('bootDisplay').innerHTML =
+      '<div class="boot-title">' + msg.title + '</div>' +
+      '<div class="boot-desc">' + msg.desc + '</div>' +
+      '<div class="boot-hint">' + msg.hint + '</div>';
+
+    // Animate SVG based on step
+    animateBootSVG(idx);
+
+    bootStep++;
+    if (bootStep < bootTotalSteps) {
+      btns[bootStep].classList.add('active');
+    }
+    if (bootStep >= bootTotalSteps) {
+      document.getElementById('bootInstruction').textContent = '🎉 太棒了！你已經學會正確的開機和關機了！';
+      document.getElementById('bootInstruction').style.color = 'var(--c4)';
+      document.getElementById('bootInstruction').style.fontWeight = '900';
+    }
+  } else {
+    btns[idx].classList.add('wrong');
+    setTimeout(function() { btns[idx].classList.remove('wrong'); }, 500);
+    document.getElementById('bootDisplay').innerHTML =
+      '<div class="boot-title" style="color:#ff6464">順序不對唷！</div>' +
+      '<div class="boot-desc">目前應該是第 ' + (bootStep + 1) + ' 步，再想想看是哪個？</div>' +
+      '<div class="boot-hint">提示：' + bootMessages[bootStep].hint + '</div>';
+  }
+}
+
+function animateBootSVG(step) {
+  var screen = document.getElementById('svgScreen');
+  var screenText = document.getElementById('svgScreenText');
+  var monitorBtn = document.getElementById('svgMonitorBtn');
+  var caseBtn = document.getElementById('svgCaseBtn');
+  var caseLED = document.getElementById('svgCaseLED');
+
+  switch (step) {
+    case 0: // Turn on monitor
+      monitorBtn.setAttribute('fill', '#4caf50');
+      screen.setAttribute('fill', '#263238');
+      screenText.textContent = '螢幕已開啟';
+      screenText.setAttribute('fill', '#888');
+      break;
+    case 1: // Turn on PC
+      caseBtn.setAttribute('fill', '#4caf50');
+      caseLED.setAttribute('fill', '#4caf50');
+      screen.setAttribute('fill', '#1a237e');
+      screenText.textContent = '正在啟動...';
+      screenText.setAttribute('fill', '#6cb4ff');
+      break;
+    case 2: // Desktop loaded
+      screen.setAttribute('fill', '#e3f2fd');
+      screenText.textContent = '桌面已就緒！';
+      screenText.setAttribute('fill', '#2196f3');
+      break;
+    case 3: // Start menu
+      screen.setAttribute('fill', '#bbdefb');
+      screenText.textContent = '點了開始選單';
+      screenText.setAttribute('fill', '#1565c0');
+      break;
+    case 4: // Shutdown
+      screen.setAttribute('fill', '#263238');
+      screenText.textContent = '正在關機...';
+      screenText.setAttribute('fill', '#ff9800');
+      break;
+    case 5: // LED off
+      caseLED.setAttribute('fill', '#ddd');
+      caseBtn.setAttribute('fill', '#eee');
+      screen.setAttribute('fill', '#1a1a2e');
+      screenText.textContent = '主機已關閉';
+      screenText.setAttribute('fill', '#555');
+      break;
+    case 6: // Monitor off
+      monitorBtn.setAttribute('fill', '#ccc');
+      screen.setAttribute('fill', '#1a1a2e');
+      screenText.textContent = '';
+      break;
+  }
+}
+
+function resetBoot() {
+  bootStep = 0;
+  var btns = document.querySelectorAll('#bootSteps .boot-step-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.remove('done', 'active', 'wrong');
+  }
+  btns[0].classList.add('active');
+  document.getElementById('bootDisplay').innerHTML =
+    '<div class="boot-title">準備好了嗎？</div>' +
+    '<div class="boot-desc">請按照正確順序，一步一步完成開機和關機的流程！</div>' +
+    '<div class="boot-hint">提示：先想想開機要先開什麼？</div>';
+  document.getElementById('bootInstruction').textContent = '點擊正確的步驟按鈕，按照順序完成開機 / 關機！';
+  document.getElementById('bootInstruction').style.color = '';
+  document.getElementById('bootInstruction').style.fontWeight = '';
+
+  // Reset SVG
+  document.getElementById('svgScreen').setAttribute('fill', '#1a1a2e');
+  document.getElementById('svgScreenText').textContent = '按照正確順序點擊按鈕';
+  document.getElementById('svgScreenText').setAttribute('fill', '#555');
+  document.getElementById('svgMonitorBtn').setAttribute('fill', '#ccc');
+  document.getElementById('svgCaseBtn').setAttribute('fill', '#eee');
+  document.getElementById('svgCaseLED').setAttribute('fill', '#ddd');
+}
+
+// ===================== MINI PAINT =====================
+var paintCanvas, paintCtx;
+var paintColor = '#ff85b3';
+var paintTool = 'pencil';
+var painting = false;
+var paintLastX = 0, paintLastY = 0;
+var paintStartX = 0, paintStartY = 0;
+var paintSnapshot = null;
+
+function initPaint() {
+  paintCanvas = document.getElementById('paintCanvas');
+  if (!paintCanvas) return;
+
+  // Set actual size based on container
+  var wrapper = paintCanvas.parentElement;
+  var rect = wrapper.getBoundingClientRect();
+  paintCanvas.width = Math.min(rect.width, 800);
+  paintCanvas.height = Math.round(paintCanvas.width * 0.5);
+
+  paintCtx = paintCanvas.getContext('2d');
+  paintCtx.fillStyle = '#ffffff';
+  paintCtx.fillRect(0, 0, paintCanvas.width, paintCanvas.height);
+  paintCtx.lineWidth = 3;
+  paintCtx.lineCap = 'round';
+  paintCtx.strokeStyle = paintColor;
+
+  paintCanvas.addEventListener('mousedown', paintMouseDown);
+  paintCanvas.addEventListener('mousemove', paintMouseMove);
+  paintCanvas.addEventListener('mouseup', paintMouseUp);
+  paintCanvas.addEventListener('mouseleave', paintMouseUp);
+
+  paintCanvas.addEventListener('touchstart', paintTouchStart, { passive: false });
+  paintCanvas.addEventListener('touchmove', paintTouchMove, { passive: false });
+  paintCanvas.addEventListener('touchend', paintTouchEnd, { passive: false });
+}
+
+function getPaintPos(e) {
+  var rect = paintCanvas.getBoundingClientRect();
+  return {
+    x: (e.clientX - rect.left) * (paintCanvas.width / rect.width),
+    y: (e.clientY - rect.top) * (paintCanvas.height / rect.height)
+  };
+}
+
+function paintMouseDown(e) {
+  painting = true;
+  var pos = getPaintPos(e);
+  paintLastX = pos.x;
+  paintLastY = pos.y;
+  paintStartX = pos.x;
+  paintStartY = pos.y;
+  if (paintTool !== 'pencil') {
+    paintSnapshot = paintCtx.getImageData(0, 0, paintCanvas.width, paintCanvas.height);
+  }
+}
+
+function paintMouseMove(e) {
+  if (!painting) return;
+  var pos = getPaintPos(e);
+  paintCtx.strokeStyle = paintColor;
+  paintCtx.lineWidth = 3;
+
+  if (paintTool === 'pencil') {
+    paintCtx.beginPath();
+    paintCtx.moveTo(paintLastX, paintLastY);
+    paintCtx.lineTo(pos.x, pos.y);
+    paintCtx.stroke();
+    paintLastX = pos.x;
+    paintLastY = pos.y;
+  } else {
+    paintCtx.putImageData(paintSnapshot, 0, 0);
+    paintCtx.beginPath();
+    if (paintTool === 'rect') {
+      paintCtx.strokeRect(paintStartX, paintStartY, pos.x - paintStartX, pos.y - paintStartY);
+    } else if (paintTool === 'circle') {
+      var rx = Math.abs(pos.x - paintStartX) / 2;
+      var ry = Math.abs(pos.y - paintStartY) / 2;
+      var cx = paintStartX + (pos.x - paintStartX) / 2;
+      var cy = paintStartY + (pos.y - paintStartY) / 2;
+      paintCtx.beginPath();
+      paintCtx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+      paintCtx.stroke();
+    }
+  }
+}
+
+function paintMouseUp(e) {
+  painting = false;
+  paintSnapshot = null;
+}
+
+function paintTouchStart(e) {
+  e.preventDefault();
+  var t = e.touches[0];
+  paintMouseDown({ clientX: t.clientX, clientY: t.clientY });
+}
+
+function paintTouchMove(e) {
+  e.preventDefault();
+  var t = e.touches[0];
+  paintMouseMove({ clientX: t.clientX, clientY: t.clientY });
+}
+
+function paintTouchEnd(e) {
+  e.preventDefault();
+  paintMouseUp(e);
+}
+
+function setPaintColor(c, el) {
+  paintColor = c;
+  var swatches = document.querySelectorAll('.paint-color');
+  for (var i = 0; i < swatches.length; i++) swatches[i].classList.remove('active');
+  el.classList.add('active');
+}
+
+function setPaintTool(tool, el) {
+  paintTool = tool;
+  var tools = document.querySelectorAll('.paint-tool');
+  for (var i = 0; i < tools.length; i++) tools[i].classList.remove('active');
+  el.classList.add('active');
+}
+
+function clearPaint() {
+  if (!paintCtx) return;
+  paintCtx.fillStyle = '#ffffff';
+  paintCtx.fillRect(0, 0, paintCanvas.width, paintCanvas.height);
+}
+
+// ===================== POSTURE CHECK =====================
+var postureChecked = {};
+var postureData = {
+  back: {
+    title: '背部直角 (90 度)',
+    desc: '背部要挺直，和大腿呈 90 度直角。想像有一根看不見的繩子從頭頂把你往上拉，背就會自然挺直了！不駝背、不後仰。'
+  },
+  knee: {
+    title: '膝蓋直角 (90 度)',
+    desc: '小腿和大腿要呈 90 度直角。如果椅子太高，腳懸空晃來晃去，記得調整椅子高度，或在腳下墊個小凳子。'
+  },
+  arm: {
+    title: '手肘直角 (90 度)',
+    desc: '打字時手肘自然彎曲呈 90 度。手腕不要翹起來或下垂，保持和鍵盤一樣高。這樣打字才不會累。'
+  },
+  eyes: {
+    title: '眼睛距離 (一隻手臂)',
+    desc: '眼睛和螢幕保持 45 到 60 公分的距離，大約是一隻手臂伸直的長度。螢幕頂端要和眼睛差不多高，不要抬頭或低頭看。'
+  },
+  feet: {
+    title: '雙腳平踩地面',
+    desc: '雙腳要平平踩在地上，不要翹腳、盤腿或讓腳懸空。腳踩穩了，坐姿才會穩，上課也比較不容易累！'
+  }
+};
+
+function checkPosture(spot, el) {
+  if (postureChecked[spot]) return;
+  postureChecked[spot] = true;
+  el.classList.add('checked');
+
+  var data = postureData[spot];
+  document.getElementById('postureInfo').innerHTML =
+    '<div style="font-weight:900;color:var(--c4);margin-bottom:6px;font-size:1.05rem">' + data.title + '</div>' +
+    '<div>' + data.desc + '</div>';
+
+  var count = Object.keys(postureChecked).length;
+  document.getElementById('postureProgress').textContent = '已檢查：' + count + ' / 5 個要點';
+  if (count >= 5) {
+    document.getElementById('postureProgress').innerHTML = '🎉 太棒了！你已經知道正確坐姿的所有要點了！';
+    document.getElementById('postureProgress').style.color = 'var(--c4)';
+  }
+}
+
+// ===================== LOTTERY =====================
+var lotteryInterval = null;
+var lotteryUsed = [];
+var lotteryMax = 30;
+
+function startLottery() {
+  clearInterval(lotteryInterval);
+  var el = document.getElementById('lotteryNum');
+  el.classList.add('lottery-spin');
+  lotteryInterval = setInterval(function() {
+    el.textContent = Math.floor(Math.random() * lotteryMax) + 1;
+  }, 80);
+}
+
+function stopLottery() {
+  clearInterval(lotteryInterval);
+  var el = document.getElementById('lotteryNum');
+  el.classList.remove('lottery-spin');
+
+  // Get unused number
+  if (lotteryUsed.length >= lotteryMax) {
+    el.textContent = '!';
+    document.getElementById('lotteryHistory').textContent = '所有號碼都抽過了！點「重置」重新開始';
+    return;
+  }
+  var num;
+  do {
+    num = Math.floor(Math.random() * lotteryMax) + 1;
+  } while (lotteryUsed.indexOf(num) !== -1);
+
+  lotteryUsed.push(num);
+  el.textContent = num;
+  document.getElementById('lotteryHistory').textContent = '已抽：' + lotteryUsed.join(', ');
+}
+
+function resetLottery() {
+  clearInterval(lotteryInterval);
+  lotteryUsed = [];
+  document.getElementById('lotteryNum').textContent = '\u2014';
+  document.getElementById('lotteryNum').classList.remove('lottery-spin');
+  document.getElementById('lotteryHistory').textContent = '';
+}
+
+// ===================== TIMER =====================
+var timerSec = 60;
+var timerRunning = false;
+var timerInterval = null;
+
+function setTimer(s) {
+  pauseTimer();
+  timerSec = s;
+  updateTimerDisplay();
+  document.getElementById('timerDisplay').style.color = '';
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  document.getElementById('timerDisplay').style.color = '';
+  timerInterval = setInterval(function() {
+    if (timerSec <= 0) {
+      pauseTimer();
+      document.getElementById('timerDisplay').textContent = '00:00';
+      document.getElementById('timerDisplay').style.color = '#ff6464';
+      return;
+    }
+    timerSec--;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function pauseTimer() {
+  timerRunning = false;
+  clearInterval(timerInterval);
+}
+
+function resetTimer() {
+  pauseTimer();
+  timerSec = 60;
+  updateTimerDisplay();
+  document.getElementById('timerDisplay').style.color = '';
+}
+
+function updateTimerDisplay() {
+  var m = Math.floor(timerSec / 60);
+  var s = timerSec % 60;
+  document.getElementById('timerDisplay').textContent =
+    String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+// ===================== MODAL =====================
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+// Close modal on background click
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('show');
+  }
+});
+
+// ===================== FLOAT TOOLS =====================
+var floatToolsVisible = false;
+
+function toggleFloatTools() {
+  floatToolsVisible = !floatToolsVisible;
+  document.getElementById('floatTools').classList.toggle('show', floatToolsVisible);
+}
+
+function goTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===================== DRAWING CANVAS (ANNOTATION TOOL) =====================
+var drawActive = false;
+var drawCtx = null;
+var drawColor = '#ff85b3';
+var drawingAnnotation = false;
+var drawLastX = 0, drawLastY = 0;
+
+function initDraw() {
+  var c = document.getElementById('drawCanvas');
+  if (!c) return;
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+  drawCtx = c.getContext('2d');
+  drawCtx.lineWidth = 4;
+  drawCtx.lineCap = 'round';
+  drawCtx.strokeStyle = drawColor;
+
+  c.addEventListener('mousedown', function(e) {
+    drawingAnnotation = true;
+    drawLastX = e.clientX;
+    drawLastY = e.clientY;
+  });
+  c.addEventListener('mousemove', function(e) {
+    if (!drawingAnnotation) return;
+    drawCtx.strokeStyle = drawColor;
+    drawCtx.beginPath();
+    drawCtx.moveTo(drawLastX, drawLastY);
+    drawCtx.lineTo(e.clientX, e.clientY);
+    drawCtx.stroke();
+    drawLastX = e.clientX;
+    drawLastY = e.clientY;
+  });
+  c.addEventListener('mouseup', function() { drawingAnnotation = false; });
+  c.addEventListener('mouseleave', function() { drawingAnnotation = false; });
+
+  c.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    drawingAnnotation = true;
+    var t = e.touches[0];
+    drawLastX = t.clientX;
+    drawLastY = t.clientY;
+  }, { passive: false });
+  c.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    if (!drawingAnnotation) return;
+    var t = e.touches[0];
+    drawCtx.strokeStyle = drawColor;
+    drawCtx.beginPath();
+    drawCtx.moveTo(drawLastX, drawLastY);
+    drawCtx.lineTo(t.clientX, t.clientY);
+    drawCtx.stroke();
+    drawLastX = t.clientX;
+    drawLastY = t.clientY;
+  }, { passive: false });
+  c.addEventListener('touchend', function() { drawingAnnotation = false; });
+
+  window.addEventListener('resize', function() {
+    var imgData = drawCtx.getImageData(0, 0, c.width, c.height);
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    drawCtx.putImageData(imgData, 0, 0);
+    drawCtx.lineWidth = 4;
+    drawCtx.lineCap = 'round';
+    drawCtx.strokeStyle = drawColor;
+  });
+}
+
+function toggleDraw() {
+  drawActive = !drawActive;
+  document.getElementById('drawWrap').classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('active', drawActive);
+}
+
+function setDrawColor(c, el) {
+  drawColor = c;
+  if (drawCtx) drawCtx.strokeStyle = c;
+  var swatches = document.querySelectorAll('.draw-toolbar .color-swatch');
+  for (var i = 0; i < swatches.length; i++) swatches[i].classList.remove('active');
+  el.classList.add('active');
+}
+
+function clearDrawCanvas() {
+  if (drawCtx) {
+    drawCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  }
+}
+
+// ===================== INIT =====================
+document.addEventListener('DOMContentLoaded', function() {
+  initSlides();
+  initMatch();
+  initPaint();
+  initDraw();
+  updateTimerDisplay();
+
+  // Set initial active boot step
+  var firstBootBtn = document.querySelector('#bootSteps .boot-step-btn');
+  if (firstBootBtn) firstBootBtn.classList.add('active');
+
+  // Video embed
+  if (youtube_video_id) {
+    document.getElementById('videoContainer').innerHTML =
+      '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px">' +
+      '<iframe src="https://www.youtube.com/embed/' + youtube_video_id +
+      '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen></iframe></div>';
+  }
+});
+
+// Resize paint canvas on window resize
+window.addEventListener('resize', function() {
+  // Only resize if paint canvas exists and has context
+  if (paintCanvas && paintCtx) {
+    var wrapper = paintCanvas.parentElement;
+    if (wrapper) {
+      var rect = wrapper.getBoundingClientRect();
+      // Don't resize if it would lose drawings - just leave it
+    }
+  }
+});
+</script>
+</body>
+</html>
