@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scratch 動畫魔法師｜五年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/scratch-animation/">
+<meta property="og:title" content="Scratch 動畫魔法師｜五年級資訊科技">
+<meta property="og:description" content="學會用 Scratch 積木製作 30 秒動畫短片！從角色造型到場景切換，6 個階段完整教學。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/scratch-animation/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/scratch-animation/og-image.png">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+html{font-size:18px;scroll-behavior:smooth}
+:root{
+  --bg:#fef3f8;--surface:#fff0f6;--panel:#ffffff;
+  --c1:#ff85b3;--c2:#ffd54f;--c3:#6cb4ff;--c4:#7be495;--c5:#c490ff;
+  --text:#2a2244;--dim:#8878aa;
+  --shadow:0 4px 16px rgba(0,0,0,0.10);
+  --radius:16px;
+  --sb-motion:#4C97FF;--sb-looks:#9966FF;--sb-sound:#CF63CF;
+  --sb-events:#FFBF00;--sb-control:#FFAB19;--sb-sensing:#5CB1D6;
+  --sb-operators:#59C059;--sb-variables:#FF8C1A;--sb-myblocks:#FF6680;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;line-height:1.7;min-height:100vh}
+a{color:var(--c1);text-decoration:none}
+.container{max-width:1400px;margin:0 auto;padding:0 24px}
+
+/* ── Header ── */
+.site-header{position:sticky;top:0;z-index:200;background:rgba(254,243,248,.95);backdrop-filter:blur(12px);border-bottom:3px solid var(--c1);padding:10px 24px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:2px solid var(--c1);background:transparent;color:var(--c1);font-family:'Noto Sans TC',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:1px;white-space:nowrap;transition:.2s;border-radius:20px}
+.home-btn:hover{background:var(--c1);color:#fff;transform:translate(-1px,-1px)}
+.header-title{font-size:1.1rem;font-weight:900;color:var(--c1);white-space:nowrap}
+.header-grade{font-size:.85rem;color:var(--c5);background:rgba(196,144,255,.15);padding:3px 12px;border-radius:20px;white-space:nowrap;font-weight:700}
+.progress-wrap{flex:1;min-width:120px;display:flex;align-items:center;gap:8px}
+.progress-bar{flex:1;height:10px;background:var(--panel);border-radius:10px;overflow:hidden;box-shadow:inset 0 1px 4px rgba(0,0,0,.06)}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--c1),var(--c5));transition:width .4s;border-radius:10px}
+.progress-txt{font-size:.8rem;color:var(--dim);white-space:nowrap;font-weight:700}
+
+/* ── Mode Toggle ── */
+.mode-bar{background:var(--surface);border-bottom:1px solid rgba(0,0,0,.04);padding:8px 24px;text-align:center}
+.mode-bar button{background:transparent;border:2px solid var(--dim);color:var(--dim);padding:5px 18px;font-family:inherit;font-size:.85rem;cursor:pointer;transition:.2s;margin:0 4px;border-radius:20px;font-weight:700}
+.mode-bar button.active{border-color:var(--c1);color:var(--c1);background:rgba(255,133,179,.1)}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:48px 24px 32px}
+.hero-emoji{font-size:3rem;margin-bottom:12px}
+.hero h2{font-size:1rem;color:var(--c5);letter-spacing:.08em;margin-bottom:8px;font-weight:700}
+.hero h3{font-size:1.5rem;font-weight:900;margin-bottom:10px;color:var(--text)}
+.hero p{color:var(--dim);font-size:1rem;max-width:700px;margin:0 auto}
+
+/* ── Objectives ── */
+.obj-section{padding:0 24px 32px}
+.obj-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1400px;margin:0 auto}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--panel);border:2px solid rgba(255,133,179,.2);border-radius:var(--radius);font-size:.95rem;transition:.2s;box-shadow:var(--shadow);font-weight:700}
+.obj-chip:hover{border-color:var(--c1);transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,133,179,.18)}
+.obj-chip .icon{font-size:1.1rem}
+
+/* ── Stage Nav ── */
+.stage-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 24px 40px;max-width:1400px;margin:0 auto}
+.stage-pill{padding:8px 18px;background:var(--panel);border:2px solid rgba(0,0,0,.06);border-radius:20px;font-size:.9rem;cursor:pointer;transition:.2s;color:var(--dim);font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.stage-pill:hover,.stage-pill.active{border-color:var(--c1);color:var(--c1);box-shadow:0 4px 12px rgba(255,133,179,.15)}
+.stage-pill.done{border-color:var(--c4);color:#3caf5c;background:rgba(123,228,149,.08)}
+
+/* ── Stage Section ── */
+.level-section{padding:48px 24px;max-width:1400px;margin:0 auto}
+.section-header{margin-bottom:28px}
+.stage-badge{display:inline-block;font-size:.7rem;color:#fff;background:var(--c1);padding:5px 16px;letter-spacing:.1em;margin-bottom:10px;border-radius:20px;font-weight:700}
+.stage-badge.s2{background:var(--c2);color:var(--text)}
+.stage-badge.s3{background:var(--c3)}
+.stage-badge.s4{background:var(--c4);color:var(--text)}
+.stage-badge.s5{background:var(--c5)}
+.stage-badge.s6{background:var(--c1)}
+.section-title{font-size:1.4rem;font-weight:900;margin-bottom:6px}
+.section-sub{font-size:1rem;color:var(--dim)}
+
+/* ── Steps Card ── */
+.steps-card{background:var(--panel);border:2px solid rgba(0,0,0,.04);border-radius:var(--radius);padding:24px;margin-bottom:24px;box-shadow:var(--shadow)}
+.steps-card h4{font-size:1.05rem;font-weight:700;margin-bottom:16px;color:var(--c1);display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.04);font-size:1rem;line-height:1.7}
+.steps-list li:last-child{border-bottom:none}
+.step-num{counter-increment:step;min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:var(--c1);color:#fff;font-size:.85rem;font-weight:700;border-radius:50%;flex-shrink:0;margin-top:2px}
+.step-num::after{content:counter(step)}
+
+/* ── Scratch Block Inline ── */
+.sb{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:5px;font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap;box-shadow:0 2px 0 rgba(0,0,0,.22);vertical-align:middle;margin:1px 2px;line-height:1.5}
+.sb.motion{background:var(--sb-motion)}
+.sb.looks{background:var(--sb-looks)}
+.sb.sound{background:var(--sb-sound)}
+.sb.events{background:var(--sb-events);color:#333}
+.sb.control{background:var(--sb-control);color:#333}
+.sb.sensing{background:var(--sb-sensing)}
+.sb.operators{background:var(--sb-operators)}
+.sb.variables{background:var(--sb-variables)}
+.sb.myblocks{background:var(--sb-myblocks)}
+
+/* ── Code Stack ── */
+.code-stack{background:#fef3f8;border:2px solid var(--c1);border-radius:var(--radius);padding:16px 20px;margin:14px 0;overflow-x:auto}
+.code-stack .cs-title{font-size:.75rem;color:var(--dim);margin-bottom:10px;letter-spacing:.05em;font-weight:700}
+.cs-line{padding:3px 0;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.cs-line.i1{padding-left:24px}
+.cs-line.i2{padding-left:48px}
+
+/* ── Tip Box ── */
+.tip-box{background:rgba(123,228,149,.08);border-left:4px solid var(--c4);padding:14px 18px;margin:14px 0;border-radius:0 var(--radius) var(--radius) 0;font-size:.95rem}
+.tip-box.warn{background:rgba(255,133,179,.08);border-color:var(--c1)}
+.tip-box.info{background:rgba(108,180,255,.08);border-color:var(--c3)}
+
+/* ── Quiz ── */
+.quiz-section{margin-top:20px}
+.quiz-card{background:var(--panel);border:2px solid rgba(0,0,0,.04);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.quiz-q{font-size:1.05rem;font-weight:700;margin-bottom:12px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--surface);border:2px solid transparent;padding:10px 16px;border-radius:var(--radius);font-family:inherit;font-size:.95rem;color:var(--text);cursor:pointer;transition:.2s;text-align:left;font-weight:700}
+.quiz-opt:hover{border-color:var(--c3);background:rgba(108,180,255,.08)}
+.quiz-card.answered .quiz-opt{pointer-events:none;opacity:.5}
+.quiz-card.answered .quiz-opt.correct{opacity:1;border-color:var(--c4);background:rgba(123,228,149,.15);color:var(--text)}
+.quiz-card.answered .quiz-opt.wrong{opacity:1;border-color:var(--c1);background:rgba(255,133,179,.1)}
+.quiz-feedback{margin-top:10px;padding:10px 14px;border-radius:var(--radius);font-size:.95rem;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{background:rgba(123,228,149,.1);color:#2e8b4e}
+.quiz-feedback.wrong{background:rgba(255,133,179,.1);color:#c44}
+
+/* ── Teacher Note ── */
+.teacher-note{background:rgba(196,144,255,.06);border:2px dashed var(--c5);border-radius:var(--radius);padding:18px;margin-top:16px}
+.teacher-note h4{color:var(--c5);font-size:1rem;margin-bottom:8px}
+.teacher-note p,.teacher-note li{font-size:.95rem;color:var(--dim);line-height:1.7}
+
+/* ── Interactive Area ── */
+.interact-area{background:var(--panel);border:2px solid var(--c5);border-radius:var(--radius);padding:24px;margin:20px 0;box-shadow:0 4px 20px rgba(196,144,255,.1)}
+.interact-area h4{font-size:1.05rem;font-weight:700;color:var(--c5);margin-bottom:14px}
+.ia-btn{background:var(--c1);color:#fff;border:none;padding:8px 20px;border-radius:20px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s}
+.ia-btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.ia-btn.green{background:var(--c4);color:var(--text)}
+.ia-btn.blue{background:var(--c3)}
+.ia-btn.yellow{background:var(--c2);color:var(--text)}
+.ia-btn.purple{background:var(--c5)}
+.ia-display{font-size:1.8rem;font-weight:900;text-align:center;padding:20px;color:var(--c1);margin:12px 0}
+
+/* ── FAQ ── */
+.faq-item{border-bottom:1px solid rgba(0,0,0,.06);padding:16px 0}
+.faq-q{font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--c5)}
+.faq-q::before{content:'▶';font-size:.7rem;transition:transform .2s}
+.faq-item.open .faq-q::before{transform:rotate(90deg)}
+.faq-a{display:none;padding:10px 0 0 22px;font-size:.95rem;color:var(--dim);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+/* ── Project Task ── */
+.project-section{background:linear-gradient(135deg,rgba(255,133,179,.08),rgba(196,144,255,.08));border:2px solid var(--c1);border-radius:var(--radius);padding:28px;margin:32px auto;max-width:1400px}
+.project-section h3{font-size:1.2rem;font-weight:900;color:var(--c1);margin-bottom:14px}
+.project-checklist{list-style:none}
+.project-checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:1rem}
+.project-checklist input[type="checkbox"]{width:20px;height:20px;accent-color:var(--c1);flex-shrink:0;margin-top:3px}
+
+/* ── Rubric ── */
+.rubric-table{width:100%;border-collapse:collapse;margin:16px 0}
+.rubric-table th{background:var(--c1);color:#fff;font-size:.9rem;padding:10px 14px;text-align:left}
+.rubric-table td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.06);font-size:.95rem;vertical-align:top}
+.rubric-table tr:hover{background:rgba(255,133,179,.04)}
+
+/* ── NLM Cards ── */
+.nlm-card{background:var(--panel);padding:16px;border-radius:var(--radius);border:2px solid transparent;text-decoration:none;transition:.2s;display:block;box-shadow:var(--shadow)}
+.nlm-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+
+/* ── Slide Player ── */
+.slide-player{margin-top:12px}
+.slide-strip{display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin-top:8px}
+.slide-strip img{width:100px;height:auto;border:2px solid transparent;border-radius:8px;cursor:pointer;opacity:.6;transition:.2s;flex-shrink:0}
+.slide-strip img:hover{opacity:.9;border-color:var(--c2)}
+.slide-strip img.active{border-color:var(--c2);opacity:1}
+
+/* ── Floating Tools ── */
+#float-tools{position:fixed;right:20px;bottom:20px;z-index:400;display:flex;flex-direction:column;gap:8px}
+.float-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--c1);background:var(--panel);color:var(--c1);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;box-shadow:var(--shadow)}
+.float-btn:hover{background:var(--c1);color:#fff;transform:scale(1.08)}
+.float-btn.blue{border-color:var(--c3);color:var(--c3)}
+.float-btn.blue:hover{background:var(--c3);color:#fff}
+.float-btn.purple{border-color:var(--c5);color:var(--c5)}
+.float-btn.purple:hover{background:var(--c5);color:#fff}
+.float-btn.yellow{border-color:var(--c2);color:#b8941d}
+.float-btn.yellow:hover{background:var(--c2);color:var(--text)}
+.float-btn.green{border-color:var(--c4);color:#3caf5c}
+.float-btn.green:hover{background:var(--c4);color:var(--text)}
+
+.tool-panel{position:fixed;right:80px;bottom:20px;z-index:400;width:320px;background:var(--panel);border:2px solid var(--c1);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:none}
+.tool-panel.show{display:block}
+.tool-panel h4{font-size:1rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.tool-panel .close{cursor:pointer;color:var(--dim);font-size:1.1rem}
+.tool-panel .close:hover{color:var(--c1)}
+
+/* Timer */
+.timer-display{font-size:2.2rem;text-align:center;color:var(--c1);padding:12px 0;font-weight:900}
+.timer-btns{display:flex;gap:6px;flex-wrap:wrap}
+.timer-btns button{flex:1;padding:8px;border:2px solid var(--c3);background:transparent;color:var(--c3);font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:20px;transition:.2s}
+.timer-btns button:hover{background:var(--c3);color:#fff}
+.timer-presets{display:flex;gap:6px;margin-top:8px}
+.timer-presets button{padding:5px 12px;border:1px solid var(--dim);background:transparent;color:var(--dim);font-size:.8rem;cursor:pointer;border-radius:20px;transition:.2s;font-weight:700}
+.timer-presets button:hover{border-color:var(--c2);color:#b8941d;background:rgba(255,213,79,.1)}
+.timer-custom{display:flex;gap:6px;margin-top:8px;align-items:center}
+.timer-custom input{width:60px;padding:4px 8px;border:2px solid var(--c3);border-radius:10px;background:var(--surface);font-family:inherit;font-size:.85rem;color:var(--text);text-align:center}
+.timer-custom button{padding:5px 12px;border:2px solid var(--c4);background:var(--c4);color:var(--text);font-size:.8rem;cursor:pointer;border-radius:20px;font-weight:700;transition:.2s}
+
+/* Lottery */
+.lottery-result{font-size:2rem;text-align:center;color:var(--c1);padding:14px 0;min-height:60px;font-weight:900}
+.lot-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap}
+.lot-row input[type="number"]{width:55px;padding:4px 6px;background:var(--surface);border:2px solid var(--c1);color:var(--text);font-family:inherit;border-radius:10px;text-align:center}
+.lot-row label{display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer;font-weight:700}
+.lot-btns{display:flex;gap:6px}
+.lot-btns button{flex:1;padding:8px;border:2px solid var(--c1);background:var(--c1);color:#fff;font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;border-radius:20px;transition:.2s}
+.lot-btns button:hover{filter:brightness(1.1)}
+.lot-btns .reset-btn{background:transparent;color:var(--c5);border-color:var(--c5)}
+
+/* ── Drawing Pen ── */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;display:block;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:var(--panel);border:2px solid var(--c1);padding:10px 14px;display:none;gap:8px;align-items:center;border-radius:var(--radius);box-shadow:var(--shadow)}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:28px;height:28px;border:2px solid rgba(0,0,0,.15);cursor:pointer;padding:0;transition:.2s;border-radius:50%}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 10px currentColor;border-color:var(--text)}
+.draw-toolbar .draw-clear{background:transparent;border:2px solid var(--c1);color:var(--c1);padding:4px 14px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;border-radius:20px}
+.draw-toolbar .draw-clear:hover{background:var(--c1);color:#fff}
+.draw-toolbar .pen-size{display:flex;align-items:center;gap:4px}
+.draw-toolbar .pen-size button{width:28px;height:28px;border:2px solid var(--dim);background:transparent;color:var(--dim);border-radius:50%;cursor:pointer;font-weight:700;font-size:.85rem;transition:.2s}
+.draw-toolbar .pen-size button:hover{border-color:var(--c1);color:var(--c1)}
+
+/* ── Scroll Top ── */
+#goTopBtn{position:fixed;left:20px;bottom:80px;z-index:400;width:42px;height:42px;border-radius:50%;border:2px solid var(--dim);background:var(--panel);color:var(--dim);font-size:1rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:.2s;box-shadow:var(--shadow)}
+#goTopBtn:hover{border-color:var(--c1);color:var(--c1)}
+
+/* ── Footer ── */
+.site-footer{text-align:center;padding:32px 24px;font-size:.85rem;color:var(--dim);border-top:2px solid rgba(0,0,0,.04)}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  html{font-size:16px}
+  .header-inner{gap:8px}
+  .header-title{font-size:.95rem}
+  .progress-wrap{min-width:80px}
+  .hero h3{font-size:1.3rem}
+  .tool-panel{right:10px;bottom:70px;width:calc(100vw - 20px)}
+  .interact-area{padding:16px}
+  .coord-grid-wrap{overflow-x:auto}
+}
+</style>
+</head>
+<body>
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="site-header">
+<div class="header-inner">
+  <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+  <span class="header-title">🎬 Scratch 動畫魔法師</span>
+  <span class="header-grade">五年級｜程式設計</span>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-txt" id="progressTxt">0 / 6</span>
+  </div>
+</div>
+</header>
+
+<!-- ═══════════════ MODE BAR ═══════════════ -->
+<div class="mode-bar">
+  <button class="active" onclick="setMode('student')">👨‍🎓 學生模式</button>
+  <button onclick="setMode('teacher')">👩‍🏫 教師模式</button>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-emoji">🎨🌟🎬</div>
+  <h2>SCRATCH ANIMATION WIZARD</h2>
+  <h3>用 Scratch 積木變出一部超酷的動畫短片！</h3>
+  <p>今天我們要學會讓角色動起來、會說話、會變魔術，最後完成一部 30 秒的動畫小電影。準備好了嗎？</p>
+  <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+    <div style="background:var(--panel);padding:10px 18px;border-radius:20px;font-size:.85rem;font-weight:700;color:var(--c1);box-shadow:var(--shadow)">⏰ 預估時間：2 節課</div>
+    <div style="background:var(--panel);padding:10px 18px;border-radius:20px;font-size:.85rem;font-weight:700;color:var(--c3);box-shadow:var(--shadow)">🧩 6 個學習階段</div>
+    <div style="background:var(--panel);padding:10px 18px;border-radius:20px;font-size:.85rem;font-weight:700;color:var(--c5);box-shadow:var(--shadow)">🎮 6 個互動小工具</div>
+  </div>
+</section>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<section class="obj-section">
+<div class="obj-grid">
+  <div class="obj-chip"><span class="icon">🎨</span> 認識角色與造型設計</div>
+  <div class="obj-chip"><span class="icon">📖</span> 學會逐格動畫原理</div>
+  <div class="obj-chip"><span class="icon">🚀</span> 掌握滑行移動技巧</div>
+  <div class="obj-chip"><span class="icon">📡</span> 理解廣播訊息互動</div>
+  <div class="obj-chip"><span class="icon">✨</span> 運用視覺特效濾鏡</div>
+  <div class="obj-chip"><span class="icon">🎬</span> 完成場景切換動畫</div>
+</div>
+</section>
+
+<!-- ═══════════════ STAGE NAV ═══════════════ -->
+<nav class="stage-nav" id="stageNav">
+  <div class="stage-pill active" onclick="scrollToStage(1)">1 角色造型</div>
+  <div class="stage-pill" onclick="scrollToStage(2)">2 逐格動畫</div>
+  <div class="stage-pill" onclick="scrollToStage(3)">3 滑行移動</div>
+  <div class="stage-pill" onclick="scrollToStage(4)">4 廣播訊息</div>
+  <div class="stage-pill" onclick="scrollToStage(5)">5 視覺特效</div>
+  <div class="stage-pill" onclick="scrollToStage(6)">6 場景切換</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 1: 角色與造型魔法
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec1">
+<div class="section-header">
+  <span class="stage-badge">STAGE 1</span>
+  <h2 class="section-title">🎨 角色與造型魔法</h2>
+  <p class="section-sub">認識 Scratch 的角色世界，學會新增角色和編輯造型！</p>
+</div>
+
+<div class="steps-card">
+  <h4>📖 學習步驟</h4>
+  <ul class="steps-list">
+    <li><div class="step-num"></div><div>打開 Scratch，右下角的「角色區」就是你的演員休息室 🎭。預設會有一隻 Scratch Cat（橘色小貓），這就是你的第一個角色！</div></li>
+    <li><div class="step-num"></div><div>新增角色有 4 種方式：<strong>選個角色</strong>（從圖庫挑）、<strong>繪畫</strong>（自己畫）、<strong>驚喜</strong>（隨機出現）、<strong>上傳</strong>（從電腦匯入圖片）。最常用的是從圖庫選角色 🖼️</div></li>
+    <li><div class="step-num"></div><div>每個角色可以有很多「造型」！點角色的「造型」標籤，就能看到和編輯造型。就像一個演員的不同套服裝 👗👔</div></li>
+    <li><div class="step-num"></div><div>在造型編輯器裡，你可以選「向量」或「點陣圖」模式。<strong>向量模式</strong>放大不會糊，適合畫簡單圖形 ✨。<strong>點陣圖模式</strong>像小畫家，適合自由塗鴉 🎨</div></li>
+    <li><div class="step-num"></div><div>用 <span class="sb looks">造型換成 [造型2]</span> 積木就可以在程式裡切換造型。搭配等待和重複，角色就會「動」起來！</div></li>
+    <li><div class="step-num"></div><div>角色的大小也很重要！使用 <span class="sb looks">尺寸設為 (80) %</span> 可以調整角色大小，100% 是原始大小，200% 是放大兩倍，50% 是縮小一半 📐</div></li>
+  </ul>
+</div>
+
+<div class="tip-box info">
+  💡 <strong>小技巧：</strong>從圖庫選角色時，很多角色本身就有多個造型（例如小貓有兩個走路的造型），這樣做動畫更方便！
+</div>
+
+<div class="tip-box">
+  🎯 <strong>圖庫推薦角色：</strong>Cat Walking（走路貓）、Ballerina（芭蕾舞者）、Dinosaur（恐龍）— 這些角色都自帶多個動畫造型，非常適合初學者！
+</div>
+
+<div class="steps-card" style="border-color:var(--c5);margin-top:16px">
+  <h4 style="color:var(--c5)">🎨 向量 vs 點陣圖 比較表</h4>
+  <div style="overflow-x:auto">
+  <table class="rubric-table" style="margin:0">
+    <thead><tr><th>比較項目</th><th>向量模式 ✨</th><th>點陣圖模式 🎨</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:700">放大效果</td><td>不會模糊，永遠清晰</td><td>會變模糊、鋸齒</td></tr>
+      <tr><td style="font-weight:700">適合畫</td><td>幾何圖形、簡潔設計</td><td>手繪風、自由塗鴉</td></tr>
+      <tr><td style="font-weight:700">工具</td><td>矩形、圓形、線條</td><td>筆刷、橡皮擦、填色</td></tr>
+      <tr><td style="font-weight:700">難度</td><td>⭐⭐ 中等</td><td>⭐ 簡單</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Interactive: 造型切換預覽器 -->
+<div class="interact-area">
+  <h4>🎮 造型切換預覽器</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:16px">點擊下面的角色卡片，看看不同造型之間的切換效果！每個角色有 4 種造型狀態。</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:16px 0" id="costumeGrid">
+    <div class="costume-card" onclick="cycleCostume(0)" style="background:linear-gradient(135deg,#ffe0ec,#fff0f6);border:3px solid var(--c1);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:.3s;user-select:none">
+      <div class="costume-display" style="font-size:3rem;margin-bottom:8px;transition:.3s" data-costumes="🐱,😺,😸,😻" data-idx="0">🐱</div>
+      <div style="font-size:.85rem;font-weight:700;color:var(--c1)">小貓</div>
+      <div class="costume-label" style="font-size:.75rem;color:var(--dim);margin-top:4px">造型 1 / 4</div>
+    </div>
+    <div class="costume-card" onclick="cycleCostume(1)" style="background:linear-gradient(135deg,#e0f4ff,#f0f8ff);border:3px solid var(--c3);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:.3s;user-select:none">
+      <div class="costume-display" style="font-size:3rem;margin-bottom:8px;transition:.3s" data-costumes="🦋,🐛,🐝,🐞" data-idx="0">🦋</div>
+      <div style="font-size:.85rem;font-weight:700;color:var(--c3)">蝴蝶</div>
+      <div class="costume-label" style="font-size:.75rem;color:var(--dim);margin-top:4px">造型 1 / 4</div>
+    </div>
+    <div class="costume-card" onclick="cycleCostume(2)" style="background:linear-gradient(135deg,#e8ffe0,#f0fff0);border:3px solid var(--c4);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:.3s;user-select:none">
+      <div class="costume-display" style="font-size:3rem;margin-bottom:8px;transition:.3s" data-costumes="🧙,🧙‍♂️,🧝,🧚" data-idx="0">🧙</div>
+      <div style="font-size:.85rem;font-weight:700;color:var(--c4)">魔法師</div>
+      <div class="costume-label" style="font-size:.75rem;color:var(--dim);margin-top:4px">造型 1 / 4</div>
+    </div>
+    <div class="costume-card" onclick="cycleCostume(3)" style="background:linear-gradient(135deg,#f0e8ff,#f8f0ff);border:3px solid var(--c5);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:.3s;user-select:none">
+      <div class="costume-display" style="font-size:3rem;margin-bottom:8px;transition:.3s" data-costumes="🌸,🌺,🌻,🌷" data-idx="0">🌸</div>
+      <div style="font-size:.85rem;font-weight:700;color:var(--c5)">花朵</div>
+      <div class="costume-label" style="font-size:.75rem;color:var(--dim);margin-top:4px">造型 1 / 4</div>
+    </div>
+  </div>
+  <div class="tip-box" style="margin-top:8px">
+    ☝️ 點擊角色卡片就是「下一個造型」的概念！在 Scratch 裡用 <span class="sb looks">造型換成 [下一個造型]</span> 就能達到同樣效果。
+  </div>
+</div>
+
+<!-- Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" id="q1">
+    <div class="quiz-q">📝 Q1：在 Scratch 中，每個角色可以有幾個造型？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q1',this,false)">A. 只能有 1 個</button>
+      <button class="quiz-opt" onclick="checkQuiz('q1',this,false)">B. 最多 2 個</button>
+      <button class="quiz-opt" onclick="checkQuiz('q1',this,true)">C. 可以有很多個</button>
+      <button class="quiz-opt" onclick="checkQuiz('q1',this,false)">D. 最多 5 個</button>
+    </div>
+    <div class="quiz-feedback" id="q1-fb"></div>
+  </div>
+  <div class="quiz-card" id="q2">
+    <div class="quiz-q">📝 Q2：在造型編輯器中，哪種模式放大後圖片不會變模糊？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q2',this,false)">A. 點陣圖模式</button>
+      <button class="quiz-opt" onclick="checkQuiz('q2',this,true)">B. 向量模式</button>
+      <button class="quiz-opt" onclick="checkQuiz('q2',this,false)">C. 3D 模式</button>
+      <button class="quiz-opt" onclick="checkQuiz('q2',this,false)">D. 沒有差別</button>
+    </div>
+    <div class="quiz-feedback" id="q2-fb"></div>
+  </div>
+</div>
+
+<!-- Teacher Note -->
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師筆記</h4>
+  <p>先讓學生從角色圖庫中找有多造型的角色（如 Cat Walking、Ballerina），引導觀察造型間的微小差異。可讓學生嘗試用向量工具畫一個簡單角色的兩個造型（如張嘴/閉嘴的笑臉），體會「逐格」概念。建議時間：10 分鐘。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 2: 逐格動畫術
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec2">
+<div class="section-header">
+  <span class="stage-badge s2">STAGE 2</span>
+  <h2 class="section-title">📖 逐格動畫術</h2>
+  <p class="section-sub">掌握動畫的核心原理：快速切換造型 = 動起來！</p>
+</div>
+
+<div class="steps-card">
+  <h4>📖 學習步驟</h4>
+  <ul class="steps-list">
+    <li><div class="step-num"></div><div>動畫的秘密就是「快速切換圖片」！就像翻書動畫一樣，每頁畫面只有一點點不同，快速翻就看起來在動 📖✨</div></li>
+    <li><div class="step-num"></div><div>在 Scratch 中，使用 <span class="sb control">重複無限次</span> 把 <span class="sb looks">造型換成 [下一個造型]</span> 和 <span class="sb control">等待 (0.2) 秒</span> 包起來，角色就會不斷切換造型</div></li>
+    <li><div class="step-num"></div><div>等待的秒數決定動畫速度：<strong>0.1 秒</strong>超快速 ⚡、<strong>0.2~0.3 秒</strong>正常速度 🚶、<strong>0.5 秒以上</strong>慢動作 🐢</div></li>
+    <li><div class="step-num"></div><div>完整程式碼：<span class="sb events">當 ⚑ 被點擊</span> → <span class="sb control">重複無限次</span> → <span class="sb looks">造型換成 [下一個造型]</span> + <span class="sb control">等待 (0.2) 秒</span></div></li>
+    <li><div class="step-num"></div><div>進階技巧：如果只想讓動畫播放固定次數，用 <span class="sb control">重複 (10) 次</span> 取代「重複無限次」。例如重複 10 次就會切換 10 次造型後停下來 🔢</div></li>
+  </ul>
+</div>
+
+<div class="code-stack">
+  <div class="cs-title">基本逐格動畫 ▼</div>
+  <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+  <div class="cs-line"><span class="sb looks">造型換成 [造型1]</span></div>
+  <div class="cs-line"><span class="sb control">重複無限次</span></div>
+  <div class="cs-line i1"><span class="sb looks">造型換成 [下一個造型]</span></div>
+  <div class="cs-line i1"><span class="sb control">等待 (0.2) 秒</span></div>
+</div>
+
+<div class="code-stack" style="border-color:var(--c5);margin-top:12px">
+  <div class="cs-title">進階：邊走邊動的動畫 ▼</div>
+  <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+  <div class="cs-line"><span class="sb looks">造型換成 [造型1]</span></div>
+  <div class="cs-line"><span class="sb motion">定位到 x:(-200) y:(0)</span></div>
+  <div class="cs-line"><span class="sb control">重複 (40) 次</span></div>
+  <div class="cs-line i1"><span class="sb motion">移動 (10) 點</span></div>
+  <div class="cs-line i1"><span class="sb looks">造型換成 [下一個造型]</span></div>
+  <div class="cs-line i1"><span class="sb control">等待 (0.1) 秒</span></div>
+</div>
+
+<div class="tip-box warn">
+  ⚠️ <strong>常見錯誤：</strong>忘記加「等待」積木！沒有等待的話，角色會在一瞬間切換完所有造型，你根本看不到動畫效果。
+</div>
+
+<div class="tip-box info">
+  📺 <strong>動畫原理：</strong>電影每秒播放 24 張圖片（24fps），我們的 Scratch 動畫大約每秒 3~5 張就很流暢了。等待 0.2 秒 = 每秒 5 格，等待 0.3 秒 = 每秒約 3 格。
+</div>
+
+<!-- Interactive: 翻頁動畫模擬器 -->
+<div class="interact-area">
+  <h4>🎮 翻頁動畫模擬器</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:16px">拖動滑桿調整等待時間，觀察動畫速度的變化！</p>
+  <div style="text-align:center;margin:20px 0">
+    <div id="flipbookDisplay" style="font-size:5rem;line-height:1;min-height:90px;transition:.15s">🐱</div>
+    <div id="flipbookFrame" style="font-size:.85rem;color:var(--dim);margin-top:8px;font-weight:700">第 1 格</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;margin:16px 0">
+    <span style="font-size:.85rem;font-weight:700;color:var(--c1);white-space:nowrap">⚡ 快</span>
+    <input type="range" id="flipbookSpeed" min="100" max="1000" value="300" step="50" style="flex:1;accent-color:var(--c1)">
+    <span style="font-size:.85rem;font-weight:700;color:var(--c3);white-space:nowrap">🐢 慢</span>
+  </div>
+  <div style="text-align:center;margin-bottom:12px">
+    <span id="flipbookMs" style="font-size:1rem;font-weight:900;color:var(--c5)">等待 0.3 秒</span>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+    <button class="ia-btn" onclick="flipbookToggle()" id="flipbookBtn">▶ 播放</button>
+    <button class="ia-btn blue" onclick="flipbookStop()">⏹ 停止</button>
+  </div>
+  <div style="display:flex;gap:6px;justify-content:center;margin-top:16px;flex-wrap:wrap" id="flipbookFrames">
+    <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:2px solid var(--c1);border-radius:10px;font-size:1.5rem" class="ff-active">🐱</div>
+    <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:2px solid transparent;border-radius:10px;font-size:1.5rem">😺</div>
+    <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:2px solid transparent;border-radius:10px;font-size:1.5rem">😸</div>
+    <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:2px solid transparent;border-radius:10px;font-size:1.5rem">😻</div>
+    <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:2px solid transparent;border-radius:10px;font-size:1.5rem">🐱</div>
+    <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:2px solid transparent;border-radius:10px;font-size:1.5rem">😺</div>
+  </div>
+</div>
+
+<!-- Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" id="q3">
+    <div class="quiz-q">📝 Q1：要讓角色持續播放動畫，需要用哪個積木把「切換造型」包起來？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q3',this,false)">A. 如果⋯那麼</button>
+      <button class="quiz-opt" onclick="checkQuiz('q3',this,true)">B. 重複無限次</button>
+      <button class="quiz-opt" onclick="checkQuiz('q3',this,false)">C. 等待 1 秒</button>
+      <button class="quiz-opt" onclick="checkQuiz('q3',this,false)">D. 廣播訊息</button>
+    </div>
+    <div class="quiz-feedback" id="q3-fb"></div>
+  </div>
+  <div class="quiz-card" id="q4">
+    <div class="quiz-q">📝 Q2：如果動畫太快看不清楚，應該怎麼調整？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q4',this,false)">A. 刪掉一些造型</button>
+      <button class="quiz-opt" onclick="checkQuiz('q4',this,false)">B. 把角色變大</button>
+      <button class="quiz-opt" onclick="checkQuiz('q4',this,true)">C. 增加「等待」的秒數</button>
+      <button class="quiz-opt" onclick="checkQuiz('q4',this,false)">D. 關掉電腦重新開機</button>
+    </div>
+    <div class="quiz-feedback" id="q4-fb"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師筆記</h4>
+  <p>可以帶學生體驗製作簡易翻書動畫（便利貼翻書），建立「動畫 = 快速切換圖片」的概念。讓學生嘗試不同等待秒數（0.05、0.1、0.3、1.0），觀察速度差異。建議時間：8 分鐘。重點強調「一定要加等待積木」，這是學生最常犯的錯誤。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 3: 滑行移動大冒險
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec3">
+<div class="section-header">
+  <span class="stage-badge s3">STAGE 3</span>
+  <h2 class="section-title">🚀 滑行移動大冒險</h2>
+  <p class="section-sub">學會用座標和滑行積木，讓角色在舞台上到處走！</p>
+</div>
+
+<div class="steps-card">
+  <h4>📖 學習步驟</h4>
+  <ul class="steps-list">
+    <li><div class="step-num"></div><div>Scratch 舞台就像一張方格紙 📐。正中間是 (0, 0)，往右 X 變大、往左 X 變小、往上 Y 變大、往下 Y 變小。舞台範圍是 X: -240 ~ 240，Y: -180 ~ 180</div></li>
+    <li><div class="step-num"></div><div>使用 <span class="sb motion">定位到 x:(0) y:(0)</span> 可以讓角色「瞬間移動」到指定位置，通常用在程式開頭做初始化 🏠</div></li>
+    <li><div class="step-num"></div><div>使用 <span class="sb motion">滑行 (1) 秒到 x:(100) y:(50)</span> 可以讓角色「滑過去」，看起來像在走路或飛行 ✈️。秒數越大越慢，越小越快</div></li>
+    <li><div class="step-num"></div><div>搭配 <span class="sb motion">面朝 (90) 度</span> 可以讓角色轉向：90 = 右、-90 = 左、0 = 上、180 = 下。讓角色看起來朝正確方向走路 🧭</div></li>
+    <li><div class="step-num"></div><div>動畫的起點很重要！程式開頭一定要先用 <span class="sb motion">定位到 x:() y:()</span> 設定初始位置，這樣每次按 ⚑ 角色才會從同一個地方開始 🎯</div></li>
+    <li><div class="step-num"></div><div>想讓角色沿著曲線走？可以用多段「滑行」串接！例如先滑到 (0, 100) 再滑到 (200, 0)，角色就會走出一個弧形路線 🌙</div></li>
+  </ul>
+</div>
+
+<div class="code-stack">
+  <div class="cs-title">基本移動動畫 ▼</div>
+  <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+  <div class="cs-line"><span class="sb motion">定位到 x:(-200) y:(0)</span></div>
+  <div class="cs-line"><span class="sb motion">面朝 (90) 度</span></div>
+  <div class="cs-line"><span class="sb motion">滑行 (2) 秒到 x:(200) y:(0)</span></div>
+</div>
+
+<div class="code-stack" style="border-color:var(--c3);margin-top:12px">
+  <div class="cs-title">進階：弧形路線移動 ▼</div>
+  <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+  <div class="cs-line"><span class="sb motion">定位到 x:(-200) y:(-100)</span></div>
+  <div class="cs-line"><span class="sb motion">面朝 (45) 度</span></div>
+  <div class="cs-line"><span class="sb motion">滑行 (1) 秒到 x:(0) y:(100)</span></div>
+  <div class="cs-line"><span class="sb motion">面朝 (135) 度</span></div>
+  <div class="cs-line"><span class="sb motion">滑行 (1) 秒到 x:(200) y:(-100)</span></div>
+</div>
+
+<div class="code-stack" style="border-color:var(--c4);margin-top:12px">
+  <div class="cs-title">進階：邊走邊說話 ▼</div>
+  <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+  <div class="cs-line"><span class="sb motion">定位到 x:(-200) y:(0)</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [出發囉！] (1) 秒</span></div>
+  <div class="cs-line"><span class="sb motion">滑行 (2) 秒到 x:(0) y:(0)</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [到了一半！] (1) 秒</span></div>
+  <div class="cs-line"><span class="sb motion">滑行 (2) 秒到 x:(200) y:(0)</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [到達終點！] (1) 秒</span></div>
+</div>
+
+<div class="tip-box">
+  🧭 <strong>方向速查：</strong>0° = 朝上 ⬆️ ｜ 90° = 朝右 ➡️ ｜ 180° = 朝下 ⬇️ ｜ -90° = 朝左 ⬅️
+</div>
+
+<!-- Interactive: 座標探險家 -->
+<div class="interact-area">
+  <h4>🎮 座標探險家</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:16px">在下面的座標格上拖動粉紅色的點，觀察 X 和 Y 座標的變化！</p>
+  <div class="coord-grid-wrap" style="position:relative;margin:16px auto;width:100%;max-width:500px">
+    <canvas id="coordCanvas" width="480" height="360" style="width:100%;border:2px solid var(--c3);border-radius:var(--radius);background:#fff;cursor:crosshair;display:block;touch-action:none"></canvas>
+    <div id="coordDisplay" style="text-align:center;margin-top:12px;font-size:1.2rem;font-weight:900;color:var(--c1)">X: 0 &nbsp; Y: 0</div>
+  </div>
+  <div class="tip-box" style="margin-top:8px">
+    🎯 試試看：把圓點拖到右上角，X 和 Y 都會是正數！拖到左下角，X 和 Y 都會是負數！
+  </div>
+</div>
+
+<!-- Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" id="q5">
+    <div class="quiz-q">📝 Q1：Scratch 舞台正中間的座標是？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q5',this,false)">A. X: 100, Y: 100</button>
+      <button class="quiz-opt" onclick="checkQuiz('q5',this,true)">B. X: 0, Y: 0</button>
+      <button class="quiz-opt" onclick="checkQuiz('q5',this,false)">C. X: 240, Y: 180</button>
+      <button class="quiz-opt" onclick="checkQuiz('q5',this,false)">D. X: -240, Y: -180</button>
+    </div>
+    <div class="quiz-feedback" id="q5-fb"></div>
+  </div>
+  <div class="quiz-card" id="q6">
+    <div class="quiz-q">📝 Q2：「滑行」和「定位到」最大的差別是什麼？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q6',this,false)">A. 顏色不同</button>
+      <button class="quiz-opt" onclick="checkQuiz('q6',this,true)">B. 滑行有過程動畫，定位到是瞬間移動</button>
+      <button class="quiz-opt" onclick="checkQuiz('q6',this,false)">C. 滑行只能往右，定位到能去任何地方</button>
+      <button class="quiz-opt" onclick="checkQuiz('q6',this,false)">D. 沒有差別，都一樣</button>
+    </div>
+    <div class="quiz-feedback" id="q6-fb"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師筆記</h4>
+  <p>可用實體教具（大方格紙 + 磁鐵）讓學生體驗座標系統。強調「初始化」的概念：每次按綠旗，角色要回到起始位置。常見問題：學生會忘記設定初始位置，導致動畫第二次播放時角色位置錯亂。建議時間：10 分鐘。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 4: 廣播對講機
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec4">
+<div class="section-header">
+  <span class="stage-badge s4">STAGE 4</span>
+  <h2 class="section-title">📡 廣播對講機</h2>
+  <p class="section-sub">學會用「廣播訊息」讓多個角色互相配合演出！</p>
+</div>
+
+<div class="steps-card">
+  <h4>📖 學習步驟</h4>
+  <ul class="steps-list">
+    <li><div class="step-num"></div><div>在動畫中，我們經常需要「A 做完某件事之後，B 才開始動作」。這就需要用到「廣播」功能 📡，就像對講機一樣！</div></li>
+    <li><div class="step-num"></div><div><span class="sb events">廣播訊息 [開始走路]</span>：像是對講機喊出暗號 📢，所有角色都會聽到這個訊息</div></li>
+    <li><div class="step-num"></div><div><span class="sb events">當收到訊息 [開始走路]</span>：角色在這裡「接收暗號」並開始執行動作 👂。只有裝了對應接收器的角色才會動作</div></li>
+    <li><div class="step-num"></div><div><span class="sb events">廣播訊息 [暗號] 並等待</span>：更厲害的版本 ⏳！會等到所有收到訊息的角色都做完事情，才繼續往下執行，適合排隊對話</div></li>
+    <li><div class="step-num"></div><div>自訂訊息名稱要取得有意義 📝！例如「角色A說完話了」「開始跳舞」「場景切換」，這樣你自己也看得懂</div></li>
+    <li><div class="step-num"></div><div>一個廣播可以被多個角色同時接收 📡📡📡！例如廣播「開始跳舞」，所有裝了 <span class="sb events">當收到訊息 [開始跳舞]</span> 的角色都會一起動作</div></li>
+  </ul>
+</div>
+
+<div class="tip-box info">
+  📡 <strong>廣播 vs 直接控制：</strong>如果你在角色 A 的程式裡寫角色 B 的動作，會非常混亂。用廣播讓每個角色管好自己的程式，像分工合作一樣更有條理！
+</div>
+
+<div class="code-stack">
+  <div class="cs-title">廣播對話範例 ▼</div>
+  <div class="cs-line"><span style="font-size:.85rem;color:var(--dim);font-weight:700">【角色 A 的程式】</span></div>
+  <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [嗨！你好嗎？] (2) 秒</span></div>
+  <div class="cs-line"><span class="sb events">廣播訊息 [A說完了]</span></div>
+  <div style="height:12px"></div>
+  <div class="cs-line"><span style="font-size:.85rem;color:var(--dim);font-weight:700">【角色 B 的程式】</span></div>
+  <div class="cs-line"><span class="sb events">當收到訊息 [A說完了]</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [我很好！謝謝！] (2) 秒</span></div>
+</div>
+
+<!-- Interactive: 廣播接力模擬 -->
+<div class="interact-area">
+  <h4>🎮 廣播接力模擬</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:16px">點擊第一個角色開始，觀察廣播訊息如何像接力棒一樣傳遞！</p>
+  <div style="display:flex;justify-content:center;gap:24px;align-items:flex-start;margin:24px 0;flex-wrap:wrap" id="broadcastArea">
+    <div style="text-align:center">
+      <div id="bc-char1" onclick="startBroadcast()" style="font-size:3.5rem;cursor:pointer;transition:.3s;padding:16px;background:var(--surface);border:3px solid var(--c1);border-radius:var(--radius);user-select:none">🐱</div>
+      <div style="font-size:.85rem;font-weight:700;margin-top:6px;color:var(--c1)">角色 A</div>
+      <div id="bc-msg1" style="background:var(--c1);color:#fff;padding:6px 14px;border-radius:16px;font-size:.85rem;font-weight:700;margin-top:6px;opacity:0;transition:.3s;white-space:nowrap">嗨！你好嗎？</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:30px">
+      <div id="bc-arrow1" style="font-size:1.5rem;color:var(--dim);opacity:0;transition:.3s">📡 ➜</div>
+      <div id="bc-signal1" style="font-size:.75rem;color:var(--c5);opacity:0;transition:.3s;font-weight:700;margin-top:4px">廣播: A說完了</div>
+    </div>
+    <div style="text-align:center">
+      <div id="bc-char2" style="font-size:3.5rem;padding:16px;background:var(--surface);border:3px solid var(--c3);border-radius:var(--radius);transition:.3s;opacity:.5">🐶</div>
+      <div style="font-size:.85rem;font-weight:700;margin-top:6px;color:var(--c3)">角色 B</div>
+      <div id="bc-msg2" style="background:var(--c3);color:#fff;padding:6px 14px;border-radius:16px;font-size:.85rem;font-weight:700;margin-top:6px;opacity:0;transition:.3s;white-space:nowrap">我很好！謝謝！</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:30px">
+      <div id="bc-arrow2" style="font-size:1.5rem;color:var(--dim);opacity:0;transition:.3s">📡 ➜</div>
+      <div id="bc-signal2" style="font-size:.75rem;color:var(--c5);opacity:0;transition:.3s;font-weight:700;margin-top:4px">廣播: B說完了</div>
+    </div>
+    <div style="text-align:center">
+      <div id="bc-char3" style="font-size:3.5rem;padding:16px;background:var(--surface);border:3px solid var(--c4);border-radius:var(--radius);transition:.3s;opacity:.5">🐰</div>
+      <div style="font-size:.85rem;font-weight:700;margin-top:6px;color:var(--c4)">角色 C</div>
+      <div id="bc-msg3" style="background:var(--c4);color:var(--text);padding:6px 14px;border-radius:16px;font-size:.85rem;font-weight:700;margin-top:6px;opacity:0;transition:.3s;white-space:nowrap">大家一起玩！</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:8px">
+    <button class="ia-btn purple" onclick="resetBroadcast()">🔄 重新播放</button>
+  </div>
+</div>
+
+<!-- Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" id="q7">
+    <div class="quiz-q">📝 Q1：「廣播訊息」的功能是什麼？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q7',this,false)">A. 讓角色變大</button>
+      <button class="quiz-opt" onclick="checkQuiz('q7',this,true)">B. 送出一個暗號讓其他角色接收並執行動作</button>
+      <button class="quiz-opt" onclick="checkQuiz('q7',this,false)">C. 播放音樂</button>
+      <button class="quiz-opt" onclick="checkQuiz('q7',this,false)">D. 刪除角色</button>
+    </div>
+    <div class="quiz-feedback" id="q7-fb"></div>
+  </div>
+  <div class="quiz-card" id="q8">
+    <div class="quiz-q">📝 Q2：「廣播訊息並等待」和「廣播訊息」的差別是？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q8',this,false)">A. 完全一樣</button>
+      <button class="quiz-opt" onclick="checkQuiz('q8',this,false)">B. 「廣播訊息並等待」只能用一次</button>
+      <button class="quiz-opt" onclick="checkQuiz('q8',this,true)">C. 「廣播訊息並等待」會等接收方做完才繼續</button>
+      <button class="quiz-opt" onclick="checkQuiz('q8',this,false)">D. 「廣播訊息」比較快</button>
+    </div>
+    <div class="quiz-feedback" id="q8-fb"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師筆記</h4>
+  <p>用「對講機」比喻說明廣播，效果很好。可請三位學生上台表演：A 說完話後舉手（廣播），B 看到舉手才開口（接收）。強調「廣播名稱」要取有意義的名字，不要取「訊息1」這種看不懂的。建議時間：10 分鐘。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 5: 特效濾鏡秀
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec5">
+<div class="section-header">
+  <span class="stage-badge s5">STAGE 5</span>
+  <h2 class="section-title">✨ 特效濾鏡秀</h2>
+  <p class="section-sub">用 Scratch 的 7 種圖像特效讓角色變出魔法！</p>
+</div>
+
+<div class="steps-card">
+  <h4>📖 學習步驟</h4>
+  <ul class="steps-list">
+    <li><div class="step-num"></div><div>Scratch 有 7 種「圖像效果」，就像 Instagram 的濾鏡一樣 📸！可以讓角色變色、變形、變透明</div></li>
+    <li><div class="step-num"></div><div>使用 <span class="sb looks">圖像效果 [顏色] 改變 (25)</span> 來持續改變效果，數字可以是正的或負的。搭配重複積木可以做出漸變動畫 🌈</div></li>
+    <li><div class="step-num"></div><div>7 種特效分別是：<strong>顏色</strong> 🎨（改變色調）、<strong>魚眼</strong> 🐟（放大變形）、<strong>旋轉</strong> 🌀（螺旋扭曲）、<strong>像素化</strong> 🧱（馬賽克格子）、<strong>馬賽克</strong> 🔲（角色縮小複製）、<strong>亮度</strong> ☀️（調明暗）、<strong>透明</strong> 👻（變透明）</div></li>
+    <li><div class="step-num"></div><div>使用 <span class="sb looks">圖像效果 [顏色] 設為 (0)</span> 可以直接設定特效的強度值</div></li>
+    <li><div class="step-num"></div><div>使用 <span class="sb looks">清除所有圖形效果</span> 可以一口氣把所有特效歸零，讓角色恢復原狀 ✨</div></li>
+  </ul>
+</div>
+
+<div class="tip-box">
+  💡 <strong>特效組合技：</strong>你可以同時使用多種特效！例如一邊變色一邊旋轉，就能做出超酷的魔法效果 🪄
+</div>
+
+<!-- Interactive: 特效魔法鏡 -->
+<div class="interact-area">
+  <h4>🎮 特效魔法鏡</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:16px">點擊下方的特效按鈕，看看圖片會產生什麼變化！</p>
+  <div style="text-align:center;margin:20px 0">
+    <div id="effectTarget" style="font-size:6rem;line-height:1;display:inline-block;transition:.5s">🐱</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0" id="effectButtons">
+    <button class="ia-btn" onclick="applyEffect('color')" style="font-size:.85rem">🎨 顏色</button>
+    <button class="ia-btn yellow" onclick="applyEffect('fisheye')" style="font-size:.85rem">🐟 魚眼</button>
+    <button class="ia-btn purple" onclick="applyEffect('whirl')" style="font-size:.85rem">🌀 旋轉</button>
+    <button class="ia-btn blue" onclick="applyEffect('pixelate')" style="font-size:.85rem">🧱 像素化</button>
+    <button class="ia-btn green" onclick="applyEffect('mosaic')" style="font-size:.85rem">🔲 馬賽克</button>
+    <button class="ia-btn" style="font-size:.85rem;background:var(--c2);color:var(--text)" onclick="applyEffect('brightness')">☀️ 亮度</button>
+    <button class="ia-btn" style="font-size:.85rem;background:#aaa" onclick="applyEffect('ghost')">👻 透明</button>
+  </div>
+  <div style="display:flex;gap:12px;align-items:center;justify-content:center;margin:12px 0">
+    <span style="font-size:.85rem;font-weight:700;color:var(--dim)">強度：</span>
+    <input type="range" id="effectIntensity" min="0" max="100" value="50" style="width:200px;accent-color:var(--c5)">
+    <span id="effectValue" style="font-size:.85rem;font-weight:900;color:var(--c5)">50</span>
+  </div>
+  <div style="text-align:center">
+    <button class="ia-btn purple" onclick="clearEffects()">🧹 清除所有特效</button>
+  </div>
+  <div id="effectDesc" style="text-align:center;margin-top:12px;font-size:.95rem;color:var(--c5);font-weight:700;min-height:24px"></div>
+</div>
+
+<!-- Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" id="q9">
+    <div class="quiz-q">📝 Q1：Scratch 共有幾種圖像效果？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q9',this,false)">A. 3 種</button>
+      <button class="quiz-opt" onclick="checkQuiz('q9',this,false)">B. 5 種</button>
+      <button class="quiz-opt" onclick="checkQuiz('q9',this,true)">C. 7 種</button>
+      <button class="quiz-opt" onclick="checkQuiz('q9',this,false)">D. 10 種</button>
+    </div>
+    <div class="quiz-feedback" id="q9-fb"></div>
+  </div>
+  <div class="quiz-card" id="q10">
+    <div class="quiz-q">📝 Q2：要讓角色恢復正常外觀，應該使用哪個積木？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q10',this,false)">A. 隱藏</button>
+      <button class="quiz-opt" onclick="checkQuiz('q10',this,true)">B. 清除所有圖形效果</button>
+      <button class="quiz-opt" onclick="checkQuiz('q10',this,false)">C. 圖像效果設為 100</button>
+      <button class="quiz-opt" onclick="checkQuiz('q10',this,false)">D. 重新啟動 Scratch</button>
+    </div>
+    <div class="quiz-feedback" id="q10-fb"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師筆記</h4>
+  <p>讓學生自由實驗各種特效最有效。可以發起「特效大挑戰」：用至少 3 種特效組合做出一個魔法效果。注意「透明」特效設到 100 角色就看不見了，學生可能會以為角色不見了。建議時間：8 分鐘。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     STAGE 6: 場景大變身
+     ═══════════════════════════════════════════════════ -->
+<section class="level-section" id="sec6">
+<div class="section-header">
+  <span class="stage-badge s6">STAGE 6</span>
+  <h2 class="section-title">🎬 場景大變身</h2>
+  <p class="section-sub">學會切換背景，為動畫加入不同場景！</p>
+</div>
+
+<div class="steps-card">
+  <h4>📖 學習步驟</h4>
+  <ul class="steps-list">
+    <li><div class="step-num"></div><div>每個 Scratch 專案都有一個「舞台」，舞台可以有很多「背景」🖼️。就像電影的場景一樣，不同場景用不同背景！</div></li>
+    <li><div class="step-num"></div><div>新增背景：點左下角「舞台」→「背景」標籤，就可以從圖庫選、自己畫、或上傳圖片 🎨</div></li>
+    <li><div class="step-num"></div><div>使用 <span class="sb looks">背景換成 [森林]</span> 可以切換到指定背景。搭配等待積木，就能讓背景按順序切換 🎬</div></li>
+    <li><div class="step-num"></div><div>使用 <span class="sb events">當背景換成 [森林]</span> 可以讓角色在特定場景自動執行動作，例如森林場景時小鳥出現、城市場景時汽車出現 🌲🏙️</div></li>
+    <li><div class="step-num"></div><div>進階技巧：用「X 座標」配合「背景切換」實現場景轉場 🎞️。例如角色走到舞台右邊 (x>230) 時，自動切換到下一個背景並讓角色回到左邊</div></li>
+  </ul>
+</div>
+
+<div class="code-stack">
+  <div class="cs-title">場景切換範例 ▼</div>
+  <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+  <div class="cs-line"><span class="sb looks">背景換成 [教室]</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [上課好無聊...] (2) 秒</span></div>
+  <div class="cs-line"><span class="sb looks">背景換成 [操場]</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [下課了！好開心！] (2) 秒</span></div>
+  <div class="cs-line"><span class="sb looks">背景換成 [公園]</span></div>
+  <div class="cs-line"><span class="sb looks">說出 [放學去公園玩！] (2) 秒</span></div>
+</div>
+
+<!-- Interactive: 故事接龍器 -->
+<div class="interact-area">
+  <h4>🎮 故事接龍器</h4>
+  <p style="font-size:.95rem;color:var(--dim);margin-bottom:16px">點擊不同的場景卡片，看看故事會怎麼發展！</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:20px 0" id="sceneCards">
+    <div class="scene-card" onclick="showScene(0)" style="background:linear-gradient(135deg,#ffe8d0,#fff5ea);border:3px solid var(--c2);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:.3s">
+      <div style="font-size:3rem;margin-bottom:8px">🏫</div>
+      <div style="font-size:.9rem;font-weight:900;color:var(--text)">場景一：教室</div>
+      <div style="font-size:.8rem;color:var(--dim);margin-top:4px">故事的開頭</div>
+    </div>
+    <div class="scene-card" onclick="showScene(1)" style="background:linear-gradient(135deg,#d0f0d0,#eaffea);border:3px solid var(--c4);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:.3s">
+      <div style="font-size:3rem;margin-bottom:8px">🌳</div>
+      <div style="font-size:.9rem;font-weight:900;color:var(--text)">場景二：操場</div>
+      <div style="font-size:.8rem;color:var(--dim);margin-top:4px">故事的發展</div>
+    </div>
+    <div class="scene-card" onclick="showScene(2)" style="background:linear-gradient(135deg,#d0e8ff,#eaf4ff);border:3px solid var(--c3);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:.3s">
+      <div style="font-size:3rem;margin-bottom:8px">🎢</div>
+      <div style="font-size:.9rem;font-weight:900;color:var(--text)">場景三：遊樂園</div>
+      <div style="font-size:.8rem;color:var(--dim);margin-top:4px">故事的結尾</div>
+    </div>
+  </div>
+  <div id="sceneBubble" style="background:var(--panel);border:3px solid var(--c5);border-radius:var(--radius);padding:20px;margin-top:16px;min-height:80px;transition:.3s;position:relative;box-shadow:var(--shadow)">
+    <div style="position:absolute;top:-12px;left:30px;width:24px;height:24px;background:var(--panel);border-top:3px solid var(--c5);border-left:3px solid var(--c5);transform:rotate(45deg)"></div>
+    <div id="sceneText" style="font-size:1rem;line-height:1.7;color:var(--text)">👆 點擊上方的場景卡片，看看故事情節吧！</div>
+  </div>
+</div>
+
+<!-- Quiz -->
+<div class="quiz-section">
+  <div class="quiz-card" id="q11">
+    <div class="quiz-q">📝 Q1：在 Scratch 中，要切換場景應該改變什麼？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q11',this,false)">A. 角色的造型</button>
+      <button class="quiz-opt" onclick="checkQuiz('q11',this,true)">B. 舞台的背景</button>
+      <button class="quiz-opt" onclick="checkQuiz('q11',this,false)">C. 角色的大小</button>
+      <button class="quiz-opt" onclick="checkQuiz('q11',this,false)">D. 角色的位置</button>
+    </div>
+    <div class="quiz-feedback" id="q11-fb"></div>
+  </div>
+  <div class="quiz-card" id="q12">
+    <div class="quiz-q">📝 Q2：「當背景換成 [某背景]」這個積木可以用來做什麼？</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz('q12',this,false)">A. 改變背景顏色</button>
+      <button class="quiz-opt" onclick="checkQuiz('q12',this,false)">B. 刪除背景</button>
+      <button class="quiz-opt" onclick="checkQuiz('q12',this,true)">C. 讓角色在特定場景自動執行動作</button>
+      <button class="quiz-opt" onclick="checkQuiz('q12',this,false)">D. 讓背景自動旋轉</button>
+    </div>
+    <div class="quiz-feedback" id="q12-fb"></div>
+  </div>
+</div>
+
+<div class="teacher-note teacher-only">
+  <h4>👩‍🏫 教師筆記</h4>
+  <p>場景切換是動畫「故事感」的關鍵。讓學生先畫 3 張背景（開頭、中間、結尾），再用積木串接。可提醒學生「當背景換成」是寫在角色身上，不是寫在舞台上。建議時間：10 分鐘。</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PROJECT TASK
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:32px">
+<div class="project-section">
+  <h3>🏆 今日實作任務：30秒動畫短片</h3>
+  <p style="font-size:1rem;color:var(--dim);margin-bottom:16px">完成以下所有項目，你就是 Scratch 動畫魔法師！</p>
+  <ul class="project-checklist">
+    <li><input type="checkbox"> 建立至少 2 個角色，每個角色至少有 2 個造型</li>
+    <li><input type="checkbox"> 角色要有逐格動畫效果（造型切換 + 等待）</li>
+    <li><input type="checkbox"> 至少一個角色使用「滑行」移動</li>
+    <li><input type="checkbox"> 使用「廣播訊息」讓角色互動（例如對話）</li>
+    <li><input type="checkbox"> 使用至少 1 種視覺特效</li>
+    <li><input type="checkbox"> 至少切換 2 個不同場景（背景）</li>
+    <li><input type="checkbox"> 動畫長度約 30 秒</li>
+    <li><input type="checkbox"> 🌟 進階：加入音效讓動畫更生動</li>
+    <li><input type="checkbox"> 🌟 進階：加入角色對話泡泡</li>
+  </ul>
+</div>
+
+<!-- Teacher Rubric -->
+<div class="teacher-note teacher-only" style="margin-top:16px">
+  <h4>📊 評分標準（教師用）</h4>
+  <table class="rubric-table" style="margin-top:12px">
+    <thead>
+      <tr><th>項目</th><th>優秀 (5分)</th><th>良好 (3分)</th><th>加油 (1分)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="font-weight:700">角色設計</td><td>2+ 角色，造型設計精美</td><td>2 角色，造型基本</td><td>僅 1 角色</td></tr>
+      <tr><td style="font-weight:700">動畫效果</td><td>流暢逐格動畫 + 滑行</td><td>有動畫但不太流暢</td><td>幾乎沒有動畫</td></tr>
+      <tr><td style="font-weight:700">互動邏輯</td><td>廣播讓角色配合順暢</td><td>有使用廣播但效果普通</td><td>未使用廣播</td></tr>
+      <tr><td style="font-weight:700">特效與場景</td><td>多種特效 + 3 場景以上</td><td>1 特效 + 2 場景</td><td>無特效或僅 1 場景</td></tr>
+      <tr><td style="font-weight:700">故事完整度</td><td>有完整的開頭、發展、結尾</td><td>有故事但略顯零散</td><td>沒有明確故事線</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     NLM RESOURCE STATION
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:32px">
+<div class="steps-card">
+  <h4>📚 NotebookLM 資源站</h4>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0">
+    <a href="#" target="_blank" rel="noopener" class="nlm-card" style="border-color:var(--c3)">
+      <div style="font-size:1.3rem;margin-bottom:6px">📓</div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--c3)">教學筆記本</div>
+      <div style="font-size:.85rem;color:var(--dim)">完整教材 + AI 問答</div>
+    </a>
+    <a href="#" target="_blank" rel="noopener" class="nlm-card" style="border-color:var(--c2)">
+      <div style="font-size:1.3rem;margin-bottom:6px">📊</div>
+      <div style="font-size:.95rem;font-weight:700;color:#b8941d">授課簡報</div>
+      <div style="font-size:.85rem;color:var(--dim)">20 頁含主講者插畫</div>
+    </a>
+    <a href="#" target="_blank" rel="noopener" class="nlm-card" style="border-color:var(--c1)">
+      <div style="font-size:1.3rem;margin-bottom:6px">🎬</div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--c1)">自學影片</div>
+      <div style="font-size:.85rem;color:var(--dim)">AI 語音動畫講解</div>
+    </a>
+  </div>
+  <div style="margin-top:16px;padding:14px;background:rgba(108,180,255,.06);border-left:4px solid var(--c3);border-radius:0 var(--radius) var(--radius) 0">
+    <p style="font-size:.95rem;color:var(--dim);line-height:1.7">🔗 <strong>NLM 串接流程：</strong>教學文字 + 主講者.pdf → NotebookLM 精簡本 → AI 自動生成簡報與影片 → Claude Code 下載處理 → 嵌入教學駕駛艙 → GitHub Pages 上線</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FAQ
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:40px">
+<div class="steps-card">
+  <h4>❓ 常見問題 FAQ</h4>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 怎麼讓角色走路看起來很自然？</div>
+    <div class="faq-a">結合「造型切換」+「等待0.1~0.3秒」+「滑行」三個積木。讓角色一邊切換走路的造型，一邊滑行移動，看起來就像真的在走路了！</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 怎麼讓兩個角色對話？</div>
+    <div class="faq-a">使用「廣播訊息」功能，A說完話後廣播暗號，B收到暗號才開始說話。例如 A 用 <span class="sb looks">說出 [你好] (2) 秒</span> 然後 <span class="sb events">廣播訊息 [A說完了]</span>，B 用 <span class="sb events">當收到訊息 [A說完了]</span> 開始回話。</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 怎麼加入音效？</div>
+    <div class="faq-a">點「音效」標籤從圖庫選或上傳，用 <span class="sb sound">播放音效 [名稱]</span> 積木搭配動作。建議在場景切換時加「Pop」音效，角色說話時加「Meow」音效。</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 怎麼讓背景跟著故事變化？</div>
+    <div class="faq-a">用 <span class="sb looks">背景換成 [名稱]</span> 積木按順序排列，中間加 <span class="sb control">等待 (N) 秒</span> 控制停留時間。記得先在舞台的「背景」標籤裡新增好所有需要的背景。</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Q. 怎麼分享動畫作品？</div>
+    <div class="faq-a">登入 Scratch 帳號後點橘色「分享」按鈕，再複製連結貼給老師或朋友。記得給作品取一個好名字、寫一段操作說明，別人才知道怎麼看你的動畫！</div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE PLAYER
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:32px">
+<div class="steps-card" style="border-color:var(--c2)">
+  <h4 style="color:#b8941d">📊 授課簡報（NotebookLM AI 生成）</h4>
+  <div class="slide-player">
+    <div class="slide-main" id="slideMain" style="position:relative;background:#fff;border:2px solid var(--c2);border-radius:var(--radius);overflow:hidden;cursor:pointer" onclick="openSlideFS()">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="簡報" style="width:100%;display:block" loading="lazy">
+      <button class="slide-nav prev" onclick="event.stopPropagation();slideNav(-1)" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;font-size:1.4rem;padding:8px 14px;cursor:pointer;border-radius:10px;transition:.2s">◀</button>
+      <button class="slide-nav next" onclick="event.stopPropagation();slideNav(1)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;font-size:1.4rem;padding:8px 14px;cursor:pointer;border-radius:10px;transition:.2s">▶</button>
+      <div id="slide-counter" style="position:absolute;left:12px;bottom:10px;background:rgba(0,0,0,.6);color:var(--c2);font-size:.8rem;font-weight:700;padding:3px 12px;border-radius:10px">1 / 20</div>
+      <div style="position:absolute;right:12px;bottom:10px;background:rgba(0,0,0,.6);color:#ccc;font-size:.75rem;padding:3px 12px;border-radius:10px">🔍 點擊全螢幕</div>
+    </div>
+    <div class="slide-strip" id="slideStrip"></div>
+  </div>
+</div>
+</section>
+
+<!-- Slide Fullscreen Overlay -->
+<div id="slide-fs" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.95);align-items:center;justify-content:center;cursor:pointer" onclick="closeSlideFS()">
+  <img id="slide-fs-img" src="" alt="" style="max-width:96vw;max-height:92vh;object-fit:contain">
+  <div id="slide-fs-counter" style="position:fixed;left:20px;bottom:20px;color:var(--c2);font-size:.9rem;font-weight:700"></div>
+  <button onclick="event.stopPropagation();closeSlideFS()" style="position:fixed;right:20px;top:20px;background:transparent;border:2px solid #fff;color:#fff;font-size:1.2rem;padding:6px 14px;cursor:pointer;border-radius:10px">✕ ESC</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     YOUTUBE VIDEO
+     ═══════════════════════════════════════════════════ -->
+<section class="container" style="padding-bottom:32px">
+<div class="steps-card" style="border-color:var(--c1)">
+  <h4 style="color:var(--c1)">▶ 學生自學影片（NotebookLM AI 生成）</h4>
+  <div id="video-wrap"></div>
+  <div style="margin-top:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <span style="display:inline-flex;align-items:center;gap:6px;background:var(--c1);color:#fff;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px">🤖 NotebookLM AI 生成</span>
+    <span style="font-size:.9rem;color:var(--dim)">💡 建議用耳機觀看，可搭配上方簡報一起複習</span>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  IT COCKPIT｜Scratch 動畫魔法師｜五年級資訊科技<br>
+  Powered by NotebookLM × Claude Code
+</footer>
+
+<!-- ═══════════════ FLOATING TOOLS ═══════════════ -->
+<div id="float-tools">
+  <button class="float-btn yellow" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn green" onclick="goTop()" title="回頂端" id="goTopBtn" style="display:flex;position:static;width:48px;height:48px">⬆</button>
+</div>
+
+<!-- Lottery Panel -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div class="lot-row">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1">
+    <span>號</span>
+    <label><input type="checkbox" id="lot-unique" checked> 不重複</label>
+  </div>
+  <div class="lot-btns">
+    <button onclick="doLottery()">🎰 抽一個</button>
+    <button class="reset-btn" onclick="resetLottery()">↻ 重置</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+  <div id="lot-history" style="font-size:.8rem;color:var(--dim);margin-top:6px;text-align:center;min-height:20px"></div>
+</div>
+
+<!-- Timer Panel -->
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timerDisplay">00:00</div>
+  <div class="timer-btns">
+    <button onclick="timerAction('start')">▶ 開始</button>
+    <button onclick="timerAction('pause')">⏸ 暫停</button>
+    <button onclick="timerAction('reset')">↻ 重置</button>
+  </div>
+  <div class="timer-presets">
+    <button onclick="timerPreset(60)">1 min</button>
+    <button onclick="timerPreset(180)">3 min</button>
+    <button onclick="timerPreset(300)">5 min</button>
+  </div>
+  <div class="timer-custom">
+    <input type="number" id="timerCustomMin" value="2" min="1" max="60" placeholder="分鐘">
+    <span style="font-size:.85rem;color:var(--dim)">分鐘</span>
+    <button onclick="timerPreset(parseInt(document.getElementById('timerCustomMin').value||2)*60)">設定</button>
+  </div>
+</div>
+
+<!-- Drawing Canvas + Toolbar -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff85b3" onclick="setPenColor('#ff85b3',this)"></button>
+  <button class="color-dot" style="background:#ffd54f" onclick="setPenColor('#ffd54f',this)"></button>
+  <button class="color-dot" style="background:#6cb4ff" onclick="setPenColor('#6cb4ff',this)"></button>
+  <button class="color-dot" style="background:#7be495" onclick="setPenColor('#7be495',this)"></button>
+  <button class="color-dot" style="background:#fff" onclick="setPenColor('#ffffff',this)"></button>
+  <div class="pen-size">
+    <button onclick="changePenSize(-2)">−</button>
+    <span id="penSizeLabel" style="font-size:.75rem;color:var(--dim);min-width:20px;text-align:center;font-weight:700">3</span>
+    <button onclick="changePenSize(2)">+</button>
+  </div>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+/* ── Mode Toggle ── */
+function setMode(m){
+  var btns=document.querySelectorAll('.mode-bar button');
+  if(m==='teacher'){
+    var pw=prompt('請輸入教師密碼：');
+    if(pw!=='it2026'){alert('密碼錯誤');return}
+    document.body.classList.add('teacher-mode');
+    btns[0].classList.remove('active');btns[1].classList.add('active');
+  }else{
+    document.body.classList.remove('teacher-mode');
+    btns[1].classList.remove('active');btns[0].classList.add('active');
+  }
+}
+
+/* ── Progress Tracking (IntersectionObserver) ── */
+var stagesDone=new Set();
+function updateProgress(stageNum){
+  stagesDone.add(String(stageNum));
+  var pct=Math.round(stagesDone.size/6*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressTxt').textContent=stagesDone.size+' / 6';
+  var pills=document.querySelectorAll('.stage-pill');
+  stagesDone.forEach(function(s){
+    var idx=parseInt(s)-1;
+    if(pills[idx]) pills[idx].classList.add('done');
+  });
+}
+(function(){
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id=entry.target.id;
+        var num=id.replace('sec','');
+        updateProgress(num);
+        var pills=document.querySelectorAll('.stage-pill');
+        pills.forEach(function(p,i){p.classList.toggle('active',i===parseInt(num)-1)});
+      }
+    });
+  },{threshold:0.3});
+  for(var i=1;i<=6;i++){
+    var el=document.getElementById('sec'+i);
+    if(el) observer.observe(el);
+  }
+})();
+
+/* ── Stage Navigation ── */
+function scrollToStage(n){
+  var el=document.getElementById('sec'+n);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── Quiz System ── */
+var correctMsgs=['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','💯 完全正確！','🎊 厲害厲害！','🥳 太聰明了！'];
+var wrongMsgs=['😅 再想想看唷！','🤔 不太對，看看提示！','💪 加油！再試一次！'];
+function checkQuiz(qId,btn,isCorrect){
+  var card=document.getElementById(qId);
+  if(card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  var fb=document.getElementById(qId+'-fb');
+  if(isCorrect){
+    btn.classList.add('correct');
+    fb.className='quiz-feedback show correct';
+    fb.textContent=correctMsgs[Math.floor(Math.random()*correctMsgs.length)];
+  }else{
+    btn.classList.add('wrong');
+    var opts=card.querySelectorAll('.quiz-opt');
+    opts.forEach(function(o){if(o!==btn){
+      var oc=o.getAttribute('onclick')||'';
+      if(oc.indexOf('true')!==-1) o.classList.add('correct');
+    }});
+    fb.className='quiz-feedback show wrong';
+    fb.textContent=wrongMsgs[Math.floor(Math.random()*wrongMsgs.length)];
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   STAGE 1 Interactive: Costume Switcher
+   ══════════════════════════════════════════════════ */
+function cycleCostume(idx){
+  var cards=document.querySelectorAll('.costume-card');
+  var card=cards[idx];
+  if(!card) return;
+  var display=card.querySelector('.costume-display');
+  var label=card.querySelector('.costume-label');
+  var costumes=display.getAttribute('data-costumes').split(',');
+  var current=parseInt(display.getAttribute('data-idx'));
+  var next=(current+1)%costumes.length;
+  display.setAttribute('data-idx',String(next));
+  display.style.transform='scale(0.5) rotate(15deg)';
+  display.style.opacity='0.3';
+  setTimeout(function(){
+    display.textContent=costumes[next];
+    display.style.transform='scale(1.15)';
+    display.style.opacity='1';
+    setTimeout(function(){
+      display.style.transform='scale(1)';
+    },150);
+  },150);
+  label.textContent='造型 '+(next+1)+' / '+costumes.length;
+}
+
+/* ══════════════════════════════════════════════════
+   STAGE 2 Interactive: Flipbook Animator
+   ══════════════════════════════════════════════════ */
+var flipbookFrames=['🐱','😺','😸','😻','🐱','😺'];
+var flipbookIdx=0;
+var flipbookTimer=null;
+var flipbookPlaying=false;
+
+document.getElementById('flipbookSpeed').addEventListener('input',function(){
+  var ms=parseInt(this.value);
+  document.getElementById('flipbookMs').textContent='等待 '+(ms/1000).toFixed(1)+' 秒';
+  if(flipbookPlaying){
+    clearInterval(flipbookTimer);
+    flipbookTimer=setInterval(flipbookStep,ms);
+  }
+});
+
+function flipbookStep(){
+  flipbookIdx=(flipbookIdx+1)%flipbookFrames.length;
+  document.getElementById('flipbookDisplay').textContent=flipbookFrames[flipbookIdx];
+  document.getElementById('flipbookFrame').textContent='第 '+(flipbookIdx+1)+' 格';
+  var ffs=document.getElementById('flipbookFrames').children;
+  for(var i=0;i<ffs.length;i++){
+    ffs[i].style.borderColor=i===flipbookIdx?'var(--c1)':'transparent';
+    ffs[i].style.transform=i===flipbookIdx?'scale(1.1)':'scale(1)';
+  }
+}
+
+function flipbookToggle(){
+  if(flipbookPlaying){
+    flipbookStop();
+  }else{
+    flipbookPlaying=true;
+    var ms=parseInt(document.getElementById('flipbookSpeed').value);
+    flipbookTimer=setInterval(flipbookStep,ms);
+    document.getElementById('flipbookBtn').textContent='⏸ 暫停';
+  }
+}
+
+function flipbookStop(){
+  flipbookPlaying=false;
+  clearInterval(flipbookTimer);
+  document.getElementById('flipbookBtn').textContent='▶ 播放';
+}
+
+/* ══════════════════════════════════════════════════
+   STAGE 3 Interactive: Coordinate Explorer
+   ══════════════════════════════════════════════════ */
+(function(){
+  var canvas=document.getElementById('coordCanvas');
+  var ctx=canvas.getContext('2d');
+  var dotX=240,dotY=180;
+  var dragging=false;
+
+  function drawGrid(){
+    ctx.clearRect(0,0,480,360);
+    ctx.strokeStyle='rgba(0,0,0,.08)';
+    ctx.lineWidth=1;
+    for(var x=0;x<=480;x+=48){
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,360);ctx.stroke();
+    }
+    for(var y=0;y<=360;y+=36){
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(480,y);ctx.stroke();
+    }
+    ctx.strokeStyle='rgba(0,0,0,.25)';
+    ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(240,0);ctx.lineTo(240,360);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,180);ctx.lineTo(480,180);ctx.stroke();
+    ctx.fillStyle='var(--dim)';
+    ctx.font='bold 11px Noto Sans TC, sans-serif';
+    ctx.textAlign='center';
+    for(var sx=-240;sx<=240;sx+=48){
+      var px=sx+240;
+      if(sx!==0){ctx.fillText(String(sx),px,180+15);}
+    }
+    ctx.textAlign='left';
+    for(var sy=-180;sy<=180;sy+=36){
+      var py=180-sy;
+      if(sy!==0){ctx.fillText(String(sy),240+5,py+4);}
+    }
+    ctx.fillText('0',244,194);
+
+    ctx.beginPath();
+    ctx.arc(dotX,dotY,12,0,Math.PI*2);
+    ctx.fillStyle='#ff85b3';
+    ctx.fill();
+    ctx.strokeStyle='#fff';
+    ctx.lineWidth=3;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(dotX,dotY,16,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,133,179,.3)';
+    ctx.lineWidth=2;
+    ctx.stroke();
+  }
+
+  function updateCoordDisplay(){
+    var sx=Math.round(dotX-240);
+    var sy=Math.round(180-dotY);
+    document.getElementById('coordDisplay').textContent='X: '+sx+'   Y: '+sy;
+  }
+
+  function getPos(e){
+    var rect=canvas.getBoundingClientRect();
+    var touch=e.touches?e.touches[0]:e;
+    return{
+      x:(touch.clientX-rect.left)*(480/rect.width),
+      y:(touch.clientY-rect.top)*(360/rect.height)
+    };
+  }
+
+  canvas.addEventListener('mousedown',function(e){
+    var pos=getPos(e);
+    var dx=pos.x-dotX,dy=pos.y-dotY;
+    if(dx*dx+dy*dy<400){dragging=true;}
+    else{dotX=Math.max(0,Math.min(480,pos.x));dotY=Math.max(0,Math.min(360,pos.y));dragging=true;drawGrid();updateCoordDisplay();}
+  });
+  canvas.addEventListener('mousemove',function(e){
+    if(!dragging) return;
+    var pos=getPos(e);
+    dotX=Math.max(0,Math.min(480,pos.x));
+    dotY=Math.max(0,Math.min(360,pos.y));
+    drawGrid();updateCoordDisplay();
+  });
+  canvas.addEventListener('mouseup',function(){dragging=false;});
+  canvas.addEventListener('mouseleave',function(){dragging=false;});
+
+  canvas.addEventListener('touchstart',function(e){
+    e.preventDefault();
+    var pos=getPos(e);
+    dotX=Math.max(0,Math.min(480,pos.x));
+    dotY=Math.max(0,Math.min(360,pos.y));
+    dragging=true;drawGrid();updateCoordDisplay();
+  },{passive:false});
+  canvas.addEventListener('touchmove',function(e){
+    e.preventDefault();
+    if(!dragging) return;
+    var pos=getPos(e);
+    dotX=Math.max(0,Math.min(480,pos.x));
+    dotY=Math.max(0,Math.min(360,pos.y));
+    drawGrid();updateCoordDisplay();
+  },{passive:false});
+  canvas.addEventListener('touchend',function(e){e.preventDefault();dragging=false;},{passive:false});
+
+  drawGrid();
+  updateCoordDisplay();
+})();
+
+/* ══════════════════════════════════════════════════
+   STAGE 4 Interactive: Broadcast Relay
+   ══════════════════════════════════════════════════ */
+var bcAnimating=false;
+function startBroadcast(){
+  if(bcAnimating) return;
+  bcAnimating=true;
+  resetBroadcastVisuals();
+
+  var char1=document.getElementById('bc-char1');
+  var char2=document.getElementById('bc-char2');
+  var char3=document.getElementById('bc-char3');
+  var msg1=document.getElementById('bc-msg1');
+  var msg2=document.getElementById('bc-msg2');
+  var msg3=document.getElementById('bc-msg3');
+  var arrow1=document.getElementById('bc-arrow1');
+  var arrow2=document.getElementById('bc-arrow2');
+  var signal1=document.getElementById('bc-signal1');
+  var signal2=document.getElementById('bc-signal2');
+
+  char1.style.transform='scale(1.1)';
+  char1.style.boxShadow='0 0 20px rgba(255,133,179,.4)';
+  msg1.style.opacity='1';
+
+  setTimeout(function(){
+    arrow1.style.opacity='1';
+    signal1.style.opacity='1';
+    setTimeout(function(){
+      char2.style.opacity='1';
+      char2.style.transform='scale(1.1)';
+      char2.style.boxShadow='0 0 20px rgba(108,180,255,.4)';
+      msg2.style.opacity='1';
+
+      setTimeout(function(){
+        arrow2.style.opacity='1';
+        signal2.style.opacity='1';
+        setTimeout(function(){
+          char3.style.opacity='1';
+          char3.style.transform='scale(1.1)';
+          char3.style.boxShadow='0 0 20px rgba(123,228,149,.4)';
+          msg3.style.opacity='1';
+          bcAnimating=false;
+        },600);
+      },600);
+    },600);
+  },800);
+}
+
+function resetBroadcastVisuals(){
+  var ids=['bc-msg1','bc-msg2','bc-msg3','bc-arrow1','bc-arrow2','bc-signal1','bc-signal2'];
+  ids.forEach(function(id){document.getElementById(id).style.opacity='0';});
+  document.getElementById('bc-char1').style.transform='scale(1)';
+  document.getElementById('bc-char1').style.boxShadow='none';
+  document.getElementById('bc-char2').style.opacity='.5';
+  document.getElementById('bc-char2').style.transform='scale(1)';
+  document.getElementById('bc-char2').style.boxShadow='none';
+  document.getElementById('bc-char3').style.opacity='.5';
+  document.getElementById('bc-char3').style.transform='scale(1)';
+  document.getElementById('bc-char3').style.boxShadow='none';
+}
+
+function resetBroadcast(){
+  bcAnimating=false;
+  resetBroadcastVisuals();
+  setTimeout(startBroadcast,300);
+}
+
+/* ══════════════════════════════════════════════════
+   STAGE 5 Interactive: Effect Mirror
+   ══════════════════════════════════════════════════ */
+var currentEffect='none';
+var effectDescriptions={
+  color:'🎨 顏色效果：改變角色的色調，讓角色變成不同顏色！',
+  fisheye:'🐟 魚眼效果：讓角色中間變大、周圍變小，像透過魚眼鏡頭看！',
+  whirl:'🌀 旋轉效果：讓角色產生螺旋扭曲的效果！',
+  pixelate:'🧱 像素化效果：讓角色變成一格一格的馬賽克方塊！',
+  mosaic:'🔲 馬賽克效果：讓角色縮小並重複出現很多個！',
+  brightness:'☀️ 亮度效果：讓角色變亮或變暗！',
+  ghost:'👻 透明效果：讓角色變透明，數值越大越透明！'
+};
+
+function applyEffect(effect){
+  currentEffect=effect;
+  var target=document.getElementById('effectTarget');
+  var intensity=parseInt(document.getElementById('effectIntensity').value);
+  var ratio=intensity/100;
+  target.style.transition='.5s';
+  target.style.filter='none';
+  target.style.transform='scale(1)';
+  target.style.opacity='1';
+
+  switch(effect){
+    case 'color':
+      target.style.filter='hue-rotate('+(ratio*360)+'deg)';
+      break;
+    case 'fisheye':
+      var sc=1+ratio*0.8;
+      target.style.transform='scale('+sc+')';
+      target.style.filter='blur('+(ratio*0.5)+'px)';
+      break;
+    case 'whirl':
+      target.style.transform='rotate('+(ratio*360)+'deg)';
+      break;
+    case 'pixelate':
+      target.style.filter='blur('+(ratio*4)+'px) contrast('+(1+ratio)+')';
+      break;
+    case 'mosaic':
+      var msc=Math.max(0.3,1-ratio*0.7);
+      target.style.transform='scale('+msc+')';
+      break;
+    case 'brightness':
+      target.style.filter='brightness('+(0.5+ratio*1.5)+')';
+      break;
+    case 'ghost':
+      target.style.opacity=String(1-ratio*0.9);
+      break;
+  }
+  document.getElementById('effectDesc').textContent=effectDescriptions[effect]||'';
+}
+
+document.getElementById('effectIntensity').addEventListener('input',function(){
+  document.getElementById('effectValue').textContent=this.value;
+  if(currentEffect!=='none') applyEffect(currentEffect);
+});
+
+function clearEffects(){
+  var target=document.getElementById('effectTarget');
+  target.style.filter='none';
+  target.style.transform='scale(1)';
+  target.style.opacity='1';
+  currentEffect='none';
+  document.getElementById('effectDesc').textContent='✨ 所有特效已清除！';
+  document.getElementById('effectIntensity').value=50;
+  document.getElementById('effectValue').textContent='50';
+}
+
+/* ══════════════════════════════════════════════════
+   STAGE 6 Interactive: Scene Cards
+   ══════════════════════════════════════════════════ */
+var sceneData=[
+  {emoji:'🏫',text:'🐱 小貓坐在教室裡，老師在黑板上寫字。小貓心想：「今天天氣好好，真想出去玩...」突然下課鐘聲響了！ 🔔「叮～叮～叮～」小貓開心地跳起來！'},
+  {emoji:'🌳',text:'🐱 小貓衝到操場上，看到好朋友小狗 🐶 正在踢球。「一起玩吧！」小貓說。他們一起跑啊跑，踢啊踢，玩得滿頭大汗 💦。「放學後去遊樂園好不好？」小狗問。'},
+  {emoji:'🎢',text:'🐱🐶 放學後，小貓和小狗來到遊樂園！旋轉木馬 🎠、摩天輪 🎡、雲霄飛車 🎢⋯⋯他們玩了好多設施。「今天真是太開心了！」兩個好朋友一起看著夕陽說 🌅。~ THE END ~'}
+];
+
+function showScene(idx){
+  var cards=document.querySelectorAll('.scene-card');
+  cards.forEach(function(c,i){
+    c.style.transform=i===idx?'scale(1.05) translateY(-4px)':'scale(1)';
+    c.style.boxShadow=i===idx?'0 8px 24px rgba(0,0,0,.15)':'none';
+  });
+  var bubble=document.getElementById('sceneBubble');
+  bubble.style.opacity='0';
+  bubble.style.transform='translateY(10px)';
+  setTimeout(function(){
+    document.getElementById('sceneText').textContent=sceneData[idx].text;
+    bubble.style.opacity='1';
+    bubble.style.transform='translateY(0)';
+  },200);
+}
+
+/* ══════════════════════════════════════════════════
+   SLIDE PLAYER
+   ══════════════════════════════════════════════════ */
+var SLIDE_LIST=[];
+(function(){
+  for(var i=1;i<=12;i++){
+    var num=i<10?'0'+i:String(i);
+    SLIDE_LIST.push('assets/slide_'+num+'.jpg');
+  }
+})();
+var slideIdx=0;
+
+function buildSlideStrip(){
+  var strip=document.getElementById('slideStrip');
+  strip.innerHTML='';
+  SLIDE_LIST.forEach(function(src,i){
+    var img=document.createElement('img');
+    img.src=src;img.alt='簡報 '+(i+1);
+    img.loading='lazy';
+    if(i===0) img.classList.add('active');
+    img.onclick=function(e){e.stopPropagation();goSlide(i);};
+    strip.appendChild(img);
+  });
+}
+buildSlideStrip();
+
+function goSlide(n){
+  if(n<0) n=SLIDE_LIST.length-1;
+  if(n>=SLIDE_LIST.length) n=0;
+  slideIdx=n;
+  document.getElementById('slide-current').src=SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent=(n+1)+' / '+SLIDE_LIST.length;
+  var thumbs=document.querySelectorAll('.slide-strip img');
+  thumbs.forEach(function(t,i){t.classList.toggle('active',i===n);});
+  if(thumbs[n]){thumbs[n].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+  /* CRITICAL: sync fullscreen image when fullscreen is open */
+  var fsOverlay=document.getElementById('slide-fs');
+  if(fsOverlay.style.display==='flex'){
+    document.getElementById('slide-fs-img').src=SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent=(n+1)+' / '+SLIDE_LIST.length;
+  }
+}
+
+function slideNav(dir){goSlide(slideIdx+dir);}
+
+function openSlideFS(){
+  var fs=document.getElementById('slide-fs');
+  fs.style.display='flex';
+  document.getElementById('slide-fs-img').src=SLIDE_LIST[slideIdx];
+  document.getElementById('slide-fs-counter').textContent=(slideIdx+1)+' / '+SLIDE_LIST.length;
+}
+function closeSlideFS(){document.getElementById('slide-fs').style.display='none';}
+
+/* Slide keyboard + swipe */
+document.addEventListener('keydown',function(e){
+  var fsOpen=document.getElementById('slide-fs').style.display==='flex';
+  if(e.key==='Escape'&&fsOpen){closeSlideFS();return;}
+  if(e.key==='ArrowLeft'){slideNav(-1);e.preventDefault();}
+  if(e.key==='ArrowRight'){slideNav(1);e.preventDefault();}
+});
+
+(function(){
+  var fsEl=document.getElementById('slide-fs');
+  var startX=0;
+  fsEl.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;},{passive:true});
+  fsEl.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-startX;
+    if(Math.abs(dx)>50){
+      if(dx<0) slideNav(1); else slideNav(-1);
+    }
+  },{passive:true});
+})();
+
+/* ══════════════════════════════════════════════════
+   YOUTUBE VIDEO
+   ══════════════════════════════════════════════════ */
+var YOUTUBE_VIDEO_ID='MmBIgGQWoDo';
+(function(){
+  var wrap=document.getElementById('video-wrap');
+  if(YOUTUBE_VIDEO_ID){
+    wrap.innerHTML='<div style="position:relative;padding-top:56.25%;width:100%;background:#000;border:2px solid var(--c1);border-radius:var(--radius);overflow:hidden"><iframe src="https://www.youtube.com/embed/'+YOUTUBE_VIDEO_ID+'?rel=0&modestbranding=1" title="Scratch 動畫魔法師 NotebookLM 教學影片" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:none"></iframe></div>';
+  }else{
+    wrap.innerHTML='<div style="position:relative;padding-top:56.25%;width:100%;background:linear-gradient(135deg,var(--surface),#fff);border:2px dashed var(--c1);border-radius:var(--radius);overflow:hidden"><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><span style="font-size:3rem">🎬</span><span style="font-size:1rem;font-weight:700;color:var(--dim)">影片製作中，敬請期待！</span></div></div>';
+  }
+})();
+
+/* ══════════════════════════════════════════════════
+   FLOATING TOOLS
+   ══════════════════════════════════════════════════ */
+var openPanel=null;
+function togglePanel(name){
+  var panel=document.getElementById('panel-'+name);
+  if(openPanel&&openPanel!==name){
+    document.getElementById('panel-'+openPanel).classList.remove('show');
+  }
+  panel.classList.toggle('show');
+  openPanel=panel.classList.contains('show')?name:null;
+}
+
+/* ── Lottery (number mode) ── */
+var lotHistory=[];
+function doLottery(){
+  var min=parseInt(document.getElementById('lot-min').value)||1;
+  var max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max){var tmp=min;min=max;max=tmp;}
+  var unique=document.getElementById('lot-unique').checked;
+  var pool=[];
+  for(var i=min;i<=max;i++){
+    if(unique&&lotHistory.indexOf(i)!==-1) continue;
+    pool.push(i);
+  }
+  if(pool.length===0){
+    document.getElementById('lot-out').textContent='已抽完！';
+    return;
+  }
+  var out=document.getElementById('lot-out');
+  var count=0;
+  var animInterval=setInterval(function(){
+    out.textContent=pool[Math.floor(Math.random()*pool.length)];
+    out.style.transform='scale(1.2) rotate('+(Math.random()*20-10)+'deg)';
+    count++;
+    if(count>12){
+      clearInterval(animInterval);
+      var result=pool[Math.floor(Math.random()*pool.length)];
+      out.textContent='🎉 '+result+' 號';
+      out.style.transform='scale(1.3)';
+      setTimeout(function(){out.style.transform='scale(1)';},300);
+      if(unique) lotHistory.push(result);
+      document.getElementById('lot-history').textContent='已抽出：'+lotHistory.join(', ');
+    }
+  },60);
+}
+
+function resetLottery(){
+  lotHistory=[];
+  document.getElementById('lot-out').textContent='等待抽號...';
+  document.getElementById('lot-out').style.transform='scale(1)';
+  document.getElementById('lot-history').textContent='';
+}
+
+/* ── Timer ── */
+var timerSec=0;
+var timerMax=0;
+var timerInterval=null;
+var timerRunning=false;
+
+function timerPreset(sec){
+  timerSec=sec;
+  timerMax=sec;
+  timerRunning=false;
+  clearInterval(timerInterval);
+  renderTimer();
+}
+
+function renderTimer(){
+  var m=Math.floor(timerSec/60);
+  var s=timerSec%60;
+  document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function timerAction(action){
+  if(action==='start'){
+    if(timerSec<=0) return;
+    if(timerRunning) return;
+    timerRunning=true;
+    timerInterval=setInterval(function(){
+      timerSec--;
+      renderTimer();
+      if(timerSec<=0){
+        clearInterval(timerInterval);
+        timerRunning=false;
+        document.getElementById('timerDisplay').textContent='🔔 時間到！';
+        document.getElementById('timerDisplay').style.color='var(--c1)';
+        try{
+          var actx=new(window.AudioContext||window.webkitAudioContext)();
+          [0,200,400].forEach(function(delay){
+            var osc=actx.createOscillator();
+            var gain=actx.createGain();
+            osc.connect(gain);gain.connect(actx.destination);
+            osc.frequency.value=880;
+            osc.type='sine';
+            gain.gain.value=0.3;
+            osc.start(actx.currentTime+delay/1000);
+            osc.stop(actx.currentTime+delay/1000+0.15);
+          });
+        }catch(e){}
+      }
+    },1000);
+  }else if(action==='pause'){
+    timerRunning=false;
+    clearInterval(timerInterval);
+  }else if(action==='reset'){
+    timerRunning=false;
+    clearInterval(timerInterval);
+    timerSec=timerMax;
+    renderTimer();
+    document.getElementById('timerDisplay').style.color='var(--c1)';
+  }
+}
+
+/* ── Draw Tool ── */
+var drawCanvas=document.getElementById('drawCanvas');
+var drawCtx=drawCanvas.getContext('2d');
+var drawActive=false;
+var penColor='#ff85b3';
+var penSize=3;
+var drawing=false;
+var lastDraw={x:0,y:0};
+
+function resizeDrawCanvas(){
+  drawCanvas.width=window.innerWidth;
+  drawCanvas.height=window.innerHeight;
+}
+resizeDrawCanvas();
+window.addEventListener('resize',resizeDrawCanvas);
+
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').style.background=drawActive?'var(--c1)':'';
+  document.getElementById('drawToggleBtn').style.color=drawActive?'#fff':'';
+}
+
+function setPenColor(color,btn){
+  penColor=color;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(function(d){d.classList.remove('active');});
+  if(btn) btn.classList.add('active');
+}
+
+function changePenSize(delta){
+  penSize=Math.max(1,Math.min(20,penSize+delta));
+  document.getElementById('penSizeLabel').textContent=penSize;
+}
+
+function clearDrawing(){
+  drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height);
+}
+
+function getDrawPos(e){
+  var touch=e.touches?e.touches[0]:e;
+  return{x:touch.clientX,y:touch.clientY};
+}
+
+function drawStart(e){
+  if(!drawActive) return;
+  e.preventDefault();
+  drawing=true;
+  var pos=getDrawPos(e);
+  lastDraw=pos;
+  drawCtx.beginPath();
+  drawCtx.arc(pos.x,pos.y,penSize/2,0,Math.PI*2);
+  drawCtx.fillStyle=penColor;
+  drawCtx.fill();
+}
+
+function drawMove(e){
+  if(!drawing||!drawActive) return;
+  e.preventDefault();
+  var pos=getDrawPos(e);
+  drawCtx.beginPath();
+  drawCtx.moveTo(lastDraw.x,lastDraw.y);
+  drawCtx.lineTo(pos.x,pos.y);
+  drawCtx.strokeStyle=penColor;
+  drawCtx.lineWidth=penSize;
+  drawCtx.lineCap='round';
+  drawCtx.lineJoin='round';
+  drawCtx.stroke();
+  lastDraw=pos;
+}
+
+function drawEnd(e){
+  if(e) e.preventDefault();
+  drawing=false;
+}
+
+drawCanvas.addEventListener('mousedown',drawStart);
+drawCanvas.addEventListener('mousemove',drawMove);
+drawCanvas.addEventListener('mouseup',drawEnd);
+drawCanvas.addEventListener('mouseleave',drawEnd);
+drawCanvas.addEventListener('touchstart',drawStart,{passive:false});
+drawCanvas.addEventListener('touchmove',drawMove,{passive:false});
+drawCanvas.addEventListener('touchend',drawEnd,{passive:false});
+
+/* ── Scroll to Top ── */
+function goTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+window.addEventListener('scroll',function(){
+  var btn=document.getElementById('goTopBtn');
+  if(window.scrollY>400){
+    btn.style.display='flex';
+  }else{
+    btn.style.display='none';
+  }
+});
+
+/* ── Initialize ── */
+timerPreset(60);
+</script>
+</body>
+</html>
+</html>
