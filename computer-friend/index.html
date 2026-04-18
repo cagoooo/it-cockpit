@@ -224,6 +224,8 @@ body.teacher-mode .teacher-only{display:block}
 .slide-nav-btn:hover{background:var(--c1);color:#fff}
 .slide-nav-btn.prev{left:8px}
 .slide-nav-btn.next{right:8px}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#fff;border:none;padding:8px 14px;font-size:.95rem;cursor:pointer;border-radius:20px;font-family:'Noto Sans TC',sans-serif;font-weight:700;box-shadow:0 4px 12px rgba(255,133,179,.4);transition:.15s;z-index:5;display:flex;align-items:center;gap:6px}
+.slide-fs-btn:hover{background:var(--c3);transform:translateY(-2px);box-shadow:0 6px 16px rgba(108,180,255,.4)}
 .slide-counter{text-align:center;font-size:.9rem;color:var(--dim);margin-bottom:8px;font-weight:700}
 .slide-thumbs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
 .slide-thumb{min-width:80px;height:48px;object-fit:cover;cursor:pointer;border:2px solid var(--dim);opacity:.6;transition:.2s;border-radius:8px}
@@ -892,8 +894,9 @@ body.teacher-mode .teacher-only{display:block}
       <img src="assets/slide_01.jpg" id="slideImg" alt="教學簡報" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:60px 20px;text-align:center;color:var(--dim)\'>簡報圖片載入中...</div>'">
       <button class="slide-nav-btn prev" onclick="changeSlide(-1)">&lsaquo;</button>
       <button class="slide-nav-btn next" onclick="changeSlide(1)">&rsaquo;</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕播放">⛶ 全螢幕</button>
     </div>
-    <div class="slide-counter" id="slideCounter">1 / 20</div>
+    <div class="slide-counter" id="slideCounter">1 / 15</div>
     <div class="slide-thumbs" id="slideThumbs"></div>
   </div>
 
@@ -916,7 +919,7 @@ body.teacher-mode .teacher-only{display:block}
   <img src="" id="slideFullscreenImg" alt="簡報全螢幕">
   <button class="slide-nav-btn prev" onclick="changeSlide(-1)" style="position:fixed;left:16px;top:50%">&lsaquo;</button>
   <button class="slide-nav-btn next" onclick="changeSlide(1)" style="position:fixed;right:16px;top:50%">&rsaquo;</button>
-  <div class="slide-fullscreen-counter" id="slideFullscreenCounter">1 / 20</div>
+  <div class="slide-fullscreen-counter" id="slideFullscreenCounter">1 / 15</div>
 </div>
 
 <!-- ==================== LOTTERY MODAL ==================== -->
