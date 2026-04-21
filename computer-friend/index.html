@@ -1143,7 +1143,10 @@ function goSlide(n) {
     thumbs[i].classList.toggle('active', i + 1 === curSlide);
   }
   if (thumbs[curSlide - 1]) {
-    thumbs[curSlide - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    var activeThumb = thumbs[curSlide - 1];
+    var strip = activeThumb.parentElement;
+    var targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
   }
 
   // Sync fullscreen

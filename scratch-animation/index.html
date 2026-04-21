@@ -1559,7 +1559,7 @@ function goSlide(n){
   document.getElementById('slide-counter').textContent=(n+1)+' / '+SLIDE_LIST.length;
   var thumbs=document.querySelectorAll('.slide-strip img');
   thumbs.forEach(function(t,i){t.classList.toggle('active',i===n);});
-  if(thumbs[n]){thumbs[n].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+  if(thumbs[n]){var _strip=thumbs[n].parentElement;var _tl=thumbs[n].offsetLeft-(_strip.clientWidth-thumbs[n].offsetWidth)/2;_strip.scrollTo({left:Math.max(0,_tl),behavior:'smooth'});}
   /* CRITICAL: sync fullscreen image when fullscreen is open */
   var fsOverlay=document.getElementById('slide-fs');
   if(fsOverlay.style.display==='flex'){

@@ -1020,7 +1020,12 @@ function goSlide(n){
   document.getElementById('slideImg').src = src;
   document.getElementById('slideCounter').textContent = curSlide+' / '+totalSlides;
   document.querySelectorAll('.slide-thumb').forEach((t,i)=>t.classList.toggle('active',i+1===curSlide));
-  document.querySelectorAll('.slide-thumb')[curSlide-1].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  const activeThumb = document.querySelectorAll('.slide-thumb')[curSlide-1];
+  if(activeThumb){
+    const strip = activeThumb.parentElement;
+    const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+  }
   // 全螢幕開啟時同步更新大圖與頁碼
   const fs = document.getElementById('slide-fs');
   if(fs && fs.classList.contains('show')){

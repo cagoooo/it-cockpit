@@ -2031,7 +2031,11 @@ function goSlide(n){
   document.getElementById('slide-cur').textContent=n+1;
   document.querySelectorAll('.slide-strip-thumb').forEach((t,i)=>{
     t.classList.toggle('active',i===n);
-    if(i===n)t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    if(i===n){
+      const strip=t.parentElement;
+      const targetLeft=t.offsetLeft-(strip.clientWidth-t.offsetWidth)/2;
+      strip.scrollTo({left:Math.max(0,targetLeft),behavior:'smooth'});
+    }
   });
   const fs=document.getElementById('slide-fs');
   if(fs&&fs.classList.contains('show')){

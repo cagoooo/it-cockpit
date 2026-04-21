@@ -1626,7 +1626,11 @@ function goSlide(n){
   document.getElementById('slide-counter').textContent = (n+1)+' / '+SLIDE_LIST.length;
   document.querySelectorAll('.slide-strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
   const active = document.querySelector('.slide-strip-thumb.active');
-  if(active) active.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  if(active){
+    const strip = active.parentElement;
+    const targetLeft = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+  }
   // 全螢幕開啟時同步更新大圖
   const fs = document.getElementById('slide-fs');
   if(fs && fs.classList.contains('show')){
