@@ -1390,7 +1390,11 @@ function goSlide(n){
   document.getElementById('slide-counter').textContent = (n+1) + ' / ' + SLIDE_LIST.length;
   document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
   const activeThumb = document.querySelector('.strip-thumb.active');
-  if(activeThumb) activeThumb.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  if(activeThumb){
+    const strip = document.getElementById('slide-strip');
+    const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+  }
   const fs = document.getElementById('slide-fs');
   if(fs && fs.classList.contains('show')){
     document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
