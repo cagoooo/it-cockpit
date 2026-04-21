@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>假訊息偵探社｜六年級事實查核教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/fact-check/">
+<meta property="og:title" content="假訊息偵探社｜六年級資訊科技">
+<meta property="og:description" content="AI 假圖一秒辨識！用 Google Lens 反向搜圖、Hive Moderation AI 偵測、事實查核網站三劍客，成為資訊瘟疫時代的超級偵探。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/fact-check/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/fact-check/og-image.png">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff9f0;--surface:#fff3e0;--panel:#ffffff;
+  --c1:#e94057;--c2:#ffa94d;--c3:#51cf66;--c4:#4dabf7;--c5:#9775fa;
+  --text:#3d3d3d;--dim:#888;--border:#2c2c2c;
+  --shadow-soft:0 4px 14px rgba(0,0,0,.08);
+  --shadow-pop:4px 4px 0 var(--border);
+}
+html{font-size:18px;scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;padding-bottom:80px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(255,249,240,.96);backdrop-filter:blur(6px);border-bottom:3px solid var(--border);padding:14px 24px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:2px solid var(--c1);background:var(--panel);color:var(--c1);font-weight:700;font-size:.85rem;letter-spacing:1px;border-radius:24px;transition:.2s;white-space:nowrap;box-shadow:var(--shadow-pop)}
+.home-btn:hover{background:var(--c1);color:#fff;transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--border)}
+.header-title{font-size:1.5rem;font-weight:900;color:var(--c1);letter-spacing:.5px}
+.header-title .emoji{margin-right:6px}
+.header-sub{font-size:1rem;color:var(--dim)}
+.grade-chip{display:inline-block;padding:4px 12px;background:var(--c2);color:#fff;font-size:.85rem;border-radius:16px;font-weight:700;border:2px solid var(--border)}
+.mode-toggle{margin-left:auto;display:flex;gap:8px}
+.mode-btn{padding:6px 14px;border:2px solid var(--border);background:var(--panel);font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:16px;transition:.2s;box-shadow:2px 2px 0 var(--border)}
+.mode-btn.active{background:var(--c4);color:#fff}
+.mode-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border)}
+
+/* Progress bar */
+.progress-wrap{max-width:1400px;margin:10px auto 0;padding:0 4px}
+.progress-label{font-size:.8rem;color:var(--dim);margin-bottom:4px;display:flex;justify-content:space-between}
+.progress-bar{height:10px;background:var(--surface);border:2px solid var(--border);border-radius:8px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c3),var(--c4));width:0%;transition:width .4s}
+
+/* Container */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Objective chips */
+.obj-section{margin-bottom:32px}
+.obj-title{font-size:1.1rem;font-weight:900;color:var(--c1);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.obj-chips{display:flex;gap:10px;flex-wrap:wrap}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;font-size:1rem;padding:10px 18px;background:var(--panel);border:2px solid var(--border);border-radius:24px;box-shadow:var(--shadow-pop);font-weight:700;transition:.2s}
+.obj-chip:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--border)}
+.obj-chip.red{border-color:var(--c1);color:var(--c1)}
+.obj-chip.orange{border-color:var(--c2);color:var(--c2)}
+.obj-chip.green{border-color:var(--c3);color:var(--c3)}
+.obj-chip.blue{border-color:var(--c4);color:var(--c4)}
+.obj-chip.purple{border-color:var(--c5);color:var(--c5)}
+
+/* Stage nav pills */
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow-soft)}
+.stage-pill{padding:10px 20px;background:var(--panel);border:2px solid var(--border);border-radius:24px;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s;color:var(--text);display:inline-flex;align-items:center;gap:6px}
+.stage-pill:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.stage-pill.done{background:var(--c3);color:#fff;border-color:var(--border)}
+
+/* Stage sections */
+.level-section{margin-bottom:56px;scroll-margin-top:140px}
+.section-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.stage-badge{font-family:'Fredoka',sans-serif;font-size:.7rem;letter-spacing:2px;padding:8px 16px;background:var(--border);color:var(--bg);border-radius:16px;white-space:nowrap;font-weight:700}
+.section-title{font-size:1.4rem;font-weight:900;color:var(--border);display:flex;align-items:center;gap:8px}
+.section-sub{font-size:1rem;color:var(--dim);margin-top:4px}
+
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:900px){.card-grid{grid-template-columns:1fr}}
+
+.steps-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.steps-card h4{font-size:1.05rem;margin-bottom:14px;color:var(--c1);display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{counter-increment:step;position:relative;padding:10px 0 10px 48px;font-size:1rem;line-height:1.7;border-bottom:1px dashed var(--dim)}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(step);position:absolute;left:0;top:10px;width:34px;height:34px;background:var(--c2);color:#fff;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.steps-list li.green::before{background:var(--c3)}
+.steps-list li.blue::before{background:var(--c4)}
+.steps-list li.purple::before{background:var(--c5)}
+
+.tip-box{margin-top:14px;padding:14px 18px;background:#fff3cd;border:2px solid var(--c2);border-radius:12px;font-size:.95rem;color:#5c4a1b;position:relative}
+.tip-box::before{content:'💡';position:absolute;top:-12px;left:14px;background:var(--bg);padding:0 6px;font-size:1.2rem}
+.tip-box strong{color:var(--c2)}
+
+.warn-box{margin-top:14px;padding:14px 18px;background:#ffe3e3;border:2px solid var(--c1);border-radius:12px;font-size:.95rem;color:#7a1e2b}
+.warn-box strong{color:var(--c1)}
+
+/* Canvas section */
+.canvas-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.canvas-title{font-size:1.05rem;font-weight:900;margin-bottom:12px;color:var(--c4);display:flex;align-items:center;gap:8px}
+.canvas-hint{font-size:.9rem;color:var(--dim);margin-bottom:12px}
+.game-canvas{width:100%;background:var(--panel);border:2px solid var(--border);border-radius:12px;display:block}
+.game-controls{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+.ctrl-btn{padding:10px 18px;background:var(--c4);color:#fff;border:2px solid var(--border);border-radius:24px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;transition:.2s;box-shadow:3px 3px 0 var(--border)}
+.ctrl-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--border)}
+.ctrl-btn.red{background:var(--c1)}
+.ctrl-btn.green{background:var(--c3)}
+.ctrl-btn.orange{background:var(--c2)}
+.ctrl-btn.purple{background:var(--c5)}
+.ctrl-btn.outline{background:var(--panel);color:var(--text)}
+.game-result{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:.95rem;font-weight:700;min-height:20px;display:none}
+.game-result.show{display:block}
+.game-result.ok{background:#d3f9d8;color:#2b8a3e;border:2px solid var(--c3)}
+.game-result.bad{background:#ffe3e3;color:var(--c1);border:2px solid var(--c1)}
+
+/* Quiz */
+.quiz-section{grid-column:1/-1;background:var(--panel);border:3px solid var(--c5);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop);margin-top:16px}
+.quiz-title{font-size:1.1rem;font-weight:900;color:var(--c5);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.quiz-q{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed var(--dim)}
+.quiz-q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.quiz-q-text{font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:700px){.quiz-opts{grid-template-columns:1fr}}
+.quiz-opt{padding:10px 16px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:.95rem;cursor:pointer;text-align:left;transition:.2s}
+.quiz-opt:hover{background:var(--panel);transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border)}
+.quiz-opt.correct{background:#d3f9d8;border-color:var(--c3);color:#2b8a3e}
+.quiz-opt.wrong{background:#ffe3e3;border-color:var(--c1);color:var(--c1)}
+.quiz-fb{margin-top:10px;font-size:.95rem;padding:10px 14px;border-radius:10px;display:none}
+.quiz-fb.show{display:block}
+.quiz-fb.ok{background:#d3f9d8;color:#2b8a3e}
+.quiz-fb.bad{background:#fff3cd;color:#856404}
+
+/* Teacher notes */
+.teacher-only{display:none;background:#ede7f6;border:3px dashed var(--c5);border-radius:14px;padding:16px 20px;margin-top:16px;position:relative}
+body.teacher-mode .teacher-only{display:block}
+.teacher-only::before{content:'教師備註';position:absolute;top:-12px;left:16px;background:var(--c5);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:10px}
+.teacher-only p{font-size:.95rem;color:#3a2d6b;margin-top:6px}
+.teacher-only ul{margin-top:8px;padding-left:24px;font-size:.95rem;color:#3a2d6b}
+
+/* Project task */
+.project-section{background:linear-gradient(135deg,#fff3e0 0%,#ffe8f0 100%);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px;box-shadow:var(--shadow-pop)}
+.project-section h3{font-size:1.3rem;color:var(--c1);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.project-tasks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px}
+@media (max-width:900px){.project-tasks{grid-template-columns:1fr}}
+.task-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.task-card h4{font-size:1rem;color:var(--c4);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.task-card p{font-size:.95rem;line-height:1.6}
+
+/* NLM resource section */
+.nb-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px;box-shadow:var(--shadow-soft)}
+.nb-section h3{font-size:1.3rem;color:var(--c5);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.nb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px}
+@media (max-width:900px){.nb-grid{grid-template-columns:1fr}}
+.nb-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border);transition:.2s}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.nb-card h4{font-size:1rem;color:var(--c5);margin-bottom:8px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.nb-card .link{display:inline-block;margin-top:10px;color:var(--c4);font-weight:700;font-size:.9rem}
+
+.flow-box{background:var(--panel);border:2px dashed var(--c5);border-radius:12px;padding:16px 20px;margin-bottom:20px}
+.flow-box h4{font-size:1rem;color:var(--c5);margin-bottom:10px}
+.flow-steps{display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem}
+.flow-step{background:var(--surface);padding:6px 12px;border:1px solid var(--c5);border-radius:16px;color:var(--c5);font-weight:700}
+
+/* FAQ */
+.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:900px){.faq-list{grid-template-columns:1fr}}
+.faq-item{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.faq-q{font-size:1rem;font-weight:700;color:var(--c1);margin-bottom:8px;display:flex;align-items:flex-start;gap:8px}
+.faq-q::before{content:'Q';background:var(--c1);color:#fff;min-width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;margin-top:2px}
+.faq-a{font-size:.95rem;line-height:1.7;color:var(--text);padding-left:30px;position:relative}
+.faq-a::before{content:'A';position:absolute;left:0;top:2px;background:var(--c3);color:#fff;min-width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem}
+
+/* Slide player */
+.slide-section{margin-bottom:48px}
+.slide-section h3{font-size:1.3rem;color:var(--c4);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.slide-player{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-pop)}
+.slide-main{position:relative;background:var(--surface);border:2px solid var(--border);border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block;background:#000}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;background:rgba(255,255,255,.9);border:2px solid var(--border);border-radius:50%;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--border);font-weight:700;z-index:3;transition:.2s}
+.slide-nav-btn:hover{background:var(--c4);color:#fff}
+.slide-nav-btn.prev{left:10px}
+.slide-nav-btn.next{right:10px}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#fff;border:none;padding:8px 14px;font-size:.95rem;cursor:pointer;border-radius:20px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:5;display:flex;align-items:center;gap:6px;transition:.15s}
+.slide-fs-btn:hover{transform:translateY(-2px)}
+.slide-counter{position:absolute;bottom:12px;left:14px;background:rgba(0,0,0,.6);color:#fff;padding:5px 12px;border-radius:16px;font-size:.85rem;z-index:3}
+.slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 4px;scrollbar-width:thin}
+.slide-strip::-webkit-scrollbar{height:6px}
+.slide-strip::-webkit-scrollbar-thumb{background:var(--c4);border-radius:4px}
+.strip-thumb{flex-shrink:0;width:90px;height:52px;border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;opacity:.6;transition:.2s;background:#000}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb:hover{opacity:1;transform:translateY(-2px)}
+.strip-thumb.active{opacity:1;border-color:var(--c1);box-shadow:0 0 0 2px var(--c1)}
+.slide-fs{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9999;align-items:center;justify-content:center}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:100%;max-height:100vh;object-fit:contain}
+.slide-fs-close{position:fixed;top:16px;right:16px;background:var(--c1);color:#fff;border:none;width:42px;height:42px;font-size:1.4rem;cursor:pointer;border-radius:50%;z-index:10000}
+.slide-fs-counter{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.9);color:var(--border);padding:6px 18px;border-radius:20px;font-size:.9rem;z-index:10000}
+
+/* Video section */
+.video-section{margin-bottom:48px}
+.video-section h3{font-size:1.3rem;color:var(--c3);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.video-wrap{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop)}
+.video-ratio{position:relative;padding-top:56.25%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border-top:2px solid var(--border)}
+.nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c5);color:#fff;font-size:.8rem;font-weight:700;padding:5px 12px;border-radius:14px;white-space:nowrap}
+.video-hint{font-size:.9rem;color:var(--dim)}
+.video-yt-link{margin-left:auto;color:var(--c1);font-size:.9rem;font-weight:700}
+.video-placeholder{padding:50px 20px;text-align:center;font-size:.95rem;color:var(--dim)}
+
+/* Infographic section */
+.infographic-section{margin-bottom:48px}
+.infographic-section h3{font-size:1.3rem;color:var(--c2);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:900px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop);cursor:pointer;transition:.2s}
+.info-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--border)}
+.info-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-bottom:2px solid var(--border);background:var(--surface)}
+.info-card .cap{padding:10px 14px;font-size:.9rem;font-weight:700;background:var(--surface);color:var(--c2)}
+
+/* Footer */
+.footer{padding:32px 24px;text-align:center;color:var(--dim);font-size:.85rem;border-top:3px solid var(--border);background:var(--surface);margin-top:40px}
+.footer a{color:var(--c4);font-weight:700}
+
+/* Floating tools */
+.float-tools{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:400}
+.float-btn{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);background:var(--c2);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:var(--shadow-pop);transition:.2s}
+.float-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--border)}
+.float-btn.red{background:var(--c1)}
+.float-btn.green{background:var(--c3)}
+.float-btn.purple{background:var(--c5)}
+.float-btn.blue{background:var(--c4)}
+
+.float-panel{position:fixed;bottom:90px;right:20px;background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;width:290px;box-shadow:var(--shadow-pop);display:none;z-index:400}
+.float-panel.show{display:block}
+.float-panel h4{font-size:1rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;color:var(--c1)}
+.float-panel .close{cursor:pointer;font-size:1.2rem;color:var(--dim);background:none;border:none}
+.btn-primary{background:var(--c1);color:#fff;border:2px solid var(--border);padding:10px 14px;border-radius:10px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;transition:.2s;box-shadow:2px 2px 0 var(--border)}
+.btn-primary:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border)}
+.lottery-result{margin-top:12px;padding:16px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-size:1.5rem;font-weight:900;text-align:center;color:var(--c1);min-height:60px;display:flex;align-items:center;justify-content:center}
+.timer-display{font-size:2rem;font-weight:900;text-align:center;color:var(--c4);padding:16px;background:var(--surface);border:2px solid var(--border);border-radius:10px;margin:12px 0}
+
+/* Draw canvas */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:var(--panel);border:3px solid var(--border);padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-pop);border-radius:16px}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:28px;height:28px;border:2px solid var(--border);cursor:pointer;padding:0;border-radius:50%;transition:.2s}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 10px currentColor}
+.draw-toolbar .draw-clear{background:var(--panel);border:2px solid var(--c1);color:var(--c1);padding:6px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;border-radius:14px}
+
+/* Answer reveal animation */
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.pulse{animation:pulse .6s ease-in-out}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div>
+      <div class="header-title"><span class="emoji">🕵️</span>假訊息偵探社</div>
+      <div class="header-sub">六年級 · 資訊科技 · 事實查核與媒體素養</div>
+    </div>
+    <span class="grade-chip">六年級</span>
+    <div class="mode-toggle">
+      <button class="mode-btn active" onclick="switchMode('student',this)">學生模式</button>
+      <button class="mode-btn" onclick="switchMode('teacher',this)">教師模式 🔒</button>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>偵探任務進度</span>
+      <span id="progTxt">0 / 6 關完成</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- 學習目標 -->
+  <section class="obj-section">
+    <div class="obj-title">🎯 今天你會學到</div>
+    <div class="obj-chips">
+      <span class="obj-chip red">🖼️ 辨認 AI 假照片</span>
+      <span class="obj-chip orange">📱 使用 Google Lens</span>
+      <span class="obj-chip green">🔍 AI 圖像偵測</span>
+      <span class="obj-chip blue">📰 事實查核網站</span>
+      <span class="obj-chip purple">🤖 與 AI 相處守則</span>
+    </div>
+  </section>
+
+  <!-- 關卡導覽 -->
+  <nav class="stage-nav">
+    <a href="#sec1" class="stage-pill" id="pill1">🖼️ 1. 有圖不一定有真相</a>
+    <a href="#sec2" class="stage-pill" id="pill2">💰 2. 為什麼假訊息這麼多</a>
+    <a href="#sec3" class="stage-pill" id="pill3">📱 3. Google Lens 反搜</a>
+    <a href="#sec4" class="stage-pill" id="pill4">🔍 4. AI 圖像偵測</a>
+    <a href="#sec5" class="stage-pill" id="pill5">📰 5. 查核網站三劍客</a>
+    <a href="#sec6" class="stage-pill" id="pill6">🤖 6. AI 相處守則</a>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 01</div>
+      <div>
+        <div class="section-title">🖼️ 有圖不一定有真相</div>
+        <div class="section-sub">AI 生成的照片已經逼真到肉眼分不出來，我們先認識常見的假圖案例。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🚨 AI 假照片常見案例</h4>
+        <ol class="steps-list">
+          <li><strong>時裝秀「流浪漢風」：</strong>網路流傳「今年流行」照片，其實是 AI 生成的梗圖。</li>
+          <li class="green"><strong>炫極光、科幻日食：</strong>太完美、太戲劇化的自然景觀，九成是 AI。真實極光常「霧霧的」。</li>
+          <li class="blue"><strong>福島核廢水變異海鮮：</strong>大龍蝦、章魚、海洋怪物系列圖，2023 年流竄，全是 AI 製造恐慌。</li>
+          <li class="purple"><strong>Deepfake 名人合成：</strong>川普太太、政治人物、哈利波特妙麗合成照，AI 一秒做出來。</li>
+          <li><strong>thispersondoesnotexist.com：</strong>每次重新整理都生成一張全新「根本不存在」的人臉。</li>
+        </ol>
+        <div class="tip-box"><strong>偵探心法：</strong>看到「太美、太神奇、太不可思議」的畫面，第一反應是「這可能是 AI 做的」。</div>
+        <div class="warn-box"><strong>⚠️ 連新聞台也會出包：</strong>2024 年 TVBS 在凱米颱風報導時，抓了公視《我們的島》2020 年在嘉義拍的畫面，說是高雄阿蓮的豬泡水。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動：真假照片偵探考驗</div>
+        <div class="canvas-hint">看照片描述，判斷是「真實事件」還是「AI 假圖」。</div>
+        <canvas id="game1" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn red" onclick="game1Answer('fake')">❌ AI 假圖</button>
+          <button class="ctrl-btn green" onclick="game1Answer('real')">✅ 真實照片</button>
+          <button class="ctrl-btn outline" onclick="game1Next()">下一題 ➜</button>
+        </div>
+        <div class="game-result" id="game1Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 1 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：下列哪個「最不可能」是真實照片？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,1,'A')">A. 太完美、太戲劇化的極光照</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'B')">B. 路人隨手拍的日常照</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'C')">C. 氣象局官方發布的氣象圖</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'D')">D. NASA 的衛星觀測照片</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：thispersondoesnotexist.com 這個網站有什麼特別？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,2,'A')">A. 會告訴你這個人是不是還活著</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'B')">B. 每次重新整理都生成一張「不存在的人臉」</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'C')">C. 可以查到任何人的身分</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'D')">D. 可以下載真實名人的照片</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：看到「福島核廢水讓龍蝦變成怪物」的圖，你應該怎麼做？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,3,'A')">A. 馬上分享給所有親友</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'B')">B. 先懷疑它可能是 AI 生成，找可信來源查證</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'C')">C. 從此不再吃海鮮</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'D')">D. 轉發到班群引起大家討論</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <strong>教學提示</strong>
+      <ul>
+        <li>建議用 5 分鐘讓學生瀏覽邱家宜老師講座中的多張 AI 假圖（流浪漢時尚、松花江冰花、極光大爆發），引發驚訝感。</li>
+        <li>可以問：「你們 LINE 群組有沒有被傳過這種照片？爸媽有沒有轉給你過？」引起共鳴。</li>
+        <li>強調：犯錯不是罪，但「不查證就轉傳」會讓自己變成假訊息的幫兇。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section id="sec2" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 02</div>
+      <div>
+        <div class="section-title">💰 為什麼假訊息這麼多？</div>
+        <div class="section-sub">平台的生意模式決定了為什麼假的、聳動的內容最容易傳開。這叫「監控資本主義」。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🏭 我們不是消費者，我們是「原料」</h4>
+        <ol class="steps-list">
+          <li><strong>傳統生意：</strong>工廠做商品→賣給客人→客人付錢。</li>
+          <li class="green"><strong>平台生意（Google、Meta）：</strong>我們免費用→平台蒐集我們的數據→把「我們」賣給廣告主。</li>
+          <li class="blue"><strong>廣告主才是客人：</strong>政治選舉、商品行銷，都可以精準鎖定「桃園 40 歲男性、愛運動」這樣的受眾。</li>
+          <li class="purple"><strong>演算法的唯一目標：</strong>把你黏在 App 上越久越好，蒐集越多資料越好。</li>
+          <li><strong>結果：</strong>越聳動、越新奇、越爭議的內容→被推播→平台賺錢。對錯、真假都不是它的邏輯。</li>
+        </ol>
+        <div class="tip-box"><strong>偵探心法：</strong>假訊息不是意外，而是演算法「設計上的副作用」。平台沒動力主動擋假訊息，因為假訊息很賺。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🔄 互動：演算法推播模擬器</div>
+        <div class="canvas-hint">點擊不同類型的貼文，看看演算法怎麼挑選「最賺錢」的內容推給大家。</div>
+        <canvas id="game2" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn orange" onclick="game2Click('calm')">😊 平淡日常</button>
+          <button class="ctrl-btn red" onclick="game2Click('shock')">😱 驚悚假圖</button>
+          <button class="ctrl-btn blue" onclick="game2Click('news')">📰 嚴肅新聞</button>
+          <button class="ctrl-btn outline" onclick="game2Reset()">重置</button>
+        </div>
+        <div class="game-result" id="game2Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 2 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：在 Facebook、YouTube 的商業模式中，誰是他們真正的「客人」？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,1,'A')">A. 一般使用者</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'B')">B. 買廣告的公司、政治人物</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'C')">C. 政府</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'D')">D. 記者</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：為什麼聳動假訊息在社群平台特別容易傳開？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,2,'A')">A. 因為政府鼓勵</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'B')">B. 因為演算法偏好能讓使用者停留、互動的內容</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'C')">C. 因為大家都很笨</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'D')">D. 因為只有假訊息才能發文</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：「監控資本主義」中，使用者扮演的角色是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,3,'A')">A. 平台的股東</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'B')">B. 產生數據的「原料生產者」</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'C')">C. 平台的員工</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'D')">D. 平台的投資人</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <strong>教學提示</strong>
+      <ul>
+        <li>監控資本主義（Surveillance Capitalism）這個詞原本很抽象，對六年級可先用「我們是原料，不是客人」的比喻切入。</li>
+        <li>可以舉例：查了某雙鞋子，整個 Instagram 都在推那雙鞋——這就是平台在販賣「你的注意力」給鞋廠。</li>
+        <li>延伸討論：為什麼 YouTube 給創作者分潤？答：因為他們也在幫平台「產生原料」。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section id="sec3" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 03</div>
+      <div>
+        <div class="section-title">📱 Google Lens 反向搜圖</div>
+        <div class="section-sub">偵探必備神器！一張圖丟進去，Google 幫你找出「這東西在哪、是什麼、從哪來」。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🔎 三步驟破解任何可疑照片</h4>
+        <ol class="steps-list">
+          <li><strong>打開相機圖示：</strong>手機 Google App 或電腦 google.com，右下方或搜尋框內有一個「相機 📷」圖示，點下去。</li>
+          <li class="green"><strong>上傳或拍照：</strong>可以直接拍、也可以從相簿選要查的照片。模糊的照片可以用框選放大重要部分。</li>
+          <li class="blue"><strong>看結果：</strong>Google 會列出「網路上最相似的圖」，告訴你這是哪裡、是什麼物件，有時候會直接貼出原始出處。</li>
+        </ol>
+        <div class="tip-box"><strong>小訣竅：</strong>同一張圖拍多個角度，或只框選最特別的部分（例如背景建築、招牌文字），搜得更準！</div>
+        <div class="warn-box"><strong>注意：</strong>Google Lens 不是萬能的。很新、很特殊的圖可能查不到；但「被轉傳過的熱門假圖」幾乎都能抓到原始出處。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">📲 互動：Google Lens 查證模擬</div>
+        <div class="canvas-hint">點擊「拍照」→「送出」→看 Google Lens 回傳什麼結果。</div>
+        <canvas id="game3" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn orange" onclick="game3Step(1)">① 打開相機</button>
+          <button class="ctrl-btn blue" onclick="game3Step(2)">② 拍照/上傳</button>
+          <button class="ctrl-btn green" onclick="game3Step(3)">③ 看結果</button>
+          <button class="ctrl-btn outline" onclick="game3Reset()">重新開始</button>
+        </div>
+        <div class="game-result" id="game3Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 3 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：要用 Google Lens 查圖，第一步要點哪個圖示？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,1,'A')">A. 搜尋框旁邊的「相機 📷」圖示</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'B')">B. 「我的帳號」圖示</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'C')">C. Gmail 圖示</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'D')">D. 地圖圖示</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：LINE 收到「這是淡水觀音山」的奇特照片，最快判別方法是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,2,'A')">A. 問問看班上同學</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'B')">B. 直接相信，回覆「好美喔！」</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'C')">C. 用 Google Lens 反向搜圖，看它真正在哪裡</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'D')">D. 刪除不回應</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：用 Google Lens 搜圖時，哪個「技巧」最能提高準確度？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,3,'A')">A. 把照片塗黑一半再搜</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'B')">B. 框選照片中最特別的部分（例如招牌、建築）</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'C')">C. 把照片轉成黑白</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'D')">D. 把照片倒過來</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <strong>教學提示</strong>
+      <ul>
+        <li>實機示範最有效：老師當場拍一張教室的某個物件，用 Google Lens 秀出搜尋結果。</li>
+        <li>課堂活動：分組出題，準備 5 張風景照（山、建築、瀑布），讓組員用 Google Lens 比速度找出正確地點。</li>
+        <li>可以挑戰「識破假虎豹潭」這類 2022 年真實案例，對比真假照片的差異。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section id="sec4" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 04</div>
+      <div>
+        <div class="section-title">🔍 AI 圖像偵測器</div>
+        <div class="section-sub">專門偵測「這張圖是不是 AI 做的」的工具。雖然不是 100% 準確，但是很有參考價值。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🧪 兩個常用偵測網站</h4>
+        <ol class="steps-list">
+          <li><strong>Hive Moderation：</strong>造訪 hivemoderation.com/ai-generated-content-detection。上傳圖片後，會給出「AI 製作機率」百分比。</li>
+          <li class="green"><strong>Deepware.ai：</strong>針對「影片」的 Deepfake 偵測。上傳或貼 YouTube 連結，會標出疑似深偽的畫面。</li>
+          <li class="blue"><strong>解讀結果：</strong>90% 以上＝很可能是 AI；50–89%＝有疑慮；30% 以下＝大致真實。</li>
+          <li class="purple"><strong>綜合判斷：</strong>偵測網站 + Google Lens 反搜 + 看來源，三管齊下才安全。</li>
+        </ol>
+        <div class="warn-box"><strong>⚠️ 別太信賴單一工具：</strong>做假的技術永遠跑在偵測前面。AI 模型一直更新，新型假圖可能暫時騙過偵測器。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎯 互動：AI 偵測儀表板</div>
+        <div class="canvas-hint">選擇一張可疑照片，看偵測器怎麼判讀。</div>
+        <canvas id="game4" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn red" onclick="game4Scan('A')">掃描 A 圖</button>
+          <button class="ctrl-btn orange" onclick="game4Scan('B')">掃描 B 圖</button>
+          <button class="ctrl-btn green" onclick="game4Scan('C')">掃描 C 圖</button>
+          <button class="ctrl-btn outline" onclick="game4Reset()">重置</button>
+        </div>
+        <div class="game-result" id="game4Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 4 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：Hive Moderation 偵測器顯示「94.7% AI 生成」，代表什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,1,'A')">A. 這張圖絕對是真的</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'B')">B. 這張圖非常可能是 AI 生成的</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'C')">C. 這張圖會在 94.7 秒內消失</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'D')">D. 這張圖有 94.7% 的人按讚</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：為什麼不能只靠一個 AI 偵測網站判斷真假？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,2,'A')">A. 偵測網站會收錢放水</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'B')">B. 做假的技術一直更新，可能騙過偵測器</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'C')">C. 偵測網站每天只能用一次</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'D')">D. 偵測網站會自己做假圖</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：最好的真假判斷方式是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,3,'A')">A. 只看「誰發的」</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'B')">B. 只靠 AI 偵測器</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'C')">C. 偵測器 + 反向搜圖 + 看來源，多方交叉驗證</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'D')">D. 憑感覺判斷</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <strong>教學提示</strong>
+      <ul>
+        <li>Hive Moderation 的免費版每天有使用次數限制，上課前可先準備幾張已測過的圖作示範。</li>
+        <li>讓學生練習「解釋百分比」——不是只看數字，還要思考偵測的限制。</li>
+        <li>可以讓學生自己用 AI 生成圖（例如 Gemini Nano Banana、Bing Image Creator）上傳測試，看看偵測率。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section id="sec5" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 05</div>
+      <div>
+        <div class="section-title">📰 事實查核網站三劍客</div>
+        <div class="section-sub">當你懷疑一則新聞或訊息的真假，直接上這些網站查！都是免費的。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🏛️ 台灣事實查核三大平台</h4>
+        <ol class="steps-list">
+          <li><strong>台灣事實查核中心（tfc-taiwan.org.tw）：</strong>專業記者團隊，每週查核多則熱門訊息，附完整報告。</li>
+          <li class="green"><strong>MyGoPen 麥擱騙：</strong>有 LINE 帳號，把可疑訊息直接丟給它，真人編輯會幫你查。</li>
+          <li class="blue"><strong>Cofacts 真的假的：</strong>開放平台，大家一起查，LINE Bot 回報速度快。</li>
+          <li class="purple"><strong>Snopes（美國）：</strong>國際知名查核網站，英文的國際假新聞都靠它。</li>
+        </ol>
+        <div class="tip-box"><strong>偵探心法：</strong>先假設所有收到的奇怪訊息都是假的，查完再相信。這不是悲觀，是保護自己。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🕵️ 互動：假訊息追查模擬</div>
+        <div class="canvas-hint">收到一則 LINE 訊息，選擇你要用哪個查核網站。</div>
+        <canvas id="game5" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn red" onclick="game5Go('tfc')">台灣事實查核中心</button>
+          <button class="ctrl-btn orange" onclick="game5Go('mygopen')">MyGoPen</button>
+          <button class="ctrl-btn green" onclick="game5Go('cofacts')">Cofacts</button>
+          <button class="ctrl-btn outline" onclick="game5Reset()">下一題</button>
+        </div>
+        <div class="game-result" id="game5Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 5 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：哪一個查核平台有「LINE 真人編輯」幫你查？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,5,1,'A')">A. Facebook</button>
+          <button class="quiz-opt" onclick="q(this,5,1,'B')">B. MyGoPen 麥擱騙</button>
+          <button class="quiz-opt" onclick="q(this,5,1,'C')">C. Instagram</button>
+          <button class="quiz-opt" onclick="q(this,5,1,'D')">D. YouTube</button>
+        </div>
+        <div class="quiz-fb" id="fb-5-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：Cofacts「真的假的」跟其他查核網站最大的差別是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,5,2,'A')">A. 只有政府公務員能查</button>
+          <button class="quiz-opt" onclick="q(this,5,2,'B')">B. 開放平台，公民一起協作查核</button>
+          <button class="quiz-opt" onclick="q(this,5,2,'C')">C. 要付費才能用</button>
+          <button class="quiz-opt" onclick="q(this,5,2,'D')">D. 只查國際新聞</button>
+        </div>
+        <div class="quiz-fb" id="fb-5-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：唐鳳建議我們看訊息時，應該先問自己什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,5,3,'A')">A. 這訊息幾個人按讚？</button>
+          <button class="quiz-opt" onclick="q(this,5,3,'B')">B. 這訊息的「來源」值不值得信任？</button>
+          <button class="quiz-opt" onclick="q(this,5,3,'C')">C. 這訊息多長？</button>
+          <button class="quiz-opt" onclick="q(this,5,3,'D')">D. 這訊息誰分享給我？</button>
+        </div>
+        <div class="quiz-fb" id="fb-5-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <strong>教學提示</strong>
+      <ul>
+        <li>建議讓學生加入 MyGoPen 與 Cofacts 的 LINE 官方帳號，變成他們手機中的「第一道防線」。</li>
+        <li>可以現場演練：老師給一段假訊息，讓學生分組分別用三個不同平台查證，比較結果。</li>
+        <li>延伸：介紹家裡長輩常被騙的「醫療謠言」「政治假訊息」，讓學生帶回家教家人查證。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 6 -->
+  <section id="sec6" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 06</div>
+      <div>
+        <div class="section-title">🤖 跟 AI 相處的安全守則</div>
+        <div class="section-sub">AI 不是敵人，但也不是「最好的朋友」。我們要知道怎麼聰明地用它。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🛡️ 給小偵探的 AI 使用守則</h4>
+        <ol class="steps-list">
+          <li><strong>先假設都是假的：</strong>看到 AI 生成的圖、影片、文字，先懷疑。用查核工具確認後再相信。</li>
+          <li class="green"><strong>AI in the loop，不是 Human in the loop：</strong>不要一個人對著 AI 聊天。幾個人一起用，讓 AI 輔助討論。</li>
+          <li class="blue"><strong>心事找真人：</strong>家人、老師、好同學才是你的情感支柱。AI 表現親密只是為了留住你。</li>
+          <li class="purple"><strong>建立媒體白名單：</strong>挑 3 個你信任的新聞來源（例如公視、中央社），其他訊息先質疑。</li>
+          <li><strong>不確定就不轉傳：</strong>轉錯了要道歉、刪文、補正確資訊。</li>
+        </ol>
+        <div class="tip-box"><strong>偵探心法：</strong>媒體素養就像打疫苗——遲早你會遇到假訊息病毒，但有疫苗就不會被害到。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">💉 互動：媒體素養疫苗進度</div>
+        <div class="canvas-hint">完成五個防身技能，成為能抵抗資訊瘟疫的偵探！</div>
+        <canvas id="game6" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn red" onclick="game6Skill(0)">💊 先懷疑</button>
+          <button class="ctrl-btn orange" onclick="game6Skill(1)">🔎 會反搜</button>
+          <button class="ctrl-btn green" onclick="game6Skill(2)">📰 有白名單</button>
+          <button class="ctrl-btn blue" onclick="game6Skill(3)">🤝 討論而非獨處</button>
+          <button class="ctrl-btn purple" onclick="game6Skill(4)">✋ 不亂轉傳</button>
+          <button class="ctrl-btn outline" onclick="game6Reset()">重來</button>
+        </div>
+        <div class="game-result" id="game6Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 6 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：唐鳳建議我們「AI in the loop」是什麼意思？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,6,1,'A')">A. 不用 AI</button>
+          <button class="quiz-opt" onclick="q(this,6,1,'B')">B. 幾個人一起用 AI 討論，讓 AI 輔助</button>
+          <button class="quiz-opt" onclick="q(this,6,1,'C')">C. AI 自己討論</button>
+          <button class="quiz-opt" onclick="q(this,6,1,'D')">D. 一個人跟 AI 密友</button>
+        </div>
+        <div class="quiz-fb" id="fb-6-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：為什麼不該把 AI 當成最好的朋友？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,6,2,'A')">A. AI 很無聊</button>
+          <button class="quiz-opt" onclick="q(this,6,2,'B')">B. AI 不會真的關心你，親密感是為了讓你一直使用</button>
+          <button class="quiz-opt" onclick="q(this,6,2,'C')">C. AI 講話很慢</button>
+          <button class="quiz-opt" onclick="q(this,6,2,'D')">D. AI 要付錢</button>
+        </div>
+        <div class="quiz-fb" id="fb-6-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：邱家宜老師用什麼比喻「媒體素養」？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,6,3,'A')">A. 雨傘</button>
+          <button class="quiz-opt" onclick="q(this,6,3,'B')">B. 疫苗</button>
+          <button class="quiz-opt" onclick="q(this,6,3,'C')">C. 書本</button>
+          <button class="quiz-opt" onclick="q(this,6,3,'D')">D. 眼鏡</button>
+        </div>
+        <div class="quiz-fb" id="fb-6-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <strong>教學提示</strong>
+      <ul>
+        <li>強調「AI 不是敵人」——它很有用，但要小心使用。避免造成 AI 恐懼症。</li>
+        <li>討論：同學之間有沒有「跟 AI 說私事」的經驗？為什麼？可以帶到情感教育。</li>
+        <li>結尾可以帶全班一起唸「我的媒體素養宣言」，提升儀式感與記憶。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 今日實作任務 -->
+  <section class="project-section">
+    <h3>🎯 今日實作任務</h3>
+    <p>完成下列三項，把你學到的查核技能用在真實生活！</p>
+    <div class="project-tasks">
+      <div class="task-card">
+        <h4>① 查一張可疑照片</h4>
+        <p>從家人的 LINE 群組找一張你懷疑的照片，用 <strong>Google Lens</strong> 反向搜圖找出真相。記錄：查到的原始出處是哪裡？</p>
+      </div>
+      <div class="task-card">
+        <h4>② 查一則可疑訊息</h4>
+        <p>上 <strong>MyGoPen</strong> 或 <strong>台灣事實查核中心</strong>，找一則讓你驚訝的查核報告，摘要它的真相寫 100 字給家人看。</p>
+      </div>
+      <div class="task-card">
+        <h4>③ 寫下我的媒體白名單</h4>
+        <p>挑 3 個你覺得「最可信」的新聞來源，說明為什麼信任它們。跟同學比較，看看大家的白名單重不重疊。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 授課簡報 -->
+  <section class="slide-section">
+    <h3>🎞️ 授課簡報</h3>
+    <div class="slide-player">
+      <div class="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 1</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
+    </div>
+  </section>
+
+  <!-- 資訊圖表 -->
+  <section class="infographic-section">
+    <h3>📊 四張偵探懶人包</h3>
+    <div class="info-grid">
+      <a class="info-card" href="assets/info_01_aifake.jpg" target="_blank">
+        <img src="assets/info_01_aifake.jpg" alt="AI 假照片大全">
+        <div class="cap">① 有圖不一定有真相 — AI 假照片特徵</div>
+      </a>
+      <a class="info-card" href="assets/info_02_capitalism.jpg" target="_blank">
+        <img src="assets/info_02_capitalism.jpg" alt="監控資本主義">
+        <div class="cap">② 為什麼假訊息這麼多 — 監控資本主義</div>
+      </a>
+      <a class="info-card" href="assets/info_03_tools.jpg" target="_blank">
+        <img src="assets/info_03_tools.jpg" alt="查核工具">
+        <div class="cap">③ 三大查核工具 — Google Lens / 偵測器 / 查核網站</div>
+      </a>
+      <a class="info-card" href="assets/info_04_vaccine.jpg" target="_blank">
+        <img src="assets/info_04_vaccine.jpg" alt="資訊瘟疫疫苗">
+        <div class="cap">④ 跟 AI 相處守則 + 資訊瘟疫疫苗</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 學生自學影片 -->
+  <section class="video-section">
+    <h3>▶ 學生自學影片</h3>
+    <div class="video-wrap">
+      <div class="video-ratio" id="video-ratio">
+        <iframe id="nlm-video-iframe" src="" title="假訊息偵探社 NotebookLM 教學影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-placeholder" id="video-placeholder" style="display:none">
+        🎬 自學影片生成中，完成後會在這裡播放。<br>
+        <a href="https://notebooklm.google.com/notebook/04dc4b1a-9e25-4ffe-a0ed-db6d5489c7e7" target="_blank" style="color:var(--c4)">（點此在 NotebookLM 查看）</a>
+      </div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 建議用耳機觀看，可搭配上方簡報一起複習</span>
+        <a href="#" target="_blank" rel="noopener" class="video-yt-link" id="yt-link">↗ 在 YouTube 開啟</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NotebookLM 資源站 -->
+  <section class="nb-section">
+    <h3>🧭 NotebookLM 資源站</h3>
+    <div class="nb-grid">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/04dc4b1a-9e25-4ffe-a0ed-db6d5489c7e7" target="_blank">
+        <h4>📚 本單元精簡本</h4>
+        <p>字幕精華 + 主講者 PDF，所有素材的生成來源。</p>
+        <span class="link">前往 NotebookLM →</span>
+      </a>
+      <a class="nb-card" href="https://tfc-taiwan.org.tw/" target="_blank">
+        <h4>🏛️ 台灣事實查核中心</h4>
+        <p>專業查核報告，可搜尋過去查核過的熱門假訊息。</p>
+        <span class="link">前往網站 →</span>
+      </a>
+      <a class="nb-card" href="https://cofacts.tw/" target="_blank">
+        <h4>🤝 Cofacts 真的假的</h4>
+        <p>開放協作平台，LINE Bot 直接查證，公民一起協作。</p>
+        <span class="link">前往網站 →</span>
+      </a>
+    </div>
+    <div class="flow-box">
+      <h4>🔄 本頁怎麼來的？（NLM × Claude 流程）</h4>
+      <div class="flow-steps">
+        <span class="flow-step">1. 講座字幕</span>
+        <span class="flow-step">2. NotebookLM 上傳</span>
+        <span class="flow-step">3. 生成簡報/影片/圖表</span>
+        <span class="flow-step">4. notebook_query 產生 FAQ</span>
+        <span class="flow-step">5. Claude 編寫 HTML</span>
+        <span class="flow-step">6. GitHub Pages 上線</span>
+      </div>
+    </div>
+    <h4 style="font-size:1.1rem;color:var(--c1);margin-bottom:12px;margin-top:20px">❓ 常見問題 FAQ</h4>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">為什麼要學習事實查核？</div>
+        <div class="faq-a">學習事實查核就像是幫大腦打疫苗，可以保護我們不被假訊息這場「資訊瘟疫」傳染。現在的假訊息非常嚴重，因為 AI 科技很發達，只要一秒鐘就能憑空造出超級逼真的人臉或風景照，連大人的肉眼都幾乎分不出來。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Google Lens 反向搜圖怎麼用？</div>
+        <div class="faq-a">只要打開手機或電腦的 Google 搜尋，點擊旁邊的「相機」小圖示就好。接著你可以直接拍照，或是從手機相簿裡選取你想檢查的神奇照片。最後 Google 就會自動幫你比對，告訴你這張照片裡面的東西到底是什麼，以及它最初是在哪裡出現的。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">什麼是監控資本主義？</div>
+        <div class="faq-a">我們在免費使用社群平台時，其實我們自己的資料變成了「原料」，平台收集我們喜歡看什麼數據去賺錢。那些超級誇張、可怕或新奇的假訊息最容易吸引大家的眼球，所以平台的系統就會故意不斷推薦這些假訊息給大家看。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">我可以跟 AI 當好朋友嗎？</div>
+        <div class="faq-a">AI 可以當你很棒的學習小幫手，但請記得不要把它當成唯一的好朋友。因為 AI 其實不會真的關心你，它表現得很親密只是為了吸引你不斷跟它講話，好收集更多你的資料。心事要找真實世界裡的家人、老師或好同學訴說。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">看到神奇的照片要怎麼判斷真假？</div>
+        <div class="faq-a">第一步就是要先懷疑它可能是假的，千萬別馬上相信。檢查這張照片的來源，看看是專業的新聞機構發布的，還是不知名的網友亂傳的。接著利用 Google Lens 反向搜圖查查看真正出處，或到事實查核網站確認。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">不小心轉傳了假訊息怎麼辦？</div>
+        <div class="faq-a">請不要慌張，第一時間先把自己發布的貼文或訊息收回並刪除。接著勇敢地跟收到訊息的朋友說聲「對不起，我傳錯了」，並且補上正確的資訊給他們。這樣做才是負責任的好表現，也能成功阻止假訊息繼續傳染。</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>🕵️ 假訊息偵探社｜六年級資訊科技教學駕駛艙</p>
+  <p>講座來源：邱家宜老師（優質新聞發展協會理事長）｜素材生成：NotebookLM｜整合：Claude</p>
+  <p>© 2026 IT COCKPIT · <a href="../index.html">回主頁</a></p>
+</footer>
+
+<!-- Floating tools -->
+<div class="float-tools">
+  <button class="float-btn red" onclick="togglePanel('lottery')" title="抽號">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn green" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn purple" onclick="goTop()" title="回頂部">⬆️</button>
+</div>
+
+<div class="float-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <button class="close" onclick="togglePanel('lottery')">✕</button></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;background:var(--surface);border:2px solid var(--border);color:var(--text);font-family:inherit;border-radius:6px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;background:var(--surface);border:2px solid var(--border);color:var(--text);font-family:inherit;border-radius:6px">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c2)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="float-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <button class="close" onclick="togglePanel('timer')">✕</button></h4>
+  <div class="timer-display" id="timer-display">00:00</div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim)">
+    <span>設定分鐘</span>
+    <input type="number" id="timer-min" value="5" min="0" max="60" style="width:60px;padding:4px 6px;background:var(--surface);border:2px solid var(--border);color:var(--text);font-family:inherit;border-radius:6px">
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1;background:var(--c3)">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="flex:1;background:var(--c2)">⏸ 暫停</button>
+    <button class="btn-primary" onclick="resetTimer()" style="background:var(--c1)">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#e94057" onclick="setPenColor('#e94057',this)"></button>
+  <button class="color-dot" style="background:#ffa94d" onclick="setPenColor('#ffa94d',this)"></button>
+  <button class="color-dot" style="background:#51cf66" onclick="setPenColor('#51cf66',this)"></button>
+  <button class="color-dot" style="background:#4dabf7" onclick="setPenColor('#4dabf7',this)"></button>
+  <button class="color-dot" style="background:#9775fa" onclick="setPenColor('#9775fa',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<!-- Fullscreen slide overlay -->
+<div class="slide-fs" id="slide-fs">
+  <img id="slide-fs-img" src="" alt="簡報全螢幕">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
+  <div class="slide-fs-counter" id="slide-fs-counter">1 / 1</div>
+</div>
+
+<script>
+// ========== CONFIG (填入實際簡報張數與 YouTube ID 後啟用) ==========
+const SLIDE_COUNT = 13; // 簡報張數
+const YOUTUBE_VIDEO_ID = ""; // YouTube 影片 ID（上傳後填入）
+const SLIDE_LIST = [];
+for(let i=1; i<=SLIDE_COUNT; i++){
+  SLIDE_LIST.push('assets/slide_' + String(i).padStart(2,'0') + '.jpg');
+}
+
+// ========== MODE SWITCH ==========
+function switchMode(mode, btn){
+  if(mode === 'teacher'){
+    const pwd = prompt('請輸入教師密碼：');
+    if(pwd !== 'it2026'){ alert('密碼錯誤'); return; }
+  }
+  document.body.classList.toggle('teacher-mode', mode === 'teacher');
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ========== PROGRESS ==========
+const doneStages = new Set();
+function markStageDone(n){
+  if(doneStages.has(n)) return;
+  doneStages.add(n);
+  const pill = document.getElementById('pill'+n);
+  if(pill) pill.classList.add('done');
+  const pct = (doneStages.size / 6) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progTxt').textContent = doneStages.size + ' / 6 關完成';
+}
+
+// ========== QUIZ ==========
+const ANS = {
+  '1-1':'A','1-2':'B','1-3':'B',
+  '2-1':'B','2-2':'B','2-3':'B',
+  '3-1':'A','3-2':'C','3-3':'B',
+  '4-1':'B','4-2':'B','4-3':'C',
+  '5-1':'B','5-2':'B','5-3':'B',
+  '6-1':'B','6-2':'B','6-3':'B'
+};
+const EXPLAIN = {
+  '1-1':'極光太完美的照片九成是 AI。真實極光常「霧霧的、不那麼藝術」。',
+  '1-2':'這是「This Person Does Not Exist」網站，示範 AI 瞬間生成不存在的人臉。',
+  '1-3':'「先懷疑 → 查證」是偵探的黃金守則，不要慌張更不要急著轉傳。',
+  '2-1':'買廣告的才是平台的「客戶」，使用者是「被賣掉的原料」。',
+  '2-2':'演算法鼓勵停留、互動。越聳動越有流量，假訊息自然被推播。',
+  '2-3':'監控資本主義的核心：我們貢獻數據（勞動），平台賣給廣告主。',
+  '3-1':'相機圖示就在搜尋框旁邊，一點開就是 Google Lens。',
+  '3-2':'反向搜圖可以立刻顯示原始出處，比猜測快又準。',
+  '3-3':'框選最特別的部分（招牌、建築）可以讓 Google Lens 搜得更準。',
+  '4-1':'百分比越高代表 AI 生成機率越大。94% 幾乎可以確定是 AI。',
+  '4-2':'AI 模型一直進化，偵測工具會有落差。多方驗證才安全。',
+  '4-3':'偵測器 + 反搜 + 看來源，「三位一體」才是最可靠的判斷。',
+  '5-1':'MyGoPen 有真人編輯，學生、長輩最適合使用。',
+  '5-2':'Cofacts 是開放平台，任何人都可以協作查證，像維基百科一樣。',
+  '5-3':'唐鳳說：「先假設都是假的，改問來源是否可信。」',
+  '6-1':'AI in the loop = 讓 AI 輔助「一群人」的討論。不是一個人陷入 AI。',
+  '6-2':'AI 的「親密感」是設計出來讓你黏著。它不會真的關心你。',
+  '6-3':'媒體素養像疫苗——遲早會遇到假訊息，打過疫苗就能存活。'
+};
+const PRAISE = ['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','💪 偵探正解！','🔥 完全正確！'];
+
+function q(btn, stage, num, choice){
+  const key = stage + '-' + num;
+  const correct = ANS[key];
+  const container = btn.parentElement;
+  container.querySelectorAll('.quiz-opt').forEach(o=>{o.disabled=true;o.style.cursor='default'});
+  const fb = document.getElementById('fb-' + key);
+  fb.classList.add('show');
+  if(choice === correct){
+    btn.classList.add('correct','pulse');
+    fb.classList.add('ok');
+    fb.textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)] + ' ' + EXPLAIN[key];
+  }else{
+    btn.classList.add('wrong');
+    container.querySelectorAll('.quiz-opt').forEach(o=>{
+      if(o.textContent.trim().startsWith(correct + '.')) o.classList.add('correct');
+    });
+    fb.classList.add('bad');
+    fb.textContent = '💡 正確答案是 ' + correct + '。' + EXPLAIN[key];
+  }
+  // 檢查整關是否都答對
+  const stageEl = document.getElementById('sec'+stage);
+  const allQ = stageEl.querySelectorAll('.quiz-opt.correct');
+  const expected = 3;
+  if(allQ.length >= expected) markStageDone(stage);
+}
+
+// ========== GAME 1: 真假照片偵探 ==========
+const G1 = [
+  {desc:'完美無瑕的極光大爆發，法國聖米歇爾山上空五彩斑斕',ans:'fake',exp:'太戲劇化的極光多為 AI。真實極光常較霧、較淡。'},
+  {desc:'路人在松花江畔拍到「冰花奇觀」，美到像夢境',ans:'fake',exp:'2024 年網路瘋傳的松花江冰花其實是 AI 生成。'},
+  {desc:'NASA 官網發布的 2024 年北美日食衛星觀測照',ans:'real',exp:'官方科學機構是可信來源，資料通常經過驗證。'},
+  {desc:'「福島核廢水變異出巨型龍蝦、章魚」系列圖',ans:'fake',exp:'2023 年製造恐慌的 AI 圖系列，沒有任何真實依據。'},
+  {desc:'氣象局在颱風來襲時發布的雲圖',ans:'real',exp:'氣象局是可信來源，有專業流程與責任。'},
+  {desc:'時裝秀「今年流行流浪漢風」的誇張造型',ans:'fake',exp:'AI 做的梗圖，各大媒體曾錯當真實新聞刊登。'},
+];
+let g1i = 0, g1s = {ok:0, bad:0};
+function drawG1(){
+  const c = document.getElementById('game1'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  // bg
+  ctx.fillStyle = '#fff9f0'; ctx.fillRect(0,0,c.width,c.height);
+  // frame
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(20,20,c.width-40,c.height-40);
+  // case number
+  ctx.fillStyle='#e94057'; ctx.font='bold 18px "Noto Sans TC"';
+  ctx.fillText('📁 案件 ' + (g1i+1) + ' / ' + G1.length, 40, 55);
+  // desc
+  ctx.fillStyle='#3d3d3d'; ctx.font='16px "Noto Sans TC"';
+  const words = G1[g1i].desc;
+  const lines = wrap(ctx, words, c.width - 80);
+  lines.forEach((l, idx)=>{
+    ctx.fillText(l, 40, 100 + idx*26);
+  });
+  // stats
+  ctx.fillStyle='#888'; ctx.font='14px "Noto Sans TC"';
+  ctx.fillText('🔍 破案：' + g1s.ok + ' ｜ ❓ 失誤：' + g1s.bad, 40, c.height - 40);
+}
+function wrap(ctx, text, maxW){
+  const out=[]; let line='';
+  for(const ch of text){
+    const tw = ctx.measureText(line+ch).width;
+    if(tw > maxW){ out.push(line); line=ch; }else line+=ch;
+  }
+  if(line) out.push(line);
+  return out;
+}
+function game1Answer(choice){
+  const r = document.getElementById('game1Result');
+  r.classList.remove('ok','bad'); r.classList.add('show');
+  if(choice === G1[g1i].ans){
+    g1s.ok++;
+    r.classList.add('ok');
+    r.innerHTML = '🎯 <strong>破案成功！</strong>' + G1[g1i].exp;
+    if(g1s.ok >= 3) markStageDone(1);
+  }else{
+    g1s.bad++;
+    r.classList.add('bad');
+    r.innerHTML = '❌ <strong>再想想！</strong>' + G1[g1i].exp;
+  }
+}
+function game1Next(){
+  g1i = (g1i+1) % G1.length;
+  document.getElementById('game1Result').classList.remove('show');
+  drawG1();
+}
+
+// ========== GAME 2: 演算法推播 ==========
+let g2Data = {calm:10, shock:10, news:10};
+function drawG2(){
+  const c = document.getElementById('game2'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fff9f0'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(20,20,c.width-40,c.height-40);
+  ctx.fillStyle='#3d3d3d'; ctx.font='bold 18px "Noto Sans TC"';
+  ctx.fillText('📊 演算法推播熱度儀表板', 40, 55);
+  const items = [
+    {k:'calm', label:'😊 平淡日常', color:'#51cf66', mult:1},
+    {k:'shock', label:'😱 驚悚假圖', color:'#e94057', mult:5},
+    {k:'news', label:'📰 嚴肅新聞', color:'#4dabf7', mult:1.5}
+  ];
+  items.forEach((it, idx)=>{
+    const y = 90 + idx*70;
+    ctx.fillStyle='#3d3d3d'; ctx.font='16px "Noto Sans TC"'; ctx.fillText(it.label, 40, y);
+    const total = g2Data[it.k] * it.mult;
+    const barW = Math.min(total*4, c.width-220);
+    ctx.fillStyle = it.color; ctx.fillRect(180, y-14, barW, 20);
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2; ctx.strokeRect(180, y-14, barW, 20);
+    ctx.fillStyle='#3d3d3d'; ctx.font='14px "Noto Sans TC"';
+    ctx.fillText('流量 ' + Math.round(total), 180+barW+10, y);
+  });
+  ctx.fillStyle='#888'; ctx.font='13px "Noto Sans TC"';
+  ctx.fillText('💡 演算法放大聳動內容：假圖的「放大倍率」是平淡內容的 5 倍', 40, c.height-30);
+}
+function game2Click(kind){
+  g2Data[kind]++;
+  drawG2();
+  const r = document.getElementById('game2Result');
+  r.classList.remove('bad'); r.classList.add('show','ok');
+  if(kind === 'shock'){
+    r.innerHTML = '😱 驚悚假圖被點了！演算法把它的流量 <strong>×5 倍</strong> 推送。';
+  }else if(kind === 'calm'){
+    r.innerHTML = '😊 日常貼文被點了，流量 <strong>×1 倍</strong> 推送。';
+  }else{
+    r.innerHTML = '📰 嚴肅新聞被點了，流量 <strong>×1.5 倍</strong> 推送。';
+  }
+  markStageDone(2);
+}
+function game2Reset(){ g2Data={calm:10,shock:10,news:10}; drawG2(); document.getElementById('game2Result').classList.remove('show'); }
+
+// ========== GAME 3: Google Lens 步驟模擬 ==========
+let g3Step = 0;
+function drawG3(){
+  const c = document.getElementById('game3'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fff9f0'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(20,20,c.width-40,c.height-40);
+  // 手機外框
+  ctx.fillStyle='#ffffff'; ctx.fillRect(200,60,200,250);
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(200,60,200,250);
+  if(g3Step === 0){
+    ctx.fillStyle='#888'; ctx.font='16px "Noto Sans TC"'; ctx.fillText('點擊下方步驟開始 →', 40, 180);
+    ctx.fillStyle='#3d3d3d'; ctx.font='14px "Noto Sans TC"';
+    ctx.fillText('Google', 260, 100);
+    // camera icon
+    ctx.fillStyle='#4dabf7'; ctx.font='30px sans-serif'; ctx.fillText('📷', 350, 105);
+  }else if(g3Step === 1){
+    ctx.fillStyle='#ffa94d'; ctx.font='bold 20px "Noto Sans TC"';
+    ctx.fillText('① 開啟相機', 40, 100);
+    ctx.fillStyle='#3d3d3d'; ctx.font='14px "Noto Sans TC"';
+    ctx.fillText('點擊搜尋框旁邊的 📷 圖示', 40, 130);
+    ctx.fillStyle='#51cf66'; ctx.font='40px sans-serif'; ctx.fillText('📷', 270, 180);
+    // pulse ring
+    ctx.strokeStyle='#51cf66'; ctx.lineWidth=3; ctx.strokeRect(255,145,80,60);
+  }else if(g3Step === 2){
+    ctx.fillStyle='#4dabf7'; ctx.font='bold 20px "Noto Sans TC"';
+    ctx.fillText('② 拍照或上傳', 40, 100);
+    ctx.fillStyle='#3d3d3d'; ctx.font='14px "Noto Sans TC"';
+    ctx.fillText('拍攝想要查的照片', 40, 130);
+    ctx.fillText('或從相簿選擇', 40, 150);
+    // fake photo
+    ctx.fillStyle='#e94057'; ctx.fillRect(230,100,140,90);
+    ctx.fillStyle='#fff'; ctx.font='14px "Noto Sans TC"'; ctx.fillText('🌅 可疑照片', 250, 150);
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2; ctx.strokeRect(230,100,140,90);
+  }else if(g3Step === 3){
+    ctx.fillStyle='#51cf66'; ctx.font='bold 20px "Noto Sans TC"';
+    ctx.fillText('③ 查看結果', 40, 100);
+    ctx.fillStyle='#3d3d3d'; ctx.font='14px "Noto Sans TC"';
+    ctx.fillText('Google 顯示最相似的圖', 40, 130);
+    ctx.fillText('和原始出處 ✨', 40, 150);
+    // result list
+    ctx.fillStyle='#ffffff'; ctx.fillRect(210,80,180,220);
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2; ctx.strokeRect(210,80,180,220);
+    ctx.fillStyle='#3d3d3d'; ctx.font='12px "Noto Sans TC"';
+    ctx.fillText('✓ 找到 12 張相似圖', 220, 110);
+    ctx.fillText('• 出處：2022 新聞網', 220, 140);
+    ctx.fillText('• 標籤：AI 生成', 220, 165);
+    ctx.fillText('• 地點：非真實拍攝', 220, 190);
+    ctx.fillStyle='#e94057'; ctx.font='bold 14px "Noto Sans TC"';
+    ctx.fillText('⚠️ 疑似 AI 生成', 220, 230);
+  }
+  // progress dots
+  for(let i=1;i<=3;i++){
+    ctx.fillStyle = (i<=g3Step) ? '#51cf66' : '#ddd';
+    ctx.beginPath(); ctx.arc(240 + (i-1)*30, c.height-40, 10, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2; ctx.stroke();
+  }
+}
+function game3Step(n){
+  g3Step = n;
+  drawG3();
+  const r = document.getElementById('game3Result');
+  r.classList.remove('bad'); r.classList.add('show','ok');
+  const msgs = ['','① 相機開啟了！','② 拍照送出！','③ 查到結果了！偵探任務完成！'];
+  r.innerHTML = msgs[n];
+  if(n === 3) markStageDone(3);
+}
+function game3Reset(){ g3Step=0; drawG3(); document.getElementById('game3Result').classList.remove('show'); }
+
+// ========== GAME 4: AI 偵測儀表板 ==========
+const G4 = {
+  A:{score:94,label:'極光大爆發照片',verdict:'🚨 非常可能是 AI'},
+  B:{score:12,label:'NASA 衛星觀測照',verdict:'✅ 應該是真實的'},
+  C:{score:67,label:'神奇海鮮大龍蝦',verdict:'⚠️ 可能有疑慮'}
+};
+function drawG4(score, label, verdict){
+  const c = document.getElementById('game4'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fff9f0'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(20,20,c.width-40,c.height-40);
+  ctx.fillStyle='#3d3d3d'; ctx.font='bold 18px "Noto Sans TC"';
+  ctx.fillText('🔍 Hive Moderation 偵測結果', 40, 55);
+  if(label){
+    ctx.font='16px "Noto Sans TC"'; ctx.fillText('檢查項目：' + label, 40, 90);
+    // score bar
+    ctx.fillStyle='#eee'; ctx.fillRect(40, 130, c.width-80, 36);
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(40, 130, c.width-80, 36);
+    const col = score>70?'#e94057':(score>40?'#ffa94d':'#51cf66');
+    ctx.fillStyle=col; ctx.fillRect(40, 130, (c.width-80)*score/100, 36);
+    ctx.fillStyle='#fff'; ctx.font='bold 20px "Noto Sans TC"';
+    ctx.fillText(score + '%', 50, 156);
+    ctx.fillStyle='#3d3d3d'; ctx.font='bold 20px "Noto Sans TC"';
+    ctx.fillText(verdict, 40, 210);
+    ctx.fillStyle='#888'; ctx.font='13px "Noto Sans TC"';
+    ctx.fillText('⚠️ 偵測器非 100% 準確，請搭配反搜與來源驗證', 40, 250);
+  }else{
+    ctx.fillStyle='#888'; ctx.font='16px "Noto Sans TC"';
+    ctx.fillText('點選上方按鈕掃描圖片', 40, 170);
+  }
+}
+function game4Scan(key){
+  const d = G4[key];
+  drawG4(d.score, d.label, d.verdict);
+  const r = document.getElementById('game4Result');
+  r.classList.remove('ok','bad'); r.classList.add('show');
+  r.classList.add(d.score > 70 ? 'bad' : 'ok');
+  r.innerHTML = '偵測值 <strong>' + d.score + '%</strong>：' + d.verdict;
+  markStageDone(4);
+}
+function game4Reset(){ drawG4(0,null,null); document.getElementById('game4Result').classList.remove('show'); }
+
+// ========== GAME 5: 假訊息追查模擬 ==========
+const G5 = [
+  {msg:'「吃某某保健品一個月就能治糖尿病」— 阿嬤的 LINE',best:'mygopen',exp:'醫療健康謠言 MyGoPen 有大量案例，真人編輯查得最快。'},
+  {msg:'「某政治人物被爆出醜聞」— 網路瘋傳圖',best:'tfc',exp:'政治類熱門訊息，台灣事實查核中心專業查核最完整。'},
+  {msg:'「這張極光照是法國拍的嗎？」— 班群傳的照片',best:'cofacts',exp:'Cofacts 開放協作，圖片/影片類的公民查核快又多元。'}
+];
+let g5i = 0;
+function drawG5(){
+  const c = document.getElementById('game5'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fff9f0'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(20,20,c.width-40,c.height-40);
+  ctx.fillStyle='#e94057'; ctx.font='bold 18px "Noto Sans TC"';
+  ctx.fillText('📩 收到可疑訊息 ' + (g5i+1) + ' / ' + G5.length, 40, 55);
+  // message bubble
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(40, 80, c.width-80, 100);
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2; ctx.strokeRect(40, 80, c.width-80, 100);
+  ctx.fillStyle='#3d3d3d'; ctx.font='16px "Noto Sans TC"';
+  const lines = wrap(ctx, G5[g5i].msg, c.width-120);
+  lines.forEach((l, idx)=> ctx.fillText(l, 60, 110 + idx*26));
+  ctx.fillStyle='#888'; ctx.font='14px "Noto Sans TC"';
+  ctx.fillText('👉 選擇你最適合的查核平台', 40, 220);
+}
+function game5Go(p){
+  const cur = G5[g5i];
+  const r = document.getElementById('game5Result');
+  r.classList.remove('ok','bad'); r.classList.add('show');
+  if(p === cur.best){
+    r.classList.add('ok');
+    r.innerHTML = '🎯 <strong>最佳選擇！</strong>' + cur.exp;
+    markStageDone(5);
+  }else{
+    r.classList.add('bad');
+    r.innerHTML = '💡 其實這題更適合 <strong>' + labelOf(cur.best) + '</strong>。' + cur.exp;
+  }
+}
+function labelOf(k){return {tfc:'台灣事實查核中心',mygopen:'MyGoPen',cofacts:'Cofacts'}[k]}
+function game5Reset(){ g5i=(g5i+1)%G5.length; drawG5(); document.getElementById('game5Result').classList.remove('show'); }
+
+// ========== GAME 6: 疫苗進度 ==========
+const G6_LABEL = ['💊 先懷疑','🔎 會反搜','📰 有白名單','🤝 不獨處','✋ 不亂傳'];
+let g6Done = [false,false,false,false,false];
+function drawG6(){
+  const c = document.getElementById('game6'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fff9f0'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.strokeRect(20,20,c.width-40,c.height-40);
+  ctx.fillStyle='#9775fa'; ctx.font='bold 18px "Noto Sans TC"';
+  ctx.fillText('💉 媒體素養疫苗完成進度', 40, 55);
+  const done = g6Done.filter(x=>x).length;
+  // ring progress
+  const cx=c.width-110, cy=150, r=60;
+  ctx.strokeStyle='#eee'; ctx.lineWidth=14;
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+  ctx.strokeStyle='#51cf66'; ctx.lineWidth=14;
+  ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2, -Math.PI/2 + Math.PI*2*(done/5)); ctx.stroke();
+  ctx.fillStyle='#3d3d3d'; ctx.font='bold 28px "Noto Sans TC"'; ctx.textAlign='center';
+  ctx.fillText(Math.round(done/5*100)+'%', cx, cy+10); ctx.textAlign='left';
+  // skill list
+  G6_LABEL.forEach((lbl, idx)=>{
+    const y = 100 + idx*40;
+    ctx.fillStyle = g6Done[idx] ? '#51cf66' : '#ddd';
+    ctx.beginPath(); ctx.arc(60, y, 14, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2; ctx.stroke();
+    if(g6Done[idx]){
+      ctx.fillStyle='#fff'; ctx.font='bold 14px "Noto Sans TC"'; ctx.textAlign='center';
+      ctx.fillText('✓', 60, y+5); ctx.textAlign='left';
+    }
+    ctx.fillStyle = g6Done[idx] ? '#51cf66' : '#888';
+    ctx.font = (g6Done[idx]?'bold ':'') + '16px "Noto Sans TC"';
+    ctx.fillText(lbl, 90, y+5);
+  });
+  if(done === 5){
+    ctx.fillStyle='#e94057'; ctx.font='bold 18px "Noto Sans TC"';
+    ctx.fillText('🎉 疫苗完成！你是合格的資訊偵探！', 40, c.height-40);
+  }
+}
+function game6Skill(i){
+  g6Done[i] = true;
+  drawG6();
+  const r = document.getElementById('game6Result');
+  r.classList.remove('bad'); r.classList.add('show','ok');
+  const done = g6Done.filter(x=>x).length;
+  r.innerHTML = '已完成 <strong>' + done + ' / 5</strong> 項技能' + (done===5 ? ' 🎉 恭喜！' : '');
+  if(done === 5) markStageDone(6);
+}
+function game6Reset(){ g6Done=[false,false,false,false,false]; drawG6(); document.getElementById('game6Result').classList.remove('show'); }
+
+// ========== SLIDE PLAYER ==========
+let slideIdx = 0;
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((src, i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0?' active':'');
+    t.onclick = ()=>goSlide(i);
+    const img = document.createElement('img');
+    img.src = src; img.loading = 'lazy'; img.alt = '縮圖 ' + (i+1);
+    t.appendChild(img);
+    strip.appendChild(t);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n<0) n = SLIDE_LIST.length-1;
+  if(n>=SLIDE_LIST.length) n = 0;
+  slideIdx = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = (n+1) + ' / ' + SLIDE_LIST.length;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  const activeThumb = document.querySelector('.strip-thumb.active');
+  if(activeThumb) activeThumb.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = (n+1) + ' / ' + SLIDE_LIST.length;
+  }
+}
+function slideNav(dir){ goSlide(slideIdx + dir); }
+function openSlideFullscreen(){
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[slideIdx];
+  document.getElementById('slide-fs-counter').textContent = (slideIdx+1) + ' / ' + SLIDE_LIST.length;
+  document.getElementById('slide-fs').classList.add('show');
+}
+function closeSlideFullscreen(){ document.getElementById('slide-fs').classList.remove('show'); }
+document.addEventListener('keydown', (e)=>{
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key === 'Escape') closeSlideFullscreen();
+    if(e.key === 'ArrowLeft') slideNav(-1);
+    if(e.key === 'ArrowRight') slideNav(1);
+  }
+});
+// Touch swipe support
+(function(){
+  let x0 = null;
+  const main = document.querySelector('.slide-main');
+  if(!main) return;
+  main.addEventListener('touchstart', e=>x0=e.touches[0].clientX);
+  main.addEventListener('touchend', e=>{
+    if(x0==null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if(Math.abs(dx) > 40) slideNav(dx > 0 ? -1 : 1);
+    x0 = null;
+  });
+})();
+
+// ========== VIDEO ==========
+function initVideo(){
+  const iframe = document.getElementById('nlm-video-iframe');
+  const placeholder = document.getElementById('video-placeholder');
+  const ratio = document.getElementById('video-ratio');
+  const ytLink = document.getElementById('yt-link');
+  if(YOUTUBE_VIDEO_ID){
+    iframe.src = 'https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID + '?rel=0&modestbranding=1';
+    ytLink.href = 'https://www.youtube.com/watch?v=' + YOUTUBE_VIDEO_ID;
+  }else{
+    ratio.style.display = 'none';
+    placeholder.style.display = 'block';
+    ytLink.style.display = 'none';
+  }
+}
+
+// ========== LOTTERY ==========
+let lotPool = [];
+function refillLotPool(){
+  const mn = parseInt(document.getElementById('lot-min').value) || 1;
+  const mx = parseInt(document.getElementById('lot-max').value) || 30;
+  if(mn > mx) return false;
+  lotPool = []; for(let i=mn;i<=mx;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const mn = parseInt(document.getElementById('lot-min').value) || 1;
+  const mx = parseInt(document.getElementById('lot-max').value) || 30;
+  if(mn > mx){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const timer = setInterval(()=>{
+    const n = Math.floor(Math.random()*(mx-mn+1)) + mn;
+    out.textContent = n + ' 號';
+  }, 60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx,1)[0];
+    }else{
+      num = Math.floor(Math.random()*(mx-mn+1)) + mn;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+// ========== TIMER ==========
+let timerInt = null, timerSec = 0;
+function startTimer(){
+  if(timerInt) return;
+  if(timerSec === 0){
+    const m = parseInt(document.getElementById('timer-min').value) || 0;
+    timerSec = m * 60;
+  }
+  timerInt = setInterval(()=>{
+    if(timerSec <= 0){
+      clearInterval(timerInt); timerInt = null;
+      document.getElementById('timer-display').textContent = '⏰ 時間到！';
+      return;
+    }
+    timerSec--;
+    updateTimerDisplay();
+  }, 1000);
+}
+function pauseTimer(){ if(timerInt){ clearInterval(timerInt); timerInt=null; } }
+function resetTimer(){
+  pauseTimer(); timerSec = 0;
+  document.getElementById('timer-display').textContent = '00:00';
+}
+function updateTimerDisplay(){
+  const m = Math.floor(timerSec/60), s = timerSec%60;
+  document.getElementById('timer-display').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+// ========== PANEL ==========
+function togglePanel(name){
+  const el = document.getElementById('panel-'+name);
+  if(!el) return;
+  document.querySelectorAll('.float-panel').forEach(p=>{
+    if(p !== el) p.classList.remove('show');
+  });
+  el.classList.toggle('show');
+}
+
+// ========== DRAW ==========
+let drawActive=false, penColor='#e94057', penSize=4;
+let drawCanvas, drawCtx, isDrawing=false, dLastX=0, dLastY=0;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e=>{ if(!drawActive) return; isDrawing=true; dLastX=e.clientX; dLastY=e.clientY; });
+  drawCanvas.addEventListener('mousemove', e=>{
+    if(!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke();
+    dLastX = e.clientX; dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', ()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart', e=>{
+    if(!drawActive) return; e.preventDefault();
+    const t = e.touches[0]; isDrawing=true; dLastX=t.clientX; dLastY=t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e=>{
+    if(!drawActive || !isDrawing) return; e.preventDefault();
+    const t = e.touches[0];
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(t.clientX, t.clientY); drawCtx.stroke();
+    dLastX=t.clientX; dLastY=t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', ()=>isDrawing=false);
+  window.addEventListener('resize', ()=>{
+    drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight;
+  });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c5)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+
+// ========== INIT ==========
+window.addEventListener('DOMContentLoaded', ()=>{
+  initDraw();
+  initSlidePlayer();
+  initVideo();
+  drawG1(); drawG2(); drawG4(0,null,null); drawG5(); drawG6();
+  // game3 initial
+  drawG3();
+});
+</script>
+</body>
+</html>
