@@ -685,24 +685,57 @@ canvas{
     <!-- 互動：提示詞組合器 -->
     <div class="canvas-section">
       <h4>互動練習：提示詞組合器</h4>
-      <p class="canvas-hint">填入四個要素，組合出你的提示詞，試著讓 Gemini 寫出你想要的歌詞！</p>
+      <p class="canvas-hint">填入五個要素，組合出你的提示詞，試著讓 Gemini 寫出你想要的畢業歌詞！</p>
       <div class="lyric-builder">
         <div class="lyric-row">
           <label>🎯 主題</label>
           <select class="lyric-select" id="l-theme">
-            <option value="感謝老師與同學">感謝老師與同學</option>
-            <option value="六年回憶與成長">六年回憶與成長</option>
-            <option value="告別小學迎接未來">告別小學迎接未來</option>
-            <option value="友情永遠不變">友情永遠不變</option>
+            <optgroup label="── 情感與人際 ──">
+              <option value="感謝老師與同學">感謝老師與同學</option>
+              <option value="友情永遠不變">友情永遠不變</option>
+              <option value="謝謝爸爸媽媽的陪伴">謝謝爸爸媽媽的陪伴</option>
+              <option value="寫給班上最好的朋友">寫給班上最好的朋友</option>
+            </optgroup>
+            <optgroup label="── 回憶與成長 ──">
+              <option value="六年回憶與成長">六年回憶與成長</option>
+              <option value="最愛的校園角落">最愛的校園角落</option>
+              <option value="畢業旅行的美好時光">畢業旅行的美好時光</option>
+              <option value="運動會上的熱血時刻">運動會上的熱血時刻</option>
+              <option value="那些讓我大笑的搞笑回憶">那些讓我大笑的搞笑回憶</option>
+            </optgroup>
+            <optgroup label="── 未來與夢想 ──">
+              <option value="告別小學迎接未來">告別小學迎接未來</option>
+              <option value="夢想起飛的第一步">夢想起飛的第一步</option>
+              <option value="我們班的超級英雄">我們班的超級英雄</option>
+              <option value="長大後要成為的那個人">長大後要成為的那個人</option>
+            </optgroup>
           </select>
         </div>
         <div class="lyric-row">
-          <label>🎨 風格</label>
+          <label>🎸 曲風</label>
+          <select class="lyric-select" id="l-genre">
+            <option value="鋼琴流行曲風（溫柔旋律、輕柔演唱）">🎹 鋼琴流行（Pop Ballad）</option>
+            <option value="木吉他民謠曲風（清新自然、輕巧吟唱）">🎸 木吉他民謠（Folk）</option>
+            <option value="電子流行曲風（節奏感強、現代合成器）">🎧 電子流行（Electronic Pop）</option>
+            <option value="嘻哈說唱曲風（節奏強烈、押韻豐富）">🎤 嘻哈說唱（Hip Hop）</option>
+            <option value="管弦交響曲風（大氣磅礴、弦樂銅管）">🎻 管弦交響（Orchestral）</option>
+            <option value="搖滾曲風（電吉他、鼓點有力）">🥁 搖滾（Rock）</option>
+            <option value="爵士曲風（慵懶隨性、薩克斯風）">🎷 爵士（Jazz）</option>
+            <option value="K-Pop 偶像曲風（活潑齊唱、充滿能量）">⭐ K-Pop 偶像風</option>
+            <option value="R&amp;B 靈魂曲風（有情感張力、節奏柔和）">🎵 R&amp;B 靈魂樂</option>
+          </select>
+        </div>
+        <div class="lyric-row">
+          <label>🎨 歌詞風格</label>
           <select class="lyric-select" id="l-style">
             <option value="輕鬆溫暖">輕鬆溫暖</option>
             <option value="感動抒情">感動抒情</option>
             <option value="活潑歡快">活潑歡快</option>
             <option value="深情懷念">深情懷念</option>
+            <option value="搖滾熱血">搖滾熱血</option>
+            <option value="幽默搞笑">幽默搞笑</option>
+            <option value="詩意文學">詩意文學</option>
+            <option value="簡單直白（字字有力）">簡單直白（字字有力）</option>
           </select>
         </div>
         <div class="lyric-row">
@@ -712,6 +745,11 @@ canvas{
             <option value="溫暖感謝">溫暖感謝</option>
             <option value="懷念不捨">懷念不捨</option>
             <option value="開心慶祝">開心慶祝</option>
+            <option value="驕傲自豪">驕傲自豪</option>
+            <option value="勇敢出發">勇敢出發</option>
+            <option value="甜蜜思念">甜蜜思念</option>
+            <option value="幽默逗趣">幽默逗趣</option>
+            <option value="熱血澎湃">熱血澎湃</option>
           </select>
         </div>
         <div class="lyric-row">
@@ -719,10 +757,13 @@ canvas{
           <select class="lyric-select" id="l-struct">
             <option value="兩段主歌、一段副歌">兩段主歌、一段副歌</option>
             <option value="一段主歌、一段副歌">一段主歌、一段副歌</option>
-            <option value="純副歌四行">純副歌四行</option>
+            <option value="三段主歌、兩段副歌">三段主歌、兩段副歌</option>
+            <option value="主歌、橋段、副歌">主歌、橋段、副歌</option>
+            <option value="說唱橋段加副歌（Rap Bridge + Chorus）">說唱橋段加副歌</option>
+            <option value="純副歌四行">純副歌四行（短版）</option>
           </select>
         </div>
-        <button class="pixel-btn" onclick="buildPrompt()">組合提示詞</button>
+        <button class="pixel-btn" onclick="buildPrompt()">✨ 組合提示詞</button>
         <div class="lyric-output" id="lyric-out">（點擊「組合提示詞」按鈕，看看你的提示詞會長什麼樣子！）</div>
       </div>
     </div>
@@ -1235,12 +1276,12 @@ canvas{
     <div class="video-card" style="padding:0;overflow:hidden;">
       <div style="padding:16px 16px 8px;">
         <h4 style="margin:0 0 4px;">🎬 完整教學影片（AI 自動生成）</h4>
-        <p style="font-size:0.85rem;color:var(--dim);margin:0;">「用 AI 做出屬於我們班的畢業歌」— 由 NotebookLM 生成，適合學生課前預習、課後複習</p>
+        <p style="font-size:0.85rem;color:var(--dim);margin:0;">「AI 音樂創作師：來做你自己的畢業歌！」— 由 NotebookLM 生成，適合學生課前預習、課後複習</p>
       </div>
       <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
         <iframe
-          src="https://www.youtube.com/embed/1gRf_0IJ-no?rel=0&modestbranding=1"
-          title="AI 音樂創作師：用 Gemini 做畢業歌曲｜六年級資訊科技 NotebookLM教學影片"
+          src="https://www.youtube.com/embed/ycF3dJfIpy0?rel=0&modestbranding=1"
+          title="AI 音樂創作師：來做你自己的畢業歌！｜六年級資訊科技 NotebookLM教學影片"
           style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
@@ -1250,7 +1291,7 @@ canvas{
         <span style="font-size:0.8rem;color:var(--dim);">⏱ 約 5 分鐘</span>
         <span style="font-size:0.8rem;color:var(--dim);">•</span>
         <span style="font-size:0.8rem;color:var(--dim);">🔒 不公開影片（點連結才能觀看）</span>
-        <a href="https://www.youtube.com/watch?v=1gRf_0IJ-no" target="_blank"
+        <a href="https://www.youtube.com/watch?v=ycF3dJfIpy0" target="_blank"
            style="margin-left:auto;font-size:0.85rem;color:var(--c1);text-decoration:none;">
           在 YouTube 開啟 ↗
         </a>
@@ -1427,10 +1468,11 @@ function answer(btn, qid, isCorrect) {
 // ===================== LYRIC BUILDER =====================
 function buildPrompt() {
   const theme  = document.getElementById('l-theme').value;
+  const genre  = document.getElementById('l-genre').value;
   const style  = document.getElementById('l-style').value;
   const mood   = document.getElementById('l-mood').value;
   const struct = document.getElementById('l-struct').value;
-  const prompt = `請幫我寫一首畢業歌的歌詞：\n主題：${theme}\n風格：${style}\n情緒：${mood}\n結構：${struct}\n要求：適合國小學生，每段歌詞不超過4行，語言親切溫暖。`;
+  const prompt = `請幫我寫一首畢業歌的歌詞：\n主題：${theme}\n曲風：${genre}\n歌詞風格：${style}\n情緒：${mood}\n結構：${struct}\n要求：適合國小學生，每段歌詞不超過4行，語言親切有力。`;
   document.getElementById('lyric-out').textContent = prompt;
 }
 

@@ -1,7 +1,7 @@
 {
-  "video_id": "1gRf_0IJ-no",
-  "watch_url": "https://www.youtube.com/watch?v=1gRf_0IJ-no",
-  "embed_url": "https://www.youtube.com/embed/1gRf_0IJ-no",
-  "title": "AI 音樂創作師：用 Gemini 做畢業歌曲｜六年級資訊科技 - NotebookLM教學影片",
+  "video_id": "ycF3dJfIpy0",
+  "watch_url": "https://www.youtube.com/watch?v=ycF3dJfIpy0",
+  "embed_url": "https://www.youtube.com/embed/ycF3dJfIpy0",
+  "title": "AI 音樂創作師：來做你自己的畢業歌！｜六年級資訊科技 - NotebookLM教學影片",
   "privacy": "unlisted"
 }
