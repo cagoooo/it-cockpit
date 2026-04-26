@@ -243,6 +243,65 @@ body{
 }
 .anchor-presets button:hover{background:var(--c2);color:#000}
 
+/* Gem Customizer (STAGE 3 — enhanced into full Gem factory) */
+.gem-step{
+  background:var(--bg);border-left:3px solid var(--c5);
+  padding:14px 18px;margin-bottom:14px;
+}
+.gem-step h4{color:var(--c5);margin-bottom:10px;font-size:1.05rem;font-weight:700;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.gem-step h4 .step-num-inline{
+  display:inline-block;background:var(--c5);color:#000;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  padding:5px 9px;letter-spacing:.05em;
+}
+.anchor-col select{
+  width:100%;padding:9px 12px;background:var(--bg);
+  border:2px solid var(--c5);color:var(--text);font-family:inherit;font-size:.95rem;
+  cursor:pointer;
+}
+.anchor-col select option{background:var(--bg);color:var(--text)}
+.gem-title-card{
+  margin:18px 0 12px;background:linear-gradient(135deg,var(--c5),var(--c3));
+  padding:24px;text-align:center;box-shadow:var(--shadow-px);
+  animation:popIn .4s;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.gem-title-label{
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  color:#fff;opacity:.9;margin-bottom:10px;letter-spacing:.1em;
+}
+.gem-title-name{
+  font-size:1.7rem;font-weight:900;color:#fff;
+  text-shadow:3px 3px 0 rgba(0,0,0,.3);margin-bottom:12px;line-height:1.3;
+}
+.gem-title-meta{font-size:.9rem;color:#fff;opacity:.95;line-height:2}
+.gem-title-meta span{
+  display:inline-block;padding:4px 12px;background:rgba(0,0,0,.28);
+  margin:3px;border-radius:14px;font-weight:500;
+}
+.gem-action-row{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.gem-action-row .btn-hero{
+  font-size:1.05rem;padding:14px 24px;background:var(--c4);color:#000;
+  flex:1;min-width:220px;
+}
+@media(max-width:600px){
+  .gem-action-row .btn-hero{flex-basis:100%}
+}
+#gem-prompt-out{
+  background:#000;border:2px solid var(--c4);padding:16px;
+  font-size:.92rem;line-height:1.75;margin-top:10px;
+  color:#cfeacb;font-family:'Noto Sans TC',monospace;
+  white-space:pre-wrap;max-height:480px;overflow-y:auto;
+}
+.gem-quick-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.gem-quick-row button{
+  padding:8px 16px;background:rgba(105,255,71,.12);border:2px solid var(--c4);
+  color:var(--c4);font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;
+}
+.gem-quick-row button:hover{background:var(--c4);color:#000}
+.gem-quick-row button.danger{background:rgba(255,64,129,.12);border-color:var(--c3);color:var(--c3)}
+.gem-quick-row button.danger:hover{background:var(--c3);color:#fff}
+
 /* SOP simulator (STAGE 4) */
 .sop-sim{background:#1a1a3e;border:2px solid var(--c4);padding:18px;min-height:200px;
   font-family:'Noto Sans TC',monospace;font-size:.95rem;line-height:1.85;margin-bottom:10px;
@@ -533,7 +592,7 @@ input, select, textarea, button{font-family:inherit}
     <div class="stage-pills">
       <a href="#sec1" class="stage-pill" data-sec="sec1">🎭 STAGE 1｜什麼是 Gem</a>
       <a href="#sec2" class="stage-pill" data-sec="sec2">🦴 STAGE 2｜三大骨架</a>
-      <a href="#sec3" class="stage-pill" data-sec="sec3">⚓ STAGE 3｜錨點三件套</a>
+      <a href="#sec3" class="stage-pill" data-sec="sec3">🛠️ STAGE 3｜Gem 工廠</a>
       <a href="#sec4" class="stage-pill" data-sec="sec4">🛠️ STAGE 4｜建立你的 Gem</a>
       <a href="#sec5" class="stage-pill" data-sec="sec5">🏠 課後實作</a>
     </div>
@@ -745,62 +804,243 @@ input, select, textarea, button{font-family:inherit}
   <section class="level-section" id="sec3">
     <div class="section-header">
       <span class="stage-badge">STAGE 3</span>
-      <h2>⚓ 一致性錨點三件套：服裝 ＋ 顏色 ＋ 配件</h2>
+      <h2>🛠️ Gem 客製化工廠 — 打造獨一無二的繪本機器人</h2>
     </div>
     <div class="two-col">
       <div>
         <div class="card">
-          <h3>🤔 為什麼要用「三件套」公式？</h3>
+          <h3>🎁 全班 30 個學生 ＝ 30 隻不一樣的 Gem！</h3>
           <p style="font-size:1rem;line-height:1.8">
-            如果你只說「畫一個小男孩」，AI 每次都會<b style="color:var(--c3)">隨機猜長相</b>：
-            這幕是棕髮、下幕變黑髮；這幕穿藍色、下幕變綠色！
+            這個工廠把<b style="color:var(--c5)">圖片風格、色調、題材、氛圍、主角、長度、配樂、旁白</b>都做成下拉選單。
+            每個學生的組合不同，產生的 <b style="color:var(--c4)">Gem 名稱與完整提示詞都獨一無二</b>！
           </p>
           <p style="font-size:1rem;line-height:1.8;margin-top:10px">
-            專業繪本畫家會固定 3 個<b style="color:var(--c4)">「永遠不變的特徵」</b>：
-            <span style="display:inline-block;padding:3px 10px;background:rgba(196,123,255,.2);color:var(--c5);font-weight:700;margin:2px">服裝</span>
-            +
-            <span style="display:inline-block;padding:3px 10px;background:rgba(255,215,64,.2);color:var(--c2);font-weight:700;margin:2px">顏色</span>
-            +
-            <span style="display:inline-block;padding:3px 10px;background:rgba(105,255,71,.2);color:var(--c4);font-weight:700;margin:2px">配件</span>
-            ＝ 主角不變裝。
+            搭配 STEP 5 的<b style="color:var(--c2)">「一致性錨點三件套」</b>（服裝＋顏色＋配件），
+            讓你的繪本主角擁有「招牌制服」，每幕都長一樣不會走鐘。
           </p>
         </div>
         <div class="tip-box purple">
-          <b>💡 越具體越穩：</b>「綠色毛帽」優於「一頂帽子」；「抱著一隻有條紋的虎斑貓」優於「抱著一隻貓」。
-          形容詞越多 → AI 越不會亂畫。
+          <b>💡 不知道怎麼選？</b>按下方 <b>🎲 我要驚喜！全部隨機</b> 讓工廠幫你抽 1 隻 — 抽到喜歡就用，
+          不喜歡再抽！老師統計：學生平均隨機 2–3 次就會找到心動款。
         </div>
       </div>
       <div class="img-frame"><img src="assets/03_consistency_anchor.jpg" alt="一致性錨點三件套公式" loading="lazy"></div>
     </div>
 
     <div class="canvas-section">
-      <h3>🛠️ 互動：設計你的角色三件套（試試一鍵帶入範例）</h3>
-      <div class="anchor-presets">
-        <button onclick="presetAnchor('boy')">🧒 帽 T 男孩</button>
-        <button onclick="presetAnchor('girl')">👧 雙馬尾少女</button>
-        <button onclick="presetAnchor('robot')">🤖 機器人小幫手</button>
-        <button onclick="presetAnchor('dragon')">🐉 小恐龍冒險家</button>
-        <button onclick="presetAnchor('clear')">🧹 清空</button>
+      <h3>🏭 Gem 工廠 5 大步驟（用下拉選單微調）</h3>
+
+      <div class="gem-quick-row">
+        <button onclick="randomizeGem()">🎲 我要驚喜！全部隨機</button>
+        <button onclick="resetGem()" class="danger">↻ 全部清空</button>
       </div>
-      <div class="anchor-grid">
-        <div class="anchor-col">
-          <label>👕 服裝（衣服款式）</label>
-          <input id="ac-cloth" placeholder="例：紅色吊帶褲＋白 T 恤">
-        </div>
-        <div class="anchor-col">
-          <label>🎨 主要顏色（髮色／膚色／代表色）</label>
-          <input id="ac-color" placeholder="例：咖啡色捲髮、有雀斑">
-        </div>
-        <div class="anchor-col">
-          <label>🎒 永久配件（特徵物）</label>
-          <input id="ac-gear" placeholder="例：肩上有一隻小綠龍">
+
+      <!-- Step 1: 命名 -->
+      <div class="gem-step">
+        <h4><span class="step-num-inline">STEP 01</span>幫你的 Gem 取一個帥氣的名字</h4>
+        <div class="anchor-grid">
+          <div class="anchor-col">
+            <label>👤 你的暱稱（出現在名字裡）</label>
+            <input id="g-name" placeholder="例：小明、阿凱、Sky" oninput="livePreview()">
+          </div>
+          <div class="anchor-col">
+            <label>🎨 命名風格</label>
+            <select id="g-naming" onchange="livePreview()">
+              <option value="workshop">「{暱稱} 的 {風格} 繪本工坊」</option>
+              <option value="mission">「Mission：{題材} 探索隊」</option>
+              <option value="studio">「{暱稱} × {風格} Studio」</option>
+              <option value="cute">「閃亮{主角}故事社」</option>
+              <option value="sense">「{氛圍}{題材} Lab」</option>
+              <option value="custom">我自己想（往下填）</option>
+            </select>
+          </div>
+          <div class="anchor-col">
+            <label>✏️ 自訂名稱（選「自己想」才填）</label>
+            <input id="g-custom" placeholder="例：太空喵繪本工廠" oninput="livePreview()">
+          </div>
         </div>
       </div>
-      <button class="btn-primary" onclick="buildAnchor()">⚓ 組合錨點句</button>
-      <button class="btn-primary" style="background:var(--c2)" onclick="copyAnchor()">📋 複製到剪貼簿</button>
-      <div class="anchor-output" id="anchor-out">←  按「組合錨點句」會把你的三件套變成可以貼進 Gem 的英文提示詞！</div>
-      <div class="tip-box good">
-        <b>✅ 試試看：</b>把你做好的錨點句貼進 STAGE 4 的範本中對應位置（[填入] 區塊），就完成了你的專屬 Gem！
+
+      <!-- Step 2: 圖片風格 -->
+      <div class="gem-step">
+        <h4><span class="step-num-inline">STEP 02</span>圖片風格（決定整本繪本長相）</h4>
+        <div class="anchor-grid">
+          <div class="anchor-col">
+            <label>🖼️ 主風格</label>
+            <select id="g-style" onchange="livePreview()">
+              <option value="chibi">Q 版可愛公仔（Chibi vinyl toy）</option>
+              <option value="watercolor">水彩繪本</option>
+              <option value="pixel">8-bit 像素風</option>
+              <option value="clay">3D 黏土動畫</option>
+              <option value="manga">日系漫畫</option>
+              <option value="paper">紙工藝立體書</option>
+              <option value="digital">數位插畫</option>
+              <option value="retro">復古 Lo-fi</option>
+              <option value="crayon">蠟筆塗鴉風</option>
+              <option value="oilpaint">油畫經典風</option>
+            </select>
+          </div>
+          <div class="anchor-col">
+            <label>🌈 色調</label>
+            <select id="g-palette" onchange="livePreview()">
+              <option value="pastel">柔和粉嫩</option>
+              <option value="vivid">鮮豔活潑</option>
+              <option value="warm">溫暖夕陽</option>
+              <option value="cool">清涼海洋</option>
+              <option value="mono">單色復古</option>
+              <option value="neon">霓虹電玩</option>
+              <option value="earth">大地自然</option>
+              <option value="midnight">深夜星空</option>
+            </select>
+          </div>
+          <div class="anchor-col">
+            <label>📐 細節密度</label>
+            <select id="g-detail" onchange="livePreview()">
+              <option value="minimal">簡約乾淨</option>
+              <option value="medium" selected>中等豐富</option>
+              <option value="detailed">超精細</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: 故事題材 + 氛圍 + 主角 -->
+      <div class="gem-step">
+        <h4><span class="step-num-inline">STEP 03</span>故事題材 × 氛圍 × 主角類型</h4>
+        <div class="anchor-grid">
+          <div class="anchor-col">
+            <label>📚 故事題材</label>
+            <select id="g-theme" onchange="livePreview()">
+              <option value="school">校園日常（午餐／社團／考試）</option>
+              <option value="fantasy">奇幻冒險（魔法／龍／寶藏）</option>
+              <option value="scifi">科幻太空（外星人／機器人／星球）</option>
+              <option value="family">溫馨家庭（家人／寵物／節慶）</option>
+              <option value="mystery">解謎偵探（線索／推理／密室）</option>
+              <option value="animal">動物擬人（會說話的森林居民）</option>
+              <option value="food">美食料理（餐廳／甜點／廚師）</option>
+              <option value="sport">運動競技（足球／籃球／奧運）</option>
+              <option value="time">時光旅行（穿越古今）</option>
+              <option value="ocean">海洋探險（深海生物／海盜）</option>
+            </select>
+          </div>
+          <div class="anchor-col">
+            <label>🎭 故事氛圍</label>
+            <select id="g-mood" onchange="livePreview()">
+              <option value="cheerful">活潑搞笑</option>
+              <option value="warm">溫暖治癒</option>
+              <option value="adventure">熱血冒險</option>
+              <option value="mystery">神秘解謎</option>
+              <option value="dreamy">浪漫夢幻</option>
+              <option value="brave">勇氣勵志</option>
+              <option value="silly">無厘頭爆笑</option>
+            </select>
+          </div>
+          <div class="anchor-col">
+            <label>🦸 主角類型</label>
+            <select id="g-hero" onchange="livePreview()">
+              <option value="boy">小男孩</option>
+              <option value="girl">小女孩</option>
+              <option value="pet">會說話的寵物</option>
+              <option value="robot">可愛機器人</option>
+              <option value="creature">神奇生物（精靈／龍）</option>
+              <option value="alien">外星訪客</option>
+              <option value="hero">超級英雄小孩</option>
+              <option value="custom">自由發揮</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: 長度 + 配樂 + 旁白 -->
+      <div class="gem-step">
+        <h4><span class="step-num-inline">STEP 04</span>故事長度 ＋ 配樂氛圍 ＋ 旁白語氣</h4>
+        <div class="anchor-grid">
+          <div class="anchor-col">
+            <label>📏 故事長度</label>
+            <select id="g-length" onchange="livePreview()">
+              <option value="3">迷你 3 幕（適合練手）</option>
+              <option value="4" selected>短篇 4 幕（推薦）</option>
+              <option value="6">中篇 6 幕（高手挑戰）</option>
+              <option value="8">長篇 8 幕（要花配額）</option>
+            </select>
+          </div>
+          <div class="anchor-col">
+            <label>🎵 配樂氛圍（給 Gem 在分幕劇本中建議）</label>
+            <select id="g-music" onchange="livePreview()">
+              <option value="none">不需要配樂建議</option>
+              <option value="piano">抒情鋼琴</option>
+              <option value="orchestra">冒險管弦樂</option>
+              <option value="electronic">可愛電子節奏</option>
+              <option value="lofi">Lo-fi 慵懶</option>
+              <option value="acoustic">民謠吉他</option>
+              <option value="jazz">輕爵士</option>
+              <option value="rock">熱血搖滾</option>
+              <option value="anime">日系動畫風</option>
+              <option value="ethnic">世界民族風</option>
+            </select>
+          </div>
+          <div class="anchor-col">
+            <label>🎤 旁白語氣</label>
+            <select id="g-voice" onchange="livePreview()">
+              <option value="kid">小朋友活潑語氣</option>
+              <option value="warm">大姐姐溫柔語氣</option>
+              <option value="cool">酷炫主持人語氣</option>
+              <option value="grandpa">爺爺說故事語氣</option>
+              <option value="narrator">電影旁白語氣</option>
+              <option value="comedy">脫口秀搞笑語氣</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: 一致性錨點三件套 -->
+      <div class="gem-step">
+        <h4><span class="step-num-inline">STEP 05</span>一致性錨點三件套（讓主角每幕都長一樣）</h4>
+        <div class="anchor-presets">
+          <button onclick="presetAnchor('boy')">🧒 帽 T 男孩</button>
+          <button onclick="presetAnchor('girl')">👧 雙馬尾少女</button>
+          <button onclick="presetAnchor('robot')">🤖 機器人小幫手</button>
+          <button onclick="presetAnchor('dragon')">🐉 小恐龍冒險家</button>
+          <button onclick="presetAnchor('cat')">🐱 太空貓咪</button>
+          <button onclick="presetAnchor('elf')">🧚 森林小精靈</button>
+          <button onclick="presetAnchor('clear')">🧹 清空</button>
+        </div>
+        <div class="anchor-grid">
+          <div class="anchor-col">
+            <label>👕 服裝</label>
+            <input id="ac-cloth" placeholder="例：紅色吊帶褲＋白 T 恤" oninput="livePreview()">
+          </div>
+          <div class="anchor-col">
+            <label>🎨 主要顏色（髮色／代表色）</label>
+            <input id="ac-color" placeholder="例：咖啡色捲髮、有雀斑" oninput="livePreview()">
+          </div>
+          <div class="anchor-col">
+            <label>🎒 永久配件</label>
+            <input id="ac-gear" placeholder="例：肩上有一隻小綠龍" oninput="livePreview()">
+          </div>
+        </div>
+        <div class="tip-box good" style="margin-top:10px">
+          <b>💡 越具體越穩：</b>「綠色毛帽」優於「一頂帽子」；「抱著一隻有條紋的虎斑貓」優於「抱著一隻貓」。
+        </div>
+      </div>
+
+      <!-- 一鍵生成 + 名稱大標 + 提示詞輸出 -->
+      <div class="gem-action-row">
+        <button class="btn-primary btn-hero" onclick="generateGem()">⚡ 生成我的專屬 Gem！</button>
+        <button class="btn-primary" onclick="copyGemName()" style="background:var(--c2)">📋 複製名稱</button>
+        <button class="btn-primary" onclick="copyGemPrompt()" style="background:var(--c5);color:#fff">📋 複製完整提示詞</button>
+      </div>
+
+      <div class="gem-title-card" id="gem-title-card" style="display:none">
+        <div class="gem-title-label">✨ YOUR UNIQUE GEM ✨</div>
+        <div class="gem-title-name" id="gem-title-name"></div>
+        <div class="gem-title-meta" id="gem-title-meta"></div>
+      </div>
+
+      <div id="gem-prompt-out" style="display:none"></div>
+
+      <div class="tip-box purple" style="margin-top:14px">
+        <b>📌 下一步：</b>按「📋 複製完整提示詞」→ 到 STAGE 4 開啟 Gemini → 把名稱貼進 Gem 名稱欄、提示詞貼進指令欄 → 儲存 → 就能用你的專屬 Gem 做繪本了！
       </div>
     </div>
 
@@ -909,7 +1149,11 @@ input, select, textarea, button{font-family:inherit}
     </div>
 
     <div class="card">
-      <h3>📝 老師提供的提示詞範本（直接複製貼進 Gem）</h3>
+      <h3>📝 通用提示詞範本（後備版）</h3>
+      <div class="tip-box purple" style="margin-bottom:12px">
+        <b>👉 推薦用 STAGE 3 的 Gem 工廠版！</b>那邊產生的提示詞會根據你選的風格、題材、主角自動量身打造，比這個通用版更個人化。
+        如果你只想快速試一下，再用下方這個通用範本。
+      </div>
       <div class="master-prompt" id="full-prompt">你是一位專業且細心的「互動式 Q 版繪本創作導演」。你會引導我從無到有，逐步完成 4 幕的 Q 版連環繪本。你擁有調用內建生圖模型 Nano Banana 2 的能力。
 
 【標準互動流程 SOP】
@@ -1221,38 +1465,281 @@ function sopShow(n){
 function sopNext(){sopShow(Math.min(sopCur+1, sopMax-1))}
 function sopPrev(){sopShow(Math.max(sopCur-1, 0))}
 
-// Anchor builder
+// =====  Gem Customizer Factory  =====
+// Anchor preset library
 const anchorPresets = {
-  boy: {cloth:'紅色吊帶褲＋白 T 恤', color:'咖啡色捲髮、有雀斑、笑得很燦爛', gear:'肩上停著一隻小綠龍、頭戴黃色星星鴨舌帽'},
-  girl: {cloth:'藍色蓬蓬連身裙＋白色高筒襪', color:'粉紅色雙馬尾、紫色大眼睛', gear:'手裡抱著一隻泰迪熊、頭上有星星髮夾'},
-  robot: {cloth:'金屬銀色機器人裝甲', color:'天藍色 LED 眼睛、白底紅紋', gear:'左手有伸縮工具、頭頂雷達天線'},
+  boy:    {cloth:'紅色吊帶褲＋白 T 恤', color:'咖啡色捲髮、有雀斑、笑得很燦爛', gear:'肩上停著一隻小綠龍、頭戴黃色星星鴨舌帽'},
+  girl:   {cloth:'藍色蓬蓬連身裙＋白色高筒襪', color:'粉紅色雙馬尾、紫色大眼睛', gear:'手裡抱著一隻泰迪熊、頭上有星星髮夾'},
+  robot:  {cloth:'金屬銀色機器人裝甲', color:'天藍色 LED 眼睛、白底紅紋', gear:'左手有伸縮工具、頭頂雷達天線'},
   dragon: {cloth:'紫色斗篷＋金色腰帶', color:'翠綠色鱗片、火紅色翅膀、橘色眼睛', gear:'背著小型探險背包、脖子掛指南針'},
-  clear: {cloth:'', color:'', gear:''}
+  cat:    {cloth:'銀色太空裝＋透明頭盔', color:'橘白虎斑、綠色寶石眼睛', gear:'背後有迷你火箭背包、肉球印著星星'},
+  elf:    {cloth:'葉子拼接的翠綠披風', color:'銀色長髮、淡紫色眼睛、尖耳朵', gear:'手持發光蘑菇燈、肩上停螢火蟲'},
+  clear:  {cloth:'', color:'', gear:''}
 };
 function presetAnchor(key){
   const p = anchorPresets[key];
   document.getElementById('ac-cloth').value = p.cloth;
   document.getElementById('ac-color').value = p.color;
   document.getElementById('ac-gear').value = p.gear;
-  if(key !== 'clear') buildAnchor();
+  livePreview();
 }
-function buildAnchor(){
+
+// Style / theme / mood / hero / music / voice / palette / detail mappings (zh + en)
+const STYLE_MAP = {
+  chibi:      {zh:'Q 版可愛公仔', en:'highly detailed collectible vinyl toy style, chibi aesthetics, cute big-head proportions'},
+  watercolor: {zh:'水彩繪本',     en:'soft watercolor storybook illustration, gentle brushstrokes, dreamy atmosphere'},
+  pixel:      {zh:'8-bit 像素風', en:'8-bit pixel art retro game style, crisp pixel edges, vibrant 16-bit palette'},
+  clay:       {zh:'3D 黏土動畫', en:'cute 3D claymation style, soft plasticine textures, stop-motion film aesthetic'},
+  manga:      {zh:'日系漫畫',     en:'cute manga style sketch, expressive sparkle eyes, soft cel-shading'},
+  paper:      {zh:'紙工藝立體書', en:'papercraft pop-up book illustration, layered cardstock cutouts, paper diorama'},
+  digital:    {zh:'數位插畫',     en:'modern digital illustration, smooth gradients, flat vector style with depth'},
+  retro:      {zh:'復古 Lo-fi',  en:'lo-fi retro illustration, warm vintage tones, grainy paper texture'},
+  crayon:     {zh:'蠟筆塗鴉風',   en:'childlike crayon doodle style, rough wax textures, hand-drawn lines'},
+  oilpaint:   {zh:'油畫經典風',   en:'classic oil painting style, rich brush strokes, timeless storybook feel'}
+};
+const PALETTE_MAP = {
+  pastel:   {zh:'柔和粉嫩', en:'soft pastel color palette'},
+  vivid:    {zh:'鮮豔活潑', en:'vivid saturated colors'},
+  warm:     {zh:'溫暖夕陽', en:'warm sunset hues, golden light'},
+  cool:     {zh:'清涼海洋', en:'cool ocean blue tones'},
+  mono:     {zh:'單色復古', en:'monochrome retro film tones'},
+  neon:     {zh:'霓虹電玩', en:'neon synthwave glow'},
+  earth:    {zh:'大地自然', en:'earthy natural tones, warm browns and greens'},
+  midnight: {zh:'深夜星空', en:'deep midnight blues with sparkling stars'}
+};
+const DETAIL_MAP = {
+  minimal:  {zh:'簡約乾淨', en:'minimalist clean lines'},
+  medium:   {zh:'中等豐富', en:'balanced composition with moderate detail'},
+  detailed: {zh:'超精細',   en:'ultra-detailed, intricate textures, professional finish'}
+};
+const THEME_MAP = {
+  school:   {zh:'校園日常', en:'school-life everyday adventures (lunch, clubs, classroom)'},
+  fantasy:  {zh:'奇幻冒險', en:'fantasy adventure with magic, dragons and treasures'},
+  scifi:    {zh:'科幻太空', en:'sci-fi space exploration with aliens, robots and planets'},
+  family:   {zh:'溫馨家庭', en:'warm family slice-of-life moments with pets and festivals'},
+  mystery:  {zh:'解謎偵探', en:'mystery-detective puzzle solving with clues and hidden rooms'},
+  animal:   {zh:'動物擬人', en:'anthropomorphic animal forest village stories'},
+  food:     {zh:'美食料理', en:'cooking and culinary adventures, restaurants and desserts'},
+  sport:    {zh:'運動競技', en:'sports competition and teamwork (soccer, basketball, Olympics)'},
+  time:     {zh:'時光旅行', en:'time-travel adventures across past and future eras'},
+  ocean:    {zh:'海洋探險', en:'deep-sea exploration with marine creatures and pirates'}
+};
+const MOOD_MAP = {
+  cheerful:  {zh:'活潑搞笑', en:'cheerful, funny, lighthearted tone'},
+  warm:      {zh:'溫暖治癒', en:'warm, healing, heartwarming tone'},
+  adventure: {zh:'熱血冒險', en:'adventurous, energetic, action-packed tone'},
+  mystery:   {zh:'神秘解謎', en:'mysterious, intriguing, curious tone'},
+  dreamy:    {zh:'浪漫夢幻', en:'dreamy, romantic, magical tone'},
+  brave:     {zh:'勇氣勵志', en:'brave, inspiring, courage-themed tone'},
+  silly:     {zh:'無厘頭爆笑', en:'absurd, slapstick, silly humor tone'}
+};
+const HERO_MAP = {
+  boy:      {zh:'小男孩', en:'a cute boy character'},
+  girl:     {zh:'小女孩', en:'a cute girl character'},
+  pet:      {zh:'會說話的寵物', en:'a talking pet companion (dog/cat/rabbit)'},
+  robot:    {zh:'可愛機器人', en:'a cute friendly robot'},
+  creature: {zh:'神奇生物', en:'a magical creature (elf/dragon/sprite)'},
+  alien:    {zh:'外星訪客', en:'a friendly alien visitor from outer space'},
+  hero:     {zh:'超級英雄小孩', en:'a kid superhero with special powers'},
+  custom:   {zh:'自由發揮', en:'a custom main character of your choice'}
+};
+const MUSIC_MAP = {
+  none:       null,
+  piano:      {zh:'抒情鋼琴',     en:'emotional piano melody'},
+  orchestra:  {zh:'冒險管弦樂',   en:'epic orchestral adventure score'},
+  electronic: {zh:'可愛電子節奏', en:'cute electronic beats'},
+  lofi:       {zh:'Lo-fi 慵懶',  en:'lo-fi chill hip-hop beats'},
+  acoustic:   {zh:'民謠吉他',     en:'folk acoustic guitar'},
+  jazz:       {zh:'輕爵士',       en:'light jazz background'},
+  rock:       {zh:'熱血搖滾',     en:'energetic rock anthem'},
+  anime:      {zh:'日系動畫風',   en:'japanese anime opening theme'},
+  ethnic:     {zh:'世界民族風',   en:'world-music ethnic instrumentation'}
+};
+const VOICE_MAP = {
+  kid:      '小朋友活潑語氣（多用驚嘆號、可愛狀聲詞）',
+  warm:     '大姐姐溫柔語氣（用溫暖字眼、給予鼓勵）',
+  cool:     '酷炫主持人語氣（節奏感強、用熱血詞彙）',
+  grandpa:  '爺爺說故事語氣（從容、有人生智慧的口吻）',
+  narrator: '電影旁白語氣（戲劇性、富畫面感的描述）',
+  comedy:   '脫口秀搞笑語氣（吐槽、誇張、自帶笑點）'
+};
+
+// Helper: build dynamic Gem name based on naming style + selections
+function buildGemName(){
+  const nm = (document.getElementById('g-name').value || '').trim();
+  const naming = document.getElementById('g-naming').value;
+  const custom = (document.getElementById('g-custom').value || '').trim();
+  const themeZh = THEME_MAP[document.getElementById('g-theme').value].zh;
+  const styleZh = STYLE_MAP[document.getElementById('g-style').value].zh;
+  const heroZh  = HERO_MAP[document.getElementById('g-hero').value].zh;
+  const moodZh  = MOOD_MAP[document.getElementById('g-mood').value].zh;
+  const fallback = nm || '小小';
+
+  switch(naming){
+    case 'workshop': return `${fallback} 的 ${styleZh}繪本工坊`;
+    case 'mission':  return `Mission：${themeZh}探索隊`;
+    case 'studio':   return `${fallback} × ${styleZh} Studio`;
+    case 'cute':     return `閃亮${heroZh}故事社`;
+    case 'sense':    return `${moodZh}${themeZh} Lab`;
+    case 'custom':   return custom || `${fallback} 的繪本機器人`;
+  }
+  return `${fallback} 的繪本機器人`;
+}
+
+// Live preview — only updates if a card has already been generated, otherwise idle
+function livePreview(){
+  const card = document.getElementById('gem-title-card');
+  if(card && card.style.display !== 'none'){ generateGem(); }
+}
+
+// Random shake — pick random for every dropdown + a random preset
+function randomizeGem(){
+  const pickRand = (id, opts) => {
+    document.getElementById(id).value = opts[Math.floor(Math.random()*opts.length)];
+  };
+  pickRand('g-naming', ['workshop','mission','studio','cute','sense']);
+  pickRand('g-style',   Object.keys(STYLE_MAP));
+  pickRand('g-palette', Object.keys(PALETTE_MAP));
+  pickRand('g-detail',  Object.keys(DETAIL_MAP));
+  pickRand('g-theme',   Object.keys(THEME_MAP));
+  pickRand('g-mood',    Object.keys(MOOD_MAP));
+  pickRand('g-hero',    Object.keys(HERO_MAP));
+  pickRand('g-length',  ['3','4','6','8']);
+  pickRand('g-music',   Object.keys(MUSIC_MAP));
+  pickRand('g-voice',   Object.keys(VOICE_MAP));
+  // Random anchor preset (excluding clear)
+  const presetKeys = Object.keys(anchorPresets).filter(k => k !== 'clear');
+  presetAnchor(presetKeys[Math.floor(Math.random()*presetKeys.length)]);
+  // No name yet? give a default
+  if(!document.getElementById('g-name').value.trim()){
+    document.getElementById('g-name').value = '探險家';
+  }
+  generateGem();
+}
+
+function resetGem(){
+  ['g-name','g-custom','ac-cloth','ac-color','ac-gear'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('g-naming').value = 'workshop';
+  document.getElementById('g-style').value   = 'chibi';
+  document.getElementById('g-palette').value = 'pastel';
+  document.getElementById('g-detail').value  = 'medium';
+  document.getElementById('g-theme').value   = 'school';
+  document.getElementById('g-mood').value    = 'cheerful';
+  document.getElementById('g-hero').value    = 'boy';
+  document.getElementById('g-length').value  = '4';
+  document.getElementById('g-music').value   = 'none';
+  document.getElementById('g-voice').value   = 'kid';
+  document.getElementById('gem-title-card').style.display = 'none';
+  document.getElementById('gem-prompt-out').style.display = 'none';
+}
+
+function generateGem(){
+  const opts = {
+    style:   STYLE_MAP[document.getElementById('g-style').value],
+    palette: PALETTE_MAP[document.getElementById('g-palette').value],
+    detail:  DETAIL_MAP[document.getElementById('g-detail').value],
+    theme:   THEME_MAP[document.getElementById('g-theme').value],
+    mood:    MOOD_MAP[document.getElementById('g-mood').value],
+    hero:    HERO_MAP[document.getElementById('g-hero').value],
+    length:  parseInt(document.getElementById('g-length').value),
+    music:   MUSIC_MAP[document.getElementById('g-music').value],
+    voice:   VOICE_MAP[document.getElementById('g-voice').value]
+  };
   const c1 = document.getElementById('ac-cloth').value.trim();
   const c2 = document.getElementById('ac-color').value.trim();
   const c3 = document.getElementById('ac-gear').value.trim();
-  const out = document.getElementById('anchor-out');
-  if(!c1 && !c2 && !c3){
-    out.textContent = '請先填寫至少一格三件套，或按上方範例帶入！';
-    return;
-  }
-  const txt = '【角色錨點 - 必須出現在每幕】\n服裝：' + (c1||'（請填入）') + '\n主要顏色：' + (c2||'（請填入）') + '\n永久配件：' + (c3||'（請填入）') + '\n\n風格：highly detailed collectible vinyl toy style, chibi aesthetics, cute big-head proportions';
-  out.style.whiteSpace = 'pre-wrap';
-  out.textContent = txt;
+
+  const gemName = buildGemName();
+
+  // Show name big card
+  const titleCard = document.getElementById('gem-title-card');
+  titleCard.style.display = 'block';
+  document.getElementById('gem-title-name').textContent = '🎨 ' + gemName;
+  document.getElementById('gem-title-meta').innerHTML =
+    `<span>🖼️ ${opts.style.zh}</span><span>🌈 ${opts.palette.zh}</span>` +
+    `<span>📚 ${opts.theme.zh}</span><span>🎭 ${opts.mood.zh}</span>` +
+    `<span>🦸 ${opts.hero.zh}</span><span>📏 ${opts.length} 幕</span>` +
+    (opts.music ? `<span>🎵 ${opts.music.zh}</span>` : '');
+
+  // Build full English style string (for image prompts)
+  const styleEn = `${opts.style.en}, ${opts.palette.en}, ${opts.detail.en}`;
+
+  const anchorBlock = (c1 || c2 || c3)
+    ? `服裝：${c1 || '（請填寫）'}\n主要顏色：${c2 || '（請填寫）'}\n永久配件：${c3 || '（請填寫）'}`
+    : '（按 STEP 5 上方的範例按鈕一鍵帶入，或自由填寫）';
+
+  const musicLine = opts.music
+    ? `\n   - 配樂氛圍建議：每幕劇本附帶「${opts.music.zh}」（${opts.music.en}）的配樂提示`
+    : '';
+
+  const fullPrompt = `# Gem 名稱：${gemName}
+
+你是一位專業且細心的「互動式繪本創作導演」，你的名字叫做「${gemName}」。
+你的任務是引導使用者從無到有，逐步完成 ${opts.length} 幕的連環繪本。
+你擁有調用內建生圖模型 Nano Banana 2 的能力，但必須嚴格依照使用者的步驟指令來觸發。
+
+## 🎭 角色定位
+- 故事題材：${opts.theme.zh}（${opts.theme.en}）
+- 故事氛圍：${opts.mood.zh}（${opts.mood.en}）
+- 主角類型：${opts.hero.zh}（${opts.hero.en}）
+- 旁白語氣：${opts.voice}
+
+## 🚦 標準互動流程 SOP（嚴格遵守暫停與等待機制）
+
+### 第一階段｜需求確認
+主動詢問使用者：「歡迎來到《${gemName}》！請告訴我您想創作的【故事主題】，預計分為 ${opts.length} 幕。」
+【暫停】等使用者回覆。
+
+### 第二階段｜腳本與提示詞設計
+收到主題後：
+1. 套用以下角色錨點：
+${anchorBlock}
+2. 產出 ${opts.length} 幕中文劇情大綱（必須符合「${opts.mood.zh}」氛圍與「${opts.theme.zh}」題材）。
+3. 為每一幕產出英文生圖提示詞（每幕開頭必須帶完整角色錨點 + 風格描述）。${musicLine}
+
+【絕對暫停】列完劇本後說：「請輸入『1』，我將為您生成第一幕的圖片！」嚴禁自動生成。
+
+### 第三階段｜逐幕生成與微調
+當使用者輸入 1, 2, 3...${opts.length} 時，分別呼叫 Nano Banana 2 生成對應幕數的圖片。
+每幕生完後問：「您對這張圖片滿意嗎？」
+- 要微調：保留錨點，只修改使用者指定的部分（表情／背景／光線）。
+- 滿意：請使用者輸入下一個數字繼續。
+
+## ⚓ 一致性保證（最重要！）
+不論第幾幕重新生成，都必須死守最初設定的角色錨點。
+所有圖片風格統一為：
+${styleEn}
+
+## 🛡️ 安全守則
+- 不接受真實姓名、學校、地址、電話等個資
+- 提醒使用者：生成的圖片帶 SynthID 隱形浮水印，這是 AI 作品
+- 內容必須適合國小學生
+
+## 🎤 開場白
+請用「${opts.voice}」開場，自我介紹「我是《${gemName}》」，然後問使用者故事主題。`;
+
+  const out = document.getElementById('gem-prompt-out');
+  out.style.display = 'block';
+  out.textContent = fullPrompt;
 }
-function copyAnchor(){
-  const txt = document.getElementById('anchor-out').innerText;
-  if(!txt || txt.startsWith('←') || txt.startsWith('請先')){alert('請先按「組合錨點句」！');return;}
-  navigator.clipboard.writeText(txt).then(()=>alert('已複製！貼到 Gem 提示詞的 [填入] 區塊吧 🎉'));
+
+function copyGemName(){
+  const card = document.getElementById('gem-title-card');
+  if(card.style.display === 'none'){ alert('請先按「⚡ 生成我的專屬 Gem」！'); return; }
+  const name = document.getElementById('gem-title-name').textContent.replace('🎨 ','').trim();
+  navigator.clipboard.writeText(name).then(
+    () => alert('Gem 名稱已複製！\n\n' + name + '\n\n貼到 Gemini「+ 新增 Gem」的「名稱」欄位 ✨'),
+    () => alert('複製失敗 — 請手動選取上方名稱複製')
+  );
+}
+
+function copyGemPrompt(){
+  const out = document.getElementById('gem-prompt-out');
+  if(out.style.display === 'none'){ alert('請先按「⚡ 生成我的專屬 Gem」！'); return; }
+  navigator.clipboard.writeText(out.textContent).then(
+    () => alert('完整提示詞已複製！\n\n貼到 Gemini「+ 新增 Gem」的「指令」大文字框，按儲存 → 你的專屬 Gem 就誕生了 🎉'),
+    () => alert('複製失敗 — 請手動選取下方提示詞複製')
+  );
 }
 
 // Master prompt copy
