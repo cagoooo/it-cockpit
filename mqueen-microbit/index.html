@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>麥昆小車程式設計師｜六年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/mqueen-microbit/">
+<meta property="og:title" content="麥昆小車程式設計師｜六年級資訊科技">
+<meta property="og:description" content="用 MakeCode 積木程式碼控制 micro:bit + 麥昆 Maqueen 智能小車。8 個關卡：認識大腦、積木入門、組裝啟動、馬達控制、循跡感測、超音波避障、無線遙控、警車防撞綜合專題。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/mqueen-microbit/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/mqueen-microbit/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#0a0a1e; --surface:#111130; --panel:#1a1a40;
+  --c1:#00ff88; --c2:#0088ff; --c3:#aa44ff; --c4:#ffcc00; --c5:#ff4081;
+  --text:#e0f0ff; --dim:#5060a0;
+  --shadow-glow:0 0 12px var(--c1);
+}
+html { font-size:18px; }
+body {
+  font-family:'Noto Sans TC',sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.7; min-height:100vh; overflow-x:hidden;
+}
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0,255,136,.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(0,136,255,.08), transparent 40%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 40px, rgba(80,96,160,.04) 40px, rgba(80,96,160,.04) 41px);
+}
+.code-font { font-family:'JetBrains Mono',monospace; }
+
+.site-header {
+  position:sticky; top:0; z-index:100; background:rgba(10,10,30,.92);
+  backdrop-filter:blur(8px); border-bottom:2px solid var(--c1);
+  box-shadow:0 4px 20px rgba(0,255,136,.15);
+}
+.header-inner {
+  max-width:1400px; margin:0 auto; padding:14px 24px;
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+}
+.home-btn {
+  display:inline-flex; align-items:center; gap:6px; padding:6px 14px;
+  border:2px solid var(--c2); background:transparent; color:var(--c2);
+  text-decoration:none; font-weight:700; font-size:.85rem; letter-spacing:1px;
+  transition:.2s; white-space:nowrap; box-shadow:3px 3px 0 #000;
+  font-family:'JetBrains Mono',monospace;
+}
+.home-btn:hover { background:var(--c2); color:var(--bg); transform:translate(-1px,-1px); box-shadow:4px 4px 0 #000; }
+.header-title { font-size:1.5rem; font-weight:900; color:var(--c1); text-shadow:0 0 8px rgba(0,255,136,.4); }
+.header-sub { font-size:1rem; color:var(--dim); }
+.grade-chip {
+  background:linear-gradient(90deg,var(--c2),var(--c3)); color:#fff;
+  padding:5px 14px; font-size:.85rem; font-weight:700; border-radius:4px;
+  font-family:'JetBrains Mono',monospace; letter-spacing:1px;
+}
+.mode-bar { margin-left:auto; display:flex; gap:8px; align-items:center; }
+.mode-btn {
+  padding:6px 12px; background:transparent; border:2px solid var(--dim);
+  color:var(--dim); cursor:pointer; font-family:'JetBrains Mono',monospace;
+  font-size:.8rem; font-weight:700; transition:.2s;
+}
+.mode-btn.active { border-color:var(--c1); color:var(--c1); box-shadow:0 0 8px rgba(0,255,136,.3); }
+
+.progress-bar {
+  height:5px; background:var(--surface); position:relative; overflow:hidden;
+}
+.progress-fill {
+  position:absolute; left:0; top:0; height:100%; width:0%;
+  background:linear-gradient(90deg,var(--c1),var(--c2)); transition:width .4s;
+  box-shadow:0 0 10px var(--c1);
+}
+
+.container { max-width:1400px; margin:0 auto; padding:32px 24px; position:relative; z-index:1; }
+
+.hero {
+  background:linear-gradient(135deg,var(--surface),var(--panel));
+  border:2px solid var(--c1); padding:36px 32px; margin-bottom:36px;
+  box-shadow:6px 6px 0 #000, 0 0 30px rgba(0,255,136,.15);
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:'> SYSTEM_BOOT'; position:absolute; top:14px; right:18px;
+  font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--c1); opacity:.5;
+}
+.hero h1 { font-size:1.9rem; font-weight:900; color:var(--c1); margin-bottom:10px; text-shadow:0 0 10px rgba(0,255,136,.5); }
+.hero p { color:var(--text); font-size:1.05rem; margin-bottom:18px; }
+.obj-chips { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.obj-chip {
+  background:var(--surface); border:2px solid var(--c2); color:var(--c2);
+  padding:8px 18px; font-size:1rem; font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+}
+
+.section-title {
+  font-size:1.4rem; font-weight:900; color:var(--c1); margin-bottom:14px;
+  padding-left:14px; border-left:4px solid var(--c1);
+}
+.section-sub { color:var(--dim); font-size:1rem; margin-bottom:20px; }
+
+.stage-nav {
+  display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;
+  padding:18px; background:var(--surface); border:2px solid var(--panel);
+}
+.stage-pill {
+  display:inline-flex; align-items:center; gap:8px; padding:10px 18px;
+  border:2px solid var(--c2); background:transparent; color:var(--c2);
+  cursor:pointer; font-size:.95rem; font-weight:700; transition:.2s;
+  text-decoration:none; font-family:'JetBrains Mono',monospace;
+}
+.stage-pill:hover { background:var(--c2); color:var(--bg); box-shadow:0 0 12px rgba(0,136,255,.5); }
+.stage-pill .num { color:var(--c1); font-weight:900; }
+
+.level-section {
+  background:var(--surface); border:2px solid var(--panel); margin-bottom:36px;
+  box-shadow:6px 6px 0 #000;
+}
+.level-section .section-header {
+  background:linear-gradient(90deg,var(--panel),transparent);
+  padding:22px 28px; border-bottom:2px solid var(--c1);
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+}
+.stage-badge {
+  display:inline-block; background:var(--c1); color:var(--bg);
+  padding:7px 14px; font-size:.6rem; font-weight:900;
+  font-family:'JetBrains Mono',monospace; letter-spacing:2px;
+}
+.level-section .section-header h3 { font-size:1.4rem; color:var(--c1); font-weight:900; }
+.level-section .body { padding:24px 28px; }
+
+.steps-card {
+  background:var(--panel); border-left:4px solid var(--c2); padding:18px 22px;
+  margin-bottom:20px;
+}
+.steps-card h4 { font-size:1.05rem; color:var(--c2); margin-bottom:12px; font-family:'JetBrains Mono',monospace; }
+.steps-list { list-style:none; }
+.steps-list li {
+  display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;
+  font-size:1rem; line-height:1.7;
+}
+.step-num {
+  flex-shrink:0; min-width:34px; height:34px; background:var(--c2); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:.9rem; font-weight:900;
+  font-family:'JetBrains Mono',monospace;
+}
+.tip-box {
+  background:rgba(255,204,0,.08); border:2px solid var(--c4); border-left-width:6px;
+  padding:14px 18px; font-size:.95rem; margin-top:14px; color:var(--text);
+}
+.tip-box .tip-label { color:var(--c4); font-weight:900; margin-right:6px; }
+
+/* Canvas interactive */
+.canvas-section {
+  background:var(--bg); border:2px solid var(--c3); padding:20px;
+  margin-top:18px; min-height:240px; position:relative;
+}
+.canvas-title { font-size:.9rem; color:var(--c3); font-weight:700; font-family:'JetBrains Mono',monospace; margin-bottom:12px; letter-spacing:1px; }
+
+/* LED 5x5 simulator */
+.led-grid { display:grid; grid-template-columns:repeat(5,40px); gap:6px; justify-content:center; padding:14px; background:#000; border:2px solid var(--c1); }
+.led-cell { width:40px; height:40px; background:#111; border:1px solid #222; cursor:pointer; transition:.1s; }
+.led-cell.on { background:radial-gradient(circle,#ff3030,#a00); box-shadow:0 0 12px #ff3030; }
+.led-controls { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.btn-icon { padding:8px 14px; background:var(--surface); border:2px solid var(--c1); color:var(--c1); cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:.85rem; font-weight:700; }
+.btn-icon:hover { background:var(--c1); color:var(--bg); }
+
+/* Block code mock */
+.block-stack { display:flex; flex-direction:column; gap:6px; max-width:340px; margin:0 auto; }
+.code-block {
+  display:flex; align-items:center; gap:8px; padding:12px 16px;
+  font-family:'JetBrains Mono',monospace; font-size:.95rem; font-weight:700;
+  color:#fff; cursor:grab; user-select:none;
+  border-radius:0 8px 8px 0;
+}
+.code-block.event { background:#3a4ad6; border-left:6px solid #2a3a96; }
+.code-block.loop { background:#a04bff; border-left:6px solid #6028b0; }
+.code-block.basic { background:#1090ff; border-left:6px solid #0050a0; }
+.code-block.maqueen { background:#22b573; border-left:6px solid #136242; }
+.code-block.logic { background:#ff8800; border-left:6px solid #b05a00; }
+
+/* Motor sliders */
+.motor-panel { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; align-items:flex-end; margin-bottom:14px; }
+.motor-col { display:flex; flex-direction:column; align-items:center; gap:8px; min-width:130px; }
+.motor-col label { font-family:'JetBrains Mono',monospace; font-size:.9rem; color:var(--c2); font-weight:700; }
+.motor-col input[type=range] { width:120px; }
+.motor-col .vread { font-family:'JetBrains Mono',monospace; color:var(--c1); font-weight:900; font-size:1rem; }
+.car-stage { position:relative; height:160px; background:#0a1020; border:2px dashed var(--dim); overflow:hidden; }
+.car-icon { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2.6rem; transition:transform .3s; }
+.car-status { font-family:'JetBrains Mono',monospace; font-size:.85rem; color:var(--c4); text-align:center; margin-top:10px; }
+
+/* Tracking simulator */
+.track-sim { display:flex; flex-direction:column; align-items:center; gap:14px; }
+.track-strip { display:flex; gap:0; }
+.track-cell { width:60px; height:80px; cursor:pointer; transition:.2s; border:1px solid var(--dim); }
+.track-cell.black { background:#000; }
+.track-cell.white { background:#f0f0f0; }
+.track-state { font-family:'JetBrains Mono',monospace; font-size:.95rem; color:var(--c1); font-weight:700; }
+
+/* Sonar */
+.sonar-panel { display:flex; flex-direction:column; align-items:center; gap:14px; }
+.sonar-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center; }
+.sonar-canvas { background:#000; border:2px solid var(--c1); width:100%; max-width:600px; height:150px; }
+.sonar-out { font-family:'JetBrains Mono',monospace; font-size:1.1rem; font-weight:900; color:var(--c4); }
+
+/* Remote keypad */
+.remote-pad { display:grid; grid-template-columns:repeat(3,70px); gap:6px; justify-content:center; }
+.rkey { width:70px; height:70px; background:var(--surface); border:2px solid var(--c2); color:var(--c2); cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:900; font-size:1.1rem; transition:.15s; }
+.rkey:hover { background:var(--c2); color:var(--bg); transform:scale(1.05); }
+.rkey:active { box-shadow:0 0 16px var(--c2); }
+.remote-out { font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--c4); margin-top:12px; text-align:center; }
+
+/* Quiz */
+.quiz-section {
+  background:var(--panel); border:2px solid var(--c5); padding:22px 26px;
+  margin-top:20px;
+}
+.quiz-section h4 { font-size:1.05rem; color:var(--c5); margin-bottom:14px; font-family:'JetBrains Mono',monospace; }
+.quiz-q { font-size:1.05rem; font-weight:700; margin-bottom:12px; color:var(--text); }
+.quiz-opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:8px; }
+.quiz-opt {
+  padding:11px 18px; background:var(--surface); border:2px solid var(--c2); color:var(--text);
+  cursor:pointer; font-size:.95rem; text-align:left; transition:.15s;
+  font-family:inherit;
+}
+.quiz-opt:hover:not(.locked) { background:var(--c2); color:var(--bg); }
+.quiz-opt.correct { background:rgba(0,255,136,.15); border-color:var(--c1); color:var(--c1); }
+.quiz-opt.wrong { background:rgba(255,64,129,.15); border-color:var(--c5); color:var(--c5); }
+.quiz-feedback { margin-top:12px; padding:10px 14px; font-size:.95rem; min-height:1.5em; }
+.quiz-feedback.ok { background:rgba(0,255,136,.1); color:var(--c1); border-left:4px solid var(--c1); }
+.quiz-feedback.bad { background:rgba(255,64,129,.1); color:var(--c5); border-left:4px solid var(--c5); }
+
+.teacher-only { display:none; }
+body.teacher-mode .teacher-only { display:block; }
+.teacher-note {
+  background:rgba(170,68,255,.08); border:2px dashed var(--c3);
+  padding:14px 18px; margin-top:16px; font-size:.95rem;
+}
+.teacher-note h5 { color:var(--c3); margin-bottom:6px; font-family:'JetBrains Mono',monospace; font-size:.9rem; }
+
+/* Project task */
+.project-task {
+  background:linear-gradient(135deg,var(--surface),var(--panel));
+  border:2px solid var(--c4); padding:28px; margin-bottom:36px;
+  box-shadow:6px 6px 0 #000, 0 0 24px rgba(255,204,0,.15);
+}
+.project-task h3 { font-size:1.4rem; color:var(--c4); margin-bottom:14px; font-family:'JetBrains Mono',monospace; }
+.project-task .task-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:18px; }
+.task-card { background:var(--bg); border:2px solid var(--c2); padding:16px; }
+.task-card h4 { color:var(--c2); font-size:1rem; margin-bottom:8px; font-family:'JetBrains Mono',monospace; }
+.task-card p { font-size:.95rem; color:var(--text); }
+
+/* Slide player */
+.slide-player {
+  background:var(--surface); border:2px solid var(--c1); margin-bottom:36px;
+  box-shadow:6px 6px 0 #000;
+}
+.slide-main {
+  position:relative; background:#000; aspect-ratio:16/9;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.slide-main img { width:100%; height:100%; object-fit:contain; }
+.slide-nav-btn {
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:48px; height:48px; background:rgba(0,0,0,.65); color:var(--c1);
+  border:2px solid var(--c1); font-size:1.5rem; cursor:pointer; transition:.2s;
+  font-family:inherit;
+}
+.slide-nav-btn:hover { background:var(--c1); color:var(--bg); }
+.slide-nav-btn.prev { left:14px; }
+.slide-nav-btn.next { right:14px; }
+.slide-fs-btn {
+  position:absolute; top:14px; right:14px;
+  background:var(--c1); color:var(--bg); border:none; padding:8px 14px;
+  font-size:.95rem; cursor:pointer; font-weight:900;
+  box-shadow:3px 3px 0 #000; z-index:5;
+  font-family:inherit;
+}
+.slide-fs-btn:hover { transform:translateY(-2px); }
+.slide-counter {
+  position:absolute; left:14px; bottom:14px;
+  background:rgba(0,0,0,.7); color:var(--c1); padding:5px 12px;
+  font-family:'JetBrains Mono',monospace; font-size:.85rem; font-weight:700;
+}
+.slide-strip {
+  display:flex; gap:8px; padding:14px; overflow-x:auto;
+  background:var(--panel); border-top:2px solid var(--panel);
+}
+.strip-thumb {
+  flex-shrink:0; width:140px; aspect-ratio:16/9; background:#000;
+  border:2px solid transparent; cursor:pointer; transition:.2s;
+}
+.strip-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.strip-thumb.active { border-color:var(--c1); box-shadow:0 0 10px var(--c1); }
+
+#slide-fs {
+  position:fixed; inset:0; background:rgba(0,0,0,.95); z-index:500;
+  display:none; align-items:center; justify-content:center; padding:30px;
+}
+#slide-fs.show { display:flex; }
+#slide-fs img { max-width:100%; max-height:100%; }
+#slide-fs .fs-close {
+  position:absolute; top:20px; right:24px;
+  background:transparent; border:2px solid var(--c1); color:var(--c1);
+  width:44px; height:44px; cursor:pointer; font-size:1.5rem;
+}
+#slide-fs .fs-counter {
+  position:absolute; left:20px; bottom:20px;
+  background:rgba(0,0,0,.7); color:var(--c1); padding:6px 14px;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* Video */
+.nlm-video-section { max-width:1400px; margin:0 auto 36px; padding:0; }
+.nlm-video-section h3 { font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--c1); margin-bottom:14px; letter-spacing:1px; }
+.video-wrap { background:var(--surface); border:3px solid var(--c1); box-shadow:6px 6px 0 #000; position:relative; overflow:hidden; }
+.video-ratio { position:relative; padding-top:56.25%; width:100%; }
+.video-ratio iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+.video-meta { background:var(--panel); border-top:2px solid var(--c1); padding:10px 16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.nlm-badge { display:inline-flex; gap:6px; background:var(--c1); color:var(--bg); font-size:.8rem; font-weight:700; padding:4px 10px; }
+.video-hint { font-size:.9rem; color:var(--dim); }
+.video-no-id { padding:50px 20px; text-align:center; font-size:1rem; color:var(--dim); border:2px dashed var(--dim); }
+.video-no-id a { color:var(--c1); }
+
+/* Infographics */
+.info-section { margin-bottom:36px; }
+.info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(380px,1fr)); gap:18px; }
+.info-card {
+  background:var(--surface); border:2px solid var(--c2); overflow:hidden;
+  box-shadow:6px 6px 0 #000; cursor:pointer; transition:.2s;
+}
+.info-card:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 #000, 0 0 20px rgba(0,136,255,.3); }
+.info-card img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+.info-card .label { padding:10px 14px; background:var(--panel); font-family:'JetBrains Mono',monospace; font-size:.9rem; color:var(--c2); border-top:2px solid var(--c2); }
+
+/* NLM resources */
+.nb-section { margin-bottom:36px; }
+.nb-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-bottom:18px; }
+.nb-card {
+  background:var(--surface); border:2px solid var(--c3); padding:18px;
+  text-decoration:none; color:var(--text); transition:.2s; display:block;
+}
+.nb-card:hover { background:var(--panel); box-shadow:0 0 14px rgba(170,68,255,.3); }
+.nb-card .nb-tag { font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--c3); font-weight:700; }
+.nb-card h4 { font-size:1rem; color:var(--text); margin:6px 0; }
+.nb-card p { font-size:.9rem; color:var(--dim); }
+
+.faq-list details {
+  background:var(--surface); border:2px solid var(--panel); border-left:4px solid var(--c2);
+  padding:14px 18px; margin-bottom:10px;
+}
+.faq-list summary {
+  cursor:pointer; font-weight:700; font-size:1rem; color:var(--c2);
+  list-style:none;
+}
+.faq-list summary::before { content:'> '; font-family:'JetBrains Mono',monospace; color:var(--c1); }
+.faq-list .faq-a { font-size:.95rem; line-height:1.7; margin-top:10px; padding-top:10px; border-top:1px dashed var(--panel); color:var(--text); }
+
+/* Floating tools */
+.float-tools {
+  position:fixed; right:20px; bottom:20px; z-index:400;
+  display:flex; flex-direction:column; gap:10px;
+}
+.float-btn {
+  width:50px; height:50px; border:2px solid var(--c1); background:var(--surface);
+  color:var(--c1); cursor:pointer; font-size:1.4rem; transition:.2s;
+  box-shadow:3px 3px 0 #000;
+}
+.float-btn:hover { background:var(--c1); color:var(--bg); transform:translate(-1px,-1px); box-shadow:4px 4px 0 #000; }
+.float-btn.pink { border-color:var(--c5); color:var(--c5); }
+.float-btn.pink:hover { background:var(--c5); }
+.float-btn.purple { border-color:var(--c3); color:var(--c3); }
+.float-btn.purple:hover { background:var(--c3); }
+.float-btn.yellow { border-color:var(--c4); color:var(--c4); }
+.float-btn.yellow:hover { background:var(--c4); color:var(--bg); }
+
+.tool-panel {
+  position:fixed; right:20px; bottom:90px; width:300px;
+  background:var(--surface); border:2px solid var(--c1); padding:18px;
+  z-index:400; display:none; box-shadow:6px 6px 0 #000;
+}
+.tool-panel.show { display:block; }
+.tool-panel h4 { color:var(--c1); font-size:1rem; margin-bottom:12px; font-family:'JetBrains Mono',monospace; display:flex; justify-content:space-between; align-items:center; }
+.tool-panel h4 .close { cursor:pointer; color:var(--dim); font-size:1.1rem; }
+.tool-panel h4 .close:hover { color:var(--c5); }
+.btn-primary {
+  width:100%; padding:10px; background:var(--c1); color:var(--bg); border:none;
+  font-weight:900; cursor:pointer; font-family:inherit; font-size:.95rem;
+  margin-top:6px;
+}
+.lottery-result {
+  text-align:center; padding:18px; margin-top:12px; background:var(--panel);
+  font-size:1.6rem; font-weight:900; color:var(--c4); font-family:'JetBrains Mono',monospace;
+  min-height:60px; display:flex; align-items:center; justify-content:center;
+}
+.timer-display {
+  text-align:center; padding:18px; margin:12px 0; background:var(--panel);
+  font-size:2rem; font-weight:900; color:var(--c1); font-family:'JetBrains Mono',monospace;
+}
+
+/* Drawing canvas */
+#drawCanvas {
+  position:fixed; inset:0; width:100%; height:100%;
+  z-index:250; pointer-events:none; background:transparent; display:block;
+}
+#drawCanvas.active { pointer-events:all; cursor:crosshair; }
+.draw-toolbar {
+  position:fixed; left:20px; bottom:20px; z-index:300;
+  background:var(--surface); border:2px solid var(--c1); padding:10px 14px;
+  display:none; gap:8px; align-items:center; box-shadow:6px 6px 0 #000;
+}
+.draw-toolbar.show { display:flex; }
+.draw-toolbar .color-dot { width:26px; height:26px; border:2px solid #000; cursor:pointer; padding:0; transition:.2s; }
+.draw-toolbar .color-dot.active { transform:scale(1.2); box-shadow:0 0 8px currentColor; }
+.draw-toolbar .draw-clear { background:transparent; border:2px solid var(--c5); color:var(--c5); padding:4px 12px; font-family:inherit; font-weight:700; cursor:pointer; font-size:.85rem; }
+
+.password-modal { position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:500; display:none; align-items:center; justify-content:center; }
+.password-modal.show { display:flex; }
+.password-modal .pw-box { background:var(--surface); border:2px solid var(--c4); padding:28px 36px; min-width:300px; box-shadow:6px 6px 0 #000; }
+.password-modal h4 { color:var(--c4); margin-bottom:14px; font-family:'JetBrains Mono',monospace; }
+.password-modal input { width:100%; padding:10px; background:var(--bg); border:2px solid var(--dim); color:var(--text); font-size:1rem; font-family:inherit; margin-bottom:14px; }
+.password-modal .pw-buttons { display:flex; gap:8px; }
+.password-modal button { flex:1; padding:10px; cursor:pointer; font-family:inherit; font-weight:700; border:none; }
+.pw-ok { background:var(--c1); color:var(--bg); }
+.pw-cancel { background:transparent; border:2px solid var(--dim); color:var(--dim); }
+
+footer {
+  text-align:center; padding:30px 20px; color:var(--dim); font-size:.9rem;
+  border-top:2px solid var(--panel); margin-top:50px;
+  font-family:'JetBrains Mono',monospace;
+}
+footer span { color:var(--c1); }
+
+@media (max-width:720px) {
+  .header-title { font-size:1.2rem; }
+  .hero h1 { font-size:1.5rem; }
+  .container { padding:20px 14px; }
+  .level-section .body { padding:18px; }
+  .led-grid { grid-template-columns:repeat(5,32px); }
+  .led-cell { width:32px; height:32px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div>
+      <div class="header-title">🤖 麥昆小車程式設計師</div>
+      <div class="header-sub">micro:bit × MakeCode × Maqueen 智能小車</div>
+    </div>
+    <span class="grade-chip">G6 ROBOTICS</span>
+    <div class="mode-bar">
+      <button class="mode-btn active" id="btn-student" onclick="setStudentMode()">學生模式</button>
+      <button class="mode-btn" id="btn-teacher" onclick="askTeacher()">教師模式</button>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</header>
+
+<div class="container">
+
+<section class="hero">
+  <h1>► 開機啟動：成為麥昆小車程式設計師！</h1>
+  <p>嗨！我是阿凱老師。今天我們要用「micro:bit 大腦」搭配「麥昆 Maqueen 機器小車」，從拖曳積木到讓小車自己沿黑線跑、自己避開障礙物、用平板遙控… 全部你都能做到！跟著 8 個關卡循序漸進，最後挑戰自己做一台會閃燈響警報的「智慧警車」！</p>
+  <div class="obj-chips">
+    <span class="obj-chip">📡 認識 micro:bit</span>
+    <span class="obj-chip">🧩 MakeCode 積木</span>
+    <span class="obj-chip">🚗 馬達控制</span>
+    <span class="obj-chip">📏 循跡感測</span>
+    <span class="obj-chip">📐 超音波避障</span>
+    <span class="obj-chip">📱 無線遙控</span>
+  </div>
+</section>
+
+<nav class="stage-nav" aria-label="關卡導覽">
+  <a class="stage-pill" href="#sec1"><span class="num">01</span> micro:bit 大腦</a>
+  <a class="stage-pill" href="#sec2"><span class="num">02</span> MakeCode 積木</a>
+  <a class="stage-pill" href="#sec3"><span class="num">03</span> 麥昆組裝</a>
+  <a class="stage-pill" href="#sec4"><span class="num">04</span> 馬達控制</a>
+  <a class="stage-pill" href="#sec5"><span class="num">05</span> 循跡感測</a>
+  <a class="stage-pill" href="#sec6"><span class="num">06</span> 超音波避障</a>
+  <a class="stage-pill" href="#sec7"><span class="num">07</span> 無線遙控</a>
+  <a class="stage-pill" href="#sec8"><span class="num">08</span> 警車挑戰</a>
+</nav>
+
+<!-- ════ STAGE 1：認識 micro:bit ════ -->
+<section id="sec1" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 01</span>
+    <h3>📡 認識 micro:bit 大腦</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">micro:bit 是英國 BBC 設計、比信用卡還小的「電子大腦」。它一片就有 <strong style="color:var(--c1)">25 顆 LED 燈、A/B 兩顆按鈕、加速度計、磁力計（指南針）、無線電、藍牙</strong>。把它插上麥昆小車，就成為機器人的「中央處理器」。</p>
+
+    <div class="steps-card">
+      <h4>🔍 micro:bit 的六大超能力（用比喻記）</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span><strong>25 LED 點陣</strong>：機器人的「表情看板」，可顯示愛心、笑臉、文字訊息</span></li>
+        <li><span class="step-num">2</span><span><strong>A/B 按鈕</strong>：兩顆「神奇開關」，像遊戲手把按鍵</span></li>
+        <li><span class="step-num">3</span><span><strong>加速度計</strong>：「內耳平衡神經」，知道板子有沒有傾斜搖晃</span></li>
+        <li><span class="step-num">4</span><span><strong>磁力計</strong>：「內建指南針」，知道方位東南西北</span></li>
+        <li><span class="step-num">5</span><span><strong>無線電 (Radio)</strong>：「對講機」，多塊 micro:bit 可以互相通訊</span></li>
+        <li><span class="step-num">6</span><span><strong>藍牙 (Bluetooth)</strong>：「隱形傳輸線」，連接手機 / 平板</span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">💡 阿凱老師提示</span>micro:bit V2 比 V1 多了「麥克風」和「喇叭」喔，可以自己發聲音！</div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="canvas-title">▶ 互動：點亮 LED 點陣（試試看設計你的圖案）</div>
+      <div class="led-grid" id="ledGrid"></div>
+      <div class="led-controls">
+        <button class="btn-icon" onclick="ledShowIcon('heart')">❤️ 愛心</button>
+        <button class="btn-icon" onclick="ledShowIcon('smile')">😀 笑臉</button>
+        <button class="btn-icon" onclick="ledShowIcon('arrow')">⬆️ 箭頭</button>
+        <button class="btn-icon" onclick="ledShowIcon('check')">✓ 打勾</button>
+        <button class="btn-icon" onclick="ledClear()">✕ 清除</button>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q1. micro:bit 上的 25 顆 LED 點陣，除了顯示圖案以外，還可以當作什麼感測器？</div>
+      <div class="quiz-opts" data-correct="A">
+        <button class="quiz-opt" onclick="answerQuiz(this,'A','光線感測器！LED 也能反過來感受外界光線多少。')">A. 光線感測器</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','溫度感測器是另一個獨立的元件喔！')">B. 溫度感測器</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','濕度需要外接感測器才能量測。')">C. 濕度感測器</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'D','聲音是 V2 上的麥克風才有的功能。')">D. 聲音感測器</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👨‍🏫 教師提示</h5>
+      可以讓學生實際拿著 micro:bit 板子，請他們找出每一個「超能力」的位置（25 個 LED、A/B 按鈕、Reset 鍵、USB 接頭）。提醒學生不要用力扳折板子。
+    </div>
+  </div>
+</section>
+
+<!-- ════ STAGE 2：MakeCode 積木 ════ -->
+<section id="sec2" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 02</span>
+    <h3>🧩 MakeCode 圖形化積木編輯器</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">MakeCode 是微軟開發的<strong style="color:var(--c1)">免費線上</strong>程式編輯器，不用安裝、打開瀏覽器就能用。寫程式就像玩樂高積木，<strong style="color:var(--c2)">拖曳拼湊</strong>就能完成。</p>
+
+    <div class="steps-card">
+      <h4>🚀 第一個程式「姓名徽章」操作步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>打開瀏覽器，輸入 <code class="code-font" style="background:var(--bg);padding:2px 8px;color:var(--c1)">makecode.microbit.org</code></span></li>
+        <li><span class="step-num">2</span><span>點選「新增專案」，認識三大區塊：<strong>左：模擬器</strong>、<strong>中：積木工具列</strong>、<strong>右：編輯區</strong></span></li>
+        <li><span class="step-num">3</span><span>從「基本」拖出「重複無限次」積木到編輯區</span></li>
+        <li><span class="step-num">4</span><span>放入「顯示文字」積木，輸入自己的名字</span></li>
+        <li><span class="step-num">5</span><span>用 USB 線連接 micro:bit，電腦會跳出名為 <strong>MICROBIT</strong> 的隨身碟</span></li>
+        <li><span class="step-num">6</span><span>點「下載」→ 把 .hex 檔拉進 MICROBIT 隨身碟。完成！🎉</span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">⚠️ 注意</span>下載時 micro:bit 背面的黃燈會閃爍，<strong>不可以拔掉 USB 線</strong>，要等閃爍結束。</div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="canvas-title">▶ 互動：MakeCode 積木示意（一個典型程式長這樣）</div>
+      <div class="block-stack">
+        <div class="code-block event">⚡ 當啟動時</div>
+        <div class="code-block loop" style="margin-left:14px">🔄 重複無限次</div>
+        <div class="code-block basic" style="margin-left:28px">▢ 顯示圖示 ❤️</div>
+        <div class="code-block basic" style="margin-left:28px">⏱ 暫停 (毫秒) 500</div>
+        <div class="code-block basic" style="margin-left:28px">▢ 清除畫面</div>
+        <div class="code-block basic" style="margin-left:28px">⏱ 暫停 (毫秒) 500</div>
+      </div>
+      <p style="text-align:center;margin-top:12px;font-size:.9rem;color:var(--dim);font-family:'JetBrains Mono',monospace">// 效果：心形圖案閃爍</p>
+    </div>
+
+    <div class="steps-card">
+      <h4>📦 加入麥昆 Maqueen 擴展庫</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>點右上齒輪 ⚙️ → 選「擴展 (Extensions)」</span></li>
+        <li><span class="step-num">2</span><span>搜尋 <code class="code-font">Maqueen</code> 或貼網址 <code class="code-font" style="background:var(--bg);padding:2px 6px;color:var(--c1);font-size:.85rem">github.com/DFRobot/pxt-maqueen</code></span></li>
+        <li><span class="step-num">3</span><span>載入後，工具列會多出綠色 <strong style="color:#22b573">Maqueen</strong> 積木</span></li>
+      </ul>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q2. 用 MakeCode 寫好程式後，要怎麼把它「燒進」micro:bit？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','想得太複雜啦！MakeCode 自動幫你做好了。')">A. 用程式語言重打一次</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','正確！把 .hex 檔拉到 MICROBIT 隨身碟就完成。','correct')">B. 點下載 → 把 .hex 檔拉進 MICROBIT 隨身碟</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','MakeCode 不需要安裝任何軟體！')">C. 安裝特殊軟體再傳輸</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','藍牙適合無線控制，不是燒錄程式。')">D. 用藍牙傳檔案</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ STAGE 3：麥昆組裝 ════ -->
+<section id="sec3" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 03</span>
+    <h3>🚗 麥昆小車組裝啟動</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">如果 micro:bit 是<strong style="color:var(--c1)">大腦</strong>，那麥昆小車就是聽從大腦指揮的<strong style="color:var(--c2)">身體</strong>！它身上有馬達（雙腿肌肉）、循跡感測器（眼睛）、超音波模組（聲納）、RGB 燈（霓虹底盤）、蜂鳴器（嘴巴）、紅外線接收頭（順風耳）。</p>
+
+    <div class="steps-card">
+      <h4>🔧 組裝四步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span><strong>裝電池</strong>：打開電池盒，裝入 3 顆 AAA (7號) 電池，注意正負極（電源開關必須在 OFF）</span></li>
+        <li><span class="step-num">2</span><span><strong>插超音波</strong>：把兩顆「大眼睛」（SR04）插在車頭專屬插槽，T 對 trig、E 對 echo</span></li>
+        <li><span class="step-num">3</span><span><strong>插 micro:bit</strong>：金手指朝下，正面（LED 矩陣）<strong>朝前方</strong>，插入小車黑色插槽</span></li>
+        <li><span class="step-num">4</span><span><strong>開電源</strong>：打開車尾電源開關（切到 ON），看小車是否亮起電源指示燈</span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">⚠️ 安全提醒</span>裝電池或插拔感測器時，務必先把電源切到 <strong>OFF</strong>，避免短路！</div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q3. 麥昆小車已經裝好電池、micro:bit 也插好了，但車子完全不動，最可能是什麼原因？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','超音波只影響避障功能，不影響整車啟動。')">A. 超音波沒插好</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','RGB 燈是裝飾性元件，不會影響行走。')">B. RGB 燈沒亮</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','正確！車尾的電源開關沒切到 ON，馬達就沒電力。','correct')">C. 車尾的電源開關還在 OFF</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','蜂鳴器有專屬開關，不影響馬達。')">D. 蜂鳴器壞了</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ STAGE 4：馬達控制 ════ -->
+<section id="sec4" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 04</span>
+    <h3>⚡ 馬達控制（讓小車動起來）</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">馬達是小車的「雙腿肌肉」。MakeCode 的馬達積木可以分別控制<strong style="color:var(--c1)">左輪、右輪、或全部</strong>，方向選擇<strong style="color:var(--c2)">前進 / 後退</strong>，速度範圍 <code class="code-font" style="color:var(--c4)">0~255</code>。<strong style="color:var(--c5)">兩輪速度差就是轉彎的關鍵！</strong></p>
+
+    <div class="steps-card">
+      <h4>🚦 操作步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>拖出「重複無限次」積木</span></li>
+        <li><span class="step-num">2</span><span>放入「馬達 (全部) 方向 (前進) 速度 (100)」</span></li>
+        <li><span class="step-num">3</span><span>加「暫停 (毫秒) 1000」（前進 1 秒）</span></li>
+        <li><span class="step-num">4</span><span>改成「左馬達 速度 0、右馬達 速度 100」→ 小車左轉</span></li>
+        <li><span class="step-num">5</span><span>練習：用 A 鍵控制前進、B 鍵後退、A+B 停止</span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">💡 馬達校正</span>如果小車直走會偏掉（兩顆馬達摩擦力不同），可以調整左右輪速度差，例如左 255、右 240 來修正。</div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="canvas-title">▶ 互動：馬達速度控制器（拖滑桿看小車怎麼動）</div>
+      <div class="motor-panel">
+        <div class="motor-col">
+          <label>L 左輪</label>
+          <input type="range" min="-255" max="255" value="0" id="motL" oninput="updateMotor()">
+          <span class="vread" id="motLv">0</span>
+        </div>
+        <div class="motor-col">
+          <label>R 右輪</label>
+          <input type="range" min="-255" max="255" value="0" id="motR" oninput="updateMotor()">
+          <span class="vread" id="motRv">0</span>
+        </div>
+        <div class="motor-col" style="min-width:auto">
+          <button class="btn-icon" onclick="motorPreset(150,150)">前進</button>
+          <button class="btn-icon" onclick="motorPreset(-150,-150)">後退</button>
+        </div>
+        <div class="motor-col" style="min-width:auto">
+          <button class="btn-icon" onclick="motorPreset(0,150)">左轉</button>
+          <button class="btn-icon" onclick="motorPreset(150,0)">右轉</button>
+        </div>
+        <div class="motor-col" style="min-width:auto">
+          <button class="btn-icon" onclick="motorPreset(0,0)">停止</button>
+        </div>
+      </div>
+      <div class="car-stage">
+        <div class="car-icon" id="carIcon">🚗</div>
+      </div>
+      <div class="car-status" id="carStatus">> 等待指令...</div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q4. 想讓麥昆小車「原地左轉」（在原位置上轉圈），最有效的設定是？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','兩輪一樣速度會一直直走，不會轉。')">A. 左輪 200 前進、右輪 200 前進</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','兩輪都停就完全不動了。')">B. 左輪 0、右輪 0</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','正確！一輪後退、一輪前進就能原地打轉。','correct')">C. 左輪 200 後退、右輪 200 前進</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'C','兩輪都後退會直直退車，不會轉。')">D. 左輪 200 後退、右輪 200 後退</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👨‍🏫 教師提示</h5>
+      建議在這關後安排「方塊積木遊戲」：用紙膠帶在地上貼一個 1m × 1m 方框，學生要寫程式讓車子沿方形邊緣繞一圈。會發現「轉 90 度」需要實測時間（不同電量、不同地板差異很大）。
+    </div>
+  </div>
+</section>
+
+<!-- ════ STAGE 5：循跡感測 ════ -->
+<section id="sec5" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 05</span>
+    <h3>📏 循跡感測（沿著黑線跑）</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">車底有 <strong style="color:var(--c1)">L1、R1 兩顆紅外線感測器</strong>，像「永遠盯著地板看的眼睛」。它分辨黑與白：<strong>黑線輸出 0</strong>、<strong>白色輸出 1</strong>。靠這兩顆眼睛 + 「如果...那麼...否則」邏輯判斷，車子就能像火車一樣沿著黑線跑！</p>
+
+    <div class="steps-card">
+      <h4>🧠 循跡邏輯（4 種情況）</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span><strong>L1=0 且 R1=0</strong>（兩顆都壓黑線）→ 馬達<strong style="color:var(--c1)">全前進</strong></span></li>
+        <li><span class="step-num">2</span><span><strong>L1=0 且 R1=1</strong>（左壓黑、右偏白）→ 左馬達停、右馬達前進（<strong style="color:var(--c2)">向左修正</strong>）</span></li>
+        <li><span class="step-num">3</span><span><strong>L1=1 且 R1=0</strong>（右壓黑、左偏白）→ 左馬達前進、右馬達停（<strong style="color:var(--c2)">向右修正</strong>）</span></li>
+        <li><span class="step-num">4</span><span><strong>L1=1 且 R1=1</strong>（兩顆都白）→ 跑出黑線了，停止或慢慢轉</span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">📐 場地準備</span>用<strong>白色大圖畫紙</strong> + <strong>黑色絕緣膠帶</strong>貼軌道。膠帶寬度要夠，讓兩個感測器能同時感測到黑線。</div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="canvas-title">▶ 互動：循跡感測模擬器（點黑/白格子，看小車要怎麼走）</div>
+      <div class="track-sim">
+        <div class="track-strip" id="trackStrip">
+          <div class="track-cell white" id="tL1" onclick="toggleTrack(1)"></div>
+          <div class="track-cell white" id="tR1" onclick="toggleTrack(2)"></div>
+        </div>
+        <div style="display:flex;gap:12px;font-family:'JetBrains Mono',monospace;font-size:.95rem">
+          <span>L1: <span class="track-state" id="trL1">1</span></span>
+          <span>R1: <span class="track-state" id="trR1">1</span></span>
+        </div>
+        <div class="car-stage" style="height:120px">
+          <div class="car-icon" id="trackCar" style="font-size:2.4rem">🚗</div>
+        </div>
+        <div class="car-status" id="trackStatus" style="font-size:1rem">點擊上方兩格切換黑/白...</div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q5. 麥昆循跡感測器讀到「左 L1=1、右 R1=0」（左白、右黑），代表車子怎麼了？該如何修正？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','應該是右輪壓黑線，車子偏左了。')">A. 車子在中間，繼續直走</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','正確！車子偏左了，需要左輪前進、右輪停止來右修。','correct')">B. 車子偏左了，要向右修正（左輪前進、右輪停）</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','是偏左，不是偏右。')">C. 車子偏右了，要向左修正</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','只有兩顆都白才代表完全跑出去。')">D. 完全跑出黑線了</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ STAGE 6：超音波避障 ════ -->
+<section id="sec6" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 06</span>
+    <h3>📐 超音波避障（不撞牆）</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">超音波模組就像<strong style="color:var(--c1)">蝙蝠的聲納雷達</strong>：發出聲波→撞到障礙物彈回→計算距離。設定一個安全距離（例如 30 公分），<strong style="color:var(--c2)">距離小於 30 就煞車轉彎</strong>，這就是自動駕駛車「自動煞車系統 (AEB)」的雛型！</p>
+
+    <div class="steps-card">
+      <h4>🛑 程式邏輯</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>建立變數 <code class="code-font" style="color:var(--c4)">distance</code></span></li>
+        <li><span class="step-num">2</span><span>在「重複無限次」中：<code class="code-font">distance = 讀取超音波 (CM)</code></span></li>
+        <li><span class="step-num">3</span><span><strong>如果 distance &lt; 30</strong> → 馬達停 → 馬達右轉 → 暫停 800 毫秒</span></li>
+        <li><span class="step-num">4</span><span><strong>否則</strong>（安全前進）→ 馬達全前進</span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">⚠️ 常見坑</span>超音波偶爾會跳到 <strong>0 公分</strong>（反射錯誤）。寫程式時加條件「distance ≠ 0 且 &lt; 30」，並加 <code class="code-font">100ms</code> 延遲防止錯誤訊號。</div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="canvas-title">▶ 互動：超音波測距模擬器（拖滑桿改變障礙物距離）</div>
+      <div class="sonar-panel">
+        <canvas class="sonar-canvas" id="sonarCanvas" width="600" height="150"></canvas>
+        <div class="sonar-row">
+          <label style="font-family:'JetBrains Mono',monospace;color:var(--c2);font-weight:700">障礙物距離：</label>
+          <input type="range" min="5" max="100" value="60" id="sonarDist" oninput="updateSonar()" style="width:200px">
+          <span class="sonar-out" id="sonarOut">60 cm</span>
+        </div>
+        <div class="car-status" id="sonarStatus" style="font-size:1rem">> 安全前進中... 🚗</div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q6. 寫好避障程式後，小車測超音波時偶爾會「跳到 0 公分」就突然煞車，最有效的解決方法？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','這是治標不治本，0 仍會被誤判。')">A. 把判斷距離改成 50</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','正確！加條件 distance ≠ 0 把錯誤值濾掉。','correct')">B. 在判斷裡加「distance ≠ 0」條件</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','馬達速度跟超音波無關。')">C. 把馬達速度改快一點</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','拔掉就完全沒測距功能了。')">D. 拔掉超音波感測器</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ STAGE 7：紅外線 / 藍牙遙控 ════ -->
+<section id="sec7" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 07</span>
+    <h3>📱 無線遙控（紅外線 + 藍牙）</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">麥昆有兩種無線遙控方式：<strong style="color:var(--c1)">紅外線遙控器</strong>（像電視遙控器）<strong style="color:var(--c2)">+</strong> <strong style="color:var(--c3)">藍牙手機/平板 App</strong>（用 Gamepad 搖桿）。</p>
+
+    <div class="steps-card">
+      <h4>🎮 紅外線遙控（按鍵代碼對照）</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>「當啟動時」設定紅外線接收引腳</span></li>
+        <li><span class="step-num">2</span><span>拖「當紅外線接收到 message」積木（自動建立 message 變數）</span></li>
+        <li><span class="step-num">3</span><span>對應按鍵代碼：<strong style="color:var(--c1)">2 前進</strong>、<strong>8 後退</strong>、<strong>4 左轉</strong>、<strong>6 右轉</strong>、<strong>5 停止</strong></span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">💡 遙控器有兩種規格</span>KEYES 與 NEC 解碼格式不同。寫前先測試一下：寫一段「顯示 message」程式，按下遙控器看跑出什麼數字，再填入對應指令。</div>
+    </div>
+
+    <div class="canvas-section">
+      <div class="canvas-title">▶ 互動：紅外線遙控器模擬（點按鍵，看小車反應）</div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+        <div class="remote-pad">
+          <div></div>
+          <button class="rkey" onclick="pressRemote(2,'前進','⬆️')">2 ▲</button>
+          <div></div>
+          <button class="rkey" onclick="pressRemote(4,'左轉','⬅️')">4 ◀</button>
+          <button class="rkey" onclick="pressRemote(5,'停止','⏹')">5 ■</button>
+          <button class="rkey" onclick="pressRemote(6,'右轉','➡️')">6 ▶</button>
+          <div></div>
+          <button class="rkey" onclick="pressRemote(8,'後退','⬇️')">8 ▼</button>
+          <div></div>
+        </div>
+        <div class="remote-out" id="remoteOut">message = ? 等待按鍵 ...</div>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <h4>📱 藍牙手機/平板 App 控制</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>平板下載 <strong>micro:bit</strong> 官方 App</span></li>
+        <li><span class="step-num">2</span><span>micro:bit 開機，<strong>同時按住 A+B 鍵</strong>不放，按一下背面 Reset 鍵</span></li>
+        <li><span class="step-num">3</span><span><strong>30 秒內</strong>在 App 點亮跟板子上一模一樣的 5×5 圖案</span></li>
+        <li><span class="step-num">4</span><span>MakeCode 加 <strong>Devices 擴展</strong>，寫 Gamepad 按鈕對應馬達動作</span></li>
+        <li><span class="step-num">5</span><span>App 開「Monitor and Control」→ Add → 新增 Gamepad → Start！</span></li>
+      </ul>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q7. 同學的麥昆遙控不靈敏，按 6 卻往左轉。最可能的原因？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answerQuiz(this,'A','正確！不同遙控器代碼不同，要先測試。','correct')">A. 程式裡按鍵代碼填錯了（KEYES 與 NEC 不同）</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'A','馬達速度不會影響轉向方向。')">B. 馬達速度設得太快</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'A','超音波只在避障程式才用到。')">C. 超音波感測器壞了</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'A','循跡是另一個獨立功能。')">D. 循跡感測器壓到黑線</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👨‍🏫 教師提示</h5>
+      藍牙配對失敗常見原因：(1) 30 秒超時 → 重新進入配對模式；(2) USB 供電不穩 → 改用小車電池供電。教學時建議讓學生兩兩一組，輪流操作。
+    </div>
+  </div>
+</section>
+
+<!-- ════ STAGE 8：警車防撞綜合專題 ════ -->
+<section id="sec8" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 08</span>
+    <h3>🚓 警車防撞綜合專題（實戰挑戰）</h3>
+  </div>
+  <div class="body">
+    <p class="section-sub">最終 Boss 戰！綜合「<strong style="color:var(--c1)">超音波避障 + 警報音效 + 紅藍車燈閃爍</strong>」做出真正的智慧警車：平常巡邏前進，遇到障礙物就煞車轉彎、發出警報並閃紅藍燈！</p>
+
+    <div class="steps-card">
+      <h4>🎬 完整邏輯</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>設定 <code class="code-font" style="color:var(--c4)">distance</code> 讀取超音波</span></li>
+        <li><span class="step-num">2</span><span><strong>如果 distance &lt; 30</strong>（遇到障礙）：
+          <ul style="margin-top:6px;padding-left:16px">
+            <li>→ 馬達後退 + 隨機左/右轉</li>
+            <li>→ 蜂鳴器播放警報音效（從低音爬升到高音）</li>
+            <li>→ 車燈/RGB 紅色閃爍</li>
+          </ul>
+        </span></li>
+        <li><span class="step-num">3</span><span><strong>否則</strong>（安全前進）：
+          <ul style="margin-top:6px;padding-left:16px">
+            <li>→ 馬達全前進</li>
+            <li>→ 停止音效</li>
+            <li>→ RGB 改為綠色（巡邏中）</li>
+          </ul>
+        </span></li>
+      </ul>
+      <div class="tip-box"><span class="tip-label">🔊 蜂鳴器開關</span>麥昆側邊有「蜂鳴器開關」，必須切到 ON 才會發聲！蜂鳴器和 P0 共用，使用 P0 時要關閉蜂鳴器。</div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-q">Q8. 警車程式寫好下載到車上後，蜂鳴器卻完全沒響。最可能的原因？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','蜂鳴器有獨立開關，跟其他功能無關。')">A. 馬達電池沒電</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','正確！麥昆側邊有蜂鳴器開關，必須切到 ON。','correct')">B. 麥昆側邊的蜂鳴器開關還在 OFF</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','超音波只影響避障判斷。')">C. 超音波沒插好</button>
+        <button class="quiz-opt" onclick="answerQuiz(this,'B','音效跟燈是分開的兩件事。')">D. RGB 燈設錯顏色</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 今日實作任務 ════ -->
+<section class="project-task">
+  <h3>🏁 今日實作任務（5 大挑戰賽）</h3>
+  <p style="margin-top:8px;color:var(--text)">完成 8 個關卡後，分組挑戰下面任務，看哪一組最強！</p>
+  <div class="task-grid">
+    <div class="task-card">
+      <h4>🏎️ 終極循跡賽道</h4>
+      <p>計時賽，沿黑線跑完全程（含 M 字彎、十字路口）。跑出黑線 +5 秒罰時。</p>
+    </div>
+    <div class="task-card">
+      <h4>🧱 迷宮大逃亡</h4>
+      <p>純靠超音波避障程式走出紙盒迷宮。基本分 100，每撞倒一個 -10 分。</p>
+    </div>
+    <div class="task-card">
+      <h4>🚓 城市警車巡邏</h4>
+      <p>紅綠燈 + 警報聲 + 紅藍車燈 + 自動避障，做出最炫的警車（造型 + 程式 50 分）。</p>
+    </div>
+    <div class="task-card">
+      <h4>🔦 追光救援大作戰</h4>
+      <p>用手電筒光線引導小車回救援區。不能用手碰車，靠光線感測器。</p>
+    </div>
+    <div class="task-card">
+      <h4>⚽ 藍牙遙控足球賽</h4>
+      <p>兩兩一組，平板搖桿控制小車推球進門。每場 3 分鐘進球數對決。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 資訊圖表 ════ -->
+<section class="info-section">
+  <h2 class="section-title">📊 重點資訊圖表（NotebookLM 自動生成）</h2>
+  <p class="section-sub">點圖放大，掃 QR Code 帶回家複習</p>
+  <div class="info-grid">
+    <div class="info-card" onclick="window.open('assets/01_microbit_makecode.jpg','_blank')">
+      <img src="assets/01_microbit_makecode.jpg" alt="micro:bit + MakeCode 入門" loading="lazy">
+      <div class="label">▢ 01 micro:bit 大腦 + MakeCode</div>
+    </div>
+    <div class="info-card" onclick="window.open('assets/02_assembly_motor.jpg','_blank')">
+      <img src="assets/02_assembly_motor.jpg" alt="麥昆組裝與馬達控制" loading="lazy">
+      <div class="label">▢ 02 麥昆組裝 + 馬達控制</div>
+    </div>
+    <div class="info-card" onclick="window.open('assets/03_tracking_avoid.jpg','_blank')">
+      <img src="assets/03_tracking_avoid.jpg" alt="循跡與避障邏輯" loading="lazy">
+      <div class="label">▢ 03 循跡感測 + 超音波避障</div>
+    </div>
+    <div class="info-card" onclick="window.open('assets/04_remote_control.jpg','_blank')">
+      <img src="assets/04_remote_control.jpg" alt="紅外線與藍牙遙控" loading="lazy">
+      <div class="label">▢ 04 紅外線 + 藍牙遙控</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 簡報播放器 ════ -->
+<section class="info-section">
+  <h2 class="section-title">📽 授課簡報（13 頁）</h2>
+  <p class="section-sub">點縮圖跳頁，按 ⛶ 全螢幕，用左右鍵翻頁</p>
+  <div class="slide-player">
+    <div class="slide-main" ondblclick="openSlideFullscreen()">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="簡報">
+      <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
+      <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+      <div class="slide-counter" id="slideCounter">1 / 13</div>
+    </div>
+    <div class="slide-strip" id="slide-strip"></div>
+  </div>
+</section>
+
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()">✕</button>
+  <img id="slide-fs-img" src="" alt="">
+  <div class="fs-counter" id="slide-fs-counter">1 / 13</div>
+</div>
+
+<!-- ════ NotebookLM 自學影片 ════ -->
+<section class="nlm-video-section">
+  <h2 class="section-title">▶ 學生自學影片（NotebookLM × YouTube）</h2>
+  <p class="section-sub">建議用耳機觀看，可搭配上方簡報一起複習</p>
+  <div class="video-wrap">
+    <div class="video-no-id" id="videoPlaceholder">
+      🎬 自學影片製作中（NotebookLM AI 生成 + 上傳 YouTube）<br>
+      完成後會在此自動嵌入。在這之前，可以先看 <a href="https://notebooklm.google.com/notebook/c8459492-b8ee-4ae6-a9ab-2d40dacb58ce" target="_blank" rel="noopener">NotebookLM 筆記本</a>。
+    </div>
+    <div class="video-meta">
+      <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+      <span class="video-hint">💡 影片約 5–8 分鐘，涵蓋全部重點</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════ NotebookLM 資源站 ════ -->
+<section class="nb-section">
+  <h2 class="section-title">🔗 NotebookLM 教學資源站</h2>
+  <p class="section-sub">本駕駛艙由 NotebookLM 深度搜尋 + Claude Code 自動生成。3 個筆記本你都可以打開繼續探索！</p>
+  <div class="nb-grid">
+    <a class="nb-card" href="https://notebooklm.google.com/notebook/c8459492-b8ee-4ae6-a9ab-2d40dacb58ce" target="_blank" rel="noopener">
+      <span class="nb-tag">SLIM // 精簡本</span>
+      <h4>📓 麥昆小車程式設計師｜教學簡報</h4>
+      <p>本頁的簡報、影片、資訊圖表都從這個精簡本生成（萃取精華 + 阿凱老師主講者）</p>
+    </a>
+    <a class="nb-card" href="https://notebooklm.google.com/notebook/a28844a1-f9d3-425a-aa08-9f6c785b8ae8" target="_blank" rel="noopener">
+      <span class="nb-tag">RESEARCH // 研究本</span>
+      <h4>📚 [研究本] 麥昆小車程式設計師</h4>
+      <p>NotebookLM 深度搜尋 37 個專業來源（DFRobot 官方教學、阿玉micro:bit 研究區、大同國小、機器人競賽規則）</p>
+    </a>
+    <a class="nb-card" href="https://makecode.microbit.org/" target="_blank" rel="noopener">
+      <span class="nb-tag">EDITOR // 程式編輯器</span>
+      <h4>🧩 MakeCode for micro:bit</h4>
+      <p>免費線上拖曳積木程式編輯器。搜尋 Maqueen 擴展即可控制麥昆小車</p>
+    </a>
+  </div>
+  <h3 style="color:var(--c2);font-size:1.1rem;margin:24px 0 14px;font-family:'JetBrains Mono',monospace">▼ FAQ：學生最常問的問題</h3>
+  <div class="faq-list">
+    <details>
+      <summary>Q1. micro:bit 和 Arduino 有什麼不一樣？我該學哪個？</summary>
+      <div class="faq-a">micro:bit 是「<strong>內建超多裝備的超級大腦</strong>」（自帶 25 顆 LED、2 顆按鈕、加速度計、磁力計、藍牙、無線電），不用拉線焊接就能玩；Arduino 像「什麼都沒有的空板」，要自己接線焊接。對國小初學者，<strong style="color:var(--c1)">micro:bit 絕對是最好玩、最不容易失敗的選擇</strong>！</div>
+    </details>
+    <details>
+      <summary>Q2. MakeCode 要付錢嗎？回家可以用嗎？</summary>
+      <div class="faq-a"><strong style="color:var(--c1)">完全免費！</strong> MakeCode 是微軟（Microsoft）開發的免費線上軟體，不需要在電腦安裝任何程式，只要打開瀏覽器（Chrome、Edge）輸入 <code class="code-font">makecode.microbit.org</code> 就能開始寫程式。回家只要有網路，隨時都能繼續創作！</div>
+    </details>
+    <details>
+      <summary>Q3. 螢幕旁邊那個會動的「模擬器」有什麼用？</summary>
+      <div class="faq-a">模擬器是你的「<strong>虛擬試車場</strong>」！在把程式真正下載到實體 micro:bit 之前，可以先在畫面左邊看虛擬大腦的 LED 燈、按鈕有沒有照預期運作。確認沒寫錯再下載到車子裡，可以幫你<strong>省下大量除錯時間</strong>！</div>
+    </details>
+    <details>
+      <summary>Q4. 麥昆小車沒電了怎麼辦？要怎麼充電？</summary>
+      <div class="faq-a">「麥昆 Lite」基礎版用 <strong>3 顆 AAA (7號) 電池</strong>，沒電就換新電池（注意正負極，安裝時電源開關必須在 OFF）。「麥昆 Plus V2」用 18650 鋰電池，可以用 USB 線直接充電。<strong style="color:var(--c5)">電壓低於 2V 時，板子 LED 還會亮但馬達跑不動</strong>，這時就是該換電池了！</div>
+    </details>
+    <details>
+      <summary>Q5. 麥昆延伸庫安裝失敗怎麼辦？</summary>
+      <div class="faq-a">最常見的解法：(1) 切換到 JavaScript 模式 → 點開左側 Explorer → 點 Maqueen 旁邊的「更新」按鈕（refresh 圖示）；(2) 清除瀏覽器 cookie 或改用「無痕模式」。實在不行可以直接貼網址 <code class="code-font" style="font-size:.85rem">github.com/DFRobot/pxt-maqueen</code> 加入。</div>
+    </details>
+    <details>
+      <summary>Q6. 學會後可以做什麼專題？能參加比賽嗎？</summary>
+      <div class="faq-a">超多應用！可以做相撲機器人、無人快遞車、警車巡邏、自動避障車、鋼琴小車。比賽方面可以挑戰 <strong>「2025 科技寶國際機器人競賽」國小組</strong>（迷宮避障、自動搬運），或是各縣市的創客比賽。家裡也可以買一套來繼續玩，麥昆 Lite 全套約 1500-2000 元，CP 值很高！</div>
+    </details>
+    <details>
+      <summary>Q7. 馬達會不會夾到手？麥昆容易壞嗎？</summary>
+      <div class="faq-a"><strong style="color:var(--c1)">非常安全！</strong>麥昆有 ABS 塑膠外殼包覆齒輪，不像有些機器人齒輪外露；電路板還有「防反接保護」，就算電池裝反也不會燒板子。但畢竟是精密電子儀器，不要當碰碰車摔，也不要放在有水的地方。好好愛護可以陪你玩好多年！</div>
+    </details>
+    <details>
+      <summary>Q8. 藍牙配對失敗怎麼辦？</summary>
+      <div class="faq-a">最常見原因是<strong>「30 秒超時」</strong>。重新按 A+B+Reset 進入配對模式，<strong>30 秒內</strong>在 App 點亮跟板子上一模一樣的 5×5 圖案。建議改用<strong>小車電池供電</strong>（USB 供電有時電力不穩）。</div>
+    </details>
+  </div>
+</section>
+
+</div><!-- /.container -->
+
+<!-- ════ 浮動工具 ════ -->
+<div class="float-tools">
+  <button class="float-btn yellow" onclick="togglePanel('lottery')" title="抽號">🎲</button>
+  <button class="float-btn purple" onclick="togglePanel('timer')" title="計時器">⏱</button>
+  <button class="float-btn pink" onclick="toggleDraw()" id="drawToggleBtn" title="畫筆標註">✏️</button>
+  <button class="float-btn" onclick="goTop()" title="回頂端">↑</button>
+</div>
+
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c5);color:#fff;flex:0 0 auto;padding:10px 14px">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱ 課堂計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timerDisplay">00:00</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="setTimerMin(3)" style="flex:1">3 分</button>
+    <button class="btn-primary" onclick="setTimerMin(5)" style="flex:1">5 分</button>
+    <button class="btn-primary" onclick="setTimerMin(10)" style="flex:1">10 分</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:8px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="flex:1;background:var(--c4);color:var(--bg)">⏸ 暫停</button>
+    <button class="btn-primary" onclick="resetTimer()" style="flex:1;background:var(--c5);color:#fff">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd740" onclick="setPenColor('#ffd740',this)"></button>
+  <button class="color-dot" style="background:#00ff88" onclick="setPenColor('#00ff88',this)"></button>
+  <button class="color-dot" style="background:#0088ff" onclick="setPenColor('#0088ff',this)"></button>
+  <button class="color-dot" style="background:#fff" onclick="setPenColor('#fff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<div class="password-modal" id="pwModal">
+  <div class="pw-box">
+    <h4>🔐 教師模式 - 請輸入密碼</h4>
+    <input type="password" id="pwInput" placeholder="請輸入..." onkeydown="if(event.key==='Enter')checkPassword()">
+    <div class="pw-buttons">
+      <button class="pw-ok" onclick="checkPassword()">解鎖</button>
+      <button class="pw-cancel" onclick="closePwModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>{ NotebookLM × Claude Code }</span> · 麥昆小車程式設計師 · 2026 IT COCKPIT
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// SLIDE PLAYER
+// ═══════════════════════════════════════════
+const SLIDE_COUNT = 13;
+const SLIDE_LIST = Array.from({length:SLIDE_COUNT},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+let curSlide = 0;
+
+function initSlidePlayer() {
+  const strip = document.getElementById('slide-strip');
+  let html = '';
+  SLIDE_LIST.forEach((src,i) => {
+    html += `<div class="strip-thumb${i===0?' active':''}" data-i="${i}" onclick="goSlide(${i})"><img src="${src}" alt="slide ${i+1}" loading="lazy"></div>`;
+  });
+  strip.innerHTML = html;
+}
+
+function goSlide(n) {
+  if (n < 0) n = SLIDE_LIST.length - 1;
+  if (n >= SLIDE_LIST.length) n = 0;
+  curSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slideCounter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+
+  const activeThumb = document.querySelector('.strip-thumb.active');
+  if (activeThumb) {
+    const strip = document.getElementById('slide-strip');
+    const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, targetLeft), behavior:'smooth'});
+  }
+
+  const fs = document.getElementById('slide-fs');
+  if (fs && fs.classList.contains('show')) {
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  }
+}
+
+function slideNav(dir) { goSlide(curSlide + dir); }
+
+function openSlideFullscreen() {
+  const fs = document.getElementById('slide-fs');
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+  fs.classList.add('show');
+}
+function closeSlideFullscreen() { document.getElementById('slide-fs').classList.remove('show'); }
+
+document.addEventListener('keydown', e => {
+  const fsOn = document.getElementById('slide-fs').classList.contains('show');
+  if (e.key === 'Escape' && fsOn) { closeSlideFullscreen(); }
+  if (e.key === 'ArrowLeft') { slideNav(-1); }
+  if (e.key === 'ArrowRight') { slideNav(1); }
+});
+
+// ═══════════════════════════════════════════
+// LED 5x5
+// ═══════════════════════════════════════════
+const LED_PATTERNS = {
+  heart: [0,1,0,1,0, 1,1,1,1,1, 1,1,1,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  smile: [0,1,0,1,0, 0,1,0,1,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  arrow: [0,0,1,0,0, 0,1,1,1,0, 1,0,1,0,1, 0,0,1,0,0, 0,0,1,0,0],
+  check: [0,0,0,0,1, 0,0,0,1,0, 1,0,1,0,0, 0,1,0,0,0, 0,0,0,0,0]
+};
+function initLED() {
+  const grid = document.getElementById('ledGrid');
+  let html = '';
+  for (let i = 0; i < 25; i++) html += `<div class="led-cell" data-i="${i}" onclick="ledToggle(${i})"></div>`;
+  grid.innerHTML = html;
+}
+function ledToggle(i) { document.querySelector(`.led-cell[data-i="${i}"]`).classList.toggle('on'); }
+function ledShowIcon(name) {
+  const p = LED_PATTERNS[name]; if (!p) return;
+  document.querySelectorAll('.led-cell').forEach((c,i)=>c.classList.toggle('on', p[i]===1));
+}
+function ledClear() { document.querySelectorAll('.led-cell').forEach(c=>c.classList.remove('on')); }
+
+// ═══════════════════════════════════════════
+// MOTOR
+// ═══════════════════════════════════════════
+function updateMotor() {
+  const L = +document.getElementById('motL').value;
+  const R = +document.getElementById('motR').value;
+  document.getElementById('motLv').textContent = L;
+  document.getElementById('motRv').textContent = R;
+  const car = document.getElementById('carIcon');
+  const status = document.getElementById('carStatus');
+  let action = '停止', icon = '🚗';
+  if (L === 0 && R === 0) { action = '停止'; }
+  else if (Math.abs(L-R) < 30 && L > 0) { action = '前進'; icon = '🚗'; }
+  else if (Math.abs(L-R) < 30 && L < 0) { action = '後退'; icon = '🚗'; }
+  else if (L < R) { action = '左轉'; }
+  else if (L > R) { action = '右轉'; }
+  status.textContent = `> 馬達狀態: L=${L} R=${R} → ${action} ${icon}`;
+  const speed = (Math.abs(L)+Math.abs(R))/2 / 30;
+  car.style.transform = `translate(-50%,-50%) rotate(${(R-L)*0.3}deg) scale(${1+speed*0.02})`;
+}
+function motorPreset(l, r) {
+  document.getElementById('motL').value = l;
+  document.getElementById('motR').value = r;
+  updateMotor();
+}
+
+// ═══════════════════════════════════════════
+// TRACKING SIM
+// ═══════════════════════════════════════════
+function toggleTrack(which) {
+  const cell = document.getElementById(which===1?'tL1':'tR1');
+  cell.classList.toggle('black');
+  cell.classList.toggle('white');
+  updateTrackState();
+}
+function updateTrackState() {
+  const L = document.getElementById('tL1').classList.contains('black') ? 0 : 1;
+  const R = document.getElementById('tR1').classList.contains('black') ? 0 : 1;
+  document.getElementById('trL1').textContent = L;
+  document.getElementById('trR1').textContent = R;
+  const car = document.getElementById('trackCar');
+  const status = document.getElementById('trackStatus');
+  let msg = '', rotate = 0;
+  if (L === 0 && R === 0) { msg = '✅ 兩輪都壓黑線 → 全前進'; rotate = 0; }
+  else if (L === 0 && R === 1) { msg = '⬅️ 左壓黑、右偏白 → 向左修正'; rotate = -25; }
+  else if (L === 1 && R === 0) { msg = '➡️ 右壓黑、左偏白 → 向右修正'; rotate = 25; }
+  else { msg = '⚠️ 兩輪都白 → 跑出黑線了！停止/找回路徑'; rotate = 0; }
+  car.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`;
+  status.textContent = msg;
+}
+
+// ═══════════════════════════════════════════
+// SONAR
+// ═══════════════════════════════════════════
+function updateSonar() {
+  const dist = +document.getElementById('sonarDist').value;
+  document.getElementById('sonarOut').textContent = dist + ' cm';
+  const status = document.getElementById('sonarStatus');
+  if (dist < 30) status.textContent = `🛑 distance < 30 → 馬達停止 + 轉彎避障！`;
+  else status.textContent = `> 安全前進中... 🚗 (distance=${dist} cm)`;
+  drawSonar(dist);
+}
+function drawSonar(dist) {
+  const c = document.getElementById('sonarCanvas');
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  ctx.clearRect(0,0,W,H);
+  // grid lines
+  ctx.strokeStyle = '#0a3050'; ctx.lineWidth = 1;
+  for (let x = 0; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  // car
+  ctx.font = '40px serif'; ctx.fillText('🚗', 30, H/2+12);
+  // sonar wave (yellow)
+  const carX = 70;
+  const obsX = 70 + (dist * (W-100)/100);
+  const wave = (Date.now()/300) % 30;
+  ctx.strokeStyle = dist < 30 ? '#ff4081' : '#00ff88'; ctx.lineWidth = 2;
+  for (let i = 0; i < 4; i++) {
+    const r = wave + i*30;
+    if (carX + r < obsX) {
+      ctx.beginPath(); ctx.arc(carX, H/2, r, -0.4, 0.4); ctx.stroke();
+    }
+  }
+  // obstacle
+  ctx.fillStyle = dist < 30 ? '#ff4081' : '#aa44ff';
+  ctx.fillRect(obsX, H/2-30, 24, 60);
+  // distance label
+  ctx.fillStyle = '#ffcc00'; ctx.font = '14px JetBrains Mono';
+  ctx.fillText(`${dist} cm`, (carX+obsX)/2 - 20, H/2 - 40);
+  // safety zone
+  ctx.strokeStyle = '#ff4081'; ctx.setLineDash([4,4]);
+  const safeX = 70 + (30 * (W-100)/100);
+  ctx.beginPath(); ctx.moveTo(safeX,0); ctx.lineTo(safeX,H); ctx.stroke();
+  ctx.setLineDash([]);
+}
+let sonarAnim;
+function startSonarAnim() { sonarAnim = setInterval(()=>updateSonar(), 100); }
+
+// ═══════════════════════════════════════════
+// REMOTE
+// ═══════════════════════════════════════════
+function pressRemote(code, action, icon) {
+  document.getElementById('remoteOut').textContent = `message = ${code} → 小車${action} ${icon}`;
+}
+
+// ═══════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════
+const QUIZ_PRAISE = ['🎉 太棒了！', '✨ 答對囉！', '🌟 你真厲害！', '💪 完美命中！', '🚀 答案正確！'];
+let quizDone = new Set();
+function answerQuiz(btn, correctLabel, msg, mark) {
+  const opts = btn.parentElement;
+  const stage = btn.closest('section').id;
+  const qIdx = btn.closest('.quiz-section').querySelectorAll('.quiz-q').length === 1 ? 0 : 1;
+  const key = `${stage}-${qIdx}`;
+  opts.querySelectorAll('.quiz-opt').forEach(o => o.classList.add('locked'));
+  const fb = opts.parentElement.querySelector('.quiz-feedback');
+  // 3rd arg form: answerQuiz(this, 'B', '...', 'correct')
+  // simpler: if option text marker matches
+  const isCorrect = mark === 'correct' || (btn.textContent.trim().startsWith(correctLabel + '.') && msg.includes('正確'));
+  if (isCorrect) {
+    btn.classList.add('correct');
+    const praise = QUIZ_PRAISE[Math.floor(Math.random()*QUIZ_PRAISE.length)];
+    fb.textContent = `${praise} ${msg}`;
+    fb.className = 'quiz-feedback ok';
+    if (!quizDone.has(key)) { quizDone.add(key); updateProgress(); }
+  } else {
+    btn.classList.add('wrong');
+    // highlight correct
+    opts.querySelectorAll('.quiz-opt').forEach(o => {
+      if (o.textContent.trim().startsWith(correctLabel + '.')) o.classList.add('correct');
+    });
+    fb.textContent = `🤔 ${msg}`;
+    fb.className = 'quiz-feedback bad';
+    if (!quizDone.has(key)) { quizDone.add(key); updateProgress(); }
+  }
+}
+function updateProgress() {
+  const total = document.querySelectorAll('.quiz-section').length;
+  const pct = total === 0 ? 0 : (quizDone.size / total) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ═══════════════════════════════════════════
+// MODE SWITCH (teacher/student)
+// ═══════════════════════════════════════════
+function setStudentMode() {
+  document.body.classList.remove('teacher-mode');
+  document.getElementById('btn-student').classList.add('active');
+  document.getElementById('btn-teacher').classList.remove('active');
+}
+function askTeacher() {
+  document.getElementById('pwModal').classList.add('show');
+  setTimeout(() => document.getElementById('pwInput').focus(), 50);
+}
+function checkPassword() {
+  const v = document.getElementById('pwInput').value;
+  if (v === 'it2026') {
+    document.body.classList.add('teacher-mode');
+    document.getElementById('btn-teacher').classList.add('active');
+    document.getElementById('btn-student').classList.remove('active');
+    closePwModal();
+  } else {
+    alert('密碼錯誤！');
+  }
+}
+function closePwModal() {
+  document.getElementById('pwModal').classList.remove('show');
+  document.getElementById('pwInput').value = '';
+}
+
+// ═══════════════════════════════════════════
+// FLOATING TOOLS
+// ═══════════════════════════════════════════
+function togglePanel(name) {
+  const p = document.getElementById('panel-' + name);
+  ['lottery','timer'].forEach(n => {
+    if (n !== name) document.getElementById('panel-' + n).classList.remove('show');
+  });
+  p.classList.toggle('show');
+}
+
+// Lottery
+let lotPool = [];
+function refillLotPool() {
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if (min > max) return false;
+  lotPool = []; for (let i = min; i <= max; i++) lotPool.push(i);
+  return true;
+}
+function doLottery() {
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if (min > max) { alert('最小號必須 ≤ 最大號！'); return; }
+  if (unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const timer = setInterval(() => {
+    const n = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = n + ' 號';
+  }, 60);
+  setTimeout(() => {
+    clearInterval(timer);
+    let num;
+    if (unique) {
+      if (lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max-min+1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery() {
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+// Timer
+let timerSec = 0, timerId = null, timerRunning = false;
+function fmtTime(s) {
+  const m = Math.floor(s/60), ss = s%60;
+  return String(m).padStart(2,'0') + ':' + String(ss).padStart(2,'0');
+}
+function updateTimerDisplay() {
+  document.getElementById('timerDisplay').textContent = fmtTime(timerSec);
+}
+function setTimerMin(m) { timerSec = m*60; updateTimerDisplay(); }
+function startTimer() {
+  if (timerRunning) return;
+  if (timerSec === 0) { alert('請先設定時間！'); return; }
+  timerRunning = true;
+  timerId = setInterval(() => {
+    timerSec--; updateTimerDisplay();
+    if (timerSec <= 0) { clearInterval(timerId); timerRunning = false; alert('⏰ 時間到！'); }
+  }, 1000);
+}
+function pauseTimer() { if (timerId) { clearInterval(timerId); timerRunning = false; } }
+function resetTimer() { pauseTimer(); timerSec = 0; updateTimerDisplay(); }
+
+// ═══════════════════════════════════════════
+// DRAWING CANVAS
+// ═══════════════════════════════════════════
+let drawActive = false, penColor = '#ff4081', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+function initDraw() {
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e => {
+    if (!drawActive) return;
+    isDrawing = true; dLastX = e.clientX; dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mousemove', e => {
+    if (!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke();
+    dLastX = e.clientX; dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', () => isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e => {
+    if (!drawActive) return; e.preventDefault();
+    const t = e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e => {
+    if (!drawActive || !isDrawing) return; e.preventDefault();
+    const t = e.touches[0];
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(t.clientX, t.clientY); drawCtx.stroke();
+    dLastX = t.clientX; dLastY = t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', () => isDrawing = false);
+  window.addEventListener('resize', () => {
+    drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  });
+}
+function toggleDraw() {
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c1)' : '';
+  document.getElementById('drawToggleBtn').style.color = drawActive ? 'var(--bg)' : '';
+}
+function setPenColor(c, el) {
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing() { if (drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height); }
+
+// Misc
+function goTop() { window.scrollTo({top:0, behavior:'smooth'}); }
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  initSlidePlayer();
+  initLED();
+  initDraw();
+  updateMotor();
+  updateSonar();
+  startSonarAnim();
+  // 不要 scrollIntoView / focus / location.hash
+});
+</script>
+</body>
+</html>
