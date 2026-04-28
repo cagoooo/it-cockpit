@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canva 魔法簡報：用 AI 變身設計高手｜四年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/canva-magic/">
+<meta property="og:title" content="Canva 魔法簡報：用 AI 變身設計高手｜四年級資訊科技">
+<meta property="og:description" content="從登入 Canva 教育版到認識 Magic Studio 五大 AI 魔法工具，四年級小設計師的互動式教學駕駛艙。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/canva-magic/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/canva-magic/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fef3f8; --surface:#fff0f6; --panel:#ffffff;
+  --c1:#ff85b3; --c2:#ffd54f; --c3:#6cb4ff; --c4:#7be495; --c5:#b388ff; --c6:#ff7043;
+  --text:#2a2244; --dim:#8878aa;
+  --shadow-soft:0 4px 16px rgba(255,133,179,.18);
+  --shadow-pop:0 6px 22px rgba(255,133,179,.30);
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;scroll-behavior:smooth}
+body{font-family:'Noto Sans TC','Fredoka',sans-serif;line-height:1.7;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--c1);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:3px solid var(--c1);box-shadow:var(--shadow-soft)}
+.header-inner{max-width:1400px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:2px solid var(--c1);background:transparent;color:var(--c1);text-decoration:none;font-weight:700;font-size:.9rem;letter-spacing:.5px;transition:.2s;white-space:nowrap;border-radius:24px}
+.home-btn:hover{background:var(--c1);color:#fff;text-decoration:none;transform:translateY(-1px);box-shadow:var(--shadow-pop)}
+.header-title{display:flex;flex-direction:column;flex:1;min-width:200px}
+.header-title h1{font-size:1.5rem;font-weight:900;color:var(--text);line-height:1.3}
+.header-title h1 .accent{color:var(--c1)}
+.header-title .sub{font-size:.95rem;color:var(--dim);margin-top:2px}
+.grade-chip{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--c2),#ffb74d);color:#5d3a00;padding:7px 14px;border-radius:20px;font-weight:700;font-size:.9rem;box-shadow:0 2px 8px rgba(255,213,79,.4)}
+.progress-wrap{flex-basis:100%;display:flex;align-items:center;gap:10px;margin-top:6px}
+.progress-label{font-size:.85rem;color:var(--dim);font-weight:700}
+.progress-bar{flex:1;height:10px;background:#fff5f9;border-radius:10px;overflow:hidden;border:2px solid var(--c1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c5));width:0;transition:width .5s ease;border-radius:10px}
+.progress-pct{font-weight:900;color:var(--c1);font-size:.95rem;min-width:50px;text-align:right}
+
+/* Mode Bar */
+.mode-bar{max-width:1400px;margin:18px auto 0;padding:0 24px;display:flex;justify-content:flex-end;gap:8px}
+.mode-btn{padding:7px 16px;border:2px solid var(--c5);background:#fff;color:var(--c5);border-radius:20px;font-weight:700;font-size:.85rem;transition:.2s}
+.mode-btn.active{background:var(--c5);color:#fff;box-shadow:0 4px 12px rgba(179,136,255,.4)}
+.mode-btn:hover{transform:translateY(-1px)}
+
+/* Container */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Hero / objectives */
+.hero{background:linear-gradient(135deg,#fff5fa,#fff);border:3px solid var(--c1);border-radius:24px;padding:28px 30px;margin-bottom:32px;box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:radial-gradient(circle,rgba(255,213,79,.4),transparent);border-radius:50%}
+.hero h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--text);position:relative}
+.hero h2 .icon{display:inline-block;font-size:1.6rem;margin-right:8px}
+.hero p.lead{font-size:1rem;color:var(--text);line-height:1.8;margin-bottom:18px;position:relative}
+.obj-list{display:flex;gap:10px;flex-wrap:wrap;position:relative}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#fff;border:2px solid var(--c1);border-radius:50px;font-size:1rem;font-weight:700;color:var(--text);box-shadow:0 3px 10px rgba(255,133,179,.15);transition:.2s}
+.obj-chip:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,133,179,.3)}
+.obj-chip .ico{font-size:1.15rem}
+
+/* Stage Nav */
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;padding:14px;background:#fff;border:2px solid var(--c3);border-radius:20px;box-shadow:var(--shadow-soft)}
+.stage-pill{padding:10px 20px;border:2px solid var(--c3);background:#fff;color:var(--c3);border-radius:50px;font-weight:700;font-size:.95rem;text-decoration:none;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.stage-pill:hover{background:var(--c3);color:#fff;transform:translateY(-2px);text-decoration:none;box-shadow:0 4px 12px rgba(108,180,255,.4)}
+
+/* STAGE Sections */
+.level-section{margin-bottom:48px;background:var(--panel);border-radius:24px;padding:30px;border:3px solid #ffeaf2;box-shadow:var(--shadow-soft);scroll-margin-top:100px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.stage-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-family:'Fredoka','Noto Sans TC',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1.5px;color:#fff;border-radius:30px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.stage-badge.s1{background:linear-gradient(135deg,#ff85b3,#ff4081)}
+.stage-badge.s2{background:linear-gradient(135deg,#ffd54f,#ffa726)}
+.stage-badge.s3{background:linear-gradient(135deg,#7be495,#4caf50)}
+.stage-badge.s4{background:linear-gradient(135deg,#b388ff,#7e57c2)}
+.stage-badge.s5{background:linear-gradient(135deg,#6cb4ff,#42a5f5)}
+.section-title{flex:1;min-width:200px}
+.section-title h2{font-size:1.4rem;font-weight:900;color:var(--text);line-height:1.3}
+.section-title .sub{font-size:1rem;color:var(--dim);margin-top:2px}
+
+.section-img-wrap{margin:0 -8px 20px;border-radius:18px;overflow:hidden;border:3px solid #ffeaf2;box-shadow:var(--shadow-soft)}
+.section-img-wrap img{width:100%;display:block}
+
+.steps-card{background:#fff8fb;border:2px solid var(--c1);border-radius:18px;padding:22px;margin-bottom:18px}
+.steps-card h4{font-size:1.05rem;font-weight:900;color:var(--c1);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.steps-list li{display:flex;align-items:flex-start;gap:12px;font-size:1rem;line-height:1.7;padding:8px 0}
+.step-num{flex-shrink:0;min-width:34px;height:34px;background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;box-shadow:0 3px 8px rgba(255,133,179,.4)}
+.step-text{flex:1}
+.step-text b{color:var(--c1)}
+
+.tip-box{background:linear-gradient(135deg,#fffde7,#fff8b0);border:2px solid var(--c2);border-radius:14px;padding:14px 18px;margin-top:14px;font-size:.95rem;color:#5d4d00;display:flex;gap:10px;align-items:flex-start}
+.tip-box .ico{font-size:1.3rem;flex-shrink:0}
+.warn-box{background:linear-gradient(135deg,#fff0e6,#ffd1b3);border:2px solid var(--c6);border-radius:14px;padding:14px 18px;margin-top:14px;font-size:.95rem;color:#6b2e00;display:flex;gap:10px;align-items:flex-start}
+.warn-box .ico{font-size:1.3rem;flex-shrink:0}
+
+/* Canvas / interactive section */
+.canvas-section{background:#f6f0ff;border:2px dashed var(--c5);border-radius:18px;padding:22px;margin-bottom:18px}
+.canvas-section h4{font-size:1.05rem;font-weight:900;color:var(--c5);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.canvas-tip{font-size:.95rem;color:var(--dim);margin-bottom:16px}
+
+/* Tool cards (Stage 4 AI tools) */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+.tool-card{background:#fff;border:3px solid #f0e6ff;border-radius:16px;padding:16px;cursor:pointer;transition:.2s;text-align:center}
+.tool-card:hover{border-color:var(--c5);transform:translateY(-4px);box-shadow:0 8px 20px rgba(179,136,255,.25)}
+.tool-card.active{border-color:var(--c5);background:linear-gradient(135deg,#f6f0ff,#e8d8ff);box-shadow:0 8px 20px rgba(179,136,255,.35)}
+.tool-card .icon{font-size:2.2rem;margin-bottom:6px;display:block}
+.tool-card .name{font-size:.95rem;font-weight:900;color:var(--text)}
+.tool-card .en{font-size:.75rem;color:var(--dim);margin-top:2px;font-family:'Fredoka',sans-serif}
+.tool-detail{margin-top:18px;padding:18px 22px;background:#fff;border:2px solid var(--c5);border-radius:14px;display:none}
+.tool-detail.show{display:block}
+.tool-detail h4{font-size:1.1rem;color:var(--c5);margin-bottom:8px;font-weight:900}
+.tool-detail p{font-size:.95rem;line-height:1.7;margin-bottom:6px}
+.tool-detail .label{display:inline-block;background:var(--c5);color:#fff;padding:2px 8px;border-radius:8px;font-size:.78rem;font-weight:700;margin-right:6px}
+
+/* Quiz */
+.quiz-section{background:#fff;border:2px solid var(--c4);border-radius:18px;padding:22px;margin-bottom:14px}
+.quiz-section h4{font-size:1.05rem;font-weight:900;color:#3a8a3a;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.quiz-q{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:12px}
+.quiz-q .qnum{display:inline-block;background:var(--c4);color:#1f4d1f;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:.85rem;font-weight:900;margin-right:8px}
+.quiz-options{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:12px}
+.quiz-opt{padding:11px 16px;background:#f5fff5;border:2px solid var(--c4);border-radius:12px;cursor:pointer;font-size:.95rem;font-weight:500;text-align:left;transition:.18s;color:var(--text)}
+.quiz-opt:hover{background:var(--c4);color:#1f4d1f;transform:translateY(-1px)}
+.quiz-opt.correct{background:linear-gradient(135deg,#7be495,#4caf50);color:#fff;border-color:#4caf50}
+.quiz-opt.wrong{background:linear-gradient(135deg,#ffd1b3,#ff7043);color:#fff;border-color:#ff7043}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{padding:12px 16px;border-radius:12px;font-size:.95rem;font-weight:700;margin-top:10px;display:none}
+.quiz-feedback.right{background:#e8f5e9;color:#1b5e20;border:2px solid var(--c4);display:block}
+.quiz-feedback.miss{background:#ffe0e0;color:#7b1f1f;border:2px solid var(--c6);display:block}
+.quiz-q-block{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #d8e8d8}
+.quiz-q-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+
+/* Teacher only */
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+.teacher-note{background:linear-gradient(135deg,#e3f2fd,#fff);border:2px solid var(--c3);border-radius:14px;padding:18px;margin-top:14px}
+.teacher-note h4{color:var(--c3);font-size:1rem;font-weight:900;margin-bottom:8px}
+.teacher-note p,.teacher-note li{font-size:.95rem;line-height:1.7}
+.teacher-note ul{padding-left:20px}
+
+/* Project task */
+.project-task{background:linear-gradient(135deg,#fff,#fff5fa);border:3px solid var(--c1);border-radius:24px;padding:30px;margin-bottom:48px;box-shadow:var(--shadow-soft)}
+.project-task h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c1)}
+.project-task .lead{font-size:1rem;color:var(--text);margin-bottom:18px}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.theme-card{background:#fff;border:2px solid #ffd6e6;border-radius:18px;padding:20px;transition:.2s}
+.theme-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-pop);border-color:var(--c1)}
+.theme-card .badge{display:inline-block;background:var(--c1);color:#fff;padding:4px 12px;border-radius:12px;font-size:.78rem;font-weight:900;margin-bottom:10px}
+.theme-card h3{font-size:1.1rem;font-weight:900;margin-bottom:8px;color:var(--text)}
+.theme-card p{font-size:.95rem;line-height:1.7;color:var(--text)}
+.theme-card ul{font-size:.92rem;margin-top:8px;padding-left:18px;color:var(--dim);line-height:1.7}
+
+/* NotebookLM Resource Section */
+.nb-section{background:linear-gradient(135deg,#fff8fb,#fff);border:3px solid var(--c5);border-radius:24px;padding:30px;margin-bottom:48px;box-shadow:var(--shadow-soft)}
+.nb-section h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c5);display:flex;align-items:center;gap:8px}
+.nb-section .lead{font-size:1rem;margin-bottom:20px;color:var(--text)}
+.nb-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:24px}
+.nb-card{background:#fff;border:2px solid #e8d8ff;border-radius:16px;padding:18px;text-decoration:none;color:var(--text);transition:.2s;display:block}
+.nb-card:hover{transform:translateY(-3px);border-color:var(--c5);box-shadow:0 8px 20px rgba(179,136,255,.25);text-decoration:none}
+.nb-card .icon{font-size:2rem;margin-bottom:8px;display:block}
+.nb-card h4{font-size:1rem;font-weight:900;margin-bottom:5px;color:var(--c5)}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.6}
+.nb-flow{background:#fff;border:2px dashed var(--c5);border-radius:14px;padding:18px;margin-bottom:24px}
+.nb-flow h4{font-size:1rem;font-weight:900;color:var(--c5);margin-bottom:10px}
+.nb-flow .flow-line{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.95rem}
+.nb-flow .step{padding:6px 12px;background:linear-gradient(135deg,#f6f0ff,#e8d8ff);border-radius:20px;font-weight:700;color:var(--c5)}
+.nb-flow .arrow{color:var(--c5);font-weight:900}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:#fff;border:2px solid #ffeaf2;border-radius:14px;overflow:hidden;transition:.2s}
+.faq-item.open{border-color:var(--c1);box-shadow:var(--shadow-soft)}
+.faq-q{padding:14px 18px;cursor:pointer;font-size:1rem;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;background:#fff5fa}
+.faq-q:hover{background:#ffeaf2}
+.faq-q .toggle{color:var(--c1);font-size:1.2rem;transition:.2s}
+.faq-item.open .toggle{transform:rotate(45deg)}
+.faq-a{display:none;padding:14px 18px;font-size:.95rem;line-height:1.8;border-top:1px dashed #ffd6e6;color:var(--text)}
+.faq-item.open .faq-a{display:block}
+
+/* Slide Player */
+.slide-section{margin-bottom:48px}
+.slide-section h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c3);display:flex;align-items:center;gap:8px}
+.slide-player{background:#fff;border:3px solid var(--c3);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.slide-main{position:relative;background:#000;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.85);color:var(--c3);border:none;width:48px;height:48px;border-radius:50%;font-size:1.8rem;font-weight:900;cursor:pointer;transition:.2s;box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center}
+.slide-nav-btn:hover{background:var(--c3);color:#fff;transform:translateY(-50%) scale(1.08)}
+.slide-nav-btn.prev{left:14px}
+.slide-nav-btn.next{right:14px}
+.slide-fs-btn{position:absolute;top:14px;right:14px;background:var(--c3);color:#fff;border:none;padding:9px 16px;font-size:.95rem;font-weight:700;cursor:pointer;border-radius:24px;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:5;display:flex;align-items:center;gap:6px;transition:.15s;font-family:inherit}
+.slide-fs-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.slide-counter{position:absolute;bottom:14px;left:14px;background:rgba(0,0,0,.7);color:#fff;padding:5px 12px;border-radius:14px;font-size:.85rem;font-weight:700}
+.slide-strip{display:flex;gap:10px;padding:14px;overflow-x:auto;background:#fff5fa;border-top:2px solid #ffd6e6}
+.strip-thumb{flex-shrink:0;width:130px;aspect-ratio:16/9;border:3px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;transition:.2s;background:#fff}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb:hover{transform:translateY(-2px)}
+.strip-thumb.active{border-color:var(--c3);box-shadow:0 0 0 2px #fff,0 0 0 5px var(--c3)}
+
+/* Slide fullscreen */
+.slide-fs{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9000;display:none;align-items:center;justify-content:center;padding:30px}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+.slide-fs-close{position:absolute;top:20px;right:20px;background:#fff;color:#000;border:none;width:44px;height:44px;border-radius:50%;font-size:1.4rem;cursor:pointer;font-weight:900}
+.slide-fs-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.9);color:#000;padding:8px 18px;border-radius:20px;font-weight:700;font-size:.95rem}
+.slide-fs-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.85);color:#333;border:none;width:54px;height:54px;border-radius:50%;font-size:2rem;cursor:pointer;font-weight:900}
+.slide-fs-nav.prev{left:20px}
+.slide-fs-nav.next{right:20px}
+
+/* Video section */
+.nlm-video-section{margin-bottom:48px}
+.nlm-video-section h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c1);display:flex;align-items:center;gap:8px}
+.video-wrap{background:#fff;border:3px solid var(--c1);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.video-ratio{position:relative;padding-top:56.25%;width:100%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-no-id{padding:60px 30px;text-align:center;font-size:1rem;color:var(--dim);background:linear-gradient(135deg,#fff5fa,#fff);border:2px dashed var(--c1)}
+.video-no-id .icon{font-size:3rem;margin-bottom:14px;display:block}
+.video-no-id a{color:var(--c1);font-weight:700}
+.video-meta{background:#fff5fa;border-top:2px solid #ffd6e6;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c1);color:#fff;font-size:.8rem;font-weight:700;padding:5px 12px;border-radius:14px;white-space:nowrap}
+.video-hint{font-size:.92rem;color:var(--dim)}
+
+/* Footer / Teacher resources */
+.footer-section{background:linear-gradient(135deg,#fff,#fff5fa);border:3px solid var(--c2);border-radius:24px;padding:30px;margin-bottom:32px;box-shadow:var(--shadow-soft)}
+.footer-section h2{font-size:1.4rem;font-weight:900;margin-bottom:12px;color:#a07000}
+.footer-section p,.footer-section li{font-size:.95rem;line-height:1.8}
+.footer-section ul{padding-left:22px}
+.copyright{text-align:center;padding:24px;color:var(--dim);font-size:.85rem}
+.copyright a{color:var(--c5)}
+
+/* Floating tools */
+.float-tools{position:fixed;right:20px;bottom:20px;z-index:400;display:flex;flex-direction:column;gap:10px}
+.float-btn{width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;font-size:1.5rem;box-shadow:0 6px 16px rgba(0,0,0,.18);transition:.2s;display:flex;align-items:center;justify-content:center;color:#fff}
+.float-btn:hover{transform:scale(1.1)}
+.float-btn.pink{background:linear-gradient(135deg,#ff85b3,#ff4081)}
+.float-btn.yellow{background:linear-gradient(135deg,#ffd54f,#ffa726);color:#5d3a00}
+.float-btn.purple{background:linear-gradient(135deg,#b388ff,#7e57c2)}
+.float-btn.blue{background:linear-gradient(135deg,#6cb4ff,#42a5f5)}
+.float-btn.green{background:linear-gradient(135deg,#7be495,#4caf50)}
+
+.tool-panel{position:fixed;right:90px;bottom:20px;z-index:400;background:#fff;border:3px solid var(--c1);border-radius:18px;padding:20px;width:280px;box-shadow:0 12px 30px rgba(0,0,0,.18);display:none}
+.tool-panel.show{display:block}
+.tool-panel h4{font-size:1.05rem;font-weight:900;color:var(--c1);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.tool-panel .close{cursor:pointer;background:transparent;border:none;font-size:1.2rem;color:var(--dim)}
+.tool-panel .close:hover{color:var(--c6)}
+.tool-panel input[type="number"]{padding:6px 10px;border:2px solid #ffd6e6;border-radius:8px;font-family:inherit;font-size:.95rem;color:var(--text);background:#fff5fa;outline:none}
+.tool-panel input[type="number"]:focus{border-color:var(--c1)}
+.btn-primary{background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;transition:.15s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(255,133,179,.4)}
+.lottery-result{margin-top:14px;text-align:center;padding:14px;background:linear-gradient(135deg,#fff5fa,#fff);border:2px dashed var(--c1);border-radius:12px;font-size:1.5rem;font-weight:900;color:var(--c1);min-height:60px;display:flex;align-items:center;justify-content:center}
+.timer-display{text-align:center;font-size:2.4rem;font-weight:900;color:var(--c5);margin:14px 0;font-family:'Fredoka','Noto Sans TC',sans-serif}
+
+/* Draw canvas */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent;display:block}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:#fff;border:3px solid var(--c1);border-radius:30px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.2);display:none;gap:10px;align-items:center}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .label{font-size:1.2rem}
+.color-dot{width:30px;height:30px;border:3px solid #fff;cursor:pointer;padding:0;transition:.2s;border-radius:50%;outline:2px solid transparent}
+.color-dot.active{outline-color:var(--text);transform:scale(1.15)}
+.draw-clear{background:linear-gradient(135deg,var(--c6),#ff5722);color:#fff;border:none;padding:6px 14px;border-radius:18px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem}
+
+/* Teacher modal */
+.modal-mask{position:fixed;inset:0;background:rgba(255,133,179,.3);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center}
+.modal-mask.show{display:flex}
+.modal{background:#fff;border:3px solid var(--c1);border-radius:24px;padding:30px;max-width:380px;width:90%;box-shadow:0 20px 50px rgba(0,0,0,.2)}
+.modal h3{color:var(--c1);font-size:1.2rem;font-weight:900;margin-bottom:12px;text-align:center}
+.modal p{font-size:.95rem;color:var(--dim);margin-bottom:14px;text-align:center}
+.modal input{width:100%;padding:11px 14px;border:2px solid var(--c1);background:#fff5fa;color:var(--text);font-family:inherit;font-size:1rem;border-radius:14px;outline:none}
+.modal input:focus{border-color:var(--c5);background:#fff}
+.modal-btns{display:flex;gap:10px;margin-top:18px;justify-content:center}
+.modal-btns button{padding:9px 20px;border:none;border-radius:20px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem}
+.modal-btns .ok{background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff}
+.modal-btns .cancel{background:#eee;color:var(--text)}
+
+/* Responsive */
+@media(max-width:720px){
+  html{font-size:17px}
+  .container{padding:18px}
+  .header-title h1{font-size:1.25rem}
+  .level-section{padding:22px 18px}
+  .stage-pill{font-size:.88rem;padding:8px 14px}
+  .quiz-options{grid-template-columns:1fr}
+  .float-tools{right:14px;bottom:14px}
+  .float-btn{width:48px;height:48px;font-size:1.3rem}
+  .tool-panel{right:14px;left:14px;width:auto;bottom:80px}
+  .strip-thumb{width:100px}
+}
+
+/* Animation */
+@keyframes pop{0%{transform:scale(.85);opacity:0}60%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}
+.pop{animation:pop .35s ease}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title">
+      <h1>Canva 魔法簡報：用 AI 變身<span class="accent">設計高手</span></h1>
+      <div class="sub">5 個關卡 × Canva AI 五大魔法工具</div>
+    </div>
+    <span class="grade-chip">🎓 國小四年級｜資訊科技</span>
+    <div class="progress-wrap">
+      <span class="progress-label">⭐ 學習進度</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-bar">
+  <button class="mode-btn active" id="btn-student" onclick="setMode('student')">👧 學生模式</button>
+  <button class="mode-btn" id="btn-teacher" onclick="askTeacher()">👨‍🏫 教師模式</button>
+</div>
+
+<main class="container">
+
+  <!-- HERO / Objectives -->
+  <section class="hero">
+    <h2><span class="icon">🎯</span> 今天的學習目標</h2>
+    <p class="lead">嘿，四年級小設計師！今天我們要把學校發給你的 Google 帳號變成<b>魔法棒</b>，打開 Canva 這個超級大百寶箱，學會做出比 PowerPoint 還漂亮的簡報。最酷的是，我們還要認識住在 Canva 裡面的 5 個 <b>AI 魔法精靈</b>，讓他們幫你寫文字、畫圖、自動排版！</p>
+    <div class="obj-list">
+      <div class="obj-chip"><span class="ico">🔑</span>用學校 Google 帳號登入 Canva</div>
+      <div class="obj-chip"><span class="ico">📊</span>建立簡報、選範本、改文字</div>
+      <div class="obj-chip"><span class="ico">🎨</span>加照片、貼紙、可愛圖示</div>
+      <div class="obj-chip"><span class="ico">🪄</span>認識 5 個 AI 魔法工具</div>
+      <div class="obj-chip"><span class="ico">💾</span>下載與分享簡報給老師</div>
+    </div>
+  </section>
+
+  <!-- Stage Nav -->
+  <nav class="stage-nav" aria-label="關卡導覽">
+    <a href="#sec1" class="stage-pill">🏠 1. 認識 Canva</a>
+    <a href="#sec2" class="stage-pill">📊 2. 建立簡報</a>
+    <a href="#sec3" class="stage-pill">🎨 3. 加入素材</a>
+    <a href="#sec4" class="stage-pill">🪄 4. AI 魔法</a>
+    <a href="#sec5" class="stage-pill">💾 5. 儲存分享</a>
+    <a href="#project" class="stage-pill">🏆 任務</a>
+  </nav>
+
+  <!-- ============= STAGE 1 ============= -->
+  <section class="level-section" id="sec1">
+    <div class="section-header">
+      <span class="stage-badge s1">STAGE 01</span>
+      <div class="section-title">
+        <h2>🏠 認識 Canva 大百寶箱</h2>
+        <p class="sub">登入教育版、認識首頁與三大區塊</p>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/01_入門大冒險.jpg" alt="Canva 入門大冒險資訊圖" loading="lazy">
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟</h4>
+      <ol class="steps-list">
+        <li><div class="step-num">1</div><div class="step-text">打開瀏覽器，網址列輸入 <b>canva.com</b>，按 Enter。</div></li>
+        <li><div class="step-num">2</div><div class="step-text">點右上角的<b>「登入」</b>按鈕，選擇<b>「繼續使用 Google 帳號」</b>。</div></li>
+        <li><div class="step-num">3</div><div class="step-text">輸入<b>學校發給你的 Google 帳號</b>（不是爸爸媽媽的喔！）。</div></li>
+        <li><div class="step-num">4</div><div class="step-text">登入後就會看到 <b>Canva 首頁</b>，左邊是工具列、中間是設計區。</div></li>
+        <li><div class="step-num">5</div><div class="step-text">如果看到老師的<b>班級名稱</b>，代表你已經成功進入教育版囉！🎉</div></li>
+      </ol>
+      <div class="tip-box"><span class="ico">💡</span><div><b>為什麼要老師邀請？</b>因為 Canva 規定 13 歲以下的小朋友，必須要老師用「Canva for Education 教育版」邀請你進班級才能使用。這是為了保護你！而且教育版的好處超多：所有「皇冠 👑」素材都能免費用、AI 工具次數變多、沒有惱人的「升級」彈出視窗。</div></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動練習：Canva 介面找一找</h4>
+      <p class="canvas-tip">點選下方的卡片，看看每個區塊在 Canva 裡的功能！</p>
+      <div class="tool-grid" id="ui-grid">
+        <div class="tool-card" onclick="showUiInfo('home',this)"><span class="icon">🏡</span><div class="name">首頁 Home</div><div class="en">Home Page</div></div>
+        <div class="tool-card" onclick="showUiInfo('toolbar',this)"><span class="icon">📦</span><div class="name">左邊工具列</div><div class="en">Side Panel</div></div>
+        <div class="tool-card" onclick="showUiInfo('canvas',this)"><span class="icon">🖼️</span><div class="name">設計區（畫布）</div><div class="en">Canvas</div></div>
+        <div class="tool-card" onclick="showUiInfo('top',this)"><span class="icon">⚙️</span><div class="name">頂端工具列</div><div class="en">Top Toolbar</div></div>
+      </div>
+      <div class="tool-detail" id="ui-detail"></div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🌟 來考考你（STAGE 1）</h4>
+      <div class="quiz-q-block" data-stage="1" data-q="1">
+        <div class="quiz-q"><span class="qnum">Q1</span>Canva 是什麼？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">PowerPoint 的升級版</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">線上設計大百寶箱 🎯</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">遊戲平台</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">影片剪輯軟體</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="1" data-q="2">
+        <div class="quiz-q"><span class="qnum">Q2</span>為什麼小朋友要等老師邀請才能用 Canva？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">因為 Canva 太貴了</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">老師很奇怪</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">為了保護 13 歲以下的學生</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">怕你做太多作品</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="1" data-q="3">
+        <div class="quiz-q"><span class="qnum">Q3</span>登入 Canva 的時候，要用哪個帳號？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">爸爸媽媽的 Gmail</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">自己亂取的帳號</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">學校發的 Google 帳號</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">朋友的帳號</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h4>👨‍🏫 教師提示</h4>
+        <p><b>建議流程</b>：上課前先用 Canva for Education 教師帳號建立班級，把<b>「邀請連結」</b>產生好，貼在 Google Classroom 或班級群組。學生點連結 + 學校 Google 帳號登入即可。</p>
+        <ul>
+          <li>未滿 13 歲的學生<b>不能自行註冊</b>個人 Canva 帳號，必須走教師邀請</li>
+          <li>教育版預設關閉部分 AI（Magic Write、Magic Media），要在「設定 → 權限 → Magic and AI」打開</li>
+          <li>建議第一節課只做「登入 + 認識介面」，不開 AI，第二節再循序漸進</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= STAGE 2 ============= -->
+  <section class="level-section" id="sec2">
+    <div class="section-header">
+      <span class="stage-badge s2">STAGE 02</span>
+      <div class="section-title">
+        <h2>📊 建立你的第一份簡報</h2>
+        <p class="sub">選範本、改文字、加新頁面</p>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/02_簡報製作入門.jpg" alt="簡報製作入門資訊圖" loading="lazy">
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟</h4>
+      <ol class="steps-list">
+        <li><div class="step-num">1</div><div class="step-text">點 Canva 首頁右上角紫色的<b>「+建立設計」</b>按鈕。</div></li>
+        <li><div class="step-num">2</div><div class="step-text">在搜尋框打<b>「簡報」</b>，選擇<b>「簡報 (16:9)」</b>，會打開一張空白投影片。</div></li>
+        <li><div class="step-num">3</div><div class="step-text">在左邊工具列點<b>「設計」</b>分頁，挑一個你最喜歡的<b>範本</b>點下去。</div></li>
+        <li><div class="step-num">4</div><div class="step-text">想改文字？對著文字<b>「雙擊」</b>（連續快點兩下），原本的字會被選起來，直接打字替換。</div></li>
+        <li><div class="step-num">5</div><div class="step-text">選文字後，畫布上方會出現工具列，可以改<b>字型、大小、顏色、粗體</b>。</div></li>
+        <li><div class="step-num">6</div><div class="step-text">想加新一頁？點畫布下方的<b>「+ 新增頁面」</b>，或在右邊縮圖列每頁中間的「+」。</div></li>
+      </ol>
+      <div class="tip-box"><span class="ico">💡</span><div><b>挑範本的小訣竅：</b>不要找「100 分完美」的範本，要找「結構順、風格我喜歡」的就好，剩下的可以慢慢改！</div></div>
+      <div class="warn-box"><span class="ico">⚠️</span><div><b>誤刪文字了？</b>別緊張！按鍵盤上的 <b>Ctrl + Z</b>（Mac 是 Cmd + Z）就是「時光倒流魔法」，被刪掉的字會立刻飛回來。</div></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動練習：模擬範本選擇器</h4>
+      <p class="canvas-tip">假裝你正在 Canva 裡選範本，點點看下面 4 個範本，每個都會被高亮並顯示主題！</p>
+      <div class="tool-grid" id="tpl-grid">
+        <div class="tool-card" onclick="showTplInfo('birthday',this)"><span class="icon">🎂</span><div class="name">生日卡片</div><div class="en">Birthday Card</div></div>
+        <div class="tool-card" onclick="showTplInfo('intro',this)"><span class="icon">👋</span><div class="name">自我介紹</div><div class="en">About Me</div></div>
+        <div class="tool-card" onclick="showTplInfo('book',this)"><span class="icon">📚</span><div class="name">讀書心得</div><div class="en">Book Report</div></div>
+        <div class="tool-card" onclick="showTplInfo('event',this)"><span class="icon">🎪</span><div class="name">活動海報</div><div class="en">Event Poster</div></div>
+      </div>
+      <div class="tool-detail" id="tpl-detail"></div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🌟 來考考你（STAGE 2）</h4>
+      <div class="quiz-q-block" data-stage="2" data-q="1">
+        <div class="quiz-q"><span class="qnum">Q1</span>建立新簡報的第一步是？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,true)">點「+建立設計」按鈕</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">直接打字</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">先上傳照片</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">大叫一聲魔法咒語</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="2" data-q="2">
+        <div class="quiz-q"><span class="qnum">Q2</span>想要修改範本上的文字，要怎麼做？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">用滑鼠拖拉</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">對著文字「雙擊」</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">重啟 Canva</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">按 Enter 鍵</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="2" data-q="3">
+        <div class="quiz-q"><span class="qnum">Q3</span>不小心把文字刪掉了，怎麼救回來？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">重新打一次</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">關掉 Canva 重開</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">按 Ctrl + Z 時光倒流</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">哭著找老師</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h4>👨‍🏫 教師提示</h4>
+        <p><b>觀察重點</b>：學生第一次操作很容易找不到「雙擊」的概念。可以在大螢幕上示範一次，再讓學生自己試。</p>
+        <ul>
+          <li>建議先請全班用<b>同一個範本</b>練習，整齊好教學</li>
+          <li>提醒學生：Canva 沒有「儲存」按鈕，<b>每個動作都會自動存到雲端</b></li>
+          <li>常見錯誤：學生會「滑鼠拖拉文字框」誤以為在改字，要多示範「雙擊 = 編輯文字」</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= STAGE 3 ============= -->
+  <section class="level-section" id="sec3">
+    <div class="section-header">
+      <span class="stage-badge s3">STAGE 03</span>
+      <div class="section-title">
+        <h2>🎨 加入素材：照片、貼紙、圖示</h2>
+        <p class="sub">從元素庫拖拉、上傳自己的照片</p>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟</h4>
+      <ol class="steps-list">
+        <li><div class="step-num">1</div><div class="step-text">在左邊工具列點<b>「元素」</b>，上面搜尋框打你想要的東西（例如：小狗、星星、地球）。</div></li>
+        <li><div class="step-num">2</div><div class="step-text">看到喜歡的圖案，<b>用滑鼠拖拉</b>到畫布上。</div></li>
+        <li><div class="step-num">3</div><div class="step-text">想加自己的照片？點左邊<b>「上傳」</b>→「新增媒體」→ 從電腦選照片上傳。</div></li>
+        <li><div class="step-num">4</div><div class="step-text">上傳後一樣<b>拖拉</b>到畫布上。</div></li>
+        <li><div class="step-num">5</div><div class="step-text">圖案太大或太小？<b>拉四個角的小白圈</b>等比例縮放。</div></li>
+        <li><div class="step-num">6</div><div class="step-text">想旋轉？拉圖案下方的<b>小圓圈</b>，可以轉到任何角度！</div></li>
+      </ol>
+      <div class="tip-box"><span class="ico">💡</span><div><b>小提醒：</b>單張照片不能超過 50MB，免費帳號總空間 5GB（教育版多很多）。如果上傳失敗，先檢查照片是不是太大！</div></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動練習：素材魔法操作</h4>
+      <p class="canvas-tip">下方的可愛貼紙可以「拖拉」到右邊的畫布！試試看把它們搬家！</p>
+      <div id="dragArea" style="background:#fff;border:2px dashed var(--c5);border-radius:14px;padding:20px;min-height:280px;position:relative">
+        <div style="font-size:.95rem;color:var(--dim);margin-bottom:12px">🪄 把下面的貼紙拖到框框裡⬇️</div>
+        <div id="dragSource" style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px">
+          <div class="drag-item" draggable="true" data-emoji="🐶">🐶</div>
+          <div class="drag-item" draggable="true" data-emoji="⭐">⭐</div>
+          <div class="drag-item" draggable="true" data-emoji="🌸">🌸</div>
+          <div class="drag-item" draggable="true" data-emoji="🚀">🚀</div>
+          <div class="drag-item" draggable="true" data-emoji="🎈">🎈</div>
+        </div>
+        <div id="dropZone" style="background:linear-gradient(135deg,#fff5fa,#fff);border:3px dashed var(--c1);border-radius:12px;min-height:140px;padding:18px;text-align:center;color:var(--dim);font-size:.95rem">
+          ⬇️ 把貼紙拖到這裡 ⬇️
+        </div>
+        <button class="btn-primary" onclick="resetDragArea()" style="margin-top:14px">↻ 重新開始</button>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🌟 來考考你（STAGE 3）</h4>
+      <div class="quiz-q-block" data-stage="3" data-q="1">
+        <div class="quiz-q"><span class="qnum">Q1</span>想找一個小狗的可愛貼紙要去哪裡？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">上網下載</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">自己畫</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">在「元素」搜尋「小狗」</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">拜託老師畫</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="3" data-q="2">
+        <div class="quiz-q"><span class="qnum">Q2</span>要把自己的照片放進 Canva 簡報，應該用？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">「元素」分頁</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">「上傳」分頁</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">用 LINE 傳給 Canva</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">不能上傳</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="3" data-q="3">
+        <div class="quiz-q"><span class="qnum">Q3</span>想把圖案變大或變小，要拉哪裡？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">圖案中間</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">四個角的白色小圓圈</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">圖案上方</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">不能改變大小</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h4>👨‍🏫 教師提示</h4>
+        <p><b>常見問題</b>：學生上傳的照片可能解析度太低（手機老照片或網路截圖），放大後會很模糊。</p>
+        <ul>
+          <li>事先請學生<b>準備好 3-5 張</b>清晰的照片（800px 寬以上）</li>
+          <li>教學生用<b>「對齊輔助線」</b>（拖拉時的紫色虛線）排版</li>
+          <li>提醒：拉<b>角落的圓圈</b>會等比縮放，拉<b>邊的小圓圈</b>會變形</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= STAGE 4 ============= -->
+  <section class="level-section" id="sec4">
+    <div class="section-header">
+      <span class="stage-badge s4">STAGE 04</span>
+      <div class="section-title">
+        <h2>🪄 Canva AI 魔法工具大集合</h2>
+        <p class="sub">5 個 AI 魔法精靈，讓做簡報變超快</p>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/03_AI魔法工具.jpg" alt="Canva AI 魔法工具大集合資訊圖" loading="lazy">
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動練習：點選 AI 魔法精靈，看看它的功能！</h4>
+      <p class="canvas-tip">Canva 的 AI 工具叫做 <b>Magic Studio 魔法工作室</b>，裡面有 5 個 AI 精靈幫你做簡報。點選下面的卡片試試看！</p>
+      <div class="tool-grid" id="ai-grid">
+        <div class="tool-card" onclick="showAiInfo('write',this)"><span class="icon">✍️</span><div class="name">Magic Write</div><div class="en">文字魔法</div></div>
+        <div class="tool-card" onclick="showAiInfo('design',this)"><span class="icon">✨</span><div class="name">Magic Design</div><div class="en">自動排版</div></div>
+        <div class="tool-card" onclick="showAiInfo('media',this)"><span class="icon">🎨</span><div class="name">Magic Media</div><div class="en">文字生成圖片</div></div>
+        <div class="tool-card" onclick="showAiInfo('eraser',this)"><span class="icon">🧹</span><div class="name">Magic Eraser</div><div class="en">魔法橡皮擦</div></div>
+        <div class="tool-card" onclick="showAiInfo('bg',this)"><span class="icon">✂️</span><div class="name">Background Remover</div><div class="en">背景移除</div></div>
+      </div>
+      <div class="tool-detail" id="ai-detail"></div>
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 用 AI 做簡報的 3 個小訣竅</h4>
+      <ol class="steps-list">
+        <li><div class="step-num">1</div><div class="step-text"><b>關鍵字越具體越好</b>：不要只打「狗」，可以打「黃色拉布拉多在草地上奔跑」。</div></li>
+        <li><div class="step-num">2</div><div class="step-text"><b>多試幾次</b>：AI 第一次畫的可能不滿意，多試 2-3 次就會有驚喜。</div></li>
+        <li><div class="step-num">3</div><div class="step-text"><b>AI + 自己 = 最棒</b>：AI 幫你做 80 分的初稿，剩下的 20 分加上自己的創意，就是 100 分作品！</div></li>
+      </ol>
+      <div class="warn-box"><span class="ico">⚠️</span><div><b>版權小提醒：</b>不要叫 AI 畫已經有主人的角色（像「畫穿 Nike 的米老鼠」），這樣是不尊重別人喔！要當一個有禮貌的小設計師。</div></div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🌟 來考考你（STAGE 4）</h4>
+      <div class="quiz-q-block" data-stage="4" data-q="1">
+        <div class="quiz-q"><span class="qnum">Q1</span>標題不知道怎麼寫，要請哪個魔法精靈幫忙？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,true)">Magic Write 文字魔法</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Magic Eraser 魔法橡皮擦</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Background Remover 背景移除</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Magic Design 自動排版</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="4" data-q="2">
+        <div class="quiz-q"><span class="qnum">Q2</span>想用文字描述讓 AI 畫一張獨特的圖片？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">Magic Eraser</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">Magic Media</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Background Remover</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Magic Design</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="4" data-q="3">
+        <div class="quiz-q"><span class="qnum">Q3</span>想把照片背景去掉，只留下小狗，要用？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">Magic Write</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">Background Remover 背景移除</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Magic Design</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">重新拍一張</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="4" data-q="4">
+        <div class="quiz-q"><span class="qnum">Q4</span>用 AI 生成的圖片可以放在我自己的作業裡嗎？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,true)">可以，但不能模仿已有的角色</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">完全不可以</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">要付錢給 AI</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">只能在 Canva 裡看</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h4>👨‍🏫 教師提示</h4>
+        <p><b>AI 工具教學重點</b>：教育版預設關閉部分 AI，老師需在「設定 → 權限 → Magic and AI」打開。建議第一次只開 Magic Design（自動排版），熟悉後再開 Magic Media。</p>
+        <ul>
+          <li><b>引導正確使用 AI</b>：強調「AI 幫忙 ≠ AI 代替」，鼓勵學生在 AI 初稿上加入個人創意</li>
+          <li><b>版權教育機會</b>：藉機講「不指定品牌商標 / 公眾人物」的原則，融入媒體素養</li>
+          <li><b>免費版 vs 教育版額度差異</b>：可在這個單元自然帶入「為什麼要用學校帳號」</li>
+          <li><b>建議活動</b>：「AI vs 人類搜圖大賽」，比較傳統圖庫 vs Magic Media 結果</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= STAGE 5 ============= -->
+  <section class="level-section" id="sec5">
+    <div class="section-header">
+      <span class="stage-badge s5">STAGE 05</span>
+      <div class="section-title">
+        <h2>💾 儲存與分享你的作品</h2>
+        <p class="sub">下載 PDF / 分享連結 / 常見問題排除</p>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/04_儲存分享與任務.jpg" alt="儲存分享與學習任務資訊圖" loading="lazy">
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟</h4>
+      <ol class="steps-list">
+        <li><div class="step-num">1</div><div class="step-text"><b>不用按儲存！</b>Canva 裡住著一個自動儲存小精靈，每個動作都會自動存到雲端。</div></li>
+        <li><div class="step-num">2</div><div class="step-text">點右上角紫色的<b>「分享」</b>按鈕。</div></li>
+        <li><div class="step-num">3</div><div class="step-text">想下載？點<b>「下載」</b>，選格式：</div></li>
+        <li><div class="step-num">4</div><div class="step-text"><b>PDF（標準）</b> = 適合 email 給老師（檔案小）</div></li>
+        <li><div class="step-num">5</div><div class="step-text"><b>PNG</b> = 每頁變一張圖片</div></li>
+        <li><div class="step-num">6</div><div class="step-text"><b>PowerPoint (.pptx)</b> = 可以丟回 PowerPoint 繼續編輯</div></li>
+        <li><div class="step-num">7</div><div class="step-text">想分享連結？點「分享」→<b>「複製連結」</b>，把連結貼給老師就好！</div></li>
+      </ol>
+      <div class="tip-box"><span class="ico">💡</span><div><b>找不到剛剛的作品？</b>先確認你登入的是<b>學校 Google 帳號</b>（不是私人帳號），然後在首頁找<b>「最近的設計」</b>就會找到。</div></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 學生最常踩雷救援包</h4>
+      <p class="canvas-tip">點選下方常見問題，看看怎麼解決！</p>
+      <div class="tool-grid" id="bug-grid">
+        <div class="tool-card" onclick="showBugInfo('delete',this)"><span class="icon">🗑️</span><div class="name">不小心刪掉文字</div></div>
+        <div class="tool-card" onclick="showBugInfo('upload',this)"><span class="icon">📤</span><div class="name">照片上傳失敗</div></div>
+        <div class="tool-card" onclick="showBugInfo('blur',this)"><span class="icon">🔍</span><div class="name">圖片變模糊</div></div>
+        <div class="tool-card" onclick="showBugInfo('lost',this)"><span class="icon">😱</span><div class="name">作品不見了</div></div>
+        <div class="tool-card" onclick="showBugInfo('big',this)"><span class="icon">📦</span><div class="name">PDF 檔案太大</div></div>
+        <div class="tool-card" onclick="showBugInfo('ai',this)"><span class="icon">🤖</span><div class="name">AI 生成怪怪的</div></div>
+      </div>
+      <div class="tool-detail" id="bug-detail"></div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🌟 來考考你（STAGE 5）</h4>
+      <div class="quiz-q-block" data-stage="5" data-q="1">
+        <div class="quiz-q"><span class="qnum">Q1</span>簡報做完忘記儲存怎麼辦？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">重新做一遍</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">不用擔心，Canva 會自動儲存！</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">哭著找媽媽</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">永遠找不到了</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="5" data-q="2">
+        <div class="quiz-q"><span class="qnum">Q2</span>想把簡報 email 給老師看，要下載哪個格式？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">直接螢幕截圖</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">PDF（標準）</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">列印出來掃描</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">不能分享</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="5" data-q="3">
+        <div class="quiz-q"><span class="qnum">Q3</span>登入後找不到剛剛做的作品？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">立刻重做一遍</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">確認是用學校 Google 帳號登入</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">把 Canva 解除安裝</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Canva 壞掉了</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only">
+      <div class="teacher-note">
+        <h4>👨‍🏫 教師提示</h4>
+        <p><b>下課前的回收策略</b>：請學生用 <b>「分享連結」</b> 方式繳交比下載 PDF 更方便（連結可即時編輯，老師看到的就是最新版）。</p>
+        <ul>
+          <li>建議統一使用 <b>Google Classroom 作業</b> 收連結，方便評量</li>
+          <li>下載 PDF 時提醒學生選 <b>「標準 PDF」</b>，避免「列印 PDF」太大</li>
+          <li>常見錯誤：學生登出忘了登入學校帳號 → 上課前統一檢查右上角頭像帳號</li>
+          <li>進階建議：用 Canva 教師端的 <b>「作業」</b> 功能批改更快速</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 今日實作任務 ============= -->
+  <section class="project-task" id="project">
+    <h2>🏆 今日實作任務（任選一個）</h2>
+    <p class="lead">學了這麼多魔法，現在輪到你來當設計師！從下面 3 個任務挑一個你最有感覺的，做出 5-6 頁的簡報，下課前用「分享連結」交給老師。</p>
+    <div class="theme-grid">
+      <div class="theme-card">
+        <div class="badge">主題 A · 推薦初學者</div>
+        <h3>🌟 我的自我介紹簡報</h3>
+        <p>讓全班認識你！介紹你的興趣、家人、夢想。</p>
+        <ul>
+          <li>P1 封面：我是誰（大頭照 + 姓名 + 班級）</li>
+          <li>P2 我的興趣（3 個 + 圖示）</li>
+          <li>P3 我的家人（合照 + 描述）</li>
+          <li>P4 我最喜歡的食物（用 Magic Media 畫夢幻版）</li>
+          <li>P5 我的夢想（用 Magic Media 畫未來職業）</li>
+          <li>P6 結尾感謝</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <div class="badge">主題 B · 練習 AI 排版</div>
+        <h3>💖 我的最愛分享</h3>
+        <p>介紹你最愛的一本書 / 一隻動物 / 一個地方。</p>
+        <ul>
+          <li>用 <b>Magic Design</b> 輸入主題，AI 自動排版</li>
+          <li>修改文字成自己的內容</li>
+          <li>用 <b>Magic Edit</b> 替換範本上的物件</li>
+          <li>結尾頁寫「為什麼我喜歡它」</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <div class="badge">主題 C · 練習修圖</div>
+        <h3>🎉 校園活動報導</h3>
+        <p>運動會 / 園遊會 / 母親節活動的紀錄。</p>
+        <ul>
+          <li>上傳活動照片 3-5 張</li>
+          <li>用 <b>Background Remover</b> 把背景去掉，貼到漂亮新背景</li>
+          <li>用 <b>Magic Eraser</b> 把角落的路人擦掉</li>
+          <li>加標題、日期、心得</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= NotebookLM 資源站 ============= -->
+  <section class="nb-section">
+    <h2><span>🧠</span> NotebookLM × Claude AI 資源站</h2>
+    <p class="lead">這個駕駛艙的所有教材，都是用 Google 的 <b>NotebookLM</b> AI 搜尋整理 + Claude AI 設計版面做出來的。下面是我們的「研究本」「精簡本」連結，你可以點進去問 AI 任何問題！</p>
+    <div class="nb-cards">
+      <a href="https://notebooklm.google.com/notebook/30ef007a-f3b5-4597-a67d-2177cddc0c4e" target="_blank" rel="noopener" class="nb-card">
+        <span class="icon">📚</span>
+        <h4>研究本（27 個來源）</h4>
+        <p>NotebookLM 自動搜尋全網 27 個 Canva 教學文章與官方說明，你可以在這裡問 AI 任何 Canva 問題。</p>
+      </a>
+      <a href="https://notebooklm.google.com/notebook/772a8e47-e7dc-475f-9496-b2e170cf2ac1" target="_blank" rel="noopener" class="nb-card">
+        <span class="icon">🎯</span>
+        <h4>精簡本（萃取精華）</h4>
+        <p>把 27 個來源的內容萃取成「四年級看得懂」的精華筆記，再加上主講者圖像，產出簡報、影片、資訊圖表。</p>
+      </a>
+      <a href="https://notebooklm.google.com" target="_blank" rel="noopener" class="nb-card">
+        <span class="icon">🚀</span>
+        <h4>NotebookLM 首頁</h4>
+        <p>Google 推出的 AI 筆記本，可以上傳資料、自動生成簡報 / 影片 / 心智圖 / 資訊圖表，完全免費！</p>
+      </a>
+    </div>
+    <div class="nb-flow">
+      <h4>🔄 這個駕駛艙是怎麼做出來的？</h4>
+      <div class="flow-line">
+        <span class="step">深度搜尋 27 個來源</span>
+        <span class="arrow">→</span>
+        <span class="step">萃取精華</span>
+        <span class="arrow">→</span>
+        <span class="step">建立精簡本</span>
+        <span class="arrow">→</span>
+        <span class="step">生成簡報 / 影片 / 圖表</span>
+        <span class="arrow">→</span>
+        <span class="step">Claude 設計駕駛艙</span>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.2rem;font-weight:900;margin-bottom:14px;color:var(--c5)">💬 學生常見問題 FAQ</h3>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q1. Canva 是什麼？跟 PowerPoint 有什麼不一樣？<span class="toggle">+</span></div>
+        <div class="faq-a">Canva 是一個擁有無數貼紙、漂亮畫布、現成範本的「<b>超級大百寶箱</b>」，全部都裝在同一個網頁裡。它跟 PowerPoint 最大的差別是：以前做簡報要自己上網找圖片再貼過來，但在 Canva 裡，按幾個按鈕就可以直接把<b>找圖、排版、加 AI 圖片</b>一次完成！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q2. 我可以自己註冊 Canva 嗎？為什麼老師說要等他邀請？<span class="toggle">+</span></div>
+        <div class="faq-a">為了保護未滿 13 歲的小朋友，Canva 規定一定要老師用「<b>Canva for Education 教育版</b>」邀請你進班級才能使用。教育版的好處超多：所有「皇冠」素材都能免費用、AI 工具次數變多、沒有惱人的「升級」彈出視窗。等老師邀請你才用是<b>對的，也是合法的</b>！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q3. Magic Write 和 Magic Media 是什麼？跟 ChatGPT 一樣嗎？<span class="toggle">+</span></div>
+        <div class="faq-a">原理類似！都是 AI 機器人。差別是 Magic Write 專門幫你<b>寫文字</b>、Magic Media 專門幫你<b>畫圖</b>，而且都直接住在 Canva 裡，做簡報時可以隨時呼叫，不用切到別的網頁。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q4. AI 幫我生成的圖片可以直接用嗎？有版權問題嗎？<span class="toggle">+</span></div>
+        <div class="faq-a">這支機器人畫筆幫你畫出來的圖片，<b>你可以放心用在自己的作業和簡報裡</b>！不過要記得，<b>不要叫它畫一些已經有主人的角色</b>（例如：穿著某品牌衣服的米老鼠），這樣才是一個尊重別人的好設計師。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q5. Canva 要花錢嗎？我家沒有付錢可以用嗎？<span class="toggle">+</span></div>
+        <div class="faq-a">Canva 裡面有<b>很多免費的功能</b>可以盡情玩！如果你看到有些圖案旁邊有「<b>小皇冠 👑</b>」標誌，那就代表需要付費版才能用。但你用<b>老師發給你的「教育版」帳號</b>，幾乎所有皇冠都能免費用！放心大膽地試試看吧！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q6. 我可以下載成 PowerPoint 檔案嗎？<span class="toggle">+</span></div>
+        <div class="faq-a">可以！當你把簡報做好後，點畫面右上角的「<b>分享</b>」按鈕 → 「<b>下載</b>」 → 選擇「<b>PowerPoint (.pptx)</b>」即可。下載後在 PowerPoint 打開，文字和圖片都還能繼續編輯！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Q7. Magic Design 跟自己做的差很多嗎？我應該用哪個？<span class="toggle">+</span></div>
+        <div class="faq-a">Magic Design 是<b>會幫你快速排版的神奇機器人</b>，可以讓你在腦袋空白時瞬間變出有圖有字的漂亮初稿。不過，最棒的作品還是需要加入<b>你自己的創意</b>。你可以先請機器人幫你搭好骨架，再自己換上喜歡的顏色和貼紙，這樣就會是 <b>100 分的作品</b>！</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 授課簡報播放器 ============= -->
+  <section class="slide-section" id="slides">
+    <h2><span>📊</span> 授課簡報（NotebookLM AI 自動產生）</h2>
+    <p style="color:var(--dim);margin-bottom:14px;font-size:.95rem">這份 15 頁的簡報是 NotebookLM 根據精華筆記自動生成的，<b>主講者是你們的「阿凱老師」</b>！按 ← → 切換頁面，按 ⛶ 全螢幕。</p>
+    <div class="slide-player">
+      <div class="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="assets/slide_01.jpg" alt="簡報第 1 頁">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 15</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
+    </div>
+    <div class="slide-fs" id="slide-fs">
+      <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
+      <button class="slide-fs-nav prev" onclick="slideNav(-1)">‹</button>
+      <img id="slide-fs-img" src="assets/slide_01.jpg" alt="">
+      <button class="slide-fs-nav next" onclick="slideNav(1)">›</button>
+      <div class="slide-fs-counter" id="slide-fs-counter">1 / 15</div>
+    </div>
+  </section>
+
+  <!-- ============= 學生自學影片 ============= -->
+  <section class="nlm-video-section">
+    <h2><span>🎬</span> 學生自學影片（NotebookLM × YouTube）</h2>
+    <div class="video-wrap">
+      <div class="video-ratio">
+        <iframe
+          src="https://www.youtube.com/embed/k0K6CJvHisI?rel=0&modestbranding=1"
+          title="Canva 魔法簡報 - NotebookLM 教學影片"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"></iframe>
+      </div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 建議用耳機觀看，可以搭配上方簡報一起複習！</span>
+        <a href="https://www.youtube.com/watch?v=k0K6CJvHisI" target="_blank" rel="noopener" style="margin-left:auto;color:var(--c1);font-size:.88rem;text-decoration:none;font-weight:700">↗ 在 YouTube 開啟</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 教師延伸 ============= -->
+  <section class="teacher-only">
+    <div class="footer-section">
+      <h2>👨‍🏫 教師延伸資源</h2>
+      <p style="margin-bottom:14px"><b>建議節數</b>：4-5 節（每節 40 分鐘）</p>
+      <ul>
+        <li>第 1 節：STAGE 1 認識 Canva + 教育版邀請流程</li>
+        <li>第 2 節：STAGE 2-3 建立簡報、加素材</li>
+        <li>第 3 節：STAGE 4 Canva AI 工具（重點是 Magic Design + Magic Media）</li>
+        <li>第 4 節：STAGE 5 + 開始實作任務</li>
+        <li>第 5 節：完成實作 + 上台分享</li>
+      </ul>
+      <p style="margin-top:14px"><b>對應領域核心素養</b>：資訊科技 A-E-A1（具備運用科技、資訊與媒體之能力）、科-E-A1（具備運用科技工具的能力）</p>
+      <p style="margin-top:10px"><b>跨學科連結</b>：國語（簡報文字組織）、藝術（色彩美感）、綜合活動（自我介紹、團體報告）</p>
+      <p style="margin-top:10px"><b>建議分組</b>：2-3 人一組（互相幫忙登入、討論版面），但每人交一份個人作品</p>
+      <p style="margin-top:10px"><b>素養評量重點</b>：操作熟練度、AI 工具運用合理性、版面設計美感、簡報內容完整度</p>
+    </div>
+  </section>
+
+  <p class="copyright">
+    🌸 由 <a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> AI 自動研究 + <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude</a> AI 設計｜
+    <a href="../index.html">回到 IT COCKPIT 主頁</a>
+  </p>
+
+</main>
+
+<!-- 浮動按鈕 -->
+<div class="float-tools">
+  <button class="float-btn pink" onclick="togglePanel('lottery')" title="抽號碼">🎲</button>
+  <button class="float-btn purple" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn yellow" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn green" onclick="goTop()" title="回頂端">🔝</button>
+</div>
+
+<!-- 抽號面板 -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <button class="close" onclick="togglePanel('lottery')">✕</button></h4>
+  <div style="display:flex;gap:6px;align-items:center;margin-bottom:10px;font-size:.88rem;color:var(--dim);flex-wrap:wrap">
+    <span>範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px">
+    <span>~</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:#aaa;padding:9px 12px">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<!-- 計時器面板 -->
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <button class="close" onclick="togglePanel('timer')">✕</button></h4>
+  <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px;font-size:.88rem;color:var(--dim)">
+    <span>分鐘:</span>
+    <input type="number" id="timer-min" value="5" min="0" max="60" style="width:55px">
+    <span>秒:</span>
+    <input type="number" id="timer-sec" value="0" min="0" max="59" style="width:55px">
+  </div>
+  <div class="timer-display" id="timerDisplay">05:00</div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1" id="timerBtn">▶ 開始</button>
+    <button class="btn-primary" onclick="resetTimer()" style="background:#aaa;padding:9px 12px">↻</button>
+  </div>
+</div>
+
+<!-- 畫筆 -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span class="label">🖊️</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd54f" onclick="setPenColor('#ffd54f',this)"></button>
+  <button class="color-dot" style="background:#6cb4ff" onclick="setPenColor('#6cb4ff',this)"></button>
+  <button class="color-dot" style="background:#7be495" onclick="setPenColor('#7be495',this)"></button>
+  <button class="color-dot" style="background:#2a2244" onclick="setPenColor('#2a2244',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<!-- 教師密碼對話框 -->
+<div class="modal-mask" id="teacherModal">
+  <div class="modal">
+    <h3>🔒 教師模式</h3>
+    <p>請輸入教師密碼以解鎖教師模式（提示、延伸資源）</p>
+    <input type="password" id="teacher-pwd" placeholder="輸入密碼..." onkeydown="if(event.key==='Enter')checkTeacher()">
+    <div class="modal-btns">
+      <button class="cancel" onclick="closeTeacherModal()">取消</button>
+      <button class="ok" onclick="checkTeacher()">確認</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.drag-item{font-size:2.2rem;background:#fff;border:3px solid #f0e6ff;border-radius:14px;padding:10px 16px;cursor:grab;transition:.2s;user-select:none}
+.drag-item:hover{transform:translateY(-3px);border-color:var(--c5)}
+.drag-item.dragging{opacity:.4;cursor:grabbing}
+.dropped-item{font-size:2rem;display:inline-block;margin:6px;animation:pop .35s ease}
+</style>
+
+<script>
+/* ============== Slide List ============== */
+const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+let curSlide = 0;
+
+/* ============== Mode Switch ============== */
+function setMode(mode){
+  if(mode==='student'){
+    document.body.classList.remove('teacher-mode');
+    document.getElementById('btn-student').classList.add('active');
+    document.getElementById('btn-teacher').classList.remove('active');
+  }
+}
+function askTeacher(){
+  if(document.body.classList.contains('teacher-mode')){
+    document.body.classList.remove('teacher-mode');
+    document.getElementById('btn-student').classList.add('active');
+    document.getElementById('btn-teacher').classList.remove('active');
+    return;
+  }
+  document.getElementById('teacherModal').classList.add('show');
+  setTimeout(()=>document.getElementById('teacher-pwd').focus(),100);
+}
+function closeTeacherModal(){
+  document.getElementById('teacherModal').classList.remove('show');
+  document.getElementById('teacher-pwd').value='';
+}
+function checkTeacher(){
+  const v=document.getElementById('teacher-pwd').value;
+  if(v==='it2026'){
+    document.body.classList.add('teacher-mode');
+    document.getElementById('btn-teacher').classList.add('active');
+    document.getElementById('btn-student').classList.remove('active');
+    closeTeacherModal();
+  } else {
+    alert('密碼不對喔！再試試看。');
+    document.getElementById('teacher-pwd').value='';
+  }
+}
+
+/* ============== Quiz / Progress ============== */
+const totalQuestions = document.querySelectorAll('.quiz-q-block').length;
+let answeredQs = new Set();
+const PRAISE = ['🎉 答對囉，太棒了！','✨ 你真厲害！','🌟 完全正確！','💯 滿分！','🥳 答對了！'];
+
+function answerQ(btn, isCorrect){
+  const block = btn.closest('.quiz-q-block');
+  if(block.dataset.answered) return;
+  block.dataset.answered = '1';
+  const opts = block.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>o.disabled=true);
+  const fb = block.querySelector('.quiz-feedback');
+  if(isCorrect){
+    btn.classList.add('correct');
+    fb.classList.add('right');
+    fb.textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)];
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o=>{
+      if(o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+    });
+    fb.classList.add('miss');
+    fb.textContent = '差一點點！正確答案已標出來囉，看看為什麼吧！';
+  }
+  const id = block.dataset.stage + '-' + block.dataset.q;
+  answeredQs.add(id);
+  updateProgress();
+}
+function updateProgress(){
+  const pct = Math.round(answeredQs.size / totalQuestions * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+/* ============== UI Tour (STAGE 1) ============== */
+const UI_INFO = {
+  home:{icon:'🏡',name:'首頁 Home',desc:'登入 Canva 後第一個看到的畫面！這裡有：你最近做過的設計、老師的班級、新功能介紹、各種範本推薦。'},
+  toolbar:{icon:'📦',name:'左邊工具列',desc:'所有工具的入口！包含：設計範本、元素貼紙、上傳照片、文字、AI 工具。每天最常用的就是這一排。'},
+  canvas:{icon:'🖼️',name:'設計區（畫布）',desc:'畫面中間最大的白色空白，就是你要做簡報的「舞台」！所有文字、圖片、貼紙都會出現在這裡。'},
+  top:{icon:'⚙️',name:'頂端工具列',desc:'點選文字或圖片時會出現！這裡可以改字型、大小、顏色、複製、刪除，是「微調」的好幫手。'}
+};
+function showUiInfo(key,el){
+  document.querySelectorAll('#ui-grid .tool-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const info=UI_INFO[key];
+  const d=document.getElementById('ui-detail');
+  d.innerHTML=`<h4><span class="label">${info.icon}</span>${info.name}</h4><p>${info.desc}</p>`;
+  d.classList.add('show');
+}
+
+/* ============== Template Picker (STAGE 2) ============== */
+const TPL_INFO = {
+  birthday:{icon:'🎂',name:'生日卡片範本',desc:'適合做家人朋友的生日卡！通常有可愛的氣球、蛋糕、燈飾元素，配色溫馨。<br><b>適合用途</b>：生日驚喜、節日卡片、感謝卡。'},
+  intro:{icon:'👋',name:'自我介紹範本',desc:'5-6 頁的個人簡介模板，包含照片區、興趣、夢想、家人。<br><b>適合用途</b>：開學自我介紹、轉學第一天、社團迎新。'},
+  book:{icon:'📚',name:'讀書心得範本',desc:'書本封面、章節介紹、心得欄位都排好了！<br><b>適合用途</b>：閱讀心得作業、推薦好書、班級讀書會。'},
+  event:{icon:'🎪',name:'活動海報範本',desc:'大大的標題、活動日期、地點、報名資訊，視覺吸睛。<br><b>適合用途</b>：園遊會宣傳、社團招生、運動會海報。'}
+};
+function showTplInfo(key,el){
+  document.querySelectorAll('#tpl-grid .tool-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const info=TPL_INFO[key];
+  const d=document.getElementById('tpl-detail');
+  d.innerHTML=`<h4><span class="label">${info.icon}</span>${info.name}</h4><p>${info.desc}</p>`;
+  d.classList.add('show');
+}
+
+/* ============== AI Tools (STAGE 4) ============== */
+const AI_INFO = {
+  write:{icon:'✍️',name:'Magic Write 文字魔法',desc:'<b>是什麼：</b>會幫你想點子的聰明寫作小助手。<br><b>能做什麼：</b>標題寫不出來？讓它幫你想 5 個版本！句子太短？讓它擴寫！<br><b>哪裡找：</b>點選文字框 → 上方工具列出現 Magic Write 按鈕。<br><b>適合情境：</b>「幫我想 5 個關於我喜歡狗狗的標題」。'},
+  design:{icon:'✨',name:'Magic Design 自動排版',desc:'<b>是什麼：</b>會自動幫你排版的機器人設計師。<br><b>能做什麼：</b>輸入主題（例如「我最愛的恐龍」）和風格（「可愛卡通」），AI 就會配好圖、配好文字，瞬間生出 8 組漂亮版型給你選！<br><b>哪裡找：</b>Canva 首頁搜尋欄；或左邊工具列。<br><b>適合情境：</b>腦袋空白時，先請它生成版型，再自己換照片。'},
+  media:{icon:'🎨',name:'Magic Media 文字生成圖片',desc:'<b>是什麼：</b>聽得懂你說話的神奇畫筆。<br><b>能做什麼：</b>輸入「彩虹獨角獸在棉花糖雲朵上飛」，AI 會在 30 秒內畫出一張獨一無二的圖片！<br><b>哪裡找：</b>左邊「元素」→ 往下找「AI 圖片產生器」。<br><b>訣竅：</b>關鍵字越具體越好，多加形容詞（顏色、風格、情境）。'},
+  eraser:{icon:'🧹',name:'Magic Eraser 魔法橡皮擦',desc:'<b>是什麼：</b>超級厲害的隱形橡皮擦。<br><b>能做什麼：</b>照片上有不想要的路人、垃圾桶、雜物，用筆刷塗一塗就消失！<br><b>哪裡找：</b>選照片 → 上方「編輯照片」→「魔法橡皮擦」。<br><b>適合情境：</b>運動會照片角落拍到陌生路人，把他擦掉。'},
+  bg:{icon:'✂️',name:'Background Remover 背景移除',desc:'<b>是什麼：</b>一鍵把背景變透明的神奇剪刀。<br><b>能做什麼：</b>把照片背後亂亂的背景去除，只留下主角，變成一張可貼到任何地方的「貼紙」！<br><b>哪裡找：</b>選照片 → 上方「編輯照片」→「背景移除器」。<br><b>適合情境：</b>把自己大頭照去背後放到星空背景上。'}
+};
+function showAiInfo(key,el){
+  document.querySelectorAll('#ai-grid .tool-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const info=AI_INFO[key];
+  const d=document.getElementById('ai-detail');
+  d.innerHTML=`<h4><span class="label">${info.icon}</span>${info.name}</h4><p>${info.desc}</p>`;
+  d.classList.add('show');
+}
+
+/* ============== Bug rescue (STAGE 5) ============== */
+const BUG_INFO = {
+  delete:{icon:'🗑️',name:'不小心刪掉文字',desc:'別緊張！按鍵盤上的 <b>Ctrl + Z</b>（Mac 是 Cmd + Z），這是「時光倒流魔法」，被刪掉的字會立刻飛回來！'},
+  upload:{icon:'📤',name:'照片上傳失敗',desc:'通常是因為：① 照片超過 50MB 太大了，② Canva 雲端空間滿了。<br>解決：先用手機壓縮照片，或刪除舊作品釋放空間。'},
+  blur:{icon:'🔍',name:'圖片變模糊',desc:'這是因為原本的照片太小，被你拉大後就變馬賽克了！<br>解決：換一張原本就<b>很大、很清楚</b>的照片來用（手機原圖通常夠大）。'},
+  lost:{icon:'😱',name:'作品不見了',desc:'別怕！通常是登入錯帳號。<br>① 確認你登入的是<b>學校 Google 帳號</b><br>② 在首頁找「<b>最近的設計</b>」<br>③ 你的作品都在那裡乖乖等你！'},
+  big:{icon:'📦',name:'PDF 檔案太大',desc:'下載 PDF 時，看到兩個選項：<br>① 「<b>標準 PDF</b>」= 檔案小，適合 email<br>② 「列印 PDF」= 檔案很大，適合印刷<br>選「標準」就對了！'},
+  ai:{icon:'🤖',name:'AI 生成怪怪的',desc:'AI 有時候會聽不懂你的咒語！<br>① 重新呼叫，選「重寫」或「更有趣」<br>② 在關鍵字加形容詞（顏色、風格、年代）<br>③ 試 3 次還沒滿意，改用「元素」找現成圖。'}
+};
+function showBugInfo(key,el){
+  document.querySelectorAll('#bug-grid .tool-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const info=BUG_INFO[key];
+  const d=document.getElementById('bug-detail');
+  d.innerHTML=`<h4><span class="label">${info.icon}</span>${info.name}</h4><p>${info.desc}</p>`;
+  d.classList.add('show');
+}
+
+/* ============== FAQ ============== */
+function toggleFaq(el){
+  el.parentElement.classList.toggle('open');
+}
+
+/* ============== Slide Player ============== */
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0?' active':'');
+    t.innerHTML = `<img src="${src}" alt="第${i+1}頁" loading="lazy">`;
+    t.onclick = ()=>goSlide(i);
+    strip.appendChild(t);
+  });
+  goSlide(0, false);
+}
+function goSlide(n, scrollStrip = true){
+  if(n<0||n>=SLIDE_LIST.length) return;
+  curSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active',i===n));
+  // 同步全螢幕（避免踩雷 #5）
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  }
+  // 縮圖捲動：只動縮圖列容器內部，永遠不動頁面（避免踩雷 #11）
+  if(scrollStrip){
+    const active = document.querySelector('.strip-thumb.active');
+    if(active){
+      const strip = document.getElementById('slide-strip');
+      const target = active.offsetLeft - (strip.clientWidth - active.offsetWidth)/2;
+      strip.scrollTo({left:Math.max(0,target),behavior:'smooth'});
+    }
+  }
+}
+function slideNav(dir){ goSlide(curSlide + dir); }
+function openSlideFullscreen(){
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+  document.getElementById('slide-fs').classList.add('show');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+}
+
+/* ============== Drag area (STAGE 3) ============== */
+function initDragArea(){
+  const items = document.querySelectorAll('.drag-item');
+  const zone = document.getElementById('dropZone');
+  let dragging = null;
+  items.forEach(it=>{
+    it.addEventListener('dragstart',e=>{
+      dragging = it;
+      it.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+      e.dataTransfer.setData('text/plain', it.dataset.emoji);
+    });
+    it.addEventListener('dragend',()=>{
+      it.classList.remove('dragging');
+      dragging = null;
+    });
+  });
+  zone.addEventListener('dragover',e=>{
+    e.preventDefault();
+    e.dataTransfer.dropEffect='move';
+  });
+  zone.addEventListener('drop',e=>{
+    e.preventDefault();
+    if(zone.querySelector('.dropped-item') == null){
+      zone.innerHTML = '<div style="font-size:.92rem;color:var(--c4);margin-bottom:6px">🎉 太棒了！繼續加更多貼紙吧！</div>';
+    }
+    const emoji = e.dataTransfer.getData('text/plain') || (dragging?dragging.dataset.emoji:'⭐');
+    const span = document.createElement('span');
+    span.className='dropped-item';
+    span.textContent=emoji;
+    zone.appendChild(span);
+  });
+}
+function resetDragArea(){
+  document.getElementById('dropZone').innerHTML = '⬇️ 把貼紙拖到這裡 ⬇️';
+}
+
+/* ============== Floating panels ============== */
+function togglePanel(name){
+  ['lottery','timer'].forEach(n=>{
+    const p = document.getElementById('panel-'+n);
+    if(n===name) p.classList.toggle('show');
+    else p.classList.remove('show');
+  });
+}
+function goTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ============== Lottery ============== */
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = [];
+  for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){ alert('最小號要 ≤ 最大號喔！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const tk = setInterval(()=>{
+    const n = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = n + ' 號';
+  },60);
+  setTimeout(()=>{
+    clearInterval(tk);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx,1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max-min+1)) + min;
+    }
+    out.innerHTML = '🌟 <span class="pop">' + num + '</span> 號 🌟';
+  },1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+/* ============== Timer ============== */
+let timerSec = 0;
+let timerHd = null;
+let timerRunning = false;
+function fmtTime(s){
+  const m = Math.floor(s/60).toString().padStart(2,'0');
+  const ss = (s%60).toString().padStart(2,'0');
+  return m + ':' + ss;
+}
+function startTimer(){
+  if(timerRunning){
+    clearInterval(timerHd);
+    timerRunning = false;
+    document.getElementById('timerBtn').textContent='▶ 繼續';
+    return;
+  }
+  if(timerSec === 0){
+    const m = parseInt(document.getElementById('timer-min').value) || 0;
+    const s = parseInt(document.getElementById('timer-sec').value) || 0;
+    timerSec = m*60 + s;
+  }
+  if(timerSec <= 0) return;
+  timerRunning = true;
+  document.getElementById('timerBtn').textContent='⏸ 暫停';
+  timerHd = setInterval(()=>{
+    timerSec--;
+    document.getElementById('timerDisplay').textContent = fmtTime(timerSec);
+    if(timerSec <= 0){
+      clearInterval(timerHd);
+      timerRunning = false;
+      document.getElementById('timerBtn').textContent='▶ 開始';
+      document.getElementById('timerDisplay').textContent = '⏰ 時間到！';
+      try{ new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=').play(); }catch(e){}
+    }
+  },1000);
+}
+function resetTimer(){
+  clearInterval(timerHd);
+  timerRunning = false;
+  timerSec = 0;
+  const m = parseInt(document.getElementById('timer-min').value) || 0;
+  const s = parseInt(document.getElementById('timer-sec').value) || 0;
+  document.getElementById('timerDisplay').textContent = fmtTime(m*60+s);
+  document.getElementById('timerBtn').textContent = '▶ 開始';
+}
+
+/* ============== Drawing canvas ============== */
+let drawActive = false, penColor = '#ff4081', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth;
+  drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown',e=>{
+    if(!drawActive) return;
+    isDrawing = true;
+    dLastX = e.clientX;
+    dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mousemove',e=>{
+    if(!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor;
+    drawCtx.lineWidth = penSize;
+    drawCtx.lineCap = 'round';
+    drawCtx.beginPath();
+    drawCtx.moveTo(dLastX, dLastY);
+    drawCtx.lineTo(e.clientX, e.clientY);
+    drawCtx.stroke();
+    dLastX = e.clientX;
+    dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup',()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart',e=>{
+    if(!drawActive) return;
+    e.preventDefault();
+    const t=e.touches[0];
+    isDrawing=true;
+    dLastX=t.clientX;
+    dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchmove',e=>{
+    if(!drawActive || !isDrawing) return;
+    e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle = penColor;
+    drawCtx.lineWidth = penSize;
+    drawCtx.lineCap = 'round';
+    drawCtx.beginPath();
+    drawCtx.moveTo(dLastX,dLastY);
+    drawCtx.lineTo(t.clientX,t.clientY);
+    drawCtx.stroke();
+    dLastX = t.clientX;
+    dLastY = t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+  window.addEventListener('resize',()=>{
+    drawCanvas.width = window.innerWidth;
+    drawCanvas.height = window.innerHeight;
+  });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'linear-gradient(135deg,#7be495,#4caf50)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){
+  if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height);
+}
+
+/* ============== Keyboard nav ============== */
+document.addEventListener('keydown',e=>{
+  // 簡報全螢幕時的鍵盤導覽
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    if(e.key==='ArrowLeft'){ slideNav(-1); e.preventDefault(); }
+    else if(e.key==='ArrowRight'){ slideNav(1); e.preventDefault(); }
+    else if(e.key==='Escape'){ closeSlideFullscreen(); }
+  }
+  // 教師密碼框 Enter 確認
+  if(e.key==='Escape'){
+    const tm = document.getElementById('teacherModal');
+    if(tm.classList.contains('show')) closeTeacherModal();
+  }
+});
+
+/* ============== Init ============== */
+document.addEventListener('DOMContentLoaded',()=>{
+  initSlidePlayer();
+  initDragArea();
+  initDraw();
+  // 注意：不要在這裡用 scrollIntoView 或 .focus()，避免初始化跳轉（踩雷 #10/#11）
+});
+</script>
+
+</body>
+</html>
