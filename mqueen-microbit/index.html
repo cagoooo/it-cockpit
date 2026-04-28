@@ -306,10 +306,14 @@ body.teacher-mode .teacher-only { display:block; }
 .strip-thumb.active { border-color:var(--c1); box-shadow:0 0 10px var(--c1); }
 
 #slide-fs {
-  position:fixed; inset:0; background:rgba(0,0,0,.95); z-index:500;
+  position:fixed; inset:0; background:rgba(0,0,0,.97); z-index:9999;
   display:none; align-items:center; justify-content:center; padding:30px;
 }
 #slide-fs.show { display:flex; }
+body.slides-fullscreen { overflow:hidden; }
+body.slides-fullscreen .site-header,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar { display:none !important; }
 #slide-fs img { max-width:100%; max-height:100%; }
 #slide-fs .fs-close {
   position:absolute; top:20px; right:24px;
@@ -1195,8 +1199,12 @@ function openSlideFullscreen() {
   document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
   document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
   fs.classList.add('show');
+  document.body.classList.add('slides-fullscreen');
 }
-function closeSlideFullscreen() { document.getElementById('slide-fs').classList.remove('show'); }
+function closeSlideFullscreen() {
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
 
 document.addEventListener('keydown', e => {
   const fsOn = document.getElementById('slide-fs').classList.contains('show');
