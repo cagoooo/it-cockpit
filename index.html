@@ -630,6 +630,48 @@
   root.appendChild(renderTracks());
   GRADES.forEach(g => root.appendChild(renderSection(g)));
   root.appendChild(renderFooter());
+
+  /* ===== Service Worker：自動更新機制 ===== */
+  (function registerSW() {
+    if (!('serviceWorker' in navigator)) return;
+
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (reloaded) return;
+      reloaded = true;
+      showUpdateToast();
+      setTimeout(() => location.reload(), 800);
+    });
+
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      // 頁面變回前景時、每 5 分鐘各檢查一次新版
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) reg.update();
+      });
+      setInterval(() => reg.update(), 5 * 60 * 1000);
+
+      // 新 SW 安裝完成且有舊 SW 在控制 → 通知舊 SW 讓位
+      reg.addEventListener('updatefound', () => {
+        const newSW = reg.installing;
+        if (!newSW) return;
+        newSW.addEventListener('statechange', () => {
+          if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+            newSW.postMessage({ type: 'SKIP_WAITING' });
+          }
+        });
+      });
+    }).catch(() => { /* file:// 或 SW 不支援時靜默失敗 */ });
+  })();
+
+  function showUpdateToast() {
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);' +
+      'z-index:99999;padding:12px 22px;background:#0a0a22;color:#fff;' +
+      'border:1px solid #00e5ff;box-shadow:0 8px 30px rgba(0,229,255,0.35);' +
+      'font:600 13px "Noto Sans TC",sans-serif;letter-spacing:0.3px;';
+    t.textContent = '🚀 偵測到新版，正在更新…';
+    document.body.appendChild(t);
+  }
 </script>
 </body>
 </html>
