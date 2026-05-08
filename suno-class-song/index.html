@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用 Suno 設計班級神曲｜六年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/suno-class-song/">
+<meta property="og:title" content="用 Suno 設計班級神曲｜六年級資訊科技">
+<meta property="og:description" content="從班級主題曲到專屬畢業歌！用 ChatGPT 寫歌詞、Suno AI 作曲、Canva 製作畢業 MV，五個關卡帶你成為班級音樂製作人。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/suno-class-song/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/suno-class-song/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fef3f8; --surface:#fff0f6; --panel:#ffffff;
+  --c1:#ff85b3; --c2:#ffd54f; --c3:#6cb4ff; --c4:#7be495; --c5:#b388ff;
+  --text:#2a2244; --dim:#8878aa;
+  --shadow-sm:0 2px 8px rgba(255,133,179,.12);
+  --shadow-md:0 4px 16px rgba(255,133,179,.18);
+  --shadow-lg:0 8px 28px rgba(255,133,179,.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans TC','Fredoka',sans-serif;
+  line-height:1.7;background:var(--bg);color:var(--text);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,133,179,.08), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(108,180,255,.08), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(255,213,79,.05), transparent 40%);
+}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+a{color:var(--c1);text-decoration:none}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--c1);
+  box-shadow:var(--shadow-md);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;
+  border:2px solid var(--c2);background:#fff;color:#d49a00;
+  text-decoration:none;font-weight:700;font-size:.85rem;
+  border-radius:24px;
+  transition:.2s;white-space:nowrap;
+  box-shadow:0 4px 12px rgba(255,213,79,.25);
+}
+.home-btn:hover{background:var(--c2);color:#fff;transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,213,79,.4)}
+.header-title-area{flex:1;min-width:240px}
+.header-title{font-size:1.4rem;font-weight:900;color:var(--c1);letter-spacing:.5px}
+.header-title .emoji{margin-right:4px}
+.header-sub{font-size:.95rem;color:var(--dim);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.header-chip{
+  display:inline-block;padding:2px 10px;
+  background:var(--c3);color:#fff;border-radius:16px;
+  font-weight:700;font-size:.78rem;
+}
+.mode-toggle{
+  display:flex;gap:6px;background:var(--surface);
+  padding:4px;border-radius:24px;border:2px solid var(--c5);
+}
+.mode-btn{
+  border:none;background:transparent;color:var(--text);
+  padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:700;
+  cursor:pointer;transition:.2s;font-family:inherit;
+}
+.mode-btn.active{background:var(--c5);color:#fff;box-shadow:var(--shadow-sm)}
+
+/* 進度條 */
+.progress-rail{
+  width:100%;background:#fff;height:6px;border-radius:6px;
+  overflow:hidden;border:1px solid var(--c1);
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  width:0%;transition:width .4s;
+}
+
+/* ============ HERO ============ */
+.hero{
+  background:linear-gradient(135deg,#fff,#fff0f6);
+  border:3px solid var(--c1);border-radius:24px;
+  padding:32px;margin:24px 0;
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'🎤🎵🎶';position:absolute;top:-20px;right:-10px;
+  font-size:5rem;opacity:.08;letter-spacing:8px;
+}
+.hero h1{font-size:2.2rem;font-weight:900;color:var(--c1);margin-bottom:8px;line-height:1.3}
+.hero h1 .emoji{margin-right:6px}
+.hero p.lead{font-size:1.05rem;color:var(--text);margin-bottom:20px}
+.objs{display:flex;gap:10px;flex-wrap:wrap}
+.obj-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;background:#fff;border:2px solid var(--c1);
+  border-radius:24px;font-size:.95rem;font-weight:700;color:var(--c1);
+  box-shadow:var(--shadow-sm);transition:.2s;
+}
+.obj-chip:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.obj-chip.c2{border-color:#d49a00;color:#d49a00}
+.obj-chip.c3{border-color:var(--c3);color:var(--c3)}
+.obj-chip.c4{border-color:#3da870;color:#3da870}
+.obj-chip.c5{border-color:var(--c5);color:var(--c5)}
+
+/* ============ 關卡導覽 ============ */
+.stage-nav{
+  background:var(--panel);border-radius:24px;padding:18px;
+  margin:24px 0;border:2px dashed var(--c5);
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+}
+.stage-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;background:#fff;border:2px solid var(--c1);
+  border-radius:24px;font-size:.95rem;font-weight:700;color:var(--c1);
+  text-decoration:none;cursor:pointer;transition:.2s;
+}
+.stage-pill:hover{background:var(--c1);color:#fff;transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.stage-pill .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;background:var(--c1);color:#fff;
+  border-radius:50%;font-weight:900;font-size:.85rem;
+}
+.stage-pill:hover .num{background:#fff;color:var(--c1)}
+
+/* ============ SECTION ============ */
+.level-section{margin:48px 0;scroll-margin-top:100px}
+.section-header{
+  display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;
+}
+.stage-badge{
+  display:inline-block;padding:6px 14px;
+  background:var(--c1);color:#fff;
+  border-radius:16px;font-size:.7rem;font-weight:700;
+  letter-spacing:1.5px;
+  font-family:'Fredoka',sans-serif;
+}
+.section-title{font-size:1.5rem;font-weight:900;color:var(--text);line-height:1.3}
+.section-sub{font-size:1rem;color:var(--dim);margin-bottom:16px}
+
+/* 操作步驟卡 */
+.steps-card{
+  background:var(--panel);border-radius:20px;padding:24px;
+  margin-bottom:18px;border:2px solid var(--c2);
+  box-shadow:var(--shadow-md);
+}
+.steps-card h4{font-size:1.1rem;color:#d49a00;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;padding:0}
+.steps-list li{
+  display:flex;gap:14px;padding:10px 0;font-size:1rem;line-height:1.7;
+  border-bottom:1px dashed #ffe8a0;
+}
+.steps-list li:last-child{border-bottom:none}
+.step-num{
+  flex-shrink:0;width:34px;height:34px;
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  color:#fff;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.9rem;box-shadow:var(--shadow-sm);
+}
+
+/* tip box */
+.tip-box{
+  background:linear-gradient(135deg,#e8f4ff,#fff);
+  border-left:4px solid var(--c3);border-radius:12px;
+  padding:14px 18px;font-size:.95rem;margin:14px 0;
+  box-shadow:var(--shadow-sm);
+}
+.tip-box strong{color:var(--c3)}
+
+/* Canvas 互動 */
+.canvas-section{
+  background:var(--panel);border-radius:20px;padding:24px;
+  margin:18px 0;border:2px solid var(--c3);box-shadow:var(--shadow-md);
+}
+.canvas-section h4{font-size:1.1rem;color:var(--c3);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.canvas-prompt{font-size:.95rem;color:var(--dim);margin-bottom:14px}
+.canvas-wrap{
+  background:#fafdff;border:2px dashed var(--c3);border-radius:16px;
+  padding:20px;min-height:280px;
+}
+
+/* 評量 */
+.quiz-section{
+  background:linear-gradient(135deg,#fff,#fff0f6);
+  border-radius:20px;padding:22px;margin:18px 0;
+  border:2px solid var(--c5);box-shadow:var(--shadow-md);
+}
+.quiz-section h4{font-size:1.1rem;color:var(--c5);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.quiz-q{font-size:1.05rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.quiz-opt{
+  padding:10px 16px;background:#fff;border:2px solid #ddd;
+  border-radius:14px;font-size:.95rem;cursor:pointer;text-align:left;
+  font-family:inherit;color:var(--text);transition:.2s;
+}
+.quiz-opt:hover{border-color:var(--c5);background:#f8f0ff;transform:translateX(4px)}
+.quiz-opt.correct{background:#e8ffec;border-color:var(--c4);color:#2a8c4c}
+.quiz-opt.wrong{background:#ffe8e8;border-color:#ff6b6b;color:#c93030}
+.quiz-feedback{
+  margin-top:8px;padding:10px 14px;border-radius:12px;font-size:.95rem;
+  font-weight:700;display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:#e8ffec;color:#2a8c4c}
+.quiz-feedback.no{background:#ffe8e8;color:#c93030}
+
+.quiz-block{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #e0d0f0}
+.quiz-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+
+/* 教師提示 */
+.teacher-note{
+  background:linear-gradient(135deg,#fff7e0,#fff);
+  border:2px dashed var(--c2);border-radius:14px;
+  padding:14px 18px;font-size:.92rem;margin-top:14px;color:#7a5d00;
+}
+.teacher-note::before{content:'👩‍🏫 教師提示｜';font-weight:700;color:#d49a00}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* 簡報播放器 */
+.slide-section{margin:48px 0}
+.slide-player{
+  background:var(--panel);border-radius:20px;
+  border:3px solid var(--c1);overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.slide-main{
+  position:relative;background:#000;aspect-ratio:16/9;
+  display:flex;align-items:center;justify-content:center;
+}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:50px;height:60px;background:rgba(255,255,255,.85);
+  border:none;color:var(--c1);font-size:2rem;font-weight:900;
+  cursor:pointer;border-radius:30px;
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s;box-shadow:var(--shadow-md);
+}
+.slide-nav-btn:hover{background:var(--c1);color:#fff;transform:translateY(-50%) scale(1.05)}
+.slide-nav-btn.prev{left:14px}
+.slide-nav-btn.next{right:14px}
+.slide-fs-btn{
+  position:absolute;top:14px;right:14px;
+  background:var(--c1);color:#fff;border:none;
+  padding:8px 16px;font-size:.95rem;font-weight:700;
+  cursor:pointer;border-radius:24px;
+  display:flex;align-items:center;gap:6px;
+  z-index:5;font-family:inherit;
+  box-shadow:var(--shadow-md);transition:.2s;
+}
+.slide-fs-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(255,133,179,.4)}
+.slide-counter{
+  position:absolute;left:14px;bottom:14px;
+  background:rgba(0,0,0,.6);color:#fff;
+  padding:5px 12px;border-radius:14px;font-size:.85rem;font-weight:700;
+}
+.slide-strip{
+  display:flex;gap:6px;padding:10px;overflow-x:auto;
+  background:#fff8fc;border-top:2px solid var(--c1);
+  scroll-behavior:smooth;
+}
+.slide-strip::-webkit-scrollbar{height:8px}
+.slide-strip::-webkit-scrollbar-track{background:#fff;border-radius:4px}
+.slide-strip::-webkit-scrollbar-thumb{background:var(--c1);border-radius:4px}
+.strip-thumb{
+  flex-shrink:0;width:120px;aspect-ratio:16/9;
+  border:3px solid #ffd0e0;border-radius:8px;cursor:pointer;
+  background-size:cover;background-position:center;
+  transition:.2s;position:relative;
+}
+.strip-thumb:hover{border-color:var(--c1);transform:translateY(-2px)}
+.strip-thumb.active{border-color:var(--c1);box-shadow:0 0 0 3px var(--c2)}
+.strip-thumb .thumb-num{
+  position:absolute;left:4px;top:4px;
+  background:rgba(255,255,255,.9);color:var(--c1);
+  padding:1px 6px;border-radius:8px;font-size:.7rem;font-weight:700;
+}
+
+/* 全螢幕 */
+#slide-fs{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.96);z-index:9999;
+  align-items:center;justify-content:center;
+}
+#slide-fs.show{display:flex}
+#slide-fs img{max-width:96%;max-height:96%;object-fit:contain}
+.fs-close{
+  position:absolute;top:18px;right:18px;
+  background:var(--c1);color:#fff;border:none;
+  width:48px;height:48px;border-radius:50%;cursor:pointer;
+  font-size:1.4rem;font-weight:900;z-index:2;font-family:inherit;
+  box-shadow:var(--shadow-lg);
+}
+.fs-close:hover{background:#fff;color:var(--c1)}
+.fs-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:80px;
+  background:rgba(255,255,255,.15);border:2px solid var(--c1);color:var(--c1);
+  font-size:2rem;font-weight:900;cursor:pointer;z-index:2;
+  display:flex;align-items:center;justify-content:center;font-family:inherit;
+  border-radius:14px;transition:.2s;
+}
+.fs-nav.prev{left:24px}
+.fs-nav.next{right:24px}
+.fs-nav:hover{background:var(--c1);color:#fff}
+.fs-counter{
+  position:absolute;left:24px;bottom:24px;
+  background:rgba(255,133,179,.85);color:#fff;
+  padding:8px 16px;border-radius:14px;font-weight:700;
+}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none !important}
+
+/* NLM video */
+.nlm-video-section{max-width:1400px;margin:0 auto 48px;padding:0 24px}
+.nlm-video-section h3{font-size:1.2rem;color:var(--c3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.video-wrap{
+  background:var(--panel);border:3px solid var(--c3);
+  border-radius:20px;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.video-ratio{position:relative;padding-top:56.25%;width:100%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{
+  background:#f0f8ff;border-top:2px solid var(--c3);
+  padding:12px 18px;display:flex;align-items:center;
+  gap:12px;flex-wrap:wrap;
+}
+.nlm-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--c3);color:#fff;font-size:.8rem;font-weight:700;
+  padding:5px 12px;border-radius:16px;white-space:nowrap;
+}
+.video-hint{font-size:.92rem;color:var(--dim)}
+.video-no-id{
+  padding:50px 20px;text-align:center;font-size:.95rem;color:var(--dim);
+  border:2px dashed var(--c3);background:#f8fcff;
+}
+.video-no-id .big{font-size:2.5rem;margin-bottom:10px}
+
+/* NLM 資源站 */
+.nb-section{
+  background:linear-gradient(135deg,#fff,#f0fff5);
+  border:3px solid var(--c4);border-radius:20px;
+  padding:28px;margin:48px 0;box-shadow:var(--shadow-lg);
+}
+.nb-section h3{font-size:1.4rem;color:#3da870;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px}
+.nb-card{
+  background:#fff;border:2px solid #c0e8d0;border-radius:16px;
+  padding:18px;text-decoration:none;color:var(--text);
+  transition:.2s;display:block;
+}
+.nb-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--c4)}
+.nb-card .icon{font-size:2rem;margin-bottom:8px}
+.nb-card h4{font-size:1rem;color:#2a8c4c;margin-bottom:6px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.6}
+.nb-flow{
+  background:#fff;border-radius:14px;padding:16px;font-size:.92rem;
+  color:var(--dim);line-height:1.8;margin-bottom:18px;border:1px dashed var(--c4);
+}
+.nb-flow code{
+  background:#fff0f6;color:var(--c1);padding:2px 8px;
+  border-radius:6px;font-family:'Fredoka',monospace;font-weight:700;
+}
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{
+  background:#fff;border:2px solid #d0eed8;border-radius:14px;overflow:hidden;
+}
+.faq-q{
+  padding:14px 18px;font-size:1rem;font-weight:700;cursor:pointer;
+  color:#2a8c4c;display:flex;justify-content:space-between;align-items:center;
+}
+.faq-q::after{content:'＋';font-size:1.4rem;transition:.2s}
+.faq-item.open .faq-q::after{content:'－'}
+.faq-a{
+  padding:0 18px;max-height:0;overflow:hidden;font-size:.95rem;
+  line-height:1.7;color:var(--text);transition:.3s;
+}
+.faq-item.open .faq-a{padding:0 18px 14px;max-height:600px}
+
+/* Project task */
+.project-task{
+  background:linear-gradient(135deg,#fff7e0,#fff);
+  border:3px solid var(--c2);border-radius:20px;
+  padding:28px;margin:48px 0;box-shadow:var(--shadow-lg);
+}
+.project-task h3{font-size:1.4rem;color:#d49a00;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.task-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.task-card{
+  background:#fff;border:2px dashed var(--c2);border-radius:14px;
+  padding:14px;font-size:.95rem;
+}
+.task-card strong{color:#d49a00;display:block;margin-bottom:4px;font-size:1rem}
+
+/* 浮動工具 */
+.float-tools{
+  position:fixed;right:18px;bottom:18px;z-index:400;
+  display:flex;flex-direction:column;gap:8px;
+}
+.float-btn{
+  width:54px;height:54px;border-radius:50%;border:none;
+  cursor:pointer;font-size:1.4rem;
+  box-shadow:var(--shadow-lg);transition:.2s;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+.float-btn:hover{transform:scale(1.1) translateY(-2px)}
+.float-btn.pink{background:var(--c1);color:#fff}
+.float-btn.yellow{background:var(--c2);color:#fff}
+.float-btn.blue{background:var(--c3);color:#fff}
+.float-btn.green{background:var(--c4);color:#fff}
+.float-btn.purple{background:var(--c5);color:#fff}
+
+.tool-panel{
+  position:fixed;right:18px;bottom:90px;z-index:401;
+  background:#fff;border:2px solid var(--c1);
+  border-radius:18px;padding:18px;width:300px;
+  box-shadow:var(--shadow-lg);display:none;
+}
+.tool-panel.show{display:block}
+.tool-panel h4{
+  font-size:1rem;margin-bottom:12px;color:var(--c1);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.tool-panel h4 .close{cursor:pointer;color:var(--dim);font-size:1.1rem}
+.tool-panel input{
+  width:100%;padding:8px 10px;border:2px solid #f0c0d0;
+  border-radius:10px;font-family:inherit;font-size:.95rem;color:var(--text);
+}
+.btn-primary{
+  padding:9px 14px;background:var(--c1);color:#fff;border:none;
+  border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:.2s;font-size:.95rem;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.lottery-result{
+  margin-top:12px;text-align:center;padding:18px;
+  background:linear-gradient(135deg,#fff0f6,#fff);
+  border:2px dashed var(--c1);border-radius:12px;
+  font-size:1.4rem;font-weight:900;color:var(--c1);min-height:60px;
+  display:flex;align-items:center;justify-content:center;
+}
+.timer-display{
+  font-size:2.2rem;font-weight:900;color:var(--c1);text-align:center;
+  padding:14px;background:#fff0f6;border-radius:12px;margin-bottom:10px;
+  font-family:'Fredoka',monospace;
+}
+.timer-controls{display:flex;gap:6px}
+
+/* 畫筆工具 */
+#drawCanvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:250;pointer-events:none;background:transparent;
+}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:18px;bottom:18px;z-index:300;
+  background:#fff;border:2px solid var(--c1);
+  border-radius:18px;padding:10px 14px;
+  display:none;gap:8px;align-items:center;
+  box-shadow:var(--shadow-lg);
+}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{
+  width:28px;height:28px;border:2px solid #fff;
+  border-radius:50%;cursor:pointer;padding:0;transition:.2s;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.draw-toolbar .color-dot.active{transform:scale(1.25);box-shadow:0 0 8px currentColor}
+.draw-toolbar .draw-clear{
+  background:transparent;border:2px solid var(--c5);color:var(--c5);
+  padding:5px 12px;border-radius:14px;font-family:inherit;
+  font-weight:700;cursor:pointer;font-size:.85rem;
+}
+.draw-toolbar .draw-clear:hover{background:var(--c5);color:#fff}
+
+/* Footer */
+.site-footer{
+  text-align:center;padding:30px 20px;color:var(--dim);
+  font-size:.9rem;border-top:2px dashed #ffd0e0;margin-top:48px;
+}
+
+/* 各種互動 widget */
+.lyric-tag-bank,.lyric-tag-target{
+  display:flex;flex-wrap:wrap;gap:8px;padding:14px;border-radius:12px;
+  min-height:56px;
+}
+.lyric-tag-bank{background:#fff8fc;border:2px dashed var(--c5)}
+.lyric-tag-target{background:#f0fff5;border:2px solid var(--c4);margin-top:10px}
+.tag-chip{
+  padding:6px 14px;background:#fff;border:2px solid var(--c5);
+  border-radius:18px;font-weight:700;cursor:grab;
+  color:var(--c5);font-size:.95rem;user-select:none;
+}
+.tag-chip.placed{background:var(--c5);color:#fff;cursor:default}
+.tag-chip.in-target{background:var(--c4);border-color:var(--c4);color:#fff;cursor:pointer}
+
+.style-builder{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
+.style-col{background:#fff;border:2px solid var(--c3);border-radius:12px;padding:10px}
+.style-col label{font-size:.85rem;font-weight:700;color:var(--c3);display:block;margin-bottom:6px}
+.style-col select{
+  width:100%;padding:8px 10px;border:1px solid #c0d8ff;border-radius:8px;
+  font-family:inherit;font-size:.92rem;background:#f8fcff;color:var(--text);
+}
+.style-output{
+  background:linear-gradient(135deg,#0a1428,#1a2848);color:#7be495;
+  font-family:'Fredoka',monospace;padding:14px;border-radius:10px;
+  font-size:.95rem;min-height:54px;line-height:1.7;
+}
+.style-output .placeholder{color:#8090b0}
+
+.song-mood-toggle{
+  display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;
+}
+.mood-btn{
+  flex:1;min-width:140px;padding:14px;
+  background:#fff;border:2px solid #ddd;border-radius:14px;
+  font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+  transition:.2s;color:var(--text);
+}
+.mood-btn:hover{transform:translateY(-2px)}
+.mood-btn.active.classlike{background:var(--c2);border-color:var(--c2);color:#fff}
+.mood-btn.active.gradlike{background:var(--c5);border-color:var(--c5);color:#fff}
+.mood-display{
+  background:#fff;border:2px dashed var(--c3);border-radius:14px;
+  padding:18px;font-size:.95rem;line-height:1.8;min-height:140px;
+}
+.mood-display h5{margin-bottom:8px;font-size:1.05rem}
+.mood-display.classlike h5{color:#d49a00}
+.mood-display.gradlike h5{color:var(--c5)}
+.mood-bar{
+  display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;
+  font-size:.9rem;
+}
+.mood-bar span{
+  padding:4px 10px;background:#f8f8ff;border-radius:12px;
+  border:1px solid #ddd;color:var(--text);
+}
+
+/* MV 時間軸 */
+.mv-timeline{
+  background:#fff;border:2px solid var(--c4);border-radius:14px;
+  padding:14px;margin-bottom:14px;
+}
+.mv-track{
+  height:50px;background:#f0fff5;border-radius:8px;
+  margin-bottom:10px;position:relative;overflow:hidden;
+  display:flex;align-items:center;padding:0 8px;gap:4px;
+}
+.mv-track-label{
+  position:absolute;left:8px;top:4px;font-size:.7rem;
+  color:var(--dim);font-weight:700;z-index:2;
+}
+.mv-clip{
+  height:36px;background:linear-gradient(135deg,var(--c1),var(--c5));
+  border-radius:6px;flex:1;font-size:.7rem;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+}
+.mv-clip.audio{background:linear-gradient(135deg,var(--c4),#3da870);height:24px;flex:1}
+.mv-stats{
+  display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem;color:var(--dim);
+}
+.mv-stats span{padding:4px 10px;background:#f0fff5;border-radius:10px}
+
+/* Responsive */
+@media(max-width:720px){
+  html{font-size:17px}
+  .container{padding:14px}
+  .hero{padding:24px}
+  .hero h1{font-size:1.7rem}
+  .header-title{font-size:1.15rem}
+  .stage-pill{font-size:.85rem;padding:8px 14px}
+  .stage-pill .num{width:24px;height:24px;font-size:.78rem}
+  .float-btn{width:46px;height:46px;font-size:1.2rem}
+  .tool-panel{width:calc(100% - 36px);right:18px;left:18px}
+  .strip-thumb{width:90px}
+  .slide-nav-btn{width:42px;height:50px;font-size:1.5rem}
+  .slide-fs-btn{font-size:.85rem;padding:6px 12px}
+  #slide-fs .fs-nav{width:46px;height:64px;font-size:1.6rem}
+  #slide-fs .fs-nav.prev{left:8px}
+  #slide-fs .fs-nav.next{right:8px}
+  .fs-close{width:40px;height:40px;top:12px;right:12px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title-area">
+      <div class="header-title"><span class="emoji">🎤</span>用 Suno 設計班級神曲</div>
+      <div class="header-sub">
+        <span class="header-chip">六年級</span>
+        <span class="header-chip" style="background:var(--c2);color:#5a4400">資訊科技</span>
+        <span style="font-size:.85rem">A-E-A1 ｜ 5 個關卡</span>
+        <div class="progress-rail" style="flex:1;min-width:140px;margin-left:8px">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-toggle" title="教師密碼：it2026">
+      <button class="mode-btn active" id="modeStudent">👦 學生模式</button>
+      <button class="mode-btn" id="modeTeacher">👩‍🏫 教師模式</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1><span class="emoji">🎵</span>從 ChatGPT 寫詞到 Suno 唱出班級畢業神曲</h1>
+    <p class="lead">想像一下：用<strong>每天 50 點免費</strong>的 Suno AI，把全班最棒的回憶變成一首完整的歌！再用 Canva 配上同學的照片，做成獨一無二的畢業 MV，在畢業典禮上感動全班。本駕駛艙帶你 5 關通過，從班級主題曲一路升級到專屬畢業歌！</p>
+    <div class="objs">
+      <div class="obj-chip">🎶 認識 Suno AI</div>
+      <div class="obj-chip c2">✍️ 用 ChatGPT 寫詞</div>
+      <div class="obj-chip c3">🎹 Custom 模式作曲</div>
+      <div class="obj-chip c4">🎓 升級畢業歌</div>
+      <div class="obj-chip c5">🎬 Canva 製作 MV</div>
+    </div>
+  </section>
+
+  <!-- 關卡導覽 -->
+  <nav class="stage-nav">
+    <a class="stage-pill" href="#sec1"><span class="num">1</span>認識 Suno</a>
+    <a class="stage-pill" href="#sec2"><span class="num">2</span>AI 寫歌詞</a>
+    <a class="stage-pill" href="#sec3"><span class="num">3</span>生成班歌</a>
+    <a class="stage-pill" href="#sec4"><span class="num">4</span>升級畢業歌</a>
+    <a class="stage-pill" href="#sec5"><span class="num">5</span>下載＋MV</a>
+  </nav>
+
+  <!-- ============= STAGE 1 ============= -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 1</span>
+      <h2 class="section-title">🎶 認識 Suno AI 與註冊</h2>
+    </div>
+    <p class="section-sub">Suno 就像一台「神奇音樂料理機」🥘 — 你輸入文字食材（歌詞、風格），它就煮出一道有歌手演唱的歌曲大餐！</p>
+
+    <img src="assets/01_認識Suno與註冊.jpg" alt="認識 Suno AI 與註冊資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c1)">
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>打開瀏覽器進入 <strong>suno.com</strong>，點右上角「Sign Up」，選 <strong>Google 帳號</strong>快速註冊登入。</li>
+        <li><span class="step-num">2</span>登入後 Suno 會自動送你 <strong>每天 50 點 credits</strong>（每次生成扣 10 點，等於每天 10 首歌！）</li>
+        <li><span class="step-num">3</span>看左邊選單，點選 <strong>「Create（創作）」</strong> — 這就是施展音樂魔法的地方。</li>
+        <li><span class="step-num">4</span>頁面上方有兩個模式：把開關切到 <strong>「Custom（自訂）」</strong>，才能自己貼歌詞、決定曲風。</li>
+        <li><span class="step-num">5</span>熟悉三大欄位：<strong>Lyrics</strong>（歌詞）、<strong>Style of Music</strong>（風格）、<strong>Title</strong>（歌名）。</li>
+      </ol>
+      <div class="tip-box"><strong>💡 重要：</strong>Suno 規定使用者必須滿 13 歲，未滿 18 歲使用前要先取得家長同意喔！</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：模擬 Suno 註冊與介面點擊</h4>
+      <p class="canvas-prompt">點擊下方的步驟按鈕，看看 Suno 的介面長什麼樣！</p>
+      <div class="canvas-wrap">
+        <canvas id="signupCanvas" width="900" height="320" style="width:100%;height:320px;background:#fff;border-radius:12px;border:1px solid #f0c0d0"></canvas>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn-primary" onclick="signupStep(1)">① 進入 suno.com</button>
+          <button class="btn-primary" onclick="signupStep(2)" style="background:var(--c2);color:#5a4400">② 點 Sign Up</button>
+          <button class="btn-primary" onclick="signupStep(3)" style="background:var(--c3)">③ 用 Google 登入</button>
+          <button class="btn-primary" onclick="signupStep(4)" style="background:var(--c4);color:#1a4a2a">④ 領 50 點</button>
+          <button class="btn-primary" onclick="signupStep(5)" style="background:var(--c5)">⑤ 切到 Custom</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-block" data-q="1-1">
+        <div class="quiz-q">Q1. Suno 免費版每天送幾點 credits？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,1)">10 點（生成 1 首歌）</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>50 點（生成 10 首歌）</button>
+          <button class="quiz-opt" onclick="ans(this,0)">100 點（無限生成）</button>
+          <button class="quiz-opt" onclick="ans(this,0)">需要付費才有點數</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block" data-q="1-2">
+        <div class="quiz-q">Q2. 想自己貼歌詞並指定曲風，要切到哪個模式？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">Simple Mode（簡單模式）</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>Custom Mode（自訂模式）</button>
+          <button class="quiz-opt" onclick="ans(this,0)">Pro Mode（專業模式）</button>
+          <button class="quiz-opt" onclick="ans(this,0)">Random Mode（隨機模式）</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">引導學生實際完成註冊：建議在課前要求家長簽署「AI 工具課堂使用同意書」。可全班統一示範一次後讓每位學生用個人 Google 帳號註冊，避免共用帳號造成 credits 競爭。</div>
+  </section>
+
+  <!-- ============= STAGE 2 ============= -->
+  <section id="sec2" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c2);color:#5a4400">STAGE 2</span>
+      <h2 class="section-title">✍️ 用 ChatGPT / Gemini 寫班歌歌詞</h2>
+    </div>
+    <p class="section-sub">分工合作！ChatGPT 是「作文小幫手」📝、Suno 是「作曲大師」🎼。先讓 AI 寫出押韻又有結構的歌詞，再交給 Suno 譜曲。</p>
+
+    <img src="assets/02_用AI寫歌詞.jpg" alt="用 AI 寫歌詞流程圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c2)">
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>打開 ChatGPT 或 Gemini（實測 Gemini 寫歌詞的押韻和結構效果略勝一籌！）</li>
+        <li><span class="step-num">2</span><strong>收集班級回憶素材</strong>：大隊接力、校外教學、班導口頭禪、最愛下課時光…全都可以！</li>
+        <li><span class="step-num">3</span>下達明確指令，範例：<br><em>「請幫我寫一首國小六年級班歌，主題『我們是六年三班』。涵蓋大隊接力第一名、班導陳老師口頭禪『再加油一點』、校外教學動物園。風格活潑歡樂，請用 [Verse]/[Chorus] 結構分段，句尾押韻。」</em></li>
+        <li><span class="step-num">4</span>歌詞用 <strong>結構標籤</strong>分段：<code>[Intro]</code>→<code>[Verse]</code>→<code>[Chorus]</code>→<code>[Verse]</code>→<code>[Chorus]</code>→<code>[Bridge]</code>→<code>[Outro]</code></li>
+        <li><span class="step-num">5</span>要求<strong>句尾押韻</strong> — 唱起來才順口好記！</li>
+        <li><span class="step-num">6</span>從 AI 給的歌詞中挑最喜歡的，<strong>動手改成班級專屬版本</strong>。</li>
+      </ol>
+      <div class="tip-box"><strong>🍔 漢堡比喻：</strong>歌曲結構就像吃漢堡 — <strong>主歌</strong>是上下「麵包」（說故事），<strong>副歌</strong>是好吃的「漢堡肉」（最洗腦），<strong>橋段</strong>是驚喜的「酸黃瓜」（轉折），<strong>尾奏</strong>是擦嘴巴的滿足感。</div>
+      <div class="tip-box" style="border-left-color:#ff6b6b;background:#fff8f8"><strong>⚠️ 安全：</strong>歌詞中<strong>絕對不要寫同學的真實全名、家裡電話或住址</strong>，避免洩漏隱私。可以用「小華」、「阿明」這種綽號代替！</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：把標籤拖進歌詞排出正確結構</h4>
+      <p class="canvas-prompt">幫這首歌組合出正確的結構順序：開場 → 主歌 → 副歌 → 主歌 → 副歌 → 橋段 → 尾奏</p>
+      <div class="canvas-wrap">
+        <div style="font-size:.92rem;color:var(--dim);margin-bottom:6px">🎁 標籤庫（點擊把它放進歌曲）</div>
+        <div class="lyric-tag-bank" id="tagBank">
+          <span class="tag-chip" data-tag="[Verse]" onclick="placeTag(this)">[Verse] 主歌</span>
+          <span class="tag-chip" data-tag="[Chorus]" onclick="placeTag(this)">[Chorus] 副歌</span>
+          <span class="tag-chip" data-tag="[Intro]" onclick="placeTag(this)">[Intro] 前奏</span>
+          <span class="tag-chip" data-tag="[Bridge]" onclick="placeTag(this)">[Bridge] 橋段</span>
+          <span class="tag-chip" data-tag="[Outro]" onclick="placeTag(this)">[Outro] 尾奏</span>
+          <span class="tag-chip" data-tag="[Verse]" onclick="placeTag(this)">[Verse] 主歌</span>
+          <span class="tag-chip" data-tag="[Chorus]" onclick="placeTag(this)">[Chorus] 副歌</span>
+        </div>
+        <div style="font-size:.92rem;color:var(--dim);margin-top:14px;margin-bottom:6px">🎵 歌曲結構（按順序放入正確的標籤）</div>
+        <div class="lyric-tag-target" id="tagTarget"></div>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+          <button class="btn-primary" onclick="checkTagOrder()" style="background:var(--c4);color:#1a4a2a">✅ 檢查答案</button>
+          <button class="btn-primary" onclick="resetTags()" style="background:var(--c5)">↻ 重來</button>
+        </div>
+        <div id="tagFeedback" style="margin-top:10px;font-weight:700"></div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-block" data-q="2-1">
+        <div class="quiz-q">Q1. 為什麼建議搭配 ChatGPT/Gemini 寫歌詞，再丟給 Suno？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">因為 Suno 不會寫歌詞</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>ChatGPT 擅長押韻和結構，分工合作品質更高</button>
+          <button class="quiz-opt" onclick="ans(this,0)">Suno 不支援中文歌詞</button>
+          <button class="quiz-opt" onclick="ans(this,0)">會省 credits</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block" data-q="2-2">
+        <div class="quiz-q">Q2. 副歌（整首歌最洗腦的精華）對應哪個標籤？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">[Verse]</button>
+          <button class="quiz-opt" onclick="ans(this,0)">[Bridge]</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>[Chorus]</button>
+          <button class="quiz-opt" onclick="ans(this,0)">[Outro]</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block" data-q="2-3">
+        <div class="quiz-q">Q3. 寫班歌歌詞時，下列哪一項<strong>絕對不能</strong>放？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">大隊接力第一名的回憶</button>
+          <button class="quiz-opt" onclick="ans(this,0)">班導的口頭禪</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>同學的真實全名和家裡電話</button>
+          <button class="quiz-opt" onclick="ans(this,0)">校外教學去哪裡</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">建議帶學生先做「班級回憶大網羅」白板腦力激盪 15 分鐘，再分組讓不同組用 ChatGPT vs Gemini 比較歌詞品質。提醒學生即使 AI 寫得好也要動手修改 — 這是創作的核心，不是抄寫。</div>
+  </section>
+
+  <!-- ============= STAGE 3 ============= -->
+  <section id="sec3" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c3)">STAGE 3</span>
+      <h2 class="section-title">🎹 把歌詞貼進 Suno 生成第一首班歌</h2>
+    </div>
+    <p class="section-sub">三個魔法欄位 + 一個 Create 按鈕，30 秒就生出兩個版本！</p>
+
+    <img src="assets/03_Custom模式生成班歌.jpg" alt="Custom 模式生成班歌資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c3)">
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>確認在 <strong>Custom 模式</strong>，把 ChatGPT 修好的歌詞貼進「Lyrics」框（含結構標籤）。</li>
+        <li><span class="step-num">2</span>填寫 <strong>Style of Music</strong>，建議用<strong>英文</strong>（Suno 主要用英文訓練比較準）。範例：<code>upbeat pop, joyful, electric guitar and drums, BPM 120</code></li>
+        <li><span class="step-num">3</span>取個響亮的歌名，例如「六年三班的冒險日記」。</li>
+        <li><span class="step-num">4</span>點大大的 <strong>Create</strong> 按鈕（扣 10 點 credits）！</li>
+        <li><span class="step-num">5</span>等 20–40 秒，Suno 會一次生出 <strong>兩個版本</strong>，輪流試聽。</li>
+        <li><span class="step-num">6</span>挑最棒的一首，按愛心收藏 — 第一首班歌完成！🎉</li>
+      </ol>
+      <div class="tip-box"><strong>📮 寄信比喻：</strong>三個欄位就像寄信 — <strong>Lyrics</strong> 是「信紙內容」、<strong>Style of Music</strong> 是「信封顏色裝飾」、<strong>Title</strong> 是「收件人標題」。</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：Style of Music 提示詞組合器</h4>
+      <p class="canvas-prompt">選擇音樂類型 + 情緒 + 樂器 + 速度，產生你的 Style 提示詞！</p>
+      <div class="canvas-wrap">
+        <div class="style-builder">
+          <div class="style-col">
+            <label>🎵 音樂類型</label>
+            <select id="styleGenre" onchange="updateStyleOutput()">
+              <option value="upbeat pop">流行樂 (pop)</option>
+              <option value="acoustic folk">民謠 (folk)</option>
+              <option value="rock">搖滾 (rock)</option>
+              <option value="K-pop dance">K-pop 舞曲</option>
+              <option value="piano ballad">鋼琴抒情</option>
+              <option value="8-bit chiptune">8-bit 遊戲樂</option>
+              <option value="hip-hop">嘻哈饒舌</option>
+            </select>
+          </div>
+          <div class="style-col">
+            <label>💫 情緒</label>
+            <select id="styleMood" onchange="updateStyleOutput()">
+              <option value="joyful">歡樂 (joyful)</option>
+              <option value="energetic">有活力 (energetic)</option>
+              <option value="warm and emotional">溫暖感人</option>
+              <option value="nostalgic">懷舊感</option>
+              <option value="hopeful">充滿希望</option>
+              <option value="upbeat and youthful">青春洋溢</option>
+            </select>
+          </div>
+          <div class="style-col">
+            <label>🎸 主要樂器</label>
+            <select id="styleInst" onchange="updateStyleOutput()">
+              <option value="electric guitar and drums">電吉他＋鼓</option>
+              <option value="piano and strings">鋼琴＋弦樂</option>
+              <option value="acoustic guitar">木吉他</option>
+              <option value="synthesizer">合成器</option>
+              <option value="full band">整組樂團</option>
+              <option value="orchestra">管弦樂</option>
+            </select>
+          </div>
+          <div class="style-col">
+            <label>⏱️ 速度 BPM</label>
+            <select id="styleBpm" onchange="updateStyleOutput()">
+              <option value="BPM 120">中快 (120)</option>
+              <option value="BPM 90">中速 (90)</option>
+              <option value="BPM 70">慢板 (70)</option>
+              <option value="BPM 140">快歌 (140)</option>
+            </select>
+          </div>
+        </div>
+        <div style="font-size:.85rem;color:var(--dim);margin-bottom:6px">📋 你的 Style of Music 提示詞（直接複製貼到 Suno）：</div>
+        <div class="style-output" id="styleOutput"><span class="placeholder">選擇上方欄位看結果...</span></div>
+        <button class="btn-primary" onclick="copyStyle()" style="margin-top:10px">📋 複製到剪貼簿</button>
+        <span id="copyMsg" style="margin-left:10px;color:var(--c4);font-weight:700"></span>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-block" data-q="3-1">
+        <div class="quiz-q">Q1. 在 Suno Custom 模式按一次 Create 會發生什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">扣 50 credits 生成 1 首歌</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>扣 10 credits 一次生成 2 個版本可以挑選</button>
+          <button class="quiz-opt" onclick="ans(this,0)">免費生成不扣點數</button>
+          <button class="quiz-opt" onclick="ans(this,0)">扣 5 credits 生成 5 首歌</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block" data-q="3-2">
+        <div class="quiz-q">Q2. Style of Music 寫得太籠統（例如只寫「好聽的歌」）會怎樣？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">Suno 會自動補完美設定</button>
+          <button class="quiz-opt" onclick="ans(this,0)">不會生成任何音樂</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>AI 亂猜，會生出普通的罐頭音樂</button>
+          <button class="quiz-opt" onclick="ans(this,0)">生成的歌會比較長</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">「風格實驗室」活動建議：用同一首歌詞，讓 A/B/C 三組分別輸入不同 Style of Music（例如搖滾 vs 鋼琴抒情 vs K-pop），各播 30 秒，討論「同詞不同曲」的感受差別。每組約耗 10 credits，Free 帳號完全足夠。</div>
+  </section>
+
+  <!-- ============= STAGE 4 ============= -->
+  <section id="sec4" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c5)">STAGE 4</span>
+      <h2 class="section-title">🎓 升級成班級專屬畢業歌</h2>
+    </div>
+    <p class="section-sub">把「歡樂班歌」變成「溫暖畢業歌」 — 改歌詞、改風格，還能用 Persona 保留同一個歌手嗓音，用 Extend 把短歌延長到完整版！</p>
+
+    <img src="assets/04_升級畢業歌.jpg" alt="升級畢業歌資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c5)">
+
+    <div class="steps-card">
+      <h4>📋 操作步驟（從班歌升級成畢業歌）</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span><strong>修改歌詞主題</strong>：原本「衝刺終點線、笑聲滿教室」改成「驪歌響起時、感謝陳老師、要珍重再見、未來會發光」。</li>
+        <li><span class="step-num">2</span><strong>調整風格變溫暖抒情</strong>：Style of Music 改成 <code>warm Chinese ballad, emotional, soft female vocals, piano and strings, slow tempo BPM 70, graduation theme</code></li>
+        <li><span class="step-num">3</span><strong>用 Persona 保留歌手嗓音</strong>：找喜歡的班歌 → 點「⋯」→ Create > Make Persona → 取名「六年三班專屬歌手」。</li>
+        <li><span class="step-num">4</span>下次做新歌時，在 Custom 模式上方點 Personas → 選剛建立的角色 → Style of Music 自動填入。</li>
+        <li><span class="step-num">5</span><strong>用 Extend 延長</strong>：歌只唱 1 分鐘？點「⋯」→ Remix/Edit → Extend，把剩下歌詞貼上 → Create。</li>
+        <li><span class="step-num">6</span><strong>合併完整版</strong>：點「⋯」→ Create > <strong>Get Whole Song</strong>，Suno 會把延長段縫合成完整歌。</li>
+      </ol>
+      <div class="tip-box"><strong>⚡ Persona 比喻：</strong>就像寶可夢的精靈球！把喜歡的歌手聲音「收進球裡」，下次戰鬥（做新歌）時隨時叫出來繼續為你們班唱歌！</div>
+      <div class="tip-box" style="border-left-color:#ff6b6b;background:#fff8f8"><strong>⚠️ 注意：</strong>Replace Section（替換段落）是 <strong>Pro 付費版</strong>才有的功能！免費版只能用 Extend 延長。</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：班歌 vs 畢業歌風格對比</h4>
+      <p class="canvas-prompt">點擊兩個按鈕，看看同一首歌詞用不同 Style of Music 會有什麼差別！</p>
+      <div class="canvas-wrap">
+        <div class="song-mood-toggle">
+          <button class="mood-btn active classlike" id="moodBtnClass" onclick="switchMood('class')">🎉 歡樂班歌</button>
+          <button class="mood-btn gradlike" id="moodBtnGrad" onclick="switchMood('grad')">🎓 溫暖畢業歌</button>
+        </div>
+        <div class="mood-display classlike" id="moodDisplay">
+          <h5>🎉 歡樂班級主題曲</h5>
+          <p><strong>歌詞主題：</strong>大隊接力衝刺、笑聲滿教室、班導陳老師的口頭禪「再加油一點」、最棒的下課時光。</p>
+          <p style="margin-top:8px"><strong>Style of Music：</strong></p>
+          <code style="display:block;background:#fff7e0;padding:10px;border-radius:8px;margin-top:4px;font-size:.92rem">upbeat pop, joyful and energetic, electric guitar and drums, BPM 120, youthful Chinese vocals</code>
+          <div class="mood-bar">
+            <span>🎵 流行 / 搖滾</span>
+            <span>⏱️ 快板 BPM 120</span>
+            <span>😄 開心活潑</span>
+            <span>🎤 年輕嗓音</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-block" data-q="4-1">
+        <div class="quiz-q">Q1. Persona（角色）功能的最大用途是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">幫歌詞自動押韻</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>把喜歡的歌手嗓音保存起來，新歌可以用同一個歌手</button>
+          <button class="quiz-opt" onclick="ans(this,0)">把歌詞翻譯成英文</button>
+          <button class="quiz-opt" onclick="ans(this,0)">每天送你 100 點 credits</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block" data-q="4-2">
+        <div class="quiz-q">Q2. 歌只有 1 分鐘怎麼變成 3 分鐘完整版？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">重新 Create 三次</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>使用 Extend（延長）功能，貼上剩下歌詞繼續生成</button>
+          <button class="quiz-opt" onclick="ans(this,0)">用慢速播放就會變長</button>
+          <button class="quiz-opt" onclick="ans(this,0)">必須付費升級才能變長</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block" data-q="4-3">
+        <div class="quiz-q">Q3. 從班歌升級成畢業歌，<strong>歌詞</strong>該怎麼調整？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">完全不變，只改風格就好</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>加入感謝師長、六年回憶、展望未來的元素</button>
+          <button class="quiz-opt" onclick="ans(this,0)">把所有歌詞改成英文</button>
+          <button class="quiz-opt" onclick="ans(this,0)">刪掉副歌讓歌變短</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">建議學生先用 STAGE 3 完成班歌後，再操作 STAGE 4 的 Persona + Extend，這樣才有「升級感」。提醒：Replace Section 是付費功能，免費版做出短版再用 Extend 延長即可。每次 Extend 也要扣 10 credits，安排活動時要注意 credits 預算。</div>
+  </section>
+
+  <!-- ============= STAGE 5 ============= -->
+  <section id="sec5" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c4);color:#1a4a2a">STAGE 5</span>
+      <h2 class="section-title">🎬 下載 MP3 ＋ 用 Canva 做畢業 MV</h2>
+    </div>
+    <p class="section-sub">把畢業歌配上班級照片，做成感動全班的畢業 MV，在畢業典禮上播放！</p>
+
+    <img src="assets/05_下載與畢業MV.jpg" alt="下載與畢業 MV 製作流程" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c4)">
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>在 Suno 找到畢業歌 → 點「⋯」→ <strong>Download → MP3 Audio</strong>，存到電腦。</li>
+        <li><span class="step-num">2</span>到班級雲端硬碟<strong>下載活動照片</strong>（運動會、校外教學、畢業旅行）— 約 24 張（120 秒影片，每張 5 秒）。</li>
+        <li><span class="step-num">3</span>打開 <strong>Canva</strong> → 新增 1080p 影片專案。</li>
+        <li><span class="step-num">4</span>把照片<strong>全部上傳到 Canva 圖庫</strong>（拖曳到「上傳項目」區）。</li>
+        <li><span class="step-num">5</span>把 Suno 的 MP3 拖到底部<strong>音軌</strong>，配合節奏調整每張照片秒數。</li>
+        <li><span class="step-num">6</span>加入<strong>歌詞字幕</strong>和<strong>轉場特效</strong>（漸變、滑動）。</li>
+        <li><span class="step-num">7</span>右上角 Share → Download → <strong>MP4 格式</strong>匯出。</li>
+        <li><span class="step-num">8</span>畢業典禮上播放，感動全班！🎓✨</li>
+      </ol>
+      <div class="tip-box"><strong>⚖️ 法律小知識：</strong>依台灣著作權法第 55 條，學校畢業典禮「<strong>非營利、不收費、不付表演者費用</strong>」屬於「合理使用」，可以合法公開播放你們的 Suno 作品！但別把錄音檔分送給校外人士或拿去 YouTube 開營利。</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：模擬 Canva MV 時間軸</h4>
+      <p class="canvas-prompt">調整數字，看看你的 MV 需要多少張照片！</p>
+      <div class="canvas-wrap">
+        <div class="mv-timeline">
+          <div style="font-size:.85rem;color:var(--dim);margin-bottom:6px">📹 影像軌（每張照片 <span id="mvSec">5</span> 秒）</div>
+          <div class="mv-track" id="mvVideoTrack">
+            <span class="mv-track-label">VIDEO</span>
+          </div>
+          <div style="font-size:.85rem;color:var(--dim);margin:10px 0 6px">🎵 音樂軌（Suno 畢業歌）</div>
+          <div class="mv-track" style="background:#e8fff0">
+            <span class="mv-track-label">AUDIO</span>
+            <div class="mv-clip audio">🎵 graduation-song.mp3</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+          <label style="font-size:.92rem;font-weight:700;color:var(--c4)">🎬 影片總長度（秒）：
+            <input type="number" id="mvDuration" value="120" min="30" max="240" style="width:80px;padding:6px;border:2px solid #c0e8d0;border-radius:8px;font-family:inherit" oninput="renderMV()">
+          </label>
+          <label style="font-size:.92rem;font-weight:700;color:var(--c4)">📸 每張照片秒數：
+            <input type="number" id="mvPerPic" value="5" min="2" max="10" style="width:80px;padding:6px;border:2px solid #c0e8d0;border-radius:8px;font-family:inherit" oninput="renderMV()">
+          </label>
+        </div>
+        <div class="mv-stats" id="mvStats"></div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>🎯 形成性評量</h4>
+      <div class="quiz-block" data-q="5-1">
+        <div class="quiz-q">Q1. 學校畢業典禮播 Suno 生成的歌違法嗎？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">違法，必須付權利金</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>不違法！畢業典禮屬於著作權法第 55 條合理使用</button>
+          <button class="quiz-opt" onclick="ans(this,0)">必須先寄信給 Suno 公司</button>
+          <button class="quiz-opt" onclick="ans(this,0)">只能用一段不超過 30 秒</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block" data-q="5-2">
+        <div class="quiz-q">Q2. 想做 120 秒的畢業 MV，每張照片 5 秒切換，總共需要幾張照片？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,0)">12 張</button>
+          <button class="quiz-opt" onclick="ans(this,0)">18 張</button>
+          <button class="quiz-opt" onclick="ans(this,1)" data-correct>24 張</button>
+          <button class="quiz-opt" onclick="ans(this,0)">120 張</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">建議畢業 MV 製作獨立排一節電腦課（40 分鐘）。提醒學生 Canva 上傳的歌曲要從 Suno 下載 MP3，不要直接用 Canva 內建的版權歌曲（Canva 內建歌曲若用於商業有版權問題，但教育典禮使用 OK）。匯出建議 MP4 格式，相容性最好。</div>
+  </section>
+
+  <!-- 今日實作任務 -->
+  <section class="project-task">
+    <h3>🎯 今日實作任務｜班級畢業神曲完整製作</h3>
+    <p style="margin-bottom:8px;color:var(--dim)">把今天學到的 5 個關卡串聯起來，做出一份完整的畢業作品！</p>
+    <div class="task-grid">
+      <div class="task-card"><strong>🎨 任務 A｜班級回憶大網羅</strong>全班腦力激盪寫下 10 個最棒回憶，挑選 5 個寫進歌詞。（15 分）</div>
+      <div class="task-card"><strong>📝 任務 B｜AI 寫詞 PK</strong>各組用 ChatGPT 或 Gemini 寫出含 [Verse]/[Chorus] 結構的歌詞，全班票選最佳版本。（20 分）</div>
+      <div class="task-card"><strong>🎹 任務 C｜風格實驗室</strong>用同一首歌詞配上不同 Style of Music（搖滾/鋼琴抒情/K-pop），比較聽感。（20 分）</div>
+      <div class="task-card"><strong>🎓 任務 D｜畢業歌總決選</strong>修改成畢業主題、用 Persona 保留歌手嗓音、Extend 延長到 3 分鐘，全班盲聽投票。（30 分）</div>
+      <div class="task-card"><strong>🎬 任務 E｜畢業 MV 製作</strong>下載 MP3 + Canva 配照片 + 加字幕 + 加轉場 → 匯出 MP4 影片。（40 分）</div>
+      <div class="task-card"><strong>🎤 任務 F｜畢業典禮首映</strong>把 MV 上傳到班級雲端，畢業典禮現場播放，全班一起感動落淚！（畢業典禮當日）</div>
+    </div>
+  </section>
+
+  <!-- NotebookLM 資源站 -->
+  <section class="nb-section">
+    <h3>📚 NotebookLM AI 學習資源站</h3>
+    <p style="color:var(--dim);margin-bottom:14px">本駕駛艙的所有教材，都是用 NotebookLM AI 從 75 個網路來源整理萃取，再由 Claude 編寫成互動式教學頁面！下面是相關的 AI 學習資源：</p>
+    <div class="nb-grid">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/e0797e65-8ee1-46a9-93f3-e30b089916fd" target="_blank" rel="noopener">
+        <div class="icon">📒</div>
+        <h4>主筆記本（精簡本）</h4>
+        <p>含完整教學精華 + 主講者插畫，是生成簡報、影片、資訊圖表的核心來源。</p>
+      </a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/515559f9-b38e-4707-9996-3de343ea102e" target="_blank" rel="noopener">
+        <div class="icon">🔬</div>
+        <h4>研究本（完整來源）</h4>
+        <p>包含 75 個網路來源（Suno 官方、Reddit、教育部落格、台灣著作權法），可深度查詢任何細節。</p>
+      </a>
+      <a class="nb-card" href="https://suno.com" target="_blank" rel="noopener">
+        <div class="icon">🎵</div>
+        <h4>Suno AI 官網</h4>
+        <p>用 Google 帳號註冊立即開始創作，每天 50 點免費 credits，能做 10 首歌！</p>
+      </a>
+    </div>
+    <div class="nb-flow">
+      <strong>🔄 本頁面如何由 AI 生成？</strong><br>
+      <code>1. 深度搜尋</code> NotebookLM 從網路抓 75 個來源 →
+      <code>2. 萃取精華</code> AI 整理成完整教學筆記 →
+      <code>3. 生成素材</code> 自動產生簡報＋影片＋5 張資訊圖表 →
+      <code>4. 編寫頁面</code> Claude AI 設計互動式駕駛艙 →
+      <code>5. 部署上線</code> GitHub Pages 公開分享！
+    </div>
+    <h4 style="font-size:1.1rem;color:#3da870;margin:14px 0 10px">❓ 常見問題 FAQ</h4>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q1. Suno 真的免費嗎？學生用自己 Google 帳號會被收費嗎？</div>
+        <div class="faq-a">完全不用花錢！Suno 提供每天 50 點免費額度，用 Google 帳號註冊登入是免費的。不過系統規定使用者必須滿 13 歲，老師建議大家先跟爸爸媽媽說一聲，得到同意後再一起開心創作最安心。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q2. 為什麼一定要用 ChatGPT 寫歌詞？我自己寫不行嗎？</div>
+        <div class="faq-a">當然可以自己寫！老師超鼓勵你們寫下最真實的班級回憶，這會讓班歌更有溫度。我們搭配 ChatGPT 只是請它當小助手，幫忙把好點子修飾得更押韻、更符合主歌與副歌的段落格式，讓 AI 歌手唱起來更好聽而已。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q3. 為什麼我打的中文歌詞，Suno 唱出來變成怪怪的發音？</div>
+        <div class="faq-a">Suno 像個剛學中文的外國小幫手，遇到比較少見的中文字有時會唸不準。沒關係！把那個字換成「同音字」（例如「獴」改成「夢」），或在字跟字中間加個空白鍵換氣，它就能聰明地唱對囉。等做好後再把文字改回原本的字！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q4. 畢業典禮播 Suno 生成的歌會不會違反版權？</div>
+        <div class="faq-a">學校畢業典禮因為沒有收費，公開播放你們的心血結晶是合法且符合「合理使用」的（依台灣著作權法第 55 條），不用擔心！不過免費版做出來的歌不能拿去賣錢，如果想傳到 YouTube 紀念，記得不要開啟營利功能，並標明是用 Suno AI 創作的。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q5. 我的歌只有 1 分多鐘，怎麼變成 3 分鐘的完整版？</div>
+        <div class="faq-a">這是因為 AI 每次只會先生成一小段音樂！想讓它繼續唱，只要點歌曲旁邊的「Extend（延長）」按鈕就可以。把還沒唱完的歌詞貼進去，Suno 就會順著原本的旋律，把整首畢業歌完整唱完。最後點 Get Whole Song 把延長段縫合成完整版。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q6. 不小心把歌生壞了 credits 還是被扣，可以退嗎？</div>
+        <div class="faq-a">哎呀，AI 有時候也會調皮搗蛋做出奇怪的音樂，但只要按下生成鍵，點數扣了就沒辦法退還！別灰心，Suno 每天都會重新送我們 50 點免費額度，下次按下按鈕前記得多檢查一下歌詞跟風格提示詞，明天再試一次就好啦！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q7. Style of Music 要寫中文還是英文比較好？</div>
+        <div class="faq-a">兩種都可以，但建議寫英文比較準確（Suno 主要用英文訓練）。歌詞用中文沒問題，但風格欄位用英文，例如 <code>warm piano ballad, emotional, female vocals</code>。中文 Style 也能用，但要寫得很具體（音樂類型 + 情緒 + 樂器），否則 AI 容易亂猜。</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.container -->
+
+<!-- 簡報播放器 -->
+<section class="slide-section container">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--c5)">SLIDES</span>
+    <h2 class="section-title">📊 授課簡報</h2>
+  </div>
+  <p class="section-sub">由 NotebookLM 自動生成，主講者「阿凱老師」貫穿全頁。雙擊或按右上角按鈕進入全螢幕模式。</p>
+
+  <div class="slide-player">
+    <div class="slide-main" ondblclick="openSlideFullscreen()">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+      <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+      <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕（Esc 退出）">⛶ 全螢幕</button>
+      <div class="slide-counter" id="slide-counter">1 / 15</div>
+    </div>
+    <div class="slide-strip" id="slide-strip"></div>
+  </div>
+</section>
+
+<!-- 全螢幕 overlay -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="fs-counter" id="slide-fs-counter">1 / 15</div>
+</div>
+
+<!-- NotebookLM 自學影片 -->
+<section class="nlm-video-section">
+  <h3>🎬 學生自學影片（NotebookLM × YouTube）</h3>
+  <div class="video-wrap">
+    <div class="video-ratio">
+      <iframe
+        src="https://www.youtube.com/embed/zTchta70j0M?rel=0&modestbranding=1"
+        title="用 Suno 設計班級神曲｜NotebookLM 教學影片"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"></iframe>
+    </div>
+    <div class="video-meta">
+      <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+      <span class="video-hint">💡 建議用耳機觀看，可搭配上方簡報一起複習</span>
+      <a href="https://www.youtube.com/watch?v=zTchta70j0M" target="_blank" rel="noopener" style="margin-left:auto;color:var(--c3);font-size:.85rem">↗ 在 YouTube 開啟</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>🤖 本駕駛艙由 <strong>NotebookLM</strong>（深度搜尋＋萃取教材）＋ <strong>Claude AI</strong>（互動頁面設計）＋ <strong>GitHub Pages</strong>（部署）共同完成</p>
+  <p style="margin-top:6px">© 2026 IT COCKPIT｜六年級資訊科技 · 教師密碼 <code style="background:#fff8fc;padding:2px 8px;border-radius:6px;color:var(--c1)">it2026</code></p>
+</footer>
+
+<!-- 浮動工具 -->
+<div class="float-tools">
+  <button class="float-btn pink" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn green" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn purple" onclick="goTop()" title="回到頂部">⬆️</button>
+</div>
+
+<!-- 抽籤器面板 -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:60px;padding:4px 6px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:60px;padding:4px 6px">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c5)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<!-- 計時器面板 -->
+<div class="tool-panel" id="panel-timer" style="border-color:var(--c3)">
+  <h4 style="color:var(--c3)">⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timer-disp" style="color:var(--c3);background:#f0f8ff">00:00</div>
+  <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="setTimerSec(60)" style="background:var(--c3);font-size:.85rem;padding:7px 10px">1 min</button>
+    <button class="btn-primary" onclick="setTimerSec(180)" style="background:var(--c3);font-size:.85rem;padding:7px 10px">3 min</button>
+    <button class="btn-primary" onclick="setTimerSec(300)" style="background:var(--c3);font-size:.85rem;padding:7px 10px">5 min</button>
+    <button class="btn-primary" onclick="setTimerSec(600)" style="background:var(--c3);font-size:.85rem;padding:7px 10px">10 min</button>
+  </div>
+  <div class="timer-controls">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1;background:var(--c4);color:#1a4a2a">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="flex:1;background:var(--c2);color:#5a4400">⏸ 暫停</button>
+    <button class="btn-primary" onclick="resetTimer()" style="flex:1;background:var(--c5)">↻</button>
+  </div>
+</div>
+
+<!-- 畫筆 -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd740" onclick="setPenColor('#ffd740',this)"></button>
+  <button class="color-dot" style="background:#00e5ff" onclick="setPenColor('#00e5ff',this)"></button>
+  <button class="color-dot" style="background:#69ff47" onclick="setPenColor('#69ff47',this)"></button>
+  <button class="color-dot" style="background:#b388ff" onclick="setPenColor('#b388ff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+/* ============ Mode toggle ============ */
+document.getElementById('modeStudent').addEventListener('click', ()=>{
+  document.body.classList.remove('teacher-mode');
+  document.getElementById('modeStudent').classList.add('active');
+  document.getElementById('modeTeacher').classList.remove('active');
+});
+document.getElementById('modeTeacher').addEventListener('click', ()=>{
+  const pwd = prompt('🔐 請輸入教師密碼：');
+  if(pwd === 'it2026'){
+    document.body.classList.add('teacher-mode');
+    document.getElementById('modeTeacher').classList.add('active');
+    document.getElementById('modeStudent').classList.remove('active');
+  } else if(pwd !== null) {
+    alert('密碼不對喔！');
+  }
+});
+
+/* ============ Quiz ============ */
+const quizState = {};
+function ans(btn, isCorrect){
+  const block = btn.closest('.quiz-block');
+  const qid = block.dataset.q;
+  if(quizState[qid]) return; // 已答過
+  const fb = block.querySelector('.quiz-feedback');
+  if(isCorrect){
+    btn.classList.add('correct');
+    const okMsg = ['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','💯 完美！','🎵 答得超棒！'];
+    fb.textContent = okMsg[Math.floor(Math.random()*okMsg.length)];
+    fb.className = 'quiz-feedback show ok';
+    quizState[qid] = 'ok';
+  } else {
+    btn.classList.add('wrong');
+    const correct = block.querySelector('[data-correct]');
+    if(correct) correct.classList.add('correct');
+    fb.textContent = '💡 沒關係！正確答案已經標出來了，仔細看看再記一次～';
+    fb.className = 'quiz-feedback show no';
+    quizState[qid] = 'no';
+  }
+  // 鎖住所有按鈕
+  block.querySelectorAll('.quiz-opt').forEach(b=>b.style.pointerEvents='none');
+  updateProgress();
+}
+function updateProgress(){
+  const total = document.querySelectorAll('.quiz-block').length;
+  const done = Object.keys(quizState).length;
+  document.getElementById('progressFill').style.width = (done/total*100) + '%';
+}
+
+/* ============ Stage 1: Signup canvas ============ */
+const signupCanvas = document.getElementById('signupCanvas');
+const sCtx = signupCanvas.getContext('2d');
+function drawSignupBase(){
+  sCtx.fillStyle='#fff';sCtx.fillRect(0,0,900,320);
+  // browser frame
+  sCtx.fillStyle='#fef3f8';sCtx.fillRect(20,20,860,30);
+  sCtx.fillStyle='#ff6b9a';sCtx.beginPath();sCtx.arc(40,35,6,0,7);sCtx.fill();
+  sCtx.fillStyle='#ffd54f';sCtx.beginPath();sCtx.arc(60,35,6,0,7);sCtx.fill();
+  sCtx.fillStyle='#7be495';sCtx.beginPath();sCtx.arc(80,35,6,0,7);sCtx.fill();
+  sCtx.fillStyle='#fff';sCtx.fillRect(110,25,500,20);
+  sCtx.fillStyle='#888';sCtx.font='13px sans-serif';
+  sCtx.fillText('🔒 suno.com',120,40);
+  // body
+  sCtx.fillStyle='#fff';sCtx.fillRect(20,50,860,250);
+  sCtx.strokeStyle='#ff85b3';sCtx.lineWidth=2;sCtx.strokeRect(20,50,860,250);
+}
+function signupStep(n){
+  drawSignupBase();
+  sCtx.fillStyle='#2a2244';sCtx.font='bold 22px sans-serif';
+  if(n===1){
+    sCtx.fillText('🎵 Suno',60,100);
+    sCtx.font='16px sans-serif';sCtx.fillStyle='#666';
+    sCtx.fillText('Make any song you can imagine',60,130);
+    sCtx.fillStyle='#ff85b3';sCtx.fillRect(700,75,150,40);
+    sCtx.fillStyle='#fff';sCtx.font='bold 16px sans-serif';
+    sCtx.fillText('Sign Up →',730,100);
+    drawArrow(680,95,700,95);
+    sCtx.fillStyle='#d49a00';sCtx.font='bold 14px sans-serif';
+    sCtx.fillText('① 點右上角 Sign Up 按鈕',60,260);
+  } else if(n===2){
+    sCtx.fillStyle='#fff';sCtx.fillRect(280,90,340,180);sCtx.strokeStyle='#ff85b3';sCtx.strokeRect(280,90,340,180);
+    sCtx.fillStyle='#2a2244';sCtx.font='bold 18px sans-serif';
+    sCtx.fillText('Sign in to Suno',360,120);
+    sCtx.fillStyle='#fff';sCtx.strokeStyle='#ddd';sCtx.lineWidth=1;
+    sCtx.strokeRect(310,140,280,40);
+    sCtx.fillStyle='#4285f4';sCtx.font='bold 14px sans-serif';
+    sCtx.fillText('🔵 Continue with Google',330,164);
+    sCtx.strokeRect(310,190,280,40);sCtx.fillStyle='#222';
+    sCtx.fillText('🟣 Continue with Discord',330,214);
+    sCtx.strokeRect(310,235,280,30);sCtx.fillStyle='#0078d4';
+    sCtx.fillText('🟦 Continue with Microsoft',330,254);
+    drawArrow(280,160,310,160);
+    sCtx.fillStyle='#d49a00';sCtx.font='bold 14px sans-serif';
+    sCtx.fillText('② 跳出登入視窗，三種方式都可以',60,290);
+  } else if(n===3){
+    sCtx.fillStyle='#f0f8ff';sCtx.fillRect(280,90,340,180);
+    sCtx.strokeStyle='#4285f4';sCtx.lineWidth=2;sCtx.strokeRect(280,90,340,180);
+    sCtx.fillStyle='#4285f4';sCtx.font='bold 18px sans-serif';
+    sCtx.fillText('🔵 Choose an account',330,120);
+    sCtx.fillStyle='#fff';sCtx.strokeStyle='#ccc';sCtx.lineWidth=1;
+    sCtx.strokeRect(310,140,280,50);
+    sCtx.fillStyle='#ffd54f';sCtx.beginPath();sCtx.arc(335,165,15,0,7);sCtx.fill();
+    sCtx.fillStyle='#fff';sCtx.font='bold 14px sans-serif';sCtx.fillText('小',330,170);
+    sCtx.fillStyle='#222';sCtx.font='14px sans-serif';
+    sCtx.fillText('小華同學',360,160);
+    sCtx.fillStyle='#888';sCtx.font='12px sans-serif';
+    sCtx.fillText('xiaohua@gmail.com',360,178);
+    sCtx.fillStyle='#d49a00';sCtx.font='bold 14px sans-serif';
+    sCtx.fillText('③ 選自己的 Google 帳號 → 完成登入！',60,290);
+  } else if(n===4){
+    sCtx.fillStyle='#fff';sCtx.fillRect(60,80,780,160);
+    sCtx.strokeStyle='#7be495';sCtx.lineWidth=3;sCtx.strokeRect(60,80,780,160);
+    sCtx.fillStyle='#3da870';sCtx.font='bold 28px sans-serif';
+    sCtx.fillText('🎉 歡迎加入！',300,130);
+    sCtx.fillStyle='#fef3f8';sCtx.fillRect(150,150,600,70);
+    sCtx.strokeStyle='#ff85b3';sCtx.lineWidth=2;sCtx.strokeRect(150,150,600,70);
+    sCtx.fillStyle='#ff85b3';sCtx.font='bold 36px sans-serif';
+    sCtx.fillText('💎 50 Credits',310,195);
+    sCtx.fillStyle='#888';sCtx.font='14px sans-serif';
+    sCtx.fillText('每天送你 50 點 = 10 首歌',330,215);
+    sCtx.fillStyle='#d49a00';sCtx.font='bold 14px sans-serif';
+    sCtx.fillText('④ 登入成功！每天自動領 50 點 credits',60,290);
+  } else if(n===5){
+    sCtx.fillStyle='#f5f5fa';sCtx.fillRect(20,50,180,250);
+    sCtx.fillStyle='#ff85b3';sCtx.fillRect(40,70,140,30);
+    sCtx.fillStyle='#fff';sCtx.font='bold 14px sans-serif';
+    sCtx.fillText('+ Create',75,90);
+    sCtx.fillStyle='#666';sCtx.font='13px sans-serif';
+    ['Library','Personas','Settings'].forEach((t,i)=>sCtx.fillText(t,55,130+i*30));
+    sCtx.fillStyle='#fff';sCtx.fillRect(220,80,640,200);
+    sCtx.strokeStyle='#ff85b3';sCtx.strokeRect(220,80,640,200);
+    sCtx.fillStyle='#2a2244';sCtx.font='bold 16px sans-serif';
+    sCtx.fillText('Mode:',240,110);
+    sCtx.fillStyle='#ddd';sCtx.fillRect(290,90,100,30);
+    sCtx.fillStyle='#666';sCtx.font='13px sans-serif';sCtx.fillText('Simple',315,110);
+    sCtx.fillStyle='#ff85b3';sCtx.fillRect(395,90,100,30);
+    sCtx.fillStyle='#fff';sCtx.font='bold 13px sans-serif';sCtx.fillText('Custom ✓',410,110);
+    drawArrow(395,75,395,90);
+    sCtx.fillStyle='#888';sCtx.font='12px sans-serif';
+    sCtx.fillText('Lyrics:',240,150);sCtx.strokeStyle='#ddd';sCtx.lineWidth=1;sCtx.strokeRect(240,160,600,50);
+    sCtx.fillText('Style of Music:',240,225);sCtx.strokeRect(240,235,400,30);
+    sCtx.fillText('Title:',660,225);sCtx.strokeRect(660,235,180,30);
+    sCtx.fillStyle='#d49a00';sCtx.font='bold 14px sans-serif';
+    sCtx.fillText('⑤ 切到 Custom 模式 → 看到三大欄位！',60,300);
+  }
+}
+function drawArrow(x1,y1,x2,y2){
+  sCtx.strokeStyle='#ff4081';sCtx.lineWidth=3;
+  sCtx.beginPath();sCtx.moveTo(x1,y1);sCtx.lineTo(x2,y2);sCtx.stroke();
+  sCtx.fillStyle='#ff4081';
+  sCtx.beginPath();sCtx.moveTo(x2,y2);sCtx.lineTo(x2-8,y2-5);sCtx.lineTo(x2-8,y2+5);sCtx.fill();
+}
+drawSignupBase();
+sCtx.fillStyle='#888';sCtx.font='15px sans-serif';
+sCtx.fillText('👆 點上方按鈕看 Suno 註冊與介面 5 個步驟',280,170);
+
+/* ============ Stage 2: Lyric tag drag/click ============ */
+const correctOrder = ['[Intro]','[Verse]','[Chorus]','[Verse]','[Chorus]','[Bridge]','[Outro]'];
+const targetEl = document.getElementById('tagTarget');
+function placeTag(el){
+  if(el.classList.contains('placed')) return;
+  el.classList.add('placed');
+  const clone = document.createElement('span');
+  clone.className = 'tag-chip in-target';
+  clone.dataset.tag = el.dataset.tag;
+  clone.textContent = el.textContent;
+  clone.onclick = ()=>{ clone.remove(); el.classList.remove('placed'); };
+  targetEl.appendChild(clone);
+}
+function checkTagOrder(){
+  const placed = Array.from(targetEl.children).map(c=>c.dataset.tag);
+  const fb = document.getElementById('tagFeedback');
+  if(placed.length !== correctOrder.length){
+    fb.textContent = '⚠️ 還沒放滿！請放 7 個標籤（Intro→Verse→Chorus→Verse→Chorus→Bridge→Outro）';
+    fb.style.color = '#d49a00';return;
+  }
+  const ok = placed.every((t,i)=>t===correctOrder[i]);
+  if(ok){
+    fb.textContent = '🎉 太棒了！這就是完整的歌曲結構！';
+    fb.style.color = 'var(--c4)';
+  } else {
+    fb.textContent = '💡 順序不太對，正確是：[Intro]→[Verse]→[Chorus]→[Verse]→[Chorus]→[Bridge]→[Outro]';
+    fb.style.color = '#c93030';
+  }
+}
+function resetTags(){
+  targetEl.innerHTML='';
+  document.querySelectorAll('#tagBank .tag-chip').forEach(c=>c.classList.remove('placed'));
+  document.getElementById('tagFeedback').textContent='';
+}
+
+/* ============ Stage 3: Style of Music builder ============ */
+function updateStyleOutput(){
+  const g = document.getElementById('styleGenre').value;
+  const m = document.getElementById('styleMood').value;
+  const i = document.getElementById('styleInst').value;
+  const b = document.getElementById('styleBpm').value;
+  document.getElementById('styleOutput').innerHTML = `${g}, ${m}, ${i}, ${b}`;
+}
+function copyStyle(){
+  const text = document.getElementById('styleOutput').textContent;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>{
+      const m = document.getElementById('copyMsg');
+      m.textContent = '✅ 已複製！';
+      setTimeout(()=>m.textContent='',1500);
+    });
+  }
+}
+updateStyleOutput();
+
+/* ============ Stage 4: Mood compare ============ */
+function switchMood(mode){
+  const display = document.getElementById('moodDisplay');
+  document.getElementById('moodBtnClass').classList.toggle('active', mode==='class');
+  document.getElementById('moodBtnGrad').classList.toggle('active', mode==='grad');
+  if(mode==='class'){
+    display.className = 'mood-display classlike';
+    display.innerHTML = `
+      <h5>🎉 歡樂班級主題曲</h5>
+      <p><strong>歌詞主題：</strong>大隊接力衝刺、笑聲滿教室、班導陳老師的口頭禪「再加油一點」、最棒的下課時光。</p>
+      <p style="margin-top:8px"><strong>Style of Music：</strong></p>
+      <code style="display:block;background:#fff7e0;padding:10px;border-radius:8px;margin-top:4px;font-size:.92rem">upbeat pop, joyful and energetic, electric guitar and drums, BPM 120, youthful Chinese vocals</code>
+      <div class="mood-bar">
+        <span>🎵 流行 / 搖滾</span><span>⏱️ 快板 BPM 120</span>
+        <span>😄 開心活潑</span><span>🎤 年輕嗓音</span>
+      </div>`;
+  } else {
+    display.className = 'mood-display gradlike';
+    display.innerHTML = `
+      <h5>🎓 溫暖畢業歌</h5>
+      <p><strong>歌詞主題：</strong>驪歌響起時、感謝陳老師六年陪伴、要珍重再見、未來會發光、不忘這份友情。</p>
+      <p style="margin-top:8px"><strong>Style of Music：</strong></p>
+      <code style="display:block;background:#f0e8ff;padding:10px;border-radius:8px;margin-top:4px;font-size:.92rem">warm Chinese ballad, emotional and nostalgic, soft female vocals, piano and strings, slow tempo BPM 70, graduation theme</code>
+      <div class="mood-bar">
+        <span>🎵 鋼琴抒情</span><span>⏱️ 慢板 BPM 70</span>
+        <span>🥺 溫暖感人</span><span>🎤 深情嗓音</span>
+        <span>💎 用 Persona 鎖嗓音</span>
+      </div>`;
+  }
+}
+
+/* ============ Stage 5: MV timeline ============ */
+function renderMV(){
+  const dur = parseInt(document.getElementById('mvDuration').value) || 120;
+  const per = parseInt(document.getElementById('mvPerPic').value) || 5;
+  const count = Math.ceil(dur / per);
+  document.getElementById('mvSec').textContent = per;
+  const track = document.getElementById('mvVideoTrack');
+  track.querySelectorAll('.mv-clip').forEach(c=>c.remove());
+  const maxVisual = Math.min(count, 24);
+  for(let i=0;i<maxVisual;i++){
+    const clip = document.createElement('div');
+    clip.className = 'mv-clip';
+    clip.style.flex = '1';
+    clip.textContent = (count<=12)?`📷 ${i+1}`:'';
+    track.appendChild(clip);
+  }
+  document.getElementById('mvStats').innerHTML = `
+    <span>📸 需要照片：<strong>${count}</strong> 張</span>
+    <span>⏱️ 總長度：<strong>${dur}</strong> 秒（${(dur/60).toFixed(1)} 分鐘）</span>
+    <span>🎵 Suno 歌曲長度建議：<strong>${dur}</strong> 秒</span>
+    ${count>maxVisual?`<span style="color:var(--c1)">💡 顯示前 ${maxVisual} 張</span>`:''}
+  `;
+}
+renderMV();
+
+/* ============ Slide player ============ */
+const TOTAL_SLIDES = 15;
+const SLIDE_LIST = Array.from({length:TOTAL_SLIDES}, (_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+let currentSlide = 0;
+
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  SLIDE_LIST.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0?' active':'');
+    t.style.backgroundImage = `url(${src})`;
+    t.dataset.idx = i;
+    t.innerHTML = `<span class="thumb-num">${i+1}</span>`;
+    t.onclick = ()=> goSlide(i);
+    strip.appendChild(t);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n<0||n>=TOTAL_SLIDES) return;
+  currentSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = `${n+1} / ${TOTAL_SLIDES}`;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  // 同步全螢幕
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${TOTAL_SLIDES}`;
+  }
+  // 縮圖列只捲動內部
+  const activeThumb = document.querySelector('.strip-thumb.active');
+  if(activeThumb){
+    const strip = document.getElementById('slide-strip');
+    const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+  }
+}
+function slideNav(dir){ goSlide(currentSlide + dir); }
+function openSlideFullscreen(){
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[currentSlide];
+  document.getElementById('slide-fs-counter').textContent = `${currentSlide+1} / ${TOTAL_SLIDES}`;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key==='Escape') closeSlideFullscreen();
+    else if(e.key==='ArrowLeft') slideNav(-1);
+    else if(e.key==='ArrowRight') slideNav(1);
+  }
+});
+
+/* ============ Float panels ============ */
+function togglePanel(name){
+  const p = document.getElementById('panel-'+name);
+  const on = !p.classList.contains('show');
+  document.querySelectorAll('.tool-panel').forEach(x=>x.classList.remove('show'));
+  if(on) p.classList.add('show');
+}
+
+/* ============ Lottery ============ */
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){alert('最小號必須 ≤ 最大號！');return;}
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const t = setInterval(()=>{
+    const n = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = n + ' 號';
+  }, 60);
+  setTimeout(()=>{
+    clearInterval(t);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max-min+1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+/* ============ Timer ============ */
+let timerSec = 0, timerOrig = 0, timerInt = null;
+function setTimerSec(s){ timerSec = timerOrig = s; updateTimerDisp(); }
+function updateTimerDisp(){
+  const m = Math.floor(timerSec/60).toString().padStart(2,'0');
+  const s = (timerSec%60).toString().padStart(2,'0');
+  document.getElementById('timer-disp').textContent = `${m}:${s}`;
+}
+function startTimer(){
+  if(timerInt) return;
+  if(timerSec<=0){ alert('先選一個時間！'); return; }
+  timerInt = setInterval(()=>{
+    timerSec--; updateTimerDisp();
+    if(timerSec<=0){
+      clearInterval(timerInt); timerInt=null;
+      alert('⏰ 時間到！');
+    }
+  }, 1000);
+}
+function pauseTimer(){ if(timerInt){clearInterval(timerInt); timerInt=null;} }
+function resetTimer(){ pauseTimer(); timerSec = timerOrig; updateTimerDisp(); }
+
+/* ============ Drawing ============ */
+let drawActive = false, penColor='#ff4081', penSize=4;
+let drawCanvas, drawCtx, isDrawing=false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e=>{
+    if(!drawActive) return;
+    isDrawing=true; dLastX=e.clientX; dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mousemove', e=>{
+    if(!drawActive||!isDrawing) return;
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX,dLastY); drawCtx.lineTo(e.clientX,e.clientY); drawCtx.stroke();
+    dLastX=e.clientX; dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', ()=> isDrawing=false);
+  drawCanvas.addEventListener('touchstart', e=>{
+    if(!drawActive) return;
+    e.preventDefault();
+    const t = e.touches[0]; isDrawing=true; dLastX=t.clientX; dLastY=t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e=>{
+    if(!drawActive||!isDrawing) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX,dLastY); drawCtx.lineTo(t.clientX,t.clientY); drawCtx.stroke();
+    dLastX=t.clientX; dLastY=t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', ()=> isDrawing=false);
+  window.addEventListener('resize', ()=>{
+    const data = drawCtx.getImageData(0,0,drawCanvas.width,drawCanvas.height);
+    drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+    drawCtx.putImageData(data,0,0);
+  });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  const b = document.getElementById('drawToggleBtn');
+  b.style.background = drawActive ? 'var(--c1)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+
+/* ============ Helpers ============ */
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+
+/* ============ Init ============ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  initSlidePlayer();
+  initDraw();
+});
+</script>
+
+</body>
+</html>
