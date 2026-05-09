@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaGamO 國小天地世界冒險｜三年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/pagamo-world/">
+<meta property="og:title" content="PaGamO 國小天地世界冒險｜三年級資訊科技">
+<meta property="og:description" content="用學校信箱登入 PaGamO 國小天地，世界任務佔領土地、班級任務拿紅包、背包道具與地形升級全圖解！四大關卡帶國小三年級小朋友變身遊戲學習高手。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/pagamo-world/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/pagamo-world/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d2818; --surface:#143821; --panel:#1d4a2c;
+  --c1:#4caf50; --c2:#ffd740; --c3:#ff85b3; --c4:#69ff47; --c5:#00e5ff;
+  --text:#e8f5e9; --dim:#7fa888;
+  --shadow-px:4px 4px 0 #000;
+  --shadow-px-lg:6px 6px 0 #000;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:20px;scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans TC',sans-serif;line-height:1.8;
+  background:var(--bg);color:var(--text);
+  background-image:
+    linear-gradient(rgba(76,175,80,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,175,80,.04) 1px, transparent 1px);
+  background-size:30px 30px;
+}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+a{color:var(--c1);text-decoration:none}
+.pix-font{font-family:'Press Start 2P',monospace;letter-spacing:.05em}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,40,24,.95);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:3px solid var(--c1);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;
+  border:2px solid var(--c2);background:transparent;color:var(--c2);
+  font-family:'Press Start 2P',monospace;font-size:.55rem;letter-spacing:1px;
+  text-decoration:none;font-weight:700;
+  transition:.2s;white-space:nowrap;box-shadow:3px 3px 0 #000;
+}
+.home-btn:hover{
+  background:var(--c2);color:var(--bg);
+  transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000;
+}
+.brand{display:flex;align-items:center;gap:14px;flex:1;min-width:300px}
+.brand-icon{
+  width:52px;height:52px;background:var(--c1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--bg);font-weight:900;box-shadow:var(--shadow-px);
+}
+.brand-text h1{font-size:1.15rem;font-weight:900;color:var(--text);line-height:1.3}
+.brand-text .sub{font-size:.85rem;color:var(--dim);margin-top:2px}
+.grade-chip{
+  background:var(--c2);color:var(--bg);padding:6px 14px;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  font-weight:900;box-shadow:3px 3px 0 #000;
+}
+.progress-strip{
+  width:100%;display:flex;gap:6px;padding:10px 24px 14px;
+  max-width:1400px;margin:0 auto;
+}
+.progress-strip .prog-cell{
+  flex:1;height:10px;background:var(--surface);
+  border:2px solid var(--panel);position:relative;
+}
+.progress-strip .prog-cell.done{background:var(--c1);border-color:var(--c1)}
+.progress-strip .prog-cell.active{background:var(--c2);border-color:var(--c2);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+/* ============ MODE BAR ============ */
+.mode-bar{
+  background:var(--panel);border-bottom:2px solid var(--c1);
+  padding:8px 24px;display:flex;align-items:center;gap:14px;
+  font-size:.85rem;flex-wrap:wrap;
+}
+.mode-bar label{display:flex;align-items:center;gap:6px;color:var(--dim);cursor:pointer}
+.mode-bar .mode-tag{background:var(--c5);color:var(--bg);padding:3px 10px;font-weight:700;font-size:.75rem}
+.mode-bar input{transform:scale(1.2);accent-color:var(--c1)}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+body.teacher-mode .teacher-only.inline{display:inline}
+
+/* ============ HERO ============ */
+.hero{padding:36px 0 18px;text-align:center}
+.hero h2{
+  font-size:2.2rem;font-weight:900;line-height:1.4;
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:8px;
+}
+.hero p{font-size:1.05rem;color:var(--dim);max-width:900px;margin:0 auto}
+.objectives{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:24px 0 18px;
+}
+.obj-chip{
+  background:var(--surface);border:2px solid var(--c1);color:var(--c1);
+  padding:9px 18px;font-size:1rem;font-weight:700;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:3px 3px 0 #000;
+}
+.obj-chip .obj-emoji{font-size:1.2rem}
+.stage-pills{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0 28px;
+}
+.stage-pills a{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 20px;font-size:.95rem;font-weight:700;
+  background:var(--panel);border:2px solid var(--c2);color:var(--text);
+  text-decoration:none;transition:.2s;box-shadow:3px 3px 0 #000;
+}
+.stage-pills a:hover{background:var(--c2);color:var(--bg);transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
+.stage-pills .num{
+  font-family:'Press Start 2P',monospace;font-size:.55rem;
+  background:var(--c1);color:var(--bg);padding:4px 7px;
+}
+
+/* ============ LEVEL SECTION ============ */
+.level-section{
+  margin:48px 0;padding:32px;
+  background:var(--surface);border:3px solid var(--c1);
+  position:relative;box-shadow:var(--shadow-px-lg);
+}
+.section-header{
+  display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;
+}
+.stage-badge{
+  font-family:'Press Start 2P',monospace;font-size:.62rem;
+  background:var(--c1);color:var(--bg);padding:8px 14px;
+  white-space:nowrap;box-shadow:3px 3px 0 #000;
+}
+.section-title{font-size:1.5rem;font-weight:900;color:var(--text)}
+.section-sub{
+  width:100%;color:var(--dim);font-size:1rem;margin-top:4px;
+}
+.steps-card{
+  background:var(--panel);border:2px solid var(--c2);
+  padding:22px;margin:20px 0;box-shadow:var(--shadow-px);
+}
+.steps-card h4{
+  font-size:1.1rem;color:var(--c2);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.steps-list li{
+  font-size:1rem;display:flex;gap:12px;align-items:flex-start;
+  padding:10px;background:var(--surface);border-left:4px solid var(--c1);
+}
+.step-num{
+  flex-shrink:0;width:36px;height:36px;background:var(--c1);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:1rem;
+}
+.step-text{flex:1;line-height:1.7}
+.tip-box{
+  background:rgba(255,215,64,.1);border-left:4px solid var(--c2);
+  padding:14px 18px;margin:14px 0;font-size:.95rem;color:var(--c2);
+}
+.tip-box::before{content:"💡 ";font-size:1.2rem}
+
+/* Canvas section */
+.canvas-section{
+  margin:24px 0;background:var(--bg);border:2px solid var(--c5);
+  padding:18px;box-shadow:var(--shadow-px);
+}
+.canvas-section h4{font-size:1.05rem;color:var(--c5);margin-bottom:12px}
+.canvas-section .canvas-hint{font-size:.9rem;color:var(--dim);margin-bottom:12px}
+.canvas-wrap{
+  background:#000;border:2px solid var(--c5);min-height:280px;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:14px;padding:18px;
+}
+.sim-btn{
+  background:var(--panel);border:2px solid var(--c1);color:var(--text);
+  padding:10px 18px;font-size:.95rem;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:.15s;box-shadow:3px 3px 0 #000;
+}
+.sim-btn:hover{background:var(--c1);color:var(--bg);transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
+.sim-btn.active{background:var(--c2);border-color:var(--c2);color:var(--bg)}
+.sim-btn.disabled{opacity:.4;cursor:not-allowed}
+.sim-message{
+  width:100%;text-align:center;margin-top:14px;font-size:1rem;color:var(--c4);
+  font-weight:700;min-height:1.5rem;
+}
+#login-canvas,#quest-canvas,#class-canvas,#bag-canvas{
+  width:100%;background:#000;border:2px solid var(--c5);max-width:760px;
+}
+
+/* Quiz section */
+.quiz-section{
+  margin:24px 0;background:var(--panel);border:2px solid var(--c3);
+  padding:22px;box-shadow:var(--shadow-px);
+}
+.quiz-section h4{font-size:1.1rem;color:var(--c3);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.quiz-q{
+  margin-bottom:20px;padding-bottom:20px;border-bottom:1px dashed var(--dim);
+}
+.quiz-q:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.quiz-q .q-text{font-size:1.05rem;font-weight:700;margin-bottom:12px;color:var(--text)}
+.quiz-q .q-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  background:var(--surface);border:2px solid var(--c1);color:var(--text);
+  padding:11px 16px;font-size:1rem;text-align:left;cursor:pointer;
+  font-family:inherit;transition:.15s;
+}
+.quiz-opt:hover:not(.locked){background:var(--c1);color:var(--bg)}
+.quiz-opt.correct{background:var(--c4);border-color:var(--c4);color:var(--bg);font-weight:700}
+.quiz-opt.wrong{background:#ff4081;border-color:#ff4081;color:#fff;text-decoration:line-through}
+.quiz-opt.locked{cursor:default}
+.quiz-feedback{
+  margin-top:10px;font-size:.95rem;padding:10px;
+  background:var(--surface);border-left:4px solid var(--c4);
+  display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.wrong{border-left-color:#ff4081;color:var(--c3)}
+
+/* Teacher note */
+.teacher-note{
+  margin-top:22px;padding:16px;
+  background:rgba(0,229,255,.1);border:2px dashed var(--c5);
+  font-size:.95rem;color:var(--c5);
+}
+.teacher-note::before{content:"👨‍🏫 教師備註：";font-weight:900;display:block;margin-bottom:6px}
+
+/* ============ TERRAIN COMPARE ============ */
+.terrain-compare{margin:24px 0;background:var(--panel);border:2px solid var(--c2);padding:22px;box-shadow:var(--shadow-px)}
+.terrain-compare h4{font-size:1.1rem;color:var(--c2);margin-bottom:14px}
+.terrain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.terrain-card{
+  background:var(--surface);border:2px solid var(--c1);padding:14px;text-align:center;
+  position:relative;overflow:hidden;transition:.2s;
+}
+.terrain-card:hover{transform:translateY(-3px);box-shadow:4px 4px 0 #000}
+.terrain-card .t-emoji{font-size:2.2rem;margin-bottom:6px}
+.terrain-card .t-name{font-size:1rem;font-weight:700;color:var(--c1)}
+.terrain-card .t-coin{
+  font-family:'Press Start 2P',monospace;font-size:.95rem;
+  color:var(--c2);margin-top:6px;
+}
+.terrain-card .t-level{
+  position:absolute;top:6px;right:6px;font-size:.75rem;color:var(--dim);
+}
+.terrain-card.tier1{border-color:var(--dim)}
+.terrain-card.tier2{border-color:var(--c1)}
+.terrain-card.tier3{border-color:var(--c2);box-shadow:0 0 12px rgba(255,215,64,.3)}
+
+/* ============ PROJECT TASK ============ */
+.project-task{
+  margin:48px 0;background:linear-gradient(135deg,var(--surface),var(--panel));
+  border:3px solid var(--c4);padding:32px;box-shadow:var(--shadow-px-lg);
+}
+.project-task h3{
+  font-size:1.5rem;font-weight:900;color:var(--c4);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.task-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:18px}
+.task-item{
+  background:var(--surface);border:2px solid var(--c4);padding:16px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.task-item .t-num{
+  flex-shrink:0;width:34px;height:34px;background:var(--c4);color:var(--bg);
+  font-weight:900;font-size:1rem;display:flex;align-items:center;justify-content:center;
+}
+.task-item p{font-size:.95rem;line-height:1.6}
+
+/* ============ NLM SECTION ============ */
+.nb-section{
+  margin:48px 0;background:var(--surface);border:3px solid var(--c5);
+  padding:32px;box-shadow:var(--shadow-px-lg);
+}
+.nb-section h3{
+  font-size:1.5rem;font-weight:900;color:var(--c5);margin-bottom:18px;
+  display:flex;align-items:center;gap:10px;
+}
+.nb-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px}
+.nb-card{
+  background:var(--panel);border:2px solid var(--c5);padding:16px;
+  text-decoration:none;color:inherit;transition:.2s;display:block;
+}
+.nb-card:hover{transform:translateY(-3px);box-shadow:4px 4px 0 #000;background:var(--surface)}
+.nb-card h4{font-size:1.05rem;color:var(--c5);margin-bottom:6px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.6}
+.nb-flow{
+  background:var(--bg);padding:18px;font-size:.95rem;
+  border-left:4px solid var(--c2);margin:18px 0;line-height:1.8;
+}
+.faq{margin-top:14px}
+.faq-q{
+  background:var(--panel);padding:12px 16px;font-size:1rem;font-weight:700;
+  cursor:pointer;color:var(--c2);border-left:4px solid var(--c2);
+  margin-top:10px;display:flex;justify-content:space-between;align-items:center;
+}
+.faq-q::after{content:"+";font-size:1.4rem;color:var(--c1);transition:.2s}
+.faq-q.open::after{content:"−";color:var(--c3)}
+.faq-a{
+  display:none;padding:14px 18px;background:var(--surface);
+  font-size:.95rem;line-height:1.7;border-left:4px solid var(--c1);
+}
+.faq-a.show{display:block}
+
+/* ============ SLIDE PLAYER ============ */
+.slide-section{margin:48px 0}
+.slide-section h3{font-size:1.4rem;color:var(--c2);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.slide-player{background:var(--surface);border:3px solid var(--c2);box-shadow:var(--shadow-px-lg);overflow:hidden}
+.slide-main{position:relative;background:#000;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:60px;background:rgba(0,0,0,.6);color:var(--c2);
+  border:2px solid var(--c2);font-size:1.6rem;cursor:pointer;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+.slide-nav-btn.prev{left:10px}
+.slide-nav-btn.next{right:10px}
+.slide-nav-btn:hover{background:var(--c2);color:var(--bg)}
+.slide-counter{
+  position:absolute;bottom:10px;left:14px;
+  background:rgba(0,0,0,.7);color:var(--c2);padding:5px 11px;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+}
+.slide-fs-btn{
+  position:absolute;top:12px;right:12px;
+  background:var(--c1);color:#fff;border:none;padding:8px 14px;
+  font-size:.9rem;cursor:pointer;font-weight:700;
+  font-family:inherit;display:flex;align-items:center;gap:6px;
+  box-shadow:3px 3px 0 #000;z-index:5;transition:.15s;
+}
+.slide-fs-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
+.slide-strip{
+  display:flex;gap:8px;padding:14px;background:var(--bg);
+  overflow-x:auto;border-top:2px solid var(--c2);
+}
+.strip-thumb{
+  flex-shrink:0;width:120px;aspect-ratio:16/9;border:2px solid var(--panel);
+  cursor:pointer;background-size:cover;background-position:center;transition:.2s;
+}
+.strip-thumb.active{border-color:var(--c2);box-shadow:0 0 8px var(--c2)}
+.strip-thumb:hover{border-color:var(--c1)}
+
+/* Fullscreen */
+#slide-fs{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);
+  z-index:9999;display:none;align-items:center;justify-content:center;
+}
+#slide-fs.show{display:flex}
+#slide-fs img{max-width:96vw;max-height:90vh;object-fit:contain}
+#slide-fs .fs-close{
+  position:absolute;top:14px;right:14px;width:48px;height:48px;
+  background:transparent;border:2px solid var(--c2);color:var(--c2);
+  font-size:1.4rem;cursor:pointer;font-family:inherit;
+}
+#slide-fs .fs-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:80px;background:rgba(0,0,0,.6);
+  border:2px solid var(--c2);color:var(--c2);
+  font-size:2rem;cursor:pointer;font-weight:900;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+#slide-fs .fs-nav.prev{left:20px}
+#slide-fs .fs-nav.next{right:20px}
+#slide-fs .fs-nav:hover{background:var(--c2);color:var(--bg);box-shadow:0 0 16px var(--c2)}
+#slide-fs .fs-nav:active{transform:translateY(-50%) scale(.95)}
+#slide-fs .fs-counter{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.7);color:var(--c2);padding:6px 14px;
+  font-family:'Press Start 2P',monospace;font-size:.65rem;
+}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none !important}
+
+/* ============ NLM VIDEO ============ */
+.nlm-video-section{margin:48px 0}
+.nlm-video-section h3{font-family:'Press Start 2P',monospace;font-size:.65rem;color:var(--c3);margin-bottom:14px;letter-spacing:.05em}
+.video-wrap{background:var(--surface);border:3px solid var(--c3);box-shadow:var(--shadow-px-lg);position:relative;overflow:hidden}
+.video-ratio{position:relative;padding-top:56.25%;width:100%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{background:var(--panel);border-top:2px solid var(--c3);padding:11px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.video-meta .nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c3);color:#fff;font-size:.8rem;font-weight:700;padding:5px 11px;white-space:nowrap}
+.video-meta .video-hint{font-size:.9rem;color:var(--dim)}
+.video-no-id{padding:48px 20px;text-align:center;font-size:1rem;color:var(--dim);border:2px dashed var(--dim);background:var(--bg)}
+.video-no-id a{color:var(--c1)}
+
+/* ============ FLOATING TOOLS ============ */
+.float-tools{position:fixed;right:20px;bottom:20px;z-index:400;display:flex;flex-direction:column;gap:10px}
+.fab{
+  width:54px;height:54px;background:var(--c1);color:var(--bg);
+  border:2px solid #000;cursor:pointer;font-size:1.5rem;
+  display:flex;align-items:center;justify-content:center;font-family:inherit;
+  box-shadow:var(--shadow-px);transition:.2s;
+}
+.fab.pink{background:var(--c3)}
+.fab.yellow{background:var(--c2)}
+.fab.green{background:var(--c4)}
+.fab:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #000}
+
+.tool-panel{
+  position:fixed;right:90px;bottom:20px;z-index:400;
+  background:var(--panel);border:2px solid var(--c1);padding:16px;
+  width:280px;display:none;box-shadow:var(--shadow-px-lg);
+}
+.tool-panel.show{display:block}
+.tool-panel h4{font-size:1rem;color:var(--c1);margin-bottom:12px;display:flex;align-items:center;gap:6px;justify-content:space-between}
+.tool-panel .close{cursor:pointer;color:var(--dim);font-size:1.2rem}
+.tool-panel .btn-primary{
+  width:100%;background:var(--c1);color:var(--bg);border:none;
+  padding:9px 14px;font-size:1rem;font-weight:700;font-family:inherit;
+  cursor:pointer;
+}
+.tool-panel .btn-primary:hover{background:var(--c4)}
+.lottery-result{
+  text-align:center;font-family:'Press Start 2P',monospace;
+  font-size:1.4rem;color:var(--c2);margin-top:12px;
+  padding:14px;background:var(--surface);border:2px solid var(--c2);
+}
+.timer-display{
+  text-align:center;font-family:'Press Start 2P',monospace;
+  font-size:2rem;color:var(--c2);margin:14px 0;
+  padding:14px;background:var(--surface);border:2px solid var(--c2);
+}
+.timer-controls{display:flex;gap:6px}
+.timer-controls button{flex:1}
+
+/* Draw canvas */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;z-index:300;
+  background:var(--surface);border:2px solid var(--c1);padding:10px 14px;
+  display:none;gap:8px;align-items:center;box-shadow:var(--shadow-px);
+}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:28px;height:28px;border:2px solid #000;cursor:pointer;padding:0;transition:.2s}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor}
+.draw-toolbar .draw-clear{background:transparent;border:2px solid var(--c3);color:var(--c3);padding:4px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem}
+
+/* ============ FOOTER ============ */
+.site-footer{
+  margin-top:60px;padding:28px 24px;background:var(--surface);
+  border-top:3px solid var(--c1);text-align:center;color:var(--dim);font-size:.9rem;
+}
+.site-footer a{color:var(--c2)}
+
+/* responsive */
+@media (max-width:720px){
+  html{font-size:18px}
+  .container{padding:16px}
+  .hero h2{font-size:1.6rem}
+  .level-section{padding:20px}
+  .section-title{font-size:1.2rem}
+  .float-tools{right:14px;bottom:14px}
+  .fab{width:48px;height:48px;font-size:1.3rem}
+  .tool-panel{right:14px;bottom:80px;width:calc(100vw - 28px);max-width:280px}
+  #slide-fs .fs-nav{width:46px;height:64px;font-size:1.6rem}
+  #slide-fs .fs-nav.prev{left:8px}
+  #slide-fs .fs-nav.next{right:8px}
+  #slide-fs .fs-close{width:40px;height:40px;top:12px;right:12px}
+  .strip-thumb{width:90px}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="brand">
+      <div class="brand-icon">PG</div>
+      <div class="brand-text">
+        <h1>PaGamO 國小天地世界冒險</h1>
+        <div class="sub">解題佔領 × 任務闖關 × 背包道具 × 地形升級</div>
+      </div>
+    </div>
+    <span class="grade-chip">G3 三年級</span>
+  </div>
+  <div class="progress-strip">
+    <div class="prog-cell active" id="p1"></div>
+    <div class="prog-cell" id="p2"></div>
+    <div class="prog-cell" id="p3"></div>
+    <div class="prog-cell" id="p4"></div>
+  </div>
+</header>
+
+<div class="mode-bar">
+  <span class="mode-tag">教學模式</span>
+  <label><input type="checkbox" id="teacher-toggle"> 教師模式（顯示備註與延伸資源，密碼 it2026）</label>
+</div>
+
+<main class="container">
+  <section class="hero">
+    <h2>🎮 嗨！小朋友，準備好登入 PaGamO 了嗎？</h2>
+    <p>用學校信箱免費玩「國小天地」，邊答題邊佔領土地，蒐集寶物建造你的王國！</p>
+
+    <div class="objectives">
+      <div class="obj-chip"><span class="obj-emoji">🔑</span>學會用學校信箱登入</div>
+      <div class="obj-chip"><span class="obj-emoji">🗺️</span>玩世界任務佔領土地</div>
+      <div class="obj-chip"><span class="obj-emoji">📚</span>完成老師的班級任務</div>
+      <div class="obj-chip"><span class="obj-emoji">🎒</span>使用背包升級地形</div>
+    </div>
+
+    <div class="stage-pills">
+      <a href="#sec1"><span class="num">S1</span>登入大冒險</a>
+      <a href="#sec2"><span class="num">S2</span>世界任務</a>
+      <a href="#sec3"><span class="num">S3</span>班級任務</a>
+      <a href="#sec4"><span class="num">S4</span>背包與地形</a>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 1: 登入 ============ -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 1</span>
+      <h3 class="section-title">🔑 用學校信箱登入 PaGamO</h3>
+      <div class="section-sub">第一次登入要靠學校 Google 帳號（教育雲端／親師生平台），找老師幫忙最快！</div>
+    </div>
+
+    <img src="assets/01_login.jpg" alt="登入流程資訊圖" loading="lazy" style="width:100%;border:2px solid var(--c1);box-shadow:var(--shadow-px);margin-bottom:18px">
+
+    <div class="steps-card">
+      <h4>🚀 6 個步驟登入 PaGamO</h4>
+      <ol class="steps-list">
+        <li><div class="step-num">1</div><div class="step-text">打開瀏覽器（Chrome 或 Edge），輸入網址 <strong>https://www.pagamo.org/</strong></div></li>
+        <li><div class="step-num">2</div><div class="step-text">點擊畫面 <strong>右上角</strong> 的「<strong>註冊／登入</strong>」按鈕</div></li>
+        <li><div class="step-num">3</div><div class="step-text">點選右邊 <strong>藍色按鈕</strong>「使用教育雲端或縣市帳號登入」</div></li>
+        <li><div class="step-num">4</div><div class="step-text">選擇你的 <strong>縣市</strong>（新北市／桃園市／高雄市…）和身份「<strong>學生</strong>」</div></li>
+        <li><div class="step-num">5</div><div class="step-text">輸入學校給的 <strong>校務系統帳號</strong>（像 sk12345）和密碼（通常是身分證字號）</div></li>
+        <li><div class="step-num">6</div><div class="step-text">登入成功！選擇「<strong>國小天地</strong>」→「進入遊戲」開始冒險 🎉</div></li>
+      </ol>
+    </div>
+
+    <div class="tip-box">忘記密碼別緊張！直接告訴老師，老師可以在校務行政系統幫你還原。每次玩完記得「<strong>登出</strong>」保護帳號喔！</div>
+
+    <div class="canvas-section">
+      <h4>🖱️ 跟著做：模擬登入畫面</h4>
+      <div class="canvas-hint">點擊正確的順序：<strong>① 註冊／登入 → ② 教育雲端登入 → ③ 選縣市 → ④ 進入國小天地</strong></div>
+      <div class="canvas-wrap" id="login-sim">
+        <button class="sim-btn" data-step="1" onclick="doLoginSim(this,1)">① 註冊／登入</button>
+        <button class="sim-btn disabled" data-step="2" onclick="doLoginSim(this,2)">② 教育雲端登入</button>
+        <button class="sim-btn disabled" data-step="3" onclick="doLoginSim(this,3)">③ 選擇縣市</button>
+        <button class="sim-btn disabled" data-step="4" onclick="doLoginSim(this,4)">④ 進入國小天地</button>
+        <div class="sim-message" id="login-msg">請依序點擊四個按鈕完成登入！</div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 動腦時間（3 選 1）</h4>
+      <div class="quiz-q">
+        <div class="q-text">Q1. 我要登入 PaGamO，要先點哪個按鈕？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">A) 註冊／登入</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">B) 商店</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 任務書</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="q-text">Q2. 新北市學生用什麼帳號登入？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) Yahoo 信箱</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">B) 學校 @apps.ntpc.edu.tw 信箱</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 爸媽的 LINE 帳號</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="q-text">Q3. 玩完 PaGamO 應該做什麼？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) 直接關電腦</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">B) 把帳號告訴別人</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">C) 點「登出」保護帳號</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      若全班共用機房電腦：登入前請學生先確認 Google 帳號已切換為「校務帳號」，否則會用到別人的 PaGamO 進度。可請學生在 Chrome 右上角的個人圖示處檢查目前登入帳號。
+    </div>
+  </section>
+
+  <!-- ============ STAGE 2: 世界任務 ============ -->
+  <section id="sec2" class="level-section" style="border-color:var(--c2)">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c2)">STAGE 2</span>
+      <h3 class="section-title">🗺️ 世界任務：解題佔領大冒險</h3>
+      <div class="section-sub">點任務書 → 選世界任務 → 攻擊空地、訓練自己領土，答對就佔領！</div>
+    </div>
+
+    <img src="assets/02_world_quest.jpg" alt="世界任務流程資訊圖" loading="lazy" style="width:100%;border:2px solid var(--c2);box-shadow:var(--shadow-px);margin-bottom:18px">
+
+    <div class="steps-card" style="border-color:var(--c2)">
+      <h4 style="color:var(--c2)">⚔️ 6 個步驟玩世界任務</h4>
+      <ol class="steps-list">
+        <li><div class="step-num" style="background:var(--c2)">1</div><div class="step-text">登入後選「<strong>國小天地</strong>」→ 點「進入遊戲」</div></li>
+        <li><div class="step-num" style="background:var(--c2)">2</div><div class="step-text">看到地圖後，點 <strong>畫面左邊</strong> 的「<strong>任務書</strong>」圖示</div></li>
+        <li><div class="step-num" style="background:var(--c2)">3</div><div class="step-text">在任務書下方點「<strong>世界任務</strong>」標籤</div></li>
+        <li><div class="step-num" style="background:var(--c2)">4</div><div class="step-text">挑一個喜歡的任務，按「<strong>開始任務</strong>」</div></li>
+        <li><div class="step-num" style="background:var(--c2)">5</div><div class="step-text">點 <strong>自己的領土</strong> → 選「<strong>訓練</strong>」，或點 <strong>隔壁空地</strong> → 選「<strong>攻擊</strong>」</div></li>
+        <li><div class="step-num" style="background:var(--c2)">6</div><div class="step-text">看清楚題目認真答，<strong>答對</strong>就成功佔領，獲得獎勵 🎁</div></li>
+      </ol>
+    </div>
+
+    <div class="tip-box" style="background:rgba(105,255,71,.08);border-left-color:var(--c4);color:var(--c4)">答錯題目<strong>不會扣分</strong>喔！只是這次沒佔領成功，會用掉一點能量。能量會慢慢回復，再來挑戰一次就好！</div>
+
+    <div class="canvas-section">
+      <h4>🎮 跟著做：解題流程模擬</h4>
+      <div class="canvas-hint">點按鈕走一遍世界任務流程：任務書 → 世界任務 → 開始任務 → 攻擊空地 → 答題</div>
+      <canvas id="quest-canvas" width="760" height="280"></canvas>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="sim-btn" onclick="questStep(1)">① 任務書</button>
+        <button class="sim-btn" onclick="questStep(2)">② 世界任務</button>
+        <button class="sim-btn" onclick="questStep(3)">③ 開始任務</button>
+        <button class="sim-btn" onclick="questStep(4)">④ 攻擊空地</button>
+        <button class="sim-btn" onclick="questStep(5)">⑤ 答題</button>
+        <button class="sim-btn" onclick="questStep(0)" style="background:var(--c3);border-color:var(--c3)">↻ 重置</button>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 動腦時間（3 選 1）</h4>
+      <div class="quiz-q">
+        <div class="q-text">Q1. 想開始世界任務，要先點哪個圖示？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">A) 任務書</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">B) 背包</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 商店</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="q-text">Q2. 答對題目可以做什麼？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) 角色升等變強</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">B) 成功佔領新土地</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 增加最大血量</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="q-text">Q3. 答錯題目會怎樣？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) 扣 100 分</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">B) 不扣分但消耗一點能量</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 帳號被關閉</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      建議第一次教學選擇官方「短篇」世界任務（題目集 10–15 題即可完成），讓學生在一節課內看到完整成功案例。完成後分享他們獲得的虛寶截圖，可以大幅提升動機。
+    </div>
+  </section>
+
+  <!-- ============ STAGE 3: 班級任務 ============ -->
+  <section id="sec3" class="level-section" style="border-color:var(--c3)">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c3)">STAGE 3</span>
+      <h3 class="section-title">📚 班級任務：完成老師的特別考驗</h3>
+      <div class="section-sub">老師會給「班級代碼」，加入後在「一般任務」就能看到專屬挑戰！</div>
+    </div>
+
+    <img src="assets/03_class_quest.jpg" alt="班級任務流程資訊圖" loading="lazy" style="width:100%;border:2px solid var(--c3);box-shadow:var(--shadow-px);margin-bottom:18px">
+
+    <div class="steps-card" style="border-color:var(--c3)">
+      <h4 style="color:var(--c3)">🏫 6 個步驟接受班級任務</h4>
+      <ol class="steps-list">
+        <li><div class="step-num" style="background:var(--c3)">1</div><div class="step-text">老師會給你一組「<strong>班級代碼</strong>」（像是 ABC123）</div></li>
+        <li><div class="step-num" style="background:var(--c3)">2</div><div class="step-text">在遊戲畫面找到「<strong>我的班級</strong>」（在選單或右上角）</div></li>
+        <li><div class="step-num" style="background:var(--c3)">3</div><div class="step-text">輸入老師給的 <strong>班級代碼</strong>，按「加入」</div></li>
+        <li><div class="step-num" style="background:var(--c3)">4</div><div class="step-text">回到地圖，再次點開「<strong>任務書</strong>」</div></li>
+        <li><div class="step-num" style="background:var(--c3)">5</div><div class="step-text">這次點「<strong>一般任務</strong>」標籤（不是世界任務！）</div></li>
+        <li><div class="step-num" style="background:var(--c3)">6</div><div class="step-text">完成老師指派的題目，拿到 <strong>專屬紅包或寶物</strong> 🧧</div></li>
+      </ol>
+    </div>
+
+    <div class="tip-box" style="background:rgba(255,133,179,.08);border-left-color:var(--c3);color:var(--c3)">老師的班級任務通常 <strong>比世界任務優先做</strong>，因為老師會看完成情況打分數！可以同時加入多個班級代碼，每個班的任務分開。</div>
+
+    <div class="canvas-section">
+      <h4>🔢 跟著做：模擬輸入班級代碼</h4>
+      <div class="canvas-hint">在下方欄位輸入老師假設的班級代碼「<strong>SMES303</strong>」按加入！</div>
+      <div class="canvas-wrap" style="flex-direction:column;align-items:center;gap:14px">
+        <div style="font-size:.95rem;color:var(--dim)">📮 我的班級 → 輸入班級代碼</div>
+        <input type="text" id="class-code-input" placeholder="輸入班級代碼" maxlength="10"
+          style="padding:12px 16px;font-size:1.1rem;background:var(--surface);border:2px solid var(--c3);color:var(--text);width:240px;text-align:center;font-family:inherit;letter-spacing:2px">
+        <button class="sim-btn" onclick="checkClassCode()" style="background:var(--c3);border-color:var(--c3)">🚪 加入班級</button>
+        <div class="sim-message" id="class-msg">期待你加入老師的 PaGamO 班級！</div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 動腦時間（3 選 1）</h4>
+      <div class="quiz-q">
+        <div class="q-text">Q1. 老師會給我們什麼，才能加入班級？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">A) 班級代碼</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">B) 老師家的 Wi-Fi 密碼</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 學校門禁卡</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="q-text">Q2. 班級任務在任務書的哪個標籤？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) 世界任務</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">B) 一般任務</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 素養任務（要付費）</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      建立教師帳號後可在後台編輯任務、選題、設定獎勵紅包。建議第一次設定 5–10 題的小型任務，難度貼近班級進度。可結合單元測驗：上完一課後出 1 個 PaGamO 班級任務，當作課後練習。
+    </div>
+  </section>
+
+  <!-- ============ STAGE 4: 背包 + 地形 ============ -->
+  <section id="sec4" class="level-section" style="border-color:var(--c4)">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c4);color:var(--bg)">STAGE 4</span>
+      <h3 class="section-title">🎒 背包道具與地形升級</h3>
+      <div class="section-sub">背包像神奇百寶袋！用建材在土地上建造，每天就能自動賺金幣！</div>
+    </div>
+
+    <img src="assets/04_bag_terrain.jpg" alt="背包與地形升級資訊圖" loading="lazy" style="width:100%;border:2px solid var(--c4);box-shadow:var(--shadow-px);margin-bottom:18px">
+
+    <div class="steps-card" style="border-color:var(--c4)">
+      <h4 style="color:var(--c4)">📦 背包四大欄位</h4>
+      <ol class="steps-list">
+        <li><div class="step-num" style="background:var(--c4)">1</div><div class="step-text">點擊畫面 <strong>左下角</strong> 的「<strong>背包</strong>」圖示</div></li>
+        <li><div class="step-num" style="background:var(--c4)">2</div><div class="step-text"><strong>怪獸欄</strong>：青翼鳥之卵、薑餅人…可以孵蛋當守護！</div></li>
+        <li><div class="step-num" style="background:var(--c4)">3</div><div class="step-text"><strong>道具欄</strong>：水槍、炸彈、捕獸夾…用來攻擊或防守！</div></li>
+        <li><div class="step-num" style="background:var(--c4)">4</div><div class="step-text"><strong>地形欄</strong>：草原之力、金之榮耀…用來升級土地！</div></li>
+        <li><div class="step-num" style="background:var(--c4)">5</div><div class="step-text"><strong>材料欄</strong>：橡膠、落葉、星之碎片…用來鍛造新道具！</div></li>
+        <li><div class="step-num" style="background:var(--c4)">6</div><div class="step-text">把地形卡點「<strong>使用</strong>」放到自己領土，外觀會變漂亮 + 每天賺更多金幣 💰</div></li>
+      </ol>
+    </div>
+
+    <div class="terrain-compare">
+      <h4>🌍 看！同一塊地升級後每天賺多少金幣（單位：Pa幣／天）</h4>
+      <div class="terrain-grid">
+        <div class="terrain-card tier1"><div class="t-level">⭐</div><div class="t-emoji">🌾</div><div class="t-name">草原</div><div class="t-coin">2 幣／天</div></div>
+        <div class="terrain-card tier2"><div class="t-level">⭐⭐</div><div class="t-emoji">🐑</div><div class="t-name">牧羊人之歌</div><div class="t-coin">5 幣／天</div></div>
+        <div class="terrain-card tier3"><div class="t-level">⭐⭐⭐</div><div class="t-emoji">🌬️</div><div class="t-name">風車磨坊</div><div class="t-coin">32 幣／天</div></div>
+        <div class="terrain-card tier1"><div class="t-level">⭐</div><div class="t-emoji">🏖️</div><div class="t-name">荒沙</div><div class="t-coin">2 幣／天</div></div>
+        <div class="terrain-card tier2"><div class="t-level">⭐⭐</div><div class="t-emoji">🐚</div><div class="t-name">珊瑚島</div><div class="t-coin">+8 幣／天</div></div>
+        <div class="terrain-card tier3"><div class="t-level">⭐⭐⭐</div><div class="t-emoji">🧜</div><div class="t-name">人魚島</div><div class="t-coin">+23 幣／天</div></div>
+        <div class="terrain-card tier1"><div class="t-level">⭐</div><div class="t-emoji">🌳</div><div class="t-name">密林</div><div class="t-coin">4 幣／天</div></div>
+        <div class="terrain-card tier3"><div class="t-level">⭐⭐⭐</div><div class="t-emoji">🏰</div><div class="t-name">庭園別墅</div><div class="t-coin">36 幣／天</div></div>
+        <div class="terrain-card tier3"><div class="t-level">⭐⭐⭐</div><div class="t-emoji">👑</div><div class="t-name">金之榮耀</div><div class="t-coin">+44 幣／天</div></div>
+      </div>
+    </div>
+
+    <div class="tip-box">想賺多金幣的小撇步：認真完成任務 → 拿到地形卡 → 蓋在自己的土地上！「<strong>三星地形</strong>」（風車磨坊、庭園別墅、金之榮耀）每天賺最多！</div>
+
+    <div class="canvas-section">
+      <h4>🏗️ 跟著做：把地形按「金幣多少」排序</h4>
+      <div class="canvas-hint">把下面 4 個地形卡，從「金幣最少」到「金幣最多」排列！點兩張卡片可以交換它們。</div>
+      <div class="canvas-wrap" id="terrain-sort">
+        <!-- 動態生成 -->
+      </div>
+      <div class="sim-message" id="terrain-msg">點兩張卡片來交換位置，正確排序就會慶祝！</div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 動腦時間（3 選 1）</h4>
+      <div class="quiz-q">
+        <div class="q-text">Q1. 背包圖示在畫面的哪裡？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) 右上角</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">B) 左下角</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">C) 中間</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="q-text">Q2. 升級地形有什麼好處？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) 只是變漂亮而已</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">B) 角色變強壯</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">C) 變漂亮 + 每天賺更多金幣</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="q-text">Q3. 哪一個地形每天賺金幣最多？</div>
+        <div class="q-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">A) 草原（2 幣）</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,1)">B) 珊瑚島（8 幣）</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,0)">C) 風車磨坊（32 幣）</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      可請學生計算：「我每天累積 100 幣需要建幾塊三星地形？」當作數學應用題。也可組隊比賽哪一組班級的「每日總產出最高」，培養合作策略思考。
+    </div>
+  </section>
+
+  <!-- ============ PROJECT TASK ============ -->
+  <section class="project-task">
+    <h3>🎯 今日實作任務</h3>
+    <p style="color:var(--dim);margin-bottom:8px">完成下列五個小任務，就能成為 PaGamO 國小天地小達人！</p>
+    <div class="task-list">
+      <div class="task-item"><div class="t-num">1</div><p>用學校信箱成功登入 PaGamO（找老師確認 OK）</p></div>
+      <div class="task-item"><div class="t-num">2</div><p>進入「國小天地」，找到「任務書」位置</p></div>
+      <div class="task-item"><div class="t-num">3</div><p>挑戰 1 個世界任務，至少答對 5 題</p></div>
+      <div class="task-item"><div class="t-num">4</div><p>輸入老師給的班級代碼，加入班級成功</p></div>
+      <div class="task-item"><div class="t-num">5</div><p>打開背包，找到至少 1 張地形卡並使用它</p></div>
+    </div>
+  </section>
+
+  <!-- ============ NLM RESOURCES ============ -->
+  <section class="nb-section">
+    <h3>📓 NotebookLM 學習資源站</h3>
+    <p style="color:var(--dim);margin-bottom:14px">這個駕駛艙的內容，全都來自 NotebookLM 老師收集的網路資料！想再深入研究嗎？點下面的卡片！</p>
+    <div class="nb-cards">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/b8587acb-91ba-4909-839c-b24461325c6c" target="_blank" rel="noopener">
+        <h4>📚 PaGamO 研究本（21 個來源）</h4>
+        <p>完整的網路資料庫，包含 PaGamO Wiki、新北市教育局帳號說明、各縣市登入教學等。</p>
+      </a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/81c41ae8-36e2-45dc-986a-df6cce0a1ea8" target="_blank" rel="noopener">
+        <h4>🎯 PaGamO 簡報本（精華）</h4>
+        <p>濃縮成精華筆記 + 主講者圖像，用來生成本頁所有簡報、影片、資訊圖表。</p>
+      </a>
+      <a class="nb-card" href="https://www.pagamo.org/" target="_blank" rel="noopener">
+        <h4>🚪 PaGamO 官方網站</h4>
+        <p>馬上開始你的學習冒險！記得用學校信箱登入，並選擇「國小天地」。</p>
+      </a>
+    </div>
+
+    <div class="nb-flow">
+      <strong>本頁是怎麼做出來的？</strong><br>
+      ① NotebookLM <strong>深度搜尋</strong> 找到 21 個 PaGamO 相關網頁 →
+      ② 用 <strong>5 個 AI 問題</strong> 萃取教學精華 →
+      ③ 整合成 1 份精簡筆記 + 主講者圖像 →
+      ④ 自動生成 <strong>4 張資訊圖表 + 教學簡報 + 自學影片</strong> →
+      ⑤ Claude 寫成這個互動駕駛艙 →
+      ⑥ 部署到 GitHub Pages 上線！
+    </div>
+
+    <h4 style="margin-top:24px;color:var(--c2);font-size:1.2rem;display:flex;align-items:center;gap:8px">❓ 常見問題 FAQ（點問題展開）</h4>
+    <div class="faq">
+      <div class="faq-q" onclick="toggleFaq(this)">Q1. 我是石門國小（或其他學校）學生，要用什麼帳號登入？</div>
+      <div class="faq-a">每個學校的學生都會拿到一組 <strong>校務行政系統帳號</strong>（學校信箱）。新北市學生用 @apps.ntpc.edu.tw；桃園、高雄等縣市用對應的「教育雲端帳號」。在 PaGamO 點「使用教育雲端或縣市帳號登入」→ 選你的縣市 → 輸入帳號密碼即可。<strong>忘記密碼直接告訴老師，不要慌！</strong></div>
+
+      <div class="faq-q" onclick="toggleFaq(this)">Q2. 我答錯題目會被扣分嗎？</div>
+      <div class="faq-a"><strong>不會扣分喔！</strong>只是這次沒佔領那塊土地，會消耗一點點能量。能量會慢慢回復，再來挑戰一次就好。遇到不會的題目可以多想一想，或請教老師再回來戰鬥！</div>
+
+      <div class="faq-q" onclick="toggleFaq(this)">Q3. 世界任務和班級任務有什麼不同？</div>
+      <div class="faq-a"><strong>世界任務</strong>是 PaGamO 公司發給「全部玩家」的大型挑戰；<strong>班級任務</strong>是老師專門出給「我們班」的小考驗。兩個都能拿到很棒的獎勵，但通常要 <strong>優先完成老師的班級任務</strong>，因為老師會看完成情況打分數！</div>
+
+      <div class="faq-q" onclick="toggleFaq(this)">Q4. 背包裡的道具用完會自動再生嗎？</div>
+      <div class="faq-a"><strong>不會自動再生！</strong>要靠完成任務、訓練自己的土地（在自己領土上答題）來收集新道具和材料。越認真答題，背包就會越豐富，可以蓋出越漂亮的領土。</div>
+
+      <div class="faq-q" onclick="toggleFaq(this)">Q5. 哪些地形最好建造？</div>
+      <div class="faq-a">三年級可以先學 <strong>基本三種：草原、密林、荒沙</strong>。當你材料夠多後，可以挑戰升級成「珊瑚島（每天 +8 幣）」、「庭園別墅（每天 36 幣）」、「金之榮耀（每天 +44 幣）」等漂亮的三星地形，賺超多金幣！</div>
+
+      <div class="faq-q" onclick="toggleFaq(this)">Q6. 我每天可以玩多久？爸媽會擔心嗎？</div>
+      <div class="faq-a">PaGamO 有貼心的「<strong>能量限制</strong>」機制：每次答題會消耗能量，每天能量用完就代表該休息囉！建議跟爸媽 <strong>約定每天 30 分鐘到 1 小時</strong>，既能完成任務也能保護眼睛。記得跟爸媽說：「PaGamO 是學習，不是純玩遊戲！」</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE PLAYER ============ -->
+  <section class="slide-section" id="slides">
+    <h3>🎬 授課簡報播放器</h3>
+    <p style="color:var(--dim);margin-bottom:14px">點箭頭翻頁或點縮圖跳頁；按右上角「⛶ 全螢幕」鈕投影到大螢幕（手機也可用）。</p>
+    <div class="slide-player" id="slide-player">
+      <div class="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="assets/slide_01.jpg" alt="" loading="eager">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 10</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
+    </div>
+  </section>
+
+  <!-- ============ NLM VIDEO ============ -->
+  <section class="nlm-video-section">
+    <h3>▶ SELF-STUDY VIDEO</h3>
+    <div class="video-wrap">
+      <div class="video-no-id" id="video-placeholder">
+        🎬 自學影片製作中，完成後將在此嵌入。<br>
+        <a href="https://notebooklm.google.com/notebook/81c41ae8-36e2-45dc-986a-df6cce0a1ea8" target="_blank" rel="noopener">點此先到 NotebookLM 觀看</a>
+      </div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 建議用耳機觀看，可搭配上方簡報一起複習</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FULLSCREEN SLIDE OVERLAY ============ -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="fs-counter" id="slide-fs-counter">1 / 10</div>
+</div>
+
+<!-- ============ FLOATING TOOLS ============ -->
+<div class="float-tools" id="float-tools">
+  <button class="fab yellow" onclick="togglePanel('lottery')" title="抽號碼">🎲</button>
+  <button class="fab green" onclick="togglePanel('timer')" title="計時器">⏱</button>
+  <button class="fab pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+</div>
+
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c3);color:#fff">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timer-display">00:00</div>
+  <div style="display:flex;gap:8px;margin-bottom:10px;font-size:.85rem;color:var(--dim)">
+    <button class="btn-primary" onclick="setTimer(60)" style="background:var(--c4);color:var(--bg)">1分</button>
+    <button class="btn-primary" onclick="setTimer(180)" style="background:var(--c4);color:var(--bg)">3分</button>
+    <button class="btn-primary" onclick="setTimer(300)" style="background:var(--c4);color:var(--bg)">5分</button>
+  </div>
+  <div class="timer-controls">
+    <button class="btn-primary" onclick="startTimer()">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="background:var(--c2);color:var(--bg)">⏸</button>
+    <button class="btn-primary" onclick="resetTimer()" style="background:var(--c3);color:#fff">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd740" onclick="setPenColor('#ffd740',this)"></button>
+  <button class="color-dot" style="background:#00e5ff" onclick="setPenColor('#00e5ff',this)"></button>
+  <button class="color-dot" style="background:#69ff47" onclick="setPenColor('#69ff47',this)"></button>
+  <button class="color-dot" style="background:#fff" onclick="setPenColor('#fff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<footer class="site-footer">
+  <p>📦 Powered by NotebookLM × Claude × GitHub Pages | 適合國小三年級資訊科技課程</p>
+  <p style="margin-top:6px">資料來源：PaGamO 官方 Wiki、新北市教育局、PaGamO 素養品學堂等公開資源 · <a href="../index.html">回到 IT COCKPIT 主頁</a></p>
+</footer>
+
+<script>
+/* ============ SLIDE PLAYER ============ */
+const SLIDE_LIST = [
+  "assets/slide_01.jpg",
+  "assets/slide_02.jpg",
+  "assets/slide_03.jpg",
+  "assets/slide_04.jpg",
+  "assets/slide_05.jpg",
+  "assets/slide_06.jpg",
+  "assets/slide_07.jpg",
+  "assets/slide_08.jpg",
+  "assets/slide_09.jpg",
+  "assets/slide_10.jpg"
+];
+let curSlide = 0;
+
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0?' active':'');
+    t.style.backgroundImage = `url(${src})`;
+    t.dataset.idx = i;
+    t.onclick = ()=>goSlide(i);
+    strip.appendChild(t);
+  });
+  goSlide(0);
+}
+
+function goSlide(n){
+  if(n<0||n>=SLIDE_LIST.length) return;
+  curSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  // strip 內部自動捲動到 active（不要 scrollIntoView，會讓整頁跳動）
+  const activeThumb = document.querySelector('.strip-thumb.active');
+  if(activeThumb){
+    const strip = document.getElementById('slide-strip');
+    const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+  }
+  // 同步全螢幕大圖
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  }
+}
+
+function slideNav(dir){
+  const next = curSlide + dir;
+  if(next>=0 && next<SLIDE_LIST.length) goSlide(next);
+}
+
+function openSlideFullscreen(){
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key==='Escape') closeSlideFullscreen();
+    if(e.key==='ArrowRight') slideNav(1);
+    if(e.key==='ArrowLeft') slideNav(-1);
+  }
+});
+
+/* ============ TEACHER MODE ============ */
+document.getElementById('teacher-toggle').addEventListener('change', e=>{
+  if(e.target.checked){
+    const pwd = prompt('輸入教師密碼：');
+    if(pwd === 'it2026'){
+      document.body.classList.add('teacher-mode');
+    } else {
+      e.target.checked = false;
+      alert('密碼不對，請再試一次！');
+    }
+  } else {
+    document.body.classList.remove('teacher-mode');
+  }
+});
+
+/* ============ FAQ ============ */
+function toggleFaq(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('show');
+}
+
+/* ============ QUIZ ============ */
+const ENCOURAGE = ['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','👏 繼續加油！','💪 答得好！'];
+function answerQuiz(btn, isWrong){
+  const opts = btn.parentElement.querySelectorAll('.quiz-opt');
+  if([...opts].some(o=>o.classList.contains('locked'))) return;  // 已答過
+  const fb = btn.parentElement.parentElement.querySelector('.quiz-feedback');
+  opts.forEach(o=>o.classList.add('locked'));
+  if(isWrong === 0){
+    btn.classList.add('correct');
+    fb.textContent = ENCOURAGE[Math.floor(Math.random()*ENCOURAGE.length)];
+    fb.className = 'quiz-feedback show';
+  } else {
+    btn.classList.add('wrong');
+    [...opts].find(o=>o.getAttribute('onclick').includes(',0)')).classList.add('correct');
+    fb.textContent = '差一點點！正確答案已經幫你標出，再想一次原因吧～';
+    fb.className = 'quiz-feedback show wrong';
+  }
+  // 更新關卡進度
+  updateProgress();
+}
+
+function updateProgress(){
+  for(let i=1;i<=4;i++){
+    const sec = document.getElementById('sec'+i);
+    const cell = document.getElementById('p'+i);
+    if(!sec||!cell) continue;
+    const total = sec.querySelectorAll('.quiz-q').length;
+    const answered = sec.querySelectorAll('.quiz-feedback.show').length;
+    if(total>0 && answered>=total){
+      cell.classList.remove('active');
+      cell.classList.add('done');
+      const next = document.getElementById('p'+(i+1));
+      if(next && !next.classList.contains('done')) next.classList.add('active');
+    }
+  }
+}
+
+/* ============ STAGE 1 LOGIN SIM ============ */
+let loginStep = 0;
+function doLoginSim(btn, step){
+  if(step !== loginStep + 1){
+    document.getElementById('login-msg').textContent = '⚠️ 順序不對！要從 ① 開始喔～';
+    return;
+  }
+  btn.classList.add('active');
+  loginStep = step;
+  const msgs = ['', '✓ 點到了！接著點 ②', '✓ 太好了！接著點 ③', '✓ 進度過半！接著點 ④', '🎉 登入成功！可以開始國小天地大冒險囉！'];
+  document.getElementById('login-msg').textContent = msgs[step];
+  // 開啟下一個按鈕
+  const nextBtn = document.querySelector(`#login-sim button[data-step="${step+1}"]`);
+  if(nextBtn) nextBtn.classList.remove('disabled');
+}
+
+/* ============ STAGE 2 QUEST CANVAS ============ */
+let questCanvas, questCtx, questCurStep = 0;
+const QUEST_BOXES = [
+  {x:30,  y:120, w:120, h:60, label:'任務書',     color:'#4caf50'},
+  {x:170, y:120, w:120, h:60, label:'世界任務',   color:'#ffd740'},
+  {x:310, y:120, w:120, h:60, label:'開始任務',   color:'#ff85b3'},
+  {x:450, y:120, w:120, h:60, label:'攻擊空地',   color:'#00e5ff'},
+  {x:600, y:120, w:120, h:60, label:'答對佔領',   color:'#69ff47'}
+];
+
+function initQuestCanvas(){
+  questCanvas = document.getElementById('quest-canvas');
+  if(!questCanvas) return;
+  questCtx = questCanvas.getContext('2d');
+  drawQuest();
+}
+
+function drawQuest(){
+  const ctx = questCtx;
+  ctx.clearRect(0, 0, 760, 280);
+  ctx.fillStyle = '#0d2818';
+  ctx.fillRect(0, 0, 760, 280);
+  // 標題
+  ctx.fillStyle = '#e8f5e9';
+  ctx.font = 'bold 18px Noto Sans TC, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('世界任務流程：點按鈕一步一步走！', 380, 50);
+  // 流程箭頭與方框
+  QUEST_BOXES.forEach((b, i)=>{
+    const active = i < questCurStep;
+    ctx.fillStyle = active ? b.color : '#143821';
+    ctx.fillRect(b.x, b.y, b.w, b.h);
+    ctx.strokeStyle = b.color;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(b.x, b.y, b.w, b.h);
+    ctx.fillStyle = active ? '#0d2818' : '#7fa888';
+    ctx.font = 'bold 16px Noto Sans TC, sans-serif';
+    ctx.fillText(b.label, b.x + b.w/2, b.y + b.h/2 + 6);
+    // 箭頭
+    if(i < QUEST_BOXES.length-1){
+      ctx.strokeStyle = active ? b.color : '#7fa888';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(b.x + b.w + 2, b.y + b.h/2);
+      ctx.lineTo(b.x + b.w + 18, b.y + b.h/2);
+      ctx.stroke();
+    }
+  });
+  // 進度提示
+  ctx.fillStyle = questCurStep === 5 ? '#69ff47' : '#7fa888';
+  ctx.font = 'bold 16px Noto Sans TC, sans-serif';
+  if(questCurStep === 0) ctx.fillText('▶ 從 ① 任務書開始！', 380, 240);
+  else if(questCurStep === 5) ctx.fillText('🎉 答對！成功佔領新土地！', 380, 240);
+  else ctx.fillText(`✓ 進度：${questCurStep} / 5  (繼續點 ${questCurStep+1})`, 380, 240);
+}
+
+function questStep(n){
+  if(n === 0){ questCurStep = 0; drawQuest(); return; }
+  if(n !== questCurStep + 1){
+    questCurStep = 0;
+    drawQuest();
+    setTimeout(()=>{ questCurStep = 0; alert('順序不對！要從 ① 開始喔～'); }, 50);
+    return;
+  }
+  questCurStep = n;
+  drawQuest();
+}
+
+/* ============ STAGE 3 CLASS CODE ============ */
+function checkClassCode(){
+  const v = document.getElementById('class-code-input').value.trim().toUpperCase();
+  const msg = document.getElementById('class-msg');
+  if(v === ''){ msg.textContent = '😅 請先輸入班級代碼！'; msg.style.color = '#ffd740'; return; }
+  if(v === 'SMES303'){
+    msg.textContent = '🎉 加入班級成功！請去任務書找「一般任務」！';
+    msg.style.color = '#69ff47';
+  } else {
+    msg.textContent = `❌「${v}」這個代碼不對！正確答案是 SMES303（每個班的真實代碼要問你的老師）`;
+    msg.style.color = '#ff85b3';
+  }
+}
+
+/* ============ STAGE 4 TERRAIN SORT ============ */
+const TERRAINS = [
+  {emoji:'🌾', name:'草原',     coin:2,  rank:0},
+  {emoji:'🐚', name:'珊瑚島',   coin:8,  rank:1},
+  {emoji:'🌬️', name:'風車磨坊', coin:32, rank:2},
+  {emoji:'👑', name:'金之榮耀', coin:44, rank:3}
+];
+let terrainOrder = [3, 0, 2, 1];  // 初始亂序
+let selectedIdx = -1;
+
+function renderTerrainSort(){
+  const wrap = document.getElementById('terrain-sort');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  terrainOrder.forEach((tIdx, i)=>{
+    const t = TERRAINS[tIdx];
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:3px solid var(--c1);padding:14px;width:130px;text-align:center;cursor:pointer;transition:.15s';
+    if(selectedIdx === i){
+      card.style.borderColor = 'var(--c3)';
+      card.style.transform = 'translateY(-6px)';
+      card.style.boxShadow = '0 0 12px var(--c3)';
+    }
+    card.innerHTML = `<div style="font-size:2rem">${t.emoji}</div>
+      <div style="font-weight:700;color:var(--c1)">${t.name}</div>
+      <div style="font-family:'Press Start 2P',monospace;font-size:.85rem;color:var(--c2);margin-top:6px">${t.coin}幣</div>`;
+    card.onclick = ()=>handleTerrainClick(i);
+    wrap.appendChild(card);
+    if(i < 3){
+      const arrow = document.createElement('div');
+      arrow.textContent = '→';
+      arrow.style.cssText = 'font-size:1.6rem;color:var(--c2);font-weight:900';
+      wrap.appendChild(arrow);
+    }
+  });
+}
+
+function handleTerrainClick(i){
+  if(selectedIdx === -1){
+    selectedIdx = i;
+  } else if(selectedIdx === i){
+    selectedIdx = -1;
+  } else {
+    [terrainOrder[selectedIdx], terrainOrder[i]] = [terrainOrder[i], terrainOrder[selectedIdx]];
+    selectedIdx = -1;
+    // 檢查是否正確排序
+    const isSorted = terrainOrder.every((idx, j) => TERRAINS[idx].rank === j);
+    if(isSorted){
+      document.getElementById('terrain-msg').textContent = '🎉 太厲害了！你已經學會看金幣產量！金幣越多 = 地形等級越高！';
+      document.getElementById('terrain-msg').style.color = '#69ff47';
+    } else {
+      document.getElementById('terrain-msg').textContent = '✓ 已交換！繼續調整位置，從少到多排好它們！';
+      document.getElementById('terrain-msg').style.color = '#ffd740';
+    }
+  }
+  renderTerrainSort();
+}
+
+/* ============ DRAW CANVAS ============ */
+let drawActive = false, penColor = '#ff4081', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth;
+  drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e=>{ if(!drawActive) return; isDrawing = true; dLastX = e.clientX; dLastY = e.clientY; });
+  drawCanvas.addEventListener('mousemove', e=>{
+    if(!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke();
+    dLastX = e.clientX; dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', ()=>isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e=>{ if(!drawActive) return; e.preventDefault(); const t = e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e=>{
+    if(!drawActive || !isDrawing) return; e.preventDefault();
+    const t = e.touches[0];
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(t.clientX, t.clientY); drawCtx.stroke();
+    dLastX = t.clientX; dLastY = t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', ()=>isDrawing = false);
+  window.addEventListener('resize', ()=>{ drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight; });
+}
+
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c4)' : '';
+}
+
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height); }
+
+/* ============ FLOATING PANELS ============ */
+function togglePanel(name){
+  document.querySelectorAll('.tool-panel').forEach(p=>{ if(p.id !== 'panel-' + name) p.classList.remove('show'); });
+  document.getElementById('panel-' + name).classList.toggle('show');
+}
+
+/* ============ LOTTERY ============ */
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const timer = setInterval(()=>{
+    const n = Math.floor(Math.random()*(max - min + 1)) + min;
+    out.textContent = n + ' 號';
+  }, 60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max - min + 1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+/* ============ TIMER ============ */
+let timerSec = 0, timerTotal = 0, timerInt = null;
+function setTimer(s){ timerTotal = s; timerSec = s; updateTimerDisplay(); }
+function startTimer(){
+  if(timerInt) return;
+  if(timerSec === 0){ alert('請先按 1分／3分／5分 設定時間！'); return; }
+  timerInt = setInterval(()=>{
+    timerSec--;
+    updateTimerDisplay();
+    if(timerSec <= 0){
+      clearInterval(timerInt); timerInt = null;
+      document.getElementById('timer-display').style.color = '#ff85b3';
+      try{ new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=').play(); }catch(e){}
+      alert('⏰ 時間到！');
+    }
+  }, 1000);
+}
+function pauseTimer(){ if(timerInt){ clearInterval(timerInt); timerInt = null; } }
+function resetTimer(){ pauseTimer(); timerSec = timerTotal; updateTimerDisplay(); document.getElementById('timer-display').style.color = ''; }
+function updateTimerDisplay(){
+  const m = Math.floor(timerSec / 60).toString().padStart(2, '0');
+  const s = (timerSec % 60).toString().padStart(2, '0');
+  document.getElementById('timer-display').textContent = m + ':' + s;
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  initSlidePlayer();
+  initQuestCanvas();
+  renderTerrainSort();
+  initDraw();
+});
+</script>
+</body>
+</html>
