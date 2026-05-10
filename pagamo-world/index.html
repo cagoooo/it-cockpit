@@ -418,7 +418,10 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 .fab.pink{background:var(--c3)}
 .fab.yellow{background:var(--c2)}
 .fab.green{background:var(--c4)}
+.fab.cyan{background:var(--c5);color:#000}
 .fab:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #000}
+#backToTopBtn{display:none}
+#backToTopBtn.show{display:flex}
 
 .tool-panel{
   position:fixed;right:90px;bottom:20px;z-index:400;
@@ -938,6 +941,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
 <!-- ============ FLOATING TOOLS ============ -->
 <div class="float-tools" id="float-tools">
+  <button class="fab cyan" id="backToTopBtn" onclick="goTop()" title="回到頂端">⬆</button>
   <button class="fab yellow" onclick="togglePanel('lottery')" title="抽號碼">🎲</button>
   <button class="fab green" onclick="togglePanel('timer')" title="計時器">⏱</button>
   <button class="fab pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
@@ -1394,12 +1398,20 @@ function updateTimerDisplay(){
   document.getElementById('timer-display').textContent = m + ':' + s;
 }
 
+/* ============ BACK TO TOP ============ */
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+
 /* ============ INIT ============ */
 document.addEventListener('DOMContentLoaded', ()=>{
   initSlidePlayer();
   initQuestCanvas();
   renderTerrainSort();
   initDraw();
+  // 捲動超過 400px 顯示「回頂端」按鈕
+  const backTop = document.getElementById('backToTopBtn');
+  window.addEventListener('scroll', ()=>{
+    backTop.classList.toggle('show', window.scrollY > 400);
+  }, {passive:true});
 });
 </script>
 </body>
