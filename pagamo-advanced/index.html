@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaGamO 進階駕駛艙｜桃園市素養付費版完全攻略｜四年級資訊科技</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/pagamo-advanced/">
+<meta property="og:title" content="PaGamO 進階駕駛艙｜四年級資訊科技">
+<meta property="og:description" content="桃園市素養學習付費版完全攻略：教育雲登入、中文素養閱讀理解題組、省力模式/自選章節/魔物指針/競賽之盾四大神器、班級任務獎勵全教學。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/pagamo-advanced/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/pagamo-advanced/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0d2b; --surface:#1a1a3e; --panel:#252552;
+  --c1:#00e5ff; --c2:#ffd740; --c3:#ff4081; --c4:#69ff47; --c5:#ff6b6b;
+  --text:#e8e4f8; --dim:#7070a0;
+  --shadow-px:4px 4px 0 #000;
+  --shadow-px-lg:6px 6px 0 #000;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;
+  background-image:
+    linear-gradient(rgba(105,255,71,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(105,255,71,.04) 1px,transparent 1px);
+  background-size:30px 30px;
+  min-height:100vh;
+}
+.pixel-font{font-family:'Press Start 2P',monospace;letter-spacing:.05em}
+
+/* ═══ Header ═══ */
+.site-header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(13,13,43,.96);backdrop-filter:blur(8px);
+  border-bottom:3px solid var(--c4);box-shadow:0 4px 20px rgba(105,255,71,.2);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border:2px solid var(--c2);background:transparent;color:var(--c2);
+  text-decoration:none;font-weight:700;font-size:.85rem;letter-spacing:1px;
+  transition:.15s;white-space:nowrap;box-shadow:3px 3px 0 #000;
+}
+.home-btn:hover{background:var(--c2);color:var(--bg);transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
+.header-title-block{flex:1;min-width:200px}
+.header-title{font-size:1.5rem;font-weight:900;color:var(--c4);line-height:1.3}
+.header-title .pixel-tag{
+  font-family:'Press Start 2P',monospace;font-size:.55rem;
+  background:var(--c4);color:var(--bg);padding:3px 8px;margin-right:8px;
+  vertical-align:middle;
+}
+.header-sub{font-size:.95rem;color:var(--dim);margin-top:4px}
+.header-sub .grade-chip{
+  display:inline-block;background:var(--c1);color:var(--bg);
+  padding:2px 10px;font-weight:700;margin-right:8px;font-size:.8rem;
+}
+.mode-toggle{
+  display:flex;gap:8px;align-items:center;
+}
+.mode-btn{
+  padding:7px 14px;border:2px solid var(--c1);background:transparent;color:var(--c1);
+  font-family:inherit;font-weight:700;font-size:.85rem;cursor:pointer;
+  transition:.15s;box-shadow:3px 3px 0 #000;
+}
+.mode-btn.active{background:var(--c1);color:var(--bg)}
+.mode-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
+.progress-bar{
+  display:flex;gap:6px;align-items:center;width:100%;
+  margin-top:10px;
+}
+.progress-bar .label{font-size:.8rem;color:var(--dim);min-width:65px}
+.progress-bar .track{
+  flex:1;height:14px;background:var(--surface);border:2px solid var(--c4);
+  position:relative;overflow:hidden;
+}
+.progress-bar .fill{
+  height:100%;background:linear-gradient(90deg,var(--c4),var(--c1));
+  width:0%;transition:width .4s;
+}
+.progress-bar .pct{font-size:.85rem;color:var(--c4);font-weight:700;min-width:42px;text-align:right}
+
+/* ═══ Container ═══ */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* ═══ Intro ═══ */
+.intro-section{margin-bottom:48px}
+.intro-section h2{
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--c2);margin-bottom:18px;letter-spacing:.05em;
+}
+.objectives{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.obj-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;background:var(--surface);border:2px solid var(--c4);
+  font-size:1rem;font-weight:700;color:var(--c4);box-shadow:var(--shadow-px);
+}
+.obj-chip .ico{font-size:1.3rem}
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stage-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;background:var(--surface);border:2px solid var(--c1);
+  color:var(--c1);text-decoration:none;font-size:.95rem;font-weight:700;
+  transition:.15s;box-shadow:var(--shadow-px);
+}
+.stage-pill:hover{background:var(--c1);color:var(--bg);transform:translate(-2px,-2px);box-shadow:6px 6px 0 #000}
+.stage-pill .num{
+  font-family:'Press Start 2P',monospace;font-size:.55rem;
+  background:rgba(0,229,255,.2);padding:2px 6px;
+}
+
+/* ═══ Stage Section ═══ */
+.level-section{
+  margin-bottom:48px;background:var(--surface);
+  border:3px solid var(--c1);box-shadow:var(--shadow-px-lg);
+  padding:28px;position:relative;
+}
+.level-section.s1{border-color:var(--c1)}
+.level-section.s2{border-color:var(--c2)}
+.level-section.s3{border-color:var(--c3)}
+.level-section.s4{border-color:var(--c4)}
+.level-section.s5{border-color:#b388ff}
+.level-section.s6{border-color:var(--c5)}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.stage-badge{
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  padding:7px 14px;background:var(--c1);color:var(--bg);
+}
+.s2 .stage-badge{background:var(--c2)}
+.s3 .stage-badge{background:var(--c3);color:#fff}
+.s4 .stage-badge{background:var(--c4)}
+.s5 .stage-badge{background:#b388ff;color:#fff}
+.s6 .stage-badge{background:var(--c5);color:#fff}
+.section-title{font-size:1.4rem;font-weight:900;color:var(--text);flex:1;min-width:200px}
+.section-sub{font-size:1rem;color:var(--dim);margin-bottom:18px}
+
+/* ═══ Steps Card ═══ */
+.steps-card{
+  background:var(--panel);border:2px solid var(--c1);padding:22px;
+  margin-bottom:18px;
+}
+.s2 .steps-card{border-color:var(--c2)}
+.s3 .steps-card{border-color:var(--c3)}
+.s4 .steps-card{border-color:var(--c4)}
+.s5 .steps-card{border-color:#b388ff}
+.s6 .steps-card{border-color:var(--c5)}
+.steps-card h4{font-size:1.05rem;color:var(--c1);margin-bottom:14px;font-weight:900}
+.s2 .steps-card h4{color:var(--c2)}
+.s3 .steps-card h4{color:var(--c3)}
+.s4 .steps-card h4{color:var(--c4)}
+.s5 .steps-card h4{color:#b388ff}
+.s6 .steps-card h4{color:var(--c5)}
+.steps-list{list-style:none;padding:0}
+.steps-list li{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:10px 0;font-size:1rem;line-height:1.7;
+  border-bottom:1px dashed rgba(255,255,255,.08);
+}
+.steps-list li:last-child{border-bottom:none}
+.step-num{
+  flex-shrink:0;min-width:34px;height:34px;background:var(--c1);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;font-weight:900;
+  font-size:.9rem;font-family:'Press Start 2P',monospace;
+}
+.s2 .step-num{background:var(--c2)}
+.s3 .step-num{background:var(--c3);color:#fff}
+.s4 .step-num{background:var(--c4)}
+.s5 .step-num{background:#b388ff;color:#fff}
+.s6 .step-num{background:var(--c5);color:#fff}
+.tip-box{
+  background:rgba(0,229,255,.08);border-left:4px solid var(--c1);
+  padding:14px 18px;font-size:.95rem;margin:14px 0;
+}
+.tip-box.warn{background:rgba(255,107,107,.08);border-left-color:var(--c5)}
+.tip-box.tip{background:rgba(105,255,71,.08);border-left-color:var(--c4)}
+.tip-box strong{color:var(--c2);font-weight:700}
+
+/* ═══ Canvas Section ═══ */
+.canvas-section{
+  background:var(--bg);border:2px solid var(--c4);padding:18px;
+  margin-bottom:18px;
+}
+.canvas-section h4{
+  font-size:1rem;color:var(--c4);margin-bottom:12px;font-weight:900;
+  display:flex;align-items:center;gap:8px;
+}
+.canvas-hint{font-size:.85rem;color:var(--dim);margin-bottom:14px}
+.canvas-wrap{
+  background:var(--surface);border:2px solid var(--c4);
+  min-height:280px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+
+/* ═══ Quiz ═══ */
+.quiz-section{
+  background:var(--panel);border:2px dashed var(--c2);padding:22px;
+  margin-bottom:18px;
+}
+.quiz-section h4{
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  color:var(--c2);margin-bottom:18px;letter-spacing:.05em;
+}
+.quiz-q{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.6}
+.quiz-q::before{content:"❓ ";color:var(--c2)}
+.quiz-opts{display:grid;gap:10px;margin-bottom:10px}
+.quiz-opt{
+  padding:10px 16px;background:var(--surface);border:2px solid var(--dim);
+  color:var(--text);font-family:inherit;font-size:.95rem;cursor:pointer;
+  text-align:left;transition:.15s;
+}
+.quiz-opt:hover:not(.answered){background:rgba(255,215,64,.15);border-color:var(--c2);transform:translateX(3px)}
+.quiz-opt.correct{background:rgba(105,255,71,.2);border-color:var(--c4);color:var(--c4);font-weight:700}
+.quiz-opt.wrong{background:rgba(255,107,107,.2);border-color:var(--c5);color:var(--c5);text-decoration:line-through}
+.quiz-feedback{
+  margin-top:12px;padding:12px 16px;font-size:.95rem;
+  border-left:4px solid var(--c4);background:rgba(105,255,71,.1);
+  display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.wrong-feedback{background:rgba(255,215,64,.1);border-left-color:var(--c2)}
+.quiz-block + .quiz-block{margin-top:24px;padding-top:24px;border-top:1px dashed rgba(255,255,255,.1)}
+
+/* ═══ Teacher Note ═══ */
+.teacher-note{
+  background:rgba(255,64,129,.08);border:2px dashed var(--c3);
+  padding:16px 20px;margin-top:14px;font-size:.95rem;
+}
+.teacher-note h5{color:var(--c3);margin-bottom:8px;font-weight:900;font-size:1rem}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* ═══ Project Task ═══ */
+.project-task{
+  margin-bottom:48px;padding:32px;background:var(--surface);
+  border:3px solid var(--c2);box-shadow:var(--shadow-px-lg);
+}
+.project-task h2{
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--c2);margin-bottom:18px;letter-spacing:.05em;
+}
+.task-list{display:grid;gap:14px;margin-top:16px}
+.task-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:16px;background:var(--panel);border:2px solid var(--c2);
+}
+.task-item .num-box{
+  flex-shrink:0;width:50px;height:50px;background:var(--c2);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2rem;
+  font-family:'Press Start 2P',monospace;
+}
+.task-item h4{font-size:1.05rem;color:var(--c2);margin-bottom:6px}
+.task-item p{font-size:.95rem;color:var(--text);line-height:1.6}
+
+/* ═══ NotebookLM Section ═══ */
+.nb-section{
+  margin-bottom:48px;padding:32px;background:var(--surface);
+  border:3px solid var(--c3);box-shadow:var(--shadow-px-lg);
+}
+.nb-section h2{
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--c3);margin-bottom:18px;letter-spacing:.05em;
+}
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:24px}
+.nb-card{
+  display:block;padding:18px;background:var(--panel);border:2px solid var(--c3);
+  text-decoration:none;color:var(--text);transition:.15s;
+}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--c3)}
+.nb-card .nb-ico{font-size:1.6rem;margin-bottom:8px}
+.nb-card h4{font-size:1rem;color:var(--c3);margin-bottom:6px;font-weight:900}
+.nb-card p{font-size:.9rem;color:var(--dim)}
+
+.nb-flow{
+  background:var(--panel);border:2px solid var(--c3);padding:20px;margin-bottom:24px;
+}
+.nb-flow h3{font-size:1.05rem;color:var(--c3);margin-bottom:12px;font-weight:900}
+.nb-flow-steps{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:.95rem}
+.nb-flow-step{
+  padding:8px 14px;background:var(--surface);border:2px solid var(--c3);
+  font-weight:700;
+}
+.nb-flow-arrow{color:var(--c3);font-size:1.2rem}
+
+.faq-section h3{font-size:1.1rem;color:var(--c3);margin-bottom:14px;font-weight:900}
+.faq-item{
+  margin-bottom:12px;background:var(--panel);border:2px solid rgba(255,64,129,.3);
+  padding:16px 20px;
+}
+.faq-q{font-size:1rem;color:var(--c2);font-weight:700;margin-bottom:8px}
+.faq-q::before{content:"Q：";color:var(--c3)}
+.faq-a{font-size:.95rem;color:var(--text);line-height:1.7}
+.faq-a::before{content:"A：";color:var(--c4);font-weight:700}
+
+/* ═══ Slide Player ═══ */
+.slide-section{
+  margin-bottom:48px;padding:32px;background:var(--surface);
+  border:3px solid var(--c1);box-shadow:var(--shadow-px-lg);
+}
+.slide-section h2{
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--c1);margin-bottom:18px;letter-spacing:.05em;
+}
+.slide-player{background:var(--panel);border:2px solid var(--c1);overflow:hidden}
+.slide-main{
+  position:relative;background:#000;
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;
+}
+.slide-main img{max-width:100%;max-height:100%;display:block}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:48px;height:64px;background:rgba(0,0,0,.6);border:2px solid var(--c1);
+  color:var(--c1);font-size:1.5rem;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.15s;z-index:2;
+}
+.slide-nav-btn.prev{left:12px}
+.slide-nav-btn.next{right:12px}
+.slide-nav-btn:hover{background:var(--c1);color:var(--bg);box-shadow:0 0 12px var(--c1)}
+.slide-fs-btn{
+  position:absolute;top:12px;right:12px;
+  background:var(--c1);color:var(--bg);border:none;padding:8px 14px;
+  font-size:.95rem;cursor:pointer;font-family:inherit;font-weight:700;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);z-index:3;display:flex;align-items:center;gap:6px;transition:.15s;
+}
+.slide-fs-btn:hover{transform:translateY(-2px)}
+.slide-counter{
+  position:absolute;bottom:12px;left:12px;
+  background:rgba(0,0,0,.7);color:var(--c1);padding:5px 12px;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;z-index:2;
+}
+.slide-strip{
+  display:flex;gap:6px;padding:12px;background:var(--bg);
+  overflow-x:auto;scroll-behavior:smooth;
+}
+.slide-strip::-webkit-scrollbar{height:6px}
+.slide-strip::-webkit-scrollbar-thumb{background:var(--c1)}
+.strip-thumb{
+  flex-shrink:0;width:120px;aspect-ratio:16/9;
+  border:2px solid var(--dim);cursor:pointer;transition:.15s;
+  background-size:cover;background-position:center;position:relative;
+}
+.strip-thumb.active{border-color:var(--c1);box-shadow:0 0 10px var(--c1);transform:scale(1.05)}
+.strip-thumb:hover{border-color:var(--c2)}
+.strip-thumb .pn{
+  position:absolute;top:2px;left:4px;color:#fff;
+  font-family:'Press Start 2P',monospace;font-size:.5rem;
+  text-shadow:1px 1px 2px #000;
+}
+#slide-fs{
+  position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);
+  display:none;align-items:center;justify-content:center;
+}
+#slide-fs.show{display:flex}
+#slide-fs img{max-width:96%;max-height:96%}
+.fs-close{
+  position:absolute;top:12px;right:12px;width:48px;height:48px;
+  background:var(--c5);border:none;color:#fff;font-size:1.5rem;
+  cursor:pointer;font-weight:900;z-index:10;
+}
+.fs-close:hover{background:#fff;color:var(--c5)}
+.fs-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--c1);
+  color:var(--c1);font-size:2rem;font-weight:900;cursor:pointer;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+}
+.fs-nav.prev{left:20px}
+.fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--c1);color:var(--bg);box-shadow:0 0 16px var(--c1)}
+.fs-nav:active{transform:translateY(-50%) scale(.95)}
+.fs-counter{
+  position:absolute;bottom:20px;left:20px;
+  background:rgba(0,0,0,.7);color:var(--c1);padding:8px 16px;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;
+}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none !important}
+
+/* ═══ NLM Video ═══ */
+.nlm-video-section{margin-bottom:48px}
+.nlm-video-section h2{
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--c4);margin-bottom:18px;letter-spacing:.05em;
+}
+.video-wrap{
+  background:var(--surface);border:3px solid var(--c4);box-shadow:var(--shadow-px-lg);
+  position:relative;overflow:hidden;
+}
+.video-ratio{position:relative;padding-top:56.25%;width:100%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-no-id{
+  padding:60px 24px;text-align:center;
+  font-size:1.05rem;color:var(--dim);border:2px dashed var(--dim);
+}
+.video-no-id .icon{font-size:2.5rem;margin-bottom:14px;display:block}
+.video-meta{
+  background:var(--panel);border-top:2px solid var(--c4);
+  padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.nlm-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--c4);color:var(--bg);font-size:.8rem;font-weight:900;
+  padding:5px 12px;
+}
+.video-hint{font-size:.95rem;color:var(--dim)}
+.yt-link{margin-left:auto;color:var(--c4);font-size:.9rem;text-decoration:none;font-weight:700}
+.yt-link:hover{text-decoration:underline}
+
+/* ═══ Footer ═══ */
+.site-footer{
+  margin-top:48px;padding:32px 24px;text-align:center;
+  border-top:3px solid var(--c4);background:var(--surface);
+}
+.site-footer p{font-size:.95rem;color:var(--dim);margin:6px 0}
+.site-footer a{color:var(--c4);text-decoration:none;font-weight:700}
+.site-footer a:hover{text-decoration:underline}
+
+/* ═══ Float Tools ═══ */
+.float-tools{
+  position:fixed;right:20px;bottom:20px;z-index:400;
+  display:flex;flex-direction:column;gap:10px;
+}
+.float-btn{
+  width:54px;height:54px;border:3px solid var(--c2);background:var(--surface);
+  color:var(--c2);font-size:1.5rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-px);transition:.15s;
+}
+.float-btn:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-px-lg)}
+.float-btn.cyan{border-color:var(--c1);color:var(--c1)}
+.float-btn.pink{border-color:var(--c3);color:var(--c3)}
+.float-btn.green{border-color:var(--c4);color:var(--c4)}
+.float-btn.gotop{border-color:var(--c5);color:var(--c5)}
+.tool-panel{
+  position:fixed;right:20px;bottom:90px;z-index:400;
+  width:300px;background:var(--surface);border:3px solid var(--c2);
+  padding:18px;display:none;box-shadow:var(--shadow-px-lg);
+}
+.tool-panel.show{display:block}
+.tool-panel h4{
+  font-size:1rem;color:var(--c2);margin-bottom:12px;font-weight:900;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.tool-panel h4 .close{cursor:pointer;font-size:1rem;color:var(--c5)}
+#panel-lottery{border-color:var(--c1)}
+#panel-lottery h4{color:var(--c1)}
+#panel-timer{border-color:var(--c4)}
+#panel-timer h4{color:var(--c4)}
+.btn-primary{
+  padding:8px 18px;background:var(--c2);color:var(--bg);border:none;
+  font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;
+  box-shadow:2px 2px 0 #000;transition:.15s;
+}
+.btn-primary:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #000}
+#panel-lottery .btn-primary{background:var(--c1)}
+#panel-timer .btn-primary{background:var(--c4)}
+.lottery-result{
+  text-align:center;font-size:1.6rem;font-weight:900;color:var(--c1);
+  padding:14px;background:var(--bg);margin-top:10px;
+  font-family:'Press Start 2P',monospace;letter-spacing:.05em;
+}
+.timer-display{
+  text-align:center;font-size:2rem;font-weight:900;color:var(--c4);
+  padding:14px;background:var(--bg);margin:10px 0;
+  font-family:'Press Start 2P',monospace;
+}
+
+/* ═══ Drawing Canvas ═══ */
+#drawCanvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:250;pointer-events:none;background:transparent;
+}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;z-index:300;
+  background:var(--surface);border:2px solid var(--c1);padding:10px 14px;
+  display:none;gap:8px;align-items:center;box-shadow:var(--shadow-px);
+}
+.draw-toolbar.show{display:flex}
+.color-dot{width:26px;height:26px;border:2px solid #000;cursor:pointer;padding:0;transition:.2s}
+.color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor}
+.draw-clear{
+  background:transparent;border:2px solid var(--c5);color:var(--c5);
+  padding:4px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;
+}
+.draw-clear:hover{background:var(--c5);color:#fff}
+
+/* ═══ Login Simulator ═══ */
+.login-sim{
+  background:linear-gradient(135deg,#1a3d6f 0%,#0d2444 100%);
+  padding:24px;width:100%;max-width:480px;border:2px solid var(--c1);
+}
+.login-sim h5{color:var(--c2);font-size:1rem;margin-bottom:16px;text-align:center}
+.login-step{
+  background:rgba(255,255,255,.05);border:2px solid var(--c1);
+  padding:14px;margin-bottom:10px;display:flex;gap:10px;align-items:center;
+  font-size:.95rem;cursor:pointer;transition:.2s;color:var(--text);
+}
+.login-step.active{background:rgba(0,229,255,.2);border-color:var(--c2);transform:translateX(8px)}
+.login-step.done{background:rgba(105,255,71,.15);border-color:var(--c4)}
+.login-step .check{margin-left:auto;color:var(--c4);font-size:1.2rem;display:none}
+.login-step.done .check{display:inline}
+
+/* ═══ World Selector ═══ */
+.world-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;width:100%;padding:14px;
+}
+.world-tile{
+  padding:16px 12px;border:2px solid var(--dim);background:var(--panel);
+  cursor:pointer;text-align:center;transition:.2s;color:var(--text);
+}
+.world-tile:hover{border-color:var(--c2);transform:translateY(-3px)}
+.world-tile.correct{
+  border-color:var(--c4);background:rgba(105,255,71,.15);
+  box-shadow:0 0 20px var(--c4);
+}
+.world-tile.wrong{border-color:var(--c5);background:rgba(255,107,107,.15);opacity:.5}
+.world-tile .ico{font-size:2rem;display:block;margin-bottom:6px}
+.world-tile .nm{font-size:.95rem;font-weight:700}
+.world-feedback{
+  padding:14px;text-align:center;font-size:1rem;color:var(--c4);
+  font-weight:700;display:none;
+}
+.world-feedback.show{display:block}
+
+/* ═══ PISA Cards ═══ */
+.pisa-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;width:100%;padding:14px;
+}
+.pisa-card{
+  padding:16px;background:var(--panel);border:2px solid var(--c3);
+  cursor:pointer;transition:.2s;
+}
+.pisa-card:hover{transform:translateY(-3px);box-shadow:0 6px 12px rgba(255,64,129,.3)}
+.pisa-card .ico{font-size:1.8rem;margin-bottom:8px}
+.pisa-card h5{color:var(--c3);font-size:1rem;margin-bottom:6px;font-weight:900}
+.pisa-card p{font-size:.9rem;color:var(--text);line-height:1.6}
+.pisa-card .ex{
+  margin-top:10px;padding:8px 10px;background:rgba(0,0,0,.25);
+  font-size:.85rem;color:var(--c2);border-left:3px solid var(--c2);display:none;
+}
+.pisa-card.show .ex{display:block}
+
+/* ═══ Treasure Selector ═══ */
+.treasure-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;width:100%;padding:14px;
+}
+.treasure-btn{
+  padding:18px 10px;background:var(--panel);border:2px solid var(--c4);
+  cursor:pointer;text-align:center;color:var(--text);transition:.2s;
+}
+.treasure-btn:hover{transform:translateY(-3px);box-shadow:0 0 16px var(--c4)}
+.treasure-btn.active{background:var(--c4);color:var(--bg)}
+.treasure-btn .ico{font-size:2rem;display:block;margin-bottom:6px}
+.treasure-btn .nm{font-size:.95rem;font-weight:900}
+.treasure-detail{
+  width:100%;padding:18px;background:var(--bg);border-top:2px solid var(--c4);
+  margin-top:12px;display:none;
+}
+.treasure-detail.show{display:block}
+.treasure-detail h5{color:var(--c4);font-size:1.1rem;margin-bottom:8px;font-weight:900}
+.treasure-detail .desc{font-size:.95rem;color:var(--text);margin-bottom:10px;line-height:1.7}
+.treasure-detail .row{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem}
+.treasure-detail .row span{
+  padding:4px 10px;background:var(--surface);border:1px solid var(--c2);color:var(--c2);
+}
+
+/* ═══ Class Code ═══ */
+.code-input-wrap{
+  width:100%;padding:24px;background:var(--panel);border:2px solid #b388ff;text-align:center;
+}
+.code-input-wrap h5{color:#b388ff;font-size:1rem;margin-bottom:16px;font-weight:900}
+.code-input{
+  font-size:1.6rem;text-align:center;letter-spacing:.5em;
+  padding:14px 20px;width:240px;background:var(--bg);
+  border:2px solid #b388ff;color:var(--c2);font-family:'Press Start 2P',monospace;
+}
+.seat-input{
+  font-size:1.4rem;text-align:center;
+  padding:14px 20px;width:120px;background:var(--bg);
+  border:2px solid #b388ff;color:var(--c2);font-family:'Press Start 2P',monospace;
+  margin-left:8px;
+}
+.code-row{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.code-row .lbl{color:#b388ff;font-weight:700}
+.code-result{
+  margin-top:14px;padding:14px;font-size:1rem;display:none;
+}
+.code-result.show{display:block}
+.code-result.ok{background:rgba(105,255,71,.15);color:var(--c4);border:2px solid var(--c4)}
+.code-result.err{background:rgba(255,107,107,.15);color:var(--c5);border:2px solid var(--c5)}
+
+/* ═══ Reward Animation ═══ */
+.reward-wrap{
+  width:100%;padding:24px;background:var(--panel);border:2px solid var(--c5);
+}
+.task-progress{
+  background:var(--bg);border:2px solid var(--c5);
+  padding:14px 18px;margin-bottom:16px;
+}
+.task-progress h5{color:var(--c5);font-size:1rem;margin-bottom:8px;font-weight:900}
+.progress-track{
+  height:24px;background:var(--surface);border:2px solid var(--c5);
+  position:relative;overflow:hidden;
+}
+.progress-fill-r{
+  height:100%;background:linear-gradient(90deg,var(--c5),var(--c2),var(--c4));
+  width:0%;transition:width .8s;display:flex;align-items:center;justify-content:flex-end;
+  padding-right:8px;color:#000;font-weight:900;font-size:.85rem;
+}
+.reward-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;min-height:80px}
+.reward-item{
+  width:70px;height:70px;background:var(--bg);border:2px solid var(--c2);
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;
+  opacity:0;transform:scale(.5);transition:.4s;
+}
+.reward-item.show{opacity:1;transform:scale(1)}
+.reward-controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+
+/* ═══ Responsive ═══ */
+@media (max-width:720px){
+  html{font-size:16px}
+  .container{padding:14px}
+  .header-inner{padding:10px 14px}
+  .header-title{font-size:1.2rem}
+  .level-section{padding:18px}
+  .nb-flow-steps{flex-direction:column;align-items:flex-start}
+  .nb-flow-arrow{transform:rotate(90deg)}
+  .strip-thumb{width:90px}
+  .float-btn{width:46px;height:46px;font-size:1.2rem}
+  #slide-fs .fs-nav{width:46px;height:64px;font-size:1.6rem}
+  #slide-fs .fs-nav.prev{left:8px}
+  #slide-fs .fs-nav.next{right:8px}
+  .fs-close{width:40px;height:40px;top:12px;right:12px}
+  .tool-panel{width:calc(100% - 40px);right:20px;left:20px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title-block">
+      <div class="header-title"><span class="pixel-tag">PaGamO</span>桃園市素養付費版進階駕駛艙</div>
+      <div class="header-sub"><span class="grade-chip">四年級</span>從新手村到素養大師的 6 大關卡冒險之旅</div>
+    </div>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btn-student" onclick="switchMode('student')">🎓 學生模式</button>
+      <button class="mode-btn" id="btn-teacher" onclick="switchMode('teacher')">👩‍🏫 教師模式</button>
+    </div>
+    <div class="progress-bar">
+      <span class="label">關卡進度</span>
+      <div class="track"><div class="fill" id="progress-fill"></div></div>
+      <span class="pct" id="progress-pct">0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <section class="intro-section">
+    <h2>▶ MISSION BRIEFING</h2>
+    <div class="objectives">
+      <div class="obj-chip"><span class="ico">🔑</span>教育雲帳號登入</div>
+      <div class="obj-chip"><span class="ico">🌍</span>切換桃園素養世界</div>
+      <div class="obj-chip"><span class="ico">📖</span>閱讀理解四能力</div>
+      <div class="obj-chip"><span class="ico">⚔️</span>四大付費神器</div>
+      <div class="obj-chip"><span class="ico">🏫</span>加入老師班級</div>
+      <div class="obj-chip"><span class="ico">🎁</span>領取班級獎勵</div>
+    </div>
+    <div class="stage-nav">
+      <a href="#sec1" class="stage-pill"><span class="num">S1</span>登入新手村</a>
+      <a href="#sec2" class="stage-pill"><span class="num">S2</span>進入桃園世界</a>
+      <a href="#sec3" class="stage-pill"><span class="num">S3</span>素養題挑戰</a>
+      <a href="#sec4" class="stage-pill"><span class="num">S4</span>四大神器</a>
+      <a href="#sec5" class="stage-pill"><span class="num">S5</span>加入老師班級</a>
+      <a href="#sec6" class="stage-pill"><span class="num">S6</span>領取獎勵</a>
+    </div>
+  </section>
+
+  <!-- ═══ STAGE 1：教育雲登入 ═══ -->
+  <section id="sec1" class="level-section s1">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 1</span>
+      <h3 class="section-title">🔑 用「教育雲帳號」登入桃園市 PaGamO 付費版</h3>
+    </div>
+    <p class="section-sub">教育雲端帳號是教育部給學生的「萬能通行證」，一組帳號就能登入所有教育網站。所有遊戲進度都會永久保存，換到電腦或平板都能接著玩！</p>
+
+    <div class="steps-card">
+      <h4>🖥️ 電腦網頁版登入步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><div>打開瀏覽器，輸入網址 <strong style="color:var(--c2)">https://www.pagamo.org/</strong></div></li>
+        <li><span class="step-num">2</span><div>點擊畫面右上方「<strong style="color:var(--c2)">登入</strong>」按鈕</div></li>
+        <li><span class="step-num">3</span><div>選擇有「<strong style="color:var(--c2)">教育雲</strong>」圖示的按鈕（OpenID）</div></li>
+        <li><span class="step-num">4</span><div>點選「使用縣市帳號登入」→ 地區選「<strong style="color:var(--c2)">桃園市</strong>」→ 身分選「學生」</div></li>
+        <li><span class="step-num">5</span><div>輸入學校給的桃園市教育雲端帳號和密碼</div></li>
+        <li><span class="step-num">6</span><div>第一次使用要輸入「兌換碼」綁定付費版</div></li>
+      </ul>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動模擬：照著做一次登入流程</h4>
+      <div class="canvas-hint">點擊每一步，模擬真實的登入過程</div>
+      <div class="canvas-wrap">
+        <div class="login-sim">
+          <h5>🌐 模擬登入畫面</h5>
+          <div class="login-step" data-i="0" onclick="loginStep(0)">1️⃣ 開啟 pagamo.org 網址 <span class="check">✅</span></div>
+          <div class="login-step" data-i="1" onclick="loginStep(1)">2️⃣ 點擊「登入」按鈕 <span class="check">✅</span></div>
+          <div class="login-step" data-i="2" onclick="loginStep(2)">3️⃣ 選擇「教育雲」OpenID <span class="check">✅</span></div>
+          <div class="login-step" data-i="3" onclick="loginStep(3)">4️⃣ 桃園市 / 學生身分 <span class="check">✅</span></div>
+          <div class="login-step" data-i="4" onclick="loginStep(4)">5️⃣ 輸入帳號密碼登入 <span class="check">✅</span></div>
+          <div id="login-final" style="text-align:center;padding:14px;color:var(--c4);font-weight:900;display:none">🎉 成功登入！歡迎來到桃園素養世界！</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box tip">
+      💡 <strong>跨裝置提醒</strong>：同一組教育雲帳號可在電腦、手機 APP、平板無縫切換，所有進度永久保存！學生帳號可以用到高中職畢業，不會因為轉學或升學而消失。
+    </div>
+    <div class="tip-box warn">
+      ⚠️ <strong>忘記密碼怎麼辦？</strong>點選「忘記帳號」或「忘記密碼」找回；找學校資訊組長幫忙；或撥打客服 04-22220507。
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE CLEAR CHECK</h4>
+      <div class="quiz-block">
+        <p class="quiz-q">登入桃園市 PaGamO 付費版時，要選擇哪一個圖示登入？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'其他登入方式不會帶你到桃園市的付費內容喔！')">Facebook 圖示</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！教育雲（OpenID）是教育部專用的學生帳號，登入後才會看到付費版的素養任務。')">教育雲（OpenID）圖示</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'這個選項是給家長註冊用的，不適合學生喔！')">註冊新帳號</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'Google 帳號雖然方便，但學校付費的內容是綁定教育雲帳號的！')">Google 帳號</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block">
+        <p class="quiz-q">如果忘記教育雲帳號的密碼，最快的解決方法是？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'這樣不行！每組帳號都是學校配給你的專屬帳號，重新申請會弄丟舊進度！')">重新申請一個新帳號</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'家長可能也不知道，最好還是直接找學校處理。')">問家長</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！學校的資訊組長最熟悉學生帳號，可以直接幫你重設密碼！')">找學校資訊組長協助</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'這樣只是放棄學習機會，記得有客服 04-22220507 可以求助喔！')">不玩了</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👩‍🏫 教師教學提示</h5>
+      <p>建議第一堂課帶學生實際操作登入流程，特別注意「學生身分」選擇與帳號保密。可請學生在聯絡簿/筆記本記下自己的桃園教育雲帳號（不是密碼！）方便日後查找。若全班同時登入造成系統卡頓，可分批登入。</p>
+    </div>
+  </section>
+
+  <!-- ═══ STAGE 2：進入桃園世界 ═══ -->
+  <section id="sec2" class="level-section s2">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 2</span>
+      <h3 class="section-title">🌍 進入「世界遊戲」付費版世界</h3>
+    </div>
+    <p class="section-sub">PaGamO 有很多個世界（國小天地、國中世界、各縣市素養世界等）。<strong style="color:var(--c5)">桃園市付費版的素養任務只在「桃園市素養世界」才會出現！</strong>很多同學抱怨沒看到付費任務，9 成 9 是「跑錯世界」了！</p>
+
+    <div class="steps-card">
+      <h4>🌍 切換到桃園市素養世界</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><div>登入後找到主畫面<strong style="color:var(--c2)">左上角</strong>的世界選單</div></li>
+        <li><span class="step-num">2</span><div>切換到「<strong style="color:var(--c2)">桃園市素養世界</strong>」（會有桃園專屬圖示）</div></li>
+        <li><span class="step-num">3</span><div>切換成功後，左側「任務書」會出現素養任務</div></li>
+        <li><span class="step-num">4</span><div>系統每週一、四下午 4:00 自動派發 2 個閱讀素養任務</div></li>
+      </ul>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎯 互動挑戰：哪一個是「桃園市素養世界」？</h4>
+      <div class="canvas-hint">點選看看，找出正確答案！其他世界都不會收到付費的素養任務喔</div>
+      <div class="canvas-wrap">
+        <div style="width:100%">
+          <div class="world-grid">
+            <div class="world-tile" onclick="pickWorld(this,false)"><span class="ico">🏰</span><span class="nm">國小天地</span></div>
+            <div class="world-tile" onclick="pickWorld(this,false)"><span class="ico">🌊</span><span class="nm">國中世界</span></div>
+            <div class="world-tile" onclick="pickWorld(this,true)"><span class="ico">🌸</span><span class="nm">桃園市素養世界</span></div>
+            <div class="world-tile" onclick="pickWorld(this,false)"><span class="ico">🚀</span><span class="nm">學測世界</span></div>
+            <div class="world-tile" onclick="pickWorld(this,false)"><span class="ico">🎮</span><span class="nm">遊戲樂園</span></div>
+            <div class="world-tile" onclick="pickWorld(this,false)"><span class="ico">🏖️</span><span class="nm">假期世界</span></div>
+          </div>
+          <div class="world-feedback" id="world-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <h4>🎮 主畫面介面導覽</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">📍</span><div><strong style="color:var(--c2)">黑色小旗子</strong>：你已經佔領的領土</div></li>
+        <li><span class="step-num">📖</span><div><strong style="color:var(--c2)">書本圖示（左側）</strong>：任務書，所有任務都在這裡</div></li>
+        <li><span class="step-num">👤</span><div><strong style="color:var(--c2)">角色大頭貼（左下）</strong>：個人資訊、等級、領土數</div></li>
+        <li><span class="step-num">🎒</span><div><strong style="color:var(--c2)">背包</strong>：商店與道具，分為 4 大類（防守、攻擊、能量、土地）</div></li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      🎭 <strong>三種角色選擇</strong>：🦎 Lizard 蜴（防守型，不常上線適合）、🦅 Eagle 鷹（策略型，賺錢快）、🐺 Wolf 狼（攻擊型，戰鬥力強）
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE CLEAR CHECK</h4>
+      <div class="quiz-block">
+        <p class="quiz-q">小明登入後一直沒看到桃園市的素養任務，最可能的原因是？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'付費版兌換成功後，系統會自動每週一、四派發任務，不需要每次重買！')">兌換碼又過期了</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！9 成 9 都是這個原因，記得看左上角切到桃園市素養世界！')">他跑到「國小天地」其他世界，沒切到「桃園市素養世界」</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'PaGamO 一般都很穩定，先檢查自己的世界選對了沒。')">PaGamO 系統壞了</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'四年級當然可以收到任務！')">四年級不能收任務</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block">
+        <p class="quiz-q">如果你常常很久才上線一次玩，選哪個角色最適合？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！Lizard 蜴的土地血量最多，比較難被攻陷，超適合不常上線的玩家！')">🦎 Lizard 蜴（防守型）</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'Eagle 適合愛策略、賺錢快的玩家，但土地不夠厚！')">🦅 Eagle 鷹（策略型）</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'Wolf 適合每天玩、愛戰鬥的玩家，攻擊力高但防禦不夠厚！')">🐺 Wolf 狼（攻擊型）</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'PaGamO 沒有貓咪角色喔！只有蜴、鷹、狼三種。')">🐱 Cat 貓</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👩‍🏫 教師教學提示</h5>
+      <p>桃園市付費版的素養任務由縣市教育局處與 PaGamO 合作授權，「跑錯世界」是學生最常見的卡關點。建議在白板畫出 PaGamO 主畫面示意圖，明確指出「左上角世界選單」位置。也提醒學生「老師在遊戲中收不到素養任務」，但可在教師後台查看學生收到的內容。</p>
+    </div>
+  </section>
+
+  <!-- ═══ STAGE 3：閱讀理解題組題 ═══ -->
+  <section id="sec3" class="level-section s3">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 3</span>
+      <h3 class="section-title">📖 中文素養閱讀理解題組題</h3>
+    </div>
+    <p class="section-sub"><strong style="color:var(--c2)">素養 = 把學到的知識用在解決生活中真實問題的能力</strong>。PaGamO 與品學堂合作，每週一、四派發兩篇跨領域文章 + 4-5 道題，訓練 PISA 國際閱讀素養四大能力！</p>
+
+    <div class="canvas-section">
+      <h4>🧠 互動學習：點開卡片看 PISA 四大能力</h4>
+      <div class="canvas-hint">點擊每張卡片，看看四大能力的生活範例</div>
+      <div class="canvas-wrap">
+        <div class="pisa-grid">
+          <div class="pisa-card" onclick="this.classList.toggle('show')">
+            <div class="ico">🔍</div>
+            <h5>1. 擷取訊息</h5>
+            <p>找線索！直接從文章裡找答案，像玩躲貓貓。</p>
+            <div class="ex">📌 例：文章寫「小明吃了三顆紅蘋果」→ 問「吃什麼顏色？」答「紅色」</div>
+          </div>
+          <div class="pisa-card" onclick="this.classList.toggle('show')">
+            <div class="ico">🌐</div>
+            <h5>2. 廣泛理解</h5>
+            <p>看全貌！把整篇文章的主旨和大意讀出來。</p>
+            <div class="ex">📌 例：讀完「動物射手」一文 → 知道這是介紹某種動物的捕食方式</div>
+          </div>
+          <div class="pisa-card" onclick="this.classList.toggle('show')">
+            <div class="ico">🧩</div>
+            <h5>3. 發展解釋</h5>
+            <p>拼拼圖！把線索拼起來，推理作者想表達什麼。</p>
+            <div class="ex">📌 例：「天空烏雲，大家撐傘」→ 推理「快下雨了」</div>
+          </div>
+          <div class="pisa-card" onclick="this.classList.toggle('show')">
+            <div class="ico">⚖️</div>
+            <h5>4. 省思評鑑</h5>
+            <p>當小裁判！把文章內容跟自己生活經驗連結，判斷合理性。</p>
+            <div class="ex">📌 例：讀亂丟垃圾故事 → 思考「主角這樣對嗎？我會怎麼做？」</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <h4>📚 完整作答流程</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><div>點擊左側「<strong style="color:var(--c2)">任務書</strong>」→「<strong style="color:var(--c2)">素養任務</strong>」</div></li>
+        <li><span class="step-num">2</span><div>地圖上找一塊<strong style="color:var(--c2)">緊鄰自己領土</strong>的土地</div></li>
+        <li><span class="step-num">3</span><div>點擊該土地 → 按下「<strong style="color:var(--c2)">攻擊</strong>（Attack）」</div></li>
+        <li><span class="step-num">4</span><div>跳出文章 + 題目，仔細閱讀後選答案</div></li>
+        <li><span class="step-num">5</span><div>每答對一題，土地血量就減少</div></li>
+        <li><span class="step-num">6</span><div>把血量扣到 0 → 佔領這塊地！</div></li>
+        <li><span class="step-num">7</span><div>進度達到 <strong style="color:var(--c4)">100%</strong> 完成任務</div></li>
+        <li><span class="step-num">8</span><div>⭐ <strong style="color:var(--c2)">作答完一定要看「文字詳解」和「影音詳解」</strong>！這是進步關鍵！</div></li>
+      </ul>
+    </div>
+
+    <div class="tip-box tip">
+      📝 <strong>連續文本 vs 非連續文本</strong>：連續文本像故事書、課文（例：動物射手）；非連續文本包含圖表、地圖、海報、食譜（例：過年糕級食物食譜）。要學會看兩種！
+    </div>
+    <div class="tip-box">
+      ⏱️ <strong>時間規劃</strong>：每篇 11-16 分鐘可完成，每週 4 篇 = 1 小時。分散每天 15 分鐘做一篇最有效！
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE CLEAR CHECK</h4>
+      <div class="quiz-block">
+        <p class="quiz-q">下面哪個情境最需要用到「擷取訊息」的能力？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'這是「省思評鑑」喔！要動腦判斷對錯。')">判斷新聞是不是假的</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！直接從說明書裡「找出」操作步驟，這就是擷取訊息！')">看玩具說明書找出組裝步驟</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'這是「發展解釋」喔！要根據線索推理。')">看到天上烏雲，推理快下雨了</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'這是「廣泛理解」喔！要看全文知道大意。')">讀完整本書知道講什麼</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block">
+        <p class="quiz-q">為什麼答錯了還是要看「影音詳解」？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'答對給道具是有的，但更重要的是「學到知識」！')">這樣才能拿到答對獎勵</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！詳解能讓你看到專家的思考方法，下次遇到類似題目就會了！')">看詳解可以學專家的思考方法，下次就會了</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'素養任務做過就不能重做喔！要珍惜每次學習機會。')">看完才能重做這題</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'雖然有趣是真的，但學習才是真正的收穫！')">影片很好笑</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👩‍🏫 教師教學提示</h5>
+      <p>四年級學生對「素養」概念較陌生，建議用「魔法雷達」比喻（PISA 四能力 = 四種偵探能力）。可在課堂上挑一篇全班錯誤率高的文章，播放影音詳解後請小組討論「老師如何畫重點」。也可以使用品學堂提供的學習單作為延伸活動。</p>
+    </div>
+  </section>
+
+  <!-- ═══ STAGE 4：四大付費神器 ═══ -->
+  <section id="sec4" class="level-section s4">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 4</span>
+      <h3 class="section-title">⚔️ 桃園市付費版四大神器全攻略</h3>
+    </div>
+    <p class="section-sub">付費版獨家的四大神器，幫你在學習與競賽時更聰明、更省力、更有效率！點選下方按鈕看詳細介紹。</p>
+
+    <div class="canvas-section">
+      <h4>⚡ 互動神器選擇器：點選看每個神器的使用方法</h4>
+      <div class="canvas-hint">點下方按鈕切換不同神器</div>
+      <div class="canvas-wrap" style="flex-direction:column;align-items:stretch">
+        <div class="treasure-grid">
+          <button class="treasure-btn active" onclick="pickTreasure(this,0)"><span class="ico">⚡</span><span class="nm">省力模式</span></button>
+          <button class="treasure-btn" onclick="pickTreasure(this,1)"><span class="ico">📚</span><span class="nm">自選章節</span></button>
+          <button class="treasure-btn" onclick="pickTreasure(this,2)"><span class="ico">🧭</span><span class="nm">魔物指針</span></button>
+          <button class="treasure-btn" onclick="pickTreasure(this,3)"><span class="ico">🛡️</span><span class="nm">競賽之盾</span></button>
+        </div>
+        <div class="treasure-detail show" id="treasure-detail"></div>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <h4>🎒 進階道具總覽（背包→商店）</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">💉</span><div><strong style="color:var(--c2)">土地營養劑</strong>：恢復土地 50~300 點血量</div></li>
+        <li><span class="step-num">🧪</span><div><strong style="color:var(--c2)">魔法藥水</strong>：恢復玩家 10~60 點能量</div></li>
+        <li><span class="step-num">💣</span><div><strong style="color:var(--c2)">炸彈</strong>：對別人土地造成 100 點傷害</div></li>
+        <li><span class="step-num">🐲</span><div><strong style="color:var(--c2)">等級一怪獸</strong>：守衛領地，敵人攻打更難</div></li>
+        <li><span class="step-num">⬆️</span><div><strong style="color:var(--c2)">升級道具</strong>：土地升級，防護力與外觀加倍</div></li>
+        <li><span class="step-num">🌀</span><div><strong style="color:var(--c2)">傳送門</strong>：把領地傳送到全新地點</div></li>
+      </ul>
+    </div>
+
+    <div class="tip-box tip">
+      🌟 <strong>稀有獎勵</strong>：三星地形、季節地形（雪地/櫻花）、Boss 戰役道具最稀有！靠完成世界任務、素養任務、每天登入、訓練升級土地獲得。
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE CLEAR CHECK</h4>
+      <div class="quiz-block">
+        <p class="quiz-q">明天要段考了，想用 PaGamO 練習數學分數的章節，要用哪個神器？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'省力模式只能省能量，沒辦法選題目範圍喔！')">⚡ 省力模式</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！自選章節是段考前的複習神器，可以挑老師教過的單元密集練習！')">📚 自選章節</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'魔物指針是用來找怪獸寶藏的，不是選題目！')">🧭 魔物指針</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'競賽之盾是用來防禦攻擊的，不是練習題目！')">🛡️ 競賽之盾</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block">
+        <p class="quiz-q">什麼時候「不該」開省力模式？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'剛好相反！平常練習就是省力模式的最佳時機！')">平常每天上線練習時</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！攻擊力大幅下降，遇到血量厚的稀有土地會打很久！')">要打血量厚的稀有三星地形時</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'省力模式正適合大量練習！')">想短時間練很多題目時</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'能量快用完時更要省著用！')">能量快用完時</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👩‍🏫 教師教學提示</h5>
+      <p>「魔物指針」與「競賽之盾」是桃園付費版的進階機制（搭配 PaGamO 既有的「捕獸夾/怪獸列表」與「防護罩」概念），主要強化「探索蒐集」與「PVP 對戰防禦」體驗。實際介面以官方公告為準。建議引導學生「先理解每個神器的設計目的」，而非死記操作步驟。</p>
+    </div>
+  </section>
+
+  <!-- ═══ STAGE 5：班級代碼加入 ═══ -->
+  <section id="sec5" class="level-section s5">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 5</span>
+      <h3 class="section-title">🏫 用班級代碼加入老師建立的班級</h3>
+    </div>
+    <p class="section-sub">老師建立的「班級」是專屬學習社群！加入後可以收到老師親自設計的班級任務、跟同學競賽排名、領取額外的班級獎勵！</p>
+
+    <div class="steps-card">
+      <h4>🎫 完整加入步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><div>跟老師拿「<strong style="color:#b388ff">班級代碼</strong>」（學校或聯絡簿告訴你）</div></li>
+        <li><span class="step-num">2</span><div>在 PaGamO 中點選「<strong style="color:#b388ff">課程設定</strong>」</div></li>
+        <li><span class="step-num">3</span><div>點擊「<strong style="color:#b388ff">我的班級</strong>」</div></li>
+        <li><span class="step-num">4</span><div>輸入老師給的「班級代碼」+「自己的座號」</div></li>
+        <li><span class="step-num">5</span><div>按下確定送出</div></li>
+        <li><span class="step-num">6</span><div>到「任務書」確認有沒有出現老師指派的任務</div></li>
+      </ul>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動模擬：輸入班級代碼加入</h4>
+      <div class="canvas-hint">試試輸入老師給你的代碼（測試代碼：PAGAMO，座號隨意）</div>
+      <div class="canvas-wrap">
+        <div class="code-input-wrap">
+          <h5>📝 加入老師班級表單</h5>
+          <div class="code-row">
+            <span class="lbl">班級代碼</span>
+            <input type="text" id="code-input" class="code-input" placeholder="輸入 6 位代碼" maxlength="8" oninput="this.value=this.value.toUpperCase()">
+          </div>
+          <div class="code-row">
+            <span class="lbl">座號</span>
+            <input type="number" id="seat-input" class="seat-input" placeholder="號" min="1" max="40">
+          </div>
+          <button class="btn-primary" onclick="submitCode()" style="background:#b388ff;color:#fff;margin-top:8px">🚀 送出</button>
+          <div class="code-result" id="code-result"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      ✅ <strong>確認加入成功的方法</strong>：(1) 「我的班級」列表會出現該班級；(2) 「任務書」會收到老師派的「一般任務」（紅色或藍色標籤）。
+    </div>
+    <div class="tip-box warn">
+      ⚠️ <strong>找不到班級代碼？</strong>不要亂猜！直接問老師最快。沒有購買題庫的學生無法使用這個功能喔！
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE CLEAR CHECK</h4>
+      <div class="quiz-block">
+        <p class="quiz-q">想加入老師班級，要去哪裡輸入代碼？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'背包是放道具和商店的地方，不是加入班級！')">背包</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！「課程設定 → 我的班級」就是加入班級的入口！')">課程設定 → 我的班級</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'任務書是看任務和領獎勵的地方，不是加入班級！')">任務書</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'個人檔案是看自己資料的地方，不是加入班級！')">個人檔案</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block">
+        <p class="quiz-q">如何確認自己已經成功加入老師的班級？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'桌布變綠色不是 PaGamO 的功能喔！')">桌布變成綠色</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'金幣是答題得到的，跟班級無關！')">金幣突然變多</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！任務書出現「一般任務」就代表老師可以指派作業了！')">任務書出現老師指派的「一般任務」</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'這只是換角色，跟加入班級沒關係！')">角色變成大人</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👩‍🏫 教師教學提示</h5>
+      <p>建立班級時請事先在教師後台檢查座號與班上實際座號是否一致（可拖曳調整）。班級代碼建議寫在白板讓全班同時加入，或印在學習單上。若學生加入後沒看到任務，請先確認雙方在同一個世界（桃園市素養世界）。</p>
+    </div>
+  </section>
+
+  <!-- ═══ STAGE 6：完成任務領獎勵 ═══ -->
+  <section id="sec6" class="level-section s6">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 6</span>
+      <h3 class="section-title">🎁 完成班級任務 & 領取獎勵</h3>
+    </div>
+    <p class="section-sub">加入班級後，老師會指派專屬的「一般任務」。完成後可以領到道具、地形卡、稀有寶箱等戰利品！</p>
+
+    <div class="steps-card">
+      <h4>📋 完成班級任務的流程</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><div>點擊左側「<strong style="color:var(--c5)">任務書</strong>」→ 找到老師的任務</div></li>
+        <li><span class="step-num">2</span><div>按下「<strong style="color:var(--c5)">開始任務</strong>」</div></li>
+        <li><span class="step-num">3</span><div>回到地圖，找一塊緊連自己領土的土地按「攻擊」</div></li>
+        <li><span class="step-num">4</span><div>跳出來的題目就是老師出的作業！</div></li>
+        <li><span class="step-num">5</span><div>任務目標：<strong style="color:var(--c4)">完成率 100%</strong></div></li>
+        <li><span class="step-num">6</span><div>到任務書按「<strong style="color:var(--c2)">領取獎勵</strong>」按鈕</div></li>
+        <li><span class="step-num">7</span><div>獎勵自動進入「<strong style="color:var(--c2)">背包</strong>」可查看</div></li>
+      </ul>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎬 互動模擬：完成任務 → 領取獎勵動畫</h4>
+      <div class="canvas-hint">點按鈕模擬答題，看進度條到 100% 後領取獎勵！</div>
+      <div class="canvas-wrap">
+        <div class="reward-wrap">
+          <div class="task-progress">
+            <h5>📋 老師指派任務：閱讀理解第 3 篇</h5>
+            <div class="progress-track"><div class="progress-fill-r" id="r-fill">0%</div></div>
+          </div>
+          <div class="reward-controls">
+            <button class="btn-primary" onclick="answerQuestion()" style="background:var(--c4);color:var(--bg)">📝 答對一題（+25%）</button>
+            <button class="btn-primary" onclick="claimReward()" style="background:var(--c2);color:var(--bg)" id="r-claim" disabled>🎁 領取獎勵</button>
+            <button class="btn-primary" onclick="resetReward()" style="background:var(--c5);color:#fff">↻ 重置</button>
+          </div>
+          <div class="reward-row" id="r-rewards"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-card">
+      <h4>🏆 任務的三大類別</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">🏫</span><div><strong style="color:var(--c5)">一般任務</strong>（老師指派）：商店物品、心靈雞湯、季節地形</div></li>
+        <li><span class="step-num">🌍</span><div><strong style="color:var(--c5)">世界任務</strong>（PaGamO 官方）：專屬地形、命名寶典、Boss 道具</div></li>
+        <li><span class="step-num">📖</span><div><strong style="color:var(--c5)">素養任務</strong>（付費購買）：Boss 道具、矮妖鑰匙、素養地形、寶箱</div></li>
+      </ul>
+    </div>
+
+    <div class="tip-box tip">
+      💪 <strong>學習小撇步</strong>：每天 15 分鐘定時定量、答錯不灰心要看詳解、善用錯題列表練功、跟同學討論文章、適時開省力模式 — 五招讓你成為素養大師！
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE CLEAR CHECK</h4>
+      <div class="quiz-block">
+        <p class="quiz-q">老師指派的任務屬於哪一種類別？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！老師親自指派的就是「一般任務」，會出現在任務書中！')">一般任務</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'世界任務是 PaGamO 官方派的，不是老師喔！')">世界任務</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'素養任務是付費購買的品學堂題組，不是老師親自出！')">素養任務</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'隱藏任務不是 PaGamO 的官方分類！')">隱藏任務</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-block">
+        <p class="quiz-q">完成任務後，獎勵會出現在哪裡？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'獎勵不會出現在任務書，要回背包看！')">任務書</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,true,'答對！背包就是收納所有道具和獎勵的地方！')">背包</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'個人檔案是看遊戲資訊的地方，不是放獎勵！')">個人檔案</button>
+          <button class="quiz-opt" onclick="answerQuiz(this,false,'地圖上會看到地形變化，但獎勵道具還是要回背包查看！')">地圖中央</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h5>👩‍🏫 教師教學提示</h5>
+      <p>建議搭配教師後台的「班級統計分析」(錯題排行榜、班級排名) 設立「每週進步獎」、「領土擴張王」。每週固定 10 分鐘檢視全班學習狀況，針對錯題密集區進行補救教學。也可以納入平時成績或班級競賽獎勵制度。</p>
+    </div>
+  </section>
+
+  <!-- ═══ 今日實作任務 ═══ -->
+  <section class="project-task">
+    <h2>▶ TODAY MISSION</h2>
+    <p style="color:var(--text);font-size:1rem">完成下面 4 個今日實作任務，挑戰自己成為素養新手！</p>
+    <div class="task-list">
+      <div class="task-item">
+        <div class="num-box">1</div>
+        <div>
+          <h4>🔑 登入桃園市 PaGamO 付費版</h4>
+          <p>用學校發的教育雲帳號登入 PaGamO，切換到「桃園市素養世界」，截圖你的主畫面。</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="num-box">2</div>
+        <div>
+          <h4>📖 完成 1 篇素養任務並看詳解</h4>
+          <p>到任務書找最新的素養任務，認真讀完文章和題目，作答完一定要看「文字詳解」和「影音詳解」！</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="num-box">3</div>
+        <div>
+          <h4>⚡ 試用一個付費神器</h4>
+          <p>選一個你最有興趣的神器（省力模式 / 自選章節 / 魔物指針 / 競賽之盾），實際用看看，記錄你的感想。</p>
+        </div>
+      </div>
+      <div class="task-item">
+        <div class="num-box">4</div>
+        <div>
+          <h4>🏫 加入老師的班級</h4>
+          <p>跟老師拿班級代碼，加入班級後完成第 1 個老師指派的任務，到背包看看你獲得了什麼獎勵！</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ NotebookLM 資源站 ═══ -->
+  <section class="nb-section">
+    <h2>▶ AI LEARNING HUB（NotebookLM 資源站）</h2>
+    <p style="font-size:1rem;color:var(--text);margin-bottom:14px">本駕駛艙的所有教學內容，由 <strong style="color:var(--c3)">Claude AI + NotebookLM</strong> 整合 16 個權威來源後自動生成。點擊下方卡片，可以直接到 NotebookLM 跟 AI 對話、看完整研究報告、聽 AI 生成的播客！</p>
+    <div class="nb-grid">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/b98aca9e-786e-4e8b-b3a1-a813accf2ab7" target="_blank" rel="noopener">
+        <div class="nb-ico">🎯</div>
+        <h4>精簡本（教學簡報用）</h4>
+        <p>NotebookLM 精簡筆記本，只有 2 個來源（萃取精華 + 主講者插畫），所有素材都從這裡生成。</p>
+      </a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/fdf41122-4e92-4320-be4d-8652ede463a3" target="_blank" rel="noopener">
+        <div class="nb-ico">📚</div>
+        <h4>研究本（深度搜尋）</h4>
+        <p>16 個 PaGamO 與桃園教育雲的權威來源，用 NotebookLM 深度網路搜尋「deep」模式自動建立。</p>
+      </a>
+      <a class="nb-card" href="https://www.pagamo.org/" target="_blank" rel="noopener">
+        <div class="nb-ico">🎮</div>
+        <h4>PaGamO 官方網站</h4>
+        <p>直接前往 PaGamO 官方網站，用教育雲帳號登入開始你的素養冒險！</p>
+      </a>
+    </div>
+
+    <div class="nb-flow">
+      <h3>🔧 本駕駛艙的 AI 製作流程</h3>
+      <div class="nb-flow-steps">
+        <span class="nb-flow-step">深度搜尋 16 個來源</span>
+        <span class="nb-flow-arrow">→</span>
+        <span class="nb-flow-step">notebook_query × 4 萃取</span>
+        <span class="nb-flow-arrow">→</span>
+        <span class="nb-flow-step">建立精簡本（2 來源）</span>
+        <span class="nb-flow-arrow">→</span>
+        <span class="nb-flow-step">生成簡報 + 影片 + 4 圖表</span>
+        <span class="nb-flow-arrow">→</span>
+        <span class="nb-flow-step">Claude AI 整合互動 HTML</span>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <h3>❓ 學生常見問題（FAQ）</h3>
+      <div class="faq-item">
+        <p class="faq-q">教育雲帳號登入失敗、忘記密碼怎麼辦？</p>
+        <p class="faq-a">點選「忘記帳號」或「忘記密碼」找回；找學校資訊組長協助；或撥客服 04-22220507。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">登入後沒看到付費的素養任務？</p>
+        <p class="faq-a">99% 是跑錯世界！檢查左上角是不是切到「桃園市素養世界」，不是「國小天地」。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">換到別台電腦/平板還能繼續玩嗎？</p>
+        <p class="faq-a">可以！同一組教育雲帳號，所有進度跟著你走。也有 PaGamO APP 可裝在手機平板。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">任務做過了可以重新做嗎？</p>
+        <p class="faq-a">素養任務不能重做（要訓練看陌生文章），但可到「個人檔案 → 題目列表 → 錯題列表」重練。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">省力模式什麼時候用最划算？</p>
+        <p class="faq-a">想短時間練大量題目時最划算！但要打血量厚的稀有土地或搶下別人領土時就不要用！</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">自選章節有哪些題目可以選？</p>
+        <p class="faq-a">學科：國語、數學、自然、社會、英語各版本；生活主題：理財、反毒、清潔安全、環境防災等。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">能量值用完了怎麼辦？</p>
+        <p class="faq-a">(1) 用魔法藥水恢復；(2) 加好友請朋友送能量；(3) 去錯題列表練功；(4) 等到隔天能量自動補滿。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">領土被別人攻擊怎麼防守？</p>
+        <p class="faq-a">訓練土地（按 TRAIN）讓血量變多；買「防護罩」保護；用「等級一怪獸」幫你守；換成 Lizard 防守型角色。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">老師建議每天玩多久比較好？</p>
+        <p class="faq-a">每天 15 分鐘最好！每篇素養任務 11-16 分鐘，分散每天做最有效，不要一次趕完一週進度。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 授課簡報播放器 ═══ -->
+  <section class="slide-section">
+    <h2>▶ TEACHING SLIDES（授課簡報 - 阿凱老師主講版）</h2>
+    <p style="font-size:.95rem;color:var(--dim);margin-bottom:14px">由 NotebookLM 自動生成的 15 頁像素遊戲風授課簡報，主講者：阿凱老師。可雙擊主畫面或點右上角全螢幕，鍵盤左右鍵翻頁。</p>
+    <div class="slide-player">
+      <div class="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">01 / 15</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
+    </div>
+  </section>
+
+  <!-- ═══ NLM 自學影片 ═══ -->
+  <section class="nlm-video-section">
+    <h2>▶ SELF-STUDY VIDEO（學生自學影片）</h2>
+    <div class="video-wrap">
+      <div class="video-ratio">
+        <iframe
+          src="https://www.youtube.com/embed/orrtRnvCTKk?rel=0&modestbranding=1"
+          title="PaGamO 桃園市素養付費版進階教學｜NotebookLM 教學影片"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 建議用耳機觀看，可搭配上方簡報一起複習</span>
+        <a href="https://www.youtube.com/watch?v=orrtRnvCTKk" target="_blank" rel="noopener" class="yt-link">↗ 在 YouTube 開啟</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <p>📚 IT COCKPIT × NotebookLM × Claude AI 整合製作</p>
+  <p>Made with ❤️ by <a href="https://web.smes.tyc.edu.tw/teacher/index/?id=130&page=" target="_blank" rel="noopener">阿凱老師</a></p>
+  <p style="font-size:.85rem;margin-top:10px">資料來源：PaGamO 官方文件、桃園市教育雲、品學堂閱讀素養｜部分付費版進階神器以實際遊戲畫面為準</p>
+</footer>
+
+<!-- ═══ Floating Tools ═══ -->
+<div class="float-tools">
+  <button class="float-btn cyan" onclick="togglePanel('lottery')" title="抽號機">🎲</button>
+  <button class="float-btn green" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn gotop" onclick="goPageTop()" title="回頂端">🔝</button>
+</div>
+
+<!-- 抽號機面板 -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>~</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c5);color:#fff">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<!-- 計時器面板 -->
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim)">
+    <span>倒數</span>
+    <input type="number" id="tim-min" value="15" min="1" max="60" style="width:55px;padding:4px 6px;background:var(--bg);border:1px solid var(--c4);color:var(--text);font-family:inherit">
+    <span>分鐘</span>
+  </div>
+  <div class="timer-display" id="tim-out">15:00</div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1">▶ 開始</button>
+    <button class="btn-primary" onclick="resetTimer()" style="background:var(--c5);color:#fff">↻</button>
+  </div>
+</div>
+
+<!-- 全螢幕簡報 -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="fs-counter" id="slide-fs-counter">01 / 15</div>
+</div>
+
+<!-- 畫筆 Canvas + 工具列 -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd740" onclick="setPenColor('#ffd740',this)"></button>
+  <button class="color-dot" style="background:#00e5ff" onclick="setPenColor('#00e5ff',this)"></button>
+  <button class="color-dot" style="background:#69ff47" onclick="setPenColor('#69ff47',this)"></button>
+  <button class="color-dot" style="background:#fff" onclick="setPenColor('#fff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+/* ═══ 模式切換 ═══ */
+function switchMode(m){
+  if(m==='teacher'){
+    const pwd=prompt('請輸入教師密碼：');
+    if(pwd!=='it2026'){alert('密碼錯誤');return;}
+    document.body.classList.add('teacher-mode');
+    document.getElementById('btn-teacher').classList.add('active');
+    document.getElementById('btn-student').classList.remove('active');
+  } else {
+    document.body.classList.remove('teacher-mode');
+    document.getElementById('btn-student').classList.add('active');
+    document.getElementById('btn-teacher').classList.remove('active');
+  }
+}
+
+/* ═══ 進度追蹤 ═══ */
+const TOTAL_QUIZ=12;
+let answeredCorrect=new Set();
+function updateProgress(){
+  const pct=Math.round(answeredCorrect.size/TOTAL_QUIZ*100);
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-pct').textContent=pct+'%';
+}
+
+/* ═══ Quiz ═══ */
+let quizCounter=0;
+function answerQuiz(btn,correct,explain){
+  const block=btn.closest('.quiz-block');
+  if(block.dataset.done)return;
+  block.dataset.done='1';
+  const opts=block.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>o.classList.add('answered'));
+  if(correct){
+    btn.classList.add('correct');
+    const id=block.getBoundingClientRect().top+'_'+Math.random();
+    answeredCorrect.add(id);
+    const cheers=['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','⭐ Perfect！','🏆 真聰明！'];
+    showFeedback(block,cheers[Math.floor(Math.random()*cheers.length)]+' '+explain,false);
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o=>{
+      const ev=o.getAttribute('onclick')||'';
+      if(ev.includes(',true,'))o.classList.add('correct');
+    });
+    showFeedback(block,'再加油！'+explain,true);
+  }
+  updateProgress();
+}
+function showFeedback(block,msg,wrong){
+  const fb=block.querySelector('.quiz-feedback');
+  fb.textContent=msg;
+  fb.className='quiz-feedback show'+(wrong?' wrong-feedback':'');
+}
+
+/* ═══ Login Simulator ═══ */
+let loginCurrent=0;
+function loginStep(i){
+  if(i!==loginCurrent)return;
+  const steps=document.querySelectorAll('.login-step');
+  steps[i].classList.remove('active');
+  steps[i].classList.add('done');
+  loginCurrent++;
+  if(loginCurrent<steps.length)steps[loginCurrent].classList.add('active');
+  else document.getElementById('login-final').style.display='block';
+}
+function initLoginSim(){
+  const steps=document.querySelectorAll('.login-step');
+  if(steps[0])steps[0].classList.add('active');
+}
+
+/* ═══ World Picker ═══ */
+function pickWorld(el,correct){
+  const tiles=document.querySelectorAll('.world-tile');
+  tiles.forEach(t=>t.style.pointerEvents='none');
+  if(correct){
+    el.classList.add('correct');
+    document.getElementById('world-fb').textContent='🎉 答對！這就是你要去的桃園素養世界，馬上會收到付費任務！';
+    document.getElementById('world-fb').classList.add('show');
+  } else {
+    el.classList.add('wrong');
+    setTimeout(()=>{
+      tiles.forEach(t=>t.style.pointerEvents='auto');
+      el.classList.remove('wrong');
+    },1200);
+  }
+}
+
+/* ═══ Treasure ═══ */
+const treasures=[
+  {nm:'⚡ 省力模式',desc:'地圖介面右下方的「藍色按鈕」，點擊一下開啟，再點一下關閉。打地花費的能量值變少（約 1/3），但攻擊力也下降。',where:'地圖右下角藍色按鈕',when:'想短時間大量練題',effect:'省能量、攻擊力下降'},
+  {nm:'📚 自選章節',desc:'課程設定 → 題目來源 → 自選題目，挑選想練習的科目（國/數/自/社/英）→ 冊別 → 單元，按確定。打地時題目會變成你選的範圍！',where:'課程設定 → 自選題目',when:'段考前複習超好用',effect:'指定章節密集練習'},
+  {nm:'🧭 魔物指針',desc:'桃園市付費版的進階指引功能：在大地圖上幫你找到隱藏的魔物與寶藏指引（類似指南針 + 怪獸雷達）。也可搭配「捕獸夾」獵捕別人土地上的怪獸。',where:'背包 → 商店',when:'想完成怪獸蒐集成就',effect:'更有效率取得寶藏'},
+  {nm:'🛡️ 競賽之盾',desc:'桃園市付費版的進階防禦：在班級競賽 PVP 對戰中保護領土（強化版防護罩）。讓你的領土免疫對方的攻擊型道具（炸彈、捕獸夾）。',where:'背包 → 商店',when:'班級競賽火熱、剛佔稀有地形',effect:'領土免疫攻擊'}
+];
+function pickTreasure(btn,i){
+  document.querySelectorAll('.treasure-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const t=treasures[i];
+  document.getElementById('treasure-detail').innerHTML=
+    '<h5>'+t.nm+'</h5>'+
+    '<div class="desc">'+t.desc+'</div>'+
+    '<div class="row"><span>📍 在哪裡：'+t.where+'</span><span>⏰ 何時用：'+t.when+'</span><span>✨ 效果：'+t.effect+'</span></div>';
+}
+
+/* ═══ Class Code ═══ */
+function submitCode(){
+  const code=document.getElementById('code-input').value.trim();
+  const seat=document.getElementById('seat-input').value.trim();
+  const r=document.getElementById('code-result');
+  if(!code||!seat){
+    r.textContent='⚠️ 請輸入班級代碼和座號！';
+    r.className='code-result show err';
+    return;
+  }
+  if(code.length<4){
+    r.textContent='⚠️ 班級代碼太短了，跟老師再確認一次！';
+    r.className='code-result show err';
+    return;
+  }
+  r.innerHTML='🎉 加入成功！你已加入老師的班級（代碼：<strong>'+code+'</strong>，座號：<strong>'+seat+' 號</strong>）<br>📖 快到「任務書」看老師指派的任務吧！';
+  r.className='code-result show ok';
+}
+
+/* ═══ Reward Animation ═══ */
+let rProgress=0;
+function answerQuestion(){
+  if(rProgress>=100)return;
+  rProgress=Math.min(100,rProgress+25);
+  const fill=document.getElementById('r-fill');
+  fill.style.width=rProgress+'%';
+  fill.textContent=rProgress+'%';
+  if(rProgress>=100){
+    document.getElementById('r-claim').disabled=false;
+    document.getElementById('r-claim').style.animation='pulse 1s infinite';
+  }
+}
+function claimReward(){
+  if(rProgress<100)return;
+  const rewards=['🎁','💎','🌸','⭐','🏆','🗝️'];
+  const wrap=document.getElementById('r-rewards');
+  wrap.innerHTML='';
+  rewards.forEach((r,i)=>{
+    const d=document.createElement('div');
+    d.className='reward-item';d.textContent=r;
+    wrap.appendChild(d);
+    setTimeout(()=>d.classList.add('show'),i*150);
+  });
+  document.getElementById('r-claim').disabled=true;
+}
+function resetReward(){
+  rProgress=0;
+  document.getElementById('r-fill').style.width='0%';
+  document.getElementById('r-fill').textContent='0%';
+  document.getElementById('r-rewards').innerHTML='';
+  document.getElementById('r-claim').disabled=true;
+}
+
+/* ═══ Slide Player ═══ */
+const SLIDE_LIST=[];
+for(let i=1;i<=15;i++){SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.jpg')}
+let currentSlide=0;
+function initSlidePlayer(){
+  const strip=document.getElementById('slide-strip');
+  SLIDE_LIST.forEach((src,i)=>{
+    const t=document.createElement('div');
+    t.className='strip-thumb';
+    if(i===0)t.classList.add('active');
+    t.style.backgroundImage='url('+src+')';
+    t.innerHTML='<span class="pn">'+String(i+1).padStart(2,'0')+'</span>';
+    t.onclick=()=>goSlide(i);
+    strip.appendChild(t);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n<0||n>=SLIDE_LIST.length)return;
+  currentSlide=n;
+  document.getElementById('slide-current').src=SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent=String(n+1).padStart(2,'0')+' / '+String(SLIDE_LIST.length).padStart(2,'0');
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active',i===n));
+  // 同步全螢幕
+  const fs=document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src=SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent=String(n+1).padStart(2,'0')+' / '+String(SLIDE_LIST.length).padStart(2,'0');
+  }
+  // 縮圖列水平捲動（只動 strip 內部，不動頁面）
+  const activeThumb=document.querySelector('.strip-thumb.active');
+  if(activeThumb){
+    const strip=document.getElementById('slide-strip');
+    const targetLeft=activeThumb.offsetLeft-(strip.clientWidth-activeThumb.offsetWidth)/2;
+    strip.scrollTo({left:Math.max(0,targetLeft),behavior:'smooth'});
+  }
+}
+function slideNav(dir){goSlide(currentSlide+dir)}
+function openSlideFullscreen(){
+  const fs=document.getElementById('slide-fs');
+  document.getElementById('slide-fs-img').src=SLIDE_LIST[currentSlide];
+  document.getElementById('slide-fs-counter').textContent=String(currentSlide+1).padStart(2,'0')+' / '+String(SLIDE_LIST.length).padStart(2,'0');
+  fs.classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key==='Escape')closeSlideFullscreen();
+    else if(e.key==='ArrowLeft')slideNav(-1);
+    else if(e.key==='ArrowRight')slideNav(1);
+  }
+});
+
+/* ═══ Float Panels ═══ */
+function togglePanel(p){
+  ['lottery','timer'].forEach(id=>{
+    const el=document.getElementById('panel-'+id);
+    if(id===p)el.classList.toggle('show');
+    else el.classList.remove('show');
+  });
+}
+function goPageTop(){window.scrollTo({top:0,behavior:'smooth'})}
+
+/* ═══ Lottery ═══ */
+let lotPool=[];
+function refillLotPool(){
+  const min=parseInt(document.getElementById('lot-min').value)||1;
+  const max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max)return false;
+  lotPool=[];for(let i=min;i<=max;i++)lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique=document.getElementById('lot-unique').checked;
+  const min=parseInt(document.getElementById('lot-min').value)||1;
+  const max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max){alert('最小號必須 ≤ 最大號');return}
+  if(unique&&lotPool.length===0)refillLotPool();
+  const out=document.getElementById('lot-out');
+  const timer=setInterval(()=>{
+    const n=Math.floor(Math.random()*(max-min+1))+min;
+    out.textContent=n+' 號';
+  },60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length===0)refillLotPool();
+      const idx=Math.floor(Math.random()*lotPool.length);
+      num=lotPool.splice(idx,1)[0];
+    } else {
+      num=Math.floor(Math.random()*(max-min+1))+min;
+    }
+    out.textContent='🌟 '+num+' 號 🌟';
+  },1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent='等待抽號...';
+}
+
+/* ═══ Timer ═══ */
+let tInterval=null,tRemaining=900;
+function startTimer(){
+  if(tInterval)return;
+  const m=parseInt(document.getElementById('tim-min').value)||15;
+  tRemaining=m*60;
+  tInterval=setInterval(()=>{
+    if(tRemaining<=0){
+      clearInterval(tInterval);tInterval=null;
+      document.getElementById('tim-out').textContent='⏰ 時間到！';
+      document.getElementById('tim-out').style.color='var(--c5)';
+      try{new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAA').play()}catch(e){}
+      return;
+    }
+    tRemaining--;
+    const mm=String(Math.floor(tRemaining/60)).padStart(2,'0');
+    const ss=String(tRemaining%60).padStart(2,'0');
+    document.getElementById('tim-out').textContent=mm+':'+ss;
+  },1000);
+}
+function resetTimer(){
+  if(tInterval){clearInterval(tInterval);tInterval=null}
+  const m=parseInt(document.getElementById('tim-min').value)||15;
+  tRemaining=m*60;
+  document.getElementById('tim-out').textContent=String(m).padStart(2,'0')+':00';
+  document.getElementById('tim-out').style.color='var(--c4)';
+}
+
+/* ═══ Drawing Canvas ═══ */
+let drawActive=false,penColor='#ff4081',penSize=4;
+let drawCanvas,drawCtx,isDrawing=false,dLastX,dLastY;
+function initDraw(){
+  drawCanvas=document.getElementById('drawCanvas');
+  drawCtx=drawCanvas.getContext('2d');
+  drawCanvas.width=window.innerWidth;drawCanvas.height=window.innerHeight;
+  drawCanvas.addEventListener('mousedown',e=>{if(!drawActive)return;isDrawing=true;dLastX=e.clientX;dLastY=e.clientY});
+  drawCanvas.addEventListener('mousemove',e=>{
+    if(!drawActive||!isDrawing)return;
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(e.clientX,e.clientY);drawCtx.stroke();
+    dLastX=e.clientX;dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup',()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart',e=>{
+    if(!drawActive)return;e.preventDefault();
+    const t=e.touches[0];isDrawing=true;dLastX=t.clientX;dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchmove',e=>{
+    if(!drawActive||!isDrawing)return;e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(t.clientX,t.clientY);drawCtx.stroke();
+    dLastX=t.clientX;dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+  window.addEventListener('resize',()=>{drawCanvas.width=window.innerWidth;drawCanvas.height=window.innerHeight});
+}
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').style.background=drawActive?'var(--c4)':'';
+  document.getElementById('drawToggleBtn').style.color=drawActive?'var(--bg)':'';
+}
+function setPenColor(c,el){
+  penColor=c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){if(drawCtx)drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height)}
+
+/* ═══ Init ═══ */
+document.addEventListener('DOMContentLoaded',()=>{
+  initSlidePlayer();
+  initLoginSim();
+  pickTreasure(document.querySelector('.treasure-btn.active'),0);
+  initDraw();
+});
+</script>
+</body>
+</html>
