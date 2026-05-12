@@ -4,13 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>IT COCKPIT｜國小資訊科技教學駕駛艙</title>
+<meta name="description" content="國小資訊科技教學駕駛艙 — 三、四、五、六年級・20 大互動教學艙，從電腦入門、英文打字、Scratch 程式設計，到 AI 創作、媒體識讀與機器人，一站翻轉資訊課堂。NotebookLM × Claude Code 打造。">
+<meta name="theme-color" content="#f1ebdc">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/">
 <meta property="og:title" content="IT COCKPIT｜國小資訊科技教學駕駛艙">
-<meta property="og:description" content="三、五、六年級・十三大互動教學艙，從電腦入門、程式設計，到 AI 創作與媒體識讀，一站式翻轉資訊課堂。NotebookLM × Claude Code 打造。">
+<meta property="og:description" content="三、四、五、六年級・20 大互動教學艙，從電腦入門、程式設計，到 AI 創作、媒體識讀與機器人，一站翻轉資訊課堂。NotebookLM × Claude Code 打造。">
 <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,325 +20,162 @@
 <meta property="og:site_name" content="IT COCKPIT">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="IT COCKPIT｜國小資訊科技教學駕駛艙">
-<meta name="twitter:description" content="三、五、六年級・十三大互動教學艙，從電腦入門、程式設計，到 AI 創作與媒體識讀。">
+<meta name="twitter:description" content="三、四、五、六年級・20 大互動教學艙，從電腦入門、程式設計，到 AI 創作與媒體識讀。">
 <meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/og-image.png">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  :root {
-    --bg: #06061a;
-    --surface: rgba(15,15,40,0.6);
-    --text: #e8e4f8;
-    --dim: #a8aad8;
-    --mute: #7070a0;
-    --line: rgba(255,255,255,0.06);
-    --line-2: #1f1f4a;
-    --line-3: #2a2a55;
-    --accent-a: #00e5ff;
-    --accent-b: #ffd740;
-  }
   body {
-    background: var(--bg);
+    font-family: 'Inter Tight', 'Noto Sans TC', system-ui, sans-serif;
+    background: #f1ebdc;
     background-image:
-      radial-gradient(1000px 600px at 12% 0%, rgba(0,229,255,0.10) 0%, transparent 60%),
-      radial-gradient(800px 500px at 92% 6%, rgba(255,215,64,0.08) 0%, transparent 55%),
-      radial-gradient(600px 400px at 50% 100%, rgba(179,136,255,0.06) 0%, transparent 60%),
-      linear-gradient(180deg, #08081e 0%, #04041a 100%);
-    color: var(--text);
-    font-family: 'Noto Sans TC', sans-serif;
+      radial-gradient(820px 520px at 110% -10%, #f4a62322 0%, transparent 60%),
+      radial-gradient(720px 520px at -10% 110%, #1b243812 0%, transparent 60%);
+    color: #1b2438;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
   }
   a { color: inherit; text-decoration: none; }
-  button { font-family: inherit; }
 
-  .mono { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; }
-  .grad-text {
-    background: linear-gradient(90deg, var(--accent-a) 0%, var(--accent-b) 100%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
-  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+  @media (max-width: 720px) { .wrap { padding: 0 22px; } }
 
-  /* nav */
-  .nav {
-    position: sticky; top: 0; z-index: 10;
-    border-bottom: 1px solid var(--line);
-    background: rgba(8,8,30,0.7);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-  .nav-inner {
-    max-width: 1240px; margin: 0 auto; padding: 14px 28px;
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 16px; flex-wrap: wrap;
-  }
-  .logo { display: flex; align-items: center; gap: 12px; }
+  /* ===== Nav ===== */
+  .nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; gap: 18px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 14px; }
   .logo-mark {
-    width: 44px; height: 44px;
-    background: #0a0a22; border: 2px solid var(--line-2);
-    display: flex; align-items: center; justify-content: center; gap: 3px;
-    font-family: 'Press Start 2P', monospace; font-size: 13px; letter-spacing: 1px;
-  }
-  .logo-mark .l-i { color: var(--accent-a); }
-  .logo-mark .l-t { color: var(--accent-b); }
-  .logo-title { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 11px; color: #fff; margin-bottom: 4px; }
-  .logo-sub { font-size: 10px; color: var(--mute); }
-  .nav-right { display: flex; gap: 4px; flex-wrap: wrap; }
-  .nav-link {
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 14px; color: #c0c2e8; font-size: 13px; font-weight: 500;
-  }
-  .nav-dot { width: 8px; height: 8px; border-radius: 50%; }
-  .nav-count { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 8px; color: var(--mute); }
-
-  /* hero */
-  .hero { max-width: 1240px; margin: 0 auto; padding: 70px 28px 50px; }
-  .hero-grid { display: grid; gap: 60px; align-items: center; grid-template-columns: 1.2fr 1fr; }
-  @media (max-width: 880px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
-  .kicker {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px;
-    margin-bottom: 28px; padding: 8px 14px;
-    color: var(--accent-a);
-    border: 1px solid rgba(0,229,255,0.33);
-    background: rgba(0,229,255,0.06);
-  }
-  .kicker-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent-a);
-    box-shadow: 0 0 6px var(--accent-a);
-  }
-  .hero-title {
-    font-size: clamp(40px, 5vw, 68px);
-    font-weight: 900; line-height: 1.14; color: #fff;
-    margin: 0 0 24px; letter-spacing: 0.005em;
-  }
-  .hero-lead {
-    font-size: 16px; line-height: 1.85; color: var(--dim);
-    margin: 0 0 36px; max-width: 500px;
-  }
-  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
-  .cta-primary {
-    display: inline-flex; align-items: center; gap: 12px;
-    padding: 16px 28px; font-weight: 900; font-size: 15px;
-    background: var(--accent-a); color: #0a0a22;
-    box-shadow: 5px 5px 0 var(--accent-b), 10px 10px 0 #000;
-    transition: transform .15s, box-shadow .15s;
-  }
-  .cta-primary:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--accent-b), 12px 12px 0 #000; }
-  .cta-arrow { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 14px; }
-  .cta-ghost {
-    padding: 16px 24px;
-    border: 2px solid var(--line-3);
-    color: #c0c2e8; font-size: 15px; font-weight: 700;
-    transition: border-color .15s, color .15s;
-  }
-  .cta-ghost:hover { border-color: var(--accent-a); color: #fff; }
-  .hero-meta {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    color: var(--mute); font-size: 12px;
-  }
-  .meta-pill {
-    font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px;
-    border: 1px solid var(--line-3); padding: 5px 10px; color: #9ea0d8;
-  }
-  .meta-sep { color: #3a3a5a; }
-  .meta-text { color: #9ea0d8; }
-
-  /* viewport / radar */
-  .viewport {
-    background: #08081e; border: 2px solid var(--line-2);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,255,0.08);
-  }
-  .vp-header {
-    display: flex; align-items: center; gap: 7px;
-    padding: 10px 14px;
-    background: #04041a; border-bottom: 1px solid var(--line-2);
-  }
-  .vp-dot { width: 9px; height: 9px; border-radius: 50%; }
-  .vp-dot-1 { background: #ff5f57; }
-  .vp-dot-2 { background: #febc2e; }
-  .vp-dot-3 { background: #28c840; }
-  .vp-title {
-    font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px;
-    color: var(--mute); margin-left: 10px; flex: 1;
-  }
-  .vp-status {
-    font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px;
-    color: #69ff47;
-  }
-  .vp-body { padding: 24px; }
-  .radar {
-    position: relative; width: 100%; aspect-ratio: 1 / 1;
-    max-height: 320px; margin: 0 auto 18px;
-    border: 1px solid rgba(0,229,255,0.25);
-    background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%);
-    overflow: hidden;
-  }
-  .radar-ring {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%; border: 1px solid rgba(0,229,255,0.19);
-  }
-  .radar-ring.r1 { width: 100%; height: 100%; }
-  .radar-ring.r2 { width: 70%; height: 70%; border-color: rgba(0,229,255,0.15); }
-  .radar-ring.r3 { width: 40%; height: 40%; border-color: rgba(0,229,255,0.13); }
-  .radar-cross-v { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(255,255,255,0.05); }
-  .radar-cross-h { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(255,255,255,0.05); }
-  .radar-sweep {
-    position: absolute; top: 0; left: 50%;
-    width: 50%; height: 50%;
-    transform-origin: 0% 100%;
-    background: linear-gradient(90deg, rgba(0,229,255,0.33) 0%, transparent 100%);
-    animation: radar-sweep 4s linear infinite;
-  }
-  .blip {
-    position: absolute; width: 8px; height: 8px; border-radius: 50%;
-    animation: blip-pulse 2s ease-in-out infinite;
-  }
-  .vp-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: var(--line-2);
-  }
-  .vstat { background: #08081e; padding: 14px 10px; text-align: center; }
-  .vstat-v { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 22px; margin-bottom: 6px; }
-  .vstat-k { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 8px; color: var(--mute); }
-
-  @keyframes radar-sweep { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  @keyframes blip-pulse {
-    0%, 100% { transform: scale(1); opacity: 0.9; }
-    50% { transform: scale(1.6); opacity: 0.4; }
-  }
-
-  /* tracks */
-  .tracks { max-width: 1240px; margin: 0 auto; padding: 30px 28px 20px; }
-  .tracks-head { margin-bottom: 24px; }
-  .eyebrow { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px; color: var(--mute); margin-bottom: 10px; }
-  .tracks-title { font-size: 26px; font-weight: 900; color: #fff; margin: 0; }
-  .tracks-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 14px;
-  }
-  .track {
-    display: flex; overflow: hidden;
-    background: var(--surface);
-    border: 1px solid;
-    transition: transform .15s, border-color .15s;
-  }
-  .track:hover { transform: translateY(-2px); }
-  .track-bar { width: 4px; flex-shrink: 0; }
-  .track-body { padding: 20px 22px; flex: 1; }
-  .track-top {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .track-badge {
-    font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 10px;
-    border: 2px solid; padding: 6px 10px;
-  }
-  .track-num { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px; color: #4a4a7a; }
-  .track-label { font-size: 18px; font-weight: 900; color: #fff; margin: 0 0 4px; }
-  .track-name { font-size: 14px; color: #c0c2e8; margin-bottom: 10px; font-weight: 500; }
-  .track-caption { font-size: 13px; color: #9ea0d8; margin-bottom: 14px; line-height: 1.6; }
-  .track-arrow { font-size: 13px; font-weight: 700; }
-
-  /* section */
-  .section { max-width: 1240px; margin: 0 auto; padding: 30px 28px 20px; }
-  .section-head {
-    display: flex; align-items: center; gap: 16px; margin-bottom: 22px; flex-wrap: wrap;
-  }
-  .section-badge {
-    display: flex; align-items: center; gap: 10px;
-    border: 2px solid; padding: 9px 14px;
-    background: var(--surface);
-  }
-  .section-badge-num { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 14px; }
-  .section-badge-label { font-weight: 700; font-size: 13px; color: #fff; }
-  .section-title { font-size: 22px; font-weight: 900; color: #fff; margin: 0; }
-  .section-rule { flex: 1; height: 1px; min-width: 30px; }
-  .section-meta { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px; color: var(--mute); }
-
-  /* cards */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    gap: 14px;
-  }
-  .card {
-    position: relative; overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 22px 22px 20px;
-    color: var(--text); display: block;
-    background: rgba(15,15,40,0.55);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
-    transition: transform .2s ease, border-color .2s ease, box-shadow .25s ease, background .25s ease;
-  }
-  .card:hover {
-    transform: translateY(-4px);
-    background: linear-gradient(180deg, rgba(20,20,55,0.92) 0%, rgba(15,15,40,0.92) 100%);
-  }
-  .card-glow {
-    position: absolute; inset: 0; pointer-events: none;
-    opacity: 0; transition: opacity .25s;
-  }
-  .card:hover .card-glow { opacity: 1; }
-  .card-topbar {
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    opacity: 0.5; transition: opacity .2s;
-  }
-  .card:hover .card-topbar { opacity: 1; }
-  .card-head {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 16px; margin-top: 4px; position: relative;
-  }
-  .card-icon {
-    width: 44px; height: 44px;
-    border: 2px solid;
+    width: 48px; height: 48px; background: #1b2438; color: #f1ebdc;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 13px;
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; letter-spacing: 0.05em;
+    border-radius: 12px; position: relative; flex-shrink: 0;
   }
-  .card-cat { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px; }
-  .card-title {
-    font-size: 19px; font-weight: 900; color: #fff;
-    line-height: 1.4; margin: 0 0 10px; position: relative;
-  }
-  .card-desc {
-    font-size: 13.5px; line-height: 1.7; color: var(--dim);
-    margin: 0 0 18px; position: relative; min-height: 70px;
-  }
-  .card-cta {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: 14px; border-top: 1px solid var(--line);
-    font-size: 13px; position: relative;
-  }
-  .card-cta-text { font-weight: 700; letter-spacing: 0.3px; }
-  .card-arrow {
-    font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 13px;
-    transition: transform .2s;
-  }
-  .card:hover .card-arrow { transform: translateX(8px); }
+  .logo-mark::after { content: ""; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 18px; height: 2px; background: #f4a623; }
+  .logo-title { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+  .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #1b243899; margin-top: 3px; text-transform: uppercase; }
+  .nav-right { display: flex; gap: 4px; align-items: center; padding: 5px; background: #ffffff66; border-radius: 999px; border: 1.5px solid #1b243822; flex-wrap: wrap; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: #1b2438; border-radius: 999px; transition: background .15s; }
+  .nav-link:hover { background: #f1ebdc; }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .nav-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1b243866; }
 
-  /* footer */
-  .footer {
-    margin-top: 50px; padding: 30px 28px;
-    border-top: 1px solid var(--line);
-    background: rgba(4,4,20,0.5);
-  }
-  .footer-inner {
-    max-width: 1240px; margin: 0 auto;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 16px;
-  }
-  .footer-dim { color: var(--mute); font-size: 12px; margin-top: 4px; }
-  .footer-right { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .footer-mono { font-family: 'Press Start 2P', monospace; letter-spacing: 1px; font-size: 9px; color: #9ea0d8; }
+  /* ===== Hero ===== */
+  .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; padding: 36px 0 48px; align-items: start; }
+  @media (max-width: 960px) { .hero { grid-template-columns: 1fr; gap: 40px; } }
 
-  a:focus-visible, button:focus-visible {
-    outline: 2px solid var(--accent-a);
-    outline-offset: 4px;
-  }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 13px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c2410c; background: #c2410c14; border-radius: 999px; margin-bottom: 32px; text-transform: uppercase; }
+  .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #c2410c; box-shadow: 0 0 0 4px #c2410c22; }
+
+  .title { font-size: clamp(48px, 7vw, 92px); font-weight: 800; line-height: 0.96; letter-spacing: -0.035em; margin: 0 0 22px; color: #1b2438; }
+  .title-row { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+  .title-tag { display: inline-flex; align-items: center; padding: 4px 18px; background: #f4a623; color: #1b2438; font-size: 0.42em; font-weight: 700; letter-spacing: 0.08em; border-radius: 999px; transform: translateY(-18%); }
+  .title em { font-style: italic; font-weight: 700; color: #c2410c; }
+
+  .lead { font-size: 18px; line-height: 1.65; color: #1b2438cc; margin: 0 0 32px; max-width: 540px; }
+  .lead strong { font-weight: 800; color: #1b2438; }
+
+  .ctas { display: flex; gap: 12px; align-items: center; margin-bottom: 36px; flex-wrap: wrap; }
+  .cta { display: inline-flex; align-items: center; gap: 12px; padding: 17px 26px; background: #1b2438; color: #f1ebdc; font-size: 15px; font-weight: 700; border-radius: 999px; transition: all .2s; box-shadow: 0 2px 0 #c2410c, 0 8px 24px #1b243822; }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 4px 0 #c2410c, 0 14px 30px #1b243828; }
+  .cta-arrow { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #f4a623; color: #1b2438; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 12px; }
+  .cta-ghost { display: inline-flex; align-items: center; padding: 17px 22px; font-size: 15px; font-weight: 600; color: #1b2438; border-radius: 999px; border: 1.5px solid #1b243822; background: #f1ebdc88; transition: border-color .15s; }
+  .cta-ghost:hover { border-color: #1b2438; }
+
+  .creds { display: flex; gap: 18px; align-items: center; padding-top: 24px; border-top: 1px solid #1b243822; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #1b243899; text-transform: uppercase; flex-wrap: wrap; }
+  .cred-blink { width: 7px; height: 7px; border-radius: 50%; background: #2d8a55; box-shadow: 0 0 0 4px #2d8a5522; display: inline-block; margin-right: 7px; vertical-align: middle; animation: blink 1.6s infinite; }
+  @keyframes blink { 50% { opacity: .3; } }
+
+  /* ===== Dashboard ===== */
+  .dash { background: #fffcf3; border: 1.5px solid #1b243822; border-radius: 24px; padding: 22px; box-shadow: 0 30px 60px -20px #1b243822; position: relative; overflow: hidden; }
+  .dash::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle at 50% 50%, transparent 0, transparent 70%, #1b243808 100%); pointer-events: none; }
+  .dash-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .dash-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: #1b243899; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+  .dash-title::before { content: ""; width: 9px; height: 9px; background: #c2410c; border-radius: 2px; }
+  .dash-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #2d8a55; display: flex; align-items: center; gap: 6px; }
+  .dash-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #2d8a55; box-shadow: 0 0 0 3px #2d8a5522; animation: blink 1.6s infinite; }
+
+  .horizon { aspect-ratio: 16/10; border-radius: 16px; background: linear-gradient(180deg, #b7d9e8 0%, #d9c896 52%, #f1ebdc 52%, #f4a62333 100%); border: 1.5px solid #1b243822; position: relative; overflow: hidden; margin-bottom: 14px; }
+  .h-grid { position: absolute; inset: 0; background-image: linear-gradient(90deg, #1b243812 1px, transparent 1px), linear-gradient(0deg, #1b243812 1px, transparent 1px); background-size: 10% 25%; }
+  .h-center { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); width: 60px; height: 60px; border: 2.5px solid #c2410c; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .h-center::before, .h-center::after { content: ""; position: absolute; background: #c2410c; }
+  .h-center::before { width: 110px; height: 2.5px; }
+  .h-center::after { width: 14px; height: 14px; border-radius: 50%; background: #c2410c; }
+  .h-pill { position: absolute; top: 14px; left: 14px; padding: 5px 10px; background: #fffcf3ee; border: 1px solid #1b243822; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #1b2438; }
+  .h-pill.right { left: auto; right: 14px; }
+  .h-marker { position: absolute; width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 0 4px #fffcf377; transform: translate(-50%, -50%); }
+  .h-label { position: absolute; padding: 3px 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; border-radius: 4px; transform: translate(-50%, -190%); white-space: nowrap; color: #fff; }
+
+  .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); border-radius: 12px; overflow: hidden; border: 1px solid #1b243822; }
+  .dstat { background: #fffcf3; padding: 14px 14px 12px; text-align: left; border-right: 1px solid #1b243822; }
+  .dstat:last-child { border-right: 0; }
+  .dstat-k { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: #1b243899; text-transform: uppercase; margin-bottom: 6px; }
+  .dstat-v { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .dstat-bar { height: 4px; border-radius: 2px; background: #1b243814; margin-top: 8px; overflow: hidden; }
+  .dstat-bar-fill { height: 100%; border-radius: 2px; }
+
+  /* ===== Tracks ===== */
+  .tracks-row { padding: 56px 0 22px; display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+  .tracks-h { font-size: clamp(28px, 4.4vw, 44px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin: 0; }
+  .tracks-h em { font-style: italic; color: #c2410c; font-weight: 700; }
+  .tracks-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: #1b243899; text-transform: uppercase; text-align: right; line-height: 1.6; }
+
+  .tracks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 960px) { .tracks { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .tracks { grid-template-columns: 1fr; } }
+  .track { background: #fffcf3; border-radius: 18px; padding: 22px 22px 18px; border: 1.5px solid #1b243822; transition: all .2s; cursor: pointer; position: relative; overflow: hidden; display: block; }
+  .track:hover { transform: translateY(-3px); border-color: #1b2438; box-shadow: 0 12px 30px -10px #1b243826; }
+  .track-stripe { position: absolute; top: 0; left: 0; right: 0; height: 5px; }
+  .track-top { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; margin-bottom: 28px; }
+  .track-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+  .track-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #1b243866; }
+  .track-grade { font-size: 36px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 5px; }
+  .track-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .track-cap { font-size: 12.5px; line-height: 1.5; color: #1b243899; margin-bottom: 20px; min-height: 36px; }
+  .track-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px dashed #1b243822; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: 700; }
+  .track-arrow { transition: transform .2s; }
+  .track:hover .track-arrow { transform: translateX(5px); }
+
+  /* ===== Sections ===== */
+  .section { max-width: 1280px; margin: 0 auto; padding: 56px 48px 16px; }
+  @media (max-width: 720px) { .section { padding: 40px 22px 12px; } }
+  .section-head { display: flex; align-items: center; gap: 16px; margin-bottom: 26px; flex-wrap: wrap; }
+  .section-badge { display: inline-flex; align-items: center; gap: 10px; padding: 9px 14px; border: 1.5px solid; border-radius: 999px; }
+  .section-badge-num { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; }
+  .section-badge-label { font-weight: 700; font-size: 14px; }
+  .section-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin: 0; color: #1b2438; }
+  .section-rule { flex: 1; height: 1px; min-width: 30px; }
+  .section-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: #1b243899; text-transform: uppercase; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
+
+  .card { display: block; background: #fffcf3; border-radius: 18px; padding: 22px 22px 18px; border: 1.5px solid #1b243822; transition: all .2s; position: relative; overflow: hidden; color: #1b2438; }
+  .card:hover { transform: translateY(-4px); border-color: #1b2438; box-shadow: 0 18px 36px -14px #1b243826; }
+  .card-stripe { position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; margin-bottom: 16px; }
+  .card-icon { width: 44px; height: 44px; border-radius: 12px; border: 1.5px solid; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; letter-spacing: 0.05em; }
+  .card-cat { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; font-weight: 700; text-transform: uppercase; }
+  .card-title { font-size: 18px; font-weight: 800; line-height: 1.4; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .card-desc { font-size: 13.5px; line-height: 1.65; color: #1b243899; margin: 0 0 18px; min-height: 70px; }
+  .card-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px dashed #1b243822; font-size: 13px; font-weight: 700; }
+  .card-arrow { font-family: 'JetBrains Mono', monospace; transition: transform .2s; }
+  .card:hover .card-arrow { transform: translateX(6px); }
+
+  /* ===== Footer ===== */
+  .footer { margin-top: 56px; padding: 36px 0 32px; border-top: 1.5px solid #1b243822; background: #fffcf366; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+  .footer-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .footer-note { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #1b243899; text-transform: uppercase; margin-bottom: 10px; }
+  .footer-author { font-size: 13px; color: #1b2438cc; }
+  .footer-author a { color: #c2410c; font-weight: 700; border-bottom: 1.5px solid #c2410c44; transition: border-color .15s; }
+  .footer-author a:hover { border-color: #c2410c; }
+  .footer-cred { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+  .footer-cred-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #1b243866; text-transform: uppercase; }
+  .footer-cred-row { display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; }
+
+  a:focus-visible { outline: 2px solid #c2410c; outline-offset: 4px; border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -344,105 +183,86 @@
 <script>
   const MODULES = [
     // 三年級
-    { id: "computer-friend", grade: 3, category: "電腦入門", color: "#ff85b3",
-      title: "嗨！電腦新朋友",
-      desc: "認識電腦家族、正確開關機、小畫家繪圖、坐姿好習慣。配對遊戲 × 迷你畫布 × 坐姿檢查站。",
-      href: "computer-friend/index.html", icon: "PC" },
-    { id: "typing-en", grade: 3, category: "英文打字", color: "#ff9800",
-      title: "中年級英文打字練習",
-      desc: "QWERTY 鍵盤、八大手指分工、Home Row 基準鍵到盲打挑戰。整合 typeEN 字母下落遊戲。",
-      href: "typing-en/index.html", icon: "KB" },
-    { id: "pagamo-world", grade: 3, category: "遊戲學習", color: "#4caf50",
-      title: "PaGamO 國小天地世界冒險",
-      desc: "用學校信箱登入 PaGamO 國小天地！世界任務佔領土地、班級任務拿紅包、背包道具升級地形賺金幣。4 大關卡 × 10 題形成性評量。",
-      href: "pagamo-world/index.html", icon: "PG" },
+    { id: "computer-friend", grade: 3, category: "電腦入門", color: "#ff7a3d",
+      title: "嗨！電腦新朋友", short: "PC",
+      desc: "認識電腦家族、正確開關機、小畫家繪圖、坐姿好習慣。配對遊戲 × 迷你畫布 × 坐姿檢查站。" },
+    { id: "typing-en", grade: 3, category: "英文打字", color: "#f4a623",
+      title: "中年級英文打字練習", short: "KB",
+      desc: "QWERTY 鍵盤、八大手指分工、Home Row 基準鍵到盲打挑戰。整合 typeEN 字母下落遊戲。" },
+    { id: "pagamo-world", grade: 3, category: "遊戲學習", color: "#3aa66b",
+      title: "PaGamO 國小天地世界冒險", short: "PG",
+      desc: "用學校信箱登入 PaGamO！世界任務佔領土地、班級任務拿紅包、背包道具升級地形。4 大關卡 × 10 題評量。" },
     // 四年級
-    { id: "canva-magic", grade: 4, category: "AI 設計", color: "#ff85b3",
-      title: "Canva 魔法簡報：用 AI 變身設計高手",
-      desc: "Canva 教育版登入、簡報製作、AI 五大魔法工具（Magic Write/Design/Media/Eraser/Background Remover），5 大互動關卡。",
-      href: "canva-magic/index.html", icon: "CM" },
-    { id: "pagamo-advanced", grade: 4, category: "素養學習", color: "#69ff47",
-      title: "PaGamO 桃園市付費版進階教學",
-      desc: "教育雲登入 × 中文素養閱讀理解題組 × 四大付費神器（省力模式 / 自選章節 / 魔物指針 / 競賽之盾）× 班級代碼任務獎勵。6 大關卡完整攻略。",
-      href: "pagamo-advanced/index.html", icon: "PG" },
+    { id: "canva-magic", grade: 4, category: "AI 設計", color: "#e85d8a",
+      title: "Canva 魔法簡報：用 AI 變身設計高手", short: "CM",
+      desc: "Canva 教育版登入、簡報製作、AI 五大魔法工具（Magic Write/Design/Media/Eraser/BG Remover），5 大互動關卡。" },
+    { id: "pagamo-advanced", grade: 4, category: "素養學習", color: "#3aa66b",
+      title: "PaGamO 桃園市付費版進階教學", short: "PG+",
+      desc: "教育雲登入 × 中文素養閱讀理解 × 四大付費神器（省力模式 / 自選章節 / 魔物指針 / 競賽之盾）× 班級代碼任務獎勵。" },
     // 五年級
-    { id: "digital-safety", grade: 5, category: "資訊素養", color: "#e94057",
-      title: "滑手機前先想一下：數位安全小公民",
-      desc: "演算法為什麼讓人停不下來？拍照分享有界線、App 與帳號安全、遇到困擾求救站。4 大關卡 × 12 題形成性評量 × 4 個 Canvas 互動。",
-      href: "digital-safety/index.html", icon: "DS" },
-    { id: "scratch-animation", grade: 5, category: "程式設計", color: "#ff85b3",
-      title: "Scratch 動畫魔法師",
-      desc: "Scratch 積木拼出第一部動畫。逐格動畫、滑行、廣播、特效、場景切換 6 大關卡。",
-      href: "scratch-animation/index.html", icon: "AN" },
-    { id: "scratch-game", grade: 5, category: "程式設計", color: "#00ff88",
-      title: "Scratch 遊戲設計師：水果接接樂",
-      desc: "9 種顏色積木做出完整遊戲。角色設計、鍵盤控制、分身掉落、計分系統 6 個關卡。",
-      href: "scratch-game/index.html", icon: "GM" },
+    { id: "digital-safety", grade: 5, category: "資訊素養", color: "#c4395d",
+      title: "滑手機前先想一下：數位安全小公民", short: "DS",
+      desc: "演算法為什麼讓人停不下來？拍照分享有界線、App 與帳號安全、遇到困擾求救站。4 大關卡 × 12 題評量 × 4 個 Canvas 互動。" },
+    { id: "scratch-animation", grade: 5, category: "程式設計", color: "#e85d8a",
+      title: "Scratch 動畫魔法師", short: "AN",
+      desc: "Scratch 積木拼出第一部動畫。逐格動畫、滑行、廣播、特效、場景切換 6 大關卡。" },
+    { id: "scratch-game", grade: 5, category: "程式設計", color: "#2d8a55",
+      title: "Scratch 遊戲設計師：水果接接樂", short: "GM",
+      desc: "9 種顏色積木做出完整遊戲。角色設計、鍵盤控制、分身掉落、計分系統 6 個關卡。" },
     // 六年級
-    { id: "gemini-canva", grade: 6, category: "AI 創作", color: "#ffd740",
-      title: "Gemini × Canva 影片創作",
-      desc: "用 Gemini 生成圖片與音樂，在 Canva 製作完整影片的教學課程。",
-      href: "gemini-canva/index.html", icon: "VD" },
-    { id: "canva-ai", grade: 6, category: "AI 設計", color: "#00e5ff",
-      title: "Canva AI 魔法創作",
-      desc: "Magic Media、提示詞技巧、文字生成圖片影片，以及其他 Canva AI 工具。",
-      href: "canva-ai/index.html", icon: "CV" },
-    { id: "gemini-music", grade: 6, category: "AI 音樂", color: "#ff4081",
-      title: "AI 音樂創作師",
-      desc: "用 Gemini 創作歌詞、生成 30 秒音樂，Canva 串接成畢業影片，5 大關卡完整教學。",
-      href: "gemini-music/index.html", icon: "MU" },
-    { id: "ai-image-pk", grade: 6, category: "AI 對決", color: "#ff6b35",
-      title: "AI 中文生圖大 PK",
-      desc: "ChatGPT vs Gemini 中文生圖王者對決！下拉式提示詞組合器 196,608 種組合 + 評分卡客觀評審。",
-      href: "ai-image-pk/index.html", icon: "PK" },
-    { id: "gem-storymaker", grade: 6, category: "AI 創作", color: "#c47bff",
-      title: "故事生圖 Gem 機器人",
-      desc: "Gemini「Gem」+ Nano Banana 2 生圖。角色定位、SOP、一致性錨點，創作 Q 版連環繪本。",
-      href: "gem-storymaker/index.html", icon: "ST" },
-    { id: "deepfake-detective", grade: 6, category: "媒體識讀", color: "#69ff47",
-      title: "AI 假影片偵探社",
-      desc: "認識 Deepfake、5 大辨別技巧、SIFT 查核法則，以及 MyGoPen 事實查核工具實作。",
-      href: "deepfake-detective/index.html", icon: "DF" },
-    { id: "fact-check", grade: 6, category: "事實查核", color: "#e94057",
-      title: "假訊息偵探社",
-      desc: "AI 假圖辨識、Google Lens 反向搜圖、Hive Moderation、三大查核網站，6 大關卡。",
-      href: "fact-check/index.html", icon: "FC" },
-    { id: "gemini-guided-learning", grade: 6, category: "AI 自學", color: "#b388ff",
-      title: "Gemini 引導式學習",
-      desc: "不直接給答案、一步步真正學會。PARTS 提示詞框架 × 4 種互動技巧 × 自學活動。",
-      href: "gemini-guided-learning/index.html", icon: "GL" },
-    { id: "ar-vr-wearables", grade: 6, category: "未來科技", color: "#00ff88",
-      title: "AR/VR 科技穿戴設備探索",
-      desc: "Meta Ray-Ban、HTC VIVE Eagle、Rokid、Quest 3、Vision Pro 大 PK！自製 Cardboard VR。",
-      href: "ar-vr-wearables/index.html", icon: "VR" },
-    { id: "mqueen-microbit", grade: 6, category: "機器人程式", color: "#0088ff",
-      title: "麥昆小車程式設計師",
-      desc: "MakeCode 積木 × micro:bit + 麥昆智能小車。8 大關卡：認識大腦、組裝、馬達、循跡、避障、遙控、智慧警車。",
-      href: "mqueen-microbit/index.html", icon: "MQ" },
-    { id: "blogger-ai-design", grade: 6, category: "AI 部落格", color: "#ffa94d",
-      title: "Blogger × AI 創作家",
-      desc: "Gemini 寫文配圖 + Canva AI Code 美化版面，發布人生第一個 AI 部落格。6 大關卡 × 18 題形成性評量。",
-      href: "blogger-ai-design/index.html", icon: "BL" },
-    { id: "suno-class-song", grade: 6, category: "AI 音樂", color: "#e91e63",
-      title: "用 Suno 設計班級神曲",
-      desc: "ChatGPT 寫歌詞 × Suno AI 作曲 × Canva 製作 MV。從班級主題曲到專屬畢業歌，5 大關卡完整教學。",
-      href: "suno-class-song/index.html", icon: "SU" },
+    { id: "gemini-canva", grade: 6, category: "AI 影片", color: "#d4a017",
+      title: "Gemini × Canva 影片創作", short: "VD",
+      desc: "用 Gemini 生成圖片與音樂，在 Canva 製作完整影片的教學課程。" },
+    { id: "canva-ai", grade: 6, category: "AI 設計", color: "#2b88c4",
+      title: "Canva AI 魔法創作", short: "CV",
+      desc: "Magic Media、提示詞技巧、文字生成圖片影片，以及其他 Canva AI 工具。" },
+    { id: "gemini-music", grade: 6, category: "AI 音樂", color: "#d63864",
+      title: "AI 音樂創作師", short: "MU",
+      desc: "用 Gemini 創作歌詞、生成 30 秒音樂，Canva 串接成畢業影片，5 大關卡完整教學。" },
+    { id: "ai-image-pk", grade: 6, category: "AI 對決", color: "#e8551f",
+      title: "AI 中文生圖大 PK", short: "PK",
+      desc: "ChatGPT vs Gemini 中文生圖王者對決！下拉式提示詞組合器 196,608 種組合 + 評分卡客觀評審。" },
+    { id: "gem-storymaker", grade: 6, category: "AI 故事", color: "#8b5fc4",
+      title: "故事生圖 Gem 機器人", short: "ST",
+      desc: "Gemini「Gem」+ Nano Banana 2 生圖。角色定位、SOP、一致性錨點，創作 Q 版連環繪本。" },
+    { id: "deepfake-detective", grade: 6, category: "媒體識讀", color: "#2d8a55",
+      title: "AI 假影片偵探社", short: "DF",
+      desc: "認識 Deepfake、5 大辨別技巧、SIFT 查核法則，以及 MyGoPen 事實查核工具實作。" },
+    { id: "fact-check", grade: 6, category: "事實查核", color: "#c4395d",
+      title: "假訊息偵探社", short: "FC",
+      desc: "AI 假圖辨識、Google Lens 反向搜圖、Hive Moderation、三大查核網站，6 大關卡。" },
+    { id: "gemini-guided-learning", grade: 6, category: "AI 自學", color: "#7a4fb8",
+      title: "Gemini 引導式學習", short: "GL",
+      desc: "不直接給答案、一步步真正學會。PARTS 提示詞框架 × 4 種互動技巧 × 自學活動。" },
+    { id: "ar-vr-wearables", grade: 6, category: "未來科技", color: "#1a7547",
+      title: "AR / VR 科技穿戴探索", short: "VR",
+      desc: "Meta Ray-Ban、HTC VIVE Eagle、Rokid、Quest 3、Vision Pro 大 PK！自製 Cardboard VR。" },
+    { id: "mqueen-microbit", grade: 6, category: "機器人", color: "#2b88c4",
+      title: "麥昆小車程式設計師", short: "MQ",
+      desc: "MakeCode 積木 × micro:bit + 麥昆智能小車。8 大關卡：認識大腦、組裝、馬達、循跡、避障、遙控、智慧警車。" },
+    { id: "blogger-ai-design", grade: 6, category: "AI 部落格", color: "#e8861f",
+      title: "Blogger × AI 創作家", short: "BL",
+      desc: "Gemini 寫文配圖 + Canva AI Code 美化版面，發布人生第一個 AI 部落格。6 大關卡 × 18 題評量。" },
+    { id: "suno-class-song", grade: 6, category: "AI 音樂", color: "#b5305c",
+      title: "用 Suno 設計班級神曲", short: "SU",
+      desc: "ChatGPT 寫歌詞 × Suno AI 作曲 × Canva 製作 MV。從班級主題曲到專屬畢業歌，5 大關卡完整教學。" },
   ];
 
   const GRADES = [
-    { grade: 3, label: "三年級", short: "G3", color: "#ff9800",
-      track: "資訊基礎課程", caption: "電腦入門 · 英文打字" },
-    { grade: 4, label: "四年級", short: "G4", color: "#ff85b3",
-      track: "AI 創作入門", caption: "Canva × AI 魔法簡報" },
-    { grade: 5, label: "五年級", short: "G5", color: "#00ff88",
-      track: "程式設計課程", caption: "Scratch 動畫 · 遊戲" },
-    { grade: 6, label: "六年級", short: "G6", color: "#b388ff",
-      track: "AI 與媒體素養", caption: "AI 創作 · 媒體識讀 · 科技穿戴" },
+    { grade: 3, label: "三年級", short: "G3", color: "#e8861f",
+      track: "資訊基礎", caption: "電腦入門 · 英文打字 · 遊戲學習",
+      markerPos: { top: "24%", left: "18%" } },
+    { grade: 4, label: "四年級", short: "G4", color: "#e85d8a",
+      track: "AI 創作入門", caption: "Canva × AI 魔法簡報",
+      markerPos: { top: "30%", left: "78%" } },
+    { grade: 5, label: "五年級", short: "G5", color: "#2d8a55",
+      track: "程式設計", caption: "Scratch 動畫 · 遊戲",
+      markerPos: { top: "70%", left: "28%" } },
+    { grade: 6, label: "六年級", short: "G6", color: "#8b5fc4",
+      track: "AI 與媒體素養", caption: "AI 創作 · 媒體識讀 · 機器人 · 穿戴",
+      markerPos: { top: "75%", left: "72%" } },
   ];
 
-  const ACCENT = { a: "#00e5ff", b: "#ffd740" };
-
-  // Helpers
   const el = (tag, attrs = {}, children = []) => {
     const node = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) {
@@ -464,171 +284,139 @@
     }
     return node;
   };
+  const modulesByGrade = g => MODULES.filter(m => m.grade === g);
 
   function renderNav() {
-    const counts = Object.fromEntries(GRADES.map(g => [g.grade, MODULES.filter(m => m.grade === g.grade).length]));
-    return el("nav", { class: "nav" }, [
-      el("div", { class: "nav-inner" }, [
-        el("a", { class: "logo", href: "#top" }, [
-          el("div", { class: "logo-mark" }, [
-            el("span", { class: "l-i", text: "I" }),
-            el("span", { class: "l-t", text: "T" }),
-          ]),
-          el("div", {}, [
-            el("div", { class: "logo-title", text: "IT COCKPIT" }),
-            el("div", { class: "logo-sub", text: "教學駕駛艙 · v2026" }),
-          ]),
+    return el("nav", { class: "wrap nav" }, [
+      el("a", { class: "logo", href: "#top" }, [
+        el("div", { class: "logo-mark", text: "IT" }),
+        el("div", {}, [
+          el("div", { class: "logo-title", text: "IT Cockpit" }),
+          el("div", { class: "logo-sub", text: "教學駕駛艙 · v2026" }),
         ]),
-        el("div", { class: "nav-right" },
-          GRADES.map(g => el("a", { class: "nav-link", href: `#grade-${g.grade}` }, [
-            el("span", { class: "nav-dot", style: { background: g.color } }),
-            document.createTextNode(g.label),
-            el("span", { class: "nav-count", text: String(counts[g.grade]) }),
-          ]))
-        ),
       ]),
+      el("div", { class: "nav-right" }, GRADES.map(g => {
+        const count = modulesByGrade(g.grade).length;
+        return el("a", { class: "nav-link", href: `#g${g.grade}` }, [
+          el("span", { class: "nav-dot", style: { background: g.color } }),
+          document.createTextNode(g.label),
+          el("span", { class: "nav-num", text: String(count) }),
+        ]);
+      })),
     ]);
   }
 
   function renderHero() {
-    const blips = [
-      { top: "22%", left: "30%", color: "#ff9800" },
-      { top: "55%", left: "65%", color: "#00ff88" },
-      { top: "70%", left: "25%", color: "#b388ff" },
-      { top: "30%", left: "75%", color: ACCENT.a },
-      { top: "48%", left: "48%", color: ACCENT.b },
-      { top: "40%", left: "20%", color: "#ff4081" },
-      { top: "62%", left: "78%", color: "#69ff47" },
-    ];
-    return el("header", { id: "top", class: "hero" }, [
-      el("div", { class: "hero-grid" }, [
-        el("div", {}, [
-          el("div", { class: "kicker" }, [
-            el("span", { class: "kicker-dot" }),
-            document.createTextNode("FLIGHT PLAN · 2026"),
+    const subjects = new Set(MODULES.map(m => m.category)).size;
+    return el("header", { id: "top", class: "wrap hero" }, [
+      el("div", {}, [
+        el("span", { class: "eyebrow" }, [
+          el("span", { class: "eyebrow-dot" }),
+          document.createTextNode("FLIGHT PLAN · 2026 學年課表"),
+        ]),
+        el("h1", { class: "title", html: '歡迎登艙，<br><span class="title-row">準備<em>起飛</em>。<span class="title-tag">2026 SPRING</span></span>' }),
+        el("p", { class: "lead", html: `國小資訊科技教學駕駛艙 — 三、四、五、六年級，共 <strong>${MODULES.length} 個互動教學艙</strong>。從電腦入門、英文打字、Scratch 程式設計，到 AI 創作、媒體識讀與麥昆機器人，一站翻轉資訊課堂。` }),
+        el("div", { class: "ctas" }, [
+          el("a", { class: "cta", href: "#g3" }, [
+            document.createTextNode("開始飛行"),
+            el("span", { class: "cta-arrow", text: "→" }),
           ]),
-          el("h1", { class: "hero-title", html: '歡迎登艙<br><span class="grad-text">國小資訊科技</span><br>教學駕駛艙' }),
-          el("p", { class: "hero-lead", html: "三、五、六年級・十三大互動教學艙<br>從電腦入門、程式設計，到 AI 創作與媒體識讀，一站式翻轉資訊課堂。" }),
-          el("div", { class: "hero-ctas" }, [
-            el("a", { class: "cta-primary", href: "#grade-3" }, [
-              el("span", { text: "開始飛行" }),
-              el("span", { class: "cta-arrow", text: "→" }),
-            ]),
-            el("a", { class: "cta-ghost", href: "#tracks", text: "查看課程地圖" }),
-          ]),
-          el("div", { class: "hero-meta" }, [
-            el("span", { class: "meta-pill", text: "NotebookLM × Claude Code" }),
-            el("span", { class: "meta-sep", text: "·" }),
-            el("span", { class: "meta-text", text: "持續更新中" }),
+          el("a", { class: "cta-ghost", href: "#tracks", text: "查看課程地圖" }),
+        ]),
+        el("div", { class: "creds" }, [
+          el("span", { html: '<span class="cred-blink"></span>持續更新中' }),
+          el("span", { text: "NOTEBOOKLM × CLAUDE CODE" }),
+          el("span", { text: "TAOYUAN · TW" }),
+        ]),
+      ]),
+      el("div", { class: "dash" }, [
+        el("div", { class: "dash-head" }, [
+          el("div", { class: "dash-title", text: "COCKPIT.HORIZON" }),
+          el("div", { class: "dash-status", text: "LIVE" }),
+        ]),
+        el("div", { class: "horizon" }, [
+          el("div", { class: "h-grid" }),
+          el("div", { class: "h-pill", text: "ALT 2026 / HDG NW" }),
+          el("div", { class: "h-pill right", text: `SPD · ${MODULES.length}` }),
+          el("div", { class: "h-center" }),
+          ...GRADES.flatMap(g => [
+            el("div", { class: "h-marker", style: { top: g.markerPos.top, left: g.markerPos.left, background: g.color } }),
+            el("div", { class: "h-label", style: { top: g.markerPos.top, left: g.markerPos.left, background: g.color }, text: g.short }),
           ]),
         ]),
-        el("div", { class: "viewport" }, [
-          el("div", { class: "vp-header" }, [
-            el("span", { class: "vp-dot vp-dot-1" }),
-            el("span", { class: "vp-dot vp-dot-2" }),
-            el("span", { class: "vp-dot vp-dot-3" }),
-            el("span", { class: "vp-title", text: "cockpit.flight" }),
-            el("span", { class: "vp-status", text: "● LIVE" }),
-          ]),
-          el("div", { class: "vp-body" }, [
-            el("div", { class: "radar" }, [
-              el("div", { class: "radar-ring r1" }),
-              el("div", { class: "radar-ring r2" }),
-              el("div", { class: "radar-ring r3" }),
-              el("div", { class: "radar-cross-v" }),
-              el("div", { class: "radar-cross-h" }),
-              el("div", { class: "radar-sweep" }),
-              ...blips.map(b => el("div", {
-                class: "blip",
-                style: { top: b.top, left: b.left, background: b.color, boxShadow: `0 0 10px ${b.color}` },
-              })),
-            ]),
-            el("div", { class: "vp-stats" }, [
-              vstat("MISSIONS", String(MODULES.length), ACCENT.a),
-              vstat("GRADES", "3", ACCENT.b),
-              vstat("SUBJECTS", String(new Set(MODULES.map(m => m.category)).size), "#ff4081"),
-            ]),
-          ]),
+        el("div", { class: "dash-stats" }, [
+          dstat("Missions", String(MODULES.length), "#c2410c", "86%"),
+          dstat("Grades", String(GRADES.length), "#f4a623", "66%"),
+          dstat("Subjects", String(subjects), "#2d8a55", "92%"),
         ]),
       ]),
     ]);
   }
-  function vstat(k, v, c) {
-    return el("div", { class: "vstat" }, [
-      el("div", { class: "vstat-v", text: v, style: { color: c } }),
-      el("div", { class: "vstat-k", text: k }),
+  function dstat(k, v, color, barW) {
+    return el("div", { class: "dstat" }, [
+      el("div", { class: "dstat-k", text: k }),
+      el("div", { class: "dstat-v", text: v, style: { color } }),
+      el("div", { class: "dstat-bar" }, [
+        el("div", { class: "dstat-bar-fill", style: { width: barW, background: color } }),
+      ]),
     ]);
   }
 
   function renderTracks() {
-    return el("section", { id: "tracks", class: "tracks" }, [
-      el("div", { class: "tracks-head" }, [
-        el("div", { class: "eyebrow", text: "FLIGHT TRACKS · 三大課程主軸" }),
-        el("h2", { class: "tracks-title", text: "從入門到 AI 創作的完整航線" }),
-      ]),
-      el("div", { class: "tracks-grid" },
-        GRADES.map((g, i) => {
-          const count = MODULES.filter(m => m.grade === g.grade).length;
-          return el("a", {
-            class: "track",
-            href: `#grade-${g.grade}`,
-            style: { borderColor: `${g.color}40` },
-          }, [
-            el("div", { class: "track-bar", style: { background: g.color } }),
-            el("div", { class: "track-body" }, [
-              el("div", { class: "track-top" }, [
-                el("div", { class: "track-badge", style: { color: g.color, borderColor: g.color }, text: g.short }),
-                el("div", { class: "track-num", text: `0${i + 1} / 03` }),
-              ]),
-              el("h3", { class: "track-label", text: g.label }),
-              el("div", { class: "track-name", text: g.track }),
-              el("p", { class: "track-caption", text: g.caption }),
-              el("div", { class: "track-arrow", style: { color: g.color }, text: `查看 ${count} 個任務 →` }),
-            ]),
-          ]);
-        })
-      ),
+    const head = el("div", { id: "tracks", class: "wrap tracks-row" }, [
+      el("h2", { class: "tracks-h", html: '從入門到 <em>AI 創作</em><br>的完整航線。' }),
+      el("div", { class: "tracks-meta", html: `FLIGHT TRACKS<br>${GRADES.length} GRADES · ${MODULES.length} MISSIONS` }),
     ]);
+    const grid = el("div", { class: "wrap tracks" }, GRADES.map((g, i) => {
+      const count = modulesByGrade(g.grade).length;
+      return el("a", { class: "track", href: `#g${g.grade}` }, [
+        el("div", { class: "track-stripe", style: { background: g.color } }),
+        el("div", { class: "track-top" }, [
+          el("span", { class: "track-tag", style: { background: g.color + "26", color: g.color }, text: g.short }),
+          el("span", { class: "track-num", text: `${String(i + 1).padStart(2, "0")} / 04` }),
+        ]),
+        el("div", { class: "track-grade", text: g.label }),
+        el("div", { class: "track-name", text: g.track }),
+        el("div", { class: "track-cap", text: g.caption }),
+        el("div", { class: "track-foot", style: { color: g.color } }, [
+          el("span", { text: `${count} MISSIONS` }),
+          el("span", { class: "track-arrow", text: "→" }),
+        ]),
+      ]);
+    }));
+    const frag = document.createDocumentFragment();
+    frag.appendChild(head);
+    frag.appendChild(grid);
+    return frag;
   }
 
   function renderSection(g) {
-    const mods = MODULES.filter(m => m.grade === g.grade);
-    return el("section", { id: `grade-${g.grade}`, class: "section" }, [
+    const mods = modulesByGrade(g.grade);
+    return el("section", { id: `g${g.grade}`, class: "section" }, [
       el("div", { class: "section-head" }, [
-        el("div", { class: "section-badge", style: { borderColor: g.color } }, [
+        el("div", { class: "section-badge", style: { borderColor: g.color, background: g.color + "14" } }, [
           el("span", { class: "section-badge-num", style: { color: g.color }, text: `0${g.grade}` }),
           el("span", { class: "section-badge-label", text: g.label }),
         ]),
         el("h2", { class: "section-title", text: g.track }),
-        el("div", {
-          class: "section-rule",
-          style: { backgroundImage: `linear-gradient(90deg, ${g.color}55 0%, transparent 100%)` },
-        }),
-        el("div", { class: "section-meta", text: `${mods.length} modules` }),
+        el("div", { class: "section-rule", style: { backgroundImage: `linear-gradient(90deg, ${g.color}88 0%, ${g.color}22 50%, transparent 100%)` } }),
+        el("div", { class: "section-meta", text: `${mods.length} MISSIONS` }),
       ]),
       el("div", { class: "cards" }, mods.map(renderCard)),
     ]);
   }
 
   function renderCard(m) {
-    return el("a", { class: "card", href: m.href }, [
-      el("div", {
-        class: "card-glow",
-        style: { background: `radial-gradient(380px 200px at 50% -20%, ${m.color}28 0%, transparent 70%)` },
-      }),
-      el("div", { class: "card-topbar", style: { background: m.color } }),
+    return el("a", { class: "card", href: `${m.id}/index.html` }, [
+      el("div", { class: "card-stripe", style: { background: m.color } }),
       el("div", { class: "card-head" }, [
-        el("div", {
-          class: "card-icon",
-          style: { color: m.color, borderColor: m.color, background: `${m.color}10` },
-          text: m.icon,
-        }),
+        el("div", { class: "card-icon", style: { background: m.color + "1a", color: m.color, borderColor: m.color + "44" }, text: m.short }),
         el("div", { class: "card-cat", style: { color: m.color }, text: m.category }),
       ]),
       el("h3", { class: "card-title", text: m.title }),
       el("p", { class: "card-desc", text: m.desc }),
-      el("div", { class: "card-cta" }, [
-        el("span", { class: "card-cta-text", style: { color: m.color }, text: "進入駕駛艙" }),
+      el("div", { class: "card-foot" }, [
+        el("span", { style: { color: m.color }, text: "進入駕駛艙" }),
         el("span", { class: "card-arrow", style: { color: m.color }, text: "→" }),
       ]),
     ]);
@@ -636,16 +424,25 @@
 
   function renderFooter() {
     return el("footer", { class: "footer" }, [
-      el("div", { class: "footer-inner" }, [
+      el("div", { class: "wrap footer-inner" }, [
         el("div", {}, [
-          el("div", { class: "logo-title", text: "IT COCKPIT · 2026" }),
-          el("div", { class: "footer-dim", text: "國小資訊科技教學駕駛艙" }),
+          el("div", { class: "footer-logo" }, [
+            el("div", { class: "logo-mark", text: "IT" }),
+            el("div", {}, [
+              el("div", { class: "logo-title", text: "IT Cockpit · 2026" }),
+              el("div", { class: "logo-sub", text: "國小資訊科技教學駕駛艙" }),
+            ]),
+          ]),
+          el("div", { class: "footer-note", html: '<span class="cred-blink" style="display:inline-block; margin-right:8px"></span>持續更新中 · TAOYUAN · TW' }),
+          el("div", { class: "footer-author", html: 'Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/?account=ipad" target="_blank" rel="noopener">阿凱老師</a>' }),
         ]),
-        el("div", { class: "footer-right" }, [
-          el("span", { class: "footer-mono", text: "POWERED BY" }),
-          el("span", { class: "footer-mono", style: { color: ACCENT.a }, text: "NOTEBOOKLM" }),
-          el("span", { class: "footer-mono", text: "×" }),
-          el("span", { class: "footer-mono", style: { color: ACCENT.b }, text: "CLAUDE CODE" }),
+        el("div", { class: "footer-cred" }, [
+          el("span", { class: "footer-cred-label", text: "POWERED BY" }),
+          el("span", { class: "footer-cred-row" }, [
+            el("strong", { style: { color: "#c2410c" }, text: "NOTEBOOKLM" }),
+            el("span", { style: { color: "#1b243866" }, text: "×" }),
+            el("strong", { style: { color: "#1b2438" }, text: "CLAUDE CODE" }),
+          ]),
         ]),
       ]),
     ]);
@@ -690,14 +487,26 @@
     }).catch(() => { /* file:// 或 SW 不支援時靜默失敗 */ });
   })();
 
+  /* Toast：米黃版（白底 + navy 邊 + navy 字 + 番茄紅進度條） */
   function showUpdateToast() {
     const t = document.createElement('div');
     t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);' +
-      'z-index:99999;padding:12px 22px;background:#0a0a22;color:#fff;' +
-      'border:1px solid #00e5ff;box-shadow:0 8px 30px rgba(0,229,255,0.35);' +
-      'font:600 13px "Noto Sans TC",sans-serif;letter-spacing:0.3px;';
-    t.textContent = '🚀 偵測到新版，正在更新…';
+      'z-index:99999;padding:14px 22px 16px;background:#fffcf3;color:#1b2438;' +
+      'border:1.5px solid #1b2438;border-radius:12px;' +
+      'box-shadow:0 12px 30px -10px #1b243833, 0 2px 0 #c2410c;' +
+      'font:700 13px "Inter Tight","Noto Sans TC",sans-serif;letter-spacing:0.02em;' +
+      'min-width:240px;overflow:hidden;';
+    t.innerHTML = '🚀 偵測到新版，正在更新…' +
+      '<div style="position:absolute;left:0;right:0;bottom:0;height:3px;background:#c2410c22;overflow:hidden">' +
+        '<div style="height:100%;background:#c2410c;width:0;animation:toast-bar .8s linear forwards"></div>' +
+      '</div>';
     document.body.appendChild(t);
+    if (!document.getElementById('toast-anim-style')) {
+      const s = document.createElement('style');
+      s.id = 'toast-anim-style';
+      s.textContent = '@keyframes toast-bar { from { width: 0 } to { width: 100% } }';
+      document.head.appendChild(s);
+    }
   }
 </script>
 </body>
