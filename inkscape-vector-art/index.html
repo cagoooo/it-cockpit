@@ -1820,13 +1820,17 @@ function cv3Init(){
   cv.width = cv.clientWidth * 2;
   cv.height = cv.clientHeight * 2;
   cv3SetShape('triangle');
-  cv.addEventListener('mousedown', cv3Down);
-  cv.addEventListener('mousemove', cv3Move);
+  cv.addEventListener('mousedown', e => cv3Down(mouseEvt(e, cv)));
+  cv.addEventListener('mousemove', e => cv3Move(mouseEvt(e, cv)));
   cv.addEventListener('mouseup', () => cv3Drag = -1);
   cv.addEventListener('mouseleave', () => cv3Drag = -1);
   cv.addEventListener('touchstart', e => { e.preventDefault(); cv3Down(touchEvt(e, cv)); }, {passive:false});
   cv.addEventListener('touchmove', e => { e.preventDefault(); cv3Move(touchEvt(e, cv)); }, {passive:false});
   cv.addEventListener('touchend', () => cv3Drag = -1);
+}
+function mouseEvt(e, cv){
+  const r = cv.getBoundingClientRect();
+  return { offsetX: (e.clientX - r.left) * (cv.width/r.width), offsetY: (e.clientY - r.top) * (cv.height/r.height) };
 }
 function touchEvt(e, cv){
   const t = e.touches[0] || e.changedTouches[0];
@@ -1847,13 +1851,14 @@ function cv3Reset(){ cv3SetShape('triangle'); }
 function cv3Down(e){
   for(let i=0;i<cv3Nodes.length;i++){
     const n = cv3Nodes[i];
-    if(Math.hypot(e.offsetX - n.x, e.offsetY - n.y) < 30){ cv3Drag = i; return; }
+    if(Math.hypot(e.offsetX - n.x, e.offsetY - n.y) < 40){ cv3Drag = i; return; }
   }
 }
 function cv3Move(e){
   if(cv3Drag === -1) return;
-  cv3Nodes[cv3Drag].x = Math.max(20, Math.min(document.getElementById('cv3').width - 20, e.offsetX));
-  cv3Nodes[cv3Drag].y = Math.max(20, Math.min(document.getElementById('cv3').height - 20, e.offsetY));
+  const cv = document.getElementById('cv3');
+  cv3Nodes[cv3Drag].x = Math.max(20, Math.min(cv.width - 20, e.offsetX));
+  cv3Nodes[cv3Drag].y = Math.max(20, Math.min(cv.height - 20, e.offsetY));
   cv3Draw();
 }
 function cv3Draw(){
