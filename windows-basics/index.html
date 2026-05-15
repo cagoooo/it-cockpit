@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows 電腦小尖兵｜三年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/windows-basics/">
+<meta property="og:title" content="Windows 電腦小尖兵｜三年級資訊科技">
+<meta property="og:description" content="四大關卡學會 Windows 基礎：硬體認識、正確開關機、桌面與滑鼠操作、視窗與檔案總管。Retro Win98 風格 × 互動 Canvas × NotebookLM AI 教材。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/windows-basics/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/windows-basics/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════
+   Retro Windows 98 風格設計系統
+   ════════════════════════════════════════════════════════════ */
+html { font-size: 18px; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --desktop: #2a8b8b;        /* Win98 桌面藍綠 */
+  --desktop-pattern: #1f6b6b;
+  --window: #c3c7cb;         /* 視窗灰 */
+  --window-inset: #d4d0c8;
+  --title-start: #000080;    /* 視窗標題列藍漸層起點 */
+  --title-end: #1084d0;      /* 視窗標題列藍漸層終點 */
+  --title-inactive: #808080; /* 未啟用視窗標題列灰 */
+  --light: #ffffff;          /* 3D 凸起 上左 */
+  --dim: #808080;            /* 3D 凸起 下右 */
+  --dark: #000000;           /* 更深陰影 */
+  --text: #000000;
+  --text-white: #ffffff;
+  --link: #0a3a8a;
+  --yellow: #ffd700;
+  --red-x: #c00000;
+  --green-ok: #008000;
+  --accent-purple: #aa55ff;
+  --accent-orange: #ff8c00;
+}
+body{
+  font-family:'Microsoft JhengHei','MS Sans Serif','Tahoma','Noto Sans TC',sans-serif;
+  background:var(--desktop);
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--desktop-pattern) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--desktop-pattern) 1px, transparent 1px);
+  background-size:40px 40px;
+  color:var(--text);
+  line-height:1.7;
+  min-height:100vh;
+  padding-bottom:60px;
+}
+
+/* ═══ 3D 邊框工具類 ═══ */
+.bevel-out{
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.bevel-in{
+  border:2px solid;
+  border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark), inset -1px -1px 0 var(--light);
+}
+
+/* ═══ Taskbar (頂部 Header 仿 Win98 工作列) ═══ */
+.taskbar{
+  position:sticky;top:0;z-index:100;
+  background:var(--window);
+  border-bottom:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 0 1px 0 var(--light), inset 0 -1px 0 var(--dim), 0 2px 4px rgba(0,0,0,.3);
+  padding:4px 8px;
+}
+.taskbar-inner{
+  max-width:1400px;margin:0 auto;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.start-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--window);color:var(--text);text-decoration:none;
+  padding:4px 10px;font-weight:700;font-size:.95rem;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  cursor:pointer;font-family:inherit;
+  transition:none;
+}
+.start-btn:active,.start-btn.pressed{
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+  box-shadow:inset 1px 1px 0 var(--dim);
+  padding:5px 9px 3px 11px;
+}
+.start-btn .logo{
+  display:inline-block;width:18px;height:18px;
+  background:linear-gradient(135deg,#ff0000 0% 50%, #00b400 50% 100%),
+             linear-gradient(45deg, #0064ff 0% 50%, #ffe000 50% 100%);
+  background-size:50% 50%;background-position:0 0, 0 100%, 100% 0, 100% 100%;
+  background-repeat:no-repeat;
+  position:relative;
+}
+.start-btn .logo::before{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(135deg, #ff5050 0 50%, transparent 50%) 0 0/50% 50% no-repeat,
+    linear-gradient(135deg, #50ff50 0 50%, transparent 50%) 100% 0/50% 50% no-repeat,
+    linear-gradient(135deg, #5050ff 0 50%, transparent 50%) 0 100%/50% 50% no-repeat,
+    linear-gradient(135deg, #ffff50 0 50%, transparent 50%) 100% 100%/50% 50% no-repeat;
+}
+.taskbar-divider{
+  width:2px;height:24px;
+  background:linear-gradient(to right, var(--dim), var(--light));
+  margin:0 4px;
+}
+.taskbar-title{
+  font-weight:700;font-size:1rem;
+  display:flex;align-items:center;gap:6px;
+}
+.taskbar-title .icon{font-size:1.2rem}
+.taskbar-spacer{flex:1}
+.system-tray{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:3px 10px;font-size:.85rem;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  background:var(--window);
+  min-width:90px;justify-content:center;
+}
+.tray-clock{font-family:'VT323',monospace;font-size:1rem;font-weight:700}
+
+/* ═══ Container ═══ */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* ═══ Desktop Icon Style (桌面圖示) ═══ */
+.desktop-icons{
+  display:flex;flex-wrap:wrap;gap:20px;
+  padding:20px 0;
+  justify-content:center;
+}
+.desktop-icon{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;text-decoration:none;
+  width:90px;padding:6px;
+  transition:none;
+}
+.desktop-icon:hover{background:rgba(0,0,128,.4)}
+.desktop-icon .ico-img{
+  width:48px;height:48px;
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;
+}
+.desktop-icon .label{
+  color:var(--text-white);font-size:.85rem;text-align:center;
+  text-shadow:1px 1px 0 #000;font-weight:700;line-height:1.2;
+}
+
+/* ═══ Window (核心元件 — 每個關卡都是一個視窗) ═══ */
+.window{
+  background:var(--window);
+  border:2px solid;
+  border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 2px 2px 6px rgba(0,0,0,.4);
+  margin-bottom:28px;
+}
+.window-title{
+  background:linear-gradient(to right, var(--title-start), var(--title-end));
+  color:var(--text-white);
+  padding:4px 6px;
+  display:flex;align-items:center;gap:8px;
+  font-weight:700;font-size:.95rem;
+}
+.window-title.alt-purple{
+  background:linear-gradient(to right, #4a0080, #aa55ff);
+}
+.window-title.alt-green{
+  background:linear-gradient(to right, #006000, #50c450);
+}
+.window-title.alt-orange{
+  background:linear-gradient(to right, #b04000, #ff9040);
+}
+.window-title .ico{font-size:1.1rem}
+.window-title .name{flex:1}
+.window-title .controls{display:flex;gap:2px}
+.window-title .controls button{
+  width:22px;height:20px;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  cursor:pointer;font-family:inherit;font-weight:900;font-size:.7rem;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.window-title .controls button:active{
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+}
+.window-body{
+  padding:20px 24px;
+}
+.window-body.menu-bar{
+  padding:4px 8px;
+  border-bottom:1px solid var(--dim);
+  font-size:.85rem;
+  display:flex;gap:14px;
+}
+.window-body.menu-bar span{
+  cursor:default;padding:2px 6px;
+}
+.window-body.menu-bar span:hover{background:var(--title-start);color:#fff}
+.window-body.menu-bar span u{text-decoration:underline}
+
+/* ═══ Hero (頂部主視窗) ═══ */
+.hero-window .window-body{padding:32px 28px;text-align:center}
+.hero-title{
+  font-size:2rem;font-weight:900;color:var(--text);
+  margin-bottom:8px;letter-spacing:1px;
+}
+.hero-title .em{color:var(--link)}
+.hero-sub{
+  font-size:1.1rem;color:var(--text);
+  margin-bottom:18px;
+}
+.hero-meta{
+  display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:18px;
+}
+.hero-meta .chip{
+  padding:6px 14px;font-size:.95rem;font-weight:700;
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.hero-meta .chip.blue{background:var(--title-start);color:var(--text-white)}
+.hero-meta .chip.yellow{background:var(--yellow);color:#000;border-color:#fff #000 #000 #fff}
+
+/* ═══ Mode Switch ═══ */
+.mode-bar{
+  display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px;align-items:center;
+}
+.mode-btn{
+  font-family:inherit;font-size:.85rem;font-weight:700;
+  padding:5px 12px;background:var(--window);color:var(--text);cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.mode-btn.active{
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+  background:var(--title-end);color:#fff;
+}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* ═══ Learning Objectives ═══ */
+.objectives{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin:14px 0;
+}
+.obj-chip{
+  padding:8px 16px;font-size:1rem;font-weight:700;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.obj-chip .ico{font-size:1.1rem}
+
+/* ═══ Stage Pills (關卡導覽) ═══ */
+.stage-pills{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin:18px 0 28px;
+}
+.stage-pill{
+  padding:8px 18px;font-size:.95rem;font-weight:700;
+  background:var(--window);color:var(--text);text-decoration:none;cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  font-family:inherit;display:inline-flex;align-items:center;gap:6px;
+}
+.stage-pill:hover{background:var(--title-end);color:#fff}
+.stage-pill .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;background:var(--title-start);color:#fff;
+  font-weight:900;font-size:.85rem;
+}
+
+/* ═══ Stage Section ═══ */
+.stage-section{margin-bottom:32px}
+.stage-header{
+  display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap;
+}
+.stage-badge{
+  padding:6px 14px;font-weight:900;font-size:.95rem;
+  background:var(--title-start);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.stage-badge.purple{background:#5a0090}
+.stage-badge.green{background:#006000}
+.stage-badge.orange{background:#b04000}
+.stage-title{
+  font-size:1.4rem;font-weight:900;color:#fff;
+  text-shadow:2px 2px 0 var(--dark);
+}
+.stage-sub{
+  font-size:1rem;color:#fff;
+  text-shadow:1px 1px 0 var(--dark);
+  margin-left:auto;
+}
+
+/* ═══ Infographic Card (NLM 生成的關卡資訊圖) ═══ */
+.info-card{
+  margin-bottom:14px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  padding:8px;
+}
+.info-card .info-label{
+  display:flex;align-items:center;gap:6px;
+  font-size:.85rem;font-weight:700;color:var(--link);
+  margin-bottom:6px;padding:0 4px;
+}
+.info-card .info-label .nlm-tag{
+  background:var(--title-start);color:#fff;
+  padding:2px 8px;font-size:.7rem;font-weight:700;
+  border:1px solid var(--dark);
+  margin-left:auto;
+}
+.info-card img{
+  display:block;width:100%;height:auto;cursor:zoom-in;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  background:#fff;
+}
+.info-card.zoomed{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  margin:0;padding:20px;
+}
+.info-card.zoomed .info-label{display:none}
+.info-card.zoomed img{
+  max-width:96vw;max-height:90vh;width:auto;height:auto;cursor:zoom-out;
+}
+
+/* ═══ Step Card ═══ */
+.steps-card{margin-bottom:14px}
+.steps-card h4{
+  font-size:1.05rem;font-weight:900;color:var(--link);
+  margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.steps-list{list-style:none;padding:0}
+.steps-list li{
+  display:flex;gap:12px;padding:10px 12px;font-size:1rem;line-height:1.7;
+  background:var(--window-inset);margin-bottom:6px;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.step-num{
+  flex-shrink:0;min-width:34px;height:34px;
+  background:var(--title-start);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.95rem;
+}
+.steps-list li b{color:var(--link)}
+
+/* ═══ Tip Box ═══ */
+.tip-box{
+  font-size:.95rem;padding:14px 18px;margin:14px 0;
+  background:#fffacd;
+  border:2px solid;border-color:#000 var(--dim) var(--dim) #000;
+  box-shadow:inset 1px 1px 0 var(--light);
+  display:flex;gap:10px;align-items:flex-start;
+}
+.tip-box.warn{background:#ffe4e1}
+.tip-box.info{background:#e0f0ff}
+.tip-box .ico{font-size:1.4rem;flex-shrink:0}
+
+/* ═══ Canvas Section (互動區) ═══ */
+.canvas-section{
+  margin:18px 0;padding:18px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.canvas-section h4{
+  font-size:1.05rem;font-weight:900;color:var(--link);
+  margin-bottom:8px;
+}
+.canvas-section .canvas-help{
+  font-size:.95rem;margin-bottom:12px;color:#444;
+}
+.canvas-section canvas{
+  display:block;width:100%;max-width:100%;
+  background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.canvas-controls{
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center;
+}
+.ctrl-btn{
+  font-family:inherit;font-size:.95rem;font-weight:700;
+  padding:6px 14px;background:var(--window);color:var(--text);cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  display:inline-flex;align-items:center;gap:5px;
+}
+.ctrl-btn:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.ctrl-btn.primary{background:var(--title-end);color:#fff;font-weight:900}
+.ctrl-status{
+  font-size:.95rem;font-weight:700;color:var(--text);margin-left:auto;
+  padding:4px 10px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+}
+
+/* ═══ Quiz ═══ */
+.quiz-card{margin:14px 0;padding:16px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.quiz-q{font-size:1.05rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+.quiz-q .qmark{
+  display:inline-block;width:24px;height:24px;
+  background:var(--title-start);color:#fff;font-weight:900;
+  text-align:center;line-height:24px;margin-right:6px;
+}
+.quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media (max-width:600px){.quiz-opts{grid-template-columns:1fr}}
+.quiz-opt{
+  font-family:inherit;font-size:.95rem;
+  padding:10px 14px;background:var(--window);color:var(--text);
+  cursor:pointer;text-align:left;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.quiz-opt:hover{background:var(--window-inset)}
+.quiz-opt:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.quiz-opt.correct{background:#90ee90;border-color:#fff #006000 #006000 #fff}
+.quiz-opt.wrong{background:#ffb6b6;border-color:#fff #c00 #c00 #fff}
+.quiz-feedback{
+  margin-top:10px;padding:10px 14px;font-size:.95rem;font-weight:700;
+  display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:#d4ffd4;color:#006000;
+  border:2px solid;border-color:#fff #006000 #006000 #fff}
+.quiz-feedback.no{background:#ffd4d4;color:#a00;
+  border:2px solid;border-color:#fff #a00 #a00 #fff}
+
+/* ═══ Teacher Note ═══ */
+.teacher-note{
+  margin:14px 0;padding:14px 16px;
+  background:#fff4d6;
+  border:2px solid;border-color:#fff #cc8c00 #cc8c00 #fff;
+}
+.teacher-note h5{font-size:1rem;color:#8a5a00;margin-bottom:6px}
+.teacher-note p{font-size:.95rem;color:#444}
+
+/* ═══ Project Task ═══ */
+.project-task .window-body{padding:20px 24px}
+.task-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:10px}
+.task-card{padding:14px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.task-card h5{font-size:1.05rem;color:var(--link);margin-bottom:6px;display:flex;gap:6px;align-items:center}
+.task-card p{font-size:.95rem;line-height:1.6}
+
+/* ═══ NotebookLM Section ═══ */
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:14px 0}
+.nb-card{
+  display:block;padding:14px;text-decoration:none;
+  background:#fff;color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.nb-card:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.nb-card h4{font-size:1rem;color:var(--link);margin-bottom:6px;display:flex;gap:6px;align-items:center}
+.nb-card p{font-size:.9rem;color:#444;line-height:1.5}
+.nb-card .tag{
+  display:inline-block;margin-top:8px;font-size:.75rem;font-weight:700;
+  padding:2px 8px;background:var(--title-start);color:#fff;
+}
+
+.flow-box{margin:14px 0;padding:16px;background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.flow-box h4{font-size:1rem;color:var(--link);margin-bottom:8px}
+.flow-steps{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:.95rem}
+.flow-step{padding:6px 12px;background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  font-weight:700;}
+.flow-arrow{font-weight:900;color:var(--link)}
+
+/* ═══ FAQ ═══ */
+.faq-list{margin:14px 0}
+.faq-item{margin-bottom:8px;background:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);}
+.faq-q{
+  padding:12px 16px;cursor:pointer;font-weight:700;font-size:1rem;color:var(--text);
+  display:flex;gap:10px;align-items:center;background:var(--window);
+  user-select:none;
+}
+.faq-q:hover{background:var(--window-inset)}
+.faq-q .q-mark{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;background:var(--title-start);color:#fff;
+  font-weight:900;flex-shrink:0;
+}
+.faq-q .toggle{margin-left:auto;font-family:'VT323',monospace;font-size:1.3rem;color:var(--link)}
+.faq-a{padding:14px 16px 14px 52px;display:none;font-size:.95rem;line-height:1.7;color:var(--text)}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q{background:var(--window-inset)}
+
+/* ═══ Slide Player ═══ */
+.slide-player .window-body{padding:14px 16px}
+.slide-main{
+  position:relative;background:#000;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  margin-bottom:10px;
+}
+.slide-main img{display:block;width:100%;height:auto}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:60px;
+  background:rgba(0,0,128,.7);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  font-size:1.5rem;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:inherit;
+}
+.slide-nav-btn:hover{background:rgba(0,0,128,1)}
+.slide-nav-btn.prev{left:8px}
+.slide-nav-btn.next{right:8px}
+.slide-fs-btn{
+  position:absolute;top:10px;right:10px;z-index:5;
+  padding:6px 12px;font-size:.9rem;font-weight:700;
+  background:var(--window);color:var(--text);cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light);
+  font-family:inherit;
+  display:flex;align-items:center;gap:4px;
+}
+.slide-counter{
+  position:absolute;bottom:10px;left:10px;
+  padding:4px 10px;font-size:.85rem;font-weight:700;
+  background:rgba(0,0,0,.7);color:#fff;
+  font-family:'VT323',monospace;
+}
+.slide-strip{
+  display:flex;gap:6px;overflow-x:auto;padding:6px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.strip-thumb{
+  flex-shrink:0;width:96px;height:54px;cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.strip-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.strip-thumb.active{
+  border-color:var(--yellow) var(--yellow) var(--yellow) var(--yellow);
+  box-shadow:0 0 0 2px var(--title-start);
+}
+
+#slide-fs{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;
+  display:none;align-items:center;justify-content:center;
+}
+#slide-fs.show{display:flex}
+#slide-fs-img{max-width:96vw;max-height:90vh;display:block}
+.fs-close{
+  position:absolute;top:20px;right:20px;
+  width:48px;height:48px;
+  background:var(--red-x);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  cursor:pointer;font-size:1.4rem;font-weight:900;
+  font-family:inherit;
+}
+.fs-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:80px;
+  background:rgba(0,0,128,.8);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  cursor:pointer;font-size:2rem;font-weight:900;
+  font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+.fs-nav.prev{left:20px}
+.fs-nav.next{right:20px}
+.fs-counter{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  padding:8px 16px;font-size:1rem;font-weight:700;
+  background:rgba(0,0,128,.9);color:#fff;
+  border:2px solid var(--light);
+  font-family:'VT323',monospace;
+}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .taskbar,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none !important}
+@media (max-width:720px){
+  #slide-fs .fs-nav{width:46px;height:64px;font-size:1.6rem}
+  #slide-fs .fs-nav.prev{left:8px}
+  #slide-fs .fs-nav.next{right:8px}
+  .fs-close{width:40px;height:40px;top:12px;right:12px}
+}
+
+/* ═══ Video Section ═══ */
+.video-section{margin:28px 0}
+.video-wrap{
+  background:#000;
+  border:2px solid;border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:2px 2px 6px rgba(0,0,0,.4);
+}
+.video-ratio{position:relative;padding-top:56.25%;width:100%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{
+  background:var(--window);padding:8px 14px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.9rem;
+  border-top:2px solid var(--dim);
+}
+.nlm-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--title-start);color:#fff;font-weight:700;padding:3px 10px;font-size:.8rem;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.video-hint{color:#444;flex:1}
+.video-link{color:var(--link);text-decoration:none;font-weight:700}
+.video-no-id{
+  padding:40px 20px;text-align:center;background:var(--window-inset);
+  font-size:.95rem;color:#666;
+  border:2px dashed var(--dim);margin:8px;
+}
+
+/* ═══ Float Tools ═══ */
+.float-tools{
+  position:fixed;right:20px;bottom:20px;z-index:400;
+  display:flex;flex-direction:column;gap:8px;
+}
+.float-btn{
+  width:50px;height:50px;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 2px 2px 4px rgba(0,0,0,.4);
+  cursor:pointer;font-size:1.3rem;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+.float-btn:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.float-btn.active{background:var(--title-end);color:#fff}
+.float-btn.yellow{background:var(--yellow)}
+.float-btn.green{background:#90ee90}
+.float-btn.pink{background:#ffb6e0}
+
+.tool-panel{
+  position:fixed;right:80px;bottom:20px;z-index:400;
+  width:300px;background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 4px 4px 8px rgba(0,0,0,.4);
+  display:none;
+}
+.tool-panel.open{display:block}
+.tool-panel-title{
+  background:linear-gradient(to right, var(--title-start), var(--title-end));
+  color:#fff;padding:4px 8px;
+  display:flex;align-items:center;gap:6px;font-weight:700;font-size:.9rem;
+}
+.tool-panel-title .close{
+  margin-left:auto;width:20px;height:18px;background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  cursor:pointer;font-family:inherit;font-weight:900;font-size:.7rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.tool-panel-body{padding:14px}
+.tool-panel-body input[type=number]{
+  width:55px;padding:4px 6px;font-family:inherit;font-size:.9rem;
+  background:#fff;color:#000;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.tool-panel-body label{font-size:.85rem;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.tool-panel-body .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:.85rem}
+.lot-result{
+  margin-top:10px;padding:14px;font-size:1.4rem;font-weight:900;text-align:center;
+  background:#000;color:var(--yellow);
+  font-family:'VT323',monospace;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  min-height:60px;display:flex;align-items:center;justify-content:center;
+}
+
+.timer-display{
+  font-family:'VT323',monospace;
+  font-size:3rem;font-weight:900;color:var(--yellow);
+  background:#000;text-align:center;padding:14px;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  margin-bottom:10px;
+}
+
+/* ═══ Drawing Canvas ═══ */
+#drawCanvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:250;pointer-events:none;background:transparent;
+}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;z-index:300;
+  background:var(--window);padding:8px 12px;
+  border:2px solid;border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), 4px 4px 8px rgba(0,0,0,.4);
+  display:none;gap:6px;align-items:center;
+}
+.draw-toolbar.show{display:flex}
+.color-dot{
+  width:26px;height:26px;cursor:pointer;padding:0;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.color-dot.active{
+  border-color:var(--yellow);box-shadow:0 0 6px var(--yellow);
+}
+.draw-clear{
+  font-family:inherit;font-size:.85rem;font-weight:700;
+  padding:4px 10px;background:var(--red-x);color:#fff;cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+
+/* ═══ Footer ═══ */
+.site-footer{
+  margin-top:40px;padding:20px;text-align:center;
+  background:rgba(0,0,0,.3);color:#fff;font-size:.9rem;
+}
+.site-footer a{color:var(--yellow);text-decoration:none;font-weight:700}
+.site-footer .heart{color:#ff6b6b}
+
+/* ═══ Responsive ═══ */
+@media (max-width:720px){
+  html{font-size:16px}
+  .container{padding:16px}
+  .hero-title{font-size:1.5rem}
+  .stage-title{font-size:1.2rem}
+  .desktop-icons{gap:12px}
+  .taskbar-title{font-size:.9rem}
+  .system-tray{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Drawing Canvas (Layer above everything except float buttons) ═══ -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:#444;font-weight:700">🖊️</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd700" onclick="setPenColor('#ffd700',this)"></button>
+  <button class="color-dot" style="background:#000080" onclick="setPenColor('#000080',this)"></button>
+  <button class="color-dot" style="background:#008000" onclick="setPenColor('#008000',this)"></button>
+  <button class="color-dot" style="background:#000" onclick="setPenColor('#000',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<!-- ═══ Taskbar (頂部 Windows 工作列風) ═══ -->
+<header class="taskbar">
+  <div class="taskbar-inner">
+    <a href="../index.html" class="start-btn" title="回到 IT COCKPIT 主頁">
+      <span class="logo"></span>
+      <span>IT COCKPIT</span>
+    </a>
+    <div class="taskbar-divider"></div>
+    <div class="taskbar-title">
+      <span class="ico">🖥️</span>
+      <span>Windows 電腦小尖兵 — 三年級資訊科技</span>
+    </div>
+    <div class="taskbar-spacer"></div>
+    <div class="system-tray">
+      <span>🔊</span>
+      <span class="tray-clock" id="tray-clock">--:--</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ═══ Mode Switch ═══ -->
+  <div class="mode-bar">
+    <button class="mode-btn active" onclick="setMode('student',this)">👦 學生模式</button>
+    <button class="mode-btn" onclick="askTeacher(this)">👩‍🏫 教師模式</button>
+  </div>
+
+  <!-- ═══ Desktop Icons (像 Win98 桌面圖示風的快速導覽) ═══ -->
+  <div class="desktop-icons">
+    <a href="#sec1" class="desktop-icon"><div class="ico-img">🖥️</div><div class="label">硬體大發現</div></a>
+    <a href="#sec2" class="desktop-icon"><div class="ico-img">🔌</div><div class="label">開關機程序</div></a>
+    <a href="#sec3" class="desktop-icon"><div class="ico-img">🖱️</div><div class="label">桌面與滑鼠</div></a>
+    <a href="#sec4" class="desktop-icon"><div class="ico-img">📁</div><div class="label">視窗檔案總管</div></a>
+    <a href="#slides" class="desktop-icon"><div class="ico-img">📊</div><div class="label">授課簡報</div></a>
+    <a href="#video" class="desktop-icon"><div class="ico-img">🎬</div><div class="label">自學影片</div></a>
+    <a href="#nlm" class="desktop-icon"><div class="ico-img">🤖</div><div class="label">AI 學習站</div></a>
+    <a href="#faq" class="desktop-icon"><div class="ico-img">❓</div><div class="label">常見問題</div></a>
+  </div>
+
+  <!-- ═══ Hero Window ═══ -->
+  <div class="window hero-window">
+    <div class="window-title">
+      <span class="ico">🖥️</span>
+      <span class="name">Windows 電腦小尖兵 v1.0</span>
+      <div class="controls">
+        <button title="最小化">_</button>
+        <button title="最大化">□</button>
+        <button title="關閉">✕</button>
+      </div>
+    </div>
+    <div class="window-body menu-bar">
+      <span><u>F</u>檔案</span>
+      <span><u>E</u>編輯</span>
+      <span><u>V</u>檢視</span>
+      <span><u>H</u>說明</span>
+    </div>
+    <div class="window-body">
+      <div class="hero-title">🎓 歡迎來到 <span class="em">Windows 電腦小尖兵</span> 訓練營</div>
+      <div class="hero-sub">四大關卡，跟著阿凱老師一起變成班上的電腦高手！</div>
+      <div class="hero-meta">
+        <span class="chip blue">📚 三年級資訊科技</span>
+        <span class="chip">🎯 4 個關卡</span>
+        <span class="chip yellow">⭐ 8 題評量</span>
+        <span class="chip">⏱️ 約 80 分鐘</span>
+      </div>
+      <div class="objectives">
+        <span class="obj-chip"><span class="ico">🖥️</span>認識電腦家族</span>
+        <span class="obj-chip"><span class="ico">🔌</span>正確開關機</span>
+        <span class="obj-chip"><span class="ico">🖱️</span>滑鼠四大功夫</span>
+        <span class="obj-chip"><span class="ico">📁</span>視窗與檔案</span>
+      </div>
+      <div class="stage-pills">
+        <a class="stage-pill" href="#sec1"><span class="num">1</span>🖥️ 硬體大發現</a>
+        <a class="stage-pill" href="#sec2"><span class="num">2</span>🔌 開關機程序</a>
+        <a class="stage-pill" href="#sec3"><span class="num">3</span>🖱️ 桌面與滑鼠</a>
+        <a class="stage-pill" href="#sec4"><span class="num">4</span>📁 視窗檔案總管</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       關卡 1：電腦硬體大發現
+       ════════════════════════════════════════════════════════════ -->
+  <section class="stage-section" id="sec1">
+    <div class="stage-header">
+      <span class="stage-badge">第 1 關</span>
+      <span class="stage-title">🖥️ 電腦硬體大發現</span>
+      <span class="stage-sub">認識電腦家族的每位成員</span>
+    </div>
+
+    <div class="window">
+      <div class="window-title">
+        <span class="ico">🖥️</span>
+        <span class="name">關卡 1：認識電腦家族成員.exe</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+
+        <div class="tip-box info">
+          <span class="ico">💡</span>
+          <div><b>什麼是作業系統 Windows？</b> 就像電腦的「大總管」，負責指揮所有零件乖乖聽話。電腦就像超級機器人工廠，Windows 就是裡面最聰明的廠長！</div>
+        </div>
+
+        <div class="info-card" onclick="toggleZoom(this)">
+          <div class="info-label"><span>📊</span>關卡 1 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
+          <img src="assets/01_電腦硬體家族.jpg" alt="關卡 1：電腦硬體家族資訊圖表" loading="lazy">
+        </div>
+
+        <div class="steps-card">
+          <h4>🎯 認識電腦家族成員</h4>
+          <ol class="steps-list">
+            <li><span class="step-num">1</span><div><b>螢幕</b>就像電視機一樣，可以讓我們清楚看到電腦裡面的圖案和畫面。</div></li>
+            <li><span class="step-num">2</span><div><b>主機</b>是電腦最聰明的大腦，負責幫我們處理所有的重要工作。</div></li>
+            <li><span class="step-num">3</span><div><b>滑鼠</b>就像我們在電腦裡的小手，可以幫忙移動游標和點選東西。</div></li>
+            <li><span class="step-num">4</span><div><b>鍵盤</b>上面有非常多的按鍵，可以讓我們打字和輸入密碼給電腦。</div></li>
+            <li><span class="step-num">5</span><div><b>喇叭和耳機</b>會發出聲音，讓我們能聽見電腦裡好聽的音樂和影片聲音。</div></li>
+          </ol>
+        </div>
+
+        <div class="canvas-section">
+          <h4>🎮 互動練習：硬體連連看</h4>
+          <p class="canvas-help">點擊正確的硬體名稱，把它連到對的功能！全部答對就過關囉～</p>
+          <canvas id="canvas1" width="900" height="420"></canvas>
+          <div class="canvas-controls">
+            <button class="ctrl-btn primary" onclick="game1Restart()">🔄 重新開始</button>
+            <span class="ctrl-status" id="game1-status">準備好了嗎？選一個硬體開始！</span>
+          </div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>1. 電腦裡負責「處理所有重要工作」的大腦是？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,0)">A. 螢幕</button>
+            <button class="quiz-opt" onclick="ans(this,1)">B. 主機 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">C. 鍵盤</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 喇叭</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>2. 老師上課要示範時，請你做什麼最有禮貌？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,0)">A. 偷偷戴耳機聽歌</button>
+            <button class="quiz-opt" onclick="ans(this,0)">B. 大聲說話</button>
+            <button class="quiz-opt" onclick="ans(this,1)">C. 關靜音、不戴耳機，認真看 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 自己先按按看</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="teacher-note teacher-only">
+          <h5>👩‍🏫 教師提示</h5>
+          <p>建議實體展示一台拆開外殼的舊主機，讓學生看見內部主機板、硬碟、記憶體。透過視覺與觸覺，建立「主機 ＝ 電腦大腦」的具體印象。並趁機重申電腦教室「三大守則」（雙手乾淨、不飲食、輕按鍵盤），把行為規範與課程內容綁定。</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       關卡 2：正確開關機程序
+       ════════════════════════════════════════════════════════════ -->
+  <section class="stage-section" id="sec2">
+    <div class="stage-header">
+      <span class="stage-badge green">第 2 關</span>
+      <span class="stage-title">🔌 正確開關機程序</span>
+      <span class="stage-sub">叫醒電腦 ＋ 哄電腦睡覺</span>
+    </div>
+
+    <div class="window">
+      <div class="window-title alt-green">
+        <span class="ico">🔌</span>
+        <span class="name">關卡 2：開關機儀式.exe</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+
+        <div class="tip-box">
+          <span class="ico">🌙</span>
+          <div><b>關機就像「睡前儀式」</b>：睡覺前我們要先收好玩具、刷牙、蓋上棉被才能睡；電腦的睡前儀式則是依序點選螢幕左下角的「開始」→「電源」→「關機」。<br>絕對不可以不按步驟直接拔掉插頭，就像睡覺睡到一半被潑冷水叫醒，電腦會嚇壞生病！</div>
+        </div>
+
+        <div class="info-card" onclick="toggleZoom(this)">
+          <div class="info-label"><span>📊</span>關卡 2 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
+          <img src="assets/02_正確開關機.jpg" alt="關卡 2：正確開關機程序資訊圖表" loading="lazy">
+        </div>
+
+        <div class="steps-card">
+          <h4>🎯 開關機操作步驟</h4>
+          <ol class="steps-list">
+            <li><span class="step-num">1</span><div>想要開機時，先找到主機和螢幕上的 <b>電源按鈕</b> 並輕輕按下去。</div></li>
+            <li><span class="step-num">2</span><div>開機後不要著急，耐心等待螢幕出現 <b>Windows 啟動畫面</b> 才可以開始使用。</div></li>
+            <li><span class="step-num">3</span><div>關機時要按順序：點選螢幕左下角的「<b>開始</b>」→「<b>電源</b>」→「<b>關機</b>」。</div></li>
+            <li><span class="step-num">4</span><div>使用完畢請按照步驟關機，<b>絕對不可以直接拔掉插頭</b>，不然電腦容易壞掉！</div></li>
+            <li><span class="step-num">5</span><div>主機如果進入睡眠狀態（電源燈閃爍），動一下滑鼠就能讓螢幕畫面回來。</div></li>
+          </ol>
+        </div>
+
+        <div class="canvas-section">
+          <h4>🎮 互動練習：關機三步曲</h4>
+          <p class="canvas-help">按順序點擊「開始」→「電源」→「關機」三個按鈕。順序錯了會被提示喔！</p>
+          <canvas id="canvas2" width="900" height="420"></canvas>
+          <div class="canvas-controls">
+            <button class="ctrl-btn primary" onclick="game2Restart()">🔄 重新開始</button>
+            <span class="ctrl-status" id="game2-status">請依序點選：開始 → 電源 → 關機</span>
+          </div>
+        </div>
+
+        <div class="tip-box warn">
+          <span class="ico">⚠️</span>
+          <div><b>絕對不要做的事：</b><br>
+            ❌ 直接拔掉電源插頭關機<br>
+            ❌ 還沒等 Windows 啟動完畢就一直按按鍵<br>
+            ❌ 主機紅燈閃爍時，按 Reset 鍵或長按電源鍵強制關機</div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>3. 正確的關機順序是？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,0)">A. 直接拔插頭</button>
+            <button class="quiz-opt" onclick="ans(this,0)">B. 長按螢幕電源鍵</button>
+            <button class="quiz-opt" onclick="ans(this,1)">C. 開始 → 電源 → 關機 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 用力按鍵盤 Esc 鍵</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>4. 為什麼按完關機，電腦不會馬上關掉？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,0)">A. 電腦壞掉了</button>
+            <button class="quiz-opt" onclick="ans(this,1)">B. 它要整理書包才能休息 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">C. 我按錯按鈕了</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 沒有原因，再按一次</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="teacher-note teacher-only">
+          <h5>👩‍🏫 教師提示</h5>
+          <p>對三年級而言，「為什麼不能拔插頭」需要具體比喻。可請小朋友想像「跑步跑到一半被突然撞倒」的感覺。並補充學校電腦教室「下午最後使用者要關機、確認主機完成關機後才能關閉電源」的習慣。</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       關卡 3：桌面探險與滑鼠功夫
+       ════════════════════════════════════════════════════════════ -->
+  <section class="stage-section" id="sec3">
+    <div class="stage-header">
+      <span class="stage-badge purple">第 3 關</span>
+      <span class="stage-title">🖱️ 桌面探險與滑鼠功夫</span>
+      <span class="stage-sub">變身滑鼠武林高手</span>
+    </div>
+
+    <div class="window">
+      <div class="window-title alt-purple">
+        <span class="ico">🖱️</span>
+        <span class="name">關卡 3：桌面與滑鼠四大絕招.exe</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+
+        <div class="tip-box info">
+          <span class="ico">📋</span>
+          <div><b>用比喻來記住桌面上的東西：</b><br>
+            🏠 <b>桌面</b> ＝ 你的專屬大書桌<br>
+            🪄 <b>桌面圖示</b> ＝ 魔法貼紙（每張底下都有驚喜）<br>
+            🔧 <b>工作列</b> ＝ 水電工叔叔的工具腰帶<br>
+            ⏰ <b>系統匣</b> ＝ 腰帶上的小口袋（裝手錶、對講機）<br>
+            🎒 <b>開始功能表</b> ＝ 哆啦A夢的四次元百寶袋</div>
+        </div>
+
+        <div class="info-card" onclick="toggleZoom(this)">
+          <div class="info-label"><span>📊</span>關卡 3 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
+          <img src="assets/03_桌面與滑鼠.jpg" alt="關卡 3：桌面探險與滑鼠功夫資訊圖表" loading="lazy">
+        </div>
+
+        <div class="steps-card">
+          <h4>🎯 桌面導覽 + 滑鼠四大功夫</h4>
+          <ol class="steps-list">
+            <li><span class="step-num">1</span><div>電腦打開後看到的最大畫面叫「<b>桌面</b>」，上面有「<b>桌面圖示</b>」。</div></li>
+            <li><span class="step-num">2</span><div>畫面最下面的長條叫「<b>工作列</b>」，左邊有「<b>開始按鈕</b>」，右邊看時間的地方是「<b>系統匣</b>」。</div></li>
+            <li><span class="step-num">3</span><div>輕按一下左鍵 ＝「<b>單擊選取</b>」（選東西用）；快速按兩下 ＝「<b>雙擊開啟</b>」（打開東西用）。</div></li>
+            <li><span class="step-num">4</span><div>按一下右鍵 ＝「<b>右鍵叫選單</b>」，會跑出隱藏的功能選項。</div></li>
+            <li><span class="step-num">5</span><div>按住左鍵不放並移動滑鼠 ＝「<b>拖曳搬移</b>」，可以把東西搬到想放的位置。</div></li>
+          </ol>
+        </div>
+
+        <div class="canvas-section">
+          <h4>🎈 互動練習：滑鼠氣球戳戳樂</h4>
+          <p class="canvas-help">畫面上會浮出 4 色氣球：<b style="color:#0064ff">藍</b> = 單擊、<b style="color:#00b000">綠</b> = 雙擊、<b style="color:#ff8c00">橘</b> = 右鍵、<b style="color:#ff4081">粉</b> = 拖曳。用對的滑鼠功夫戳破它們！</p>
+          <canvas id="canvas3" width="900" height="420"></canvas>
+          <div class="canvas-controls">
+            <button class="ctrl-btn primary" onclick="game3Start()">▶ 開始遊戲</button>
+            <button class="ctrl-btn" onclick="game3Restart()">🔄 重新開始</button>
+            <span class="ctrl-status" id="game3-status">分數：0 ｜ 還剩：30 秒</span>
+          </div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>5. 想「打開」一個資料夾，最常用的滑鼠動作是？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,0)">A. 單擊左鍵一下</button>
+            <button class="quiz-opt" onclick="ans(this,1)">B. 雙擊左鍵兩下 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">C. 按住右鍵不放</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 同時按兩個鍵</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>6. 螢幕最下面看時間的地方叫什麼？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,0)">A. 工具箱</button>
+            <button class="quiz-opt" onclick="ans(this,1)">B. 系統匣 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">C. 開始按鈕</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 桌面圖示</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="teacher-note teacher-only">
+          <h5>👩‍🏫 教師提示</h5>
+          <p>建議先帶小朋友實際操作 Windows 開始功能表，把「百寶袋」比喻具象化。氣球戳戳樂遊戲可拿來計時競賽：誰在 30 秒內得分最高。提醒小朋友「右鍵 → 顯示其他選項」可以叫出 Win11 完整選單。</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       關卡 4：視窗大師與檔案總管
+       ════════════════════════════════════════════════════════════ -->
+  <section class="stage-section" id="sec4">
+    <div class="stage-header">
+      <span class="stage-badge orange">第 4 關</span>
+      <span class="stage-title">📁 視窗大師與檔案總管</span>
+      <span class="stage-sub">變成電腦整理高手</span>
+    </div>
+
+    <div class="window">
+      <div class="window-title alt-orange">
+        <span class="ico">📁</span>
+        <span class="name">關卡 4：視窗按鈕與檔案總管.exe</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+
+        <div class="tip-box info">
+          <span class="ico">🪟</span>
+          <div><b>視窗就像「任意門」</b>：推開每一扇窗都能看到一個新世界（畫畫、遊戲、寫字…）。<br>
+            <b>檔案 vs 資料夾</b>：檔案像「圖畫紙」，資料夾像「書包夾鏈袋」，可以把圖畫紙整整齊齊收好。<br>
+            <b>垃圾桶</b>：像教室後面的回收桶，丟錯了還能撿回來，但「清空垃圾桶」就真的消失囉！</div>
+        </div>
+
+        <div class="info-card" onclick="toggleZoom(this)">
+          <div class="info-label"><span>📊</span>關卡 4 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
+          <img src="assets/04_視窗檔案整理.jpg" alt="關卡 4：視窗大師與檔案總管資訊圖表" loading="lazy">
+        </div>
+
+        <div class="steps-card">
+          <h4>🎯 視窗三按鈕 + 檔案總管操作</h4>
+          <ol class="steps-list">
+            <li><span class="step-num">1</span><div>視窗右上角有三個神奇按鈕：<b>「_」最小化</b>、<b>「□」最大化</b>、<b>「✕」關閉</b>。</div></li>
+            <li><span class="step-num">2</span><div>點擊工作列上的「<b>檔案總管</b>」（黃色小袋子圖示），可以找到電腦裡所有的資料夾與檔案。</div></li>
+            <li><span class="step-num">3</span><div>在空白處按一下<b>滑鼠右鍵</b> → 選「<b>新增</b>」→「<b>資料夾</b>」，就可以建立新資料夾。</div></li>
+            <li><span class="step-num">4</span><div>選取檔案後按 <b>Ctrl + C</b> 是複製、<b>Ctrl + V</b> 是貼上，能變出一模一樣的檔案分身。</div></li>
+            <li><span class="step-num">5</span><div>不要的檔案丟進<b>垃圾桶</b>；發現丟錯了，點開垃圾桶可以救回來。</div></li>
+          </ol>
+        </div>
+
+        <div class="canvas-section">
+          <h4>🪟 互動練習：視窗按鈕大師</h4>
+          <p class="canvas-help">老師會出題：「現在請按 OOO 按鈕」。點對視窗右上角的對應按鈕（_ □ ✕）就過關！</p>
+          <canvas id="canvas4" width="900" height="420"></canvas>
+          <div class="canvas-controls">
+            <button class="ctrl-btn primary" onclick="game4Restart()">🔄 下一題</button>
+            <span class="ctrl-status" id="game4-status">準備好了嗎？按「下一題」開始挑戰！</span>
+          </div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>7. 視窗右上角，長得像「<b>✕</b>」的按鈕，按下去會怎樣？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,0)">A. 把視窗變很小藏起來</button>
+            <button class="quiz-opt" onclick="ans(this,0)">B. 把視窗變到最大</button>
+            <button class="quiz-opt" onclick="ans(this,1)">C. 關閉這個視窗 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 重新整理畫面</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q"><span class="qmark">Q</span>8. 不小心把作業檔案丟到垃圾桶了，可以救回來嗎？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="ans(this,1)">A. 可以，點開垃圾桶找它救回 ✓</button>
+            <button class="quiz-opt" onclick="ans(this,0)">B. 不行，永遠消失了</button>
+            <button class="quiz-opt" onclick="ans(this,0)">C. 要重新做一份</button>
+            <button class="quiz-opt" onclick="ans(this,0)">D. 找老師重新安裝電腦</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="teacher-note teacher-only">
+          <h5>👩‍🏫 教師提示</h5>
+          <p>建議搭配實際打開檔案總管，讓學生在自己的「文件」資料夾建立一個「我的三年級作品」資料夾。重新命名（Win11 是筆形圖示）的操作可作為下一節課小畫家作業繳交的前置技能。提醒「清空垃圾桶」是不可逆的動作。</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       今日實作任務
+       ════════════════════════════════════════════════════════════ -->
+  <section class="project-task" id="project">
+    <div class="window">
+      <div class="window-title">
+        <span class="ico">📋</span>
+        <span class="name">今日實作任務.exe</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+        <h3 style="font-size:1.2rem;margin-bottom:8px;color:var(--link)">🎓 三大任務｜下課前完成它！</h3>
+        <p style="font-size:1rem;margin-bottom:6px">把今天學到的功夫用在真正的電腦上：</p>
+        <div class="task-grid">
+          <div class="task-card">
+            <h5>🎯 任務一：硬體大點名</h5>
+            <p>用滑鼠在電腦旁邊指出五個成員（螢幕、主機、滑鼠、鍵盤、喇叭），念出它們的名字給同學聽。</p>
+          </div>
+          <div class="task-card">
+            <h5>🎯 任務二：彩色便利貼</h5>
+            <p>用「自黏便箋」（sticky notes）寫下今天學到的「滑鼠四大功夫」，換成不同顏色貼在桌面上。</p>
+          </div>
+          <div class="task-card">
+            <h5>🎯 任務三：我的資料夾</h5>
+            <p>打開檔案總管，在「文件」裡建立一個叫「我的三年級作品」的資料夾，下節課要把作品放進去！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       授課簡報播放器
+       ════════════════════════════════════════════════════════════ -->
+  <section class="slide-player" id="slides">
+    <div class="window">
+      <div class="window-title">
+        <span class="ico">📊</span>
+        <span class="name">授課簡報 — PowerPoint 簡報播放器</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+        <div class="slide-main" ondblclick="openSlideFullscreen()">
+          <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報" loading="lazy">
+          <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+          <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+          <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+          <div class="slide-counter" id="slide-counter">1 / 1</div>
+        </div>
+        <div class="slide-strip" id="slide-strip"></div>
+        <p style="font-size:.85rem;color:#444;margin-top:8px">💡 提示：可以用 ← → 鍵切換，或點縮圖跳頁；雙擊主畫面 ＝ 全螢幕；Esc 鍵關閉。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       自學影片
+       ════════════════════════════════════════════════════════════ -->
+  <section class="video-section" id="video">
+    <div class="window">
+      <div class="window-title">
+        <span class="ico">🎬</span>
+        <span class="name">學生自學影片.mp4 — Windows Media Player</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body" style="padding:14px">
+        <div class="video-wrap">
+          <div id="video-placeholder" class="video-no-id">
+            🎬 自學影片由 NotebookLM AI 自動生成中…<br>
+            完成後將在此嵌入 YouTube 影片，請稍後再回來看～
+          </div>
+        </div>
+        <div class="video-meta" style="margin-top:8px">
+          <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+          <span class="video-hint">💡 建議用耳機觀看，搭配上方簡報一起複習</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NotebookLM 資源站
+       ════════════════════════════════════════════════════════════ -->
+  <section id="nlm">
+    <div class="window">
+      <div class="window-title">
+        <span class="ico">🤖</span>
+        <span class="name">NotebookLM AI 學習站</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+        <h3 style="font-size:1.2rem;margin-bottom:10px;color:var(--link)">📚 三個 AI 筆記本（給好學的你）</h3>
+        <p style="font-size:.95rem;margin-bottom:10px">想要更深入學習嗎？這三個 NotebookLM 筆記本陪你練功！</p>
+        <div class="nb-grid">
+          <a class="nb-card" href="https://notebooklm.google.com/notebook/23dcc1b2-9f22-45a6-93aa-a3343b8cf187" target="_blank" rel="noopener">
+            <h4><span>📔</span>精簡教學本</h4>
+            <p>本駕駛艙簡報、影片、資訊圖表的來源；含主講者阿凱老師人物模板。</p>
+            <span class="tag">PRIMARY</span>
+          </a>
+          <a class="nb-card" href="https://notebooklm.google.com/notebook/93a5c806-6ade-4ca8-87e9-0e7fda2dc088" target="_blank" rel="noopener">
+            <h4><span>📚</span>深度研究本</h4>
+            <p>11 個網路來源整合：電腦教室規則、Win11 教學、自黏便箋、檔案總管…完整研究知識庫。</p>
+            <span class="tag">RESEARCH</span>
+          </a>
+          <a class="nb-card" href="https://notebooklm.google.com/" target="_blank" rel="noopener">
+            <h4><span>🌐</span>建立自己的本子</h4>
+            <p>NotebookLM 首頁。你也可以上傳教材、生成你的專屬簡報、影片、資訊圖表！</p>
+            <span class="tag">START</span>
+          </a>
+        </div>
+
+        <div class="flow-box">
+          <h4>🛠️ 這個駕駛艙怎麼做出來的？</h4>
+          <div class="flow-steps">
+            <span class="flow-step">🌐 深度網路搜尋 (Deep Research)</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-step">🧪 萃取 5 大精華</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-step">📔 精簡本（含主講者.pdf）</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-step">🎨 NLM 簡報＋影片＋資訊圖表</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-step">🖥️ Claude Code 生成 HTML</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-step">🚀 GitHub Pages 部署</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FAQ
+       ════════════════════════════════════════════════════════════ -->
+  <section id="faq">
+    <div class="window">
+      <div class="window-title">
+        <span class="ico">❓</span>
+        <span class="name">常見問題集 (FAQ).hlp</span>
+        <div class="controls"><button>_</button><button>□</button><button>✕</button></div>
+      </div>
+      <div class="window-body">
+        <div class="faq-list">
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q"><span class="q-mark">Q</span><span>螢幕一動就跳出來但主機看不到燈？是壞掉了嗎？</span><span class="toggle">▼</span></div>
+            <div class="faq-a">別擔心，電腦絕對沒有壞掉！它只是剛才進入了「睡眠狀態」在稍微休息，當你動一下滑鼠，就成功把畫面喚醒了。有時候主機的電源燈會輕輕閃爍或比較不亮，只要畫面正常出現，就可以放心繼續使用它！</div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q"><span class="q-mark">Q</span><span>不小心把桌面圖示拖到別的地方了，會怎樣？</span><span class="toggle">▼</span></div>
+            <div class="faq-a">完全不會怎麼樣唷！圖示就像你書桌上的貼紙，換個位置放依然是同一個好用的工具！只要你不把它丟進垃圾桶，不管把它「拖曳搬移」到桌面的哪個角落，對準它點兩下都一樣能順利打開程式。</div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q"><span class="q-mark">Q</span><span>為什麼我按了關機，電腦沒有馬上關掉？</span><span class="toggle">▼</span></div>
+            <div class="faq-a">因為電腦關機就像我們放學前要整理書包一樣，它需要一點點時間把今天所有的檔案和工作通通收好，才能安心休息。請給它一點耐心，<b>一定要等主機完全安靜、燈號熄滅後</b>，才是真正關機成功喔！</div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q"><span class="q-mark">Q</span><span>把檔案丟到垃圾桶後還能救回來嗎？</span><span class="toggle">▼</span></div>
+            <div class="faq-a">當然可以呀！電腦裡的垃圾桶有神奇的魔法，如果不小心丟錯了檔案，只要點開桌面的垃圾桶找到它，就可以隨時把它平安救回來。不過要記得，如果你不小心按到了「清理垃圾桶」，檔案就會真的被倒掉消失囉！</div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q"><span class="q-mark">Q</span><span>想要重新命名一個資料夾，怎麼做最快？</span><span class="toggle">▼</span></div>
+            <div class="faq-a">最快的方法是把滑鼠游標移到資料夾上，輕輕按一下「<b>右鍵</b>」叫出魔法選單。接著在選單裡面找到「<b>重新命名</b>」的選項（在 Windows 11 裡可能是一個長得像筆一樣的小圖示），點一下就可以馬上幫資料夾換上你喜歡的新名字囉！</div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q"><span class="q-mark">Q</span><span>滑鼠按右鍵的選單看起來很少，怎麼變回完整選單？</span><span class="toggle">▼</span></div>
+            <div class="faq-a">在 Windows 11 裡，預設的右鍵選單會把大部分功能藏起來只顯示圖示。如果想看完整選單，點右鍵後再點「<b>顯示其他選項</b>」就可以了。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══ Float Tools ═══ -->
+<div class="float-tools">
+  <button class="float-btn yellow" onclick="togglePanel('lottery')" title="抽號碼">🎲</button>
+  <button class="float-btn green" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回頂端">⬆</button>
+</div>
+
+<!-- ═══ Tool Panel: Lottery ═══ -->
+<div class="tool-panel" id="panel-lottery">
+  <div class="tool-panel-title">
+    <span>🎲</span>
+    <span>隨機抽號碼</span>
+    <button class="close" onclick="togglePanel('lottery')">✕</button>
+  </div>
+  <div class="tool-panel-body">
+    <div class="row">
+      <span>號碼範圍：</span>
+      <input type="number" id="lot-min" value="1" min="1">
+      <span>～</span>
+      <input type="number" id="lot-max" value="30" min="1">
+      <span>號</span>
+    </div>
+    <div class="row">
+      <label><input type="checkbox" id="lot-unique" checked> 不重複抽</label>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="ctrl-btn primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+      <button class="ctrl-btn" onclick="resetLottery()">↻</button>
+    </div>
+    <div class="lot-result" id="lot-out">等待抽號…</div>
+  </div>
+</div>
+
+<!-- ═══ Tool Panel: Timer ═══ -->
+<div class="tool-panel" id="panel-timer">
+  <div class="tool-panel-title">
+    <span>⏱️</span>
+    <span>計時器</span>
+    <button class="close" onclick="togglePanel('timer')">✕</button>
+  </div>
+  <div class="tool-panel-body">
+    <div class="timer-display" id="timer-disp">00:00</div>
+    <div class="row">
+      <span>分鐘：</span>
+      <input type="number" id="timer-min" value="5" min="0" max="60">
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="ctrl-btn primary" onclick="timerStart()" style="flex:1">▶ 開始</button>
+      <button class="ctrl-btn" onclick="timerStop()">⏸</button>
+      <button class="ctrl-btn" onclick="timerReset()">↻</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Slide Fullscreen Overlay ═══ -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="fs-counter" id="slide-fs-counter">1 / 1</div>
+</div>
+
+<footer class="site-footer">
+  Made with <span class="heart">❤</span> by 阿凱老師 ｜
+  <a href="https://www.smes.tyc.edu.tw/teach.aspx?info_id=12" target="_blank" rel="noopener">石門國小資訊科技</a> ｜
+  <a href="../index.html">回到 IT COCKPIT</a><br>
+  <span style="opacity:.7">© 2026 IT COCKPIT｜以 NotebookLM AI + Claude Code 製作</span>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// SLIDE LIST will be filled in dynamically — placeholder for now
+// ═══════════════════════════════════════════════════════════════
+const SLIDE_LIST = (() => {
+  const arr = [];
+  for(let i=1;i<=13;i++){
+    const n = i.toString().padStart(2,'0');
+    arr.push(`assets/slide_${n}.jpg`);
+  }
+  return arr;
+})();
+
+// YouTube embed (在影片上傳完成後會在此填入 ID)
+const YOUTUBE_VIDEO_ID = '';
+const YOUTUBE_WATCH_URL = '';
+
+// ═══════════════════════════════════════════════════════════════
+// Clock (系統匣)
+// ═══════════════════════════════════════════════════════════════
+function tickClock(){
+  const d = new Date();
+  const hh = d.getHours().toString().padStart(2,'0');
+  const mm = d.getMinutes().toString().padStart(2,'0');
+  const el = document.getElementById('tray-clock');
+  if(el) el.textContent = `${hh}:${mm}`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Mode Switch
+// ═══════════════════════════════════════════════════════════════
+function setMode(m, btn){
+  document.body.classList.toggle('teacher-mode', m === 'teacher');
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function askTeacher(btn){
+  const pw = prompt('請輸入教師密碼：');
+  if(pw === 'it2026') setMode('teacher', btn);
+  else if(pw !== null) alert('密碼錯誤！');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Quiz
+// ═══════════════════════════════════════════════════════════════
+const PRAISE = ['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','🏆 完美！','💯 滿分！'];
+const HINT = ['💡 沒關係，再想一想！','📝 答案是正確選項喔','🤔 看看其他選項','💪 下次一定對！'];
+function ans(btn, ok){
+  const card = btn.closest('.quiz-card');
+  if(card.dataset.done) return;
+  card.dataset.done = '1';
+  const opts = card.querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  const fb = card.querySelector('.quiz-feedback');
+  if(ok){
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback show ok';
+    fb.textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)] + ' 完全正確！';
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o => {
+      if(o.getAttribute('onclick').includes('this,1')) o.classList.add('correct');
+    });
+    fb.className = 'quiz-feedback show no';
+    fb.textContent = HINT[Math.floor(Math.random()*HINT.length)] + ' ｜正確答案已用綠色標示。';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Slide Player
+// ═══════════════════════════════════════════════════════════════
+let curSlide = 0;
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((src, i) => {
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i === 0 ? ' active' : '');
+    t.innerHTML = `<img src="${src}" alt="第${i+1}頁" loading="lazy">`;
+    t.onclick = () => goSlide(i);
+    strip.appendChild(t);
+  });
+  goSlide(0, false);  // initial, do NOT scrollIntoView
+}
+function goSlide(n, doScroll = true){
+  if(n < 0) n = SLIDE_LIST.length - 1;
+  if(n >= SLIDE_LIST.length) n = 0;
+  curSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  document.querySelectorAll('.strip-thumb').forEach((el, i) => {
+    el.classList.toggle('active', i === n);
+  });
+  // ⚠️ DON'T scrollIntoView (causes page jump on init).
+  // 只捲動 strip 容器內部
+  if(doScroll){
+    const active = document.querySelector('.strip-thumb.active');
+    if(active){
+      const strip = document.getElementById('slide-strip');
+      const target = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+      strip.scrollTo({left: Math.max(0, target), behavior: 'smooth'});
+    }
+  }
+  // Sync fullscreen
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  }
+}
+function slideNav(d){ goSlide(curSlide + d); }
+
+// 點 infographic 放大檢視
+function toggleZoom(el){
+  el.classList.toggle('zoomed');
+  document.body.style.overflow = el.classList.contains('zoomed') ? 'hidden' : '';
+}
+function openSlideFullscreen(){
+  const fs = document.getElementById('slide-fs');
+  fs.classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowLeft') slideNav(-1);
+  else if(e.key === 'ArrowRight') slideNav(1);
+  else if(e.key === 'Escape') closeSlideFullscreen();
+});
+
+// ═══════════════════════════════════════════════════════════════
+// Video Player init (fills in iframe if YOUTUBE_VIDEO_ID set)
+// ═══════════════════════════════════════════════════════════════
+function initVideo(){
+  if(!YOUTUBE_VIDEO_ID) return;
+  const ph = document.getElementById('video-placeholder');
+  ph.outerHTML = `
+    <div class="video-ratio">
+      <iframe src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?rel=0&modestbranding=1"
+        title="Windows 電腦小尖兵 NotebookLM 教學影片"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen loading="lazy"></iframe>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Float Tool Panels
+// ═══════════════════════════════════════════════════════════════
+function togglePanel(name){
+  const p = document.getElementById('panel-' + name);
+  const opening = !p.classList.contains('open');
+  document.querySelectorAll('.tool-panel').forEach(el => el.classList.remove('open'));
+  if(opening) p.classList.add('open');
+}
+
+// Lottery
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){alert('最小號必須 ≤ 最大號！');return;}
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const timer = setInterval(() => {
+    out.textContent = (Math.floor(Math.random() * (max-min+1)) + min) + ' 號';
+  }, 60);
+  setTimeout(() => {
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random() * lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random() * (max-min+1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號…';
+}
+
+// Timer
+let timerInterval = null, timerSecs = 0;
+function timerStart(){
+  if(timerInterval) return;
+  if(timerSecs === 0){
+    const m = parseInt(document.getElementById('timer-min').value) || 5;
+    timerSecs = m * 60;
+  }
+  timerInterval = setInterval(() => {
+    timerSecs--;
+    updateTimer();
+    if(timerSecs <= 0){
+      clearInterval(timerInterval); timerInterval = null;
+      alert('⏰ 時間到！');
+      timerSecs = 0; updateTimer();
+    }
+  }, 1000);
+}
+function timerStop(){ clearInterval(timerInterval); timerInterval = null; }
+function timerReset(){ timerStop(); timerSecs = 0; updateTimer(); }
+function updateTimer(){
+  const m = Math.floor(timerSecs / 60), s = timerSecs % 60;
+  document.getElementById('timer-disp').textContent =
+    m.toString().padStart(2,'0') + ':' + s.toString().padStart(2,'0');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Drawing Canvas
+// ═══════════════════════════════════════════════════════════════
+let drawActive = false, penColor = '#ff4081', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth;
+  drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e => {
+    if(!drawActive) return;
+    isDrawing = true; dLastX = e.clientX; dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mousemove', e => {
+    if(!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke();
+    dLastX = e.clientX; dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', () => isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e => {
+    if(!drawActive) return; e.preventDefault();
+    const t = e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e => {
+    if(!drawActive || !isDrawing) return; e.preventDefault();
+    const t = e.touches[0];
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(t.clientX, t.clientY); drawCtx.stroke();
+    dLastX = t.clientX; dLastY = t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', () => isDrawing = false);
+  window.addEventListener('resize', () => {
+    drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').classList.toggle('active', drawActive);
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){
+  if(drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GAME 1：硬體連連看（點擊配對遊戲）
+// ═══════════════════════════════════════════════════════════════
+const G1_PAIRS = [
+  {icon:'🖥️', name:'螢幕', desc:'像電視，讓我們看到畫面'},
+  {icon:'⬛', name:'主機', desc:'電腦的大腦，最聰明！'},
+  {icon:'🖱️', name:'滑鼠', desc:'電腦裡的小手，幫忙點選'},
+  {icon:'⌨️', name:'鍵盤', desc:'打字、輸入密碼用'},
+  {icon:'🔊', name:'喇叭', desc:'發出聲音，能聽音樂'}
+];
+let g1State = null;
+function game1Init(){
+  const c = document.getElementById('canvas1');
+  const ctx = c.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width * dpr; c.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
+  // 隨機右側順序
+  const rightOrder = [...G1_PAIRS].sort(() => Math.random() - 0.5);
+  g1State = {
+    W, H, ctx, c,
+    leftBoxes: G1_PAIRS.map((p, i) => ({...p, x:30, y:30 + i*72, w:200, h:60, matched:false})),
+    rightBoxes: rightOrder.map((p, i) => ({...p, x:W - 470, y:30 + i*72, w:440, h:60, matched:false})),
+    selected: null, msg: '點左邊一個硬體，再點右邊它的功能！'
+  };
+  game1Draw();
+  c.onclick = (e) => game1Click(e);
+}
+function game1Draw(){
+  const s = g1State; if(!s) return;
+  const ctx = s.ctx;
+  ctx.clearRect(0,0,s.W,s.H);
+  // 標題
+  ctx.fillStyle = '#000080'; ctx.font = 'bold 18px "Microsoft JhengHei"';
+  ctx.fillText('🎯 把左邊的硬體連到右邊正確的功能', 20, 18);
+  // Left boxes
+  for(const b of s.leftBoxes){
+    drawBox(ctx, b, b === s.selected ? '#ffd700' : (b.matched ? '#90ee90' : '#c0c0c0'));
+    ctx.font = 'bold 22px "Microsoft JhengHei"'; ctx.fillStyle = '#000';
+    ctx.fillText(b.icon + ' ' + b.name, b.x + 14, b.y + b.h/2 + 8);
+  }
+  // Right boxes
+  for(const b of s.rightBoxes){
+    drawBox(ctx, b, b.matched ? '#90ee90' : '#fff');
+    ctx.font = '15px "Microsoft JhengHei"'; ctx.fillStyle = '#000';
+    ctx.fillText(b.desc, b.x + 14, b.y + b.h/2 + 6);
+  }
+  // 連線（已配對）
+  ctx.strokeStyle = '#006000'; ctx.lineWidth = 3;
+  for(let i = 0; i < s.leftBoxes.length; i++){
+    if(s.leftBoxes[i].matched){
+      const r = s.rightBoxes.find(rr => rr.name === s.leftBoxes[i].name);
+      if(r){
+        ctx.beginPath();
+        ctx.moveTo(s.leftBoxes[i].x + s.leftBoxes[i].w, s.leftBoxes[i].y + s.leftBoxes[i].h/2);
+        ctx.lineTo(r.x, r.y + r.h/2);
+        ctx.stroke();
+      }
+    }
+  }
+  document.getElementById('game1-status').textContent = s.msg;
+}
+function drawBox(ctx, b, fill){
+  ctx.fillStyle = fill;
+  ctx.fillRect(b.x, b.y, b.w, b.h);
+  // 3D border
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(b.x, b.y + b.h); ctx.lineTo(b.x, b.y); ctx.lineTo(b.x + b.w, b.y); ctx.stroke();
+  ctx.strokeStyle = '#404040';
+  ctx.beginPath(); ctx.moveTo(b.x + b.w, b.y); ctx.lineTo(b.x + b.w, b.y + b.h); ctx.lineTo(b.x, b.y + b.h); ctx.stroke();
+}
+function game1Click(e){
+  const s = g1State;
+  const rect = s.c.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (s.W / rect.width);
+  const y = (e.clientY - rect.top) * (s.H / rect.height);
+  // Left click
+  const left = s.leftBoxes.find(b => !b.matched && x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h);
+  if(left){
+    s.selected = left;
+    s.msg = `已選「${left.name}」— 請點右邊它對應的功能`;
+    game1Draw();
+    return;
+  }
+  // Right click
+  if(s.selected){
+    const right = s.rightBoxes.find(b => !b.matched && x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h);
+    if(right){
+      if(right.name === s.selected.name){
+        s.selected.matched = true; right.matched = true;
+        const done = s.leftBoxes.every(b => b.matched);
+        s.msg = done ? '🎉 完美！全部配對成功！你是硬體小達人！' : '✅ 答對！繼續找下一組～';
+        s.selected = null;
+      } else {
+        s.msg = `❌ 不對喔！「${s.selected.name}」的功能不是這個，再想一想`;
+        s.selected = null;
+      }
+      game1Draw();
+    }
+  }
+}
+function game1Restart(){ game1Init(); }
+
+// ═══════════════════════════════════════════════════════════════
+// GAME 2：關機三步曲（順序點擊）
+// ═══════════════════════════════════════════════════════════════
+const G2_STEPS = ['開始', '電源', '關機'];
+let g2State = null;
+function game2Init(){
+  const c = document.getElementById('canvas2');
+  const ctx = c.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width * dpr; c.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
+  // Mock 桌面：底部工作列
+  g2State = {
+    W, H, ctx, c, step: 0,
+    btns: [
+      {label:'⊞ 開始', x:20, y:H-70, w:120, h:48, key:'開始', clicked:false},
+      {label:'⏻ 電源', x:170, y:H-180, w:120, h:48, key:'電源', clicked:false},
+      {label:'🌙 關機', x:320, y:H-180, w:120, h:48, key:'關機', clicked:false},
+      {label:'🔁 重新啟動', x:320, y:H-110, w:120, h:48, key:'重新啟動', clicked:false}
+    ],
+    msg: '請依序點：開始 → 電源 → 關機'
+  };
+  game2Draw();
+  c.onclick = (e) => game2Click(e);
+}
+function game2Draw(){
+  const s = g2State; if(!s) return;
+  const ctx = s.ctx;
+  ctx.fillStyle = '#2a8b8b'; ctx.fillRect(0,0,s.W,s.H);
+  // 桌面圖示
+  ctx.fillStyle = '#fff'; ctx.font = '50px sans-serif';
+  ctx.fillText('🖥️', 60, 80); ctx.fillText('🗑️', 60, 150);
+  ctx.font = 'bold 14px "Microsoft JhengHei"'; ctx.fillStyle = '#fff';
+  ctx.fillText('我的電腦', 38, 110); ctx.fillText('資源回收筒', 28, 180);
+  // 工作列
+  ctx.fillStyle = '#c0c0c0'; ctx.fillRect(0, s.H-90, s.W, 90);
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, s.H-90); ctx.lineTo(s.W, s.H-90); ctx.stroke();
+  // 按鈕
+  for(const b of s.btns){
+    const isStep = s.step < G2_STEPS.length && b.key === G2_STEPS[s.step];
+    let fill = b.clicked ? '#90ee90' : (isStep ? '#fffacd' : '#c0c0c0');
+    ctx.fillStyle = fill;
+    ctx.fillRect(b.x, b.y, b.w, b.h);
+    // 3D
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(b.x, b.y + b.h); ctx.lineTo(b.x, b.y); ctx.lineTo(b.x + b.w, b.y); ctx.stroke();
+    ctx.strokeStyle = '#404040';
+    ctx.beginPath(); ctx.moveTo(b.x + b.w, b.y); ctx.lineTo(b.x + b.w, b.y + b.h); ctx.lineTo(b.x, b.y + b.h); ctx.stroke();
+    ctx.fillStyle = '#000'; ctx.font = 'bold 17px "Microsoft JhengHei"';
+    ctx.textAlign = 'center';
+    ctx.fillText(b.label, b.x + b.w/2, b.y + b.h/2 + 6);
+    if(isStep && !b.clicked){
+      ctx.strokeStyle = '#ff0000'; ctx.lineWidth = 3;
+      ctx.strokeRect(b.x - 4, b.y - 4, b.w + 8, b.h + 8);
+    }
+  }
+  ctx.textAlign = 'left';
+  // 提示
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 16px "Microsoft JhengHei"';
+  ctx.fillText('🎯 模擬 Windows 桌面 — 練習關機流程', 200, 30);
+  document.getElementById('game2-status').textContent = s.msg;
+}
+function game2Click(e){
+  const s = g2State;
+  const rect = s.c.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (s.W / rect.width);
+  const y = (e.clientY - rect.top) * (s.H / rect.height);
+  const b = s.btns.find(bb => x >= bb.x && x <= bb.x + bb.w && y >= bb.y && y <= bb.y + bb.h);
+  if(!b) return;
+  if(s.step < G2_STEPS.length && b.key === G2_STEPS[s.step]){
+    b.clicked = true; s.step++;
+    if(s.step >= G2_STEPS.length){
+      s.msg = '🎉 完美！關機流程全對！電腦安全進入夢鄉～';
+    } else {
+      s.msg = `✅ 答對！下一步：點「${G2_STEPS[s.step]}」`;
+    }
+  } else {
+    s.msg = `❌ 順序錯了！現在應該點「${G2_STEPS[s.step] || '已完成'}」`;
+  }
+  game2Draw();
+}
+function game2Restart(){ game2Init(); }
+
+// ═══════════════════════════════════════════════════════════════
+// GAME 3：滑鼠氣球戳戳樂
+// ═══════════════════════════════════════════════════════════════
+const G3_TYPES = [
+  {color:'#0064ff', name:'藍', action:'單擊'},
+  {color:'#00b000', name:'綠', action:'雙擊'},
+  {color:'#ff8c00', name:'橘', action:'右鍵'},
+  {color:'#ff4081', name:'粉', action:'拖曳'}
+];
+let g3State = null, g3Loop = null;
+function game3Init(){
+  const c = document.getElementById('canvas3');
+  const ctx = c.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width * dpr; c.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  g3State = {
+    W: rect.width, H: rect.height, ctx, c,
+    balloons: [], score: 0, timeLeft: 30, started: false, dragId: null, dragStart: 0
+  };
+  game3Draw();
+  c.oncontextmenu = (e) => { e.preventDefault(); game3HandleClick(e, 'right'); };
+  c.onmousedown = (e) => {
+    if(e.button !== 0) return;
+    const b = game3HitBalloon(e);
+    if(!b) return;
+    if(b.type.action === '拖曳'){
+      g3State.dragId = b.id; g3State.dragStart = Date.now();
+    }
+  };
+  c.onmouseup = (e) => {
+    if(g3State.dragId !== null){
+      const elapsed = Date.now() - g3State.dragStart;
+      const b = g3State.balloons.find(bb => bb.id === g3State.dragId);
+      if(b && elapsed > 300){
+        b.popped = true; g3State.score += 15;
+      } else if(b) {
+        g3State.score -= 2;
+      }
+      g3State.dragId = null;
+    }
+  };
+  c.ondblclick = (e) => game3HandleClick(e, 'dbl');
+  c.onclick = (e) => {
+    if(g3State.dragId !== null) return;  // skip during drag
+    game3HandleClick(e, 'single');
+  };
+}
+function game3HitBalloon(e){
+  const rect = g3State.c.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (g3State.W / rect.width);
+  const y = (e.clientY - rect.top) * (g3State.H / rect.height);
+  return g3State.balloons.find(b => !b.popped && Math.hypot(b.x - x, b.y - y) < b.r);
+}
+function game3HandleClick(e, kind){
+  if(!g3State.started) return;
+  const b = game3HitBalloon(e);
+  if(!b) return;
+  const required = b.type.action;
+  let correct = false;
+  if(required === '單擊' && kind === 'single') correct = true;
+  else if(required === '雙擊' && kind === 'dbl') correct = true;
+  else if(required === '右鍵' && kind === 'right') correct = true;
+  // 拖曳由 mouseup 處理
+  if(correct){ b.popped = true; g3State.score += 10; }
+  else { g3State.score -= 2; }
+}
+function game3SpawnBalloon(){
+  const t = G3_TYPES[Math.floor(Math.random() * G3_TYPES.length)];
+  const r = 32 + Math.random() * 10;
+  const x = r + Math.random() * (g3State.W - r*2);
+  g3State.balloons.push({
+    id: Date.now() + Math.random(), type: t, x, y: g3State.H + r, r,
+    vy: -(1 + Math.random() * 1.5), drift: (Math.random() - 0.5) * 0.5,
+    popped: false
+  });
+}
+function game3Draw(){
+  const s = g3State; if(!s) return;
+  const ctx = s.ctx;
+  // sky
+  const grad = ctx.createLinearGradient(0, 0, 0, s.H);
+  grad.addColorStop(0, '#87ceeb'); grad.addColorStop(1, '#e0f6ff');
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, s.W, s.H);
+  // 雲朵
+  ctx.fillStyle = '#fff';
+  for(let i = 0; i < 4; i++){
+    const cx = (i * 220 + 80), cy = 50 + (i%2)*30;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 24, 0, Math.PI*2);
+    ctx.arc(cx + 22, cy - 8, 20, 0, Math.PI*2);
+    ctx.arc(cx + 40, cy + 4, 22, 0, Math.PI*2);
+    ctx.fill();
+  }
+  // 氣球
+  for(const b of s.balloons){
+    if(b.popped) continue;
+    ctx.fillStyle = b.type.color;
+    ctx.beginPath(); ctx.ellipse(b.x, b.y, b.r * 0.9, b.r, 0, 0, Math.PI*2); ctx.fill();
+    // 高光
+    ctx.fillStyle = 'rgba(255,255,255,.5)';
+    ctx.beginPath(); ctx.ellipse(b.x - b.r*0.3, b.y - b.r*0.4, b.r*0.25, b.r*0.4, 0, 0, Math.PI*2); ctx.fill();
+    // 線
+    ctx.strokeStyle = '#444'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(b.x, b.y + b.r); ctx.lineTo(b.x, b.y + b.r + 30); ctx.stroke();
+    // 標籤
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 14px "Microsoft JhengHei"';
+    ctx.textAlign = 'center';
+    ctx.fillText(b.type.action, b.x, b.y + 5);
+  }
+  ctx.textAlign = 'left';
+  // HUD
+  ctx.fillStyle = 'rgba(0,0,0,.7)';
+  ctx.fillRect(10, 10, 280, 32);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 15px "Microsoft JhengHei"';
+  ctx.fillText(`🏆 分數：${s.score}　⏰ 剩餘：${s.timeLeft}s`, 18, 32);
+  // 圖例
+  ctx.fillStyle = 'rgba(0,0,0,.7)';
+  ctx.fillRect(s.W - 230, 10, 220, 95);
+  ctx.fillStyle = '#fff'; ctx.font = '13px "Microsoft JhengHei"';
+  ctx.fillText('🎯 對照表：', s.W - 222, 28);
+  G3_TYPES.forEach((t, i) => {
+    ctx.fillStyle = t.color;
+    ctx.beginPath(); ctx.arc(s.W - 215, 44 + i*16, 6, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.fillText(`${t.name}氣球 → ${t.action}`, s.W - 200, 48 + i*16);
+  });
+  document.getElementById('game3-status').textContent =
+    `分數：${s.score} ｜ 剩餘：${s.timeLeft} 秒 ｜ ${s.started ? '進行中…' : '準備開始！'}`;
+}
+function game3Tick(){
+  const s = g3State; if(!s || !s.started) return;
+  for(const b of s.balloons){
+    if(b.popped) continue;
+    b.y += b.vy; b.x += b.drift;
+    if(b.y < -b.r) b.popped = true;
+  }
+  if(Math.random() < 0.05) game3SpawnBalloon();
+  game3Draw();
+}
+function game3Start(){
+  if(!g3State) game3Init();
+  if(g3State.started) return;
+  g3State.started = true;
+  g3State.score = 0; g3State.timeLeft = 30; g3State.balloons = [];
+  if(g3Loop) clearInterval(g3Loop);
+  g3Loop = setInterval(game3Tick, 50);
+  const sec = setInterval(() => {
+    g3State.timeLeft--;
+    if(g3State.timeLeft <= 0){
+      clearInterval(sec); clearInterval(g3Loop);
+      g3State.started = false;
+      document.getElementById('game3-status').textContent =
+        `🎉 時間到！最終分數：${g3State.score} 分　${g3State.score >= 100 ? '✨ 滿分小達人！' : '💪 再挑戰一次！'}`;
+    }
+  }, 1000);
+}
+function game3Restart(){
+  if(g3Loop) clearInterval(g3Loop);
+  g3State.started = false;
+  game3Init();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GAME 4：視窗按鈕大師
+// ═══════════════════════════════════════════════════════════════
+const G4_TASKS = [
+  {label:'最小化', key:'min', tip:'把視窗變不見藏起來'},
+  {label:'最大化', key:'max', tip:'把視窗放到滿螢幕'},
+  {label:'關閉', key:'close', tip:'徹底結束這個程式'},
+  {label:'最小化', key:'min', tip:'再練一次最小化～'},
+  {label:'關閉', key:'close', tip:'把它關閉吧！'}
+];
+let g4State = null;
+function game4Init(){
+  const c = document.getElementById('canvas4');
+  const ctx = c.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width * dpr; c.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  g4State = {
+    W: rect.width, H: rect.height, ctx, c,
+    idx: 0, score: 0, total: G4_TASKS.length, done: false,
+    btns: []
+  };
+  game4NewTask();
+  c.onclick = (e) => game4Click(e);
+}
+function game4NewTask(){
+  const s = g4State;
+  const W = s.W, H = s.H;
+  // 視窗位置
+  const wX = 80, wY = 60, wW = W - 160, wH = H - 140;
+  const titleH = 30;
+  const btnW = 40, btnH = 22, gap = 4;
+  s.window = {x:wX, y:wY, w:wW, h:wH};
+  s.btns = [
+    {x: wX + wW - btnW*3 - gap*3, y: wY + 4, w: btnW, h: btnH, label:'_', key:'min'},
+    {x: wX + wW - btnW*2 - gap*2, y: wY + 4, w: btnW, h: btnH, label:'□', key:'max'},
+    {x: wX + wW - btnW   - gap  , y: wY + 4, w: btnW, h: btnH, label:'✕', key:'close'}
+  ];
+  game4Draw();
+}
+function game4Draw(){
+  const s = g4State; if(!s) return;
+  const ctx = s.ctx;
+  ctx.fillStyle = '#2a8b8b'; ctx.fillRect(0,0,s.W,s.H);
+  // 桌面背景圖示
+  ctx.fillStyle = 'rgba(255,255,255,.3)'; ctx.font = '40px sans-serif';
+  for(let i=0;i<3;i++){ ctx.fillText('🖥️', 25 + i*45, 40); }
+  // 視窗
+  const w = s.window;
+  ctx.fillStyle = '#c0c0c0'; ctx.fillRect(w.x, w.y, w.w, w.h);
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(w.x, w.y+w.h); ctx.lineTo(w.x, w.y); ctx.lineTo(w.x+w.w, w.y); ctx.stroke();
+  ctx.strokeStyle = '#404040';
+  ctx.beginPath(); ctx.moveTo(w.x+w.w, w.y); ctx.lineTo(w.x+w.w, w.y+w.h); ctx.lineTo(w.x, w.y+w.h); ctx.stroke();
+  // 標題列
+  const gr = ctx.createLinearGradient(w.x, w.y, w.x+w.w, w.y);
+  gr.addColorStop(0, '#000080'); gr.addColorStop(1, '#1084d0');
+  ctx.fillStyle = gr; ctx.fillRect(w.x+2, w.y+2, w.w-4, 28);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 14px "Microsoft JhengHei"';
+  ctx.fillText('📁 我的文件 — 檔案總管', w.x + 12, w.y + 21);
+  // 三按鈕
+  for(const b of s.btns){
+    ctx.fillStyle = '#c0c0c0';
+    ctx.fillRect(b.x, b.y, b.w, b.h);
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(b.x, b.y+b.h); ctx.lineTo(b.x, b.y); ctx.lineTo(b.x+b.w, b.y); ctx.stroke();
+    ctx.strokeStyle = '#404040';
+    ctx.beginPath(); ctx.moveTo(b.x+b.w, b.y); ctx.lineTo(b.x+b.w, b.y+b.h); ctx.lineTo(b.x, b.y+b.h); ctx.stroke();
+    ctx.fillStyle = '#000'; ctx.font = 'bold 16px "Microsoft JhengHei"';
+    ctx.textAlign = 'center';
+    ctx.fillText(b.label, b.x + b.w/2, b.y + b.h/2 + 5);
+  }
+  ctx.textAlign = 'left';
+  // 內容
+  ctx.fillStyle = '#fff'; ctx.fillRect(w.x+4, w.y+32, w.w-8, w.h-36);
+  ctx.fillStyle = '#000'; ctx.font = '14px "Microsoft JhengHei"';
+  ctx.fillText('📁 我的文件', w.x + 20, w.y + 56);
+  ctx.fillText('📁 圖片', w.x + 20, w.y + 76);
+  ctx.fillText('📄 我的作品.docx', w.x + 20, w.y + 96);
+  ctx.fillText('🖼️ 三年級畢業照.jpg', w.x + 20, w.y + 116);
+  // 任務指示
+  ctx.fillStyle = 'rgba(0,0,0,.85)';
+  ctx.fillRect(w.x, w.y + w.h - 50, w.w, 50);
+  ctx.fillStyle = '#ffd700'; ctx.font = 'bold 17px "Microsoft JhengHei"';
+  if(s.done){
+    ctx.fillText(`🎉 全部完成！得分：${s.score} / ${s.total}`, w.x + 16, w.y + w.h - 28);
+  } else {
+    const t = G4_TASKS[s.idx];
+    ctx.fillText(`🎯 第 ${s.idx+1}/${s.total} 題：請按「${t.label}」按鈕（${t.tip}）`,
+      w.x + 16, w.y + w.h - 28);
+  }
+  document.getElementById('game4-status').textContent =
+    s.done ? `🏆 完成！得分 ${s.score}/${s.total}` : `任務 ${s.idx+1}/${s.total} ｜ 得分：${s.score}`;
+}
+function game4Click(e){
+  const s = g4State;
+  if(s.done) return;
+  const rect = s.c.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (s.W / rect.width);
+  const y = (e.clientY - rect.top) * (s.H / rect.height);
+  const b = s.btns.find(bb => x >= bb.x && x <= bb.x + bb.w && y >= bb.y && y <= bb.y + bb.h);
+  if(!b) return;
+  const t = G4_TASKS[s.idx];
+  if(b.key === t.key){
+    s.score++;
+    s.idx++;
+    if(s.idx >= s.total){ s.done = true; }
+  } else {
+    // 錯誤：閃紅
+    const orig = s.ctx.fillStyle;
+    s.ctx.fillStyle = 'rgba(255,0,0,.3)';
+    s.ctx.fillRect(b.x, b.y, b.w, b.h);
+    setTimeout(() => game4Draw(), 200);
+  }
+  game4Draw();
+}
+function game4Restart(){ game4Init(); }
+
+// ═══════════════════════════════════════════════════════════════
+// Initialize Everything
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  tickClock(); setInterval(tickClock, 30000);
+  initSlidePlayer();
+  initVideo();
+  initDraw();
+  refillLotPool();
+  game1Init();
+  game2Init();
+  game3Init();
+  game4Init();
+});
+</script>
+</body>
+</html>
