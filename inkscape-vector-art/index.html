@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inkscape 向量繪圖魔法｜五年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/inkscape-vector-art/">
+<meta property="og:title" content="Inkscape 向量繪圖魔法｜五年級資訊科技">
+<meta property="og:description" content="免費開源的向量繪圖軟體 Inkscape，6 大核心技能：基本形狀、填色漸層、節點、布林運算、文字圖層、匯出 SVG。Risograph 印刷風格教學駕駛艙。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/inkscape-vector-art/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/inkscape-vector-art/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&family=Bungee&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Risograph 雙色印刷風格 */
+  --paper:#f6efe3;       /* 米黃紙底 */
+  --paper-2:#fff8ec;     /* 卡片紙白 */
+  --paper-3:#ecdfc4;     /* 深紙黃 */
+  --ink-1:#2a5fb4;       /* 鈷藍主色 */
+  --ink-2:#ec5a4a;       /* 朱橘油墨 */
+  --ink-3:#f4b942;       /* 芥末黃 */
+  --ink-4:#5a8d3a;       /* 橄欖綠 */
+  --ink-5:#9a4ec9;       /* 紫菫 */
+  --text:#2d2418;        /* 印刷墨黑 */
+  --dim:#7a6a4f;         /* 暖灰 */
+  --soft:#bfa982;
+  --c1:var(--ink-1);
+  --c2:var(--ink-2);
+  --c3:var(--ink-3);
+  --c4:var(--ink-4);
+  --c5:var(--ink-5);
+  --shadow-riso: 4px 4px 0 var(--ink-2);
+  --shadow-riso-blue: 4px 4px 0 var(--ink-1);
+  --shadow-riso-small: 2px 2px 0 var(--ink-2);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans TC','Noto Serif TC',sans-serif;
+  background:var(--paper);
+  color:var(--text);
+  line-height:1.75;
+  position:relative;
+  min-height:100vh;
+}
+
+/* === Risograph 顆粒紋理 overlay === */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.14 0 0 0 0 0.09 0 0 0 0.45 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+  opacity:0.55;
+  pointer-events:none;
+  mix-blend-mode:multiply;
+  z-index:9998;
+}
+
+/* === Header（含回主頁按鈕）=== */
+.site-header{
+  position:sticky;top:0;z-index:200;
+  background:var(--paper-2);
+  border-bottom:3px solid var(--ink-1);
+  box-shadow:0 4px 0 var(--ink-2);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;
+  padding:14px 28px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;
+  border:2px solid var(--ink-1);
+  background:var(--paper);
+  color:var(--ink-1);
+  text-decoration:none;
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:0.85rem;letter-spacing:1px;
+  transition:all .15s;
+  white-space:nowrap;
+  box-shadow:3px 3px 0 var(--ink-2);
+}
+.home-btn:hover{
+  background:var(--ink-1);color:var(--paper);
+  transform:translate(-1px,-1px);
+  box-shadow:4px 4px 0 var(--ink-2);
+}
+.brand{display:flex;flex-direction:column;gap:2px;flex:1;min-width:240px}
+.brand-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand-title{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.5rem;font-weight:900;
+  color:var(--ink-1);
+  letter-spacing:0.04em;
+}
+.brand-title .accent{color:var(--ink-2)}
+.brand-sub{font-size:0.95rem;color:var(--dim);font-weight:500}
+.grade-chip{
+  display:inline-flex;align-items:center;
+  background:var(--ink-2);color:var(--paper);
+  padding:5px 12px;
+  font-family:'Space Mono',monospace;
+  font-weight:700;font-size:0.78rem;
+  box-shadow:2px 2px 0 var(--ink-1);
+}
+.curriculum-chip{
+  background:var(--paper);color:var(--ink-1);
+  border:2px solid var(--ink-1);
+  padding:4px 10px;
+  font-family:'Space Mono',monospace;
+  font-size:0.78rem;font-weight:700;
+}
+
+/* === 容器 === */
+.container{max-width:1400px;margin:0 auto;padding:30px 28px}
+
+/* === Mode 切換列（學生 / 教師）=== */
+.mode-bar{
+  display:flex;justify-content:flex-end;
+  gap:8px;margin-bottom:24px;
+}
+.mode-btn{
+  background:var(--paper-2);color:var(--text);
+  border:2px solid var(--ink-1);
+  padding:7px 16px;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;font-size:0.9rem;
+  cursor:pointer;transition:.15s;
+  box-shadow:2px 2px 0 var(--ink-2);
+}
+.mode-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink-2)}
+.mode-btn.active{
+  background:var(--ink-1);color:var(--paper);
+}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* === 學習目標 chips === */
+.objectives-band{
+  background:var(--paper-2);
+  border:2px solid var(--ink-1);
+  padding:24px 26px;
+  margin-bottom:32px;
+  position:relative;
+  box-shadow:var(--shadow-riso);
+}
+.objectives-band::before{
+  content:'OBJECTIVES';
+  position:absolute;top:-12px;left:24px;
+  background:var(--ink-1);color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;font-size:0.72rem;letter-spacing:0.15em;
+  padding:3px 12px;
+}
+.objectives-title{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.4rem;font-weight:900;
+  color:var(--ink-1);
+  margin-bottom:14px;
+}
+.obj-chips{display:flex;flex-wrap:wrap;gap:10px}
+.obj-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:8px 14px;
+  font-size:0.95rem;font-weight:500;
+  position:relative;
+  box-shadow:var(--shadow-riso-small);
+}
+.obj-chip:nth-child(2n){border-color:var(--ink-2);box-shadow:2px 2px 0 var(--ink-1)}
+.obj-chip:nth-child(3n){border-color:var(--ink-3);box-shadow:2px 2px 0 var(--ink-2)}
+.obj-chip:nth-child(4n){border-color:var(--ink-4);box-shadow:2px 2px 0 var(--ink-2)}
+.obj-icon{
+  width:22px;height:22px;display:inline-block;
+  vertical-align:middle;
+}
+
+/* === 關卡導覽 pills === */
+.stage-nav{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-bottom:32px;
+  padding:14px 0;
+  border-top:2px dashed var(--ink-1);
+  border-bottom:2px dashed var(--ink-1);
+}
+.stage-pill{
+  background:var(--paper-2);
+  border:2px solid var(--ink-1);
+  color:var(--text);
+  padding:9px 18px;
+  font-size:0.95rem;font-weight:700;
+  text-decoration:none;
+  cursor:pointer;
+  transition:.15s;
+  box-shadow:2px 2px 0 var(--ink-2);
+}
+.stage-pill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink-2)}
+.stage-pill.active{background:var(--ink-1);color:var(--paper)}
+.stage-pill .num{
+  font-family:'Space Mono',monospace;
+  color:var(--ink-2);
+  margin-right:6px;font-weight:700;
+}
+.stage-pill.active .num{color:var(--ink-3)}
+
+/* === Stage Section === */
+.level-section{
+  background:var(--paper-2);
+  border:3px solid var(--ink-1);
+  margin-bottom:40px;
+  padding:32px 30px;
+  position:relative;
+  box-shadow:6px 6px 0 var(--ink-2);
+}
+.section-header{
+  display:flex;align-items:center;gap:18px;
+  margin-bottom:24px;
+  padding-bottom:18px;
+  border-bottom:2px solid var(--ink-1);
+  flex-wrap:wrap;
+}
+.stage-badge{
+  background:var(--ink-2);color:var(--paper);
+  font-family:'Bungee','Space Mono',monospace;
+  font-size:0.7rem;letter-spacing:0.15em;
+  padding:8px 14px;
+  box-shadow:3px 3px 0 var(--ink-1);
+  white-space:nowrap;
+}
+.section-title{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.6rem;font-weight:900;
+  color:var(--ink-1);
+  flex:1;min-width:240px;
+}
+.section-sub{
+  font-size:1rem;color:var(--dim);
+  margin-top:4px;font-weight:500;
+}
+
+/* === Steps Card === */
+.steps-card{
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:22px 24px;
+  margin-bottom:22px;
+  position:relative;
+}
+.steps-card::before{
+  content:'';position:absolute;
+  top:6px;left:6px;right:-6px;bottom:-6px;
+  border:2px solid var(--ink-2);
+  z-index:-1;
+}
+.steps-card h4{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.1rem;font-weight:900;
+  color:var(--ink-2);
+  margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{
+  counter-increment:step;
+  display:flex;gap:14px;align-items:flex-start;
+  margin-bottom:14px;font-size:1rem;line-height:1.7;
+}
+.steps-list li::before{
+  content:counter(step);
+  flex-shrink:0;
+  width:32px;height:32px;
+  background:var(--ink-1);color:var(--paper);
+  font-family:'Space Mono',monospace;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.95rem;
+}
+.steps-list code,.inline-code{
+  background:var(--ink-3);
+  color:var(--text);
+  padding:2px 7px;
+  font-family:'Space Mono',monospace;
+  font-size:0.9rem;font-weight:700;
+  border:1px solid var(--text);
+}
+.tip-box{
+  background:var(--paper-3);
+  border-left:5px solid var(--ink-4);
+  padding:14px 18px;
+  margin-top:14px;
+  font-size:0.95rem;
+  position:relative;
+}
+.tip-box strong{color:var(--ink-4);font-weight:900}
+
+/* === Infographic 區域 === */
+.info-graphic{
+  margin:22px 0;
+  border:2px solid var(--ink-1);
+  position:relative;
+  background:var(--paper);
+  box-shadow:var(--shadow-riso-small);
+}
+.info-graphic img{display:block;width:100%;height:auto}
+.info-graphic .label{
+  position:absolute;top:8px;left:8px;
+  background:var(--ink-2);color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-size:0.72rem;font-weight:700;
+  padding:3px 10px;letter-spacing:0.1em;
+}
+
+/* === Canvas 互動區 === */
+.canvas-section{
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:20px 22px;
+  margin-bottom:20px;
+  position:relative;
+}
+.canvas-section h4{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.1rem;font-weight:900;
+  color:var(--ink-1);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.canvas-section .canvas-hint{
+  font-size:0.9rem;color:var(--dim);
+  margin-bottom:12px;
+}
+.interact-canvas{
+  display:block;
+  width:100%;
+  max-width:700px;
+  height:340px;
+  margin:0 auto;
+  background:var(--paper-2);
+  border:2px dashed var(--ink-1);
+  cursor:crosshair;
+}
+.canvas-controls{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:14px;justify-content:center;
+}
+.ctrl-btn{
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  color:var(--ink-1);
+  padding:8px 16px;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;font-size:0.95rem;
+  cursor:pointer;transition:.15s;
+  box-shadow:2px 2px 0 var(--ink-2);
+}
+.ctrl-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink-2)}
+.ctrl-btn.active,.ctrl-btn.primary{
+  background:var(--ink-1);color:var(--paper);
+}
+.ctrl-btn.warn{border-color:var(--ink-2);color:var(--ink-2);box-shadow:2px 2px 0 var(--ink-1)}
+.canvas-output{
+  margin-top:14px;
+  background:var(--paper-3);
+  border:2px solid var(--ink-1);
+  padding:10px 16px;
+  font-family:'Space Mono',monospace;
+  font-size:0.95rem;
+  color:var(--ink-1);
+  min-height:42px;
+  text-align:center;
+}
+
+/* === Quiz === */
+.quiz-section{
+  background:var(--paper-3);
+  border:2px solid var(--ink-2);
+  padding:22px 24px;
+  margin-bottom:18px;
+  position:relative;
+}
+.quiz-section::before{
+  content:'QUIZ';
+  position:absolute;top:-12px;left:24px;
+  background:var(--ink-2);color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;font-size:0.72rem;letter-spacing:0.15em;
+  padding:3px 12px;
+}
+.quiz-q{
+  font-size:1.05rem;font-weight:700;
+  margin-bottom:14px;color:var(--text);
+}
+.quiz-q .qnum{
+  display:inline-block;
+  background:var(--ink-1);color:var(--paper);
+  padding:2px 10px;
+  font-family:'Space Mono',monospace;
+  font-size:0.85rem;margin-right:8px;
+}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.quiz-opt{
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:10px 14px;
+  font-size:1rem;
+  text-align:left;cursor:pointer;
+  transition:.15s;
+  font-family:inherit;
+  color:var(--text);
+}
+.quiz-opt:hover{background:var(--paper-3)}
+.quiz-opt.correct{
+  background:var(--ink-4);color:var(--paper);
+  border-color:var(--ink-4);
+}
+.quiz-opt.wrong{
+  background:var(--ink-2);color:var(--paper);
+  border-color:var(--ink-2);
+}
+.quiz-opt:disabled{cursor:not-allowed;opacity:0.85}
+.quiz-feedback{
+  margin-top:10px;
+  padding:12px 14px;
+  font-size:0.95rem;
+  background:var(--paper-2);
+  border:1px dashed var(--ink-1);
+  display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.right{border-color:var(--ink-4);color:var(--ink-4)}
+.quiz-feedback.wrong{border-color:var(--ink-2);color:var(--ink-2)}
+
+/* === Teacher Note === */
+.teacher-note{
+  background:linear-gradient(0deg,var(--paper) 0%,var(--paper) 100%),
+    repeating-linear-gradient(45deg,transparent 0 8px,rgba(42,95,180,0.05) 8px 16px);
+  border:2px dashed var(--ink-5);
+  padding:18px 22px;
+  margin-top:18px;
+  position:relative;
+}
+.teacher-note::before{
+  content:'TEACHER';
+  position:absolute;top:-12px;left:24px;
+  background:var(--ink-5);color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;font-size:0.72rem;letter-spacing:0.15em;
+  padding:3px 12px;
+}
+.teacher-note h5{
+  font-family:'Noto Serif TC',serif;
+  font-size:1rem;font-weight:900;
+  color:var(--ink-5);
+  margin-bottom:8px;
+}
+.teacher-note p{font-size:0.95rem;line-height:1.7}
+
+/* === Project Tasks === */
+.project-task{
+  background:var(--paper-2);
+  border:3px solid var(--ink-2);
+  padding:32px 30px;
+  margin-bottom:40px;
+  box-shadow:6px 6px 0 var(--ink-1);
+}
+.project-task h2{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.6rem;font-weight:900;
+  color:var(--ink-2);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:12px;
+}
+.project-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+}
+.project-card{
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:20px 22px;
+  position:relative;
+  transition:.2s;
+}
+.project-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink-2)}
+.project-card::before{
+  content:'';position:absolute;
+  top:6px;left:6px;right:-6px;bottom:-6px;
+  border:2px solid var(--ink-3);
+  z-index:-1;
+}
+.project-card h4{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.05rem;font-weight:900;
+  color:var(--ink-1);
+  margin-bottom:8px;
+}
+.project-card .tools{
+  font-family:'Space Mono',monospace;
+  font-size:0.78rem;color:var(--ink-2);
+  margin-bottom:10px;
+  letter-spacing:0.05em;
+}
+.project-card p{font-size:0.95rem;line-height:1.7}
+
+/* === NotebookLM 區域 === */
+.nb-section{
+  background:var(--paper-3);
+  border:3px solid var(--ink-1);
+  padding:32px 30px;
+  margin-bottom:40px;
+  position:relative;
+  box-shadow:6px 6px 0 var(--ink-2);
+}
+.nb-section h2{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.6rem;font-weight:900;
+  color:var(--ink-1);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:12px;
+}
+.nb-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+  margin-bottom:24px;
+}
+.nb-card{
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:18px 20px;
+  text-decoration:none;
+  color:var(--text);
+  display:flex;flex-direction:column;gap:6px;
+  transition:.15s;
+  box-shadow:3px 3px 0 var(--ink-2);
+}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink-2)}
+.nb-card h4{
+  font-family:'Noto Serif TC',serif;
+  font-size:1rem;font-weight:900;color:var(--ink-1);
+}
+.nb-card .nb-icon{
+  font-family:'Space Mono',monospace;
+  font-size:0.75rem;color:var(--ink-2);
+  font-weight:700;letter-spacing:0.1em;
+}
+.nb-card p{font-size:0.9rem;color:var(--dim);line-height:1.6}
+
+.faq-list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.faq-item{
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:14px 18px;
+}
+.faq-q{
+  font-size:1rem;font-weight:900;
+  color:var(--ink-2);
+  cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'Noto Sans TC',sans-serif;
+}
+.faq-q::after{
+  content:'+';
+  font-family:'Space Mono',monospace;
+  font-size:1.3rem;color:var(--ink-1);font-weight:700;
+}
+.faq-item.open .faq-q::after{content:'−'}
+.faq-a{
+  font-size:0.95rem;line-height:1.75;
+  margin-top:10px;display:none;
+  padding-top:10px;border-top:1px dashed var(--ink-1);
+}
+.faq-item.open .faq-a{display:block}
+
+/* === 簡報播放器 === */
+.slide-section{
+  background:var(--paper-2);
+  border:3px solid var(--ink-1);
+  padding:28px 30px;
+  margin-bottom:40px;
+  box-shadow:6px 6px 0 var(--ink-2);
+}
+.slide-section h2{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.6rem;font-weight:900;
+  color:var(--ink-1);
+  margin-bottom:18px;
+}
+.slide-player .slide-main{
+  position:relative;
+  background:var(--paper);
+  border:2px solid var(--ink-1);
+  aspect-ratio:16/9;
+  overflow:hidden;
+}
+.slide-player .slide-main img{
+  display:block;width:100%;height:100%;
+  object-fit:contain;
+  background:var(--paper);
+}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:46px;height:60px;
+  background:rgba(42,95,180,0.85);color:var(--paper);
+  border:none;
+  font-size:1.6rem;font-weight:900;
+  cursor:pointer;
+  z-index:3;
+  display:flex;align-items:center;justify-content:center;
+  transition:.15s;
+  font-family:'Space Mono',monospace;
+}
+.slide-nav-btn:hover{background:var(--ink-1)}
+.slide-nav-btn.prev{left:10px}
+.slide-nav-btn.next{right:10px}
+.slide-fs-btn{
+  position:absolute;top:10px;right:10px;
+  background:var(--ink-2);color:var(--paper);
+  border:none;
+  padding:7px 13px;
+  font-family:'Space Mono',monospace;
+  font-weight:700;font-size:0.85rem;
+  cursor:pointer;
+  z-index:3;
+  display:flex;align-items:center;gap:5px;
+  box-shadow:2px 2px 0 var(--ink-1);
+}
+.slide-fs-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink-1)}
+.slide-counter{
+  position:absolute;bottom:10px;left:10px;
+  background:var(--paper);color:var(--ink-1);
+  font-family:'Space Mono',monospace;
+  font-weight:700;font-size:0.85rem;
+  padding:4px 10px;
+  border:1px solid var(--ink-1);
+  z-index:3;
+}
+.slide-strip{
+  display:flex;gap:8px;
+  margin-top:14px;
+  overflow-x:auto;
+  padding:8px 0;
+  scrollbar-width:thin;
+}
+.strip-thumb{
+  flex-shrink:0;
+  width:100px;height:60px;
+  border:2px solid var(--ink-1);
+  cursor:pointer;
+  background:var(--paper);
+  overflow:hidden;
+  transition:.15s;
+  opacity:0.5;
+}
+.strip-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.strip-thumb.active{
+  opacity:1;
+  border-color:var(--ink-2);
+  transform:translateY(-3px);
+  box-shadow:2px 2px 0 var(--ink-1);
+}
+.strip-thumb:hover{opacity:0.85}
+
+/* === 全螢幕 overlay === */
+#slide-fs{
+  position:fixed;inset:0;
+  background:rgba(20,16,10,0.96);
+  z-index:9999;
+  display:none;
+  align-items:center;justify-content:center;
+}
+#slide-fs.show{display:flex}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none !important}
+#slide-fs .fs-close{
+  position:absolute;top:18px;right:18px;
+  background:var(--ink-2);color:var(--paper);
+  border:none;
+  width:44px;height:44px;
+  font-size:1.2rem;font-weight:900;
+  cursor:pointer;
+  z-index:3;
+}
+#slide-fs .fs-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:80px;
+  background:rgba(236,90,74,0.65);
+  border:2px solid var(--ink-2);
+  color:var(--paper);
+  font-size:2rem;font-weight:900;
+  cursor:pointer;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+}
+#slide-fs .fs-nav.prev{left:20px}
+#slide-fs .fs-nav.next{right:20px}
+#slide-fs .fs-nav:hover{background:var(--ink-2)}
+#slide-fs .fs-nav:active{transform:translateY(-50%) scale(.95)}
+#slide-fs-img{
+  max-width:90vw;max-height:90vh;
+  border:3px solid var(--paper);
+  background:var(--paper);
+}
+#slide-fs-counter{
+  position:absolute;bottom:24px;left:24px;
+  background:var(--paper);color:var(--ink-1);
+  font-family:'Space Mono',monospace;
+  font-size:1rem;font-weight:700;
+  padding:6px 14px;
+  border:2px solid var(--ink-1);
+}
+@media (max-width:720px){
+  #slide-fs .fs-nav{width:46px;height:64px;font-size:1.6rem}
+  #slide-fs .fs-nav.prev{left:8px}
+  #slide-fs .fs-nav.next{right:8px}
+  #slide-fs .fs-close{width:40px;height:40px;top:12px;right:12px}
+}
+
+/* === 影片區 === */
+.nlm-video-section{margin-bottom:48px}
+.nlm-video-section h2{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.6rem;font-weight:900;
+  color:var(--ink-1);margin-bottom:18px;
+}
+.video-wrap{
+  background:var(--paper-2);
+  border:3px solid var(--ink-2);
+  box-shadow:6px 6px 0 var(--ink-1);
+  overflow:hidden;
+}
+.video-ratio{position:relative;padding-top:56.25%;width:100%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{
+  background:var(--paper-3);
+  border-top:2px solid var(--ink-2);
+  padding:12px 18px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-size:0.92rem;
+}
+.video-meta .nlm-badge{
+  background:var(--ink-2);color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;font-size:0.78rem;letter-spacing:0.08em;
+  padding:5px 12px;
+}
+.video-no-id{
+  padding:48px 24px;text-align:center;
+  font-size:1rem;color:var(--dim);
+  border:2px dashed var(--ink-1);
+  background:var(--paper);
+}
+
+/* === Footer === */
+.site-footer{
+  background:var(--paper-2);
+  border-top:3px solid var(--ink-1);
+  padding:36px 28px;
+  margin-top:60px;
+  position:relative;
+}
+.site-footer::before{
+  content:'';position:absolute;top:6px;left:0;right:0;height:4px;
+  background:repeating-linear-gradient(90deg,var(--ink-2) 0 24px,var(--ink-3) 24px 48px);
+}
+.footer-inner{
+  max-width:1400px;margin:0 auto;
+  text-align:center;
+}
+.footer-inner .author{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.1rem;font-weight:900;
+  color:var(--ink-1);
+  margin-bottom:8px;
+}
+.footer-inner .author a{color:var(--ink-2);text-decoration:none;border-bottom:2px solid var(--ink-2)}
+.footer-inner .author a:hover{color:var(--ink-1);border-color:var(--ink-1)}
+.footer-inner .copy{
+  font-family:'Space Mono',monospace;
+  font-size:0.78rem;color:var(--dim);
+  margin-top:6px;letter-spacing:0.05em;
+}
+
+/* === 浮動工具 === */
+.float-tools{
+  position:fixed;
+  right:24px;bottom:24px;
+  z-index:400;
+  display:flex;flex-direction:column;gap:10px;
+}
+.float-btn{
+  width:54px;height:54px;
+  background:var(--paper-2);
+  border:2px solid var(--ink-1);
+  color:var(--ink-1);
+  font-size:1.3rem;
+  cursor:pointer;
+  transition:.15s;
+  box-shadow:3px 3px 0 var(--ink-2);
+  display:flex;align-items:center;justify-content:center;
+}
+.float-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink-2)}
+.float-btn.gotop{font-weight:900;font-family:'Space Mono',monospace;color:var(--ink-2)}
+.float-btn.pink{border-color:var(--ink-2);color:var(--ink-2);box-shadow:3px 3px 0 var(--ink-1)}
+.float-btn.green{border-color:var(--ink-4);color:var(--ink-4);box-shadow:3px 3px 0 var(--ink-1)}
+
+.tool-panel{
+  position:fixed;
+  right:90px;bottom:24px;
+  z-index:401;
+  background:var(--paper-2);
+  border:3px solid var(--ink-1);
+  padding:18px 20px;
+  width:300px;
+  display:none;
+  box-shadow:6px 6px 0 var(--ink-2);
+}
+.tool-panel.show{display:block}
+.tool-panel h4{
+  font-family:'Noto Serif TC',serif;
+  font-size:1.05rem;font-weight:900;
+  color:var(--ink-1);
+  margin-bottom:12px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.tool-panel .close{
+  cursor:pointer;
+  color:var(--ink-2);font-weight:700;
+}
+.btn-primary{
+  background:var(--ink-1);color:var(--paper);
+  border:2px solid var(--ink-1);
+  padding:8px 14px;
+  font-family:inherit;font-weight:700;font-size:0.95rem;
+  cursor:pointer;
+  box-shadow:2px 2px 0 var(--ink-2);
+}
+.btn-primary:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink-2)}
+.lottery-result{
+  margin-top:14px;
+  font-family:'Space Mono',monospace;
+  font-size:1.8rem;font-weight:900;
+  color:var(--ink-2);
+  text-align:center;
+  padding:14px;
+  background:var(--paper);
+  border:2px dashed var(--ink-1);
+  min-height:70px;
+  display:flex;align-items:center;justify-content:center;
+}
+.timer-display{
+  font-family:'Space Mono',monospace;
+  font-size:2.4rem;font-weight:900;
+  color:var(--ink-1);
+  text-align:center;
+  padding:14px 0;
+}
+
+/* === 畫筆工具 === */
+#drawCanvas{
+  position:fixed;inset:0;
+  width:100%;height:100%;
+  z-index:250;
+  pointer-events:none;
+  background:transparent;
+}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;
+  z-index:300;
+  background:var(--paper-2);
+  border:2px solid var(--ink-1);
+  padding:10px 14px;
+  display:none;gap:8px;align-items:center;
+  box-shadow:4px 4px 0 var(--ink-2);
+}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{
+  width:26px;height:26px;
+  border:2px solid var(--text);
+  cursor:pointer;padding:0;
+  transition:.15s;
+}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor}
+.draw-toolbar .draw-clear{
+  background:var(--paper);
+  border:2px solid var(--ink-2);
+  color:var(--ink-2);
+  padding:4px 12px;
+  font-family:inherit;font-weight:700;cursor:pointer;font-size:0.85rem;
+}
+.draw-toolbar .draw-clear:hover{background:var(--ink-2);color:var(--paper)}
+
+/* === 響應式 === */
+@media (max-width:720px){
+  .container{padding:20px 16px}
+  .brand-title{font-size:1.2rem}
+  .section-title{font-size:1.3rem}
+  .level-section{padding:22px 18px}
+  .project-task,.nb-section{padding:22px 18px}
+  .tool-panel{width:90vw;right:5vw}
+  .interact-canvas{height:280px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ Header ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="brand">
+      <div class="brand-row">
+        <span class="grade-chip">五年級</span>
+        <span class="curriculum-chip">A-E-A2</span>
+        <span class="curriculum-chip">RISO STUDIO</span>
+      </div>
+      <h1 class="brand-title">Inkscape <span class="accent">向量繪圖魔法</span></h1>
+      <div class="brand-sub">免費開源 · 無限放大不失真的設計魔法 · 六大關卡 × 四個專案</div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ============ Mode 切換 ============ -->
+<div class="mode-bar">
+  <button class="mode-btn active" id="modeStudent" onclick="setMode('student')">👨‍🎓 學生模式</button>
+  <button class="mode-btn" id="modeTeacher" onclick="askTeacherPwd()">👩‍🏫 教師模式</button>
+</div>
+
+<!-- ============ 學習目標 ============ -->
+<section class="objectives-band">
+  <h2 class="objectives-title">這堂課你會學到什麼？</h2>
+  <div class="obj-chips">
+    <span class="obj-chip">🎨 認識向量圖 vs 點陣圖</span>
+    <span class="obj-chip">🔷 用基本形狀拼出複雜圖案</span>
+    <span class="obj-chip">🌈 填色、描邊與漸層美感</span>
+    <span class="obj-chip">✏️ 路徑與節點像捏黏土</span>
+    <span class="obj-chip">🍪 布林運算（剪刀與膠水）</span>
+    <span class="obj-chip">📝 文字工具與圖層管理</span>
+    <span class="obj-chip">💾 匯出 SVG 與 PNG 檔案</span>
+    <span class="obj-chip">🏅 設計專屬大頭貼/班徽/海報</span>
+  </div>
+</section>
+
+<!-- ============ 關卡導覽 ============ -->
+<nav class="stage-nav" aria-label="關卡導覽">
+  <a href="#sec1" class="stage-pill"><span class="num">01</span>認識介面 × 基本形狀</a>
+  <a href="#sec2" class="stage-pill"><span class="num">02</span>填色 × 描邊 × 漸層</a>
+  <a href="#sec3" class="stage-pill"><span class="num">03</span>路徑 × 節點編輯</a>
+  <a href="#sec4" class="stage-pill"><span class="num">04</span>物件 × 布林運算</a>
+  <a href="#sec5" class="stage-pill"><span class="num">05</span>文字 × 圖層</a>
+  <a href="#sec6" class="stage-pill"><span class="num">06</span>匯出 SVG/PNG</a>
+  <a href="#projects" class="stage-pill"><span class="num">★</span>四大創作專案</a>
+  <a href="#nb" class="stage-pill"><span class="num">⌘</span>NotebookLM 資源</a>
+</nav>
+
+<!-- ============ STAGE 1：認識介面 × 基本形狀 ============ -->
+<section id="sec1" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 01</span>
+    <div>
+      <h2 class="section-title">認識 Inkscape 介面 × 基本形狀工具</h2>
+      <div class="section-sub">用「超級積木」拼出機器人頭像 — 一切都從圓形和方形開始</div>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h4>📐 完整操作步驟</h4>
+    <ol class="steps-list">
+      <li>點選左側工具列的 <span class="inline-code">矩形與正方形</span> 或 <span class="inline-code">圓形/橢圓形/弧形</span> 圖示。</li>
+      <li>在畫布上拖拉，<strong>同時按住 <span class="inline-code">Ctrl</span> 鍵</strong>，就能畫出完美的正方形與正圓形。</li>
+      <li>選擇黑箭頭「選取和變形物件」，點一下圖案可以縮放，再點一次可以旋轉。</li>
+      <li>使用「星形與多邊形工具」，上方工具列可切換規則多邊形 / 星形，調整頂角數量。</li>
+      <li>必學快捷鍵：<span class="inline-code">Ctrl+滾輪</span> 縮放畫面、<span class="inline-code">Ctrl+S</span> 存檔、<span class="inline-code">Ctrl+Z</span> 復原。</li>
+    </ol>
+    <div class="tip-box">
+      <strong>💡 五年級小提醒：</strong>新建檔案後第一個動作就是 Ctrl+S 存成 SVG 格式！這是 Inkscape 的「魔法原始檔」，下次才能繼續修改。
+    </div>
+  </div>
+
+  <div class="info-graphic">
+    <span class="label">RISO · INFOGRAPHIC 01</span>
+    <img src="assets/01_basic_shapes.jpg" alt="認識 Inkscape 介面與基本形狀工具" loading="lazy">
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎮 互動練習：機器人頭像拼裝</h4>
+    <p class="canvas-hint">點擊下方按鈕往畫布加入圓形、方形或星形，自由組合一個機器人頭像！</p>
+    <canvas id="cv1" class="interact-canvas"></canvas>
+    <div class="canvas-controls">
+      <button class="ctrl-btn primary" onclick="cv1Add('circle')">+ 圓形</button>
+      <button class="ctrl-btn primary" onclick="cv1Add('rect')">+ 方形</button>
+      <button class="ctrl-btn primary" onclick="cv1Add('star')">+ 星形</button>
+      <button class="ctrl-btn primary" onclick="cv1Add('triangle')">+ 三角形</button>
+      <button class="ctrl-btn warn" onclick="cv1Clear()">清空畫布</button>
+    </div>
+    <div class="canvas-output" id="cv1Out">點按鈕加入形狀（共 0 個）</div>
+  </div>
+
+  <div class="quiz-section" data-stage="1">
+    <p class="quiz-q"><span class="qnum">Q1</span>畫正方形或正圓形時，要按住哪一個鍵才能畫出完美比例？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Shift 是用來加選或改變描邊色！')">Shift</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！按住 Ctrl 就能畫出完美正方形或正圓形。')">Ctrl</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Alt 在 Inkscape 多用於另類選取。')">Alt</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'空白鍵是用來拖拉移動畫面的喔！')">空白鍵</button>
+    </div>
+    <div class="quiz-feedback"></div>
+
+    <p class="quiz-q" style="margin-top:18px"><span class="qnum">Q2</span>畫完之後想復原上一步，最快的快捷鍵是？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Ctrl+S 是存檔！')">Ctrl+S</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Ctrl+C 是複製。')">Ctrl+C</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！Ctrl+Z 就像時光倒流，每按一次退回一步。')">Ctrl+Z</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Ctrl+V 是貼上。')">Ctrl+V</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    <h5>👩‍🏫 給老師的引導建議</h5>
+    <p>本關建議分 2 節課完成。第一節先做「圖形拆解大腦風暴」— 給每組學生 3 張真實 Logo（如 Apple、Nike、星巴克），讓他們在白板畫出「這個 Logo 可以拆解成哪些基本形狀」。第二節再進入軟體操作。常見誤區：學生會用滑鼠拖拉的方式畫文字（其實要用「點擊」），這個提醒在第 5 關會再強化。</p>
+  </div>
+</section>
+
+<!-- ============ STAGE 2：填色 × 描邊 × 漸層 ============ -->
+<section id="sec2" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 02</span>
+    <div>
+      <h2 class="section-title">填色、描邊與漸層 — 魔法調色盤</h2>
+      <div class="section-sub">給圖形穿上五顏六色的衣服 + 酷炫的外框 + 水彩般的漸層</div>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h4>🎨 完整操作步驟</h4>
+    <ol class="steps-list">
+      <li>用黑箭頭選取圖形後，直接點擊畫面最下方的<strong>色票</strong>就能改變內部填色（Fill）。</li>
+      <li><strong>按住 <span class="inline-code">Shift</span></strong> 再點擊下方色票，就會改變描邊（Stroke）顏色。</li>
+      <li>打開「填充與邊框」面板：快捷鍵 <span class="inline-code">Ctrl+Shift+F</span>，可設定線條粗細、虛線樣式、透明度。</li>
+      <li>使用「漸層工具」：點選左側漸層工具圖示，在圖形上拖拉一條線，就會產生漸層！</li>
+      <li>清除填色點左下方的 <span class="inline-code">X</span>；清除描邊則是 Shift + 點 <span class="inline-code">X</span>。</li>
+    </ol>
+    <div class="tip-box">
+      <strong>⚠️ 踩雷區：</strong>圖形塗不上顏色或文字看不見？打開填充與邊框面板檢查最下方的<strong>透明度（Alpha）拉桿</strong>，如果被拉到 0 就會變透明！縮小物件後邊框變超粗？在上排工具列開啟「縮放物件時同時縮放邊框寬度」。
+    </div>
+  </div>
+
+  <div class="info-graphic">
+    <span class="label">RISO · INFOGRAPHIC 02</span>
+    <img src="assets/02_fill_stroke.jpg" alt="填色、描邊與漸層工具教學" loading="lazy">
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎨 互動練習：色票調色盤</h4>
+    <p class="canvas-hint">點擊任何顏色看圖形即時變色！再點漸層按鈕看魔法漸層效果。</p>
+    <canvas id="cv2" class="interact-canvas"></canvas>
+    <div class="canvas-controls">
+      <button class="ctrl-btn" style="background:#ec5a4a;color:#fff;border-color:#ec5a4a" onclick="cv2Color('#ec5a4a')">朱橘</button>
+      <button class="ctrl-btn" style="background:#2a5fb4;color:#fff;border-color:#2a5fb4" onclick="cv2Color('#2a5fb4')">鈷藍</button>
+      <button class="ctrl-btn" style="background:#f4b942;color:#fff;border-color:#f4b942" onclick="cv2Color('#f4b942')">芥末黃</button>
+      <button class="ctrl-btn" style="background:#5a8d3a;color:#fff;border-color:#5a8d3a" onclick="cv2Color('#5a8d3a')">橄欖綠</button>
+      <button class="ctrl-btn" style="background:#9a4ec9;color:#fff;border-color:#9a4ec9" onclick="cv2Color('#9a4ec9')">紫菫</button>
+      <button class="ctrl-btn primary" onclick="cv2Gradient()">🌈 漸層</button>
+      <button class="ctrl-btn warn" onclick="cv2Reset()">恢復</button>
+    </div>
+    <div class="canvas-output" id="cv2Out">目前色號：未選擇</div>
+  </div>
+
+  <div class="quiz-section" data-stage="2">
+    <p class="quiz-q"><span class="qnum">Q1</span>圖形外圍的輪廓線顏色叫做？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'填色（Fill）是圖形內部的顏色喔。')">填色（Fill）</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！描邊（Stroke）就是圖形外圍的輪廓線。')">描邊（Stroke）</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'漸層是顏色慢慢過渡的效果。')">漸層</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'透明度是調整顏色濃淡。')">透明度</button>
+    </div>
+    <div class="quiz-feedback"></div>
+
+    <p class="quiz-q" style="margin-top:18px"><span class="qnum">Q2</span>明明點了色票，圖形卻是透明看不見，最可能是什麼原因？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'軟體沒當機，不是這原因。')">軟體當機</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！Alpha（透明度）被拉到 0 就會看不見，要拉回 255 或 100%。')">透明度（Alpha）被拉到 0</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'圖層大小不影響顏色顯示。')">圖層太小</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'這跟漸層工具無關。')">漸層工具沒打開</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    <h5>👩‍🏫 給老師的引導建議</h5>
+    <p>建議讓學生先做「閃亮熱氣球」小作品 — 一個大圓 + 漸層填色 + 粗外框。漸層方向（垂直/水平/對角線）會影響立體感，讓學生實驗不同方向感受差異。如果教室機器跑太慢，可以先讓學生只用色票區的單色填色，下一節再進階到漸層。</p>
+  </div>
+</section>
+
+<!-- ============ STAGE 3：路徑 × 節點編輯 ============ -->
+<section id="sec3" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 03</span>
+    <div>
+      <h2 class="section-title">路徑與節點 — 像捏黏土一樣自由</h2>
+      <div class="section-sub">節點是「連連看小圓點」，路徑是連接它們的線條，可以自由變形！</div>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h4>✏️ 完整操作步驟</h4>
+    <ol class="steps-list">
+      <li>點選左側「繪製貝茲曲線及直線」（像鋼筆的工具）。畫直線：點一下放開、點下一個點放開。</li>
+      <li>畫曲線：點下去後<strong>不放開</strong>滑鼠並拖拉，控制桿會拉出曲線弧度。</li>
+      <li>結束繪製：按 <span class="inline-code">Enter</span> 鍵或滑鼠右鍵，線條就會切斷！</li>
+      <li>節點編輯：點選左側「用節點編輯路徑」工具（白箭頭），拖拉節點或控制桿改變形狀。</li>
+      <li>形狀轉路徑：選取後按 <span class="inline-code">Ctrl+Shift+C</span>，把形狀變成可編輯的節點路徑。</li>
+      <li>複製：<span class="inline-code">Ctrl+C</span> → <span class="inline-code">Ctrl+V</span> 貼游標位置；<span class="inline-code">Ctrl+D</span> 再製貼原位置（最常用！）。</li>
+    </ol>
+    <div class="tip-box">
+      <strong>🪄 為什麼貝茲曲線停不下來？</strong>因為電腦不知道你畫完了沒！記得用 Enter 或滑鼠右鍵告訴它「完成」。物件一直被磁鐵吸住亂跳？按 <span class="inline-code">Shift+5</span> 關閉「貼齊」功能。
+    </div>
+  </div>
+
+  <div class="info-graphic">
+    <span class="label">RISO · INFOGRAPHIC 03</span>
+    <img src="assets/03_path_node.jpg" alt="路徑與節點編輯教學" loading="lazy">
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎮 互動練習：節點拉拉樂</h4>
+    <p class="canvas-hint">拖曳節點（藍色小方塊）改變路徑形狀，看看你能拉出什麼有趣圖案！</p>
+    <canvas id="cv3" class="interact-canvas"></canvas>
+    <div class="canvas-controls">
+      <button class="ctrl-btn primary" onclick="cv3Reset()">重新開始</button>
+      <button class="ctrl-btn" onclick="cv3SetShape('triangle')">三角形路徑</button>
+      <button class="ctrl-btn" onclick="cv3SetShape('zigzag')">鋸齒路徑</button>
+      <button class="ctrl-btn" onclick="cv3SetShape('curve')">弧形路徑</button>
+    </div>
+    <div class="canvas-output" id="cv3Out">提示：用滑鼠或手指拖拉藍色節點</div>
+  </div>
+
+  <div class="quiz-section" data-stage="3">
+    <p class="quiz-q"><span class="qnum">Q1</span>畫貝茲曲線時，要怎樣結束繪製讓線條停下來？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'這樣只是縮放畫面。')">按 Ctrl+滾輪</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！按 Enter 或滑鼠右鍵就能結束貝茲曲線繪製。')">按 Enter 或滑鼠右鍵</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Esc 通常是取消整個動作。')">按 Esc</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'空白鍵是切換移動畫面。')">按空白鍵</button>
+    </div>
+    <div class="quiz-feedback"></div>
+
+    <p class="quiz-q" style="margin-top:18px"><span class="qnum">Q2</span>要把圖形複製貼上「在原來位置」，最方便的快捷鍵是？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Ctrl+V 會貼在滑鼠位置，不是原位。')">Ctrl+V</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！Ctrl+D（再製）會貼在原物件正上方，做影子或重複圖案最方便。')">Ctrl+D</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Ctrl+F 是搜尋。')">Ctrl+F</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'Ctrl+G 是群組，不是再製。')">Ctrl+G</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    <h5>👩‍🏫 給老師的引導建議</h5>
+    <p>貝茲曲線需要大量練習。建議先讓學生畫「奇幻小樹葉」(三角形 → 拉成樹葉)，再進階畫「Q 版貓咪輪廓」。形狀轉路徑（Ctrl+Shift+C）是進階概念，可以先示範一次但不要強求學生記住，下一關布林運算會再用到。</p>
+  </div>
+</section>
+
+<!-- ============ STAGE 4：物件 × 布林運算 ============ -->
+<section id="sec4" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 04</span>
+    <div>
+      <h2 class="section-title">物件操作 — 對齊、群組與布林運算</h2>
+      <div class="section-sub">布林運算 = 圖形的「剪刀與膠水」，把簡單形狀組合成全新作品！</div>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h4>🍪 三大布林運算（餅乾模具大法）</h4>
+    <ol class="steps-list">
+      <li><strong>相加 / 聯集（Union）</strong>：兩塊黏土揉成一塊大黏土。【路徑】→【相加】或 <span class="inline-code">Ctrl++</span></li>
+      <li><strong>減去 / 差集（Difference）</strong>：拿星星模具壓麵團，挖一個星星洞！<strong>放最上層的當餅乾模具</strong>。【路徑】→【減去】或 <span class="inline-code">Ctrl+-</span></li>
+      <li><strong>交集（Intersection）</strong>：只保留兩個圖形重疊的部分。【路徑】→【交集】或 <span class="inline-code">Ctrl+*</span></li>
+      <li>對齊與分布：框選多物件 → 【物件】→【對齊與分佈】或 <span class="inline-code">Shift+Ctrl+A</span></li>
+      <li>群組：<span class="inline-code">Ctrl+G</span> 把多物件綁在一起；<span class="inline-code">Ctrl+Shift+G</span> 解散。</li>
+    </ol>
+    <div class="tip-box">
+      <strong>⚠️ 布林運算沒效果？</strong>圖形可能是「群組」或「文字」（不是路徑），要先解散群組（Ctrl+Shift+G）或文字轉路徑（Ctrl+Shift+C）。減去結果不對？檢查「要當餅乾模具的圖形是否在最上層」。
+    </div>
+  </div>
+
+  <div class="info-graphic">
+    <span class="label">RISO · INFOGRAPHIC 04</span>
+    <img src="assets/04_object_ops.jpg" alt="物件操作與布林運算教學" loading="lazy">
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎮 互動練習：布林運算實驗室</h4>
+    <p class="canvas-hint">看圓形和方形怎麼透過三種布林運算變成全新圖形！</p>
+    <canvas id="cv4" class="interact-canvas"></canvas>
+    <div class="canvas-controls">
+      <button class="ctrl-btn primary" onclick="cv4Op('union')">⊕ 相加（Union）</button>
+      <button class="ctrl-btn primary" onclick="cv4Op('difference')">⊖ 減去（Difference）</button>
+      <button class="ctrl-btn primary" onclick="cv4Op('intersect')">⊗ 交集（Intersection）</button>
+      <button class="ctrl-btn warn" onclick="cv4Reset()">恢復原狀</button>
+    </div>
+    <div class="canvas-output" id="cv4Out">點按鈕看餅乾模具變身效果</div>
+  </div>
+
+  <div class="quiz-section" data-stage="4">
+    <p class="quiz-q"><span class="qnum">Q1</span>用「減去」要在大圓形上挖一個星星洞，星星應該放在哪一層？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'星星在最底層的話會被當作背景，結果不對！')">最底層</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！星星要放最上層當「餅乾模具」，才會把底下的大圓挖出星星形狀。')">最上層</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'圖層位置會影響結果，不能隨便放。')">隨便都可以</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'布林運算只看路徑順序，不看群組層。')">同一個群組</button>
+    </div>
+    <div class="quiz-feedback"></div>
+
+    <p class="quiz-q" style="margin-top:18px"><span class="qnum">Q2</span>布林運算對哪一種物件有效？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'文字物件要先 Ctrl+Shift+C 轉成路徑才能運算！')">未轉換的文字</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'群組物件要先解散群組才行。')">群組好的物件</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！布林運算只對單純的「路徑」有效，群組或文字要先轉換。')">單純的路徑</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'匯入的點陣圖無法做布林運算。')">匯入的 JPG 照片</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    <h5>👩‍🏫 給老師的引導建議</h5>
+    <p>「咬一口的蘋果」是經典練習：兩個圓相加 + 小圓減去 = 經典 Apple Logo 概念。學生最常踩雷在「圖形不是路徑」(會跳出狀態列錯誤訊息)，提醒大家做運算前先確認沒有群組。可以引導學生猜「Apple、星巴克 Logo 是怎麼用布林運算做出來的？」激發好奇心。</p>
+  </div>
+</section>
+
+<!-- ============ STAGE 5：文字 × 圖層 ============ -->
+<section id="sec5" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 05</span>
+    <div>
+      <h2 class="section-title">文字工具與圖層管理 — 透明便利貼疊出風景</h2>
+      <div class="section-sub">圖層像疊在一起的透明便利貼 + 文字工具讓字繞著圓圈跳舞！</div>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h4>📝 完整操作步驟</h4>
+    <ol class="steps-list">
+      <li>點左側「A」文字工具，<strong>在畫布上「點一下」</strong>（不要拖曳！）就能打字。</li>
+      <li>在上方工具列調整字型、大小、粗體、字間距。Inkscape 支援所有中文字型！</li>
+      <li>打開圖層面板：<span class="inline-code">Ctrl+Shift+L</span>。點 <span class="inline-code">+</span> 新增圖層，雙擊圖層名稱可改名。</li>
+      <li>鎖定圖層：點「鎖頭圖示」；隱藏圖層：點「眼睛圖示」。</li>
+      <li><strong>超酷特效「置於路徑」</strong>：先打文字 → 畫一個圓 → 同時選取兩者 →【文字】→【置於路徑】，文字就會沿著圓彎曲！</li>
+      <li>右鍵物件 → 移到圖層 → 選擇目標圖層，可在圖層間搬移物件。</li>
+    </ol>
+    <div class="tip-box">
+      <strong>⚠️ 文字打不出來變空白？</strong>(1) 是「拖拉」開啟文字框，正確是「點擊」；(2) 字型不相容，試換字型；(3) 白字配白底，改顏色看看。記得養成<strong>每個圖層都改名字</strong>的好習慣！
+    </div>
+  </div>
+
+  <div class="info-graphic">
+    <span class="label">RISO · INFOGRAPHIC 05</span>
+    <img src="assets/05_text_layer.jpg" alt="文字工具與圖層管理教學" loading="lazy">
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎮 互動練習：圖層便利貼模擬</h4>
+    <p class="canvas-hint">點按鈕切換圖層的「眼睛」與「鎖頭」，體驗圖層怎麼運作！</p>
+    <canvas id="cv5" class="interact-canvas"></canvas>
+    <div class="canvas-controls">
+      <button class="ctrl-btn" onclick="cv5Toggle('sky','vis')">☀ 天空層 顯示/隱藏</button>
+      <button class="ctrl-btn" onclick="cv5Toggle('mountain','vis')">⛰ 山層 顯示/隱藏</button>
+      <button class="ctrl-btn" onclick="cv5Toggle('bird','vis')">🐦 小鳥層 顯示/隱藏</button>
+      <button class="ctrl-btn primary" onclick="cv5Reset()">重新顯示全部</button>
+    </div>
+    <div class="canvas-output" id="cv5Out">三個圖層全部顯示中</div>
+  </div>
+
+  <div class="quiz-section" data-stage="5">
+    <p class="quiz-q"><span class="qnum">Q1</span>用文字工具想打字，但畫面變成空白沒字出現，最可能是？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！要用「點一下」開啟文字游標，拖拉會建立空文字框，反而打不出來。')">用「拖拉」而不是「點擊」開啟</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'這跟字型大小無關，預設字大小可見。')">字型太小</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'軟體不會挑語言。')">電腦不支援中文輸入</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'圖層鎖定通常會跳警告，不是無字。')">圖層被鎖住</button>
+    </div>
+    <div class="quiz-feedback"></div>
+
+    <p class="quiz-q" style="margin-top:18px"><span class="qnum">Q2</span>圖層面板上的「鎖頭」圖示有什麼用？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'隱藏是「眼睛」圖示喔。')">隱藏圖層</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！鎖頭可以鎖定圖層，避免不小心畫錯或移動到背景。')">鎖定圖層不能修改</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'刪除有專屬按鈕。')">刪除圖層</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'匯出是檔案選單的功能。')">匯出圖層</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    <h5>👩‍🏫 給老師的引導建議</h5>
+    <p>「置於路徑」是學生最有成就感的功能！建議讓全班一起做「專屬榮譽徽章」：圓形邊框 + 文字繞著圓邊排列 + 中間放姓名。鎖定圖層的習慣要從這一關開始建立，否則之後做海報專案會一直畫錯背景。</p>
+  </div>
+</section>
+
+<!-- ============ STAGE 6：匯出 SVG / PNG ============ -->
+<section id="sec6" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 06</span>
+    <div>
+      <h2 class="section-title">匯出 SVG 與 PNG — 把作品變成可分享的圖片</h2>
+      <div class="section-sub">SVG = 魔法原始檔（可重編輯）；PNG = 平面貼紙（可貼簡報、支援透明）</div>
+    </div>
+  </div>
+
+  <div class="steps-card">
+    <h4>💾 完整操作步驟</h4>
+    <ol class="steps-list">
+      <li><strong>第一步永遠是存原始檔</strong>：【檔案】→【儲存】或 <span class="inline-code">Ctrl+S</span>，存成 <span class="inline-code">.svg</span> 格式。</li>
+      <li>匯出 PNG：【檔案】→【匯出 PNG 圖片】或 <span class="inline-code">Ctrl+Shift+E</span>。</li>
+      <li><strong>選對匯出範圍很重要</strong>：
+        <ul style="margin-top:6px;padding-left:24px;list-style:disc">
+          <li><strong>頁面</strong>：匯出整個畫布（最常用）</li>
+          <li><strong>繪圖</strong>：匯出畫布外所有東西</li>
+          <li><strong>選取範圍</strong>：只匯出選取物件（適合去背貼紙！）</li>
+        </ul>
+      </li>
+      <li>設定尺寸（解析度 96 DPI 即可）、檔名、按【匯出】。</li>
+      <li>PNG 最大特色：<strong>支援透明背景</strong>！沒選取的部分會是透明，貼到簡報不會有白色方塊。</li>
+    </ol>
+    <div class="tip-box">
+      <strong>💡 SVG vs PNG 怎麼選？</strong> 還要再修改 → 選 SVG！要貼到 Word / Google 簡報 / LINE 貼圖 → 選 PNG（記得選「選取範圍」做去背）。檔名後出現 <span class="inline-code">*</span> 代表還沒存檔，要趕快 Ctrl+S！
+    </div>
+  </div>
+
+  <div class="info-graphic">
+    <span class="label">RISO · INFOGRAPHIC 06</span>
+    <img src="assets/06_export_svg_png.jpg" alt="匯出 SVG 與 PNG 教學" loading="lazy">
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎮 互動練習：SVG vs PNG 比較</h4>
+    <p class="canvas-hint">看看 SVG 怎麼放大都清晰，PNG 放大會變模糊！</p>
+    <canvas id="cv6" class="interact-canvas"></canvas>
+    <div class="canvas-controls">
+      <button class="ctrl-btn primary" onclick="cv6Zoom(0.5)">🔍 縮小</button>
+      <button class="ctrl-btn primary" onclick="cv6Zoom(1)">原始大小</button>
+      <button class="ctrl-btn primary" onclick="cv6Zoom(3)">🔎 放大 3 倍</button>
+      <button class="ctrl-btn primary" onclick="cv6Zoom(8)">🔎🔎 放大 8 倍</button>
+    </div>
+    <div class="canvas-output" id="cv6Out">左：SVG（向量）｜右：PNG（點陣）</div>
+  </div>
+
+  <div class="quiz-section" data-stage="6">
+    <p class="quiz-q"><span class="qnum">Q1</span>畫完作品要繼續修改，老師說一定要存成什麼格式？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'JPG 是壓縮的點陣圖，存了就不能再編輯。')">JPG</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'PNG 也是點陣圖，存了就不能再拆解修改。')">PNG</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！SVG 是 Inkscape 的「魔法原始檔」，會記住所有形狀和圖層，下次能繼續編輯。')">SVG</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'GIF 是動畫格式，不適合作為向量原始檔。')">GIF</button>
+    </div>
+    <div class="quiz-feedback"></div>
+
+    <p class="quiz-q" style="margin-top:18px"><span class="qnum">Q2</span>想把畫好的小恐龍變成 LINE 貼圖（背景透明），匯出時要選什麼範圍？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'頁面會匯出整個畫布，包含白色背景。')">頁面</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'繪圖會匯出所有東西，可能有不想要的內容。')">繪圖</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！只匯出選取的小恐龍，背景就會是透明的，最適合做 LINE 貼圖。')">選取範圍</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'自訂需要手動設座標，比較進階。')">自訂</button>
+    </div>
+    <div class="quiz-feedback"></div>
+
+    <p class="quiz-q" style="margin-top:18px"><span class="qnum">Q3</span>下列哪個應用最適合用 SVG 格式？</p>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="qAnswer(this,false,'照片要保留色彩細節，用 JPG 比較好。')">把外婆生日照片寄給家人</button>
+      <button class="quiz-opt" onclick="qAnswer(this,true,'答對！LOGO 要做大做小都清晰，SVG 是最佳選擇。')">設計學校 LOGO 要印在 T-shirt 和名片上</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'簡報插入通常用 PNG 比較通用。')">把恐龍貼到 PowerPoint</button>
+      <button class="quiz-opt" onclick="qAnswer(this,false,'GIF 才支援動畫。')">做一張會動的歡迎動畫</button>
+    </div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="teacher-note teacher-only">
+    <h5>👩‍🏫 給老師的引導建議</h5>
+    <p>建議讓學生做「個人專屬去背貼圖」作為畢業作業 — 把第 4 關的「咬一口蘋果」用「選取範圍」匯出 PNG，丟進 LINE 個人貼圖，學生會超有成就感！同時提醒學生：上傳 Google Classroom 用 PNG，作品檔案備份用 SVG。</p>
+  </div>
+</section>
+
+<!-- ============ 4 個創作專案 ============ -->
+<section id="projects" class="project-task">
+  <h2>🎨 四大創作專案任務</h2>
+  <p style="margin-bottom:18px;font-size:1rem;color:var(--dim)">把學到的 6 大技能組合運用，挑戰下面 4 個生活化專案！</p>
+  <div class="project-grid">
+
+    <div class="project-card">
+      <h4>👤 專案一：我的數位大頭貼</h4>
+      <div class="tools">TOOLS: 基本形狀 · 填色 · 匯出 PNG</div>
+      <p>用圓形與方形拼出 Q 版自畫像。匯出去背 PNG 後，直接用作 Google Classroom 大頭貼、LINE 頭像、學校電腦帳號頭像！</p>
+    </div>
+
+    <div class="project-card">
+      <h4>🏅 專案二：我們這一班 — 超級徽章</h4>
+      <div class="tools">TOOLS: 多邊形 · 布林運算 · 置於路徑</div>
+      <p>結合星形底板、布林運算、文字置於路徑。設計獨一無二的班徽，印出來貼在公告欄、做班服 LOGO 提案！</p>
+    </div>
+
+    <div class="project-card">
+      <h4>🎨 專案三：手繪魔法變貼紙</h4>
+      <div class="tools">TOOLS: 描繪點陣圖 · 節點編輯 · 漸層</div>
+      <p>把紙上手繪稿拍照匯入，用「描繪點陣圖」變成數位向量，加上漸層上色，印出來做永遠不糊的防水貼紙！</p>
+    </div>
+
+    <div class="project-card">
+      <h4>🎉 專案四：心意滿滿節慶海報</h4>
+      <div class="tools">TOOLS: 圖層管理 · 對齊與分布 · 文字</div>
+      <p>用圖層分管理背景與圖案，搭配對齊工具讓畫面整齊。完成母親節 / 校慶 / 畢業海報，列印實體送家人！</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 簡報播放器 ============ -->
+<section class="slide-section">
+  <h2>📊 課堂授課簡報</h2>
+  <p style="margin-bottom:18px;font-size:0.95rem;color:var(--dim)">點縮圖跳頁，或按 ⛶ 全螢幕鍵盤左右翻頁；手機可用兩側大按鈕切換。</p>
+  <div class="slide-player" id="slidePlayer">
+    <div class="slide-main" ondblclick="openSlideFullscreen()">
+      <img id="slide-current" src="assets/01_basic_shapes.jpg" alt="授課簡報">
+      <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+      <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+      <div class="slide-counter" id="slideCounter">1 / 6</div>
+    </div>
+    <div class="slide-strip" id="slideStrip"></div>
+  </div>
+</section>
+
+<!-- ============ 全螢幕 overlay ============ -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div id="slide-fs-counter">1 / 6</div>
+</div>
+
+<!-- ============ YouTube 影片區 ============ -->
+<section class="nlm-video-section">
+  <h2>🎬 NotebookLM AI 自學影片</h2>
+  <div class="video-wrap">
+    <div class="video-no-id" id="videoPlaceholder">
+      🎬 自學影片正在 NotebookLM 雲端生成中⋯<br>
+      預計 10-15 分鐘完成，完成後此區會嵌入 YouTube 影片。<br>
+      <span style="font-size:0.85rem;color:var(--soft)">期間請先利用上方簡報與資訊圖表學習。</span>
+    </div>
+    <div class="video-meta">
+      <span class="nlm-badge">🤖 NOTEBOOKLM</span>
+      <span>建議搭配耳機 · 5-8 分鐘完整介紹</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NotebookLM 資源區 + FAQ ============ -->
+<section id="nb" class="nb-section">
+  <h2>📓 NotebookLM 學習資源 × FAQ</h2>
+
+  <div class="nb-cards">
+    <a class="nb-card" href="https://notebooklm.google.com/notebook/c5cfcd46-a6fa-4b6f-8c00-bb20ee3cf195" target="_blank" rel="noopener">
+      <span class="nb-icon">RESEARCH</span>
+      <h4>研究本（26 個來源）</h4>
+      <p>深度搜尋彙整：Inkscape 中文教學部落格、新營/新南學習網、官方文件、布林運算 YouTube 教學等。</p>
+    </a>
+    <a class="nb-card" href="https://notebooklm.google.com/notebook/0e2bf943-f045-482b-a547-824460cf2b2d" target="_blank" rel="noopener">
+      <span class="nb-icon">SLIM</span>
+      <h4>精簡本（簡報來源）</h4>
+      <p>萃取後的精華筆記 + 主講者形象 PDF。本駕駛艙的簡報與資訊圖表都來自此筆記本。</p>
+    </a>
+    <a class="nb-card" href="https://inkscape.org/zh-hant/" target="_blank" rel="noopener">
+      <span class="nb-icon">DOWNLOAD</span>
+      <h4>Inkscape 繁中官網</h4>
+      <p>免費下載 Windows / Mac / Linux 版本。100% 免費、繁體中文介面、功能完整無限制。</p>
+    </a>
+  </div>
+
+  <h3 style="font-family:'Noto Serif TC',serif;font-size:1.2rem;color:var(--ink-2);margin-top:24px">❓ 常見問題 FAQ</h3>
+  <div class="faq-list">
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q1：Inkscape 真的免費嗎？跟 Illustrator/Photoshop 有什麼不同？</div>
+      <div class="faq-a"><strong>✅ 完全免費</strong>！由全世界一群熱愛畫畫的人寫程式免費送給大家用的。Photoshop 是畫「點陣圖」的（放大會變馬賽克），Inkscape 跟 Illustrator 同屬向量陣營，<strong>圖案放大幾百倍都還是清晰平滑</strong>。Illustrator 一個月要 300 多元，Inkscape 永遠免費！</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q2：為什麼老師說畫完要存成 SVG，不是 JPG 或 PNG？</div>
+      <div class="faq-a">因為 <strong>SVG 是「魔法原始檔」</strong>！電腦會記住你畫的所有圓形、方形、圖層，明天打開還能繼續修改。存成 JPG/PNG 就變成「平平的貼紙」，不能拆開修改。每次畫完一定要先存 SVG 當秘密配方！</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q3：「路徑」跟「形狀」有什麼不一樣？</div>
+      <div class="faq-a">用工具直接拉出來的星星、圓形、方形叫<strong>「形狀」</strong>，有專屬控制把手（可調星星角數）。按 <span class="inline-code">Ctrl+Shift+C</span> 變成<strong>「路徑」</strong>後，就會充滿節點可以像黏土一樣自由捏，但會忘記自己曾是顆星星，不能再用工具改角數了！</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q4：複製貼上後圖案跑到旁邊去了？</div>
+      <div class="faq-a">`Ctrl+C` → `Ctrl+V` 會貼在「滑鼠目前的位置」。要原地複製請用魔法快捷鍵 <strong>Ctrl+D（再製）</strong>！新圖案會一毫不差誕生在原物件正上方，做影子或重複圖案最方便。</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q5：畫錯了怎麼還原？怎麼一次復原很多步驟？</div>
+      <div class="faq-a">按 <span class="inline-code">Ctrl+Z</span> 就回到上一步！亂點五下就連按五次，像時光倒流退回去。如果退太多了，按 <span class="inline-code">Ctrl+Shift+Z</span>（取消復原）就回到未來。</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Q6：要怎麼貼到 Word 或 Google 簡報裡？</div>
+      <div class="faq-a">Word 和 Google 簡報不一定看得懂 SVG，要<strong>匯出成 PNG</strong>：【檔案】→【匯出 PNG 圖片】。PNG 的超能力是支援「透明背景」，小恐龍貼到簡報不會有醜醜的白色方塊，完美融入背景！</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="author">Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/?Lang=zh-tw" target="_blank" rel="noopener">阿凱老師</a></div>
+    <div class="copy">桃園市新明國小 · 資訊科技 · IT COCKPIT · RISO STUDIO 2026</div>
+  </div>
+</footer>
+
+<!-- ============ 浮動工具：抽籤 / 計時 / 畫筆 / 回頂部 ============ -->
+<div class="float-tools" id="floatTools">
+  <button class="float-btn" onclick="togglePanel('lottery')" title="號碼抽籤">🎲</button>
+  <button class="float-btn green" onclick="togglePanel('timer')" title="計時器">⏱</button>
+  <button class="float-btn pink" onclick="toggleDraw()" id="drawToggleBtn" title="畫筆標註">✏️</button>
+  <button class="float-btn gotop" onclick="goTop()" title="回頂部">↑</button>
+</div>
+
+<!-- 抽籤面板 -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;font-size:0.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:5px 7px;background:var(--paper);border:1px solid var(--ink-1);color:var(--text);font-family:inherit">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:5px 7px;background:var(--paper);border:1px solid var(--ink-1);color:var(--text);font-family:inherit">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--ink-2);border-color:var(--ink-2);box-shadow:2px 2px 0 var(--ink-1)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<!-- 計時器面板 -->
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timer-display">00:00</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="setTimerMin(1)" style="flex:1">1 分</button>
+    <button class="btn-primary" onclick="setTimerMin(3)" style="flex:1">3 分</button>
+    <button class="btn-primary" onclick="setTimerMin(5)" style="flex:1">5 分</button>
+    <button class="btn-primary" onclick="setTimerMin(10)" style="flex:1">10 分</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:8px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1;background:var(--ink-4);border-color:var(--ink-4)">▶ 開始</button>
+    <button class="btn-primary" onclick="resetTimer()" style="flex:1;background:var(--ink-2);border-color:var(--ink-2);box-shadow:2px 2px 0 var(--ink-1)">↻ 重置</button>
+  </div>
+</div>
+
+<!-- 畫筆 canvas + 工具列 -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:0.85rem;color:var(--dim);font-weight:700">🖊️ 畫筆</span>
+  <button class="color-dot active" style="background:#ec5a4a" onclick="setPenColor('#ec5a4a',this)"></button>
+  <button class="color-dot" style="background:#2a5fb4" onclick="setPenColor('#2a5fb4',this)"></button>
+  <button class="color-dot" style="background:#f4b942" onclick="setPenColor('#f4b942',this)"></button>
+  <button class="color-dot" style="background:#5a8d3a" onclick="setPenColor('#5a8d3a',this)"></button>
+  <button class="color-dot" style="background:#2d2418" onclick="setPenColor('#2d2418',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+/* ===========================
+   SLIDE PLAYER（先用 6 張 infographic 作為佔位簡報）
+   待 slide_deck 完成後可在前面 append slide_XX.jpg
+============================ */
+const SLIDE_LIST = [
+  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg',
+  'assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg',
+  'assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg',
+  'assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg'
+];
+let curSlide = 0;
+
+function initSlidePlayer(){
+  const strip = document.getElementById('slideStrip');
+  SLIDE_LIST.forEach((src, i) => {
+    const div = document.createElement('div');
+    div.className = 'strip-thumb' + (i === 0 ? ' active' : '');
+    div.onclick = () => goSlide(i);
+    div.innerHTML = `<img src="${src}" alt="第 ${i+1} 頁" loading="lazy">`;
+    strip.appendChild(div);
+  });
+  goSlide(0, false);
+}
+
+function goSlide(n, scrollStrip = true){
+  n = Math.max(0, Math.min(SLIDE_LIST.length - 1, n));
+  curSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slideCounter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i === n));
+  // 同步全螢幕大圖
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  }
+  // 縮圖列水平捲動（不動頁面）
+  if(scrollStrip){
+    const activeThumb = document.querySelector('.strip-thumb.active');
+    if(activeThumb){
+      const strip = document.getElementById('slideStrip');
+      const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+      strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+    }
+  }
+}
+
+function slideNav(dir){ goSlide(curSlide + dir); }
+
+function openSlideFullscreen(){
+  const fs = document.getElementById('slide-fs');
+  fs.classList.add('show');
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+
+document.addEventListener('keydown', e => {
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    if(e.key === 'Escape') closeSlideFullscreen();
+    if(e.key === 'ArrowLeft') slideNav(-1);
+    if(e.key === 'ArrowRight') slideNav(1);
+  }
+});
+
+/* ===========================
+   MODE 切換（學生 / 教師）
+============================ */
+function setMode(m){
+  document.body.classList.toggle('teacher-mode', m === 'teacher');
+  document.getElementById('modeStudent').classList.toggle('active', m === 'student');
+  document.getElementById('modeTeacher').classList.toggle('active', m === 'teacher');
+}
+function askTeacherPwd(){
+  const pwd = prompt('請輸入教師密碼：');
+  if(pwd === 'it2026'){ setMode('teacher'); }
+  else if(pwd !== null){ alert('密碼錯誤，已維持學生模式。'); }
+}
+
+/* ===========================
+   QUIZ
+============================ */
+function qAnswer(btn, isRight, explain){
+  const opts = btn.parentNode.querySelectorAll('.quiz-opt');
+  opts.forEach(b => b.disabled = true);
+  btn.classList.add(isRight ? 'correct' : 'wrong');
+  // 標出正解
+  if(!isRight){
+    opts.forEach(b => {
+      if(b.getAttribute('onclick').includes(',true,')) b.classList.add('correct');
+    });
+  }
+  const fb = btn.parentNode.parentNode.querySelector('.quiz-feedback');
+  fb.textContent = (isRight ? '✨ ' : '💡 ') + explain;
+  fb.classList.add('show', isRight ? 'right' : 'wrong');
+}
+
+/* ===========================
+   CANVAS 1：機器人頭像拼裝
+============================ */
+let cv1Items = [];
+function cv1Init(){
+  const cv = document.getElementById('cv1');
+  cv.width = cv.clientWidth * 2;
+  cv.height = cv.clientHeight * 2;
+  cv1Draw();
+}
+function cv1Add(type){
+  const cv = document.getElementById('cv1');
+  const w = cv.width, h = cv.height;
+  const colors = ['#ec5a4a','#2a5fb4','#f4b942','#5a8d3a','#9a4ec9'];
+  cv1Items.push({
+    type, x: 80 + Math.random()*(w-160), y: 80 + Math.random()*(h-160),
+    s: 30 + Math.random()*50, c: colors[Math.floor(Math.random()*colors.length)]
+  });
+  document.getElementById('cv1Out').textContent = `已加入 ${cv1Items.length} 個圖形 — 試著拼出機器人！`;
+  cv1Draw();
+}
+function cv1Clear(){ cv1Items = []; document.getElementById('cv1Out').textContent = '畫布已清空（共 0 個）'; cv1Draw(); }
+function cv1Draw(){
+  const cv = document.getElementById('cv1');
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  // Risograph paper grid
+  ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.strokeStyle = 'rgba(42,95,180,0.1)'; ctx.lineWidth = 1;
+  for(let x=0;x<cv.width;x+=40){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,cv.height); ctx.stroke(); }
+  for(let y=0;y<cv.height;y+=40){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(cv.width,y); ctx.stroke(); }
+  cv1Items.forEach(it => {
+    // Riso double-print: orange ghost
+    ctx.fillStyle = '#ec5a4a'; ctx.translate(3,3);
+    drawShape(ctx, it.type, it.x, it.y, it.s);
+    ctx.translate(-3,-3);
+    ctx.fillStyle = it.c;
+    drawShape(ctx, it.type, it.x, it.y, it.s);
+  });
+}
+function drawShape(ctx, type, x, y, s){
+  ctx.beginPath();
+  if(type === 'circle'){ ctx.arc(x, y, s, 0, Math.PI*2); ctx.fill(); }
+  else if(type === 'rect'){ ctx.fillRect(x-s, y-s, s*2, s*2); }
+  else if(type === 'triangle'){
+    ctx.moveTo(x, y-s); ctx.lineTo(x-s, y+s); ctx.lineTo(x+s, y+s); ctx.closePath(); ctx.fill();
+  }
+  else if(type === 'star'){
+    for(let i=0;i<10;i++){
+      const r = i % 2 === 0 ? s : s*0.45;
+      const a = -Math.PI/2 + i*Math.PI/5;
+      const px = x + r*Math.cos(a), py = y + r*Math.sin(a);
+      if(i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.fill();
+  }
+}
+
+/* ===========================
+   CANVAS 2：色票調色盤
+============================ */
+let cv2State = { color: '#2a5fb4', gradient: false };
+function cv2Init(){
+  const cv = document.getElementById('cv2');
+  cv.width = cv.clientWidth * 2;
+  cv.height = cv.clientHeight * 2;
+  cv2Draw();
+}
+function cv2Color(c){ cv2State.color = c; cv2State.gradient = false; document.getElementById('cv2Out').textContent = `目前色號：${c}`; cv2Draw(); }
+function cv2Gradient(){ cv2State.gradient = true; document.getElementById('cv2Out').textContent = '🌈 漸層模式：朱橘 → 鈷藍 → 芥末黃'; cv2Draw(); }
+function cv2Reset(){ cv2State = { color: '#2a5fb4', gradient: false }; document.getElementById('cv2Out').textContent = '已恢復預設色'; cv2Draw(); }
+function cv2Draw(){
+  const cv = document.getElementById('cv2');
+  const ctx = cv.getContext('2d');
+  const w = cv.width, h = cv.height;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, w, h);
+  // Riso paper grain
+  ctx.fillStyle = 'rgba(42,36,24,0.04)';
+  for(let i=0;i<400;i++){ ctx.fillRect(Math.random()*w, Math.random()*h, 2, 2); }
+  // Hot air balloon
+  const cx = w/2, cy = h/2 - 30, r = Math.min(w, h)/3.5;
+  // Orange ghost shadow
+  ctx.fillStyle = '#ec5a4a';
+  ctx.beginPath(); ctx.arc(cx+6, cy+6, r, 0, Math.PI*2); ctx.fill();
+  // Main fill
+  if(cv2State.gradient){
+    const g = ctx.createLinearGradient(cx-r, cy-r, cx+r, cy+r);
+    g.addColorStop(0, '#ec5a4a');
+    g.addColorStop(0.5, '#2a5fb4');
+    g.addColorStop(1, '#f4b942');
+    ctx.fillStyle = g;
+  } else {
+    ctx.fillStyle = cv2State.color;
+  }
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
+  // Stroke (Riso double)
+  ctx.strokeStyle = '#2d2418'; ctx.lineWidth = 5;
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.stroke();
+  // Basket
+  ctx.fillStyle = '#9a4ec9';
+  ctx.fillRect(cx - r*0.3, cy + r + 40, r*0.6, r*0.4);
+  // Strings
+  ctx.strokeStyle = '#2d2418'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(cx - r*0.6, cy + r*0.5); ctx.lineTo(cx - r*0.3, cy + r + 40);
+  ctx.moveTo(cx + r*0.6, cy + r*0.5); ctx.lineTo(cx + r*0.3, cy + r + 40);
+  ctx.stroke();
+}
+
+/* ===========================
+   CANVAS 3：節點拉拉樂
+============================ */
+let cv3Nodes = []; let cv3Drag = -1;
+function cv3Init(){
+  const cv = document.getElementById('cv3');
+  cv.width = cv.clientWidth * 2;
+  cv.height = cv.clientHeight * 2;
+  cv3SetShape('triangle');
+  cv.addEventListener('mousedown', cv3Down);
+  cv.addEventListener('mousemove', cv3Move);
+  cv.addEventListener('mouseup', () => cv3Drag = -1);
+  cv.addEventListener('mouseleave', () => cv3Drag = -1);
+  cv.addEventListener('touchstart', e => { e.preventDefault(); cv3Down(touchEvt(e, cv)); }, {passive:false});
+  cv.addEventListener('touchmove', e => { e.preventDefault(); cv3Move(touchEvt(e, cv)); }, {passive:false});
+  cv.addEventListener('touchend', () => cv3Drag = -1);
+}
+function touchEvt(e, cv){
+  const t = e.touches[0] || e.changedTouches[0];
+  const r = cv.getBoundingClientRect();
+  return { offsetX: (t.clientX - r.left) * (cv.width/r.width), offsetY: (t.clientY - r.top) * (cv.height/r.height) };
+}
+function cv3SetShape(name){
+  const cv = document.getElementById('cv3');
+  const w = cv.width, h = cv.height;
+  if(name === 'triangle') cv3Nodes = [{x:w/2,y:80},{x:80,y:h-80},{x:w-80,y:h-80}];
+  else if(name === 'zigzag') cv3Nodes = [{x:80,y:h/2},{x:w/4,y:80},{x:w/2,y:h/2},{x:w*3/4,y:80},{x:w-80,y:h/2}];
+  else if(name === 'curve') cv3Nodes = [{x:80,y:h/2},{x:w/3,y:80},{x:w*2/3,y:h-80},{x:w-80,y:h/2}];
+  cv3Drag = -1;
+  document.getElementById('cv3Out').textContent = `路徑形狀已重設（${cv3Nodes.length} 個節點），拖拉藍色節點變形！`;
+  cv3Draw();
+}
+function cv3Reset(){ cv3SetShape('triangle'); }
+function cv3Down(e){
+  for(let i=0;i<cv3Nodes.length;i++){
+    const n = cv3Nodes[i];
+    if(Math.hypot(e.offsetX - n.x, e.offsetY - n.y) < 30){ cv3Drag = i; return; }
+  }
+}
+function cv3Move(e){
+  if(cv3Drag === -1) return;
+  cv3Nodes[cv3Drag].x = Math.max(20, Math.min(document.getElementById('cv3').width - 20, e.offsetX));
+  cv3Nodes[cv3Drag].y = Math.max(20, Math.min(document.getElementById('cv3').height - 20, e.offsetY));
+  cv3Draw();
+}
+function cv3Draw(){
+  const cv = document.getElementById('cv3');
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, cv.width, cv.height);
+  // Path: orange ghost + blue main
+  if(cv3Nodes.length > 1){
+    ctx.strokeStyle = '#ec5a4a'; ctx.lineWidth = 6;
+    ctx.beginPath();
+    cv3Nodes.forEach((n,i) => i === 0 ? ctx.moveTo(n.x+5, n.y+5) : ctx.lineTo(n.x+5, n.y+5));
+    ctx.stroke();
+    ctx.strokeStyle = '#2a5fb4'; ctx.lineWidth = 6;
+    ctx.beginPath();
+    cv3Nodes.forEach((n,i) => i === 0 ? ctx.moveTo(n.x, n.y) : ctx.lineTo(n.x, n.y));
+    ctx.stroke();
+  }
+  // Nodes
+  cv3Nodes.forEach((n,i) => {
+    ctx.fillStyle = '#ec5a4a';
+    ctx.fillRect(n.x-10+3, n.y-10+3, 20, 20);
+    ctx.fillStyle = i === cv3Drag ? '#f4b942' : '#2a5fb4';
+    ctx.fillRect(n.x-10, n.y-10, 20, 20);
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+    ctx.strokeRect(n.x-10, n.y-10, 20, 20);
+  });
+}
+
+/* ===========================
+   CANVAS 4：布林運算實驗室
+============================ */
+let cv4Op_ = null;
+function cv4Init(){
+  const cv = document.getElementById('cv4');
+  cv.width = cv.clientWidth * 2;
+  cv.height = cv.clientHeight * 2;
+  cv4Draw();
+}
+function cv4Op(op){
+  cv4Op_ = op;
+  const names = { union: '⊕ 相加：兩個圖形融合成一個', difference: '⊖ 減去：圓形被星星挖出洞', intersect: '⊗ 交集：只保留重疊區域' };
+  document.getElementById('cv4Out').textContent = names[op];
+  cv4Draw();
+}
+function cv4Reset(){ cv4Op_ = null; document.getElementById('cv4Out').textContent = '點按鈕看餅乾模具變身效果'; cv4Draw(); }
+function cv4Draw(){
+  const cv = document.getElementById('cv4');
+  const ctx = cv.getContext('2d');
+  const w = cv.width, h = cv.height;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, w, h);
+  // 左：原始狀態（小圖示）
+  ctx.font = '700 28px "Space Mono", monospace';
+  ctx.fillStyle = '#7a6a4f'; ctx.fillText('BEFORE', 60, 48);
+  drawCirc(ctx, 180, 200, 80, '#ec5a4a');
+  drawStar(ctx, 230, 220, 60, '#2a5fb4');
+  // 右：運算結果
+  ctx.fillStyle = '#7a6a4f'; ctx.fillText('AFTER', w-200, 48);
+  if(!cv4Op_){
+    // duplicate before
+    drawCirc(ctx, w-280, 200, 80, '#ec5a4a');
+    drawStar(ctx, w-230, 220, 60, '#2a5fb4');
+  } else if(cv4Op_ === 'union'){
+    // Merge: both filled in single blob
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(w-280, 200, 80, 0, Math.PI*2);
+    starPath(ctx, w-230, 220, 60);
+    ctx.fillStyle = '#9a4ec9'; ctx.fill();
+    ctx.restore();
+  } else if(cv4Op_ === 'difference'){
+    // Circle minus star
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(w-280, 200, 80, 0, Math.PI*2);
+    starPath(ctx, w-230, 220, 60);
+    ctx.fillStyle = '#ec5a4a'; ctx.fill('evenodd');
+    ctx.restore();
+  } else if(cv4Op_ === 'intersect'){
+    // Only overlap
+    ctx.save();
+    ctx.beginPath(); ctx.arc(w-280, 200, 80, 0, Math.PI*2);
+    ctx.clip();
+    starPath(ctx, w-230, 220, 60);
+    ctx.fillStyle = '#5a8d3a'; ctx.fill();
+    ctx.restore();
+  }
+  // Arrow
+  ctx.strokeStyle = '#2d2418'; ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.moveTo(w/2 - 60, h/2); ctx.lineTo(w/2 + 60, h/2);
+  ctx.moveTo(w/2 + 40, h/2 - 14); ctx.lineTo(w/2 + 60, h/2); ctx.lineTo(w/2 + 40, h/2 + 14);
+  ctx.stroke();
+}
+function drawCirc(ctx, x, y, r, c){
+  ctx.fillStyle = '#ec5a4a';
+  ctx.beginPath(); ctx.arc(x+4, y+4, r, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = c;
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+}
+function starPath(ctx, x, y, r){
+  ctx.beginPath();
+  for(let i=0;i<10;i++){
+    const rr = i%2===0 ? r : r*0.45;
+    const a = -Math.PI/2 + i*Math.PI/5;
+    const px = x + rr*Math.cos(a), py = y + rr*Math.sin(a);
+    if(i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+}
+function drawStar(ctx, x, y, r, c){
+  ctx.fillStyle = '#ec5a4a';
+  starPath(ctx, x+4, y+4, r); ctx.fill();
+  ctx.fillStyle = c;
+  starPath(ctx, x, y, r); ctx.fill();
+}
+
+/* ===========================
+   CANVAS 5：圖層便利貼
+============================ */
+let cv5Layers = { sky: true, mountain: true, bird: true };
+function cv5Init(){
+  const cv = document.getElementById('cv5');
+  cv.width = cv.clientWidth * 2;
+  cv.height = cv.clientHeight * 2;
+  cv5Draw();
+}
+function cv5Toggle(layer){
+  cv5Layers[layer] = !cv5Layers[layer];
+  const visible = Object.entries(cv5Layers).filter(([,v]) => v).map(([k]) => k).join(', ');
+  document.getElementById('cv5Out').textContent = `目前顯示：${visible || '(全部隱藏)'}`;
+  cv5Draw();
+}
+function cv5Reset(){ cv5Layers = { sky: true, mountain: true, bird: true }; document.getElementById('cv5Out').textContent = '三個圖層全部顯示中'; cv5Draw(); }
+function cv5Draw(){
+  const cv = document.getElementById('cv5');
+  const ctx = cv.getContext('2d');
+  const w = cv.width, h = cv.height;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, w, h);
+  // Sky layer (底)
+  if(cv5Layers.sky){
+    const g = ctx.createLinearGradient(0, 0, 0, h*0.7);
+    g.addColorStop(0, '#2a5fb4'); g.addColorStop(1, '#f4b942');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h*0.7);
+    // Sun
+    ctx.fillStyle = '#ec5a4a';
+    ctx.beginPath(); ctx.arc(w*0.8, h*0.25, 50, 0, Math.PI*2); ctx.fill();
+  }
+  // Mountain layer (中)
+  if(cv5Layers.mountain){
+    ctx.fillStyle = '#5a8d3a';
+    ctx.beginPath();
+    ctx.moveTo(0, h*0.7);
+    ctx.lineTo(w*0.25, h*0.4);
+    ctx.lineTo(w*0.5, h*0.65);
+    ctx.lineTo(w*0.75, h*0.35);
+    ctx.lineTo(w, h*0.6);
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath(); ctx.fill();
+  }
+  // Bird layer (頂)
+  if(cv5Layers.bird){
+    ctx.strokeStyle = '#2d2418'; ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(w*0.3, h*0.2); ctx.quadraticCurveTo(w*0.35, h*0.15, w*0.4, h*0.2);
+    ctx.quadraticCurveTo(w*0.45, h*0.15, w*0.5, h*0.2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(w*0.5, h*0.3); ctx.quadraticCurveTo(w*0.55, h*0.25, w*0.6, h*0.3);
+    ctx.quadraticCurveTo(w*0.65, h*0.25, w*0.7, h*0.3);
+    ctx.stroke();
+  }
+  // Layer labels (top-left)
+  ctx.font = '700 22px "Space Mono", monospace';
+  ctx.fillStyle = '#fff';
+  ['☀ SKY','⛰ MOUNTAIN','🐦 BIRD'].forEach((t,i) => {
+    const keys = ['sky','mountain','bird'];
+    const on = cv5Layers[keys[i]];
+    ctx.fillStyle = on ? '#ec5a4a' : '#7a6a4f';
+    ctx.fillRect(20, 20 + i*42, 220, 32);
+    ctx.fillStyle = '#fff';
+    ctx.fillText((on ? '● ' : '○ ') + t, 30, 42 + i*42);
+  });
+}
+
+/* ===========================
+   CANVAS 6：SVG vs PNG 縮放比較
+============================ */
+let cv6Zoom_ = 1;
+function cv6Init(){
+  const cv = document.getElementById('cv6');
+  cv.width = cv.clientWidth * 2;
+  cv.height = cv.clientHeight * 2;
+  cv6Draw();
+}
+function cv6Zoom(z){ cv6Zoom_ = z; document.getElementById('cv6Out').textContent = `放大倍率：${z}x（左 SVG 清晰｜右 PNG 模糊）`; cv6Draw(); }
+function cv6Draw(){
+  const cv = document.getElementById('cv6');
+  const ctx = cv.getContext('2d');
+  const w = cv.width, h = cv.height;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#fff8ec'; ctx.fillRect(0, 0, w, h);
+  // Divider
+  ctx.strokeStyle = '#2a5fb4'; ctx.lineWidth = 3;
+  ctx.setLineDash([10, 8]);
+  ctx.beginPath(); ctx.moveTo(w/2, 30); ctx.lineTo(w/2, h-30); ctx.stroke();
+  ctx.setLineDash([]);
+  // Labels
+  ctx.font = '700 28px "Space Mono", monospace';
+  ctx.fillStyle = '#2a5fb4'; ctx.fillText('SVG (vector)', 40, 50);
+  ctx.fillStyle = '#ec5a4a'; ctx.fillText('PNG (raster)', w/2 + 40, 50);
+  // SVG side: math-drawn star scales perfectly
+  const cx1 = w/4, cy = h/2 + 30, baseR = 60;
+  starPath(ctx, cx1, cy, baseR * cv6Zoom_ / 2);
+  ctx.fillStyle = '#2a5fb4'; ctx.fill();
+  // PNG side: rasterize then upscale (pixelated effect)
+  const off = document.createElement('canvas');
+  off.width = 80; off.height = 80;
+  const octx = off.getContext('2d');
+  octx.fillStyle = '#ec5a4a';
+  starPath(octx, 40, 40, 30);
+  octx.fill();
+  ctx.imageSmoothingEnabled = false;
+  const targetSize = Math.min(baseR * cv6Zoom_, 280);
+  ctx.drawImage(off, w*3/4 - targetSize, cy - targetSize, targetSize*2, targetSize*2);
+  ctx.imageSmoothingEnabled = true;
+}
+
+/* ===========================
+   抽籤器
+============================ */
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = [];
+  for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const timer = setInterval(() => {
+    out.textContent = (Math.floor(Math.random()*(max-min+1))+min) + ' 號';
+  }, 60);
+  setTimeout(() => {
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max-min+1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '已重置號碼池';
+}
+
+/* ===========================
+   計時器
+============================ */
+let timerSec = 0, timerInt = null;
+function setTimerMin(m){ timerSec = m*60; updateTimerDisplay(); }
+function startTimer(){
+  if(timerInt){ clearInterval(timerInt); timerInt = null; return; }
+  if(timerSec <= 0){ alert('請先設定時間'); return; }
+  timerInt = setInterval(() => {
+    timerSec--;
+    updateTimerDisplay();
+    if(timerSec <= 0){ clearInterval(timerInt); timerInt = null; alert('⏰ 時間到！'); }
+  }, 1000);
+}
+function resetTimer(){ if(timerInt){clearInterval(timerInt);timerInt=null;} timerSec = 0; updateTimerDisplay(); }
+function updateTimerDisplay(){
+  const m = Math.floor(timerSec/60), s = timerSec%60;
+  document.getElementById('timer-display').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+/* ===========================
+   面板切換
+============================ */
+function togglePanel(id){
+  const panels = ['lottery','timer'];
+  panels.forEach(p => {
+    const el = document.getElementById('panel-' + p);
+    if(p === id) el.classList.toggle('show');
+    else el.classList.remove('show');
+  });
+}
+
+/* ===========================
+   畫筆工具
+============================ */
+let drawActive = false, penColor = '#ec5a4a', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth;
+  drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e => { if(!drawActive) return; isDrawing = true; dLastX = e.clientX; dLastY = e.clientY; });
+  drawCanvas.addEventListener('mousemove', e => {
+    if(!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke();
+    dLastX = e.clientX; dLastY = e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', () => isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e => { if(!drawActive) return; e.preventDefault(); const t = e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e => {
+    if(!drawActive || !isDrawing) return; e.preventDefault();
+    const t = e.touches[0];
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(t.clientX, t.clientY); drawCtx.stroke();
+    dLastX = t.clientX; dLastY = t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', () => isDrawing = false);
+  window.addEventListener('resize', () => { drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight; });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--ink-2)' : '';
+  document.getElementById('drawToggleBtn').style.color = drawActive ? 'var(--paper)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height); }
+
+/* ===========================
+   回頂部 + 關卡導覽高亮
+============================ */
+function goTop(){ window.scrollTo({top: 0, behavior: 'smooth'}); }
+
+function initPillNav(){
+  const pills = document.querySelectorAll('.stage-pill');
+  pills.forEach(p => p.addEventListener('click', e => {
+    pills.forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+  }));
+}
+
+/* ===========================
+   啟動
+============================ */
+document.addEventListener('DOMContentLoaded', () => {
+  initSlidePlayer();
+  cv1Init(); cv2Init(); cv3Init(); cv4Init(); cv5Init(); cv6Init();
+  initDraw();
+  initPillNav();
+  // Resize handler for canvases
+  window.addEventListener('resize', () => {
+    ['cv1','cv2','cv3','cv4','cv5','cv6'].forEach(id => {
+      const cv = document.getElementById(id);
+      if(cv){ cv.width = cv.clientWidth * 2; cv.height = cv.clientHeight * 2; }
+    });
+    cv1Draw(); cv2Draw(); cv3Draw(); cv4Draw(); cv5Draw(); cv6Draw();
+  });
+});
+</script>
+</body>
+</html>
