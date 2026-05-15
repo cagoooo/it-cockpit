@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhotoCap 圖像編輯魔法師｜四年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/photocap/">
+<meta property="og:title" content="PhotoCap 圖像編輯魔法師｜四年級資訊科技">
+<meta property="og:description" content="台灣免費影像處理軟體 PhotoCap 的四大關卡：認識介面、裁切旋轉、文字貼紙、特效濾鏡。國小四年級互動式教學駕駛艙。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/photocap/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/photocap/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fef3f8; --surface:#fff0f6; --panel:#ffffff;
+  --c1:#ff85b3; --c2:#ffd54f; --c3:#6cb4ff; --c4:#7be495; --c5:#b388ff; --c6:#ff7043;
+  --text:#2a2244; --dim:#8878aa;
+  --shadow-soft:0 4px 16px rgba(255,133,179,.18);
+  --shadow-pop:0 6px 22px rgba(255,133,179,.30);
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;scroll-behavior:smooth}
+body{font-family:'Noto Sans TC','Fredoka',sans-serif;line-height:1.7;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--c1);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:3px solid var(--c1);box-shadow:var(--shadow-soft)}
+.header-inner{max-width:1400px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:2px solid var(--c1);background:transparent;color:var(--c1);text-decoration:none;font-weight:700;font-size:.9rem;letter-spacing:.5px;transition:.2s;white-space:nowrap;border-radius:24px}
+.home-btn:hover{background:var(--c1);color:#fff;text-decoration:none;transform:translateY(-1px);box-shadow:var(--shadow-pop)}
+.header-title{display:flex;flex-direction:column;flex:1;min-width:200px}
+.header-title h1{font-size:1.5rem;font-weight:900;color:var(--text);line-height:1.3}
+.header-title h1 .accent{color:var(--c1)}
+.header-title .sub{font-size:.95rem;color:var(--dim);margin-top:2px}
+.grade-chip{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--c2),#ffb74d);color:#5d3a00;padding:7px 14px;border-radius:20px;font-weight:700;font-size:.9rem;box-shadow:0 2px 8px rgba(255,213,79,.4)}
+.progress-wrap{flex-basis:100%;display:flex;align-items:center;gap:10px;margin-top:6px}
+.progress-label{font-size:.85rem;color:var(--dim);font-weight:700}
+.progress-bar{flex:1;height:10px;background:#fff5f9;border-radius:10px;overflow:hidden;border:2px solid var(--c1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c5));width:0;transition:width .5s ease;border-radius:10px}
+.progress-pct{font-weight:900;color:var(--c1);font-size:.95rem;min-width:50px;text-align:right}
+
+/* Mode Bar */
+.mode-bar{max-width:1400px;margin:18px auto 0;padding:0 24px;display:flex;justify-content:flex-end;gap:8px}
+.mode-btn{padding:7px 16px;border:2px solid var(--c5);background:#fff;color:var(--c5);border-radius:20px;font-weight:700;font-size:.85rem;transition:.2s}
+.mode-btn.active{background:var(--c5);color:#fff;box-shadow:0 4px 12px rgba(179,136,255,.4)}
+.mode-btn:hover{transform:translateY(-1px)}
+
+/* Container */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Hero / objectives */
+.hero{background:linear-gradient(135deg,#fff5fa,#fff);border:3px solid var(--c1);border-radius:24px;padding:28px 30px;margin-bottom:32px;box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:radial-gradient(circle,rgba(255,213,79,.4),transparent);border-radius:50%}
+.hero h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--text);position:relative}
+.hero h2 .icon{display:inline-block;font-size:1.6rem;margin-right:8px}
+.hero p.lead{font-size:1rem;color:var(--text);line-height:1.8;margin-bottom:18px;position:relative}
+.obj-list{display:flex;gap:10px;flex-wrap:wrap;position:relative}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#fff;border:2px solid var(--c1);border-radius:50px;font-size:1rem;font-weight:700;color:var(--text);box-shadow:0 3px 10px rgba(255,133,179,.15);transition:.2s}
+.obj-chip:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,133,179,.3)}
+.obj-chip .ico{font-size:1.15rem}
+
+/* Stage Nav */
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;padding:14px;background:#fff;border:2px solid var(--c3);border-radius:20px;box-shadow:var(--shadow-soft)}
+.stage-pill{padding:10px 20px;border:2px solid var(--c3);background:#fff;color:var(--c3);border-radius:50px;font-weight:700;font-size:.95rem;text-decoration:none;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.stage-pill:hover{background:var(--c3);color:#fff;transform:translateY(-2px);text-decoration:none;box-shadow:0 4px 12px rgba(108,180,255,.4)}
+
+/* STAGE Sections */
+.level-section{margin-bottom:48px;background:var(--panel);border-radius:24px;padding:30px;border:3px solid #ffeaf2;box-shadow:var(--shadow-soft);scroll-margin-top:100px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.stage-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-family:'Fredoka','Noto Sans TC',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1.5px;color:#fff;border-radius:30px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.stage-badge.s1{background:linear-gradient(135deg,#ff85b3,#ff4081)}
+.stage-badge.s2{background:linear-gradient(135deg,#ffd54f,#ffa726)}
+.stage-badge.s3{background:linear-gradient(135deg,#7be495,#4caf50)}
+.stage-badge.s4{background:linear-gradient(135deg,#b388ff,#7e57c2)}
+.section-title{flex:1;min-width:200px}
+.section-title h2{font-size:1.4rem;font-weight:900;color:var(--text);line-height:1.3}
+.section-title .sub{font-size:1rem;color:var(--dim);margin-top:2px}
+
+.section-img-wrap{margin:0 -8px 20px;border-radius:18px;overflow:hidden;border:3px solid #ffeaf2;box-shadow:var(--shadow-soft)}
+.section-img-wrap img{width:100%;display:block}
+
+.steps-card{background:#fff8fb;border:2px solid var(--c1);border-radius:18px;padding:22px;margin-bottom:18px}
+.steps-card h4{font-size:1.05rem;font-weight:900;color:var(--c1);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.steps-list li{display:flex;align-items:flex-start;gap:12px;font-size:1rem;line-height:1.7;padding:8px 0}
+.step-num{flex-shrink:0;min-width:34px;height:34px;background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;box-shadow:0 3px 8px rgba(255,133,179,.4)}
+.step-text{flex:1}
+.step-text b{color:var(--c1)}
+
+.tip-box{background:linear-gradient(135deg,#fffde7,#fff8b0);border:2px solid var(--c2);border-radius:14px;padding:14px 18px;margin-top:14px;font-size:.95rem;color:#5d4d00;display:flex;gap:10px;align-items:flex-start}
+.tip-box .ico{font-size:1.3rem;flex-shrink:0}
+.warn-box{background:linear-gradient(135deg,#fff0e6,#ffd1b3);border:2px solid var(--c6);border-radius:14px;padding:14px 18px;margin-top:14px;font-size:.95rem;color:#6b2e00;display:flex;gap:10px;align-items:flex-start}
+.warn-box .ico{font-size:1.3rem;flex-shrink:0}
+
+/* Canvas / interactive section */
+.canvas-section{background:#f6f0ff;border:2px dashed var(--c5);border-radius:18px;padding:22px;margin-bottom:18px}
+.canvas-section h4{font-size:1.05rem;font-weight:900;color:var(--c5);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.canvas-tip{font-size:.95rem;color:var(--dim);margin-bottom:16px}
+
+/* Tool cards */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:14px}
+.tool-card{background:#fff;border:3px solid #f0e6ff;border-radius:16px;padding:16px;cursor:pointer;transition:.2s;text-align:center}
+.tool-card:hover{border-color:var(--c5);transform:translateY(-4px);box-shadow:0 8px 20px rgba(179,136,255,.25)}
+.tool-card.active{border-color:var(--c5);background:linear-gradient(135deg,#f6f0ff,#e8d8ff);box-shadow:0 8px 20px rgba(179,136,255,.35)}
+.tool-card .icon{font-size:2.2rem;margin-bottom:6px;display:block}
+.tool-card .name{font-size:.95rem;font-weight:900;color:var(--text)}
+.tool-card .en{font-size:.78rem;color:var(--dim);margin-top:2px;font-family:'Fredoka',sans-serif}
+.tool-detail{margin-top:18px;padding:18px 22px;background:#fff;border:2px solid var(--c5);border-radius:14px;display:none}
+.tool-detail.show{display:block}
+.tool-detail h4{font-size:1.1rem;color:var(--c5);margin-bottom:8px;font-weight:900}
+.tool-detail p{font-size:.95rem;line-height:1.7;margin-bottom:6px}
+.tool-detail .label{display:inline-block;background:var(--c5);color:#fff;padding:2px 8px;border-radius:8px;font-size:.78rem;font-weight:700;margin-right:6px}
+
+/* Layer Stack interactive (STAGE 3) */
+.layer-stack{display:flex;flex-direction:column-reverse;gap:6px;background:#fff;border:2px dashed var(--c4);border-radius:14px;padding:14px;margin-top:14px}
+.layer-stack-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,#fff,#fff5fa);border:2px solid #ffd6e6;border-radius:10px;cursor:grab;font-size:.95rem;font-weight:700;color:var(--text);transition:.15s}
+.layer-stack-item:hover{transform:translateX(3px);border-color:var(--c1)}
+.layer-stack-item.dragging{opacity:.5}
+.layer-stack-item .layer-icon{font-size:1.2rem}
+.layer-stack-item .layer-up,.layer-stack-item .layer-down{margin-left:auto;background:var(--c1);color:#fff;border:none;width:30px;height:30px;border-radius:50%;font-weight:900;cursor:pointer;font-size:.95rem;transition:.15s}
+.layer-stack-item .layer-down{background:var(--c3);margin-left:6px}
+.layer-stack-item .layer-up:hover,.layer-stack-item .layer-down:hover{transform:scale(1.1)}
+.preview-stage{margin-top:14px;background:linear-gradient(135deg,#fff5fa,#fffde7);border:2px solid var(--c2);border-radius:14px;padding:16px;min-height:160px;position:relative;overflow:hidden}
+.preview-stage .layer-render{position:absolute;left:50%;transform:translateX(-50%);font-size:2.6rem;transition:.3s}
+
+/* Filter selector (STAGE 4) */
+.filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:14px}
+.filter-btn{background:#fff;border:3px solid #f0e6ff;border-radius:14px;padding:14px 10px;cursor:pointer;transition:.2s;text-align:center;font-family:inherit}
+.filter-btn:hover{border-color:var(--c5);transform:translateY(-3px)}
+.filter-btn.active{border-color:var(--c5);background:linear-gradient(135deg,#f6f0ff,#e8d8ff)}
+.filter-btn .preview-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#ff85b3,#ffd54f,#7be495,#6cb4ff);border-radius:8px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+.filter-btn .preview-img.f-bw{background:linear-gradient(135deg,#333,#999,#ccc)}
+.filter-btn .preview-img.f-retro{background:linear-gradient(135deg,#c9a47a,#e8c499,#a87a52);filter:sepia(.6)}
+.filter-btn .preview-img.f-mosaic{background:conic-gradient(from 0deg,#ff85b3,#ffd54f,#7be495,#6cb4ff,#ff85b3);filter:blur(2px) contrast(1.4)}
+.filter-btn .preview-img.f-oil{background:linear-gradient(135deg,#ff85b3,#ffd54f,#7be495,#6cb4ff);filter:saturate(2) blur(.5px)}
+.filter-btn .filter-name{font-size:1rem;font-weight:900;color:var(--text)}
+.filter-btn .filter-desc{font-size:.85rem;color:var(--dim);margin-top:3px;line-height:1.5}
+
+.filter-result{margin-top:18px;padding:20px;background:#fff;border:2px solid var(--c5);border-radius:14px;text-align:center;display:none}
+.filter-result.show{display:block}
+.filter-result h4{font-size:1.1rem;color:var(--c5);margin-bottom:10px;font-weight:900}
+.filter-result p{font-size:.95rem;line-height:1.7;color:var(--text)}
+
+/* Crop interactive (STAGE 2) */
+.crop-demo{background:#fff;border:2px dashed var(--c3);border-radius:14px;padding:20px;margin-top:14px}
+.crop-photo{position:relative;width:100%;max-width:480px;margin:0 auto;aspect-ratio:4/3;background:linear-gradient(135deg,#ffe082,#ffab91,#90caf9);border-radius:8px;overflow:hidden;cursor:crosshair;user-select:none}
+.crop-photo::before{content:'🌅 範例照片';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.3);font-weight:900}
+.crop-selection{position:absolute;border:3px dashed #fff;background:rgba(108,180,255,.25);box-shadow:0 0 0 9999px rgba(0,0,0,.45);pointer-events:none}
+.crop-controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.crop-btn{padding:9px 18px;background:linear-gradient(135deg,var(--c3),#42a5f5);color:#fff;border:none;border-radius:20px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;font-family:inherit}
+.crop-btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(108,180,255,.4)}
+.crop-btn.warn{background:linear-gradient(135deg,var(--c6),#ff5722)}
+.crop-status{margin-top:10px;text-align:center;font-size:.95rem;color:var(--c3);font-weight:700;min-height:24px}
+
+/* UI Map (STAGE 1 interactive) */
+.ui-map{position:relative;background:#fff;border:2px solid var(--c1);border-radius:12px;padding:14px;margin-top:14px}
+.ui-mockup{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto 1fr;gap:6px;background:#f7f3fb;border:2px solid #d8c7e8;border-radius:8px;padding:8px;min-height:280px}
+.ui-mockup-area{padding:10px;text-align:center;font-size:.85rem;color:var(--dim);border-radius:6px;background:#fff;border:2px dashed #d8c7e8;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.ui-mockup-area:hover{border-color:var(--c1);background:#fff5fa;color:var(--c1);transform:scale(1.02)}
+.ui-mockup-area.active{border-color:var(--c1);background:linear-gradient(135deg,#fff5fa,#ffd6e6);color:var(--c1);font-weight:900;box-shadow:0 4px 14px rgba(255,133,179,.4)}
+.ui-mockup-area .num{font-size:1.4rem;font-weight:900;color:var(--c1)}
+.ui-mockup-area .label-cn{font-size:.9rem;font-weight:700;line-height:1.3}
+.ui-area-toolbar{grid-column:1/4;grid-row:1}
+.ui-area-left{grid-column:1;grid-row:2}
+.ui-area-canvas{grid-column:2;grid-row:2;background:linear-gradient(135deg,#fff8b0,#fff)!important;font-size:1rem!important}
+.ui-area-right{grid-column:3;grid-row:2}
+
+/* Quiz */
+.quiz-section{background:#fff;border:2px solid var(--c4);border-radius:18px;padding:22px;margin-bottom:14px}
+.quiz-section h4{font-size:1.05rem;font-weight:900;color:#3a8a3a;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.quiz-q{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:12px}
+.quiz-q .qnum{display:inline-block;background:var(--c4);color:#1f4d1f;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:.85rem;font-weight:900;margin-right:8px}
+.quiz-options{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:12px}
+.quiz-opt{padding:11px 16px;background:#f5fff5;border:2px solid var(--c4);border-radius:12px;cursor:pointer;font-size:.95rem;font-weight:500;text-align:left;transition:.18s;color:var(--text)}
+.quiz-opt:hover{background:var(--c4);color:#1f4d1f;transform:translateY(-1px)}
+.quiz-opt.correct{background:linear-gradient(135deg,#7be495,#4caf50);color:#fff;border-color:#4caf50}
+.quiz-opt.wrong{background:linear-gradient(135deg,#ffd1b3,#ff7043);color:#fff;border-color:#ff7043}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{padding:12px 16px;border-radius:12px;font-size:.95rem;font-weight:700;margin-top:10px;display:none}
+.quiz-feedback.right{background:#e8f5e9;color:#1b5e20;border:2px solid var(--c4);display:block}
+.quiz-feedback.miss{background:#ffe0e0;color:#7b1f1f;border:2px solid var(--c6);display:block}
+.quiz-q-block{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #d8e8d8}
+.quiz-q-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+
+/* Teacher only */
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+.teacher-note{background:linear-gradient(135deg,#e3f2fd,#fff);border:2px solid var(--c3);border-radius:14px;padding:18px;margin-top:14px}
+.teacher-note h4{color:var(--c3);font-size:1rem;font-weight:900;margin-bottom:8px}
+.teacher-note p,.teacher-note li{font-size:.95rem;line-height:1.7}
+.teacher-note ul{padding-left:20px}
+
+/* Project task */
+.project-task{background:linear-gradient(135deg,#fff,#fff5fa);border:3px solid var(--c1);border-radius:24px;padding:30px;margin-bottom:48px;box-shadow:var(--shadow-soft)}
+.project-task h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c1)}
+.project-task .lead{font-size:1rem;color:var(--text);margin-bottom:18px}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.theme-card{background:#fff;border:2px solid #ffd6e6;border-radius:18px;padding:20px;transition:.2s}
+.theme-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-pop);border-color:var(--c1)}
+.theme-card .badge{display:inline-block;background:var(--c1);color:#fff;padding:4px 12px;border-radius:12px;font-size:.78rem;font-weight:900;margin-bottom:10px}
+.theme-card h3{font-size:1.1rem;font-weight:900;margin-bottom:8px;color:var(--text)}
+.theme-card p{font-size:.95rem;line-height:1.7;color:var(--text)}
+.theme-card ul{font-size:.92rem;margin-top:8px;padding-left:18px;color:var(--dim);line-height:1.7}
+
+/* NotebookLM Section */
+.nb-section{background:linear-gradient(135deg,#fff8fb,#fff);border:3px solid var(--c5);border-radius:24px;padding:30px;margin-bottom:48px;box-shadow:var(--shadow-soft)}
+.nb-section h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c5);display:flex;align-items:center;gap:8px}
+.nb-section .lead{font-size:1rem;margin-bottom:20px;color:var(--text)}
+.nb-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:24px}
+.nb-card{background:#fff;border:2px solid #e8d8ff;border-radius:16px;padding:18px;text-decoration:none;color:var(--text);transition:.2s;display:block}
+.nb-card:hover{transform:translateY(-3px);border-color:var(--c5);box-shadow:0 8px 20px rgba(179,136,255,.25);text-decoration:none}
+.nb-card .icon{font-size:2rem;margin-bottom:8px;display:block}
+.nb-card h4{font-size:1rem;font-weight:900;margin-bottom:5px;color:var(--c5)}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.6}
+.nb-flow{background:#fff;border:2px dashed var(--c5);border-radius:14px;padding:18px;margin-bottom:24px}
+.nb-flow h4{font-size:1rem;font-weight:900;color:var(--c5);margin-bottom:10px}
+.nb-flow .flow-line{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.95rem}
+.nb-flow .step{padding:6px 12px;background:linear-gradient(135deg,#f6f0ff,#e8d8ff);border-radius:20px;font-weight:700;color:var(--c5)}
+.nb-flow .arrow{color:var(--c5);font-weight:900}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:#fff;border:2px solid #ffeaf2;border-radius:14px;overflow:hidden;transition:.2s}
+.faq-item.open{border-color:var(--c1);box-shadow:var(--shadow-soft)}
+.faq-q{padding:14px 18px;cursor:pointer;font-size:1rem;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;background:#fff5fa}
+.faq-q:hover{background:#ffeaf2}
+.faq-q .toggle{color:var(--c1);font-size:1.2rem;transition:.2s}
+.faq-item.open .toggle{transform:rotate(45deg)}
+.faq-a{display:none;padding:14px 18px;font-size:.95rem;line-height:1.8;border-top:1px dashed #ffd6e6;color:var(--text)}
+.faq-item.open .faq-a{display:block}
+
+/* Slide Player */
+.slide-section{margin-bottom:48px}
+.slide-section h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c3);display:flex;align-items:center;gap:8px}
+.slide-player{background:#fff;border:3px solid var(--c3);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.slide-main{position:relative;background:#000;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.85);color:var(--c3);border:none;width:48px;height:48px;border-radius:50%;font-size:1.8rem;font-weight:900;cursor:pointer;transition:.2s;box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center}
+.slide-nav-btn:hover{background:var(--c3);color:#fff;transform:translateY(-50%) scale(1.08)}
+.slide-nav-btn.prev{left:14px}
+.slide-nav-btn.next{right:14px}
+.slide-fs-btn{position:absolute;top:14px;right:14px;background:var(--c3);color:#fff;border:none;padding:9px 16px;font-size:.95rem;font-weight:700;cursor:pointer;border-radius:24px;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:5;display:flex;align-items:center;gap:6px;transition:.15s;font-family:inherit}
+.slide-fs-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.slide-counter{position:absolute;bottom:14px;left:14px;background:rgba(0,0,0,.7);color:#fff;padding:5px 12px;border-radius:14px;font-size:.85rem;font-weight:700}
+.slide-strip{display:flex;gap:10px;padding:14px;overflow-x:auto;background:#fff5fa;border-top:2px solid #ffd6e6}
+.strip-thumb{flex-shrink:0;width:130px;aspect-ratio:16/9;border:3px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;transition:.2s;background:#fff}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb:hover{transform:translateY(-2px)}
+.strip-thumb.active{border-color:var(--c3);box-shadow:0 0 0 2px #fff,0 0 0 5px var(--c3)}
+
+/* Slide fullscreen */
+.slide-fs{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9999;display:none;align-items:center;justify-content:center;padding:30px}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+.slide-fs-close{position:absolute;top:20px;right:20px;background:#fff;color:#000;border:none;width:44px;height:44px;border-radius:50%;font-size:1.4rem;cursor:pointer;font-weight:900;z-index:2}
+.slide-fs-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.9);color:#000;padding:8px 18px;border-radius:20px;font-weight:700;font-size:.95rem}
+.slide-fs-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.85);color:#333;border:none;width:54px;height:54px;border-radius:50%;font-size:2rem;cursor:pointer;font-weight:900;z-index:2}
+.slide-fs-nav.prev{left:20px}
+.slide-fs-nav.next{right:20px}
+.slide-fs-nav:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none!important}
+@media (max-width:720px){
+  .slide-fs-nav{width:46px;height:64px;font-size:1.6rem}
+  .slide-fs-nav.prev{left:8px}
+  .slide-fs-nav.next{right:8px}
+  .slide-fs-close{width:40px;height:40px;top:12px;right:12px}
+}
+
+/* Video section */
+.nlm-video-section{margin-bottom:48px}
+.nlm-video-section h2{font-size:1.4rem;font-weight:900;margin-bottom:14px;color:var(--c1);display:flex;align-items:center;gap:8px}
+.video-wrap{background:#fff;border:3px solid var(--c1);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.video-ratio{position:relative;padding-top:56.25%;width:100%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-no-id{padding:60px 30px;text-align:center;font-size:1rem;color:var(--dim);background:linear-gradient(135deg,#fff5fa,#fff);border:2px dashed var(--c1)}
+.video-no-id .icon{font-size:3rem;margin-bottom:14px;display:block}
+.video-no-id a{color:var(--c1);font-weight:700}
+.video-meta{background:#fff5fa;border-top:2px solid #ffd6e6;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c1);color:#fff;font-size:.8rem;font-weight:700;padding:5px 12px;border-radius:14px;white-space:nowrap}
+.video-hint{font-size:.92rem;color:var(--dim)}
+
+/* Footer */
+.footer-section{background:linear-gradient(135deg,#fff,#fff5fa);border:3px solid var(--c2);border-radius:24px;padding:30px;margin-bottom:32px;box-shadow:var(--shadow-soft)}
+.footer-section h2{font-size:1.4rem;font-weight:900;margin-bottom:12px;color:#a07000}
+.footer-section p,.footer-section li{font-size:.95rem;line-height:1.8}
+.footer-section ul{padding-left:22px}
+.copyright{text-align:center;padding:24px;color:var(--dim);font-size:.85rem}
+.copyright a{color:var(--c5)}
+
+/* Floating tools */
+.float-tools{position:fixed;right:20px;bottom:20px;z-index:400;display:flex;flex-direction:column;gap:10px}
+.float-btn{width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;font-size:1.5rem;box-shadow:0 6px 16px rgba(0,0,0,.18);transition:.2s;display:flex;align-items:center;justify-content:center;color:#fff}
+.float-btn:hover{transform:scale(1.1)}
+.float-btn.pink{background:linear-gradient(135deg,#ff85b3,#ff4081)}
+.float-btn.yellow{background:linear-gradient(135deg,#ffd54f,#ffa726);color:#5d3a00}
+.float-btn.purple{background:linear-gradient(135deg,#b388ff,#7e57c2)}
+.float-btn.blue{background:linear-gradient(135deg,#6cb4ff,#42a5f5)}
+.float-btn.green{background:linear-gradient(135deg,#7be495,#4caf50)}
+
+.tool-panel{position:fixed;right:90px;bottom:20px;z-index:400;background:#fff;border:3px solid var(--c1);border-radius:18px;padding:20px;width:280px;box-shadow:0 12px 30px rgba(0,0,0,.18);display:none}
+.tool-panel.show{display:block}
+.tool-panel h4{font-size:1.05rem;font-weight:900;color:var(--c1);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.tool-panel .close{cursor:pointer;background:transparent;border:none;font-size:1.2rem;color:var(--dim)}
+.tool-panel .close:hover{color:var(--c6)}
+.tool-panel input[type="number"]{padding:6px 10px;border:2px solid #ffd6e6;border-radius:8px;font-family:inherit;font-size:.95rem;color:var(--text);background:#fff5fa;outline:none}
+.tool-panel input[type="number"]:focus{border-color:var(--c1)}
+.btn-primary{background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;transition:.15s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(255,133,179,.4)}
+.lottery-result{margin-top:14px;text-align:center;padding:14px;background:linear-gradient(135deg,#fff5fa,#fff);border:2px dashed var(--c1);border-radius:12px;font-size:1.5rem;font-weight:900;color:var(--c1);min-height:60px;display:flex;align-items:center;justify-content:center}
+.timer-display{text-align:center;font-size:2.4rem;font-weight:900;color:var(--c5);margin:14px 0;font-family:'Fredoka','Noto Sans TC',sans-serif}
+
+/* Draw canvas */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent;display:block}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:#fff;border:3px solid var(--c1);border-radius:30px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.2);display:none;gap:10px;align-items:center}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .label{font-size:1.2rem}
+.color-dot{width:30px;height:30px;border:3px solid #fff;cursor:pointer;padding:0;transition:.2s;border-radius:50%;outline:2px solid transparent}
+.color-dot.active{outline-color:var(--text);transform:scale(1.15)}
+.draw-clear{background:linear-gradient(135deg,var(--c6),#ff5722);color:#fff;border:none;padding:6px 14px;border-radius:18px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem}
+
+/* Teacher modal */
+.modal-mask{position:fixed;inset:0;background:rgba(255,133,179,.3);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center}
+.modal-mask.show{display:flex}
+.modal{background:#fff;border:3px solid var(--c1);border-radius:24px;padding:30px;max-width:380px;width:90%;box-shadow:0 20px 50px rgba(0,0,0,.2)}
+.modal h3{color:var(--c1);font-size:1.2rem;font-weight:900;margin-bottom:12px;text-align:center}
+.modal p{font-size:.95rem;color:var(--dim);margin-bottom:14px;text-align:center}
+.modal input{width:100%;padding:11px 14px;border:2px solid var(--c1);background:#fff5fa;color:var(--text);font-family:inherit;font-size:1rem;border-radius:14px;outline:none}
+.modal input:focus{border-color:var(--c5);background:#fff}
+.modal-btns{display:flex;gap:10px;margin-top:18px;justify-content:center}
+.modal-btns button{padding:9px 20px;border:none;border-radius:20px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem}
+.modal-btns .ok{background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff}
+.modal-btns .cancel{background:#eee;color:var(--text)}
+
+/* Responsive */
+@media(max-width:720px){
+  html{font-size:17px}
+  .container{padding:18px}
+  .header-title h1{font-size:1.25rem}
+  .level-section{padding:22px 18px}
+  .stage-pill{font-size:.88rem;padding:8px 14px}
+  .quiz-options{grid-template-columns:1fr}
+  .float-tools{right:14px;bottom:14px}
+  .float-btn{width:48px;height:48px;font-size:1.3rem}
+  .tool-panel{right:14px;left:14px;width:auto;bottom:80px}
+  .strip-thumb{width:100px}
+  .ui-mockup{grid-template-columns:1fr;grid-template-rows:auto auto auto auto}
+  .ui-area-toolbar,.ui-area-left,.ui-area-canvas,.ui-area-right{grid-column:1;grid-row:auto}
+}
+
+@keyframes pop{0%{transform:scale(.85);opacity:0}60%{transform:scale(1.05);opacity:1}100%{transform:scale(1)}}
+.pop{animation:pop .35s ease}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title">
+      <h1>PhotoCap 圖像編輯<span class="accent">魔法師</span></h1>
+      <div class="sub">4 個關卡 × 台灣免費影像處理軟體 × 變身相片大師</div>
+    </div>
+    <span class="grade-chip">🎓 國小四年級｜資訊科技</span>
+    <div class="progress-wrap">
+      <span class="progress-label">⭐ 學習進度</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-bar">
+  <button class="mode-btn active" id="mode-student" onclick="switchMode('student')">👦 學生模式</button>
+  <button class="mode-btn" id="mode-teacher" onclick="askTeacher()">👩‍🏫 教師模式</button>
+</div>
+
+<div class="container">
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2><span class="icon">🎨</span>今天你要變身：相片小設計師！</h2>
+    <p class="lead">
+      <b>PhotoCap</b> 是台灣呂聰賢老師做的<b>免費</b>影像處理軟體，已經陪伴台灣家庭和學校超過 20 年！
+      它就像「小朋友也能用的 Photoshop」 — 全中文、超好上手，可以做相片書、撲克牌、月曆、雜誌封面...
+      跟著阿凱老師走過 4 個關卡，今天就能做出讓爸媽驚呼的作品！
+    </p>
+    <div class="obj-list">
+      <span class="obj-chip"><span class="ico">🖥️</span>認識 PhotoCap 介面</span>
+      <span class="obj-chip"><span class="ico">✂️</span>裁切 / 旋轉 / 縮放</span>
+      <span class="obj-chip"><span class="ico">💬</span>加文字 / 貼紙 / 相框</span>
+      <span class="obj-chip"><span class="ico">🌈</span>顏色 / 特效濾鏡</span>
+      <span class="obj-chip"><span class="ico">📚</span>圖層概念</span>
+    </div>
+  </section>
+
+  <!-- Stage Nav -->
+  <nav class="stage-nav" aria-label="關卡導覽">
+    <a class="stage-pill" href="#sec1">🖥️ STAGE 1 認識介面</a>
+    <a class="stage-pill" href="#sec2">✂️ STAGE 2 裁切旋轉</a>
+    <a class="stage-pill" href="#sec3">💬 STAGE 3 文字貼紙相框</a>
+    <a class="stage-pill" href="#sec4">🌈 STAGE 4 特效濾鏡</a>
+    <a class="stage-pill" href="#project">🎯 今日任務</a>
+    <a class="stage-pill" href="#slides">📊 授課簡報</a>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge s1">STAGE 1</span>
+      <div class="section-title">
+        <h2>🖥️ 認識 PhotoCap 與檔案管理</h2>
+        <div class="sub">下載 → 開啟照片 → 認識視窗 → 儲存成 JPG / PNG / PCL</div>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/01_認識介面.jpg" alt="PhotoCap 介面與儲存資訊圖" loading="lazy">
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟（跟著做就會了！）</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span class="step-text">到官網 <b>www.photocap.com.tw</b> 下載 <b>正體中文版</b>，安裝時<b>不要改路徑</b>（一直按下一步就對了），素材包才會找得到家。</span></li>
+        <li><span class="step-num">2</span><span class="step-text">桌面點兩下 PhotoCap 圖示打開軟體，認識中間最大的「<b>編輯區</b>」 — 那就是你的魔法畫布！</span></li>
+        <li><span class="step-num">3</span><span class="step-text">左上角找「<b>載入</b>」按鈕（資料夾圖示）或按 <b>Ctrl + L</b>，跳出小視窗就能挑照片。</span></li>
+        <li><span class="step-num">4</span><span class="step-text">先在左邊選資料夾 → 右邊點照片 → 按綠色打勾「OK」，照片就跑到編輯區囉！</span></li>
+        <li><span class="step-num">5</span><span class="step-text">做完想存檔？點「<b>檔案 → 另存影像</b>」（快速鍵 Ctrl+S），<b>不要覆蓋原圖</b>！</span></li>
+        <li><span class="step-num">6</span><span class="step-text">在「影像類型」選 <b>JPEG</b>（傳給朋友看）或 <b>PNG</b>（要透明背景）。壓縮品質保持 <b>90% 以上</b>！</span></li>
+        <li><span class="step-num">7</span><span class="step-text">若還要繼續修改，請存成 <b>PCL 工作檔</b> — 它會保留所有貼紙、文字的「分層」，下次打開可以單獨修改。</span></li>
+      </ul>
+      <div class="tip-box"><span class="ico">💡</span><span><b>小撇步</b>：檔名後面加「_修改後」（如：full_family_修改後.jpg），永遠不會把原圖蓋掉！</span></div>
+      <div class="warn-box"><span class="ico">⚠️</span><span><b>避免悲劇</b>：PhotoCap 沒有自動儲存！每做完一個步驟就按一下儲存 PCL 檔，停電當機也不怕。</span></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動探索：PhotoCap 視窗大冒險</h4>
+      <p class="canvas-tip">點下方仿真介面圖的不同區域，看看每個地方叫什麼名字、可以做什麼！</p>
+      <div class="ui-map">
+        <div class="ui-mockup">
+          <div class="ui-mockup-area ui-area-toolbar" onclick="showUiInfo('toolbar',this)">
+            <span class="num">①②</span>
+            <span class="label-cn">功能表 + 常用工具列</span>
+          </div>
+          <div class="ui-mockup-area ui-area-left" onclick="showUiInfo('left',this)">
+            <span class="num">④</span>
+            <span class="label-cn">繪圖工具面板<br>（選取/筆刷/修片）</span>
+          </div>
+          <div class="ui-mockup-area ui-area-canvas" onclick="showUiInfo('canvas',this)">
+            <span class="num">⑤</span>
+            <span class="label-cn">編輯區<br>（魔法畫布！）</span>
+          </div>
+          <div class="ui-mockup-area ui-area-right" onclick="showUiInfo('right',this)">
+            <span class="num">⑧⑩</span>
+            <span class="label-cn">物件工具列<br>+ 圖層面板</span>
+          </div>
+        </div>
+        <div class="tool-detail" id="ui-detail">
+          <h4><span class="label">👆</span>請點上方任一區域查看說明</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 STAGE 1 形成性評量</h4>
+      <div class="quiz-q-block" data-stage="1" data-q="1">
+        <div class="quiz-q"><span class="qnum">1</span>PhotoCap 是哪一國的人開發的免費影像處理軟體？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">美國</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">台灣</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">日本</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">韓國</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="1" data-q="2">
+        <div class="quiz-q"><span class="qnum">2</span>做到一半想休息，下次還要繼續修改文字和貼紙，應該存成哪一種格式？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">JPEG</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">PNG</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">PCL（PhotoCap 工作檔）</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">TXT</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="1" data-q="3">
+        <div class="quiz-q"><span class="qnum">3</span>做好的照片要傳給沒裝 PhotoCap 的爺爺看，最適合存成哪種格式？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,true)">JPEG，最普遍、任何裝置都能看</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">PCL，畫質最好</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">EXE，最快</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">不用存，直接給他看螢幕</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h4>👩‍🏫 教師備課提示</h4>
+      <ul>
+        <li><b>課前準備</b>：請電腦教室管理員確認 PhotoCap 主程式 + V1/V2/V3 素材包都已預先安裝，路徑統一為 <code>C:\Program Files\PhotoCap6</code>。</li>
+        <li><b>暖身活動</b>：先在投影幕展示用 PhotoCap 做的撲克牌、雜誌封面、月曆樣品，讓學生「哇」一聲後再開課。</li>
+        <li><b>素材包</b>：建議建立桌面「練習圖庫」資料夾，提前放 5-10 張版權無虞的可愛動物照（家裡毛小孩、寵物店免費圖）。</li>
+        <li><b>跨年級銜接</b>：本課程銜接三年級小畫家，明確讓學生對比「小畫家只能畫」vs「PhotoCap 能修照片 + 套相框」。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section id="sec2" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge s2">STAGE 2</span>
+      <div class="section-title">
+        <h2>✂️ 裁切、旋轉與調整尺寸</h2>
+        <div class="sub">先選取後處理 × 切掉路人 × 把歪歪的照片轉正</div>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/02_裁切旋轉尺寸.jpg" alt="裁切旋轉調整尺寸資訊圖" loading="lazy">
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span class="step-text">先載入想處理的照片到編輯區（Ctrl+L）。</span></li>
+        <li><span class="step-num">2</span><span class="step-text">想切掉路人？左邊工具列點「<b>選取工具</b>」（虛線方形圖示），或按右側黑色小箭頭選「矩形選取」。</span></li>
+        <li><span class="step-num">3</span><span class="step-text">在照片上按住滑鼠左鍵不放，<b>拉出虛線框框</b>，把要保留的部分框起來。<br><b>小撇步</b>：按住 <b>Shift</b> 拖曳 = 強制正方形！</span></li>
+        <li><span class="step-num">4</span><span class="step-text">框好後，上方工具列找<b>剪刀</b>圖示「裁切」按下去，框外面的部分就消失囉。</span></li>
+        <li><span class="step-num">5</span><span class="step-text">要沖洗照片？選「<b>影像 → 裁切 → 按指定尺寸裁切</b>」 → 選「照片 [5x7 英吋]」 → 解析度填 <b>300</b> → OK，就能拿去照相館！</span></li>
+        <li><span class="step-num">6</span><span class="step-text">照片拍歪了？「<b>影像 → 旋轉版面</b>」可以選順時針 90、逆時針 90、180 度，或「任意角度」自己輸入（例：-15 度）。</span></li>
+        <li><span class="step-num">7</span><span class="step-text">要縮小照片？「<b>影像 → 影像大小</b>」輸入新的寬度高度（網頁用 960×720、解析度 72 就夠）。</span></li>
+      </ul>
+      <div class="tip-box"><span class="ico">💡</span><span>「先選取、後處理」是影像處理的<b>第一定律</b>！要動哪裡先框起來，才知道魔法要施展在哪個地方。</span></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動模擬：拖曳框選 + 裁切體驗</h4>
+      <p class="canvas-tip">在下方範例照片上 <b>按住滑鼠左鍵拖曳</b>，框出你想保留的區域；放開後按「裁切」看看效果！</p>
+      <div class="crop-demo">
+        <div class="crop-photo" id="cropPhoto">
+          <div class="crop-selection" id="cropSelection" style="display:none"></div>
+        </div>
+        <div class="crop-controls">
+          <button class="crop-btn" onclick="doCrop()">✂️ 裁切</button>
+          <button class="crop-btn" onclick="rotatePhoto()">🔄 旋轉 90°</button>
+          <button class="crop-btn warn" onclick="resetCrop()">↺ 重置</button>
+        </div>
+        <div class="crop-status" id="cropStatus">👆 在照片上拖曳滑鼠框選想保留的區域</div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 STAGE 2 形成性評量</h4>
+      <div class="quiz-q-block" data-stage="2" data-q="1">
+        <div class="quiz-q"><span class="qnum">1</span>影像處理的最重要原則是？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">先儲存再修改</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">先選取、後處理</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">先轉檔再裁切</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">越大張的照片越好</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="2" data-q="2">
+        <div class="quiz-q"><span class="qnum">2</span>用選取工具拖曳時，<b>按住哪個鍵</b>可以強制框出正方形？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">Ctrl</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Alt</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">Shift</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">Space</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="2" data-q="3">
+        <div class="quiz-q"><span class="qnum">3</span>不小心把照片轉歪了，應該怎麼救？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">關掉軟體不存檔</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">點上方「向左綠箭頭」復原（回上一步）</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">把電腦關機</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">叫老師</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h4>👩‍🏫 教師備課提示</h4>
+      <ul>
+        <li><b>解析度概念</b>：給學生具體比喻 — 印書/沖洗照片要 300 dpi（細密小方格），看螢幕只要 72 dpi（鬆鬆的方格）。</li>
+        <li><b>裁切尺寸</b>：5×7 英吋是相館標準，老師可以拿實體照片給學生看「原來實體照片就是這個比例」。</li>
+        <li><b>常見誤區</b>：學生會以為「裁切會增加畫質」 — 提醒他們裁切只能「拿掉」，不能「變大」！</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section id="sec3" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge s3">STAGE 3</span>
+      <div class="section-title">
+        <h2>💬 加文字、貼紙與相框（物件 & 圖層）</h2>
+        <div class="sub">物件 = 透明貼紙 × 圖層 = 一疊玻璃紙 × 學會就變影像大師</div>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/03_文字貼紙相框.jpg" alt="文字貼紙相框與圖層概念資訊圖" loading="lazy">
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span class="step-text">看右邊的「<b>物件工具列</b>」 — 那就是「貼紙倉庫」的入口！</span></li>
+        <li><span class="step-num">2</span><span class="step-text">加文字：找大寫英文「<b>T</b>」按鈕點下去，打上想說的話，挑字型、顏色，按 OK！記得試試「<b>光暈標題文字</b>」做出發光酷字。</span></li>
+        <li><span class="step-num">3</span><span class="step-text">移動文字：用滑鼠按住文字拖曳，邊角的小圓點可以拉大縮小，學會像高手一樣排版！</span></li>
+        <li><span class="step-num">4</span><span class="step-text">加可愛貼紙：右邊找<b>風景圖示</b>「照片物件」按鈕，從素材包選一張可愛小圖案，OK！</span></li>
+        <li><span class="step-num">5</span><span class="step-text">加漂亮相框：上方工具列<b>畫框圖示</b>「加外框」 → 跳出超多相框讓你挑（素材包有 1582 個喔！）→ 點喜歡的 → OK！</span></li>
+        <li><span class="step-num">6</span><span class="step-text">多圖外框 = 一次貼 3-4 張照片組成的拼貼相框，做「全家福組合照」超好用。</span></li>
+        <li><span class="step-num">7</span><span class="step-text">看右下角「<b>圖層面板</b>」 — 每個貼紙都會變成一行，<b>越上面的圖層越前面</b>。要把文字蓋過照片？把文字那一層往上拉就對了！</span></li>
+      </ul>
+      <div class="tip-box"><span class="ico">💡</span><span><b>圖層比喻</b>：把每個物件想成一張「透明玻璃紙」，整張作品是「一疊玻璃紙」。最上面的玻璃紙看到的東西最清楚！</span></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動實驗：拖曳圖層改變順序</h4>
+      <p class="canvas-tip">下方有 4 個圖層，<b>按上下箭頭</b>可以調整哪個在前、哪個在後。看看效果區的位置怎麼變！</p>
+      <div class="layer-stack" id="layerStack">
+        <!-- JS 動態生成 -->
+      </div>
+      <div class="preview-stage" id="previewStage">
+        <!-- JS 動態生成圖層渲染 -->
+      </div>
+      <p style="margin-top:10px;font-size:.9rem;color:var(--dim);text-align:center">💡 觀察：上面的圖層會蓋住下面的圖層</p>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 STAGE 3 形成性評量</h4>
+      <div class="quiz-q-block" data-stage="3" data-q="1">
+        <div class="quiz-q"><span class="qnum">1</span>PhotoCap 的「<b>物件</b>」最像下面哪個比喻？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,true)">可以撕下來到處貼的透明貼紙</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">把照片直接畫上去就擦不掉</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">一張完全不能改的照片</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">電腦病毒</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="3" data-q="2">
+        <div class="quiz-q"><span class="qnum">2</span>我加上去的文字不見了！最有可能是？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">電腦壞了</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">文字圖層被照片圖層蓋住，要在圖層面板把文字「往上拉」</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">電腦中毒</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">PhotoCap 不能加文字</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="3" data-q="3">
+        <div class="quiz-q"><span class="qnum">3</span>要把全家四人的個別照組成一張「全家福」，最快的方法是？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">把四張照片一起用透明膠帶黏起來掃描</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">用 PhotoCap 的「多圖外框」模板，匯入 4 張照片</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">每張個別印出來再拼</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">把照片貼在 Word 裡面</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h4>👩‍🏫 教師備課提示</h4>
+      <ul>
+        <li><b>圖層概念是難點</b>：建議用實體「投影片疊疊樂」教具示範 — 三張透明片各畫不同內容，疊起來給學生看上下順序如何影響視覺。</li>
+        <li><b>字型選擇</b>：教學生用「微軟正黑體」或「華康少女字體」等可愛字體，避免「標楷體」太正經。</li>
+        <li><b>版權教育</b>：強調網路抓的圖有版權，建議用自己拍的照片或 Pixabay、Pexels 等 CC0 圖庫。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section id="sec4" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge s4">STAGE 4</span>
+      <div class="section-title">
+        <h2>🌈 顏色調整與特效濾鏡</h2>
+        <div class="sub">亮度對比飽和度 × 黑白復古馬賽克油畫 × 一鍵變藝術品</div>
+      </div>
+    </div>
+
+    <div class="section-img-wrap">
+      <img src="assets/04_顏色特效.jpg" alt="顏色調整與特效濾鏡資訊圖" loading="lazy">
+    </div>
+
+    <div class="steps-card">
+      <h4>📝 操作步驟</h4>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span class="step-text">照片太暗？選「<b>影像 → 亮度/對比調整</b>」，跳出控制視窗。</span></li>
+        <li><span class="step-num">2</span><span class="step-text">確認「<b>自動預覽</b>」有打勾（預設就是勾的），左右拖曳滑桿，<b>照片會即時變亮變暗</b>。調好按 OK！</span></li>
+        <li><span class="step-num">3</span><span class="step-text">想讓顏色更鮮艷？「影像 → <b>色彩調整</b>」可以調飽和度（往右拖 = 顏色更濃，往左拖 = 變淡）。</span></li>
+        <li><span class="step-num">4</span><span class="step-text">黑白照？「<b>濾鏡 → 顏色濾鏡 → 黑白</b>」，瞬間變成藝術家攝影風。</span></li>
+        <li><span class="step-num">5</span><span class="step-text">復古老照片？「<b>濾鏡 → 顏色濾鏡 → 復古</b>」，馬上有阿公阿嬤年代的味道。</span></li>
+        <li><span class="step-num">6</span><span class="step-text">要遮路人臉？左邊修片工具找<b>馬賽克</b>（很多小方格圖示），按住滑鼠在照片上塗一塗就遮起來。</span></li>
+        <li><span class="step-num">7</span><span class="step-text">變成油畫？「<b>濾鏡 → 藝術風 → 油畫</b>」，照片瞬間像名畫家畫出來的傑作！</span></li>
+        <li><span class="step-num">8</span><span class="step-text">紅眼怎麼救？專門的「<b>去除紅眼</b>」工具，點一下紅眼處就消失。</span></li>
+      </ul>
+      <div class="tip-box"><span class="ico">💡</span><span>特效套<b>一兩個</b>剛剛好，套太多會看起來俗氣。先存 PCL 工作檔，再套特效，這樣不喜歡可以回去重來！</span></div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🎮 互動實驗：四大濾鏡比一比</h4>
+      <p class="canvas-tip">點下方任一濾鏡，看看效果預覽和適合的場景說明！</p>
+      <div class="filter-grid">
+        <button class="filter-btn" onclick="showFilter('bw',this)">
+          <div class="preview-img f-bw">🌑</div>
+          <div class="filter-name">黑白</div>
+          <div class="filter-desc">經典藝術風</div>
+        </button>
+        <button class="filter-btn" onclick="showFilter('retro',this)">
+          <div class="preview-img f-retro">🌅</div>
+          <div class="filter-name">復古</div>
+          <div class="filter-desc">阿公阿嬤年代</div>
+        </button>
+        <button class="filter-btn" onclick="showFilter('mosaic',this)">
+          <div class="preview-img f-mosaic">🟫</div>
+          <div class="filter-name">馬賽克</div>
+          <div class="filter-desc">遮臉好幫手</div>
+        </button>
+        <button class="filter-btn" onclick="showFilter('oil',this)">
+          <div class="preview-img f-oil">🎨</div>
+          <div class="filter-name">油畫</div>
+          <div class="filter-desc">變成藝術家</div>
+        </button>
+      </div>
+      <div class="filter-result" id="filterResult">
+        <h4>👆 請點任一濾鏡查看詳細說明</h4>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 STAGE 4 形成性評量</h4>
+      <div class="quiz-q-block" data-stage="4" data-q="1">
+        <div class="quiz-q"><span class="qnum">1</span>調整亮度時，照片沒有立刻變化，最有可能是？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">電腦壞了</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">「自動預覽」沒打勾</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">PhotoCap 不能調亮度</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">照片太大張</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="4" data-q="2">
+        <div class="quiz-q"><span class="qnum">2</span>跟同學合照時拍到路人，最快遮起來的方法是？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">把照片撕掉重拍</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">叫路人不要動</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">用 PhotoCap 的「馬賽克」工具在路人臉上塗一塗</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">把整張照片變成黑白</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-q-block" data-stage="4" data-q="3">
+        <div class="quiz-q"><span class="qnum">3</span>把彩色風景照變成像「梵谷畫的星空」風格，要用哪個特效？</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answerQ(this,false)">黑白濾鏡</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">馬賽克</button>
+          <button class="quiz-opt" onclick="answerQ(this,true)">藝術風 → 油畫濾鏡</button>
+          <button class="quiz-opt" onclick="answerQ(this,false)">復古濾鏡</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only">
+      <h4>👩‍🏫 教師備課提示</h4>
+      <ul>
+        <li><b>美感教學</b>：建議準備 5-6 張範例對比（原圖 vs 黑白/復古/油畫），讓學生發表「哪一張最有 fu？為什麼？」</li>
+        <li><b>節制使用</b>：強調「特效不是越多越好」 — 真正厲害的設計師是「會選擇不用某個特效」。</li>
+        <li><b>跨域</b>：可結合藝術領域 — 介紹梵谷、莫內等畫家，再用 PhotoCap 把學生照片變成那種風格。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 今日實作任務 -->
+  <section id="project" class="project-task">
+    <h2>🎯 今日實作任務：選一個主題，做一張獨一無二的作品！</h2>
+    <p class="lead">挑下面任何一個主題，運用今天學到的 4 個關卡功能，做出讓全班讚嘆的作品！完成後請另存 JPG 給老師，並保留 PCL 工作檔下次還能修改。</p>
+    <div class="theme-grid">
+      <div class="theme-card">
+        <span class="badge">★ 入門</span>
+        <h3>🎂 媽媽生日卡片</h3>
+        <p>用家人合照 + 加文字「祝媽媽生日快樂」+ 套用蛋糕貼紙 + 漂亮相框 = 印出來送媽媽！</p>
+        <ul>
+          <li>用到關卡：1、2、3</li>
+          <li>建議時間：40 分鐘</li>
+          <li>難度：★☆☆☆☆</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <span class="badge">★★ 中等</span>
+        <h3>📰 我是雜誌大明星</h3>
+        <p>套用 PhotoCap 雜誌封面模板 + 自己的帥照 / 美照 + 文字「四年三班最快飛毛腿」 + 調亮度 + 復古濾鏡。</p>
+        <ul>
+          <li>用到關卡：1、2、3、4</li>
+          <li>建議時間：1 節課</li>
+          <li>難度：★★☆☆☆</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <span class="badge">★★★ 進階</span>
+        <h3>🐱 寵物撲克牌組</h3>
+        <p>準備 4 張寵物 / 玩具照 + PhotoCap「撲克牌模板」 + 加上名字年齡 + 套相框 = 印出來跟好朋友玩心臟病！</p>
+        <ul>
+          <li>用到關卡：1、2、3</li>
+          <li>建議時間：2 節課</li>
+          <li>難度：★★★☆☆</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <span class="badge">★★★★ 挑戰</span>
+        <h3>✈️ 街頭藝人換我當</h3>
+        <p>世界景點照（巴黎鐵塔 / 東京）+ 自己的去背照片 + 圖層融合 = 假裝出國玩！</p>
+        <ul>
+          <li>用到關卡：1、2、3、4（含圖層概念）</li>
+          <li>建議時間：2 節課</li>
+          <li>難度：★★★★☆</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- NotebookLM 資源站 -->
+  <section class="nb-section">
+    <h2>🧠 學習資源｜NotebookLM × Claude Code 打造</h2>
+    <p class="lead">這個駕駛艙是用 Google 的 <b>NotebookLM</b>（AI 知識整理器）+ <b>Claude Code</b>（AI 程式助手）打造的！下面是相關資源：</p>
+
+    <div class="nb-cards">
+      <a href="https://notebooklm.google.com/notebook/7c265002-77b6-4808-97c5-8bd4f4e27e1a" target="_blank" class="nb-card">
+        <span class="icon">🎯</span>
+        <h4>PhotoCap 教學筆記本</h4>
+        <p>本駕駛艙專用的精簡本（含主講者形象 + 萃取精華）</p>
+      </a>
+      <a href="https://notebooklm.google.com/notebook/9fc6f9b8-b837-46fd-8513-9cdd6a58a146" target="_blank" class="nb-card">
+        <span class="icon">📚</span>
+        <h4>研究本（15 個來源）</h4>
+        <p>深度搜尋找到的 PhotoCap 完整教學資源整理</p>
+      </a>
+      <a href="https://www.photocap.com.tw/" target="_blank" class="nb-card">
+        <span class="icon">⬇️</span>
+        <h4>PhotoCap 官方網站</h4>
+        <p>下載 PhotoCap 6.0 主程式 + 素材包 V1/V2/V3</p>
+      </a>
+    </div>
+
+    <div class="nb-flow">
+      <h4>🔄 本頁如何誕生：</h4>
+      <div class="flow-line">
+        <span class="step">深度搜尋 PhotoCap 教學</span>
+        <span class="arrow">→</span>
+        <span class="step">找到 15 個來源</span>
+        <span class="arrow">→</span>
+        <span class="step">5 條 AI 萃取查詢</span>
+        <span class="arrow">→</span>
+        <span class="step">精簡本 + 主講者圖</span>
+        <span class="arrow">→</span>
+        <span class="step">生成簡報/影片/資訊圖</span>
+        <span class="arrow">→</span>
+        <span class="step">Claude Code 打包成互動網頁</span>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.2rem;font-weight:900;color:var(--c5);margin-bottom:14px;margin-top:8px;display:flex;align-items:center;gap:8px">💡 常見問題 FAQ</h3>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">不小心按到 XX，照片變了，怎麼救？<span class="toggle">+</span></div>
+        <div class="faq-a">別緊張！軟體上方有一個「向左彎的綠色箭頭」按鈕，那是「<b>回到上一步驟</b>」（也可以按 <b>Ctrl + Z</b>）。勇敢地點一下它，照片就會像時光倒流一樣，變回你按錯前的樣子！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">為什麼存好的照片變得很模糊？<span class="toggle">+</span></div>
+        <div class="faq-a">存檔時跳出來的小視窗有一個「<b>壓縮品質</b>」數字，如果拉太低照片就會糊糊的。記得設定 <b>90% 到 100%</b>，存下來才會清晰漂亮！另外也要確認原圖夠大張，太小的照片被放大就會變馬賽克。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">PhotoCap 跟手機修圖 App 哪個好？<span class="toggle">+</span></div>
+        <div class="faq-a">手機 App 方便，但 PhotoCap 是「<b>大螢幕高級魔法</b>」！它能一次幫幾十張照片加外框（批次處理），還能套用模板做撲克牌、桌曆、寫真書印出來。這些排版功能很多手機 App 做不到喔！而且 PhotoCap 完全免費，沒有水印、沒有付費購買功能。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">我可以用 PhotoCap 做什麼送給家人？<span class="toggle">+</span></div>
+        <div class="faq-a">把全家人或寵物的照片套用模板做成「<b>專屬家庭月曆</b>」，或好玩的「家人大頭撲克牌」，或者爺爺奶奶生日的「賀卡」。印出來送爸爸媽媽，他們會覺得你超級厲害，捨不得拿來用！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">我可以從網路上隨便抓圖來做作品嗎？<span class="toggle">+</span></div>
+        <div class="faq-a">不可以喔！網路圖片通常都有主人，有「<b>智慧財產權</b>」，就像別人的玩具不能不問就拿一樣。建議：<br>① 多用自己或家人拍的照片<br>② 到 Pixabay、Pexels 等免費圖庫網站（這些都是合法 CC0）<br>③ 學校老師提供的素材包<br>這樣才是尊重別人的小設計師！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">為什麼我加的文字或貼紙不見了？<span class="toggle">+</span></div>
+        <div class="faq-a">通常是文字「<b>圖層</b>」被別張照片蓋住了，就像把小貼紙壓在大紙張下面。在右邊「<b>圖層面板</b>」裡用滑鼠把文字那層「<b>往上拉</b>」，你的字就會重見天日！記住：越上面的圖層越前面，最上面的會蓋住下面所有東西。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">PCL 工作檔可以給別人開嗎？<span class="toggle">+</span></div>
+        <div class="faq-a">PCL 像你的「<b>樂高積木盒</b>」，包含所有貼紙和圖層，<b>只有在有裝 PhotoCap 的電腦才能打開</b>！想傳給沒裝軟體的家人朋友看，記得先「另存影像」變成 JPG 檔。建議自己保留 PCL 檔，分享給別人用 JPG 檔，這樣以後想修改也很方便！</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">為什麼學會 PhotoCap 就變很厲害？<span class="toggle">+</span></div>
+        <div class="faq-a">因為你學會了「<b>圖層</b>」概念！圖層就像一疊透明玻璃紙，把不同人或背景放在不同透明紙上疊起來，就變成一張豐富的大圖。學會這招，你可以把自己「剪下來」貼到國外風景上，變成<b>影像合成大師</b>！這個概念在以後學 Photoshop、Canva、Procreate 等專業軟體都用得到。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide Player -->
+  <section id="slides" class="slide-section">
+    <h2>📊 授課簡報（NLM 自動生成 15 頁）</h2>
+    <div class="slide-player">
+      <div class="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 15</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="nlm-video-section">
+    <h2>🎬 學生自學影片（NotebookLM × YouTube）</h2>
+    <div class="video-wrap">
+      <div class="video-ratio">
+        <iframe
+          src="https://www.youtube.com/embed/fFafUDqKIcA?rel=0&modestbranding=1"
+          title="PhotoCap 圖像編輯魔法師｜NotebookLM 教學影片"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 建議用耳機觀看，可搭配上方簡報複習</span>
+        <a href="https://www.youtube.com/watch?v=fFafUDqKIcA" target="_blank" rel="noopener" style="margin-left:auto;color:var(--c1);font-size:.9rem;font-weight:700;text-decoration:none">↗ 在 YouTube 開啟</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / Teacher Resources -->
+  <section class="footer-section teacher-only">
+    <h2>👩‍🏫 教師延伸資源</h2>
+    <ul>
+      <li><b>對應課綱</b>：藝術與人文 / 自然與生活科技 3-2-3「能操作常用之繪圖軟體」</li>
+      <li><b>建議節次</b>：4-6 節（每關卡 1 節 + 實作任務 1-2 節）</li>
+      <li><b>進階銜接</b>：未來可銜接 Photoshop（高中）或 Canva（五六年級 AI 設計）</li>
+      <li><b>素材包下載</b>：<a href="https://www.photocap.com.tw/" target="_blank">官網 → 素材包 V1/V2/V3 三集</a>（1582 個外框 + 613 個小圖案 + 模板）</li>
+      <li><b>跨科應用</b>：英語單字卡（語文）、時代雜誌人物（社會）、街頭藝人合成（自然）、咪咪樂月曆（綜合）</li>
+      <li><b>學生作品繳交</b>：建議學生繳交 JPG + PCL 兩份檔案，PCL 保留方便修改、JPG 給家長家人看</li>
+    </ul>
+  </section>
+
+  <div class="copyright">
+    🎨 PhotoCap 圖像編輯魔法師｜<a href="https://www.photocap.com.tw/" target="_blank">PhotoCap 官網</a>｜© 2026 國小資訊科技教學駕駛艙｜由 NotebookLM × Claude Code 打造
+  </div>
+
+</div>
+
+<!-- Slide Fullscreen Overlay -->
+<div class="slide-fs" id="slide-fs">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="slide-fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="slide-fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="slide-fs-counter" id="slide-fs-counter">1 / 15</div>
+</div>
+
+<!-- Floating Tools -->
+<div class="float-tools">
+  <button class="float-btn pink" onclick="togglePanel('lottery')" title="抽號碼">🎲</button>
+  <button class="float-btn yellow" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn purple" onclick="toggleDraw()" id="drawToggleBtn" title="畫筆標註">✏️</button>
+  <button class="float-btn blue" onclick="goTop()" title="回頂端">⬆️</button>
+</div>
+
+<!-- Lottery Panel -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <button class="close" onclick="togglePanel('lottery')">✕</button></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.9rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:60px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:60px">
+    <span>號</span>
+  </div>
+  <label style="display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:.9rem;color:var(--dim);cursor:pointer">
+    <input type="checkbox" id="lot-unique" checked> 不重複抽（抽完池子才會重置）
+  </label>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:linear-gradient(135deg,var(--c3),#42a5f5)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<!-- Timer Panel -->
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 上課計時器 <button class="close" onclick="togglePanel('timer')">✕</button></h4>
+  <div class="timer-display" id="timer-display">00:00</div>
+  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="setTimerMin(5)" style="flex:1;font-size:.85rem;padding:7px 10px">5 分</button>
+    <button class="btn-primary" onclick="setTimerMin(10)" style="flex:1;font-size:.85rem;padding:7px 10px">10 分</button>
+    <button class="btn-primary" onclick="setTimerMin(15)" style="flex:1;font-size:.85rem;padding:7px 10px">15 分</button>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="background:linear-gradient(135deg,var(--c2),#ffa726);color:#5d3a00">⏸</button>
+    <button class="btn-primary" onclick="resetTimer()" style="background:linear-gradient(135deg,var(--c6),#ff5722)">↻</button>
+  </div>
+</div>
+
+<!-- Teacher Modal -->
+<div class="modal-mask" id="teacher-modal">
+  <div class="modal">
+    <h3>👩‍🏫 進入教師模式</h3>
+    <p>請輸入老師密碼</p>
+    <input type="password" id="teacher-pwd" placeholder="教師密碼">
+    <div class="modal-btns">
+      <button class="cancel" onclick="closeTeacherModal()">取消</button>
+      <button class="ok" onclick="verifyTeacher()">確認</button>
+    </div>
+  </div>
+</div>
+
+<!-- Draw Canvas -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span class="label">🖊️</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd54f" onclick="setPenColor('#ffd54f',this)"></button>
+  <button class="color-dot" style="background:#6cb4ff" onclick="setPenColor('#6cb4ff',this)"></button>
+  <button class="color-dot" style="background:#7be495" onclick="setPenColor('#7be495',this)"></button>
+  <button class="color-dot" style="background:#b388ff" onclick="setPenColor('#b388ff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+/* ============== Data ============== */
+const SLIDE_LIST = [
+  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg',
+  'assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg',
+  'assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'
+];
+let curSlide = 0;
+
+/* ============== UI Info (STAGE 1) ============== */
+const UI_INFO = {
+  toolbar:{icon:'📋',name:'功能表 + 常用工具列（①②）',desc:'最上面那一排！「<b>功能表</b>」放所有功能選單（檔案/影像/濾鏡），「<b>常用工具列</b>」放最常用的快捷按鈕（載入、儲存、復原、裁切、加外框）。<br><b>怎麼用</b>：永遠先看這裡找功能！'},
+  left:{icon:'🎨',name:'繪圖工具面板（④）',desc:'左邊那一排！包含「<b>選取工具</b>」（矩形/圓形/魔術棒）、「<b>修片工具</b>」（馬賽克/紅眼/美膚）、「<b>繪圖工具</b>」（筆刷/橡皮擦/填色）。<br><b>原則</b>：影像處理「先選取、後處理」，所以這裡是<b>第一個按的地方</b>！'},
+  canvas:{icon:'🖼️',name:'編輯區（⑤）',desc:'中間最大的白色區域 = 你的<b>魔法畫布</b>！照片載入後會顯示在這裡，所有修改（裁切、加文字、套貼紙、套相框）都會在這裡看到效果。<br><b>小撇步</b>：滾輪可以放大縮小檢視；按住空白鍵 + 滑鼠可以移動畫布！'},
+  right:{icon:'📐',name:'物件工具列 + 圖層面板（⑧⑩）',desc:'右邊那一排！「<b>物件工具列</b>」是貼紙倉庫 — 文字（T）、照片物件、時間物件、月曆物件都在這裡。「<b>圖層面板</b>」在右下，顯示目前作品有幾個物件，<b>上下順序決定誰蓋過誰</b>。<br><b>進階</b>：拖曳圖層改變順序，就能做出影像合成大作！'}
+};
+function showUiInfo(key,el){
+  document.querySelectorAll('.ui-mockup-area').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const info=UI_INFO[key];
+  const d=document.getElementById('ui-detail');
+  d.innerHTML=`<h4><span class="label">${info.icon}</span>${info.name}</h4><p>${info.desc}</p>`;
+  d.classList.add('show');
+}
+
+/* ============== Crop Demo (STAGE 2) ============== */
+let cropStart=null, cropEnd=null, cropDragging=false, cropRotation=0;
+function initCropDemo(){
+  const photo=document.getElementById('cropPhoto');
+  const sel=document.getElementById('cropSelection');
+  function getPos(e){
+    const rect=photo.getBoundingClientRect();
+    const t=e.touches?e.touches[0]:e;
+    return {x:t.clientX-rect.left, y:t.clientY-rect.top};
+  }
+  function onDown(e){
+    e.preventDefault();
+    cropStart=getPos(e);
+    cropDragging=true;
+    sel.style.display='block';
+    sel.style.left=cropStart.x+'px';
+    sel.style.top=cropStart.y+'px';
+    sel.style.width='0px';
+    sel.style.height='0px';
+  }
+  function onMove(e){
+    if(!cropDragging)return;
+    e.preventDefault();
+    cropEnd=getPos(e);
+    const x=Math.min(cropStart.x,cropEnd.x);
+    const y=Math.min(cropStart.y,cropEnd.y);
+    const w=Math.abs(cropEnd.x-cropStart.x);
+    const h=Math.abs(cropEnd.y-cropStart.y);
+    sel.style.left=x+'px';
+    sel.style.top=y+'px';
+    sel.style.width=w+'px';
+    sel.style.height=h+'px';
+    document.getElementById('cropStatus').textContent=`📐 框選範圍：${Math.round(w)} × ${Math.round(h)} px`;
+  }
+  function onUp(){
+    cropDragging=false;
+    if(cropEnd){
+      document.getElementById('cropStatus').innerHTML='✅ 框選完成！按 <b>裁切</b> 看看結果。';
+    }
+  }
+  photo.addEventListener('mousedown',onDown);
+  photo.addEventListener('mousemove',onMove);
+  photo.addEventListener('mouseup',onUp);
+  photo.addEventListener('mouseleave',onUp);
+  photo.addEventListener('touchstart',onDown,{passive:false});
+  photo.addEventListener('touchmove',onMove,{passive:false});
+  photo.addEventListener('touchend',onUp);
+}
+function doCrop(){
+  const sel=document.getElementById('cropSelection');
+  if(sel.style.display!=='block'||parseInt(sel.style.width)<10){
+    document.getElementById('cropStatus').textContent='⚠️ 還沒框選哦！先在照片上拖曳滑鼠框出範圍';
+    return;
+  }
+  const photo=document.getElementById('cropPhoto');
+  const rect=photo.getBoundingClientRect();
+  const x=parseInt(sel.style.left);
+  const y=parseInt(sel.style.top);
+  const w=parseInt(sel.style.width);
+  const h=parseInt(sel.style.height);
+  // 模擬裁切：把照片背景縮放到剛好顯示框選區
+  photo.style.transition='.5s';
+  photo.style.transform=`scale(${rect.width/w}) translate(${-x-w/2+rect.width/2}px, ${-y-h/2+rect.height/2}px)`;
+  sel.style.display='none';
+  document.getElementById('cropStatus').innerHTML='✂️ 裁切完成！只保留框選區域。按「重置」可以還原。';
+}
+function rotatePhoto(){
+  cropRotation=(cropRotation+90)%360;
+  const photo=document.getElementById('cropPhoto');
+  photo.style.transition='.5s';
+  photo.style.transform=`rotate(${cropRotation}deg)`;
+  document.getElementById('cropStatus').innerHTML=`🔄 已旋轉 <b>${cropRotation}°</b>！按「重置」可以還原。`;
+}
+function resetCrop(){
+  const photo=document.getElementById('cropPhoto');
+  const sel=document.getElementById('cropSelection');
+  photo.style.transition='.3s';
+  photo.style.transform='none';
+  sel.style.display='none';
+  cropStart=null;cropEnd=null;cropRotation=0;
+  document.getElementById('cropStatus').textContent='👆 在照片上拖曳滑鼠框選想保留的區域';
+}
+
+/* ============== Layer Stack (STAGE 3) ============== */
+let layers = [
+  {id:1, icon:'🌅', name:'背景照片', emoji:'🌅', y:60, color:'#90caf9'},
+  {id:2, icon:'🐱', name:'貓咪貼紙', emoji:'🐱', y:90, color:'#ffd54f'},
+  {id:3, icon:'🌸', name:'相框', emoji:'🖼️', y:30, color:'#ff85b3'},
+  {id:4, icon:'T',  name:'文字「我的寶貝」', emoji:'💬 我的寶貝', y:140, color:'#7be495'}
+];
+function renderLayers(){
+  const stack=document.getElementById('layerStack');
+  stack.innerHTML='';
+  layers.forEach((L,i)=>{
+    const item=document.createElement('div');
+    item.className='layer-stack-item';
+    item.style.borderColor=L.color;
+    item.innerHTML=`
+      <span class="layer-icon">${L.icon}</span>
+      <span>${L.name}</span>
+      <button class="layer-up" onclick="moveLayer(${i},-1)" title="往上一層">↑</button>
+      <button class="layer-down" onclick="moveLayer(${i},1)" title="往下一層">↓</button>
+    `;
+    stack.appendChild(item);
+  });
+  renderPreview();
+}
+function moveLayer(i,dir){
+  const ni=i+dir;
+  if(ni<0||ni>=layers.length)return;
+  [layers[i],layers[ni]]=[layers[ni],layers[i]];
+  renderLayers();
+}
+function renderPreview(){
+  const stage=document.getElementById('previewStage');
+  stage.innerHTML='';
+  // 從底層渲染到上層（陣列尾為最上層）
+  layers.forEach((L,i)=>{
+    const r=document.createElement('div');
+    r.className='layer-render';
+    r.textContent=L.emoji;
+    r.style.top = (20 + i*8) + 'px';
+    r.style.left = '50%';
+    r.style.zIndex = layers.length - i;
+    r.style.transform = `translateX(-50%) translateY(${L.y - i*8}px)`;
+    r.style.color = L.color;
+    stage.appendChild(r);
+  });
+}
+
+/* ============== Filter Selector (STAGE 4) ============== */
+const FILTER_INFO={
+  bw:{icon:'🌑',name:'黑白濾鏡',desc:'<b>原理</b>：把照片的所有顏色資訊去掉，只保留亮暗（灰階）。<br><b>什麼時候用</b>：① 拍人物想要藝術感（婚紗、肖像）② 老照片整理 ③ 黑白攝影比賽<br><b>路徑</b>：濾鏡 → 顏色濾鏡 → 黑白'},
+  retro:{icon:'🌅',name:'復古濾鏡',desc:'<b>原理</b>：把照片加上偏黃褐色調，模擬底片時代的色溫和褪色感。<br><b>什麼時候用</b>：① 想做爺爺奶奶年代風 ② 老照片紀念冊 ③ 民國風海報<br><b>路徑</b>：濾鏡 → 顏色濾鏡 → 復古（或棕褐色 Sepia）'},
+  mosaic:{icon:'🟫',name:'馬賽克',desc:'<b>原理</b>：把選取區域變成一格一格大方塊，看不清楚原本內容。<br><b>什麼時候用</b>：① 遮路人臉保護隱私 ② 遮個資（電話號碼、地址）③ 隱藏驚喜禮物<br><b>路徑</b>：左邊修片工具 → 馬賽克筆刷 → 在照片塗一塗'},
+  oil:{icon:'🎨',name:'油畫濾鏡',desc:'<b>原理</b>：模擬畫家用油彩筆觸的塗抹效果，照片變成像畫的。<br><b>什麼時候用</b>：① 風景照變成藝術品送長輩 ② 美術作業 ③ 想做梵谷風的星空照<br><b>路徑</b>：濾鏡 → 藝術風 → 油畫（或印象派）'}
+};
+function showFilter(key,el){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const info=FILTER_INFO[key];
+  const d=document.getElementById('filterResult');
+  d.innerHTML=`<h4>${info.icon} ${info.name}</h4><p>${info.desc}</p>`;
+  d.classList.add('show');
+}
+
+/* ============== Quiz / Progress ============== */
+const totalQuestions = document.querySelectorAll('.quiz-q-block').length;
+let answeredQs = new Set();
+const PRAISE = ['🎉 答對囉，太棒了！','✨ 你真厲害！','🌟 完全正確！','💯 滿分！','🥳 答對了！','👏 帥喔！'];
+function answerQ(btn, isCorrect){
+  const block = btn.closest('.quiz-q-block');
+  if(block.dataset.answered) return;
+  block.dataset.answered = '1';
+  const opts = block.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>o.disabled=true);
+  const fb = block.querySelector('.quiz-feedback');
+  if(isCorrect){
+    btn.classList.add('correct');
+    fb.classList.add('right');
+    fb.textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)];
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o=>{
+      if(o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+    });
+    fb.classList.add('miss');
+    fb.textContent = '差一點點！正確答案已經幫你標出來了，看一下為什麼吧！';
+  }
+  const id = block.dataset.stage + '-' + block.dataset.q;
+  answeredQs.add(id);
+  updateProgress();
+}
+function updateProgress(){
+  const pct = Math.round(answeredQs.size / totalQuestions * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+/* ============== FAQ ============== */
+function toggleFaq(el){ el.parentElement.classList.toggle('open'); }
+
+/* ============== Slide Player ============== */
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0?' active':'');
+    t.innerHTML = `<img src="${src}" alt="第${i+1}頁" loading="lazy">`;
+    t.onclick = ()=>goSlide(i);
+    strip.appendChild(t);
+  });
+  goSlide(0, false);
+}
+function goSlide(n, scrollStrip = true){
+  if(n<0||n>=SLIDE_LIST.length) return;
+  curSlide = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active',i===n));
+  // 同步全螢幕（避免踩雷 #5）
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  }
+  // 縮圖捲動：只動縮圖列內部（避免踩雷 #11）
+  if(scrollStrip){
+    const active = document.querySelector('.strip-thumb.active');
+    if(active){
+      const strip = document.getElementById('slide-strip');
+      const target = active.offsetLeft - (strip.clientWidth - active.offsetWidth)/2;
+      strip.scrollTo({left:Math.max(0,target),behavior:'smooth'});
+    }
+  }
+}
+function slideNav(dir){ goSlide(curSlide + dir); }
+function openSlideFullscreen(){
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+document.addEventListener('keydown',e=>{
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    if(e.key==='ArrowLeft') slideNav(-1);
+    if(e.key==='ArrowRight') slideNav(1);
+    if(e.key==='Escape') closeSlideFullscreen();
+  }
+});
+
+/* ============== Mode (Student/Teacher) ============== */
+function switchMode(mode){
+  document.getElementById('mode-student').classList.toggle('active', mode==='student');
+  document.getElementById('mode-teacher').classList.toggle('active', mode==='teacher');
+  document.body.classList.toggle('teacher-mode', mode==='teacher');
+}
+function askTeacher(){
+  document.getElementById('teacher-modal').classList.add('show');
+  setTimeout(()=>document.getElementById('teacher-pwd').focus(),100);
+}
+function closeTeacherModal(){
+  document.getElementById('teacher-modal').classList.remove('show');
+  document.getElementById('teacher-pwd').value='';
+}
+function verifyTeacher(){
+  const pwd = document.getElementById('teacher-pwd').value;
+  if(pwd === 'it2026'){
+    switchMode('teacher');
+    closeTeacherModal();
+  } else {
+    alert('密碼錯誤！');
+    document.getElementById('teacher-pwd').value='';
+  }
+}
+document.getElementById('teacher-pwd').addEventListener('keydown',e=>{
+  if(e.key==='Enter') verifyTeacher();
+});
+
+/* ============== Floating panels ============== */
+function togglePanel(name){
+  ['lottery','timer'].forEach(n=>{
+    const p = document.getElementById('panel-'+n);
+    if(n===name) p.classList.toggle('show');
+    else p.classList.remove('show');
+  });
+}
+function goTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ============== Lottery ============== */
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){alert('最小號必須 ≤ 最大號！');return;}
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const timer = setInterval(()=>{
+    const n = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = n + ' 號';
+  }, 60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max-min+1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+/* ============== Timer ============== */
+let timerSec = 0, timerInt = null;
+function setTimerMin(m){ timerSec = m*60; renderTimer(); }
+function renderTimer(){
+  const m = String(Math.floor(timerSec/60)).padStart(2,'0');
+  const s = String(timerSec%60).padStart(2,'0');
+  document.getElementById('timer-display').textContent = `${m}:${s}`;
+}
+function startTimer(){
+  if(timerInt) return;
+  if(timerSec<=0) timerSec = 300;
+  renderTimer();
+  timerInt = setInterval(()=>{
+    timerSec--;
+    renderTimer();
+    if(timerSec<=0){
+      clearInterval(timerInt); timerInt=null;
+      document.getElementById('timer-display').style.color='var(--c6)';
+      alert('⏰ 時間到！');
+      document.getElementById('timer-display').style.color='var(--c5)';
+    }
+  },1000);
+}
+function pauseTimer(){
+  if(timerInt){ clearInterval(timerInt); timerInt=null; }
+}
+function resetTimer(){
+  pauseTimer();
+  timerSec = 0; renderTimer();
+}
+
+/* ============== Drawing ============== */
+let drawActive=false, penColor='#ff4081', penSize=4;
+let drawCanvas, drawCtx, isDrawing=false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas=document.getElementById('drawCanvas');
+  drawCtx=drawCanvas.getContext('2d');
+  drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight;
+  drawCanvas.addEventListener('mousedown',e=>{
+    if(!drawActive)return;
+    isDrawing=true; dLastX=e.clientX; dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mousemove',e=>{
+    if(!drawActive||!isDrawing)return;
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX,dLastY); drawCtx.lineTo(e.clientX,e.clientY); drawCtx.stroke();
+    dLastX=e.clientX; dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup',()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart',e=>{
+    if(!drawActive)return; e.preventDefault();
+    const t=e.touches[0]; isDrawing=true; dLastX=t.clientX; dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchmove',e=>{
+    if(!drawActive||!isDrawing)return; e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX,dLastY); drawCtx.lineTo(t.clientX,t.clientY); drawCtx.stroke();
+    dLastX=t.clientX; dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+  window.addEventListener('resize',()=>{
+    drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight;
+  });
+}
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'linear-gradient(135deg,#7be495,#4caf50)' : '';
+}
+function setPenColor(c,el){
+  penColor=c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+
+/* ============== Init ============== */
+document.addEventListener('DOMContentLoaded',()=>{
+  initSlidePlayer();
+  initCropDemo();
+  renderLayers();
+  initDraw();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+# 本地保留素材（不上傳 GitHub）
+assets/*.mp4
+assets/*.pdf
+assets/youtube_video_id.txt
+make_og.py
