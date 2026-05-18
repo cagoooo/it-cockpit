@@ -68,6 +68,21 @@ body.teacher-mode .teacher-only{display:block}
 .objectives::before{content:'LEARNING GOALS';font-family:'Press Start 2P',monospace;font-size:.55rem;color:var(--c2);position:absolute;top:-10px;left:16px;background:var(--surface);padding:0 8px}
 .obj-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .obj-chip{padding:8px 16px;border:2px solid;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:6px}
+
+/* Lecture CTA */
+.lecture-cta{display:block;margin:18px 0 24px;padding:18px 22px;
+  background:var(--c2);color:var(--bg);
+  border:3px solid var(--text);box-shadow:5px 5px 0 var(--c1);
+  text-decoration:none;transition:.2s;position:relative}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--c1)}
+.lecture-cta:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--c1)}
+.lecture-cta .cta-tag{display:inline-block;font-family:'Press Start 2P',monospace;
+  font-size:.55rem;letter-spacing:.15em;background:var(--bg);color:var(--c2);
+  padding:3px 8px;margin-bottom:8px}
+.lecture-cta .cta-title{display:block;font-size:1.3rem;font-weight:900;
+  letter-spacing:-.01em;margin-bottom:4px;font-family:'Noto Sans TC',sans-serif}
+.lecture-cta .cta-sub{display:block;font-size:.85rem;opacity:.9;line-height:1.5;
+  font-family:'Noto Sans TC',sans-serif}
 .obj-chip:nth-child(1){border-color:var(--c1);color:var(--c1)}
 .obj-chip:nth-child(2){border-color:var(--c2);color:var(--c2)}
 .obj-chip:nth-child(3){border-color:var(--c4);color:var(--c4)}
@@ -321,6 +336,12 @@ canvas{display:block;width:100%;height:auto;touch-action:none}
       <div class="obj-chip">🚀 認識其他 Canva AI 功能</div>
     </div>
   </div>
+
+  <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：14 張投影片，全螢幕投影模式">
+    <span class="cta-tag">老師上課用 ⮕</span>
+    <span class="cta-title">🎬 進入演講簡報模式</span>
+    <span class="cta-sub">14 張投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+  </a>
 
   <!-- STAGE NAV -->
   <div class="stage-nav">

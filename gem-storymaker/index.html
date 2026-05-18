@@ -118,6 +118,21 @@ body{
   color:var(--text);font-size:1rem;font-weight:500;
 }
 
+/* Lecture CTA */
+.lecture-cta{display:block;margin:20px 0 28px;padding:18px 22px;
+  background:var(--c2);color:var(--bg);
+  border:3px solid var(--text);box-shadow:5px 5px 0 var(--c5);
+  text-decoration:none;transition:.2s;position:relative}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--c5)}
+.lecture-cta:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--c5)}
+.lecture-cta .cta-tag{display:inline-block;font-family:'Press Start 2P',monospace;
+  font-size:.55rem;letter-spacing:.15em;background:var(--bg);color:var(--c2);
+  padding:3px 8px;margin-bottom:8px}
+.lecture-cta .cta-title{display:block;font-size:1.3rem;font-weight:900;
+  letter-spacing:-.01em;margin-bottom:4px;font-family:'Noto Sans TC',sans-serif}
+.lecture-cta .cta-sub{display:block;font-size:.85rem;opacity:.9;line-height:1.5;
+  font-family:'Noto Sans TC',sans-serif}
+
 #section-nav{
   position:sticky;top:70px;z-index:50;
   background:rgba(13,13,43,.95);backdrop-filter:blur(8px);
@@ -585,6 +600,14 @@ input, select, textarea, button{font-family:inherit}
       <span class="obj-chip">🍌 用 Nano Banana 2 生 Q 版圖</span>
       <span class="obj-chip">🛡️ 認識 SynthID ＋ 個資保護</span>
     </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 20px">
+    <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：14 張投影片，全螢幕投影模式">
+      <span class="cta-tag">老師上課用 ⮕</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+    </a>
   </section>
 
   <!-- Section nav -->

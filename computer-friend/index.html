@@ -63,6 +63,17 @@ body.teacher-mode .teacher-only{display:block}
 /* ==================== CONTAINER ==================== */
 .container{max-width:1400px;margin:0 auto;padding:24px}
 
+/* Lecture CTA (老師上課用：全螢幕投影模式) */
+.lecture-cta{display:block;margin:20px 0;padding:18px 22px;border-radius:16px;
+  background:var(--c1);color:#fff;border:3px solid var(--text);
+  box-shadow:0 6px 0 var(--c2),0 8px 20px rgba(0,0,0,.15);
+  text-decoration:none;transition:.2s}
+.lecture-cta:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--c2),0 12px 28px rgba(0,0,0,.2);text-decoration:none;color:#fff}
+.lecture-cta:active{transform:translateY(3px);box-shadow:0 3px 0 var(--c2)}
+.lecture-cta .cta-tag{display:inline-block;background:#fff;color:var(--c1);font-size:.75rem;padding:3px 10px;border-radius:999px;margin-bottom:8px;font-weight:700}
+.lecture-cta .cta-title{display:block;font-size:1.4rem;font-weight:900;margin-bottom:4px}
+.lecture-cta .cta-sub{display:block;font-size:.9rem;opacity:.95;line-height:1.5}
+
 /* ==================== OBJECTIVES ==================== */
 .objectives{background:var(--panel);border:3px solid var(--c2);padding:20px;margin-bottom:24px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.08);position:relative}
 .objectives::before{content:'LEARNING GOALS';font-size:.7rem;font-weight:900;letter-spacing:2px;color:var(--c2);position:absolute;top:-10px;left:20px;background:var(--panel);padding:0 10px;border-radius:8px}
@@ -361,6 +372,13 @@ body.teacher-mode .teacher-only{display:block}
 
 <!-- ==================== MAIN ==================== -->
 <main class="container">
+
+  <!-- ▶ 演講簡報模式 CTA（老師上課用） -->
+  <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+    <span class="cta-tag">老師上課用 ⮕</span>
+    <span class="cta-title">🎬 進入演講簡報模式</span>
+    <span class="cta-sub">13 張投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+  </a>
 
   <!-- OBJECTIVES -->
   <div class="objectives">

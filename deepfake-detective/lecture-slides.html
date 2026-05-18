@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI 假影片偵探社｜演講簡報模式</title>
+<meta name="description" content="六年級資訊科技｜AI 假影片偵探社：Deepfake 認識、5 大辨別技巧、SIFT 法則、MyGoPen。comic-soft 漫畫風 × 14 張投影片。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Bungee&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#fef9f0; --surface:#fff8ee; --panel:#ffffff;
+  --c1:#ff6b6b; --c2:#ffa94d; --c3:#51cf66; --c4:#339af0; --c5:#cc5de8;
+  --text:#2c2c2c; --dim:#868686; --border:#2c2c2c;
+}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:9990;
+  pointer-events:none;opacity:.06;
+  background-image:radial-gradient(circle,var(--border) 1px,transparent 1.5px);
+  background-size:10px 10px;
+}
+
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  padding:5vh 6vw;
+  opacity:0;transition:opacity .4s;
+  background:var(--bg);
+}
+.slide.active{display:flex;opacity:1}
+
+.slide-num{
+  position:absolute;bottom:24px;right:32px;
+  font-family:'Bungee',sans-serif;font-size:.95rem;color:var(--dim);
+  letter-spacing:.1em;z-index:5;
+}
+.slide-title-tag{
+  position:absolute;top:28px;left:32px;
+  font-family:'Bungee',sans-serif;font-size:.72rem;
+  letter-spacing:.18em;color:#fff;background:var(--c5);
+  padding:5px 12px;border:2px solid var(--border);
+  box-shadow:3px 3px 0 var(--border);
+  z-index:5;
+}
+
+.title-xl{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(3rem,7vw,6rem);line-height:1.05;letter-spacing:-.02em;color:var(--text);}
+.title-lg{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(2.4rem,5vw,4.5rem);line-height:1.1;color:var(--text);}
+.title-md{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.2;color:var(--text);}
+.eyebrow{
+  font-family:'Bungee',sans-serif;font-size:1rem;
+  letter-spacing:.16em;color:var(--c1);text-transform:uppercase;
+  margin-bottom:18px;display:flex;align-items:center;gap:14px;
+}
+.eyebrow::after{content:'';flex:1;height:3px;background:var(--c1);max-width:180px}
+.lead{font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.75;color:var(--text);max-width:1100px;}
+.lead b{color:var(--c1);font-weight:900}
+.accent-1{color:var(--c1);font-weight:900}
+.accent-2{color:var(--c2);font-weight:900}
+.accent-3{color:var(--c3);font-weight:900}
+.accent-4{color:var(--c4);font-weight:900}
+.accent-5{color:var(--c5);font-weight:900}
+
+.speech-bubble{
+  background:#fff;border:3px solid var(--border);
+  padding:14px 20px;border-radius:24px;position:relative;
+  box-shadow:5px 5px 0 var(--border);
+  font-size:1.1rem;font-weight:600;
+}
+.speech-bubble::after{content:'';position:absolute;bottom:-18px;left:36px;width:0;height:0;border:12px solid transparent;border-top:18px solid #fff;border-right:0}
+.speech-bubble::before{content:'';position:absolute;bottom:-22px;left:34px;width:0;height:0;border:14px solid transparent;border-top:22px solid var(--border);border-right:0}
+
+.speaker{
+  position:absolute;bottom:20px;left:32px;
+  display:flex;align-items:flex-end;gap:14px;z-index:8;
+  max-width:55%;
+}
+.speaker .avatar{
+  width:64px;height:64px;flex-shrink:0;
+  background:var(--c5);
+  border:3px solid var(--border);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  box-shadow:4px 4px 0 var(--border);
+}
+.speaker .bubble{
+  background:#fff;border:3px solid var(--border);
+  padding:10px 16px;border-radius:18px;
+  font-size:.95rem;font-weight:600;
+  position:relative;
+  box-shadow:4px 4px 0 var(--border);
+  max-width:520px;line-height:1.5;
+}
+.speaker .bubble::before{content:'';position:absolute;left:-14px;bottom:16px;width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent var(--border) transparent transparent;}
+.speaker .bubble::after{content:'';position:absolute;left:-10px;bottom:16px;width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent #fff transparent transparent;}
+
+.comic-panel{
+  background:#fff;border:3px solid var(--border);
+  padding:18px 22px;position:relative;
+  box-shadow:6px 6px 0 var(--border);
+  border-radius:6px;
+}
+.comic-panel.c1{box-shadow:6px 6px 0 var(--c1)}
+.comic-panel.c2{box-shadow:6px 6px 0 var(--c2)}
+.comic-panel.c3{box-shadow:6px 6px 0 var(--c3)}
+.comic-panel.c4{box-shadow:6px 6px 0 var(--c4)}
+.comic-panel.c5{box-shadow:6px 6px 0 var(--c5)}
+
+@keyframes sfxPop{0%{transform:scale(.5) rotate(-5deg);opacity:0}60%{transform:scale(1.2) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+.sfx{
+  font-family:'Bungee',sans-serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  color:#fff;text-shadow:4px 4px 0 var(--border);
+  letter-spacing:.04em;display:inline-block;
+  background:var(--c1);padding:10px 24px;
+  border:3px solid var(--border);
+  transform:rotate(-3deg);
+  box-shadow:5px 5px 0 var(--border);
+  clip-path:polygon(0 10%,8% 0,30% 5%,50% 0,70% 8%,90% 0,100% 12%,96% 50%,100% 88%,85% 100%,60% 96%,40% 100%,15% 96%,0 90%);
+}
+.sfx.c2{background:var(--c2)}
+.sfx.c3{background:var(--c3)}
+.sfx.c4{background:var(--c4)}
+.sfx.c5{background:var(--c5)}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:5px;background:#f0e8d8;z-index:99;}
+.progress-fill{height:100%;background:var(--c1);transition:width .4s;box-shadow:0 0 8px var(--c1);}
+
+.hint{position:fixed;top:14px;right:24px;z-index:99;font-family:'Bungee',sans-serif;font-size:.72rem;color:var(--dim);background:#fff;border:2px solid var(--border);padding:5px 12px;letter-spacing:.05em;pointer-events:none;opacity:.85;box-shadow:2px 2px 0 var(--border);}
+.kbd{display:inline-block;padding:2px 7px;background:var(--border);color:var(--c2);font-family:'Bungee',monospace;font-size:.78em;margin:0 2px;}
+
+.overview{position:fixed;inset:0;background:var(--text);display:none;padding:32px;overflow-y:auto;z-index:200;flex-direction:column;}
+.overview.show{display:flex}
+.overview h3{font-family:'Bungee',sans-serif;color:var(--c2);font-size:1.4rem;margin-bottom:18px;letter-spacing:.05em;}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.ov-card{background:var(--bg);border:3px solid var(--c2);padding:14px 16px;cursor:pointer;transition:.15s;position:relative;border-radius:8px;}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--c1)}
+.ov-card .num{position:absolute;top:8px;right:10px;font-family:'Bungee',sans-serif;font-size:.85rem;color:var(--c1);}
+.ov-card .t{font-family:'Noto Sans TC';font-weight:900;font-size:1.05rem;color:var(--c4);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;margin-top:22px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:22px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:22px}
+
+.tag{display:inline-block;padding:6px 14px;background:var(--c2);color:#fff;border:2px solid var(--border);border-radius:16px;font-weight:700;font-size:.95rem;box-shadow:2px 2px 0 var(--border);margin:4px 6px 4px 0;}
+.tag.t1{background:var(--c1)}.tag.t3{background:var(--c3)}.tag.t4{background:var(--c4)}.tag.t5{background:var(--c5)}
+
+.pillar{background:#fff;border:3px solid var(--border);padding:22px 20px;text-align:center;position:relative;border-radius:10px;box-shadow:6px 6px 0 var(--c,var(--c1));}
+.pillar .ico{width:78px;height:78px;background:var(--c,var(--c1));border:3px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:2.4rem;box-shadow:3px 3px 0 var(--border);}
+.pillar .h{font-family:'Noto Sans TC';font-weight:900;font-size:1.3rem;color:var(--c,var(--c1));margin-bottom:10px;}
+.pillar .b{font-size:.98rem;line-height:1.6;color:var(--text)}
+
+.stat-card{background:#fff;border:3px solid var(--border);padding:22px 24px;text-align:center;box-shadow:6px 6px 0 var(--c,var(--c1));flex:1;min-width:200px;border-radius:8px;}
+.stat-card .n{font-family:'Bungee',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;color:var(--c,var(--c1));}
+.stat-card .l{font-size:.95rem;color:var(--dim);margin-top:6px;letter-spacing:.05em;}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(.98rem,1.3vw,1.18rem);line-height:1.7;margin-bottom:12px;}
+.bullet-list li::before{content:'';flex-shrink:0;width:24px;height:24px;background:var(--c4);border:2px solid var(--border);border-radius:50%;margin-top:6px;box-shadow:2px 2px 0 var(--border);}
+.bullet-list.red li::before{background:var(--c1)}
+.bullet-list.green li::before{background:var(--c3)}
+.bullet-list.orange li::before{background:var(--c2)}
+.bullet-list.purple li::before{background:var(--c5)}
+
+/* Detect tip card */
+.tip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.tip-card{background:#fff;border:3px solid var(--border);padding:16px 12px;text-align:center;position:relative;border-radius:10px;box-shadow:5px 5px 0 var(--c,var(--c1));}
+.tip-card .n{font-family:'Bungee',sans-serif;font-size:1.9rem;color:var(--c,var(--c1));line-height:1;}
+.tip-card .emoji{font-size:2rem;margin:6px 0 8px}
+.tip-card h5{font-family:'Noto Sans TC';font-weight:900;font-size:1rem;color:var(--text);margin-bottom:8px;line-height:1.3}
+.tip-card p{font-size:.82rem;line-height:1.5;color:var(--dim)}
+
+/* SIFT 4 steps */
+.sift-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.sift-card{background:#fff;border:3px solid var(--border);padding:20px 16px;text-align:center;position:relative;border-radius:10px;box-shadow:6px 6px 0 var(--c,var(--c4));min-height:260px;display:flex;flex-direction:column;align-items:center;}
+.sift-card .L{font-family:'Bungee',sans-serif;font-size:3.5rem;color:var(--c,var(--c4));line-height:1;}
+.sift-card h4{font-family:'Noto Sans TC';font-weight:900;font-size:1.2rem;color:var(--c,var(--c4));margin:8px 0 10px;}
+.sift-card p{font-size:.92rem;line-height:1.55;color:var(--text)}
+
+/* Step row */
+.step-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}
+.step-item{background:#fff;border:3px solid var(--border);padding:16px 14px;text-align:center;position:relative;font-size:.88rem;box-shadow:4px 4px 0 var(--c,var(--c4));border-radius:8px;}
+.step-item .n{font-family:'Bungee',sans-serif;font-size:1.8rem;color:var(--c,var(--c4));display:block;margin-bottom:4px;}
+.step-item .t{font-weight:700;font-size:.9rem;line-height:1.4}
+.step-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:var(--border);z-index:2;}
+
+/* Scenario card */
+.scenario-fan{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}
+.scenario-card{background:#fff;border:3px solid var(--border);padding:22px 20px;position:relative;box-shadow:6px 6px 0 var(--c,var(--c4));border-radius:10px;}
+.scenario-card .num{position:absolute;top:-16px;left:18px;width:38px;height:38px;background:var(--c,var(--c4));color:#fff;border:3px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bungee',sans-serif;font-size:1.1rem;}
+.scenario-card .icon{font-size:2.5rem;margin-bottom:8px;text-align:center}
+.scenario-card h4{font-family:'Noto Sans TC';font-weight:900;font-size:1.3rem;color:var(--c,var(--c4));margin:8px 0 10px;}
+.scenario-card p{font-size:.98rem;line-height:1.65}
+
+/* Compare */
+.cmp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.cmp-tile{background:#fff;border:3px solid var(--border);padding:18px 14px;text-align:center;position:relative;border-radius:8px;box-shadow:4px 4px 0 var(--c,var(--c4));}
+.cmp-tile.star{background:#fff5e8;box-shadow:5px 5px 0 var(--c1);transform:scale(1.06)}
+.cmp-tile .nm{font-family:'Bungee',sans-serif;font-size:1.3rem;color:var(--c,var(--c4));margin-bottom:8px;}
+.cmp-tile.star .nm{color:var(--c1)}
+.cmp-tile .when{font-size:.85rem;line-height:1.5;color:var(--text);}
+.cmp-tile .ribbon{position:absolute;top:-14px;right:-8px;background:var(--c1);color:#fff;padding:3px 10px;font-size:.72rem;font-weight:700;font-family:'Bungee',sans-serif;letter-spacing:.05em;border:2px solid var(--border);box-shadow:2px 2px 0 var(--border);}
+
+/* Two-side */
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
+.side-card{background:#fff;border:3px solid var(--c,var(--c3));padding:24px 26px;position:relative;border-radius:10px;box-shadow:5px 5px 0 var(--border);}
+.side-card.bad{--c:var(--c1)}
+.side-card .ribbon{position:absolute;top:-14px;left:18px;background:var(--c);color:#fff;padding:4px 14px;border-radius:14px;font-family:'Bungee',sans-serif;font-size:.85rem;border:2px solid var(--border);box-shadow:2px 2px 0 var(--border);}
+.side-card h4{font-family:'Noto Sans TC';font-weight:900;font-size:1.3rem;color:var(--c);margin:8px 0 12px;}
+
+/* A2 grid */
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px;}
+.a2-card{background:#fff;border:3px solid var(--border);padding:18px 14px;position:relative;box-shadow:5px 5px 0 var(--c,var(--c4));border-radius:10px;}
+.a2-card .ico{font-size:1.9rem;margin-bottom:8px;}
+.a2-card h5{font-family:'Noto Sans TC';font-size:1rem;color:var(--c,var(--c4));font-weight:900;margin-bottom:8px;line-height:1.3;}
+.a2-card p{font-size:.85rem;line-height:1.5}
+
+/* Advice */
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.advice-card{background:#fff;border:3px solid var(--border);padding:18px 14px;text-align:center;position:relative;border-radius:10px;box-shadow:6px 6px 0 var(--c,var(--c1));}
+.advice-card .n{font-family:'Bungee',sans-serif;font-size:2.6rem;color:var(--c,var(--c1));line-height:1;}
+.advice-card h5{font-family:'Noto Sans TC';font-weight:900;font-size:1.05rem;color:var(--text);margin:10px 0 8px;line-height:1.3;}
+.advice-card p{font-size:.85rem;line-height:1.55}
+
+/* Cover */
+.cover{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fef9f0 0%,#fff5e8 100%);}
+.cover .badge{display:inline-block;background:var(--c1);color:#fff;font-family:'Bungee',sans-serif;font-size:1rem;letter-spacing:.18em;padding:8px 18px;margin-bottom:28px;border:3px solid var(--border);box-shadow:4px 4px 0 var(--border);}
+.cover h1{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(3.5rem,8vw,7rem);line-height:1;margin-bottom:18px;color:var(--text);letter-spacing:-.02em;}
+.cover h1 .accent{color:var(--c1);font-family:'Bungee',sans-serif;font-size:.55em;display:inline-block;transform:translateY(-12px);margin:0 4px;}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.7rem);color:var(--text);margin-bottom:42px;font-weight:500;}
+.cover .meta{display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;font-family:'Bungee',sans-serif;font-size:.9rem;letter-spacing:.05em;color:var(--dim);}
+.cover .meta b{color:var(--text);font-weight:700}
+.cover-deco{position:absolute;display:flex;gap:18px;}
+.cover-deco.tl{top:8vh;left:6vw}.cover-deco.tr{top:8vh;right:6vw}.cover-deco.bl{bottom:8vh;left:6vw}.cover-deco.br{bottom:8vh;right:6vw}
+.cover-bubble{background:#fff;border:3px solid var(--border);padding:10px 16px;border-radius:24px;font-weight:700;font-size:1rem;box-shadow:4px 4px 0 var(--border);transform:rotate(var(--rot,-3deg));}
+
+/* Hook 4-panel comic */
+.comic-strip{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-top:30px;}
+.comic-strip .panel{background:#fff;border:3px solid var(--border);padding:18px 14px;text-align:center;box-shadow:5px 5px 0 var(--border);position:relative;border-radius:6px;min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+.comic-strip .panel .pn{position:absolute;top:6px;left:8px;font-family:'Bungee',sans-serif;font-size:.9rem;color:var(--c1);}
+.comic-strip .panel .emoji{font-size:3rem;line-height:1}
+.comic-strip .panel .label{font-weight:900;font-size:1.05rem;color:var(--text)}
+.comic-strip .panel .desc{font-size:.86rem;color:var(--dim);line-height:1.5}
+
+/* Closing */
+.closing{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fef9f0 0%,#fff5e8 100%);}
+.closing h2{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(2.6rem,5.5vw,5rem);line-height:1.15;color:var(--text);margin-bottom:22px;letter-spacing:-.02em;}
+.closing h2 .em{color:var(--c1)}
+.closing .signoff{font-size:1.2rem;color:var(--dim);margin-bottom:30px;}
+.closing .qr-row{display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.closing .url-box{background:#fff;border:3px solid var(--border);padding:14px 22px;border-radius:8px;font-family:'Bungee',sans-serif;font-size:.9rem;box-shadow:4px 4px 0 var(--c1);text-align:left;}
+.closing .url-box b{color:var(--c4);font-family:'Noto Sans TC',sans-serif}
+
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col,.two-side{grid-template-columns:1fr;gap:18px}
+  .three-col,.cmp-row,.a2-grid,.advice-grid,.step-row,.comic-strip,.tip-grid,.sift-row,.scenario-fan{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="cover-bubble" style="--rot:-5deg">🕵️ 偵探</div></div>
+  <div class="cover-deco tr"><div class="cover-bubble" style="--rot:4deg">🤖 Deepfake</div></div>
+  <div class="cover-deco bl"><div class="cover-bubble" style="--rot:-3deg">🔍 SIFT</div></div>
+  <div class="cover-deco br"><div class="cover-bubble" style="--rot:5deg">📱 MyGoPen</div></div>
+
+  <span class="badge slide-up">六年級｜資訊科技 × 媒體識讀</span>
+  <h1 class="slide-up d1">AI 假影片<span class="accent">×</span><br>偵探社</h1>
+  <p class="sub slide-up d2">當 AI 連<span class="accent-1">影片都能造假</span>，我們怎麼當小偵探？</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>建議 <b>4</b> 節</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 開場 / HOOK</span>
+  <div style="margin-top:8vh">
+    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span class="sfx pop-in">POW!</span>
+      <span class="sfx c4 pop-in d1" style="transform:rotate(4deg)">ZAP!</span>
+      <span class="sfx c5 pop-in d2" style="transform:rotate(-2deg)">FAKE!</span>
+    </div>
+    <h2 class="title-lg slide-up d2" style="margin-top:30px">
+      「啊！這張<span class="accent-1">川普被警察抓走</span>的<br>照片是真的還假的？！」
+    </h2>
+  </div>
+
+  <div class="comic-strip">
+    <div class="panel pop-in d1">
+      <span class="pn">01</span>
+      <div class="emoji">📱</div>
+      <div class="label">LINE 群組</div>
+      <div class="desc">阿嬤轉傳「驚！」影片</div>
+    </div>
+    <div class="panel pop-in d2">
+      <span class="pn">02</span>
+      <div class="emoji">🤔</div>
+      <div class="label">你的直覺說</div>
+      <div class="desc">「怪怪的⋯哪裡不對？」</div>
+    </div>
+    <div class="panel pop-in d3">
+      <span class="pn">03</span>
+      <div class="emoji">🕵️</div>
+      <div class="label">小偵探出動</div>
+      <div class="desc">手部、眼睛、文字、光影</div>
+    </div>
+    <div class="panel pop-in d4">
+      <span class="pn">04</span>
+      <div class="emoji">✅</div>
+      <div class="label">真相揭曉</div>
+      <div class="desc">用 MyGoPen 一鍵驗證</div>
+    </div>
+  </div>
+
+  <div class="speaker">
+    <div class="avatar">🕵️</div>
+    <div class="bubble">你 LINE 群組是不是也有過<b>「驚！...」「轉傳！」</b>這種訊息？今天我們學<b>怎麼當小偵探</b>！</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT IS DEEPFAKE ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 主題 / DEEPFAKE</span>
+  <p class="eyebrow slide-up">先認識敵人 ─</p>
+  <h2 class="title-md slide-up d1"><span class="accent-1">Deepfake</span> = <span class="accent-4">Deep Learning</span> + <span class="accent-5">Fake</span><br>用 AI 做出超逼真的假影片。</h2>
+
+  <div class="two-col" style="grid-template-columns:1.2fr 1fr">
+    <div class="comic-panel c1 slide-up d2">
+      <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c1);font-size:1.3rem;margin-bottom:12px">🤖 GAN 兩個 AI 在對抗</h3>
+      <p class="lead" style="font-size:1rem;line-height:1.7">
+        想像兩個 AI 機器人在比賽：
+      </p>
+      <ul class="bullet-list" style="font-size:1rem">
+        <li><b>「造假機器人」</b>不停製造假圖片</li>
+        <li><b>「警察機器人」</b>不停抓破綻</li>
+        <li>互相磨練後，造假機器人騙過警察機器人 ──<b>Deepfake 就誕生了！</b></li>
+      </ul>
+    </div>
+    <div class="comic-panel c5 slide-up d2">
+      <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c5);font-size:1.3rem;margin-bottom:10px">🎭 4 種常見手法</h3>
+      <ul class="bullet-list purple" style="font-size:.96rem">
+        <li><b>① 換臉</b>：A 的臉換成 B</li>
+        <li><b>② 人臉生成</b>：做出不存在的人</li>
+        <li><b>③ 面部再現</b>：表情複製到別人臉上</li>
+        <li><b>④ 語音模仿</b>：讓人說沒說過的話</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="comic-panel c2 slide-up d2" style="margin-top:22px;text-align:center">
+    <p class="lead" style="font-size:1.1rem">
+      🎬 <b>白話說</b>：就像電影裡的「<b style="color:var(--c1)">超級變臉面具 + 超級模仿秀</b>」── AI 可以把任何人變成另一個人。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤖</div>
+    <div class="bubble">Deepfake 技術本身不壞 ── 是<b>「被惡意使用」才危險</b>。電影特效也是同樣技術。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — WHY DANGEROUS ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 為什麼危險</span>
+  <p class="eyebrow slide-up">為什麼學會辨別這麼重要？</p>
+  <h2 class="title-md slide-up d1">因為 Deepfake 已經<br><span class="accent-1">真實地影響我們的生活</span>。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">📰</div>
+      <div class="h">假新聞傳得快</div>
+      <p class="b">「名人說了沒說過的話」<br>一夜爆紅，<b>真相要 1 週</b>才能澄清。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c5)">
+      <div class="ico">💸</div>
+      <div class="h">詐騙更逼真</div>
+      <p class="b">「假冒老闆的聲音」<br>叫員工匯款 ──<b>真實發生過</b>的詐騙案例！</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c4)">
+      <div class="ico">⚖️</div>
+      <div class="h">會觸犯法律</div>
+      <p class="b">用 AI 做<b>不雅變臉影片</b><br>已經有人被法院判刑了。</p>
+    </div>
+  </div>
+
+  <div class="comic-panel c2 slide-up d2" style="margin-top:24px">
+    <p class="lead" style="text-align:center;font-size:1.1rem">
+      💡 <b>真實案例</b>：2023 年「<b style="color:var(--c1)">教宗穿白色羽絨外套</b>」AI 假照片瘋傳，連大人都被騙了！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚠️</div>
+    <div class="bubble">學會辨別假影片，不只保護自己 ──<b>更避免你變成假訊息的幫兇</b>。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — 5 TIPS ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 核心 / 5 TIPS</span>
+  <p class="eyebrow slide-up">小偵探必備工具箱</p>
+  <h2 class="title-md slide-up d1">辨別 AI 假影片<span class="accent-1">「5 大技巧」</span> ──<br>口訣：<span class="accent-4">直覺 · 手 · 眼 · 字 · 影子</span>。</h2>
+
+  <div class="tip-grid">
+    <div class="tip-card pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <div class="emoji">😬</div>
+      <h5>相信直覺</h5>
+      <p>「奇異谷效應」── 看起來像人但怪怪的 = 警報！</p>
+    </div>
+    <div class="tip-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <div class="emoji">✋</div>
+      <h5>檢查手部</h5>
+      <p>AI 最不擅長畫手！手指多一根、長度怪 = 假圖。</p>
+    </div>
+    <div class="tip-card pop-in d3" style="--c:var(--c3)">
+      <div class="n">03</div>
+      <div class="emoji">👁️</div>
+      <h5>檢查眼嘴</h5>
+      <p>瞳孔不圓、雙眼反光不同、嘴唇對不上聲音。</p>
+    </div>
+    <div class="tip-card pop-in d4" style="--c:var(--c4)">
+      <div class="n">04</div>
+      <div class="emoji">🔤</div>
+      <h5>找奇怪文字</h5>
+      <p>看招牌、刺青、衣服字。AI 不會處理文字 = 亂碼！</p>
+    </div>
+    <div class="tip-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <div class="emoji">💡</div>
+      <h5>留意光影</h5>
+      <p>光從左來但影子也在左？反射跟環境不對？= 假！</p>
+    </div>
+  </div>
+
+  <div class="comic-panel c1 slide-up d2" style="margin-top:30px;text-align:center">
+    <p class="lead" style="font-size:1.15rem">
+      🎯 <b>記憶口訣</b>：「<b style="color:var(--c1)">直覺手眼字影子，AI 破綻跑不了！</b>」
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🔍</div>
+    <div class="bubble">回家對著爸媽轉傳的影片<b>檢查這 5 點</b> ── 你會超有成就感。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — SIFT METHOD ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · 核心 / SIFT</span>
+  <p class="eyebrow slide-up">網路時代的「停看聽」</p>
+  <h2 class="title-md slide-up d1">SIFT 法則 ─ <span class="accent-1">4 個英文字母</span>，<br>4 步保你不被騙。</h2>
+
+  <div class="sift-row">
+    <div class="sift-card pop-in d1" style="--c:var(--c1)">
+      <div class="L">S</div>
+      <h4>Stop</h4>
+      <p><b>停一停！</b><br>看到讓你<b>生氣、害怕、超驚訝</b>的訊息 ──<b style="color:var(--c1)">先深呼吸</b>，絕對不要馬上按轉傳！</p>
+    </div>
+    <div class="sift-card pop-in d2" style="--c:var(--c2)">
+      <div class="L">I</div>
+      <h4>Investigate</h4>
+      <p><b>調查來源</b><br>用 5W：<b>Who</b> 誰寫？<b>What</b> 目的？<b>When</b> 何時？<b>Where</b> 在哪？<b>Why</b> 為什麼？</p>
+    </div>
+    <div class="sift-card pop-in d3" style="--c:var(--c3)">
+      <div class="L">F</div>
+      <h4>Find</h4>
+      <p><b>找更多報導</b><br>如果是<b>大新聞</b>，其他媒體也會報！<br>搜尋同樣關鍵字，看可信媒體有沒有同樣的報導。</p>
+    </div>
+    <div class="sift-card pop-in d4" style="--c:var(--c5)">
+      <div class="L">T</div>
+      <h4>Trace</h4>
+      <p><b>溯源</b><br>很多假訊息是「<b>移花接木</b>」── 拿舊照片配假故事。追蹤照片<b>最早從哪裡來</b>。</p>
+    </div>
+  </div>
+
+  <div class="comic-panel c1 slide-up d2" style="margin-top:26px;text-align:center">
+    <p class="lead" style="font-size:1.05rem">
+      ⚠️ <b>特別注意</b>：假訊息最常在<b>LINE、Facebook、TikTok</b>流傳！<b style="color:var(--c1)">LINE 是封閉群組，錯誤最難被指正</b>。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">✋</div>
+    <div class="bubble">最重要的是<b>「S - 停」</b> ── 別急著轉傳。<b>3 秒鐘的停頓，可能救你一輩子的信用</b>。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — MYGOPEN 4 STEPS ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 操作 / MYGOPEN</span>
+  <p class="eyebrow slide-up">LINE 上的謠言剋星</p>
+  <h2 class="title-md slide-up d1">用 <span class="accent-1">MyGoPen</span>（麥擱騙），<br>4 步驟秒查真相。</h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c3)"><span class="n">1</span><span class="t">加入 LINE 好友<br>ID：@mygopen</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c2)"><span class="n">2</span><span class="t">把可疑訊息<br>「轉傳」過去</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c4)"><span class="n">3</span><span class="t">機器人秒回<br>查證結果</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c5)"><span class="n">4</span><span class="t">查不到？<br>請真人查證</span></div>
+  </div>
+
+  <div class="two-col slide-up d2" style="margin-top:30px">
+    <div class="comic-panel c3">
+      <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c3);font-size:1.2rem;margin-bottom:10px">✅ 免費好用</h3>
+      <p class="lead" style="font-size:1rem">不只查文字，<b>圖片、影片也可以查</b>！跟「<b>台灣事實查核中心</b>」合作（國際 IFCN 認證）。</p>
+    </div>
+    <div class="comic-panel c1">
+      <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c1);font-size:1.2rem;margin-bottom:10px">⚠️ 重要提醒</h3>
+      <p class="lead" style="font-size:1rem">「<b>查不到 ≠ 一定是真的</b>」── 資料庫持續更新，最新假訊息可能還沒進系統，<b>仍要保持懷疑</b>。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📱</div>
+    <div class="bubble">下課後立刻加 <b>@mygopen</b> ── 比追蹤偶像 IG 還重要！</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — 3 SCENARIOS ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 情境 / SCENARIOS</span>
+  <p class="eyebrow slide-up">三大應用情境</p>
+  <h2 class="title-md slide-up d1">小偵探的<span class="accent-1">「三個戰場」</span>。</h2>
+
+  <div class="scenario-fan">
+    <div class="scenario-card pop-in d1" style="--c:var(--c1)">
+      <div class="num">1</div>
+      <div class="icon">👵</div>
+      <h4>長輩群組</h4>
+      <p><b>最常見的戰場</b>。爸媽、爺奶轉傳的「<b>驚！...</b>」訊息，用 SIFT 法則先停下來，再幫他們查證。</p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--c4)">
+      <div class="num">2</div>
+      <div class="icon">📱</div>
+      <h4>同學間轉傳</h4>
+      <p><b>同儕影響最大</b>。班群、IG 限動瘋傳的搞笑影片，可能是 Deepfake 害人。先用 5 大技巧檢查。</p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--c5)">
+      <div class="num">3</div>
+      <div class="icon">🌐</div>
+      <h4>網路名人言論</h4>
+      <p><b>政治、選舉特別多</b>。「某政治人物說...」的影片，先看光影、嘴唇對嘴。用 SIFT「F」找其他媒體。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:30px;text-align:center;color:var(--dim);font-size:1rem">
+    💡 <b>建議</b>：每天 1 分鐘 ── 看到可疑訊息<b>練習用 SIFT 過一次</b>，三週後你就是班上的小偵探！
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎯</div>
+    <div class="bubble">這不是「課堂演練」── 是<b>真實生活中每天都會遇到</b>的情境。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — REAL CASE ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 案例 / CASE</span>
+  <p class="eyebrow slide-up">真實事件</p>
+  <h2 class="title-md slide-up d1">這些<span class="accent-1">真的發生過</span>的<br>Deepfake 騙局案例。</h2>
+
+  <div class="three-col">
+    <div class="comic-panel c1 pop-in d1">
+      <div style="font-size:2.6rem;text-align:center">🚀</div>
+      <h4 style="font-family:'Noto Sans TC';font-weight:900;font-size:1.15rem;text-align:center;color:var(--c1);margin:6px 0 10px">NASA 假太空人照</h4>
+      <p class="lead" style="font-size:.9rem">2023 年瘋傳「<b>新太空人照片</b>」── 其實是 AI 生成的。<b>連 NASA 都要出來闢謠</b>。</p>
+    </div>
+    <div class="comic-panel c5 pop-in d2">
+      <div style="font-size:2.6rem;text-align:center">⚔️</div>
+      <h4 style="font-family:'Noto Sans TC';font-weight:900;font-size:1.15rem;text-align:center;color:var(--c5);margin:6px 0 10px">以色列情報總部</h4>
+      <p class="lead" style="font-size:.9rem">「<b>情報總部被炸</b>」的影片在社群瘋傳，<b>其實是 AI 生成的影片</b>。</p>
+    </div>
+    <div class="comic-panel c4 pop-in d3">
+      <div style="font-size:2.6rem;text-align:center">👨‍💼</div>
+      <h4 style="font-family:'Noto Sans TC';font-weight:900;font-size:1.15rem;text-align:center;color:var(--c4);margin:6px 0 10px">假冒老闆聲音詐騙</h4>
+      <p class="lead" style="font-size:.9rem">2024 年香港跨國公司被詐騙 <b>2 億港元</b> ── AI 假聲假畫面騙員工匯款。</p>
+    </div>
+  </div>
+
+  <div class="comic-panel c2 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.05rem">
+      🔥 <b>共同點</b>：發布後<b>數小時內瘋傳</b>，澄清要<b>數天</b>才追上。
+    </p>
+    <p class="lead" style="font-size:1rem;margin-top:8px;color:var(--c1);font-weight:700">
+      你按下「轉傳」的那 0.5 秒，可能就<b>害到別人</b>。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📊</div>
+    <div class="bubble">不要笑那些被騙的大人 ── 連<b>NASA、跨國公司、大型媒體</b>都會被騙到，更何況我們？</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — TOOLS COMPARE ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">查核工具大比較</p>
+  <h2 class="title-md slide-up d1">不同情境用<span class="accent-1">不同工具</span>，<br>多管齊下才安全。</h2>
+
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--c4)">
+      <div class="nm">Google<br>Lens</div>
+      <div class="when"><b>反向搜圖</b><br><br>🎯 看圖片的<b>原始出處</b>，揭穿移花接木</div>
+    </div>
+    <div class="cmp-tile pop-in d2" style="--c:var(--c5)">
+      <div class="nm">Hive<br>Mod</div>
+      <div class="when"><b>AI 圖片偵測</b><br><br>🎯 上傳給「AI 製作機率」百分比</div>
+    </div>
+    <div class="cmp-tile star pop-in d3">
+      <div class="ribbon">本日主推</div>
+      <div class="nm">MyGoPen</div>
+      <div class="when"><b>LINE 一鍵查</b><br><br>🎯 中文最強，<b>連長輩都會用</b></div>
+    </div>
+    <div class="cmp-tile pop-in d4" style="--c:var(--c3)">
+      <div class="nm">事實查核中心</div>
+      <div class="when"><b>專業團隊</b><br><br>🎯 國際 IFCN 認證，<b>嚴肅議題首選</b></div>
+    </div>
+  </div>
+
+  <div class="comic-panel c1 slide-up d2" style="margin-top:30px;text-align:center">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--c1);margin-bottom:10px">🎯 黃金組合</h3>
+    <p class="lead" style="font-size:1.1rem">
+      <b>圖片不對勁</b> → Google Lens 反搜 ／ <b>不確定 AI</b> → Hive ／ <b>LINE 收到</b> → MyGoPen ／ <b>嚴重新聞</b> → 事實查核中心
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚖️</div>
+    <div class="bubble">不必每個都用 ──<b>記住一個 MyGoPen 就能擋下 80% 假訊息</b>。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — TEACHER STRATEGY ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 教師策略 / TEACHER</span>
+  <p class="eyebrow slide-up">媒體識讀的雙面刃</p>
+  <h2 class="title-md slide-up d1"><span class="accent-3">「教會學生懷疑」</span>vs<br><span class="accent-1">「教成偏激陰謀論者」</span>。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 良性懷疑</div>
+      <h4>培養查證習慣</h4>
+      <ul class="bullet-list green" style="font-size:1rem">
+        <li>看到「驚！」訊息<b>先停 3 秒</b></li>
+        <li>用 SIFT 法則<b>逐步查證</b></li>
+        <li>查證後<b>分享正確版本</b>幫助別人</li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 過度懷疑</div>
+      <h4>陰謀論陷阱</h4>
+      <ul class="bullet-list red" style="font-size:1rem">
+        <li>「<b>什麼都不能信</b>」── 否認所有媒體</li>
+        <li>只看「<b>同溫層</b>」資訊管道</li>
+        <li>被誤導變成<b>假訊息散播者</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="comic-panel c4 slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--c4);margin-bottom:14px">🎯 教師三大救援策略</h3>
+    <ul class="bullet-list" style="font-size:1rem">
+      <li>強調「<b>查證 ≠ 否定</b>」── 不是所有訊息都是假的</li>
+      <li>讓學生<b>練習帶長輩查證</b>（家庭作業）── 不是教訓他們</li>
+      <li>用<b>具體案例</b>當教材（NASA、香港詐騙、教宗羽絨衣）── 比空談原則有感</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">👨‍🏫</div>
+    <div class="bubble">不是要學生變「<b>陰謀論者</b>」── 是要培養<b>「查證後再相信」</b>的好習慣。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — COMPETENCY ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / COMPETENCY</span>
+  <p class="eyebrow slide-up">對應 108 課綱核心素養</p>
+  <h2 class="title-md slide-up d1">不只是「會查假訊息」 ──<br>是<span class="accent-1">五大素養</span>同時點亮！</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🛡️</div>
+      <h5>① 綜-E-B2<br>媒體素養</h5>
+      <p>判讀媒體訊息真偽，是 12 年國教明訂的關鍵能力。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🧩</div>
+      <h5>② 科-E-A2<br>解決問題</h5>
+      <p>用 5 大技巧 + SIFT + 工具<b>解決判斷真偽</b>的問題。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c3)">
+      <div class="ico">💭</div>
+      <h5>③ 國-E-A1<br>思辨能力</h5>
+      <p>不照單全收 ──<b>培養批判性思考</b>。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c4)">
+      <div class="ico">💻</div>
+      <h5>④ A-E-A1<br>運用科技</h5>
+      <p>會用 Google Lens、MyGoPen 等查核工具。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c5)">
+      <div class="ico">🤝</div>
+      <h5>⑤ 社-E-C2<br>人際責任</h5>
+      <p>不轉傳假訊息 ──<b>對親友負責任</b>的數位公民。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem">
+    💡 <b>記住</b>：媒體識讀 = 數位時代的<b>「自我保護課」</b>，<br>
+    <span style="color:var(--dim)">10 年後 AI 更厲害，但「停一停、查一查」這個習慣<b>永遠有用</b>。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">學會了，記得<b>回家教阿公阿嬤</b>！他們最容易被假訊息騙。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — FINAL ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給未來小偵探的 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">當你看到下一張可疑照片，<br>請先記住<span class="accent-1">這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <h5>先停 3 秒<br>再轉傳</h5>
+      <p>SIFT 的「S」是最重要的。<br><b>3 秒鐘救你一輩子的信用</b>。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>檢查 5 大<br>破綻</h5>
+      <p>直覺、手、眼、字、影子。<br><b>口訣背下來</b>，看到就用。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c3)">
+      <div class="n">03</div>
+      <h5>用工具<br>不靠感覺</h5>
+      <p>MyGoPen / Google Lens 是<b>免費的偵探幫手</b>。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c4)">
+      <div class="n">04</div>
+      <h5>幫長輩<br>查證</h5>
+      <p>阿公阿嬤最容易被騙。<br><b>你是家裡的小偵探</b>。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>不確定<br>絕不轉傳</h5>
+      <p>「我不確定」是最誠實的答案。<br><b>沉默 > 散播假訊息</b>。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不只今天有用 ── <b>未來 AI 越強，這 5 件事就越關鍵</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="cover-bubble" style="--rot:-4deg">🕵️</div></div>
+  <div class="cover-deco tr"><div class="cover-bubble" style="--rot:5deg">🔍</div></div>
+  <div class="cover-deco bl"><div class="cover-bubble" style="--rot:3deg">✋</div></div>
+  <div class="cover-deco br"><div class="cover-bubble" style="--rot:-5deg">📱</div></div>
+
+  <h2 class="slide-up">假訊息的<span class="em">最強敵人</span>，<br>就是<span class="em">「會停一停的你」</span>。</h2>
+  <p class="signoff slide-up d1">AI 越強 ── 你的批判力，就越值錢。</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/deepfake-detective/</b>
+    </div>
+    <div class="url-box">
+      📱 LINE 查核<br>
+      <b>ID：@mygopen</b>
+    </div>
+  </div>
+
+  <p style="margin-top:42px;font-family:'Bungee',sans-serif;color:var(--dim);font-size:.9rem;letter-spacing:.1em">
+    Q&A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Bungee',sans-serif;color:var(--c1);font-size:1.05rem;letter-spacing:.05em">THANK YOU · 你就是家裡的小偵探！</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div>
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'AI 假影片偵探社 · 六年級資訊科技'},
+  {n:2,  t:'開場暖身',       s:'川普被抓走？SFX + 4 格漫畫'},
+  {n:3,  t:'什麼是 Deepfake',s:'GAN 兩個 AI 對抗 + 4 種手法'},
+  {n:4,  t:'為什麼危險',     s:'假新聞、詐騙、觸犯法律'},
+  {n:5,  t:'5 大辨別技巧',   s:'直覺·手·眼·字·影子 5 大破綻'},
+  {n:6,  t:'SIFT 法則',       s:'Stop · Investigate · Find · Trace'},
+  {n:7,  t:'MyGoPen 4 步',    s:'加好友→轉傳→秒回→真人查證'},
+  {n:8,  t:'三大應用情境',   s:'長輩群組 / 同學群 / 網路名人'},
+  {n:9,  t:'真實案例',       s:'NASA / 香港詐騙 / 教宗羽絨衣'},
+  {n:10, t:'查核工具比較',   s:'Google Lens · Hive · MyGoPen'},
+  {n:11, t:'教師策略',       s:'良性懷疑 vs 過度懷疑陷阱'},
+  {n:12, t:'108 課綱素養',    s:'媒體素養 + 思辨 + 人際責任'},
+  {n:13, t:'5 個叮嚀',        s:'給未來小偵探'},
+  {n:14, t:'結語 + Q&A',      s:'你就是家裡的小偵探'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

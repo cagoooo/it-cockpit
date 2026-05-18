@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PaGamO 國小天地世界冒險演講簡報｜三年級資訊科技</title>
+<meta name="description" content="阿凱老師｜三年級資訊科技｜PaGamO 國小天地世界冒險演講簡報。Pixel-game 綠色風 × 14 張投影片。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#0d2818;
+  --surface:#143821;
+  --panel:#1d4a2c;
+  --c1:#4caf50;
+  --c2:#ffd740;
+  --c3:#ff85b3;
+  --c4:#69ff47;
+  --c5:#00e5ff;
+  --text:#e8f5e8;
+  --dim:#7aa07a;
+  --shadow-px:4px 4px 0 #000;
+}
+body{font-family:'Noto Sans TC','PingFang TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;user-select:none}
+body::before{content:'';position:fixed;inset:0;z-index:9990;pointer-events:none;background:repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 2px, transparent 2px 4px)}
+
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:5vh 6vw;opacity:0;transition:opacity .4s;background:var(--bg)}
+.slide.active{display:flex;opacity:1}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,var(--c1) 0 16px,var(--c2) 16px 32px,var(--c4) 32px 48px);opacity:.85}
+.slide-num{position:absolute;bottom:18px;right:32px;font-family:'Press Start 2P',monospace;font-size:.7rem;color:var(--dim);letter-spacing:.1em;z-index:5}
+.slide-title-tag{position:absolute;top:24px;left:32px;font-family:'Press Start 2P',monospace;font-size:.55rem;letter-spacing:.18em;color:var(--c2);text-transform:uppercase;padding:6px 10px;border:2px solid var(--c2);background:var(--surface);box-shadow:var(--shadow-px);z-index:5}
+
+.title-xl{font-weight:900;font-size:clamp(3rem,7vw,6rem);line-height:1.05;letter-spacing:-.02em;color:var(--c4);text-shadow:0 0 24px rgba(105,255,71,.5)}
+.title-lg{font-weight:900;font-size:clamp(2.4rem,5vw,4rem);line-height:1.1;letter-spacing:-.02em;color:var(--c4);text-shadow:0 0 16px rgba(105,255,71,.4)}
+.title-md{font-weight:900;font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.2;color:var(--text)}
+.eyebrow{font-family:'Press Start 2P',monospace;font-size:.7rem;letter-spacing:.2em;color:var(--c3);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:'';flex:1;height:2px;background:var(--c3);max-width:200px}
+.lead{font-size:clamp(1rem,1.5vw,1.25rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--c2);font-weight:900}
+.accent-c1{color:var(--c1)}.accent-c2{color:var(--c2)}.accent-c3{color:var(--c3)}.accent-c4{color:var(--c4)}.accent-c5{color:var(--c5)}
+
+.speaker{position:absolute;bottom:18px;left:32px;display:flex;align-items:flex-end;gap:14px;z-index:8;max-width:55%}
+.speaker .avatar{width:60px;height:60px;flex-shrink:0;background:var(--c2);border:3px solid #000;display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:var(--shadow-px)}
+.speaker .bubble{background:var(--surface);border:2.5px solid var(--c4);padding:10px 16px;font-size:.95rem;font-weight:500;position:relative;box-shadow:var(--shadow-px);max-width:480px;line-height:1.5;color:var(--text)}
+.speaker .bubble::before{content:'';position:absolute;left:-14px;bottom:18px;width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent var(--c4) transparent transparent}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:5px;background:var(--panel);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c4),var(--c2));transition:width .4s;box-shadow:0 0 8px var(--c4)}
+.hint{position:fixed;top:14px;right:24px;z-index:99;font-family:'Press Start 2P',monospace;font-size:.55rem;color:var(--dim);background:var(--surface);border:1.5px solid var(--dim);padding:6px 12px;letter-spacing:.08em;pointer-events:none;opacity:.75}
+
+.overview{position:fixed;inset:0;background:#031a08;display:none;padding:32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-family:'Press Start 2P',monospace;color:var(--c2);font-size:1rem;margin-bottom:20px;letter-spacing:.1em}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.ov-card{background:var(--surface);border:3px solid var(--c2);padding:14px 16px;cursor:pointer;transition:.15s;position:relative;box-shadow:var(--shadow-px)}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--c3)}
+.ov-card .num{position:absolute;top:8px;right:10px;font-family:'Press Start 2P',monospace;font-size:.7rem;color:var(--c3)}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--c4);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+@keyframes coin-spin{0%,100%{transform:rotateY(0)}50%{transform:rotateY(180deg)}}
+.coin{width:48px;height:48px;background:var(--c2);border:3px solid #000;display:inline-flex;align-items:center;justify-content:center;font-family:'Press Start 2P',monospace;font-size:1.1rem;color:#000;box-shadow:var(--shadow-px);animation:coin-spin 2.5s ease-in-out infinite}
+.pixel-heart{display:inline-block;width:36px;height:36px;background:var(--c3);clip-path:polygon(20% 0,40% 0,40% 20%,60% 20%,60% 0,80% 0,80% 20%,100% 20%,100% 60%,80% 60%,80% 80%,60% 80%,60% 100%,40% 100%,40% 80%,20% 80%,20% 60%,0 60%,0 20%,20% 20%);box-shadow:var(--shadow-px)}
+.hp-bar{display:inline-block;width:200px;height:22px;background:var(--panel);border:3px solid #000;position:relative;box-shadow:var(--shadow-px)}
+.hp-bar .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--c4),var(--c2));width:var(--hp,80%)}
+.hp-bar::after{content:'HP';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-family:'Press Start 2P',monospace;font-size:.55rem;color:#000;text-shadow:1px 1px 0 #fff}
+.stage-card-deco{display:inline-block;padding:8px 16px;background:var(--c3);color:#000;border:3px solid #000;font-family:'Press Start 2P',monospace;font-size:.7rem;letter-spacing:.15em;box-shadow:var(--shadow-px)}
+
+.pixel-box{background:var(--surface);border:3px solid var(--c4);padding:22px 26px;position:relative;box-shadow:var(--shadow-px)}
+.pixel-box.c1{border-color:var(--c1)}
+.pixel-box.c2{border-color:var(--c2)}
+.pixel-box.c3{border-color:var(--c3)}
+.pixel-box.c5{border-color:var(--c5)}
+
+.stat-card{background:var(--surface);border:3px solid #000;padding:22px 26px;text-align:center;box-shadow:6px 6px 0 var(--c2);flex:1;min-width:180px}
+.stat-card .n{font-family:'Press Start 2P',monospace;font-size:clamp(2rem,3.5vw,3.2rem);line-height:1;color:var(--c4)}
+.stat-card .l{font-size:.95rem;color:var(--dim);margin-top:8px;letter-spacing:.05em}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.7;margin-bottom:12px}
+.bullet-list li::before{content:'▶';flex-shrink:0;color:var(--c4);font-family:'Press Start 2P',monospace;font-size:.7rem;margin-top:8px;text-shadow:0 0 8px var(--c4)}
+.bullet-list.c2 li::before{color:var(--c2);text-shadow:0 0 8px var(--c2)}
+.bullet-list.c3 li::before{color:var(--c3);text-shadow:0 0 8px var(--c3)}
+.bullet-list.c5 li::before{color:var(--c5);text-shadow:0 0 8px var(--c5)}
+
+.tag{display:inline-block;padding:6px 14px;background:var(--c2);color:#000;border:2px solid #000;font-weight:700;font-size:.9rem;box-shadow:2px 2px 0 #000;margin:4px 6px 4px 0}
+
+.kbd{display:inline-block;padding:3px 8px;background:#000;color:var(--c2);font-family:'Press Start 2P',monospace;font-size:.65rem;border:1px solid var(--c2)}
+
+.cover{align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at center, #1a4e2c 0%, var(--bg) 70%)}
+.cover .badge{display:inline-block;background:var(--c3);color:#000;font-family:'Press Start 2P',monospace;font-size:.85rem;letter-spacing:.2em;padding:10px 18px;margin-bottom:32px;box-shadow:var(--shadow-px)}
+.cover h1{font-weight:900;font-size:clamp(3rem,7.5vw,6.5rem);line-height:1.05;margin-bottom:18px;color:var(--c4);letter-spacing:-.03em;text-shadow:0 0 32px rgba(105,255,71,.6),4px 4px 0 #000}
+.cover h1 .accent{color:var(--c2);font-family:'Press Start 2P',monospace;font-size:.45em;display:inline-block;transform:translateY(-12px);margin:0 8px}
+.cover .sub{font-size:clamp(1.1rem,2vw,1.6rem);color:var(--text);margin-bottom:48px;font-weight:500}
+.cover .meta{display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;font-family:'Press Start 2P',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--dim)}
+.cover .meta b{color:var(--c2);font-weight:700}
+.cover-deco{position:absolute;display:flex;gap:18px}
+.cover-deco.tl{top:80px;left:80px}
+.cover-deco.tr{top:80px;right:80px}
+.cover-deco.bl{bottom:80px;left:80px}
+.cover-deco.br{bottom:80px;right:80px}
+
+.hook-quote{font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.4;color:var(--text);font-weight:900;max-width:1100px}
+.hook-quote .em{color:var(--c2);font-style:normal}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:flex-start;flex:1;margin-top:20px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;flex:1;margin-top:20px}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;margin-top:20px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:20px}
+
+.pillar{background:var(--surface);border:3px solid #000;padding:22px 20px;text-align:center;position:relative;box-shadow:6px 6px 0 var(--c,var(--c4))}
+.pillar .ico{width:74px;height:74px;background:var(--c,var(--c4));border:3px solid #000;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2.2rem;box-shadow:3px 3px 0 #000}
+.pillar .h{font-weight:900;font-size:1.25rem;color:var(--c,var(--c4));margin-bottom:8px}
+.pillar .b{font-size:.95rem;line-height:1.65;color:var(--text)}
+
+.step-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:24px}
+.step-item{background:var(--surface);border:3px solid #000;padding:14px 8px;text-align:center;position:relative;font-size:.85rem;box-shadow:3px 3px 0 var(--c,var(--c4));color:var(--text)}
+.step-item .n{font-family:'Press Start 2P',monospace;font-size:1.05rem;color:var(--c,var(--c4));display:block;margin-bottom:6px}
+.step-item .t{font-weight:700;font-size:.85rem;line-height:1.35}
+.step-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--c2);z-index:2;text-shadow:0 0 8px var(--c2)}
+
+.scenario-fan{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:24px}
+.scenario-card{background:var(--surface);border:3px solid var(--c,var(--c4));padding:22px 20px;position:relative;box-shadow:6px 6px 0 #000}
+.scenario-card .num{position:absolute;top:-18px;left:18px;width:38px;height:38px;background:var(--c,var(--c4));color:#000;border:3px solid #000;display:flex;align-items:center;justify-content:center;font-family:'Press Start 2P',monospace;font-size:.85rem;box-shadow:2px 2px 0 #000}
+.scenario-card .icon{font-size:2.2rem;margin-bottom:6px;text-align:center}
+.scenario-card h4{font-weight:900;font-size:1.3rem;color:var(--c,var(--c4));margin:6px 0 10px}
+.scenario-card p{font-size:.95rem;line-height:1.6;color:var(--text)}
+
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px}
+.side-card{background:var(--surface);border:3px solid var(--c,var(--c4));padding:22px 24px;position:relative;box-shadow:var(--shadow-px)}
+.side-card.bad{--c:var(--c3)}
+.side-card .ribbon{position:absolute;top:-14px;left:18px;background:var(--c);color:#000;padding:4px 14px;font-family:'Press Start 2P',monospace;font-size:.7rem;border:2px solid #000;letter-spacing:.05em}
+.side-card h4{font-weight:900;font-size:1.25rem;color:var(--c);margin:8px 0 12px}
+
+.a2-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.a2-card{background:var(--surface);border:3px solid var(--c,var(--c4));padding:18px 14px;position:relative;box-shadow:5px 5px 0 #000}
+.a2-card .ico{font-size:1.9rem;margin-bottom:6px}
+.a2-card h5{font-size:1rem;color:var(--c,var(--c4));font-weight:900;margin-bottom:6px}
+.a2-card p{font-size:.85rem;line-height:1.5;color:var(--text)}
+
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.advice-card{background:var(--surface);border:3px solid #000;padding:18px 14px;text-align:center;position:relative;box-shadow:6px 6px 0 var(--c,var(--c3))}
+.advice-card .n{font-family:'Press Start 2P',monospace;font-size:1.6rem;color:var(--c,var(--c3));line-height:1}
+.advice-card h5{font-weight:900;font-size:1.05rem;color:var(--text);margin:10px 0 6px}
+.advice-card p{font-size:.82rem;line-height:1.55;color:var(--text)}
+
+.closing{align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at center,#1a4e2c 0%,var(--bg) 70%)}
+.closing h2{font-weight:900;font-size:clamp(2.5rem,5.5vw,4.8rem);line-height:1.2;color:var(--c4);margin-bottom:24px;letter-spacing:-.02em;text-shadow:0 0 24px rgba(105,255,71,.5),4px 4px 0 #000}
+.closing h2 .em{color:var(--c2)}
+.closing .signoff{font-size:1.2rem;color:var(--dim);margin-bottom:28px}
+.closing .qr-row{display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.closing .url-box{background:var(--surface);border:3px solid var(--c2);padding:14px 22px;font-size:.95rem;color:var(--text);box-shadow:var(--shadow-px);text-align:center}
+.closing .url-box b{color:var(--c4);font-family:'Press Start 2P',monospace;font-size:.7rem;letter-spacing:.05em}
+
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .three-col,.four-col,.a2-grid,.advice-grid,.step-row{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+  .cover-deco{display:none}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="coin">$</div><div class="pixel-heart"></div></div>
+  <div class="cover-deco tr"><div class="hp-bar"><div class="fill" style="--hp:85%"></div></div></div>
+  <div class="cover-deco bl"><div class="stage-card-deco">START</div></div>
+  <div class="cover-deco br"><div class="coin">M</div><div class="pixel-heart"></div></div>
+
+  <span class="badge slide-up">三年級資訊科技 · GRADE 3</span>
+  <h1 class="slide-up d1">PaGamO<span class="accent">×</span>國小天地</h1>
+  <p class="sub slide-up d2">用學校信箱免費玩 · <span class="accent-c2"><b>邊答題邊佔領土地，蓋你自己的王國！</b></span></p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b></span>
+    <span>桃園市石門國小</span>
+    <span>4 大關卡 · 完全免費</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div style="margin-top:14vh">
+    <p class="eyebrow pop-in">小朋友，你有沒有想過 ──</p>
+    <p class="hook-quote pop-in d1">
+      有一個遊戲，可以讓你<br>
+      <span class="em">邊玩邊變聰明</span>，<br>
+      還能<span class="em">蓋自己的王國</span>？
+    </p>
+    <p class="lead slide-up d2" style="margin-top:28px;font-size:1.2rem">
+      不是電動，也不是手機遊戲。<br>
+      <span style="color:var(--c4);font-weight:900">是 PaGamO 國小天地 ── 答題就能佔領土地的冒險世界！</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎮</div>
+    <div class="bubble">嗨三年級同學！這個遊戲<b>完全免費</b>，只要你有學校信箱就能玩！</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT IS THIS ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 介紹 / WHAT</span>
+  <p class="eyebrow slide-up">PaGamO 是什麼？</p>
+  <h2 class="title-lg slide-up d1">學習版的<span class="accent-c2">魔物獵人</span> + <span class="accent-c2">皇室戰爭</span></h2>
+  <div class="two-col">
+    <div class="pixel-box slide-up d2">
+      <p class="lead" style="margin-bottom:14px">
+        🎯 <b>誰做的？</b>台大葉丙成教授的團隊<br>
+        🏆 <b>得過什麼獎？</b>2014 年全球第一名<br>
+        🆓 <b>要錢嗎？</b>國小天地<b>完全免費</b><br>
+        🎮 <b>怎麼玩？</b>答對題目 → 佔領土地 → 蓋王國
+      </p>
+      <p class="lead" style="font-size:1rem;color:var(--dim)">
+        玩起來像遊戲，但<b>大腦其實在練習</b>。
+      </p>
+    </div>
+    <div class="flex-row slide-up d2" style="margin:0">
+      <div class="stat-card pop-in d3">
+        <div class="n">400+</div>
+        <div class="l">擊敗的<br>全球團隊</div>
+      </div>
+      <div class="stat-card pop-in d4" style="box-shadow:6px 6px 0 var(--c1)">
+        <div class="n" style="color:var(--c1)">#1</div>
+        <div class="l">Reimagine<br>Education 冠軍</div>
+      </div>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:24px;color:var(--dim);text-align:center">
+    🌍 全世界都在玩，<b class="accent-c4">台灣自己做出來的遊戲</b>！
+  </p>
+  <div class="speaker">
+    <div class="avatar">🏆</div>
+    <div class="bubble">PaGamO 不是國外抄來的，<b>是台灣台大教授發明的</b>，全世界都來學我們！</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — STAGE 1 LOGIN ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · STAGE 1 / LOGIN</span>
+  <p class="eyebrow slide-up">STAGE 1 ─ 用學校信箱登入</p>
+  <h2 class="title-md slide-up d1">6 個步驟，<span class="accent-c2">登入大冒險</span></h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c4)"><span class="n">1</span><span class="t">打開<br>pagamo.org</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d1" style="--c:var(--c4)"><span class="n">2</span><span class="t">點右上<br>「註冊／登入」</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c2)"><span class="n">3</span><span class="t">選藍色<br>「教育雲端」</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c2)"><span class="n">4</span><span class="t">選縣市<br>+學生身分</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c3)"><span class="n">5</span><span class="t">輸入帳密<br>(學校給的)</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c5)"><span class="n">6</span><span class="t">選「國小<br>天地」</span></div>
+  </div>
+
+  <div class="two-col slide-up d2">
+    <div class="pixel-box c2">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.2rem;margin-bottom:10px">💡 帳號密碼小提醒</h3>
+      <p class="lead" style="font-size:1rem">
+        ✓ 帳號通常像 <b>sk12345</b><br>
+        ✓ 密碼通常是<b>身分證字號</b>（不要告訴別人）<br>
+        ✓ 忘記就跟<b>老師說</b>，老師可以幫你重設
+      </p>
+    </div>
+    <div class="pixel-box c3">
+      <h3 style="font-weight:900;color:var(--c3);font-size:1.2rem;margin-bottom:10px">⚠️ 玩完一定要做的事</h3>
+      <p class="lead" style="font-size:1rem">
+        玩完<b>記得點「登出」</b>！<br>
+        尤其是在<b>學校電腦或借別人電腦</b>玩的時候。<br>
+        <span style="color:var(--dim);font-size:.9rem">不登出 = 下一個人會看到你的進度</span>
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🔑</div>
+    <div class="bubble">第一次登入比較複雜，<b>跟著老師走一遍就懂了</b>。下次自己就能登。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — STAGE 2 WORLD QUEST ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · STAGE 2 / WORLD</span>
+  <p class="eyebrow slide-up">STAGE 2 ─ 世界任務：解題佔領大冒險</p>
+  <h2 class="title-md slide-up d1">答對題目 = <span class="accent-c2">佔領土地</span> = <span class="accent-c4">變大王國</span></h2>
+
+  <div class="three-col">
+    <div class="scenario-card pop-in d1" style="--c:var(--c4)">
+      <div class="num">1</div>
+      <div class="icon">📖</div>
+      <h4>找到任務書</h4>
+      <p>登入後點<b>畫面左邊</b>的任務書圖示</p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--c2)">
+      <div class="num">2</div>
+      <div class="icon">🌍</div>
+      <h4>選世界任務</h4>
+      <p>任務書下方點「<b class="accent-c2">世界任務</b>」標籤</p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--c3)">
+      <div class="num">3</div>
+      <div class="icon">⚔️</div>
+      <h4>攻擊或訓練</h4>
+      <p>點<b>自己領土→訓練</b>；<br>點<b>隔壁空地→攻擊</b></p>
+    </div>
+  </div>
+
+  <div class="pixel-box c4 slide-up d2" style="margin-top:24px">
+    <p class="lead" style="font-size:1.05rem">
+      ✨ <b class="accent-c4">答對</b> = 成功佔領土地 + 拿到獎勵 🎁<br>
+      ✨ <b class="accent-c3">答錯</b> = 不扣分！只是用掉一點能量，能量會慢慢回復 ── <b>不用怕</b>！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚔️</div>
+    <div class="bubble">不會的題目<b>不要亂猜</b>。仔細想，不會就先放著，下次能量回來再挑戰。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — STAGE 3 CLASS QUEST ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · STAGE 3 / CLASS</span>
+  <p class="eyebrow slide-up">STAGE 3 ─ 班級任務：跟同學一起玩</p>
+  <h2 class="title-md slide-up d1">老師<span class="accent-c2">親自挑的</span>題目，<br>跟全班<span class="accent-c4">一起解</span>。</h2>
+
+  <div class="two-col">
+    <div class="pixel-box slide-up d2">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">🏫 加入老師班級</h3>
+      <ul class="bullet-list" style="font-size:1rem">
+        <li>跟老師拿「<b>班級代碼</b>」</li>
+        <li>進「<b>課程設定</b>」→「我的班級」</li>
+        <li>輸入代碼 + <b>自己座號</b></li>
+        <li>確認任務書出現新任務 ✓</li>
+      </ul>
+    </div>
+    <div class="pixel-box c2 slide-up d2">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.2rem;margin-bottom:10px">📚 班級任務有什麼？</h3>
+      <ul class="bullet-list c2" style="font-size:1rem">
+        <li>老師<b>挑過的題目</b>（跟課本配合）</li>
+        <li>有<b>時間限制</b>（例：本週日前）</li>
+        <li>跟同學一起<b>競賽排名</b></li>
+        <li>完成有<b>班級獎勵</b>（道具、經驗值）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pixel-box c3 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.1rem">
+      ⚠️ 班級代碼是<b class="accent-c3">每班不一樣</b>的，<br>
+      不要把別班的代碼貼過來 ── 會加錯班級！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🏫</div>
+    <div class="bubble">沒加班級也可以玩 PaGamO，但<b>加了之後才會有老師親自設計的任務</b>，比較有方向！</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — STAGE 4 BACKPACK ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · STAGE 4 / ITEMS</span>
+  <p class="eyebrow slide-up">STAGE 4 ─ 背包與地形：王國升級！</p>
+  <h2 class="title-md slide-up d1">佔了土地<span class="accent-c2">還可以升級</span> ─<br>變成<span class="accent-c3">三星地形 / 雪地 / 櫻花地</span>！</h2>
+
+  <div class="four-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">💉</div>
+      <div class="h">土地營養劑</div>
+      <p class="b">恢復土地血量<br>50-300 點</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🧪</div>
+      <div class="h">魔法藥水</div>
+      <p class="b">恢復玩家能量<br>10-60 點</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c4)">
+      <div class="ico">⬆️</div>
+      <div class="h">升級道具</div>
+      <p class="b">土地升級<br>變成稀有地形</p>
+    </div>
+    <div class="pillar pop-in d4" style="--c:var(--c3)">
+      <div class="ico">🐲</div>
+      <div class="h">怪獸</div>
+      <p class="b">放在領地<br>守衛土地</p>
+    </div>
+  </div>
+
+  <div class="pixel-box c2 slide-up d2" style="margin-top:24px">
+    <p class="lead" style="font-size:1.05rem">
+      ⭐ <b class="accent-c2">最稀有的</b>：三星地形、季節地形（雪地 / 櫻花）、Boss 戰役道具<br>
+      <span style="color:var(--dim);font-size:.95rem">這些要透過<b>完成世界任務、班級任務、每天登入</b>慢慢累積。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎒</div>
+    <div class="bubble">背包就像<b>魔物獵人</b>裡的道具袋。會收集、會使用，<b>你的王國會比同學的還壯觀</b>！</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — RULES ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 規則 / RULES</span>
+  <p class="eyebrow slide-up">3 個你一定要懂的小規則</p>
+  <h2 class="title-md slide-up d1">PaGamO 玩起來輕鬆，<br>但<span class="accent-c2">規則背起來</span>會更厲害！</h2>
+
+  <div class="three-col">
+    <div class="pixel-box pop-in d1">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">⚡ 能量</h3>
+      <p class="lead" style="font-size:.98rem">
+        每答 1 題消耗能量。<br>
+        <b>每 24 小時自動回 300 點</b>，<br>
+        大約可以答 50 題。<br>
+        <span style="color:var(--c3);font-size:.85rem">答錯不歸還能量喔！</span>
+      </p>
+    </div>
+    <div class="pixel-box c2 pop-in d2">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.2rem;margin-bottom:10px">💰 金幣</h3>
+      <p class="lead" style="font-size:.98rem">
+        答對題目 + 完成任務<br>
+        都會給金幣。<br>
+        金幣可以去<b>商店買道具</b>、<br>
+        買升級材料。
+      </p>
+    </div>
+    <div class="pixel-box c3 pop-in d3">
+      <h3 style="font-weight:900;color:var(--c3);font-size:1.2rem;margin-bottom:10px">🌍 領土</h3>
+      <p class="lead" style="font-size:.98rem">
+        佔領的地越多 ＝<br>
+        排行榜分數越高。<br>
+        但<b>領土也可能被同學攻擊</b>，<br>
+        要記得<b>防禦</b>。
+      </p>
+    </div>
+  </div>
+
+  <div class="pixel-box c4 slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.15rem;color:var(--c4);margin-bottom:10px">🎯 老師的秘訣</h3>
+    <p class="lead" style="font-size:1rem">
+      <b>每天上線 10-15 分鐘</b>就好，把能量用完再離開。<br>
+      不要週末爆肝、平日不玩 ── 那樣<b class="accent-c2">能量都浪費了</b>！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📜</div>
+    <div class="bubble">規則記住了，遊戲就<b>玩得比較有策略</b>，不是亂打一通。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — DO & DONT ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 對錯 / DO &amp; DONT</span>
+  <p class="eyebrow slide-up">三年級玩 PaGamO 常見錯誤</p>
+  <h2 class="title-md slide-up d1">這些<span class="accent-c3">小錯誤</span>每個人都會犯，<br>提早知道就<span class="accent-c2">不會踩坑</span>！</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 對的做法</div>
+      <h4>聰明玩家</h4>
+      <ul class="bullet-list" style="font-size:.98rem">
+        <li>每天上線 <b>10-15 分鐘</b></li>
+        <li>不會的題目<b>仔細想</b>，不亂猜</li>
+        <li>玩完<b>記得登出</b></li>
+        <li>密碼<b>不告訴同學</b></li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 常見錯誤</div>
+      <h4>NG 雷區</h4>
+      <ul class="bullet-list c3" style="font-size:.98rem">
+        <li>整個週末玩 3 小時不睡覺</li>
+        <li>不會就<b>亂按答案</b>（能量秒光）</li>
+        <li>用別人電腦不登出</li>
+        <li>把帳號密碼借同學「玩玩看」</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pixel-box c2 slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.15rem;color:var(--c2);margin-bottom:10px">💡 為什麼不要借同學帳號？</h3>
+    <p class="lead" style="font-size:1rem">
+      因為 PaGamO 會<b>記錄你答題的對錯</b>，借同學玩會<br>
+      ① 弄亂你的答題紀錄 ② 同學<b>把你能量用光</b> ③ 老師看到會以為是你寫的。<br>
+      <b class="accent-c3">帳號就像牙刷，不能借！</b>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🚧</div>
+    <div class="bubble">這些雷老師看過很多同學踩過。<b>你學別人的教訓</b>，就不用自己踩！</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — WHY HELPFUL ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 為什麼有用 / WHY</span>
+  <p class="eyebrow slide-up">為什麼老師推薦你玩？</p>
+  <h2 class="title-md slide-up d1">因為大腦在<span class="accent-c2">「不知不覺」</span>中變強壯。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c4)">
+      <div class="ico">🎯</div>
+      <div class="h">即時回饋</div>
+      <p class="b">答對立刻佔土地<br>答錯立刻知道<br><b>學得快又深</b></p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🏆</div>
+      <div class="h">成就感</div>
+      <p class="b">看到地圖越擴張<br><b>有完成事情的感覺</b><br>越想繼續答</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c3)">
+      <div class="ico">🌀</div>
+      <div class="h">不知不覺</div>
+      <p class="b">忙著解題 + 蓋王國<br><b>不會覺得在念書</b><br>但其實有學到</p>
+    </div>
+  </div>
+
+  <div class="pixel-box c2 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.1rem">
+      💡 <b>科學家證實過</b>：每天分散練習 15 分鐘，<br>
+      比週末一次練 2 小時<b class="accent-c2">效果好 10 倍</b>！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🧠</div>
+    <div class="bubble">你玩 PaGamO 的時候，<b>腦袋其實在練習思考</b>。等你 10 歲長到 12 歲，會差很多！</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — SAFETY ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 安全 / SAFETY</span>
+  <p class="eyebrow slide-up">玩線上遊戲一定要懂的事</p>
+  <h2 class="title-md slide-up d1">PaGamO 很安全，<br>但<span class="accent-c3">這 3 件事還是要小心</span>。</h2>
+
+  <div class="three-col">
+    <div class="pixel-box c3 pop-in d1">
+      <h3 style="font-weight:900;color:var(--c3);font-size:1.2rem;margin-bottom:10px">🚫 不告訴別人</h3>
+      <p class="lead" style="font-size:.95rem">
+        密碼、帳號、家裡地址、<br>
+        真實姓名、學校班級 ──<br>
+        <b>都不要在遊戲裡告訴陌生人</b>。
+      </p>
+    </div>
+    <div class="pixel-box c2 pop-in d2">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.2rem;margin-bottom:10px">⏰ 時間到要停</h3>
+      <p class="lead" style="font-size:.95rem">
+        每天<b>不超過 30 分鐘</b>。<br>
+        鬧鐘設好，時間到就<b>暫停</b>。<br>
+        眼睛要休息，明天再繼續。
+      </p>
+    </div>
+    <div class="pixel-box c4 pop-in d3">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">💬 遇到怪事告訴大人</h3>
+      <p class="lead" style="font-size:.95rem">
+        如果遊戲裡有人說<br>
+        奇怪的話、<b>叫你按陌生連結</b>、<br>
+        要你給錢買道具 ── <b>馬上告訴老師或爸媽</b>！
+      </p>
+    </div>
+  </div>
+
+  <div class="pixel-box c3 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.1rem">
+      ⚠️ 重要提醒：<b class="accent-c3">PaGamO 國小天地完全免費</b>。<br>
+      如果有人說「<b>付錢就能升級得快</b>」── 那是<b class="accent-c3">假的、是詐騙</b>！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛡</div>
+    <div class="bubble">記住：網路世界跟真實世界一樣，<b>陌生人不要隨便相信</b>。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — COMPETENCY ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 能力 / SKILLS</span>
+  <p class="eyebrow slide-up">你會練到什麼能力？</p>
+  <h2 class="title-md slide-up d1">玩 PaGamO 不只「好玩」，<br>還偷偷練了<span class="accent-c2">這 4 種能力</span>。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c4)">
+      <div class="ico">📖</div>
+      <h5>① 認真<br>讀題</h5>
+      <p>不亂猜，<br>把題目看完</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">⏰</div>
+      <h5>② 時間<br>管理</h5>
+      <p>每天 15 分鐘，<br>自己安排</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c3)">
+      <div class="ico">🎯</div>
+      <h5>③ 策略<br>思考</h5>
+      <p>選道具、選任務，<br>動腦判斷</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c5)">
+      <div class="ico">🛡</div>
+      <h5>④ 網路<br>安全</h5>
+      <p>登出、不洩密、<br>遇怪事告大人</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem;color:var(--text)">
+    💡 這 4 種能力<b class="accent-c2">一輩子用得到</b>，<br>
+    <span style="color:var(--dim)">從 8 歲練到 80 歲都不會過時。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">會玩 PaGamO 不稀奇，<b>玩 PaGamO 練到這 4 種能力</b>才稀奇！</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — FINAL ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給三年級的 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">第一次玩 PaGamO，<br>記住<span class="accent-c2">這 5 件事</span>就夠了。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c4)">
+      <div class="n">01</div>
+      <h5>每天<br>一點點</h5>
+      <p>15 分鐘剛剛好，<br>不要爆肝</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>不會就<br>仔細想</h5>
+      <p>不要亂按答案，<br>能量很珍貴</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c3)">
+      <div class="n">03</div>
+      <h5>玩完<br>要登出</h5>
+      <p>保護自己帳號，<br>別人才不會用</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c1)">
+      <div class="n">04</div>
+      <h5>密碼<br>不告訴人</h5>
+      <p>就像牙刷，<br>不能借同學</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>遇怪事<br>找大人</h5>
+      <p>陌生人說怪話，<br>告訴老師爸媽</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事比「拿第一名」更重要。<b>習慣養成了，第一名自然會來</b>！</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="coin">$</div></div>
+  <div class="cover-deco tr"><div class="pixel-heart"></div></div>
+  <div class="cover-deco bl"><div class="stage-card-deco">CLEAR!</div></div>
+  <div class="cover-deco br"><div class="coin">M</div></div>
+
+  <h2 class="slide-up">準備好<br><span class="em">蓋你自己的王國</span>了嗎？</h2>
+  <p class="signoff slide-up d1">每天 15 分鐘，PaGamO 的世界等你來冒險！</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/pagamo-world/</b>
+    </div>
+    <div class="url-box">
+      🎮 國小天地入口<br>
+      <b>pagamo.org · 學校信箱登入</b>
+    </div>
+  </div>
+
+  <p style="margin-top:36px;font-family:'Press Start 2P',monospace;color:var(--dim);font-size:.6rem;letter-spacing:.15em">
+    Q&amp;A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Press Start 2P',monospace;color:var(--c2);font-size:.75rem;letter-spacing:.15em">THANK YOU · GAME CLEAR</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'PaGamO 國小天地 · 三年級資訊科技'},
+  {n:2,  t:'開場暖身',       s:'邊玩邊變聰明的免費冒險遊戲'},
+  {n:3,  t:'PaGamO 是什麼',  s:'台大葉丙成教授團隊 · 全球冠軍'},
+  {n:4,  t:'STAGE 1 登入',   s:'學校信箱 6 步登入'},
+  {n:5,  t:'STAGE 2 世界',   s:'攻擊 / 訓練 → 答題佔土地'},
+  {n:6,  t:'STAGE 3 班級',   s:'班級代碼加入 · 老師指派任務'},
+  {n:7,  t:'STAGE 4 背包',   s:'營養劑 / 藥水 / 升級 / 怪獸'},
+  {n:8,  t:'3 個遊戲規則',   s:'能量 · 金幣 · 領土'},
+  {n:9,  t:'對與錯',         s:'聰明玩家 vs NG 雷區'},
+  {n:10, t:'為什麼有用',     s:'即時回饋 + 成就感 + 不知不覺'},
+  {n:11, t:'網路安全',       s:'不洩密 · 時間到要停 · 遇怪事找大人'},
+  {n:12, t:'4 種能力',       s:'讀題 · 時間 · 策略 · 安全'},
+  {n:13, t:'5 個叮嚀',       s:'每天 15 分鐘 · 不亂猜 · 登出'},
+  {n:14, t:'結語 + Q&A',     s:'準備好蓋你自己的王國了嗎？'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

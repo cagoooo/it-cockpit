@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scratch 動畫魔法師｜演講簡報模式</title>
+<meta name="description" content="Scratch 動畫六關卡：角色造型、逐格動畫、滑行、廣播、特效、場景切換。candy-bright 風格演講簡報。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#fef3f8; --surface:#fff0f6; --panel:#ffffff;
+  --c1:#ff85b3; --c2:#ffd54f; --c3:#6cb4ff; --c4:#7be495; --c5:#c490ff;
+  --text:#2a2244; --dim:#8878aa;
+}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;user-select:none}
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:5vh 6vw;opacity:0;transition:opacity .4s;background:var(--bg)}
+.slide.active{display:flex;opacity:1}
+.slide-num{position:absolute;bottom:24px;right:32px;font-size:.95rem;color:var(--dim);font-weight:700;letter-spacing:.1em;z-index:5}
+.slide-title-tag{position:absolute;top:28px;left:32px;font-size:.78rem;font-weight:700;letter-spacing:.2em;color:#fff;background:var(--c1);padding:5px 14px;border-radius:999px;box-shadow:0 4px 12px rgba(255,133,179,.3);z-index:5}
+
+.title-xl{font-size:clamp(3rem,7vw,5.6rem);line-height:1.05;letter-spacing:-.02em;color:var(--c1);font-weight:900}
+.title-lg{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.1;color:var(--text);font-weight:900}
+.title-md{font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;color:var(--text);font-weight:900}
+.eyebrow{font-size:1.05rem;letter-spacing:.2em;color:var(--c5);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:'';flex:1;height:3px;background:linear-gradient(90deg,var(--c5),transparent);max-width:260px;border-radius:3px}
+.lead{font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--c1);font-weight:900}
+.accent-pink{color:var(--c1)}.accent-blue{color:var(--c3)}.accent-green{color:#3d9b5a}.accent-purple{color:var(--c5)}
+
+.speaker{position:absolute;bottom:18px;left:32px;display:flex;align-items:flex-end;gap:14px;z-index:8;max-width:55%}
+.speaker .avatar{width:62px;height:62px;flex-shrink:0;background:linear-gradient(135deg,var(--c2),#ffb74d);border:3px solid var(--text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 4px 12px rgba(255,213,79,.4)}
+.speaker .bubble{background:#fff;border:3px solid var(--c1);padding:10px 16px;border-radius:18px;font-size:.95rem;font-weight:600;position:relative;box-shadow:0 4px 16px rgba(255,133,179,.18);max-width:520px;line-height:1.55}
+.speaker .bubble::before{content:'';position:absolute;left:-12px;bottom:18px;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent var(--c1) transparent transparent}
+.speaker .bubble::after{content:'';position:absolute;left:-8px;bottom:18px;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent #fff transparent transparent}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:6px;background:rgba(255,133,179,.15);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c5));transition:width .4s}
+.hint{position:fixed;top:14px;right:24px;z-index:99;font-size:.78rem;color:var(--dim);background:#fff;border:2px solid var(--c5);padding:5px 12px;border-radius:999px;letter-spacing:.05em;pointer-events:none;opacity:.85;font-weight:700}
+.kbd{display:inline-block;padding:2px 7px;background:var(--c5);color:#fff;font-size:.85em;border-radius:6px;margin:0 2px;font-weight:700}
+
+.overview{position:fixed;inset:0;background:rgba(42,34,68,.96);display:none;padding:32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{color:var(--c2);font-size:1.5rem;margin-bottom:18px;letter-spacing:.05em;font-weight:900}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.ov-card{background:#fff;border-radius:14px;padding:14px 16px;cursor:pointer;transition:.18s;position:relative;border:3px solid var(--c1)}
+.ov-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(255,133,179,.4)}
+.ov-card .num{position:absolute;top:8px;right:12px;font-size:.85rem;color:var(--c5);font-weight:900}
+.ov-card .t{font-weight:900;font-size:1.1rem;color:var(--c1);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(8deg)}}
+@keyframes twinkle{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+.deco{position:absolute;z-index:1;pointer-events:none}
+.lollipop{width:78px;height:108px;position:relative;animation:bounce 2.3s ease-in-out infinite}
+.lollipop::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff 0%,var(--lp,var(--c1)) 60%);border:3px solid var(--text);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.lollipop::after{content:'';position:absolute;top:55px;left:50%;transform:translateX(-50%);width:4px;height:50px;background:var(--text);border-radius:2px}
+.star-deco{width:46px;height:46px;background:var(--sc,var(--c2));clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 0 10px var(--sc,var(--c2)));animation:twinkle 2s ease-in-out infinite}
+.rainbow{width:130px;height:65px;border:6px solid var(--c1);border-bottom:0;border-radius:130px 130px 0 0;position:relative}
+.rainbow::before{content:'';position:absolute;top:6px;left:6px;right:6px;bottom:0;border:6px solid var(--c2);border-bottom:0;border-radius:100px 100px 0 0}
+.rainbow::after{content:'';position:absolute;top:18px;left:18px;right:18px;bottom:0;border:6px solid var(--c4);border-bottom:0;border-radius:70px 70px 0 0}
+.cloud{width:120px;height:50px;background:#fff;border:3px solid var(--text);border-radius:50px;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.1);animation:float 4s ease-in-out infinite}
+.cloud::before{content:'';position:absolute;top:-28px;left:18px;width:48px;height:48px;background:#fff;border:3px solid var(--text);border-radius:50%;border-bottom:none;clip-path:inset(0 0 50% 0 round 50%)}
+.cloud::after{content:'';position:absolute;top:-18px;right:24px;width:32px;height:32px;background:#fff;border:3px solid var(--text);border-radius:50%;border-bottom:none;clip-path:inset(0 0 50% 0 round 50%)}
+.balloon{width:55px;height:75px;position:relative;animation:float 3.5s ease-in-out infinite}
+.balloon::before{content:'';position:absolute;top:0;left:0;width:55px;height:65px;background:radial-gradient(circle at 30% 30%,#fff5,var(--bc,var(--c3)));border:2.5px solid var(--text);border-radius:50%}
+.balloon::after{content:'';position:absolute;bottom:0;left:50%;width:2px;height:18px;background:var(--text);transform:translateX(-50%)}
+
+.card-box{background:#fff;border:3px solid var(--c1);border-radius:18px;padding:22px 26px;box-shadow:0 4px 16px rgba(255,133,179,.18);position:relative}
+.card-box.blue{border-color:var(--c3)}.card-box.green{border-color:var(--c4)}.card-box.purple{border-color:var(--c5)}.card-box.yellow{border-color:var(--c2)}
+.stat-card{background:#fff;border:3px solid var(--text);border-radius:18px;padding:22px 26px;text-align:center;box-shadow:0 6px 0 var(--c1);flex:1;min-width:200px}
+.stat-card .n{font-size:clamp(2.6rem,4.5vw,4rem);line-height:1;color:var(--c1);font-weight:900}
+.stat-card .l{font-size:.95rem;color:var(--dim);margin-top:6px;font-weight:700}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.75;margin-bottom:14px;color:var(--text)}
+.bullet-list li::before{content:'';flex-shrink:0;width:26px;height:26px;background:var(--c1);border:3px solid var(--text);border-radius:50%;margin-top:6px;box-shadow:2px 2px 0 var(--text)}
+.bullet-list.blue li::before{background:var(--c3)}.bullet-list.green li::before{background:var(--c4)}.bullet-list.yellow li::before{background:var(--c2)}.bullet-list.purple li::before{background:var(--c5)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:flex-start;flex:1;margin-top:24px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;flex:1;margin-top:24px}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;margin-top:24px}
+.five-col{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;flex:1;margin-top:24px}
+.six-col{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;flex:1;margin-top:24px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:22px}
+
+.pillar{background:#fff;border:3px solid var(--text);border-radius:18px;padding:22px 18px;text-align:center;position:relative;box-shadow:0 6px 0 var(--c,var(--c1))}
+.pillar .ico{width:72px;height:72px;background:var(--c,var(--c1));border:3px solid var(--text);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2.1rem;box-shadow:3px 3px 0 var(--text)}
+.pillar .h{font-size:1.2rem;color:var(--c,var(--c1));margin-bottom:8px;font-weight:900}
+.pillar .b{font-size:.95rem;line-height:1.6;color:var(--text)}
+
+.step-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:24px}
+.step-item{background:#fff;border:3px solid var(--text);border-radius:14px;padding:14px 8px;text-align:center;position:relative;box-shadow:3px 3px 0 var(--c,var(--c3))}
+.step-item .n{font-size:1.4rem;color:var(--c,var(--c3));display:block;margin-bottom:4px;font-weight:900}
+.step-item .t{font-weight:700;font-size:.85rem;line-height:1.35}
+
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
+.side-card{background:#fff;border:3px solid var(--c,var(--c4));border-radius:18px;padding:24px 26px;position:relative;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.side-card.bad{--c:#ff7043}
+.side-card .ribbon{position:absolute;top:-16px;left:18px;background:var(--c);color:#fff;padding:5px 14px;font-size:.95rem;border:2px solid var(--text);border-radius:999px;font-weight:900}
+.side-card h4{font-size:1.3rem;color:var(--c);margin:8px 0 12px;font-weight:900}
+
+.cmp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.cmp-tile{background:#fff;border:3px solid var(--text);border-radius:16px;padding:18px 14px;text-align:center;position:relative;box-shadow:4px 4px 0 var(--c,var(--c3))}
+.cmp-tile.star{background:linear-gradient(135deg,#fff5fa,#fff0e6);box-shadow:4px 4px 0 var(--c1);transform:scale(1.05)}
+.cmp-tile .nm{font-size:1.25rem;color:var(--c,var(--c3));margin-bottom:6px;font-weight:900}
+.cmp-tile.star .nm{color:var(--c1)}
+.cmp-tile .when{font-size:.88rem;line-height:1.55;color:var(--text)}
+.cmp-tile .ribbon{position:absolute;top:-12px;right:-8px;background:var(--c1);color:#fff;padding:3px 12px;font-size:.75rem;font-weight:700;border:2px solid var(--text);border-radius:999px}
+
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:24px}
+.a2-card{background:#fff;border:3px solid var(--c,var(--c3));border-radius:16px;padding:18px 14px;position:relative;box-shadow:4px 4px 0 var(--text)}
+.a2-card .ico{font-size:2rem;margin-bottom:8px}
+.a2-card h5{font-size:1rem;color:var(--c,var(--c3));font-weight:900;margin-bottom:8px;line-height:1.3}
+.a2-card p{font-size:.85rem;line-height:1.55;color:var(--text)}
+
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.advice-card{background:#fff;border:3px solid var(--text);border-radius:16px;padding:20px 16px;text-align:center;position:relative;box-shadow:0 6px 0 var(--c,var(--c1))}
+.advice-card .n{font-size:2.6rem;color:var(--c,var(--c1));line-height:1;font-weight:900;display:block}
+.advice-card h5{font-size:1rem;color:var(--text);margin:10px 0 6px;font-weight:900;line-height:1.3}
+.advice-card p{font-size:.85rem;line-height:1.55;color:var(--text)}
+
+.cover{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fff5fa,var(--bg))}
+.cover .badge{display:inline-block;background:var(--c1);color:#fff;font-size:1rem;letter-spacing:.2em;padding:8px 20px;margin-bottom:32px;border-radius:999px;box-shadow:0 6px 0 var(--text);font-weight:700}
+.cover h1{font-size:clamp(3.4rem,8vw,7rem);line-height:1.05;margin-bottom:18px;color:var(--c1);letter-spacing:-.03em;font-weight:900}
+.cover h1 .accent{color:var(--c5)}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.7rem);color:var(--text);margin-bottom:38px;font-weight:600;max-width:900px}
+.cover .meta{display:flex;gap:36px;align-items:center;font-size:.95rem;letter-spacing:.05em;color:var(--dim);flex-wrap:wrap;justify-content:center}
+.cover .meta b{color:var(--text);font-weight:700}
+
+.closing{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fff5fa,var(--bg))}
+.closing h2{font-size:clamp(2.6rem,5.5vw,4.8rem);line-height:1.15;color:var(--c1);margin-bottom:24px;letter-spacing:-.02em;font-weight:900}
+.closing h2 .em{color:var(--c5)}
+.closing .signoff{font-size:1.25rem;color:var(--dim);margin-bottom:32px}
+.closing .url-row{display:flex;gap:24px;align-items:center;margin-top:24px;flex-wrap:wrap;justify-content:center}
+.closing .url-box{background:#fff;border:3px solid var(--c1);border-radius:14px;padding:14px 22px;font-size:.95rem;box-shadow:0 6px 0 var(--c5);color:var(--text);font-weight:700}
+
+.hook-quote{font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.45;color:var(--text);font-weight:700;max-width:1100px}
+.hook-quote .em{color:var(--c1);font-style:italic}
+
+@keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.12s}.slide.active .pop-in.d2{animation-delay:.25s}.slide.active .pop-in.d3{animation-delay:.38s}.slide.active .pop-in.d4{animation-delay:.51s}.slide.active .pop-in.d5{animation-delay:.64s}.slide.active .pop-in.d6{animation-delay:.77s}
+@keyframes slideUp{from{transform:translateY(36px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .55s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.16s}.slide.active .slide-up.d2{animation-delay:.32s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col,.three-col,.four-col,.five-col,.six-col{grid-template-columns:1fr;gap:16px}
+  .cmp-row,.a2-grid,.advice-grid,.step-row,.two-side{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ S1 COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="deco" style="top:60px;left:80px"><div class="lollipop" style="--lp:#ff85b3"></div></div>
+  <div class="deco" style="top:80px;right:90px"><div class="star-deco" style="--sc:#ffd54f"></div></div>
+  <div class="deco" style="bottom:90px;left:90px"><div class="cloud"></div></div>
+  <div class="deco" style="bottom:80px;right:90px"><div class="balloon" style="--bc:#c490ff"></div></div>
+  <div class="deco" style="top:48%;left:40px;opacity:.65"><div class="star-deco" style="--sc:#7be495;width:32px;height:32px"></div></div>
+  <div class="deco" style="top:30%;right:60px;opacity:.7"><div class="rainbow" style="transform:scale(.7)"></div></div>
+
+  <span class="badge slide-up">資訊科技 · 演講簡報</span>
+  <h1 class="slide-up d1">Scratch<span class="accent">×</span>動畫魔法</h1>
+  <p class="sub slide-up d2">用一塊一塊的<b style="color:var(--c1)">程式積木</b>，<br>把靜止的角色變成 30 秒的動畫電影！</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>14 張投影片 · 全螢幕投影</span>
+  </div>
+</section>
+
+<!-- ═══════ S2 HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div class="deco" style="top:90px;right:80px"><div class="lollipop" style="--lp:#ffd54f;transform:scale(.85)"></div></div>
+  <div class="deco" style="bottom:140px;right:120px"><div class="star-deco" style="--sc:#c490ff"></div></div>
+  <div style="margin-top:14vh;position:relative;z-index:2">
+    <p class="eyebrow pop-in">你有沒有想過？</p>
+    <p class="hook-quote pop-in d1">
+      迪士尼那些<span class="em">會跳會跑的角色</span>，<br>
+      皮克斯那些<span class="em">會說話的玩具</span>——<br>
+      <b style="color:var(--c1)">那是怎麼動起來的？</b>
+    </p>
+    <p class="lead slide-up d2" style="margin-top:28px">
+      答案就是：<b>「快速切換不同的圖片」</b>。<br>
+      <span style="color:var(--c5);font-weight:900">今天我們要學會用 Scratch，做出屬於自己的動畫角色！</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎬</div>
+    <div class="bubble">嗨！動畫師們今天要進入<b>「動畫的祕密世界」</b>——你們會發現，原來迪士尼用的原理超簡單！</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ S3 WHAT IS SCRATCH ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 起源 / WHAT</span>
+  <p class="eyebrow slide-up">Scratch 是什麼？</p>
+  <h2 class="title-lg slide-up d1">MIT 麻省理工學院送給<br><span class="accent-pink">全世界小朋友</span>的禮物。</h2>
+  <div class="two-col">
+    <div class="card-box slide-up d2">
+      <p class="lead">
+        <b>2007 年</b>，<b>MIT 媒體實驗室</b>覺得：「小朋友也應該學程式，但 Python、C++ 太難了！」
+      </p>
+      <p class="lead" style="margin-top:14px">
+        所以他們做了 Scratch——<b style="color:var(--c1)">把程式變成一塊一塊的彩色積木</b>，<br>像玩樂高一樣<b>拖拉組合</b>就能寫程式！
+      </p>
+    </div>
+    <div class="flex-row slide-up d2" style="margin:0">
+      <div class="stat-card pop-in d3">
+        <div class="n">1 億+</div>
+        <div class="l">全球用戶</div>
+      </div>
+      <div class="stat-card pop-in d4" style="box-shadow:0 6px 0 var(--c3)">
+        <div class="n" style="color:var(--c3)">免費</div>
+        <div class="l">線上版<br>不用下載</div>
+      </div>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:28px;color:var(--dim);text-align:center">
+    🌐 <b>網址</b>：scratch.mit.edu　|　🎓 7-15 歲全世界最受歡迎的程式語言　|　🇹🇼 全中文
+  </p>
+  <div class="speaker">
+    <div class="avatar">🧩</div>
+    <div class="bubble">所以 Scratch 不是「給小朋友玩」的，<b>它是專業教學工具</b>——MIT 設計的，全球都用！</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ S4 ANIMATION PRINCIPLE ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 動畫原理 / FRAMES</span>
+  <p class="eyebrow slide-up">動畫怎麼動起來？</p>
+  <h2 class="title-md slide-up d1">動畫的核心：<span class="accent-pink">快速切換造型</span>，<br>就是這麼簡單！</h2>
+
+  <div class="two-col" style="grid-template-columns:1.1fr 1fr">
+    <div class="card-box pink slide-up d2">
+      <h3 style="font-size:1.3rem;color:var(--c1);margin-bottom:12px;font-weight:900">📖 逐格動畫原理</h3>
+      <p class="lead" style="font-size:1.05rem">
+        想像翻書動畫——<br>
+        每一頁畫一個動作，<b>快速翻動</b>，<br>角色就會「動起來」。
+      </p>
+      <p class="lead" style="font-size:1rem;margin-top:12px">
+        在 Scratch 裡，<b style="color:var(--c1)">「造型」</b>就是「一頁書」，<br><b>切換造型</b> = 翻頁。
+      </p>
+    </div>
+    <div class="card-box purple slide-up d2">
+      <h3 style="font-size:1.3rem;color:var(--c5);margin-bottom:14px;font-weight:900">🎬 兩種模式</h3>
+      <ul class="bullet-list purple" style="font-size:1.02rem">
+        <li><b>向量模式</b>：放大不會糊（適合幾何）</li>
+        <li><b>點陣圖模式</b>：自由塗鴉（像小畫家）</li>
+        <li>每個角色<b>可以有很多造型</b></li>
+        <li>切換造型 + 等待 = 動畫！</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem">
+    💡 <b>關鍵祕密</b>：眼睛看到「動」其實是<b>視覺暫留</b>——大腦把快速切換的圖片，「腦補」成連續動作。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🧠</div>
+    <div class="bubble">所以「動畫」其實是<b>騙過大腦的視覺把戲</b>。你不是真的看到動，<b>是大腦自己腦補的</b>！</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ S5 6 TYPES OF MOTION ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 核心 / 6 STAGES</span>
+  <p class="eyebrow slide-up">六大動畫關卡</p>
+  <h2 class="title-md slide-up d1">把這 6 招組合，<br>就能做出<span class="accent-pink">迪士尼級的動畫</span>！</h2>
+
+  <div class="six-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🎨</div>
+      <div class="h">角色造型</div>
+      <p class="b">設計角色 + 多個造型</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">📖</div>
+      <div class="h">逐格動畫</div>
+      <p class="b">快速切換造型 = 動</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c3)">
+      <div class="ico">🚀</div>
+      <div class="h">滑行移動</div>
+      <p class="b">指定座標 + 時間</p>
+    </div>
+    <div class="pillar pop-in d4" style="--c:var(--c5)">
+      <div class="ico">📡</div>
+      <div class="h">廣播訊息</div>
+      <p class="b">角色之間互相傳訊</p>
+    </div>
+    <div class="pillar pop-in d5" style="--c:var(--c4)">
+      <div class="ico">✨</div>
+      <div class="h">視覺特效</div>
+      <p class="b">顏色、鬼魂、放大</p>
+    </div>
+    <div class="pillar pop-in d6" style="--c:var(--c1)">
+      <div class="ico">🎬</div>
+      <div class="h">場景切換</div>
+      <p class="b">背景換 + 廣播觸發</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:30px;text-align:center;font-size:1.05rem">
+    💡 <b>學習順序</b>：1→2→3→4→5→6，<b style="color:var(--c1)">每一關卡都比上一關更厲害</b>。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🧩</div>
+    <div class="bubble">這 6 關不用一次學完。<b>每堂課攻 1 關</b>，2 個月就能做出第一部完整動畫！</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ S6 CORE BLOCKS ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · 積木 / BLOCKS</span>
+  <p class="eyebrow slide-up">必背的 6 種積木</p>
+  <h2 class="title-md slide-up d1">會這 6 種<span class="accent-pink">積木顏色</span>，<br>你就懂 Scratch 的 90% 結構。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:#4C97FF">
+      <div class="ico">🚶</div>
+      <div class="h">動作（藍）</div>
+      <p class="b"><b>移動 10 步</b><br><b>旋轉 15 度</b><br><b>滑行到</b> (x, y)</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:#9966FF">
+      <div class="ico">👁️</div>
+      <div class="h">外觀（紫）</div>
+      <p class="b"><b>造型換成</b> [下一個造型]<br><b>說「你好」</b><br><b>尺寸設為</b> 80%</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:#FFBF00">
+      <div class="ico">⚡</div>
+      <div class="h">事件（黃）</div>
+      <p class="b"><b>當綠旗被點擊</b><br><b>當收到訊息</b><br><b>當角色被點擊</b></p>
+    </div>
+    <div class="pillar pop-in d4" style="--c:#FFAB19">
+      <div class="ico">🔁</div>
+      <div class="h">控制（橘）</div>
+      <p class="b"><b>等待</b> 1 秒<br><b>重複</b> 10 次<br><b>無限重複</b></p>
+    </div>
+    <div class="pillar pop-in d5" style="--c:#CF63CF">
+      <div class="ico">🔊</div>
+      <div class="h">聲音（粉紫）</div>
+      <p class="b"><b>播放音效</b><br><b>音量設為</b> 50<br><b>停止所有聲音</b></p>
+    </div>
+    <div class="pillar pop-in d6" style="--c:#5CB1D6">
+      <div class="ico">🎯</div>
+      <div class="h">偵測（淡藍）</div>
+      <p class="b"><b>碰到</b> [滑鼠]？<br><b>按下 [空白鍵]</b>？<br><b>距離</b> 到 ?</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;color:var(--dim);font-size:1rem">
+    💡 <b>顏色記憶法</b>：左邊工具列的<b>顏色 = 積木功能</b>。看到藍色就知道是動作、看到紫色就知道是外觀！
+  </p>
+  <div class="speaker">
+    <div class="avatar">🧩</div>
+    <div class="bubble">不用背指令——<b>用顏色記憶</b>！這是 Scratch 最聰明的設計，連幼兒園都能理解。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ S7 PROJECT WORKFLOW ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 工作流 / WORKFLOW</span>
+  <p class="eyebrow slide-up">做一部動畫的 6 步驟</p>
+  <h2 class="title-md slide-up d1">記住這 6 步，<br><span class="accent-pink">學期末就能交出完整作品</span>。</h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c1)"><span class="n">1</span><span class="t">構思故事<br>(30 秒劇本)</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c2)"><span class="n">2</span><span class="t">設計角色<br>(挑造型)</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c3)"><span class="n">3</span><span class="t">畫場景<br>(背景)</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c5)"><span class="n">4</span><span class="t">寫程式<br>(拖積木)</span></div>
+    <div class="step-item pop-in d5" style="--c:var(--c4)"><span class="n">5</span><span class="t">加聲音<br>(配樂)</span></div>
+    <div class="step-item pop-in d6" style="--c:var(--c1)"><span class="n">6</span><span class="t">分享<br>(綠旗發表)</span></div>
+  </div>
+
+  <div class="two-col slide-up d2" style="margin-top:32px">
+    <div class="card-box pink">
+      <h3 style="color:var(--c1);font-size:1.25rem;margin-bottom:10px;font-weight:900">⚠️ 學生最常踩雷</h3>
+      <p class="lead" style="font-size:1.02rem">想做<b>太複雜的故事</b>！<br>第一部動畫只要<b>10 秒 + 2 個角色 + 1 個場景</b>就好。<br>能完成，比什麼都重要！</p>
+    </div>
+    <div class="card-box blue">
+      <h3 style="color:var(--c3);font-size:1.25rem;margin-bottom:10px;font-weight:900">💡 老師的話</h3>
+      <p class="lead" style="font-size:1.02rem">作品做完<b>一定要按綠旗測試 3 次</b>！<br>每次測試都會發現新 bug，<b>除錯 = 真正的程式能力</b>。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📋</div>
+    <div class="bubble">每堂課<b>聚焦在一個關卡</b>。完成不貪心，每週進步一點點，<b>學期末就有完整作品</b>。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ S8 SCENARIOS ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 情境 / SCENARIOS</span>
+  <p class="eyebrow slide-up">三大動畫題材</p>
+  <h2 class="title-md slide-up d1">學生最有感覺的<br>三種<span class="accent-pink">動畫主題</span>。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">😄</div>
+      <div class="h">自我介紹動畫</div>
+      <p class="b"><b>最推薦入門</b>。<br>角色 = 自己的 Q 版頭像，<br>對話泡泡介紹興趣、夢想。<br>10 秒就夠！</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">📖</div>
+      <div class="h">繪本故事改編</div>
+      <p class="b">把<b>《好餓的毛毛蟲》</b>變動畫！<br>用造型切換做「吃水果」，<br>用廣播做「下一頁」翻頁。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c4)">
+      <div class="ico">🎮</div>
+      <div class="h">簡單小遊戲 ★</div>
+      <p class="b">接蘋果、踩地鼠、追蝴蝶。<br>用<b>偵測（碰到？）</b> + 計分變數，<br><b>30 秒玩到上癮</b>。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:36px;text-align:center;color:var(--dim);font-size:1.05rem">
+    💡 教學建議：第一次先做「<b>自我介紹動畫</b>」（1 節課），熟練後挑戰「<b>繪本改編</b>」（2-3 節課）。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎮</div>
+    <div class="bubble">學生最愛做的是<b>小遊戲</b>——因為有「玩」的成就感。但要先學會前面 5 關，才有能力做遊戲！</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ S9 EVIDENCE ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 實證 / EVIDENCE</span>
+  <p class="eyebrow slide-up">為什麼國小就該學程式？</p>
+  <h2 class="title-md slide-up d1">不是「跟流行」，<br>是<span class="accent-pink">12 年國教課綱</span>明訂能力。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <div class="card-box yellow" style="margin-bottom:18px">
+        <h3 style="font-size:1.2rem;color:#d49a00;margin-bottom:10px;font-weight:900">📚 12 年國教 · 資訊科技</h3>
+        <p class="lead" style="font-size:.98rem">
+          <span style="display:inline-block;padding:5px 12px;background:var(--c1);color:#fff;border-radius:999px;font-size:.9rem;font-weight:700;margin:3px">資-E-A1 運算思維</span>
+          <span style="display:inline-block;padding:5px 12px;background:var(--c3);color:#fff;border-radius:999px;font-size:.9rem;font-weight:700;margin:3px">資-E-A2 解決問題</span>
+          <span style="display:inline-block;padding:5px 12px;background:var(--c4);color:#1a4a2a;border-radius:999px;font-size:.9rem;font-weight:700;margin:3px">資-E-C1 媒體創作</span>
+        </p>
+        <p class="lead" style="font-size:.95rem;margin-top:10px;color:var(--dim)">
+          Scratch 一次同時培養「<b>運算思維 + 創意表達</b>」雙素養。
+        </p>
+      </div>
+      <div class="card-box pink">
+        <h3 style="font-size:1.2rem;color:var(--c1);margin-bottom:10px;font-weight:900">⭐ 黃金發現</h3>
+        <p class="lead" style="font-size:1.05rem">
+          Scratch 對<b style="color:var(--c1)">數學/邏輯不強的學生</b>提升效果<b>最為顯著</b>。
+        </p>
+        <p class="lead" style="font-size:.95rem;margin-top:8px;color:var(--dim)">
+          —— 因為它把「邏輯」變成了「玩積木」。
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-up d2">
+      <div class="card-box green">
+        <h4 style="color:#3d9b5a;font-size:1.05rem;margin-bottom:14px;font-weight:900;letter-spacing:.1em">📊 國小五年級 Scratch 對照</h4>
+        <div style="display:flex;gap:16px;margin-bottom:16px">
+          <div style="flex:1;text-align:center;padding:16px;background:#fff;border:3px solid var(--c4);border-radius:14px">
+            <div style="font-size:3.2rem;color:var(--c4);line-height:1;font-weight:900">78%</div>
+            <div style="font-size:.9rem;color:var(--dim);font-weight:600;margin-top:4px">Scratch 班<br>數學邏輯題進步</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--text);font-weight:900">VS</div>
+          <div style="flex:1;text-align:center;padding:16px;background:#fff;border:3px solid var(--dim);border-radius:14px">
+            <div style="font-size:3.2rem;color:var(--dim);line-height:1;font-weight:900">42%</div>
+            <div style="font-size:.9rem;color:var(--dim);font-weight:600;margin-top:4px">未學程式班<br>數學邏輯題進步</div>
+          </div>
+        </div>
+        <p class="lead" style="font-size:.95rem;text-align:center">邏輯推理能力 <b class="accent-green">明顯較高</b>（桃園某國小 5 年級實驗）</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📊</div>
+    <div class="bubble">當有人說「玩 Scratch 是浪費時間」——<b>請看這張表</b>。會程式的孩子，連數學都變強！</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ S10 COMPARE ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">程式語言四款比較</p>
+  <h2 class="title-md slide-up d1">沒有「最棒的語言」，<br>只有<span class="accent-pink">「最對的年紀」</span>。</h2>
+
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--c3)">
+      <div class="nm">Scratch Jr</div>
+      <div class="when"><b>圖示拖拉</b><br><br>🎯 幼兒園-國小 2 年級<br>不識字也能玩</div>
+    </div>
+    <div class="cmp-tile star pop-in d2">
+      <div class="ribbon">本日主角</div>
+      <div class="nm">Scratch</div>
+      <div class="when"><b>積木組合</b><br><br>🎯 <b>國小 3-6 年級</b><br>動畫、遊戲、互動</div>
+    </div>
+    <div class="cmp-tile pop-in d3" style="--c:var(--c5)">
+      <div class="nm">Python</div>
+      <div class="when"><b>文字程式</b><br><br>🎯 國中以上<br>真實開發語言</div>
+    </div>
+    <div class="cmp-tile pop-in d4" style="--c:#ff7043">
+      <div class="nm">JavaScript</div>
+      <div class="when"><b>網頁程式</b><br><br>🎯 高中以上<br>網頁互動</div>
+    </div>
+  </div>
+
+  <div class="card-box pink slide-up d2" style="margin-top:34px;text-align:center">
+    <h3 style="font-size:1.3rem;color:var(--c1);margin-bottom:10px;font-weight:900">⚖️ 黃金法則</h3>
+    <p class="lead" style="font-size:1.1rem">
+      國小先用 <b>Scratch</b> 培養運算思維；<br>
+      國中再轉 <b style="color:var(--c1)">Python</b> 學文字程式；<br>
+      高中以後寫 <b>JavaScript</b> 做真實網頁應用。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚖️</div>
+    <div class="bubble">Scratch 不是「玩具」——<b>它是程式思維的腳手架</b>。沒踩過這一階，後面學 Python 會崩潰。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ S11 DOUBLE EDGE ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 雙面刃 / DOUBLE EDGE</span>
+  <p class="eyebrow slide-up">教 Scratch 的隱憂</p>
+  <h2 class="title-md slide-up d1">積木程式是<span class="accent-pink">雙面刃</span>——<br>降低門檻 vs 過度依賴。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 正面效應</div>
+      <h4>把程式變親民</h4>
+      <ul class="bullet-list green" style="font-size:1rem">
+        <li>「不會打字」也能寫程式</li>
+        <li>用「拖拉」降低<b>語法障礙</b></li>
+        <li>讓所有孩子<b>都有機會接觸程式</b></li>
+        <li>培養「<b>邏輯分解</b>」思維</li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 負面效應</div>
+      <h4>習慣了積木</h4>
+      <ul class="bullet-list" style="font-size:1rem">
+        <li>過度依賴<b>視覺操作</b>，跳到文字會崩潰</li>
+        <li>「以為程式就是拼圖」</li>
+        <li>不會處理<b>真實 bug 與錯誤訊息</b></li>
+        <li>升上國中接 Python 容易放棄</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card-box blue slide-up d2" style="margin-top:30px">
+    <h3 style="color:var(--c3);font-size:1.25rem;margin-bottom:12px;font-weight:900">🎯 老師的三大救援策略</h3>
+    <ul class="bullet-list blue" style="font-size:1.02rem">
+      <li>六年級畢業前介紹<b>「文字版 Scratch (snap)」</b>當銜接</li>
+      <li>每個積木<b>標註對應 Python 語法</b>，建立對照</li>
+      <li>定期辦<b>「程式碼閱讀練習」</b>—— 不只「寫」，也要「讀」別人的程式</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌈</div>
+    <div class="bubble">記得：Scratch 是<b>階梯</b>，不是<b>終點</b>。要主動引導學生看到更大的程式世界！</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ S12 5 LITERACIES ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / 5 LITERACIES</span>
+  <p class="eyebrow slide-up">學生要學到的 5 件事</p>
+  <h2 class="title-md slide-up d1">不是「會拖積木」就好，<br>是<span class="accent-pink">這 5 件事一起做到</span>。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🧩</div>
+      <h5>① 邏輯<br>分解</h5>
+      <p>把大問題切成<b>小步驟</b>，<br>一塊塊積木組合起來。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🔁</div>
+      <h5>② 重複<br>判斷</h5>
+      <p>會用<b>重複迴圈</b>與<br><b>條件判斷</b>解決問題。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c3)">
+      <div class="ico">📡</div>
+      <h5>③ 事件<br>觸發</h5>
+      <p>理解「<b>事件驅動</b>」<br>—— 按鍵、碰撞、訊息。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c5)">
+      <div class="ico">🐛</div>
+      <h5>④ 除錯<br>能力</h5>
+      <p>不會就試！<b>看不對就改</b>，<br>找出 bug 的位置。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c4)">
+      <div class="ico">🎨</div>
+      <h5>⑤ 創意<br>表達</h5>
+      <p>把「想說的故事」<br>變成<b>會動的作品</b>。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:28px;text-align:center;font-size:1.05rem;color:var(--text)">
+    💡 <b>10 年後 Scratch 可能進化，但「邏輯分解、迴圈判斷、事件、除錯、創意」是程式素養的不變底座。</b>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">我們教的不是「Scratch」，<b>是孩子未來看世界的邏輯眼鏡</b>。工具會變，思維不會。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ S13 ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">5 個給老師的叮嚀</p>
+  <h2 class="title-md slide-up d1">教 Scratch 之前，<br>請先記住<span class="accent-pink">這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <span class="n">01</span>
+      <h5>先當<br>學生</h5>
+      <p>自己做一個 10 秒動畫，<b>練 2 小時</b>，理解學生會卡在哪。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <span class="n">02</span>
+      <h5>一關<br>練透</h5>
+      <p>第一堂課<b>只教「造型切換」</b>，後面再加難度。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c4)">
+      <span class="n">03</span>
+      <h5>容許<br>失敗</h5>
+      <p>程式跑不出來很正常！<b>除錯就是學習</b>，不要急著告訴答案。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c3)">
+      <span class="n">04</span>
+      <h5>有<br>真實發表</h5>
+      <p>學期末辦<b>「動畫展」</b>，每人發表 30 秒作品給家長看。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <span class="n">05</span>
+      <h5>銜接<br>下一階</h5>
+      <p>六年級畢業前介紹<b>Python / micro:bit</b>，看見更廣的世界。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不只適用 Scratch，<b>適用所有程式教學現場</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ S14 CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="deco" style="top:80px;left:90px"><div class="lollipop" style="--lp:#c490ff;transform:scale(.9)"></div></div>
+  <div class="deco" style="top:90px;right:100px"><div class="star-deco" style="--sc:#ff85b3"></div></div>
+  <div class="deco" style="bottom:120px;left:100px"><div class="cloud"></div></div>
+  <div class="deco" style="bottom:100px;right:90px"><div class="balloon" style="--bc:#7be495"></div></div>
+  <div class="deco" style="top:48%;left:60px;opacity:.7"><div class="rainbow" style="transform:scale(.65)"></div></div>
+
+  <h2 class="slide-up">程式的本質，是讓<br><span class="em">想像力</span>變成<span class="em">會動的作品</span>。</h2>
+  <p class="signoff slide-up d1">Scratch 提醒我們的，是這件事本來該怎樣。</p>
+
+  <div class="url-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b style="color:var(--c1)">cagoooo.github.io/it-cockpit/scratch-animation/</b>
+    </div>
+    <div class="url-box">
+      🎬 NotebookLM 自學影片<br>
+      <b style="color:var(--c5)">見駕駛艙首頁 YouTube 連結</b>
+    </div>
+  </div>
+
+  <p style="margin-top:42px;color:var(--dim);font-size:.95rem;letter-spacing:.1em">
+    Q&amp;A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;color:var(--c1);font-size:1.1rem;letter-spacing:.05em;font-weight:900">THANK YOU · 謝謝小動畫師們</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div>
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'Scratch × 動畫魔法 · 國小資訊科技'},
+  {n:2,  t:'開場暖身',       s:'迪士尼怎麼讓角色動起來？'},
+  {n:3,  t:'Scratch 是什麼', s:'MIT 媒體實驗室 2007 · 全球 1 億用戶'},
+  {n:4,  t:'動畫原理',       s:'逐格切換造型 · 視覺暫留'},
+  {n:5,  t:'六大動畫關卡',   s:'造型 · 逐格 · 滑行 · 廣播 · 特效 · 場景'},
+  {n:6,  t:'必背 6 種積木',   s:'動作 · 外觀 · 事件 · 控制 · 聲音 · 偵測'},
+  {n:7,  t:'做動畫 6 步驟',   s:'構思 → 角色 → 場景 → 寫程式 → 配樂 → 分享'},
+  {n:8,  t:'三大動畫題材',   s:'自我介紹 · 繪本改編 · 小遊戲'},
+  {n:9,  t:'課綱對應 + 實證', s:'12 年國教 · 邏輯題進步 78% vs 42%'},
+  {n:10, t:'程式語言比較',   s:'Scratch Jr · Scratch ★ · Python · JS'},
+  {n:11, t:'積木雙面刃',     s:'親民 vs 依賴 · 救援策略'},
+  {n:12, t:'5 大運算素養',    s:'分解 · 迴圈 · 事件 · 除錯 · 創意'},
+  {n:13, t:'5 個給老師的叮嚀',s:'先當學生 · 一關練透 · 容許失敗 · 發表 · 銜接'},
+  {n:14, t:'結語 + Q&A',      s:'程式的本質 · 謝謝小動畫師'},
+];
+let curIdx = 0;
+const N = SLIDES.length;
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{s.classList.toggle('active', i === idx)});
+  curIdx = idx;
+  document.getElementById('progress-fill').style.width = ((idx + 1) / N * 100).toFixed(2) + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){ document.querySelectorAll('.speaker').forEach(s=>{s.style.display = (s.style.display === 'none') ? '' : 'none'}); }
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){ document.getElementById('overview').classList.remove('show'); e.preventDefault(); }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp': prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape': if(document.fullscreenElement) document.exitFullscreen(); break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){ const idx = parseInt(hashMatch[1]) - 1; if(idx >= 0 && idx < N) goSlide(idx); }
+</script>
+</body>
+</html>

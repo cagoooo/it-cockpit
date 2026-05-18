@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>鍵盤魔法學院演講簡報｜中年級英文打字｜資訊科技</title>
+<meta name="description" content="阿凱老師｜中年級英文打字｜QWERTY 八大手指分工 × Home Row × 盲打挑戰演講簡報。Pixel-game 橘色風 × 14 張投影片。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#0d0d2b;
+  --surface:#1a1a3e;
+  --panel:#252552;
+  --panel2:#2f2f66;
+  --c1:#ff9800;
+  --c2:#ffd740;
+  --c3:#00e5ff;
+  --c4:#69ff47;
+  --c5:#ff4081;
+  --text:#e8e4f8;
+  --dim:#7070a0;
+  --shadow-px:4px 4px 0 #000;
+}
+body{font-family:'Noto Sans TC','PingFang TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;user-select:none}
+body::before{content:'';position:fixed;inset:0;z-index:9990;pointer-events:none;background:repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 2px, transparent 2px 4px)}
+
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:5vh 6vw;opacity:0;transition:opacity .4s;background:var(--bg)}
+.slide.active{display:flex;opacity:1}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,var(--c1) 0 16px,var(--c2) 16px 32px,var(--c3) 32px 48px);opacity:.85}
+.slide-num{position:absolute;bottom:18px;right:32px;font-family:'Press Start 2P',monospace;font-size:.7rem;color:var(--dim);letter-spacing:.1em;z-index:5}
+.slide-title-tag{position:absolute;top:24px;left:32px;font-family:'Press Start 2P',monospace;font-size:.55rem;letter-spacing:.18em;color:var(--c2);text-transform:uppercase;padding:6px 10px;border:2px solid var(--c2);background:var(--surface);box-shadow:var(--shadow-px);z-index:5}
+
+.title-xl{font-weight:900;font-size:clamp(3rem,7vw,6rem);line-height:1.05;letter-spacing:-.02em;color:var(--c1);text-shadow:0 0 24px rgba(255,152,0,.5)}
+.title-lg{font-weight:900;font-size:clamp(2.4rem,5vw,4rem);line-height:1.1;letter-spacing:-.02em;color:var(--c1);text-shadow:0 0 16px rgba(255,152,0,.4)}
+.title-md{font-weight:900;font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.2;color:var(--text)}
+.eyebrow{font-family:'Press Start 2P',monospace;font-size:.7rem;letter-spacing:.2em;color:var(--c5);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:'';flex:1;height:2px;background:var(--c5);max-width:200px}
+.lead{font-size:clamp(1rem,1.5vw,1.25rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--c2);font-weight:900}
+.accent-c1{color:var(--c1)}.accent-c2{color:var(--c2)}.accent-c3{color:var(--c3)}.accent-c4{color:var(--c4)}.accent-c5{color:var(--c5)}
+
+.speaker{position:absolute;bottom:18px;left:32px;display:flex;align-items:flex-end;gap:14px;z-index:8;max-width:55%}
+.speaker .avatar{width:60px;height:60px;flex-shrink:0;background:var(--c2);border:3px solid #000;display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:var(--shadow-px)}
+.speaker .bubble{background:var(--surface);border:2.5px solid var(--c1);padding:10px 16px;font-size:.95rem;font-weight:500;position:relative;box-shadow:var(--shadow-px);max-width:480px;line-height:1.5;color:var(--text)}
+.speaker .bubble::before{content:'';position:absolute;left:-14px;bottom:18px;width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent var(--c1) transparent transparent}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:5px;background:var(--panel);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c4));transition:width .4s;box-shadow:0 0 8px var(--c1)}
+.hint{position:fixed;top:14px;right:24px;z-index:99;font-family:'Press Start 2P',monospace;font-size:.55rem;color:var(--dim);background:var(--surface);border:1.5px solid var(--dim);padding:6px 12px;letter-spacing:.08em;pointer-events:none;opacity:.75}
+
+.overview{position:fixed;inset:0;background:#05051a;display:none;padding:32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-family:'Press Start 2P',monospace;color:var(--c2);font-size:1rem;margin-bottom:20px;letter-spacing:.1em}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.ov-card{background:var(--surface);border:3px solid var(--c2);padding:14px 16px;cursor:pointer;transition:.15s;position:relative;box-shadow:var(--shadow-px)}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--c5)}
+.ov-card .num{position:absolute;top:8px;right:10px;font-family:'Press Start 2P',monospace;font-size:.7rem;color:var(--c5)}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--c1);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+@keyframes coin-spin{0%,100%{transform:rotateY(0)}50%{transform:rotateY(180deg)}}
+.coin{width:48px;height:48px;background:var(--c2);border:3px solid #000;display:inline-flex;align-items:center;justify-content:center;font-family:'Press Start 2P',monospace;font-size:1.1rem;color:#000;box-shadow:var(--shadow-px);animation:coin-spin 2.5s ease-in-out infinite}
+.pixel-heart{display:inline-block;width:36px;height:36px;background:var(--c5);clip-path:polygon(20% 0,40% 0,40% 20%,60% 20%,60% 0,80% 0,80% 20%,100% 20%,100% 60%,80% 60%,80% 80%,60% 80%,60% 100%,40% 100%,40% 80%,20% 80%,20% 60%,0 60%,0 20%,20% 20%);box-shadow:var(--shadow-px)}
+.hp-bar{display:inline-block;width:200px;height:22px;background:var(--panel);border:3px solid #000;position:relative;box-shadow:var(--shadow-px)}
+.hp-bar .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--c4),var(--c3));width:var(--hp,80%)}
+.hp-bar::after{content:'WPM';position:absolute;left:8px;top:50%;transform:translateY(-50%);font-family:'Press Start 2P',monospace;font-size:.55rem;color:#000;text-shadow:1px 1px 0 #fff}
+.stage-card-deco{display:inline-block;padding:8px 16px;background:var(--c5);color:#000;border:3px solid #000;font-family:'Press Start 2P',monospace;font-size:.7rem;letter-spacing:.15em;box-shadow:var(--shadow-px)}
+
+.pixel-box{background:var(--surface);border:3px solid var(--c1);padding:22px 26px;position:relative;box-shadow:var(--shadow-px)}
+.pixel-box.c2{border-color:var(--c2)}
+.pixel-box.c3{border-color:var(--c3)}
+.pixel-box.c4{border-color:var(--c4)}
+.pixel-box.c5{border-color:var(--c5)}
+
+.stat-card{background:var(--surface);border:3px solid #000;padding:22px 26px;text-align:center;box-shadow:6px 6px 0 var(--c5);flex:1;min-width:180px}
+.stat-card .n{font-family:'Press Start 2P',monospace;font-size:clamp(2rem,3.5vw,3.2rem);line-height:1;color:var(--c1)}
+.stat-card .l{font-size:.95rem;color:var(--dim);margin-top:8px;letter-spacing:.05em}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.7;margin-bottom:12px}
+.bullet-list li::before{content:'▶';flex-shrink:0;color:var(--c1);font-family:'Press Start 2P',monospace;font-size:.7rem;margin-top:8px;text-shadow:0 0 8px var(--c1)}
+.bullet-list.c2 li::before{color:var(--c2);text-shadow:0 0 8px var(--c2)}
+.bullet-list.c3 li::before{color:var(--c3);text-shadow:0 0 8px var(--c3)}
+.bullet-list.c4 li::before{color:var(--c4);text-shadow:0 0 8px var(--c4)}
+.bullet-list.c5 li::before{color:var(--c5);text-shadow:0 0 8px var(--c5)}
+
+.tag{display:inline-block;padding:6px 14px;background:var(--c2);color:#000;border:2px solid #000;font-weight:700;font-size:.9rem;box-shadow:2px 2px 0 #000;margin:4px 6px 4px 0}
+
+.kbd{display:inline-block;padding:3px 8px;background:#000;color:var(--c2);font-family:'Press Start 2P',monospace;font-size:.65rem;border:1px solid var(--c2)}
+
+/* Keyboard key */
+.kb-key{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;margin:3px;background:var(--surface);border:2.5px solid #000;color:var(--text);font-family:'Press Start 2P',monospace;font-size:.85rem;box-shadow:3px 3px 0 #000;font-weight:700}
+.kb-key.home{background:var(--c4);color:#000;border-color:#000}
+.kb-key.top{background:var(--c2);color:#000;border-color:#000}
+.kb-key.bot{background:var(--c3);color:#000;border-color:#000}
+.kb-key.bump{position:relative}
+.kb-key.bump::after{content:'';position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:8px;height:3px;background:var(--c5);border-radius:0}
+
+.cover{align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at center, #2a1a0d 0%, var(--bg) 70%)}
+.cover .badge{display:inline-block;background:var(--c5);color:#000;font-family:'Press Start 2P',monospace;font-size:.85rem;letter-spacing:.2em;padding:10px 18px;margin-bottom:32px;box-shadow:var(--shadow-px)}
+.cover h1{font-weight:900;font-size:clamp(3rem,7.5vw,6.5rem);line-height:1.05;margin-bottom:18px;color:var(--c1);letter-spacing:-.03em;text-shadow:0 0 32px rgba(255,152,0,.6),4px 4px 0 #000}
+.cover h1 .accent{color:var(--c2);font-family:'Press Start 2P',monospace;font-size:.45em;display:inline-block;transform:translateY(-12px);margin:0 8px}
+.cover .sub{font-size:clamp(1.1rem,2vw,1.6rem);color:var(--text);margin-bottom:48px;font-weight:500}
+.cover .meta{display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;font-family:'Press Start 2P',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--dim)}
+.cover .meta b{color:var(--c2);font-weight:700}
+.cover-deco{position:absolute;display:flex;gap:18px}
+.cover-deco.tl{top:80px;left:80px}
+.cover-deco.tr{top:80px;right:80px}
+.cover-deco.bl{bottom:80px;left:80px}
+.cover-deco.br{bottom:80px;right:80px}
+
+.hook-quote{font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.4;color:var(--text);font-weight:900;max-width:1100px}
+.hook-quote .em{color:var(--c1);font-style:normal}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:flex-start;flex:1;margin-top:20px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;flex:1;margin-top:20px}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;margin-top:20px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:20px}
+
+.pillar{background:var(--surface);border:3px solid #000;padding:22px 20px;text-align:center;position:relative;box-shadow:6px 6px 0 var(--c,var(--c1))}
+.pillar .ico{width:74px;height:74px;background:var(--c,var(--c1));border:3px solid #000;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2.2rem;box-shadow:3px 3px 0 #000}
+.pillar .h{font-weight:900;font-size:1.25rem;color:var(--c,var(--c1));margin-bottom:8px}
+.pillar .b{font-size:.95rem;line-height:1.65;color:var(--text)}
+
+.formula-table{width:100%;border-collapse:collapse;background:var(--surface);font-size:clamp(.9rem,1.1vw,1.05rem)}
+.formula-table th{background:var(--c1);color:#000;padding:12px 16px;text-align:left;font-family:'Press Start 2P',monospace;font-size:.6rem;border:2px solid #000;letter-spacing:.1em}
+.formula-table td{padding:12px 18px;border:2px solid #000;font-weight:500;color:var(--text)}
+.formula-table tr:nth-child(2n) td{background:var(--panel)}
+.formula-table .big{font-size:1.1em;color:var(--c2);font-weight:900}
+
+.step-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:24px}
+.step-item{background:var(--surface);border:3px solid #000;padding:14px 8px;text-align:center;position:relative;font-size:.85rem;box-shadow:3px 3px 0 var(--c,var(--c1));color:var(--text)}
+.step-item .n{font-family:'Press Start 2P',monospace;font-size:1.05rem;color:var(--c,var(--c1));display:block;margin-bottom:6px}
+.step-item .t{font-weight:700;font-size:.85rem;line-height:1.35}
+.step-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--c2);z-index:2;text-shadow:0 0 8px var(--c2)}
+
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px}
+.side-card{background:var(--surface);border:3px solid var(--c,var(--c4));padding:22px 24px;position:relative;box-shadow:var(--shadow-px)}
+.side-card.bad{--c:var(--c5)}
+.side-card .ribbon{position:absolute;top:-14px;left:18px;background:var(--c);color:#000;padding:4px 14px;font-family:'Press Start 2P',monospace;font-size:.7rem;border:2px solid #000;letter-spacing:.05em}
+.side-card h4{font-weight:900;font-size:1.25rem;color:var(--c);margin:8px 0 12px}
+
+.a2-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.a2-card{background:var(--surface);border:3px solid var(--c,var(--c1));padding:18px 14px;position:relative;box-shadow:5px 5px 0 #000}
+.a2-card .ico{font-size:1.9rem;margin-bottom:6px}
+.a2-card h5{font-size:1rem;color:var(--c,var(--c1));font-weight:900;margin-bottom:6px}
+.a2-card p{font-size:.85rem;line-height:1.5;color:var(--text)}
+
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.advice-card{background:var(--surface);border:3px solid #000;padding:18px 14px;text-align:center;position:relative;box-shadow:6px 6px 0 var(--c,var(--c5))}
+.advice-card .n{font-family:'Press Start 2P',monospace;font-size:1.6rem;color:var(--c,var(--c5));line-height:1}
+.advice-card h5{font-weight:900;font-size:1.05rem;color:var(--text);margin:10px 0 6px}
+.advice-card p{font-size:.82rem;line-height:1.55;color:var(--text)}
+
+.closing{align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at center,#2a1a0d 0%,var(--bg) 70%)}
+.closing h2{font-weight:900;font-size:clamp(2.5rem,5.5vw,4.8rem);line-height:1.2;color:var(--c1);margin-bottom:24px;letter-spacing:-.02em;text-shadow:0 0 24px rgba(255,152,0,.5),4px 4px 0 #000}
+.closing h2 .em{color:var(--c5)}
+.closing .signoff{font-size:1.2rem;color:var(--dim);margin-bottom:28px}
+.closing .qr-row{display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.closing .url-box{background:var(--surface);border:3px solid var(--c2);padding:14px 22px;font-size:.95rem;color:var(--text);box-shadow:var(--shadow-px);text-align:center}
+.closing .url-box b{color:var(--c1);font-family:'Press Start 2P',monospace;font-size:.7rem;letter-spacing:.05em}
+
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .three-col,.four-col,.a2-grid,.advice-grid,.step-row{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+  .cover-deco{display:none}
+  .kb-key{width:36px;height:36px;font-size:.7rem}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="coin">$</div><div class="pixel-heart"></div></div>
+  <div class="cover-deco tr"><div class="hp-bar"><div class="fill" style="--hp:75%"></div></div></div>
+  <div class="cover-deco bl"><div class="stage-card-deco">PRESS START</div></div>
+  <div class="cover-deco br"><div class="coin">M</div><div class="pixel-heart"></div></div>
+
+  <span class="badge slide-up">中年級資訊科技 · TYPING</span>
+  <h1 class="slide-up d1">⌨️ 鍵盤<span class="accent">×</span>魔法學院</h1>
+  <p class="sub slide-up d2">從<b>兩指神功</b>變成<b class="accent-c4">十指齊發</b>的<span class="accent-c1"><b>盲打小高手</b></span></p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b></span>
+    <span>桃園市石門國小</span>
+    <span>5 大關卡 · 目標 15 WPM</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div style="margin-top:14vh">
+    <p class="eyebrow pop-in">先比一比</p>
+    <p class="hook-quote pop-in d1">
+      你<span class="em">兩根手指啄米</span>打字 ──<br>
+      老師<span class="em">不看鍵盤</span>就能打字。<br>
+      差別在哪？
+    </p>
+    <p class="lead slide-up d2" style="margin-top:28px;font-size:1.2rem">
+      不是老師比較聰明，<br>
+      <span style="color:var(--c1);font-weight:900">是老師有受過「八大手指分工」的訓練。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⌨️</div>
+    <div class="bubble">今天這節課結束，你也可以開始<b>把鍵盤背起來</b>。一學期就能做到老師的程度！</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHY LEARN ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 為什麼 / WHY</span>
+  <p class="eyebrow slide-up">為什麼一定要練打字？</p>
+  <h2 class="title-lg slide-up d1">打字是 <span class="accent-c2">21 世紀的「寫字」</span></h2>
+  <div class="two-col">
+    <div class="pixel-box slide-up d2">
+      <p class="lead" style="margin-bottom:14px">
+        ⌨️ <b>查資料</b>：Google、維基百科都要打字<br>
+        💬 <b>傳訊息</b>：Line、Email 都要打字<br>
+        ✍ <b>寫作業</b>：將來報告都用電腦打<br>
+        🎮 <b>玩遊戲</b>：取名字、聊天都要打
+      </p>
+      <p class="lead" style="font-size:1rem;color:var(--dim)">
+        不會打字 = <b>21 世紀的文盲</b>。<br>
+        早點學，可以早點享受快感。
+      </p>
+    </div>
+    <div class="flex-row slide-up d2" style="margin:0">
+      <div class="stat-card pop-in d3">
+        <div class="n">15</div>
+        <div class="l">WPM<br>(本學期目標)</div>
+      </div>
+      <div class="stat-card pop-in d4" style="box-shadow:6px 6px 0 var(--c4)">
+        <div class="n" style="color:var(--c4)">10</div>
+        <div class="l">分鐘 / 天<br>練習量</div>
+      </div>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:24px;color:var(--dim);text-align:center">
+    💡 <b class="accent-c1">WPM = Words Per Minute</b>（每分鐘字數）：15 = 中年級目標，60 = 高中生水準。
+  </p>
+  <div class="speaker">
+    <div class="avatar">⚡</div>
+    <div class="bubble">每天 10 分鐘，<b>1 個學期就會到 15 WPM</b>。1 年就能到 30 WPM ── 比很多大人還快！</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — STAGE 1 QWERTY ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · STAGE 1 / QWERTY</span>
+  <p class="eyebrow slide-up">STAGE 1 ─ 認識 QWERTY 鍵盤</p>
+  <h2 class="title-md slide-up d1">為什麼叫 QWERTY？<br>看<span class="accent-c2">左上角第一排字母</span>！</h2>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:30px">
+    <div>
+      <span class="kb-key top">Q</span>
+      <span class="kb-key top">W</span>
+      <span class="kb-key top">E</span>
+      <span class="kb-key top">R</span>
+      <span class="kb-key top">T</span>
+      <span class="kb-key top">Y</span>
+      <span class="kb-key top">U</span>
+      <span class="kb-key top">I</span>
+      <span class="kb-key top">O</span>
+      <span class="kb-key top">P</span>
+    </div>
+    <div>
+      <span class="kb-key home">A</span>
+      <span class="kb-key home">S</span>
+      <span class="kb-key home">D</span>
+      <span class="kb-key home bump">F</span>
+      <span class="kb-key home">G</span>
+      <span class="kb-key home">H</span>
+      <span class="kb-key home bump">J</span>
+      <span class="kb-key home">K</span>
+      <span class="kb-key home">L</span>
+      <span class="kb-key home">;</span>
+    </div>
+    <div>
+      <span class="kb-key bot">Z</span>
+      <span class="kb-key bot">X</span>
+      <span class="kb-key bot">C</span>
+      <span class="kb-key bot">V</span>
+      <span class="kb-key bot">B</span>
+      <span class="kb-key bot">N</span>
+      <span class="kb-key bot">M</span>
+    </div>
+  </div>
+
+  <div class="three-col" style="margin-top:30px">
+    <div class="pixel-box c2 pop-in d1">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.1rem;margin-bottom:8px">🟡 上排 TOP</h3>
+      <p class="lead" style="font-size:.95rem">Q W E R T Y U I O P<br><span style="color:var(--dim);font-size:.85rem">除了 A 的母音都在這</span></p>
+    </div>
+    <div class="pixel-box c4 pop-in d2">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.1rem;margin-bottom:8px">🟢 基準 HOME</h3>
+      <p class="lead" style="font-size:.95rem">A S D F G H J K L ;<br><span style="color:var(--dim);font-size:.85rem">手指的家 · F+J 有凸點</span></p>
+    </div>
+    <div class="pixel-box c3 pop-in d3">
+      <h3 style="font-weight:900;color:var(--c3);font-size:1.1rem;margin-bottom:8px">🔵 下排 BOT</h3>
+      <p class="lead" style="font-size:.95rem">Z X C V B N M<br><span style="color:var(--dim);font-size:.85rem">較少用 · 大拇指除外</span></p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🗺️</div>
+    <div class="bubble">為什麼這樣排？<b>不是亂排的</b>！是為了「防止打字機卡住」設計的。下一張告訴你！</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — HISTORY ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 歷史 / HISTORY</span>
+  <p class="eyebrow slide-up">QWERTY 的小故事</p>
+  <h2 class="title-md slide-up d1">100 多年前的<span class="accent-c1">「防塞車」設計</span>，<br>沒想到變成<span class="accent-c4">全世界的標準</span>。</h2>
+
+  <div class="two-col">
+    <div class="pixel-box slide-up d2">
+      <h3 style="font-weight:900;color:var(--c1);font-size:1.2rem;margin-bottom:12px">📜 故事是這樣的</h3>
+      <p class="lead" style="font-size:1rem">
+        1870 年代美國發明家 <b class="accent-c2">Christopher Latham Sholes</b> 發明打字機。<br><br>
+        但是<b>常用字母太接近</b>，打字機的金屬手臂<b class="accent-c5">常常卡住</b>（像超市結帳大塞車）。<br><br>
+        所以他想了一個辦法：<b class="accent-c2">把常用字母拆開</b>，刻意讓打字慢一點，這樣才不會卡住。
+      </p>
+    </div>
+    <div class="pixel-box c5 slide-up d2">
+      <h3 style="font-weight:900;color:var(--c5);font-size:1.2rem;margin-bottom:12px">🤯 為什麼到現在還用？</h3>
+      <p class="lead" style="font-size:1rem">
+        後來電腦發明，<b>機器不會卡住了</b>。<br><br>
+        但是<b class="accent-c2">大家已經習慣 QWERTY</b>，<br>
+        換一套要重學，<b>沒人想換</b>。<br><br>
+        所以一個「100 年前的補救設計」，<br>
+        變成了<b class="accent-c4">全世界的鍵盤標準</b>。
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📚</div>
+    <div class="bubble">這就是「<b>路徑依賴</b>」── 一旦大家都習慣某種設計，就很難改。電腦鍵盤就是個好例子！</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — STAGE 2 HOME ROW ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · STAGE 2 / HOME</span>
+  <p class="eyebrow slide-up">STAGE 2 ─ 手指的「家」</p>
+  <h2 class="title-md slide-up d1">先找到 <span class="accent-c5">F 和 J</span> 的小凸點 ─<br>那是<span class="accent-c4">食指的導盲犬</span>！</h2>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:24px">
+    <div>
+      <span class="kb-key home">A</span>
+      <span class="kb-key home">S</span>
+      <span class="kb-key home">D</span>
+      <span class="kb-key home bump" style="background:var(--c5);color:#fff">F</span>
+      <span class="kb-key home">G</span>
+      <span class="kb-key home">H</span>
+      <span class="kb-key home bump" style="background:var(--c5);color:#fff">J</span>
+      <span class="kb-key home">K</span>
+      <span class="kb-key home">L</span>
+      <span class="kb-key home">;</span>
+    </div>
+    <p style="color:var(--c5);font-family:'Press Start 2P',monospace;font-size:.7rem;margin-top:8px">↑ F 和 J 下面有小凸點 ← 摸摸看就知道！</p>
+  </div>
+
+  <div class="two-col" style="margin-top:24px">
+    <div class="pixel-box c1 slide-up d2">
+      <h3 style="font-weight:900;color:var(--c1);font-size:1.2rem;margin-bottom:10px">🚢 左手口訣</h3>
+      <p class="lead" style="font-size:1.05rem">
+        <b class="accent-c2">A</b>ll <b class="accent-c2">S</b>hips <b class="accent-c2">D</b>o <b class="accent-c2">F</b>loat<br>
+        <span style="font-size:.95rem;color:var(--dim)">「所有船都會浮起來」</span><br>
+        <b class="accent-c1">A S D F</b> = 小指 / 無名指 / 中指 / 食指
+      </p>
+    </div>
+    <div class="pixel-box c4 slide-up d2">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">👀 右手口訣</h3>
+      <p class="lead" style="font-size:1.05rem">
+        <b class="accent-c2">J</b>ust <b class="accent-c2">K</b>eep <b class="accent-c2">L</b>ooking<br>
+        <span style="font-size:.95rem;color:var(--dim)">「持續看著螢幕」</span><br>
+        <b class="accent-c4">J K L ;</b> = 食指 / 中指 / 無名指 / 小指
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🏠</div>
+    <div class="bubble">F 和 J 是<b>全世界鍵盤的標準</b>！你閉上眼摸，所有鍵盤都會有這兩個凸點。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — FINGER MAP ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 手指 / FINGERS</span>
+  <p class="eyebrow slide-up">八大手指分工表</p>
+  <h2 class="title-md slide-up d1">每根手指都有<span class="accent-c2">「自己的家」</span> ── <br>不要讓別人代勞！</h2>
+
+  <div class="two-col">
+    <div class="pixel-box slide-up d2">
+      <h3 style="font-weight:900;color:var(--c1);font-size:1.2rem;margin-bottom:10px">🤚 左手</h3>
+      <table class="formula-table">
+        <thead><tr><th>手指</th><th>負責</th></tr></thead>
+        <tbody>
+          <tr><td>小指</td><td class="big">A · Q · Z</td></tr>
+          <tr><td>無名指</td><td class="big">S · W · X</td></tr>
+          <tr><td>中指</td><td class="big">D · E · C</td></tr>
+          <tr><td>食指 ★</td><td class="big">F G · R T · V B</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pixel-box c4 slide-up d2">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">✋ 右手</h3>
+      <table class="formula-table">
+        <thead><tr><th>手指</th><th>負責</th></tr></thead>
+        <tbody>
+          <tr><td>食指 ★</td><td class="big">J H · U Y · N M</td></tr>
+          <tr><td>中指</td><td class="big">K · I · ,</td></tr>
+          <tr><td>無名指</td><td class="big">L · O · .</td></tr>
+          <tr><td>小指</td><td class="big">; · P · /</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pixel-box c5 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.05rem">
+      ⭐ <b class="accent-c5">食指是超級勞模</b>：要負責 <b>6 個字母</b>（左：R T F G V B / 右：Y U H J N M）<br>
+      <span style="color:var(--dim);font-size:.95rem">大拇指則負責<b class="accent-c2">空白鍵（Spacebar）</b>輪流按。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤝</div>
+    <div class="bubble">記住：<b>每個鍵都有「指定」的手指</b>。打字 = 派對排隊 = 不能插隊！</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — STAGE 3 GO HOME ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · STAGE 3 / GYM</span>
+  <p class="eyebrow slide-up">STAGE 3 ─ 手指體操：跳出去要回家</p>
+  <h2 class="title-md slide-up d1">按完上排 / 下排，<br>手指要<span class="accent-c1">「立刻回基地」</span>！</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c2)">
+      <div class="ico">⬆️</div>
+      <div class="h">上排 → 回家</div>
+      <p class="b">中指打 E<br>→ 立刻回 D<br>食指打 R<br>→ 立刻回 F</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c4)">
+      <div class="ico">🏠</div>
+      <div class="h">Home Row 是基地</div>
+      <p class="b">十指<b>永遠</b><br>放在 A-S-D-F<br>+ J-K-L-;<br>上待命</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c3)">
+      <div class="ico">⬇️</div>
+      <div class="h">下排 → 回家</div>
+      <p class="b">中指打 C<br>→ 立刻回 D<br>食指打 V<br>→ 立刻回 F</p>
+    </div>
+  </div>
+
+  <div class="pixel-box c1 slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--c1);margin-bottom:10px">🎯 為什麼一定要回家？</h3>
+    <ul class="bullet-list" style="font-size:1rem">
+      <li>不回家 = 找下一個鍵<b>要重新搜尋位置</b> ← 慢</li>
+      <li>回家 = 下一個鍵<b>從固定位置出發</b> ← 快很多</li>
+      <li>練熟後 ↑ 完全不看鍵盤，<b class="accent-c2">這就是盲打的秘密</b></li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤸</div>
+    <div class="bubble">把 Home Row 當<b>「家」</b>，把上下排當<b>「出去玩」</b>。<b>玩完就要回家</b>！</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — STAGE 4 WORDS ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · STAGE 4 / WORDS</span>
+  <p class="eyebrow slide-up">STAGE 4 ─ 單字魔法師</p>
+  <h2 class="title-md slide-up d1">會打字母，<br>下一步是<span class="accent-c2">連續打單字</span>！</h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c4)"><span class="n">L1</span><span class="t">3 個字母<br>cat / dog</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d1" style="--c:var(--c2)"><span class="n">L2</span><span class="t">4 個字母<br>book / desk</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c1)"><span class="n">L3</span><span class="t">5 個字母<br>apple / happy</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c5)"><span class="n">L4</span><span class="t">短句<br>I like cat.</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c3)"><span class="n">L5</span><span class="t">長句<br>The boy is here.</span></div>
+  </div>
+
+  <div class="two-col slide-up d2">
+    <div class="pixel-box c2">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.2rem;margin-bottom:10px">📝 練習方法</h3>
+      <ul class="bullet-list c2" style="font-size:1rem">
+        <li>每天<b>挑 5 個單字</b>練 10 次</li>
+        <li>不看鍵盤、看螢幕</li>
+        <li>速度<b>慢慢加</b>，先求準</li>
+        <li>練熟<b>再進下一關</b></li>
+      </ul>
+    </div>
+    <div class="pixel-box c5">
+      <h3 style="font-weight:900;color:var(--c5);font-size:1.2rem;margin-bottom:10px">⚠️ 常見錯誤</h3>
+      <ul class="bullet-list c5" style="font-size:1rem">
+        <li>用<b>兩根食指</b>啄米（很難進步）</li>
+        <li>低頭<b>偷看鍵盤</b>（永遠學不會）</li>
+        <li>追求速度<b>不顧錯誤</b>（壞習慣）</li>
+        <li>打錯<b>一直按 BACKSPACE</b>不分析</li>
+      </ul>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">✨</div>
+    <div class="bubble">先求<b>對</b>，再求<b>快</b>。錯誤的速度沒意義 ── 對的慢慢練，自然就快了。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — STAGE 5 NINJA ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · STAGE 5 / NINJA</span>
+  <p class="eyebrow slide-up">STAGE 5 ─ 極速忍者：盲打挑戰</p>
+  <h2 class="title-md slide-up d1">最後一關：<br><span class="accent-c5">完全不看鍵盤</span>還能打字！</h2>
+
+  <div class="three-col">
+    <div class="pixel-box c4 pop-in d1">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">🥷 怎麼練？</h3>
+      <p class="lead" style="font-size:.95rem">
+        ① 用<b>紙板</b>蓋住雙手<br>
+        ② 看螢幕的<b>單字</b><br>
+        ③ <b>用記憶</b>找位置<br>
+        ④ 打錯<b>不偷看</b>
+      </p>
+    </div>
+    <div class="pixel-box c2 pop-in d2">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.2rem;margin-bottom:10px">🎮 推薦小遊戲</h3>
+      <p class="lead" style="font-size:.95rem">
+        ✓ <b>typeEN</b>（字母彗星）<br>
+        ✓ <b>花蓮縣打字練習網</b><br>
+        ✓ <b>Monkeytype</b>（高手用）<br>
+        ✓ <b>10fastfingers</b>
+      </p>
+    </div>
+    <div class="pixel-box c1 pop-in d3">
+      <h3 style="font-weight:900;color:var(--c1);font-size:1.2rem;margin-bottom:10px">📊 速度標準</h3>
+      <p class="lead" style="font-size:.95rem">
+        🐌 5 WPM = 新手<br>
+        🚶 15 WPM = <b>本學期目標</b><br>
+        🏃 30 WPM = 一年練成<br>
+        🏎 60 WPM = 高中生程度
+      </p>
+    </div>
+  </div>
+
+  <div class="pixel-box c5 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.1rem">
+      🎯 <b class="accent-c5">最重要的事</b>：盲打不是「打很快」，是「<b class="accent-c2">不看鍵盤就能打</b>」。<br>
+      <span style="color:var(--dim);font-size:.95rem">速度會自己變快 ── 不用刻意追求。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🥷</div>
+    <div class="bubble">當你<b>不看鍵盤也能打對</b>的那天，恭喜你 ── 你就是合格的<b>盲打忍者</b>了！</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — POSTURE ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 姿勢 / POSTURE</span>
+  <p class="eyebrow slide-up">沒人講的小事：姿勢</p>
+  <h2 class="title-md slide-up d1">打字打到<span class="accent-c5">手痠 / 肩痛</span> ？<br>不是練太久，是<span class="accent-c2">姿勢錯了</span>！</h2>
+
+  <div class="four-col">
+    <div class="pillar pop-in d1" style="--c:var(--c4)">
+      <div class="ico">🪑</div>
+      <div class="h">① 坐挺</div>
+      <p class="b">背靠椅背<br>不駝背<br>腳平踩地</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🖥</div>
+      <div class="h">② 螢幕高</div>
+      <p class="b">螢幕中心<br>跟眼睛<br><b>平視</b></p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c1)">
+      <div class="ico">✋</div>
+      <div class="h">③ 手腕直</div>
+      <p class="b">手腕<br><b>不要凹</b><br>輕靠桌邊</p>
+    </div>
+    <div class="pillar pop-in d4" style="--c:var(--c5)">
+      <div class="ico">⏰</div>
+      <div class="h">④ 休息</div>
+      <p class="b">每 20 分<br>休息 1 分<br>看看遠方</p>
+    </div>
+  </div>
+
+  <div class="two-side slide-up d2" style="margin-top:24px">
+    <div class="side-card">
+      <div class="ribbon">✓ 對的姿勢</div>
+      <h4>聰明小手</h4>
+      <ul class="bullet-list c4" style="font-size:.98rem">
+        <li>雙腳<b>平踩地板</b></li>
+        <li>手腕<b>輕鬆懸空</b></li>
+        <li>螢幕<b>離眼睛 50 公分</b></li>
+        <li>燈光<b>不刺眼</b></li>
+      </ul>
+    </div>
+    <div class="side-card bad">
+      <div class="ribbon">⚠ 錯的姿勢</div>
+      <h4>NG 雷區</h4>
+      <ul class="bullet-list c5" style="font-size:.98rem">
+        <li>趴在桌上駝背</li>
+        <li>手腕<b>壓桌邊</b>（腕隧道炎）</li>
+        <li>螢幕太近<b>近視</b></li>
+        <li>練 1 小時不休息</li>
+      </ul>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🪑</div>
+    <div class="bubble">老師教過很多大人手腕痛，<b>都是小時候姿勢沒練對</b>累積出來的。早點養成好姿勢！</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — SKILLS ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 能力 / SKILLS</span>
+  <p class="eyebrow slide-up">這節課練到什麼？</p>
+  <h2 class="title-md slide-up d1">不只是「會打字」，<br>還有<span class="accent-c2">這 4 種能力</span>悄悄變強。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🧠</div>
+      <h5>① 肌肉<br>記憶</h5>
+      <p>身體記住動作，<br>不需要思考</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🎯</div>
+      <h5>② 專注<br>力</h5>
+      <p>盲打需要看螢幕<br>不分心</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c4)">
+      <div class="ico">📝</div>
+      <h5>③ 英文<br>反應</h5>
+      <p>看到單字<br>立刻反應</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c5)">
+      <div class="ico">💪</div>
+      <h5>④ 耐心<br>堅持</h5>
+      <p>每天 10 分鐘<br>累積一年</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem;color:var(--text)">
+    💡 <b class="accent-c2">這 4 種能力 = 一輩子的學習資產。</b><br>
+    <span style="color:var(--dim)">不只用在打字 ── 學鋼琴、學編程、學運動都會用到。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">會打字不稀奇，<b>從打字學會「肌肉記憶」</b>才是真寶藏 ── 這方法可以用在好多地方！</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — FINAL ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給中年級的 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">每天 10 分鐘，<br>1 個學期 = <span class="accent-c2">完全不同的你</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <h5>每天<br>10 分鐘</h5>
+      <p>分散練比週末爆練有效</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>先求對<br>再求快</h5>
+      <p>錯誤的速度沒意義</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c4)">
+      <div class="n">03</div>
+      <h5>不要<br>偷看</h5>
+      <p>看了就學不會盲打</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c3)">
+      <div class="n">04</div>
+      <h5>姿勢<br>要正</h5>
+      <p>不要趴桌、不壓手腕</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>F+J<br>是基地</h5>
+      <p>用凸點找位置，不靠眼睛</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事老師當年自己學的時候也都做過。<b>方法對，誰都能學會</b>！</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="coin">$</div></div>
+  <div class="cover-deco tr"><div class="pixel-heart"></div></div>
+  <div class="cover-deco bl"><div class="stage-card-deco">CLEAR!</div></div>
+  <div class="cover-deco br"><div class="coin">M</div></div>
+
+  <h2 class="slide-up">準備好成為<br><span class="em">盲打小忍者</span>了嗎？</h2>
+  <p class="signoff slide-up d1">每天 10 分鐘，一個學期後你會嚇到自己！</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/typing-en/</b>
+    </div>
+    <div class="url-box">
+      ⌨️ 推薦練習網站<br>
+      <b>typeEN · 花蓮縣打字練習網</b>
+    </div>
+  </div>
+
+  <p style="margin-top:36px;font-family:'Press Start 2P',monospace;color:var(--dim);font-size:.6rem;letter-spacing:.15em">
+    Q&amp;A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Press Start 2P',monospace;color:var(--c1);font-size:.75rem;letter-spacing:.15em">THANK YOU · LEVEL UP</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',            s:'鍵盤魔法學院 · 中年級英文打字'},
+  {n:2,  t:'開場暖身',        s:'兩指神功 vs 十指齊發'},
+  {n:3,  t:'為什麼練打字',    s:'21 世紀的「寫字」 · 目標 15 WPM'},
+  {n:4,  t:'STAGE 1 QWERTY',  s:'認識鍵盤三大顏色分區'},
+  {n:5,  t:'歷史故事',        s:'100 年前的防塞車設計變成世界標準'},
+  {n:6,  t:'STAGE 2 Home Row',s:'F+J 凸點 · 兩個魔法口訣'},
+  {n:7,  t:'八大手指分工',    s:'左手 / 右手各 4 指 · 食指最忙'},
+  {n:8,  t:'STAGE 3 體操',    s:'按完上下排立刻回家'},
+  {n:9,  t:'STAGE 4 單字',    s:'從 3 字母到完整句子'},
+  {n:10, t:'STAGE 5 盲打',    s:'紙板蓋手 · 不偷看 · 練速度'},
+  {n:11, t:'姿勢與休息',      s:'坐挺 / 螢幕高 / 手腕直 / 休息'},
+  {n:12, t:'4 種能力',        s:'肌肉記憶 · 專注 · 反應 · 耐心'},
+  {n:13, t:'5 個叮嚀',        s:'每天 10 分鐘 · 先求對再求快'},
+  {n:14, t:'結語 + Q&A',      s:'準備好成為盲打小忍者了嗎？'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

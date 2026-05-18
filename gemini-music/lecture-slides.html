@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI 音樂創作師：用 Gemini 做畢業歌曲｜演講簡報</title>
+<meta name="description" content="阿凱老師｜六年級資訊科技｜AI 音樂創作師 5 大關卡演講簡報。Pixel-game 風 × 14 張投影片。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset & Base ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#0d0d2b;
+  --surface:#1a1a3e;
+  --panel:#252552;
+  --c1:#00e5ff;
+  --c2:#ffd740;
+  --c3:#ff4081;
+  --c4:#69ff47;
+  --c5:#b388ff;
+  --text:#e8e4f8;
+  --dim:#7070a0;
+  --shadow-px:4px 4px 0 #000;
+}
+body{
+  font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+/* Pixel scanline overlay */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9990;
+  pointer-events:none;
+  background:repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 2px, transparent 2px 4px);
+}
+
+/* ===== Slide Container ===== */
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  padding:5vh 6vw;
+  opacity:0;transition:opacity .4s;
+  background:var(--bg);
+}
+.slide.active{display:flex;opacity:1}
+
+/* ===== Universal Slide Decorations ===== */
+.slide::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:repeating-linear-gradient(90deg,var(--c1) 0 16px,var(--c3) 16px 32px,var(--c2) 32px 48px);
+  opacity:.85;
+}
+.slide-num{
+  position:absolute;bottom:18px;right:32px;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;color:var(--dim);
+  letter-spacing:.1em;z-index:5;
+}
+.slide-title-tag{
+  position:absolute;top:24px;left:32px;
+  font-family:'Press Start 2P',monospace;font-size:.55rem;
+  letter-spacing:.18em;color:var(--c2);text-transform:uppercase;
+  padding:6px 10px;border:2px solid var(--c2);
+  background:var(--surface);
+  box-shadow:var(--shadow-px);
+  z-index:5;
+}
+
+/* ===== Typography ===== */
+.title-xl{
+  font-weight:900;
+  font-size:clamp(3rem,7vw,6rem);line-height:1.05;
+  letter-spacing:-.02em;color:var(--c1);
+  text-shadow:0 0 24px rgba(0,229,255,.5);
+}
+.title-lg{
+  font-weight:900;
+  font-size:clamp(2.4rem,5vw,4rem);line-height:1.1;
+  letter-spacing:-.02em;color:var(--c1);
+  text-shadow:0 0 16px rgba(0,229,255,.4);
+}
+.title-md{
+  font-weight:900;
+  font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.2;
+  color:var(--text);
+}
+.eyebrow{
+  font-family:'Press Start 2P',monospace;font-size:.7rem;
+  letter-spacing:.2em;color:var(--c3);text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:14px;
+}
+.eyebrow::after{content:'';flex:1;height:2px;background:var(--c3);max-width:200px}
+.lead{
+  font-size:clamp(1rem,1.5vw,1.25rem);line-height:1.75;
+  color:var(--text);max-width:1100px;
+}
+.lead b{color:var(--c2);font-weight:900}
+.accent-c1{color:var(--c1)}
+.accent-c2{color:var(--c2)}
+.accent-c3{color:var(--c3)}
+.accent-c4{color:var(--c4)}
+.accent-c5{color:var(--c5)}
+
+/* ===== Speaker Bubble ===== */
+.speaker{
+  position:absolute;bottom:18px;left:32px;
+  display:flex;align-items:flex-end;gap:14px;z-index:8;
+  max-width:55%;
+}
+.speaker .avatar{
+  width:60px;height:60px;flex-shrink:0;
+  background:var(--c2);
+  border:3px solid #000;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;
+  box-shadow:var(--shadow-px);
+}
+.speaker .bubble{
+  background:var(--surface);
+  border:2.5px solid var(--c1);
+  padding:10px 16px;
+  font-size:.95rem;font-weight:500;
+  position:relative;
+  box-shadow:var(--shadow-px);
+  max-width:480px;line-height:1.5;
+  color:var(--text);
+}
+.speaker .bubble::before{
+  content:'';position:absolute;left:-14px;bottom:18px;
+  width:0;height:0;
+  border-style:solid;
+  border-width:8px 14px 8px 0;
+  border-color:transparent var(--c1) transparent transparent;
+}
+
+/* ===== Progress Bar ===== */
+.progress{
+  position:fixed;bottom:0;left:0;right:0;height:5px;
+  background:var(--panel);z-index:99;
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--c1),var(--c4));
+  transition:width .4s;
+  box-shadow:0 0 8px var(--c1);
+}
+
+/* ===== Hint Bar ===== */
+.hint{
+  position:fixed;top:14px;right:24px;z-index:99;
+  font-family:'Press Start 2P',monospace;font-size:.55rem;
+  color:var(--dim);
+  background:var(--surface);
+  border:1.5px solid var(--dim);
+  padding:6px 12px;
+  letter-spacing:.08em;
+  pointer-events:none;
+  opacity:.75;
+}
+
+/* ===== Overview Mode ===== */
+.overview{
+  position:fixed;inset:0;background:#05051a;
+  display:none;padding:32px;overflow-y:auto;z-index:200;
+  flex-direction:column;
+}
+.overview.show{display:flex}
+.overview h3{
+  font-family:'Press Start 2P',monospace;color:var(--c2);
+  font-size:1rem;margin-bottom:20px;letter-spacing:.1em;
+}
+.overview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.ov-card{
+  background:var(--surface);
+  border:3px solid var(--c2);
+  padding:14px 16px;cursor:pointer;
+  transition:.15s;position:relative;
+  box-shadow:var(--shadow-px);
+}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--c3)}
+.ov-card .num{
+  position:absolute;top:8px;right:10px;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;
+  color:var(--c3);
+}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--c1);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+/* ===== Pixel Decorations ===== */
+@keyframes coin-spin{
+  0%,100%{transform:rotateY(0)}
+  50%{transform:rotateY(180deg)}
+}
+.coin{
+  width:48px;height:48px;
+  background:var(--c2);
+  border:3px solid #000;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:1.1rem;color:#000;
+  box-shadow:var(--shadow-px);
+  animation:coin-spin 2.5s ease-in-out infinite;
+}
+.pixel-heart{
+  display:inline-block;width:36px;height:36px;
+  background:var(--c3);
+  clip-path:polygon(20% 0,40% 0,40% 20%,60% 20%,60% 0,80% 0,80% 20%,100% 20%,100% 60%,80% 60%,80% 80%,60% 80%,60% 100%,40% 100%,40% 80%,20% 80%,20% 60%,0 60%,0 20%,20% 20%);
+  box-shadow:var(--shadow-px);
+}
+.hp-bar{
+  display:inline-block;
+  width:200px;height:22px;
+  background:var(--panel);
+  border:3px solid #000;
+  position:relative;
+  box-shadow:var(--shadow-px);
+}
+.hp-bar .fill{
+  position:absolute;left:0;top:0;bottom:0;
+  background:linear-gradient(90deg,var(--c4),var(--c1));
+  width:var(--hp,80%);
+}
+.hp-bar::after{
+  content:'HP';position:absolute;left:8px;top:50%;transform:translateY(-50%);
+  font-family:'Press Start 2P',monospace;font-size:.55rem;color:#000;
+  text-shadow:1px 1px 0 #fff;
+}
+.stage-card-deco{
+  display:inline-block;padding:8px 16px;
+  background:var(--c3);color:#000;
+  border:3px solid #000;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;
+  letter-spacing:.15em;
+  box-shadow:var(--shadow-px);
+}
+
+/* ===== Cards & Boxes ===== */
+.pixel-box{
+  background:var(--surface);
+  border:3px solid var(--c1);
+  padding:22px 26px;position:relative;
+  box-shadow:var(--shadow-px);
+}
+.pixel-box.c2{border-color:var(--c2)}
+.pixel-box.c3{border-color:var(--c3)}
+.pixel-box.c4{border-color:var(--c4)}
+.pixel-box.c5{border-color:var(--c5)}
+
+.stat-card{
+  background:var(--surface);
+  border:3px solid #000;
+  padding:22px 26px;
+  text-align:center;
+  box-shadow:6px 6px 0 var(--c3);
+  flex:1;min-width:180px;
+}
+.stat-card .n{
+  font-family:'Press Start 2P',monospace;
+  font-size:clamp(2rem,3.5vw,3.2rem);line-height:1;
+  color:var(--c1);
+}
+.stat-card .l{
+  font-size:.95rem;color:var(--dim);margin-top:8px;letter-spacing:.05em;
+}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{
+  display:flex;gap:14px;align-items:flex-start;
+  font-size:clamp(1rem,1.3vw,1.2rem);
+  line-height:1.7;margin-bottom:12px;
+}
+.bullet-list li::before{
+  content:'▶';flex-shrink:0;
+  color:var(--c1);
+  font-family:'Press Start 2P',monospace;font-size:.7rem;
+  margin-top:8px;
+  text-shadow:0 0 8px var(--c1);
+}
+.bullet-list.c2 li::before{color:var(--c2);text-shadow:0 0 8px var(--c2)}
+.bullet-list.c3 li::before{color:var(--c3);text-shadow:0 0 8px var(--c3)}
+.bullet-list.c4 li::before{color:var(--c4);text-shadow:0 0 8px var(--c4)}
+
+.tag{
+  display:inline-block;
+  padding:6px 14px;
+  background:var(--c2);color:#000;
+  border:2px solid #000;
+  font-weight:700;font-size:.9rem;
+  box-shadow:2px 2px 0 #000;
+  margin:4px 6px 4px 0;
+}
+.tag.c1{background:var(--c1);color:#000}
+.tag.c3{background:var(--c3);color:#000}
+.tag.c4{background:var(--c4);color:#000}
+.tag.c5{background:var(--c5);color:#000}
+
+.kbd{
+  display:inline-block;padding:3px 8px;
+  background:#000;color:var(--c2);
+  font-family:'Press Start 2P',monospace;font-size:.65rem;
+  border:1px solid var(--c2);
+}
+
+/* ===== SLIDE 1: COVER ===== */
+.cover{
+  align-items:center;justify-content:center;
+  text-align:center;
+  background:radial-gradient(ellipse at center, #1a1a4e 0%, var(--bg) 70%);
+}
+.cover .badge{
+  display:inline-block;
+  background:var(--c3);color:#000;
+  font-family:'Press Start 2P',monospace;
+  font-size:.85rem;letter-spacing:.2em;
+  padding:10px 18px;margin-bottom:32px;
+  box-shadow:var(--shadow-px);
+}
+.cover h1{
+  font-weight:900;
+  font-size:clamp(3rem,7.5vw,6.5rem);
+  line-height:1.05;margin-bottom:18px;
+  color:var(--c1);letter-spacing:-.03em;
+  text-shadow:0 0 32px rgba(0,229,255,.6),4px 4px 0 #000;
+}
+.cover h1 .accent{
+  color:var(--c2);font-family:'Press Start 2P',monospace;
+  font-size:.45em;display:inline-block;
+  transform:translateY(-12px);margin:0 8px;
+}
+.cover .sub{
+  font-size:clamp(1.1rem,2vw,1.6rem);
+  color:var(--text);margin-bottom:48px;font-weight:500;
+}
+.cover .meta{
+  display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  letter-spacing:.1em;color:var(--dim);
+}
+.cover .meta b{color:var(--c2);font-weight:700}
+.cover-deco{
+  position:absolute;display:flex;gap:18px;
+}
+.cover-deco.tl{top:80px;left:80px}
+.cover-deco.tr{top:80px;right:80px}
+.cover-deco.bl{bottom:80px;left:80px}
+.cover-deco.br{bottom:80px;right:80px}
+
+/* ===== Slide 2: Hook ===== */
+.hook-quote{
+  font-size:clamp(2rem,4.5vw,3.4rem);
+  line-height:1.4;color:var(--text);
+  font-weight:900;
+  max-width:1100px;
+}
+.hook-quote .em{color:var(--c3);font-style:normal}
+
+/* ===== Layout helpers ===== */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:flex-start;flex:1;margin-top:20px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;flex:1;margin-top:20px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:20px}
+.center-content{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+
+/* Pillars */
+.pillar{
+  background:var(--surface);
+  border:3px solid #000;
+  padding:22px 20px;text-align:center;
+  position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--c1));
+}
+.pillar .ico{
+  width:74px;height:74px;
+  background:var(--c,var(--c1));
+  border:3px solid #000;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 12px;font-size:2.2rem;
+  box-shadow:3px 3px 0 #000;
+}
+.pillar .h{
+  font-weight:900;
+  font-size:1.25rem;color:var(--c,var(--c1));margin-bottom:8px;
+}
+.pillar .b{font-size:.95rem;line-height:1.65;color:var(--text)}
+
+/* Formula table */
+.formula-table{
+  width:100%;border-collapse:collapse;
+  background:var(--surface);font-size:clamp(.9rem,1.1vw,1.05rem);
+}
+.formula-table th{
+  background:var(--c1);color:#000;
+  padding:12px 16px;text-align:left;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  border:2px solid #000;letter-spacing:.1em;
+}
+.formula-table td{padding:14px 18px;border:2px solid #000;font-weight:500;color:var(--text)}
+.formula-table tr:nth-child(2n) td{background:var(--panel)}
+.formula-table .big{font-size:1.15em;color:var(--c2);font-weight:900}
+
+/* Scenario card */
+.scenario-fan{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;
+  margin-top:24px;
+}
+.scenario-card{
+  background:var(--surface);
+  border:3px solid var(--c,var(--c1));
+  padding:22px 20px;position:relative;
+  box-shadow:6px 6px 0 #000;
+}
+.scenario-card .num{
+  position:absolute;top:-18px;left:18px;
+  width:38px;height:38px;
+  background:var(--c,var(--c1));color:#000;
+  border:3px solid #000;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  box-shadow:2px 2px 0 #000;
+}
+.scenario-card .icon{font-size:2.2rem;margin-bottom:6px;text-align:center}
+.scenario-card h4{
+  font-weight:900;
+  font-size:1.3rem;color:var(--c,var(--c1));
+  margin:6px 0 10px;
+}
+.scenario-card p{font-size:.95rem;line-height:1.6;color:var(--text)}
+
+/* Compare row */
+.cmp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.cmp-tile{
+  background:var(--surface);
+  border:3px solid #000;
+  padding:18px 14px;text-align:center;
+  position:relative;
+  box-shadow:4px 4px 0 var(--c,var(--c1));
+}
+.cmp-tile.star{background:var(--c2);box-shadow:5px 5px 0 var(--c3);transform:scale(1.06)}
+.cmp-tile .nm{
+  font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--c,var(--c1));margin-bottom:10px;letter-spacing:.05em;
+}
+.cmp-tile.star .nm{color:#000;font-size:.95rem}
+.cmp-tile .when{
+  font-size:.88rem;line-height:1.55;color:var(--text);
+}
+.cmp-tile.star .when{color:#000}
+.cmp-tile .ribbon{
+  position:absolute;top:-12px;right:-8px;
+  background:var(--c3);color:#000;
+  padding:3px 10px;font-size:.7rem;font-weight:700;
+  font-family:'Press Start 2P',monospace;
+  border:2px solid #000;letter-spacing:.05em;
+}
+
+/* Steps */
+.step-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:24px}
+.step-item{
+  background:var(--surface);
+  border:3px solid #000;
+  padding:14px 8px;text-align:center;
+  position:relative;font-size:.85rem;
+  box-shadow:3px 3px 0 var(--c,var(--c1));color:var(--text);
+}
+.step-item .n{
+  font-family:'Press Start 2P',monospace;font-size:1.1rem;
+  color:var(--c,var(--c1));display:block;margin-bottom:6px;
+}
+.step-item .t{font-weight:700;font-size:.88rem;line-height:1.35}
+.step-arrow{
+  position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  font-size:1.4rem;color:var(--c2);z-index:2;
+  text-shadow:0 0 8px var(--c2);
+}
+
+/* Two-side */
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px}
+.side-card{
+  background:var(--surface);
+  border:3px solid var(--c,var(--c4));
+  padding:22px 24px;position:relative;
+  box-shadow:var(--shadow-px);
+}
+.side-card.bad{--c:var(--c3)}
+.side-card .ribbon{
+  position:absolute;top:-14px;left:18px;
+  background:var(--c);color:#000;
+  padding:4px 14px;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;
+  border:2px solid #000;letter-spacing:.05em;
+}
+.side-card h4{
+  font-weight:900;
+  font-size:1.25rem;color:var(--c);margin:8px 0 12px;
+}
+
+/* A2 / 素養 grid */
+.a2-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px;
+}
+.a2-card{
+  background:var(--surface);
+  border:3px solid var(--c,var(--c1));
+  padding:18px 12px;position:relative;
+  box-shadow:5px 5px 0 #000;
+}
+.a2-card .ico{
+  font-size:1.9rem;margin-bottom:6px;
+}
+.a2-card h5{
+  font-size:1rem;color:var(--c,var(--c1));
+  font-weight:900;margin-bottom:6px;
+}
+.a2-card p{font-size:.82rem;line-height:1.5;color:var(--text)}
+
+/* Advice grid */
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.advice-card{
+  background:var(--surface);
+  border:3px solid #000;
+  padding:18px 14px;text-align:center;
+  position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--c3));
+}
+.advice-card .n{
+  font-family:'Press Start 2P',monospace;
+  font-size:1.6rem;color:var(--c,var(--c3));line-height:1;
+}
+.advice-card h5{
+  font-weight:900;
+  font-size:1.05rem;color:var(--text);margin:10px 0 6px;
+}
+.advice-card p{font-size:.82rem;line-height:1.55;color:var(--text)}
+
+/* Closing */
+.closing{
+  align-items:center;justify-content:center;text-align:center;
+  background:radial-gradient(ellipse at center,#1a1a4e 0%,var(--bg) 70%);
+}
+.closing h2{
+  font-weight:900;
+  font-size:clamp(2.5rem,5.5vw,4.8rem);line-height:1.2;
+  color:var(--c1);margin-bottom:24px;letter-spacing:-.02em;
+  text-shadow:0 0 24px rgba(0,229,255,.5),4px 4px 0 #000;
+}
+.closing h2 .em{color:var(--c3)}
+.closing .signoff{
+  font-size:1.2rem;color:var(--dim);margin-bottom:28px;
+}
+.closing .qr-row{display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.closing .url-box{
+  background:var(--surface);border:3px solid var(--c2);
+  padding:14px 22px;
+  font-size:.95rem;color:var(--text);
+  box-shadow:var(--shadow-px);text-align:center;
+}
+.closing .url-box b{color:var(--c1);font-family:'Press Start 2P',monospace;font-size:.7rem;letter-spacing:.05em}
+
+/* ===== Animations ===== */
+@keyframes pop{
+  0%{transform:scale(.3);opacity:0}
+  60%{transform:scale(1.05)}
+  100%{transform:scale(1);opacity:1}
+}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+/* ===== Responsive ===== */
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .three-col,.cmp-row,.a2-grid,.advice-grid,.step-row{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+  .cover-deco{display:none}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="coin">$</div><div class="pixel-heart"></div></div>
+  <div class="cover-deco tr"><div class="hp-bar"><div class="fill" style="--hp:85%"></div></div></div>
+  <div class="cover-deco bl"><div class="stage-card-deco">STAGE 1 START</div></div>
+  <div class="cover-deco br"><div class="coin">M</div><div class="pixel-heart"></div></div>
+
+  <span class="badge slide-up">六年級資訊科技 · GRADE 6 · IT CLASS</span>
+  <h1 class="slide-up d1">AI 音樂創作師<span class="accent">×</span>畢業歌</h1>
+  <p class="sub slide-up d2">用 Gemini 寫歌詞 · 生音樂 · <span class="accent-c3"><b>做出屬於你的畢業神曲</b></span></p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b></span>
+    <span>桃園市石門國小</span>
+    <span>5 大關卡 · 一節課完成</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div style="margin-top:14vh">
+    <p class="eyebrow pop-in">畢業前夕，你想留下什麼？</p>
+    <p class="hook-quote pop-in d1">
+      你可以打開 YouTube 找一首畢業歌，<br>
+      也可以——<span class="em">自己寫一首</span>，<br>
+      <span class="em">讓 AI 唱給全班聽</span>。
+    </p>
+    <p class="lead slide-up d2" style="margin-top:28px;font-size:1.2rem">
+      今天我們不是「聽歌」，<br>
+      <span style="color:var(--c1);font-weight:900">是當一個 AI 音樂創作師：你下指令、AI 出作品，你是導演。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎤</div>
+    <div class="bubble">嘿，六年級的同學！今天這節課結束，你就會擁有一首「世界上只有你有」的畢業歌。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT WILL YOU MAKE ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 目標 / GOAL</span>
+  <p class="eyebrow slide-up">今天要完成什麼？</p>
+  <h2 class="title-lg slide-up d1">一首 <span class="accent-c2">30 秒</span> 的畢業音樂影片</h2>
+  <div class="two-col">
+    <div class="pixel-box slide-up d2">
+      <p class="lead" style="margin-bottom:14px">
+        🎼 <b>歌詞</b>：Gemini 幫你寫 4-6 行<br>
+        🎵 <b>音樂</b>：Lyria 3 生成 30 秒旋律<br>
+        🖼 <b>圖片</b>：3-5 張照片或 AI 畫的圖<br>
+        🎬 <b>影片</b>：Canva 串接、加轉場、出 MP4
+      </p>
+      <p class="lead" style="font-size:1rem;color:var(--dim)">
+        全部你自己完成，<b>不寫程式、不用樂器</b>——你只需要會打字。
+      </p>
+    </div>
+    <div class="flex-row slide-up d2" style="margin:0">
+      <div class="stat-card pop-in d3">
+        <div class="n">30s</div>
+        <div class="l">音樂長度<br>（免費版）</div>
+      </div>
+      <div class="stat-card pop-in d4" style="box-shadow:6px 6px 0 var(--c4)">
+        <div class="n" style="color:var(--c4)">5</div>
+        <div class="l">關卡<br>STAGE</div>
+      </div>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:24px;color:var(--dim);text-align:center">
+    🎯 一節課後，每個人都會帶著一支 <b class="accent-c1">MP4 畢業神曲</b> 回家。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎯</div>
+    <div class="bubble">這不是練習題，<b>是真的作品</b>。下課後你可以分享給爸媽、傳給班導、留到畢業典禮播。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — WHY AI WORKS ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 原理 / WHY</span>
+  <p class="eyebrow slide-up">為什麼 AI 寫歌會這麼神？</p>
+  <h2 class="title-md slide-up d1">三件你 7 年來沒辦法靠自己做到的事，<br>AI <span class="accent-c3">5 分鐘就幫你搞定</span>。</h2>
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">✍️</div>
+      <div class="h">會寫詞</div>
+      <p class="b">Gemini 讀過全世界的歌詞、詩、散文。你給情緒，<b>它把字找出來</b>。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🎹</div>
+      <div class="h">會作曲</div>
+      <p class="b">Lyria 3 是 Google 的音樂 AI，看過幾百萬首歌。你描述風格，<b>它編出旋律</b>。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c4)">
+      <div class="ico">🎤</div>
+      <div class="h">會唱歌</div>
+      <p class="b">在歌詞前加 <b>Lyrics:</b>，AI 就會用合成人聲<b>把它唱出來</b>，不是只有伴奏。</p>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:24px;color:var(--dim);text-align:center">
+    所以你不需要學鋼琴、不需要學音樂理論。<br>
+    你只需要學一件事：<b class="accent-c2">怎麼把心裡的感覺用文字描述出來。</b>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🤖</div>
+    <div class="bubble">AI 不會取代有想法的人，AI 只會放大「<b>會描述想法</b>」的人的能力。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — PROMPT FORMULA ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 提示詞 / PROMPT</span>
+  <p class="eyebrow slide-up">STAGE 1 ─ 怎麼跟 AI 講話？</p>
+  <h2 class="title-md slide-up d1">黃金提示詞公式：<span class="accent-c2">主題 + 風格 + 情緒 + 結構</span></h2>
+
+  <div class="two-col" style="grid-template-columns:1.3fr 1fr">
+    <div class="slide-up d2">
+      <table class="formula-table">
+        <thead><tr><th>要素</th><th>例子</th></tr></thead>
+        <tbody>
+          <tr><td>🎯 主題</td><td class="big">感謝老師與同學</td></tr>
+          <tr><td>🎸 曲風</td><td class="big">鋼琴流行（Pop Ballad）</td></tr>
+          <tr><td>💛 情緒</td><td class="big">溫暖感謝、充滿希望</td></tr>
+          <tr><td>📝 結構</td><td class="big">兩段主歌、一段副歌</td></tr>
+        </tbody>
+      </table>
+      <p class="lead" style="margin-top:16px;font-size:1rem">
+        把這四件事填好，組合成<b class="accent-c1">一句話</b>，貼給 Gemini。
+      </p>
+    </div>
+    <div class="pixel-box c3 slide-up d2">
+      <h3 class="title-md" style="font-size:1.4rem;color:var(--c3);margin-bottom:12px">⚠️ 反例</h3>
+      <p class="lead" style="font-size:1rem">
+        ❌ 「<i>寫一首歌</i>」<br>
+        ❌ 「<i>幫我寫畢業歌</i>」<br>
+      </p>
+      <p class="lead" style="font-size:1rem;margin-top:12px;color:var(--dim)">
+        指令越模糊，AI 給的東西越平淡。<br>
+        <b style="color:var(--c2)">指令越具體，AI 越知道你要什麼。</b>
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📝</div>
+    <div class="bubble">記住一個小秘密：<b>AI 不會讀心術</b>。你越會描述，它越能幫你。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — IMAGE STYLE ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · 圖片 / IMAGE</span>
+  <p class="eyebrow slide-up">STAGE 2 ─ 圖片是另一種提示詞</p>
+  <h2 class="title-md slide-up d1">顏色 ＝ 情緒。<br>你上傳什麼圖，AI 就<span class="accent-c3">用那個情緒寫音樂</span>。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c2)">
+      <div class="ico">☀️</div>
+      <div class="h">暖色系</div>
+      <p class="b">夕陽橘 / 黃色光線<br>→ <b>歡快、感人、溫暖</b><br><span style="color:var(--dim);font-size:.85rem">適合：寫給朋友的歌</span></p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c1)">
+      <div class="ico">🌊</div>
+      <div class="h">冷色系</div>
+      <p class="b">藍天 / 海洋 / 雨景<br>→ <b>抒情、深沉、思念</b><br><span style="color:var(--dim);font-size:.85rem">適合：捨不得離開的歌</span></p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c5)">
+      <div class="ico">⚫</div>
+      <div class="h">高對比</div>
+      <p class="b">黑白 / 強烈對比<br>→ <b>節奏感強、有戲劇感</b><br><span style="color:var(--dim);font-size:.85rem">適合：搖滾、嘻哈風</span></p>
+    </div>
+  </div>
+  <div class="pixel-box c4 slide-up d2" style="margin-top:24px">
+    <p class="lead" style="font-size:1.05rem">
+      💡 <b>小技巧</b>：手邊沒有合適的照片？<br>
+      可以叫 Gemini <b class="accent-c4">畫一張</b>給你！例如：<br>
+      <span style="font-family:monospace;color:var(--c2)">「畫一張溫暖的國小畢業典禮插圖，藍天白雲，學生們快樂揮手」</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎨</div>
+    <div class="bubble">想讓音樂更歡樂，選<b>暖色</b>；想讓音樂更深情，選<b>夕陽或藍色</b>。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — 5 STEPS ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 流程 / WORKFLOW</span>
+  <p class="eyebrow slide-up">STAGE 3 ─ Gemini 生成音樂 5 步驟</p>
+  <h2 class="title-md slide-up d1">把這 5 步背下來，<span class="accent-c2">回家就能自己做</span>。</h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c1)"><span class="n">1</span><span class="t">登入 Gemini<br>(學校帳號)</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d1" style="--c:var(--c2)"><span class="n">2</span><span class="t">輸入提示詞<br>+ Lyrics:</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c3)"><span class="n">3</span><span class="t">上傳圖片<br>引導風格</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c4)"><span class="n">4</span><span class="t">按生成<br>等 10-20 秒</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c5)"><span class="n">5</span><span class="t">下載 mp3<br>或 wav</span></div>
+  </div>
+
+  <div class="two-col slide-up d2">
+    <div class="pixel-box c3">
+      <h3 style="font-weight:900;color:var(--c3);font-size:1.2rem;margin-bottom:10px">🔑 關鍵字訣</h3>
+      <p class="lead" style="font-size:1rem">
+        歌詞前一定要加 <b style="font-family:monospace;color:var(--c2)">Lyrics:</b><br>
+        否則 AI 只會做<b>背景音樂</b>，不會「唱出來」！<br>
+        <span style="color:var(--dim);font-size:.9rem">想要純伴奏？加「<b>純器樂演奏</b>」四個字。</span>
+      </p>
+    </div>
+    <div class="pixel-box c4">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">💡 試聽小技巧</h3>
+      <p class="lead" style="font-size:1rem">
+        生成完<b>先試聽一遍</b>，覺得不對再修提示詞重生成。<br>
+        <b class="accent-c2">最好的版本，通常是第 2-3 次生成的</b>。
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚡</div>
+    <div class="bubble">Lyrics: 這四個英文字 + 冒號就是<b>讓 AI 開口唱歌的咒語</b>，背起來！</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — CANVA TIMELINE ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 影片 / VIDEO</span>
+  <p class="eyebrow slide-up">STAGE 4 ─ 用 Canva 串成影片</p>
+  <h2 class="title-md slide-up d1">把音樂 + 照片變成 <span class="accent-c3">30 秒 MP4</span> 完整作品</h2>
+
+  <div class="scenario-fan">
+    <div class="scenario-card pop-in d1" style="--c:var(--c1)">
+      <div class="num">1</div>
+      <div class="icon">🎬</div>
+      <h4>新增影片</h4>
+      <p>canva.com → 影片 → 空白 16:9 比例</p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--c2)">
+      <div class="num">2</div>
+      <div class="icon">🖼</div>
+      <h4>排照片</h4>
+      <p>拖曳 3-5 張照片到時間軸，每張 3-5 秒</p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--c4)">
+      <div class="num">3</div>
+      <div class="icon">✨</div>
+      <h4>加轉場</h4>
+      <p>點兩張照片中間的 <b style="color:var(--c3)">+</b> 號 → 選效果</p>
+    </div>
+  </div>
+
+  <div class="two-col slide-up d2" style="margin-top:24px">
+    <div class="pixel-box">
+      <h3 style="font-weight:900;color:var(--c1);font-size:1.15rem;margin-bottom:10px">🎵 加入音樂</h3>
+      <p class="lead" style="font-size:.95rem">
+        時間軸下方「<b>+ 音訊</b>」→ 上傳 Gemini 下載的 mp3<br>
+        拖曳對齊照片，<b class="accent-c2">音樂長度配 30 秒</b>。
+      </p>
+    </div>
+    <div class="pixel-box c2">
+      <h3 style="font-weight:900;color:var(--c2);font-size:1.15rem;margin-bottom:10px">💾 輸出 MP4</h3>
+      <p class="lead" style="font-size:.95rem">
+        右上「分享」→「下載」→ 格式選 <b class="accent-c3">MP4</b><br>
+        就可以傳給家人、放畢業典禮、上傳 YouTube。
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎞</div>
+    <div class="bubble">時間軸建議：0-3 秒封面 → 3-18 秒歌詞畫面 → 18-25 秒高潮 → 25-30 秒結尾字卡。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — AI ETHICS ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 倫理 / ETHICS</span>
+  <p class="eyebrow slide-up">STAGE 5 ─ AI 倫理與著作權</p>
+  <h2 class="title-md slide-up d1">AI 給你超能力，<br>但<span class="accent-c3">能力越大，責任越大</span>。</h2>
+
+  <div class="three-col">
+    <div class="pixel-box pop-in d1">
+      <h3 style="font-weight:900;color:var(--c1);font-size:1.2rem;margin-bottom:10px">✅ 可以做</h3>
+      <ul class="bullet-list" style="font-size:.95rem">
+        <li>用在學校作業、班級欣賞</li>
+        <li>送給家人、傳給朋友</li>
+        <li>說「這是我用 AI 做的」</li>
+      </ul>
+    </div>
+    <div class="pixel-box c3 pop-in d2">
+      <h3 style="font-weight:900;color:var(--c3);font-size:1.2rem;margin-bottom:10px">❌ 不可以</h3>
+      <ul class="bullet-list c3" style="font-size:.95rem">
+        <li>拿去賣錢、商業使用</li>
+        <li>說「這是我原創的」騙人</li>
+        <li>偷放同學照片不告知</li>
+      </ul>
+    </div>
+    <div class="pixel-box c4 pop-in d3">
+      <h3 style="font-weight:900;color:var(--c4);font-size:1.2rem;margin-bottom:10px">🤝 要先問</h3>
+      <ul class="bullet-list c4" style="font-size:.95rem">
+        <li>用到同學照片 → <b>問本人</b></li>
+        <li>要分享到網路 → <b>告知大家</b></li>
+        <li>有人不想入鏡 → <b>尊重</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="pixel-box c2 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.15rem">
+      💡 記住：你是<b class="accent-c2">「AI 的導演」</b>，不是「AI 的複製機」。<br>
+      <span style="font-size:1rem;color:var(--dim)">有創意的提示詞 ＋ 負責任的使用 ＝ 真正的 AI 音樂創作師。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛡</div>
+    <div class="bubble">能用 AI 不代表「<b>什麼都可以做</b>」。會用 AI、也<b>會尊重別人</b>，才是高手。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — COMPARE ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">為什麼選 Gemini？</p>
+  <h2 class="title-md slide-up d1">市面上的 AI 音樂工具，<br>各有<span class="accent-c2">最適合的使用時機</span>。</h2>
+
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--c5)">
+      <div class="nm">SUNO</div>
+      <div class="when"><b>完整 2 分鐘歌曲</b><br>要付費、要排隊<br>🎯 認真做專輯</div>
+    </div>
+    <div class="cmp-tile pop-in d2" style="--c:var(--c4)">
+      <div class="nm">UDIO</div>
+      <div class="when"><b>音質最好的 AI</b><br>免費版次數少<br>🎯 比賽用</div>
+    </div>
+    <div class="cmp-tile pop-in d3" style="--c:var(--c3)">
+      <div class="nm">CANVA</div>
+      <div class="when"><b>內建免費音樂庫</b><br>不是生成是套用<br>🎯 沒時間生成時</div>
+    </div>
+    <div class="cmp-tile star pop-in d4">
+      <div class="ribbon">本日主角</div>
+      <div class="nm">GEMINI</div>
+      <div class="when"><b>免費 + 唱出來</b><br>學校帳號可用<br>🎯 課堂教學</div>
+    </div>
+  </div>
+
+  <div class="pixel-box slide-up d2" style="margin-top:28px;text-align:center;border-color:var(--c1)">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--c1);margin-bottom:10px">⚖️ 為什麼今天用 Gemini？</h3>
+    <p class="lead" style="font-size:1.05rem">
+      ① <b>完全免費</b>　② <b>學校帳號就能用</b>　③ <b>會唱出來</b>（Lyrics: 咒語）<br>
+      ④ <b>圖片可以引導風格</b>　⑤ <b>跟 Canva 串接最順</b>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚔️</div>
+    <div class="bubble">每個工具都有強項。<b>選對時機用對工具</b>，才是 AI 時代的真本事。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — TIPS & TRAPS ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 雷區 / TRAPS</span>
+  <p class="eyebrow slide-up">老師見過的常見錯誤</p>
+  <h2 class="title-md slide-up d1">這 4 個雷踩過一次，<br><span class="accent-c3">就要記一輩子</span>。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 對的做法</div>
+      <h4>正確姿勢</h4>
+      <ul class="bullet-list c4" style="font-size:.98rem">
+        <li>提示詞寫滿 <b>主題 + 風格 + 情緒 + 結構</b></li>
+        <li>歌詞前面加 <b>Lyrics:</b></li>
+        <li>圖片色調配合情緒</li>
+        <li>用同學照片<b>先徵求同意</b></li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 常見錯誤</div>
+      <h4>NG 雷區</h4>
+      <ul class="bullet-list c3" style="font-size:.98rem">
+        <li>「寫一首歌」←太模糊 AI 不會</li>
+        <li>忘記加 Lyrics: ←AI 不會唱</li>
+        <li>「模仿周杰倫一模一樣」←版權擋住</li>
+        <li>偷放同學照片 ←別人會生氣</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pixel-box c2 slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--c2);margin-bottom:10px">🎯 老師私房秘訣</h3>
+    <ul class="bullet-list c2" style="font-size:1rem">
+      <li>第一次生成<b>不會是最好的</b> ← 修 2-3 次再決定</li>
+      <li>不滿意旋律？<b>圖片換一張色調</b>，整首歌的感覺會變</li>
+      <li>影片做完，<b>給家人聽一遍</b>，看看他們有沒有感動</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🚧</div>
+    <div class="bubble">這些坑，老師都踩過了。你直接<b>跳過去</b>就好，不用再踩一次。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — COMPETENCY ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / COMPETENCY</span>
+  <p class="eyebrow slide-up">這節課你學到什麼？</p>
+  <h2 class="title-md slide-up d1">不只是「會用 Gemini」，<br>是<span class="accent-c2">這 5 種能力</span>一起練。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🎯</div>
+      <h5>① 提示詞<br>能力</h5>
+      <p>把心裡想的<br>用文字精準描述</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c4)">
+      <div class="ico">🎨</div>
+      <h5>② 美感<br>判斷</h5>
+      <p>選顏色 / 選圖片<br>讓情緒一致</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c2)">
+      <div class="ico">⚙️</div>
+      <h5>③ 工具<br>串接</h5>
+      <p>Gemini → Canva<br>不同工具接起來</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c3)">
+      <div class="ico">🛡</div>
+      <h5>④ AI 倫理<br>判斷</h5>
+      <p>知道什麼可以做<br>什麼要先問</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c5)">
+      <div class="ico">💡</div>
+      <h5>⑤ 創作<br>表達</h5>
+      <p>說出自己的故事<br>讓 AI 幫你呈現</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem;color:var(--text)">
+    💡 <b class="accent-c2">記住：AI 不會取代「有想法的人」</b>。<br>
+    <span style="color:var(--dim)">10 年後你用的 AI 一定跟今天不一樣，但這 5 種能力會跟你一輩子。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">會用 Gemini 不稀奇，<b>會用 Gemini 寫出感動人的歌</b>才稀奇——這是你今天的真本事。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — FINAL ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給未來的 AI 創作者 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">畢業前的最後一節資訊課，<br>老師想送你<span class="accent-c3">這 5 句話</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <h5>先有想法<br>再用工具</h5>
+      <p>AI 是放大器，<br>你心裡要先有東西。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>不要怕<br>修改</h5>
+      <p>第一次永遠不完美，<br>第 5 次才會驚艷。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c4)">
+      <div class="n">03</div>
+      <h5>保持<br>誠實</h5>
+      <p>是 AI 做的就說是 AI，<br><b>誠實的人最帥</b>。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c3)">
+      <div class="n">04</div>
+      <h5>尊重<br>他人</h5>
+      <p>用到別人的東西，<br><b>先問一聲</b>。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>分享<br>感動</h5>
+      <p>做完不要只放硬碟，<br>讓<b>愛你的人</b>聽見。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💝</div>
+    <div class="bubble">這 5 件事不只適用 AI 音樂，<b>適用你未來的每一個創作</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="coin">$</div></div>
+  <div class="cover-deco tr"><div class="pixel-heart"></div></div>
+  <div class="cover-deco bl"><div class="stage-card-deco">CLEAR!</div></div>
+  <div class="cover-deco br"><div class="coin">M</div></div>
+
+  <h2 class="slide-up">畢業歌不一定要花錢買，<br>你<span class="em">自己就能做一首</span>。</h2>
+  <p class="signoff slide-up d1">今天這節課，你已經是 AI 音樂創作師了。</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/gemini-music/</b>
+    </div>
+    <div class="url-box">
+      📚 NotebookLM 筆記本<br>
+      <b>80+ Gemini Lyria 教學來源</b>
+    </div>
+  </div>
+
+  <p style="margin-top:36px;font-family:'Press Start 2P',monospace;color:var(--dim);font-size:.6rem;letter-spacing:.15em">
+    Q&amp;A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Press Start 2P',monospace;color:var(--c3);font-size:.75rem;letter-spacing:.15em">THANK YOU · GAME CLEAR</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- ===== Progress bar ===== -->
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<!-- ===== Hint ===== -->
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<!-- ===== Overview ===== -->
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'AI 音樂創作師 × 畢業歌 · 六年級資訊科技'},
+  {n:2,  t:'開場暖身',       s:'不只聽歌 · 你要當 AI 的導演'},
+  {n:3,  t:'今天要做什麼',   s:'歌詞 + 音樂 + 圖片 + 影片 = 30 秒 MP4'},
+  {n:4,  t:'AI 為什麼神',    s:'會寫詞 · 會作曲 · 會唱歌'},
+  {n:5,  t:'STAGE 1 提示詞', s:'黃金公式：主題 + 風格 + 情緒 + 結構'},
+  {n:6,  t:'STAGE 2 圖片',   s:'顏色 = 情緒 · 暖色 / 冷色 / 高對比'},
+  {n:7,  t:'STAGE 3 生成',   s:'Gemini Lyria 5 步驟 · Lyrics: 咒語'},
+  {n:8,  t:'STAGE 4 Canva',  s:'影片串接 · 加轉場 · 輸出 MP4'},
+  {n:9,  t:'STAGE 5 倫理',   s:'可以做 / 不可以 / 要先問'},
+  {n:10, t:'AI 音樂工具比較', s:'SUNO · UDIO · CANVA · GEMINI'},
+  {n:11, t:'4 個常見雷區',   s:'踩過一次記一輩子的錯誤'},
+  {n:12, t:'5 種素養',       s:'提示詞 · 美感 · 串接 · 倫理 · 表達'},
+  {n:13, t:'5 個叮嚀',       s:'給未來的 AI 創作者'},
+  {n:14, t:'結語 + Q&A',     s:'你已經是 AI 音樂創作師了'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){
+  document.getElementById('overview').classList.toggle('show');
+}
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+// ===== Build overview =====
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{
+    goSlide(i);
+    document.getElementById('overview').classList.remove('show');
+  };
+  ovGrid.appendChild(card);
+});
+
+// ===== Keyboard =====
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight':
+    case 'ArrowDown':
+    case ' ':
+    case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft':
+    case 'ArrowUp':
+    case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+// ===== Click navigation =====
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+// ===== Swipe (mobile) =====
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+// ===== Initial slide from hash =====
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

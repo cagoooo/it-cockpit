@@ -68,6 +68,14 @@ img{max-width:100%;display:block}
 .obj-chip.blue{border-color:var(--c4);color:var(--c4)}
 .obj-chip.purple{border-color:var(--c5);color:var(--c5)}
 
+/* Lecture CTA */
+.lecture-cta{display:block;margin:18px 0 0;padding:18px 22px;background:var(--panel);color:var(--text);border:3px solid var(--border);box-shadow:6px 6px 0 var(--c1);text-decoration:none;transition:.2s;border-radius:12px;position:relative}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--c1)}
+.lecture-cta:active{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--c1)}
+.lecture-cta .cta-tag{display:inline-block;background:var(--c1);color:#fff;font-size:.8rem;padding:3px 10px;border:2px solid var(--border);margin-bottom:8px;font-weight:700;letter-spacing:.05em}
+.lecture-cta .cta-title{display:block;font-size:1.4rem;font-weight:900;margin-bottom:4px;color:var(--text)}
+.lecture-cta .cta-sub{display:block;font-size:.9rem;color:var(--dim);line-height:1.5}
+
 /* Stage nav pills */
 .stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow-soft)}
 .stage-pill{padding:10px 20px;background:var(--panel);border:2px solid var(--border);border-radius:24px;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s;color:var(--text);display:inline-flex;align-items:center;gap:6px}
@@ -297,6 +305,11 @@ body.teacher-mode .teacher-only{display:block}
       <span class="obj-chip blue">📰 事實查核網站</span>
       <span class="obj-chip purple">🤖 與 AI 相處守則</span>
     </div>
+    <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+      <span class="cta-tag">老師上課用 ⮕</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張投影片 · comic-soft 漫畫風 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+    </a>
   </section>
 
   <!-- 關卡導覽 -->

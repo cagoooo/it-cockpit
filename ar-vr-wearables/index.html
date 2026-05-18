@@ -752,6 +752,19 @@ footer a:hover{color:var(--c2);}
   .price-row{grid-template-columns:110px 1fr 90px;}
   .price-row .name{font-size:.85rem;}
 }
+
+/* ═══ 演講簡報模式 CTA ═══ */
+.lecture-cta{display:block;margin:20px 0 8px;padding:18px 22px;
+  background:var(--surface);color:var(--text);border:2px solid var(--c1);
+  box-shadow:0 0 12px var(--c1),0 0 24px rgba(0,255,136,.3);
+  text-decoration:none;transition:.2s;
+  font-family:'JetBrains Mono','Noto Sans TC',sans-serif}
+.lecture-cta:hover{box-shadow:0 0 20px var(--c1),0 0 40px var(--c1);transform:translateY(-2px)}
+.lecture-cta .cta-tag{display:inline-block;background:var(--c1);color:#000;
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;
+  padding:3px 10px;margin-bottom:8px;letter-spacing:.05em}
+.lecture-cta .cta-title{display:block;font-size:1.3rem;font-weight:900;margin-bottom:4px;color:var(--c1);text-shadow:0 0 6px var(--c1)}
+.lecture-cta .cta-sub{display:block;font-size:.85rem;color:var(--dim);line-height:1.5}
 </style>
 </head>
 <body>
@@ -789,6 +802,11 @@ footer a:hover{color:var(--c2);}
       <span class="obj-chip"><span class="ico">👀</span>視力保健 eye 眼 6 原則</span>
       <span class="obj-chip"><span class="ico">💡</span>發明自己的 AR/VR 眼鏡</span>
     </div>
+    <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+      <span class="cta-tag">&gt; 老師上課用 _</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+    </a>
   </div>
 </section>
 

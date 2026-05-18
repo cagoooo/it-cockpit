@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>麥昆小車程式設計師｜阿凱老師 neon-tech 演講簡報</title>
+<meta name="description" content="阿凱老師｜六年級資訊科技 · MakeCode 積木 × micro:bit + 麥昆智能小車 · neon-tech 霓虹科技風 · 14 張投影片">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#0a0a1e; --surface:#111130; --panel:#1a1a40;
+  --c1:#00ff88; --c2:#0088ff; --c3:#aa44ff; --c4:#ffcc00; --c5:#ff4081;
+  --text:#e0f0ff; --dim:#5060a0;
+  --shadow-glow:0 0 12px var(--c1);
+}
+body{
+  font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.6;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,255,136,.10), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(0,136,255,.08), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(170,68,255,.05), transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 40px, rgba(80,96,160,.03) 40px, rgba(80,96,160,.03) 41px);
+  user-select:none;
+  -webkit-font-smoothing:antialiased;
+}
+.code-font{font-family:'JetBrains Mono',monospace}
+
+/* 矩陣雨 */
+.matrix-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;opacity:.32}
+@keyframes matrixRain{from{transform:translateY(-110vh)}to{transform:translateY(110vh)}}
+.matrix-col{
+  position:absolute;top:0;width:14px;color:var(--c1);
+  font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.1;opacity:.55;
+  animation:matrixRain linear infinite;text-shadow:0 0 8px var(--c1);
+  white-space:pre-line;letter-spacing:1px;
+}
+
+.deck{position:fixed;inset:0;overflow:hidden;z-index:1}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+  padding:5vh 6vw;opacity:0;transition:opacity .4s}
+.slide.active{display:flex;opacity:1}
+
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--c1) 0%,var(--c2) 50%,var(--c4) 100%);
+  box-shadow:0 0 16px var(--c1)}
+.slide-num{position:absolute;bottom:18px;right:32px;
+  font-family:'JetBrains Mono',monospace;font-size:.95rem;
+  color:var(--c1);letter-spacing:.15em;z-index:5;text-shadow:0 0 8px var(--c1)}
+.slide-title-tag{position:absolute;top:24px;left:32px;
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.18em;
+  color:var(--c1);padding:4px 12px;border:1.5px solid var(--c1);
+  background:rgba(0,255,136,.06);box-shadow:0 0 8px var(--c1);z-index:5;text-transform:uppercase}
+.slide-title-tag.c2{color:var(--c2);border-color:var(--c2);box-shadow:0 0 8px var(--c2)}
+.slide-title-tag.c3{color:var(--c3);border-color:var(--c3);box-shadow:0 0 8px var(--c3)}
+.slide-title-tag.c4{color:var(--c4);border-color:var(--c4);box-shadow:0 0 8px var(--c4)}
+.slide-title-tag.c5{color:var(--c5);border-color:var(--c5);box-shadow:0 0 8px var(--c5)}
+
+.title-lg{font-weight:900;font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.1;color:var(--c1);
+  text-shadow:0 0 10px var(--c1);font-family:'JetBrains Mono','Noto Sans TC',sans-serif}
+.title-md{font-weight:900;font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.2;color:var(--text)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:1rem;letter-spacing:.18em;
+  color:var(--c1);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:14px;
+  text-shadow:0 0 6px var(--c1)}
+.eyebrow::before{content:'> ';font-weight:700;color:var(--c1)}
+.eyebrow::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--c1),transparent);max-width:240px;box-shadow:0 0 6px var(--c1)}
+.eyebrow.c2{color:var(--c2);text-shadow:0 0 6px var(--c2)}
+.eyebrow.c2::before{color:var(--c2)}
+.eyebrow.c2::after{background:linear-gradient(90deg,var(--c2),transparent);box-shadow:0 0 6px var(--c2)}
+.eyebrow.c3{color:var(--c3);text-shadow:0 0 6px var(--c3)}
+.eyebrow.c3::before{color:var(--c3)}
+.eyebrow.c3::after{background:linear-gradient(90deg,var(--c3),transparent);box-shadow:0 0 6px var(--c3)}
+.eyebrow.c4{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+.eyebrow.c4::before{color:var(--c4)}
+.eyebrow.c4::after{background:linear-gradient(90deg,var(--c4),transparent);box-shadow:0 0 6px var(--c4)}
+.lead{font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--c1);font-weight:800}
+.accent-c1{color:var(--c1)}.accent-c2{color:var(--c2)}.accent-c3{color:var(--c3)}
+.accent-c4{color:var(--c4)}.accent-c5{color:var(--c5)}
+
+/* 主講者 - 終端機綠字 */
+.speaker{position:absolute;bottom:28px;left:32px;display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:55%}
+.speaker .avatar{width:60px;height:60px;flex-shrink:0;background:#000;
+  border:2px solid var(--c1);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;box-shadow:0 0 12px var(--c1),inset 0 0 8px rgba(0,255,136,.2)}
+.speaker .bubble{background:#000;border:2px solid var(--c1);
+  font-family:'JetBrains Mono',monospace;color:var(--c1);
+  padding:10px 16px;font-size:.95rem;font-weight:500;line-height:1.5;
+  position:relative;max-width:520px;
+  box-shadow:0 0 12px var(--c1),inset 0 0 6px rgba(0,255,136,.15)}
+.speaker .bubble::before{content:'> ';color:var(--c1)}
+.speaker .bubble::after{content:'▊';animation:cursorBlink 1s infinite;margin-left:4px;color:var(--c1)}
+@keyframes cursorBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.speaker .bubble b{color:var(--c4)}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:4px;background:rgba(255,255,255,.05);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .4s;box-shadow:0 0 10px var(--c1)}
+
+.hint{position:fixed;top:14px;right:24px;z-index:99;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+  color:var(--c1);background:rgba(0,0,0,.6);border:1px solid var(--c1);
+  box-shadow:0 0 8px var(--c1);padding:5px 12px;pointer-events:none;opacity:.85}
+.kbd{display:inline-block;padding:1px 6px;background:var(--c1);color:#000;
+  font-family:'JetBrains Mono',monospace;font-size:.85em;font-weight:700;border-radius:2px;margin:0 2px}
+
+.overview{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;padding:32px;
+  overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-family:'JetBrains Mono',monospace;color:var(--c1);font-size:1.4rem;margin-bottom:18px;
+  letter-spacing:.08em;text-shadow:0 0 8px var(--c1)}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.ov-card{background:var(--surface);border:2px solid var(--c1);padding:14px 16px;cursor:pointer;
+  transition:.18s;position:relative;box-shadow:0 0 8px rgba(0,255,136,.3)}
+.ov-card:hover{box-shadow:0 0 16px var(--c1);transform:translateY(-2px)}
+.ov-card .num{position:absolute;top:6px;right:10px;font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;color:var(--c4);font-weight:700}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--c1);margin-bottom:4px}
+.ov-card .s{font-size:.82rem;color:var(--dim);line-height:1.5}
+
+/* === neon-tech 元素 === */
+.terminal{background:#000;border:2px solid var(--c1);color:var(--c1);
+  font-family:'JetBrains Mono',monospace;padding:14px 18px;font-size:1rem;
+  box-shadow:0 0 16px var(--c1),inset 0 0 8px rgba(0,255,136,.18);
+  position:relative;line-height:1.75;letter-spacing:.02em}
+.terminal::before{content:'> ';color:var(--c1)}
+.terminal.c2{border-color:var(--c2);color:var(--c2);box-shadow:0 0 16px var(--c2),inset 0 0 8px rgba(0,136,255,.18)}
+.terminal.c2::before{color:var(--c2)}
+.terminal.c4{border-color:var(--c4);color:var(--c4);box-shadow:0 0 16px var(--c4),inset 0 0 8px rgba(255,204,0,.18)}
+.terminal.c4::before{color:var(--c4)}
+
+.neon-card{background:var(--surface);border:2px solid var(--c1);padding:22px 24px;
+  box-shadow:0 0 8px var(--c1),0 0 16px rgba(0,255,136,.2),inset 0 0 6px rgba(0,255,136,.1)}
+.neon-card.c2{border-color:var(--c2);box-shadow:0 0 8px var(--c2),0 0 16px rgba(0,136,255,.2)}
+.neon-card.c3{border-color:var(--c3);box-shadow:0 0 8px var(--c3),0 0 16px rgba(170,68,255,.2)}
+.neon-card.c4{border-color:var(--c4);box-shadow:0 0 8px var(--c4),0 0 16px rgba(255,204,0,.2)}
+.neon-card.c5{border-color:var(--c5);box-shadow:0 0 8px var(--c5),0 0 16px rgba(255,64,129,.2)}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 8px var(--c1),0 0 16px rgba(0,255,136,.3)}
+  50%{box-shadow:0 0 24px var(--c1),0 0 48px var(--c1)}}
+.neon-glow{animation:pulse 2.5s ease-in-out infinite}
+
+/* 程式碼積木視覺（MakeCode 風） */
+.code-block-stack{display:flex;flex-direction:column;gap:6px;font-family:'JetBrains Mono',monospace}
+.code-blk{padding:10px 16px;border:2px solid #000;font-size:.92rem;font-weight:700;
+  box-shadow:0 0 8px rgba(0,255,136,.3),3px 3px 0 rgba(0,0,0,.4);position:relative;
+  color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.4)}
+.code-blk.event{background:#FFBF00;color:#333;text-shadow:none}
+.code-blk.loop{background:#FFAB19;color:#333;text-shadow:none}
+.code-blk.basic{background:#1E90FF}
+.code-blk.motor{background:#22b573}
+.code-blk.if{background:#FFAB19;color:#333;text-shadow:none}
+.code-blk.var{background:#FF8C1A}
+.code-blk.sensor{background:#5CB1D6;color:#000;text-shadow:none}
+
+/* 機器人 ASCII 風 */
+.robot-ascii{font-family:'JetBrains Mono',monospace;color:var(--c1);
+  text-shadow:0 0 8px var(--c1);font-size:.85rem;line-height:1.2;white-space:pre}
+
+.qr-deco{display:grid;grid-template-columns:repeat(8,8px);gap:2px;width:auto}
+.qr-deco span{width:8px;height:8px;background:var(--c1);box-shadow:0 0 4px var(--c1);opacity:var(--o,.8)}
+
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px;align-items:start}
+
+/* Pillar */
+.pillar{background:var(--surface);border:2px solid var(--c,var(--c1));padding:22px 20px;text-align:center;
+  position:relative;box-shadow:0 0 10px var(--c,var(--c1))}
+.pillar .ico{width:72px;height:72px;background:var(--c,var(--c1));color:#000;
+  border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;font-size:2.2rem;box-shadow:0 0 12px var(--c,var(--c1))}
+.pillar .h{font-weight:900;font-size:1.3rem;color:var(--c,var(--c1));margin-bottom:10px;
+  text-shadow:0 0 6px var(--c,var(--c1))}
+.pillar .b{font-size:.98rem;line-height:1.6;color:var(--text)}
+
+/* 8 關卡 grid */
+.stage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.stage-card{background:var(--surface);border:2px solid var(--c,var(--c1));padding:16px 14px;text-align:center;
+  position:relative;box-shadow:0 0 10px var(--c,var(--c1))}
+.stage-card .num{position:absolute;top:6px;right:10px;font-family:'JetBrains Mono',monospace;
+  font-size:1.2rem;color:var(--c,var(--c1));font-weight:800;text-shadow:0 0 6px var(--c,var(--c1))}
+.stage-card .ico{font-size:2rem;margin-bottom:8px;display:block}
+.stage-card .h{font-weight:900;font-size:1rem;color:var(--c,var(--c1));margin-bottom:4px;
+  text-shadow:0 0 5px var(--c,var(--c1))}
+.stage-card .b{font-size:.82rem;line-height:1.5;color:var(--dim)}
+
+/* 步驟 */
+.step-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:24px}
+.step-item{background:var(--surface);border:2px solid var(--c,var(--c1));padding:14px 8px;text-align:center;
+  position:relative;font-size:.85rem;box-shadow:0 0 8px var(--c,var(--c1))}
+.step-item .n{font-family:'JetBrains Mono',monospace;font-size:1.7rem;color:var(--c,var(--c1));
+  display:block;margin-bottom:4px;font-weight:800;text-shadow:0 0 6px var(--c,var(--c1))}
+.step-item .t{font-weight:600;font-size:.82rem;line-height:1.3;color:var(--text)}
+.step-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+  font-size:1.3rem;color:var(--c4);z-index:2;text-shadow:0 0 6px var(--c4)}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:1rem;line-height:1.65;margin-bottom:10px}
+.bullet-list li::before{content:'▸';flex-shrink:0;color:var(--c1);font-weight:700;font-size:1.1em;text-shadow:0 0 6px var(--c1)}
+.bullet-list.c2 li::before{color:var(--c2);text-shadow:0 0 6px var(--c2)}
+.bullet-list.c4 li::before{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+
+.tag{display:inline-block;padding:4px 12px;background:rgba(0,255,136,.12);border:1.5px solid var(--c1);
+  color:var(--c1);font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;margin:3px 5px 3px 0;
+  letter-spacing:.04em;text-shadow:0 0 4px var(--c1)}
+.tag.c2{background:rgba(0,136,255,.12);border-color:var(--c2);color:var(--c2);text-shadow:0 0 4px var(--c2)}
+.tag.c3{background:rgba(170,68,255,.12);border-color:var(--c3);color:var(--c3);text-shadow:0 0 4px var(--c3)}
+.tag.c4{background:rgba(255,204,0,.12);border-color:var(--c4);color:var(--c4);text-shadow:0 0 4px var(--c4)}
+.tag.c5{background:rgba(255,64,129,.12);border-color:var(--c5);color:var(--c5);text-shadow:0 0 4px var(--c5)}
+
+/* a2 grid */
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.a2-card{background:var(--surface);border:2px solid var(--c,var(--c1));padding:18px 14px;
+  box-shadow:0 0 10px var(--c,var(--c1))}
+.a2-card .ico{font-size:1.9rem;margin-bottom:8px}
+.a2-card h5{font-size:1.02rem;color:var(--c,var(--c1));font-weight:900;margin-bottom:8px;line-height:1.3;
+  text-shadow:0 0 5px var(--c,var(--c1))}
+.a2-card p{font-size:.85rem;line-height:1.55}
+
+/* advice */
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.advice-card{background:var(--surface);border:2px solid var(--c,var(--c1));padding:18px 14px;text-align:center;
+  box-shadow:0 0 10px var(--c,var(--c1))}
+.advice-card .n{font-family:'JetBrains Mono',monospace;font-size:2.6rem;color:var(--c,var(--c1));line-height:1;
+  font-weight:800;text-shadow:0 0 8px var(--c,var(--c1))}
+.advice-card h5{font-weight:900;font-size:1.05rem;color:var(--text);margin:10px 0 8px;line-height:1.3}
+.advice-card p{font-size:.85rem;line-height:1.55;color:var(--dim)}
+
+/* 雙面 */
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
+.side-card{background:var(--surface);border:2px solid var(--c,var(--c1));padding:22px 24px;position:relative;
+  box-shadow:0 0 10px var(--c,var(--c1))}
+.side-card .ribbon{position:absolute;top:-14px;left:16px;background:var(--c,var(--c1));color:#000;
+  padding:3px 14px;font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700}
+.side-card h4{font-weight:900;font-size:1.3rem;color:var(--c,var(--c1));margin:6px 0 12px;
+  text-shadow:0 0 6px var(--c,var(--c1))}
+
+/* 封面 */
+.cover{align-items:center;justify-content:center;text-align:center}
+.cover .badge{display:inline-block;background:transparent;border:2px solid var(--c1);
+  color:var(--c1);font-family:'JetBrains Mono',monospace;font-size:1rem;letter-spacing:.18em;
+  padding:8px 18px;margin-bottom:32px;box-shadow:0 0 12px var(--c1);text-transform:uppercase}
+.cover h1{font-family:'JetBrains Mono','Noto Sans TC',sans-serif;font-weight:900;
+  font-size:clamp(3rem,7vw,6rem);line-height:1.05;margin-bottom:20px;color:var(--c1);
+  letter-spacing:-.02em;text-shadow:0 0 16px var(--c1),0 0 32px rgba(0,255,136,.5)}
+.cover h1 .accent{color:var(--c4);text-shadow:0 0 12px var(--c4)}
+.cover h1 .accent2{color:var(--c2);text-shadow:0 0 12px var(--c2)}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.6rem);color:var(--text);margin-bottom:40px;font-weight:500;line-height:1.6}
+.cover .sub b{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+.cover .meta{display:flex;gap:42px;align-items:center;flex-wrap:wrap;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--dim);letter-spacing:.04em}
+.cover .meta b{color:var(--c1);text-shadow:0 0 4px var(--c1)}
+.cover-deco{position:absolute;display:flex;gap:14px;align-items:center}
+.cover-deco.tl{top:64px;left:64px}
+.cover-deco.tr{top:64px;right:64px}
+.cover-deco.bl{bottom:60px;left:64px}
+.cover-deco.br{bottom:60px;right:64px}
+
+.hook-quote{font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.4;color:var(--text);font-weight:700;
+  max-width:1200px;font-family:'JetBrains Mono','Noto Sans TC',sans-serif}
+.hook-quote .em{color:var(--c1);text-shadow:0 0 8px var(--c1)}
+.hook-quote .em2{color:var(--c4);text-shadow:0 0 8px var(--c4)}
+.hook-quote .em3{color:var(--c2);text-shadow:0 0 8px var(--c2)}
+
+.closing{align-items:center;justify-content:center;text-align:center}
+.closing h2{font-family:'JetBrains Mono','Noto Sans TC',sans-serif;font-weight:900;
+  font-size:clamp(2.5rem,5vw,4.5rem);line-height:1.2;color:var(--c1);margin-bottom:24px;
+  text-shadow:0 0 12px var(--c1);letter-spacing:-.01em}
+.closing h2 .em{color:var(--c4);text-shadow:0 0 12px var(--c4)}
+.closing .signoff{font-size:1.2rem;color:var(--dim);margin-bottom:32px;line-height:1.7}
+.closing .url-row{display:flex;gap:24px;align-items:stretch;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.closing .url-box{background:var(--surface);border:2px solid var(--c1);padding:14px 20px;
+  font-family:'JetBrains Mono',monospace;font-size:.95rem;box-shadow:0 0 10px var(--c1)}
+.closing .url-box b{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+
+@keyframes fadeUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:fadeUp .55s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.15s}
+.slide.active .slide-up.d2{animation-delay:.3s}
+.slide.active .slide-up.d3{animation-delay:.45s}
+.slide.active .slide-up.d4{animation-delay:.6s}
+.slide.active .slide-up.d5{animation-delay:.75s}
+
+@keyframes popIn{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:popIn .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.2s}
+.slide.active .pop-in.d2{animation-delay:.35s}
+.slide.active .pop-in.d3{animation-delay:.5s}
+.slide.active .pop-in.d4{animation-delay:.65s}
+.slide.active .pop-in.d5{animation-delay:.8s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 4vw}
+  .two-col{grid-template-columns:1fr;gap:18px}
+  .three-col,.advice-grid,.a2-grid,.step-row,.stage-grid{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+}
+@media print{.progress,.hint,.matrix-bg{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}}
+</style>
+</head>
+<body>
+
+<div class="matrix-bg" id="matrixBg" aria-hidden="true"></div>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="qr-deco">
+    <span style="--o:.9"></span><span style="--o:.6"></span><span style="--o:.9"></span><span style="--o:.3"></span><span style="--o:.7"></span><span style="--o:.9"></span><span style="--o:.4"></span><span style="--o:.8"></span>
+  </div></div>
+  <div class="cover-deco tr"><span style="font-size:2.5rem;filter:drop-shadow(0 0 12px var(--c1))">🚗</span><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--c4))">🤖</span></div>
+  <div class="cover-deco bl"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--c2))">📡</span></div>
+  <div class="cover-deco br"><div class="qr-deco">
+    <span></span><span style="--o:.4"></span><span></span><span style="--o:.6"></span><span style="--o:.9"></span><span></span><span style="--o:.4"></span><span></span>
+  </div></div>
+
+  <span class="badge slide-up neon-glow">SMES IT · GRADE 6 · MAKECODE × MICRO:BIT</span>
+  <h1 class="slide-up d1">麥昆<span class="accent">×</span>程式<br><span class="accent2">設計師</span></h1>
+  <p class="sub slide-up d2">把<b>會跑、會閃燈、會說話</b>的機器人，<br>從<span style="color:var(--c1);text-shadow:0 0 8px var(--c1)">積木拖一拖</span>就完成。</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>8 關卡 · <b>智慧警車</b>挑戰</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · OPENING / 暖場</span>
+  <div style="margin-top:14vh">
+    <p class="eyebrow pop-in">機器人在說話…</p>
+    <p class="hook-quote pop-in d1">
+      「<span class="em">我有 25 顆 LED 燈做表情</span>，<br>
+      <span class="em2">兩顆按鈕當開關</span>、<span class="em3">耳朵聽聲音</span>、<br>
+      腳下有眼睛能看黑線，<br>
+      <b style="color:var(--c5);text-shadow:0 0 10px var(--c5)">而你只要拼積木，就能控制我！」</b>
+    </p>
+    <p class="lead slide-up d2" style="margin-top:28px;font-size:1.25rem">
+      這個會講話的，<b style="color:var(--c1)">就是 micro:bit + 麥昆智能小車</b>。<br>
+      今天我們要從零開始，讓它跑、避障、循跡、遙控，<br>
+      <span style="color:var(--c4);font-weight:800;text-shadow:0 0 6px var(--c4)">最後變成會閃紅藍燈的智慧警車！</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤖</div>
+    <div class="bubble">嗨！我是阿凱老師。今天我們要當<b>機器人馴獸師</b>——用積木對話讓機器人聽你的。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag c2">02 · WHAT / 認識</span>
+  <p class="eyebrow c2 slide-up">主角介紹</p>
+  <h2 class="title-lg slide-up d1">micro:bit 是<span class="accent-c4">大腦</span>，<br>麥昆小車是<span class="accent-c2">身體</span>。</h2>
+
+  <div class="two-col">
+    <div class="neon-card slide-up d2">
+      <h3 style="color:var(--c1);font-weight:900;font-size:1.3rem;margin-bottom:14px;text-shadow:0 0 6px var(--c1)">🧠 micro:bit 六大超能力</h3>
+      <ul class="bullet-list" style="font-size:.95rem">
+        <li><b>25 LED 點陣</b>：機器人表情看板</li>
+        <li><b>A/B 按鈕</b>：兩顆神奇開關</li>
+        <li><b>加速度計</b>：內耳平衡神經</li>
+        <li><b>磁力計</b>：內建指南針</li>
+        <li><b>無線電 + 藍牙</b>：對講機 / 隱形傳輸線</li>
+        <li><b>V2 還有麥克風 + 喇叭</b>，能聽能說</li>
+      </ul>
+    </div>
+    <div class="neon-card c2 slide-up d3">
+      <h3 style="color:var(--c2);font-weight:900;font-size:1.3rem;margin-bottom:14px;text-shadow:0 0 6px var(--c2)">🚗 麥昆 Maqueen 身體</h3>
+      <ul class="bullet-list c2" style="font-size:.95rem">
+        <li><b>左右馬達</b>：雙腿肌肉</li>
+        <li><b>循跡感測器 L1/R1</b>：眼睛看黑線</li>
+        <li><b>超音波 SR04</b>：蝙蝠聲納雷達</li>
+        <li><b>RGB 燈條</b>：霓虹底盤</li>
+        <li><b>蜂鳴器</b>：嘴巴會發聲</li>
+        <li><b>紅外線接收 + 藍牙</b>：順風耳</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="terminal slide-up d2" style="margin-top:22px">
+    <span style="color:var(--c4)">📍 BBC micro:bit</span>：英國 BBC 設計、比信用卡還小的電子大腦。<br>
+    └── 全世界已有<b style="color:var(--c4)">超過 700 萬</b>學生用過它學程式。
+  </div>
+  <div class="speaker">
+    <div class="avatar">📡</div>
+    <div class="bubble">大腦 + 身體一插就連結——這就是<b>物聯網</b>的雛型。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — WHY 為什麼有趣 ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag c4">03 · WHY / 為什麼好玩</span>
+  <p class="eyebrow c4 slide-up">為什麼小學就要學機器人？</p>
+  <h2 class="title-md slide-up d1">不只是<span class="accent-c1">寫程式</span>，<br>是學會「<span class="accent-c4">用邏輯解決真實問題</span>」。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🧩</div>
+      <div class="h">積木式思考</div>
+      <p class="b">不用打英文字，<b>拖曳拼湊</b>就能完成。<br>降低學習門檻，專注在邏輯設計。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">👀</div>
+      <div class="h">看得見結果</div>
+      <p class="b">不是螢幕上的數字，<b>機器人真的會動</b>。<br>循跡、避障、閃燈，立刻看到回饋。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c4)">
+      <div class="ico">🚀</div>
+      <div class="h">解決真實問題</div>
+      <p class="b">最後做出<b>自動駕駛雛型</b>——<br>跟特斯拉 AEB 自動煞車是同邏輯！</p>
+    </div>
+  </div>
+
+  <div class="terminal c4 slide-up d2" style="margin-top:26px">
+    <span style="color:var(--c1)">寫機器人程式 = 學「電腦運算思維（Computational Thinking）」</span><br>
+    ├── <b>分解</b>：把大問題拆小（循跡 = 偵測 + 判斷 + 控制馬達）<br>
+    ├── <b>樣式辨識</b>：黑白訊號 → 對應動作<br>
+    ├── <b>抽象化</b>：用變數 distance 代表距離<br>
+    └── <b>演算法</b>：如果 / 否則的判斷流程
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">這四件事是<b>108 課綱核心素養</b>——程式只是練習載體。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — 核心機制 ① MakeCode ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · MECHANIC / 機制 ①</span>
+  <p class="eyebrow slide-up">MakeCode 是什麼？</p>
+  <h2 class="title-md slide-up d1">微軟做的<span class="accent-c1">免費線上積木編輯器</span>，<br>打開瀏覽器就能用。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <div class="terminal" style="font-size:.98rem;margin-bottom:14px">
+        <span style="color:var(--c4)">第一個程式「姓名徽章」5 步驟</span><br>
+        ├── 開瀏覽器 → <b style="color:var(--c1)">makecode.microbit.org</b><br>
+        ├── 新增專案 → 拖「重複無限次」<br>
+        ├── 放入「顯示文字」積木<br>
+        ├── 輸入名字，按下載<br>
+        └── <b style="color:var(--c4)">.hex 拉進 MICROBIT 隨身碟 ✨</b>
+      </div>
+      <div class="neon-card c5" style="padding:14px 18px">
+        <p style="color:var(--c5);font-weight:700;font-size:1rem;margin-bottom:6px;text-shadow:0 0 5px var(--c5)">⚠️ 注意</p>
+        <p style="font-size:.95rem">下載時 micro:bit 背面的黃燈會閃，<br><b>不可以拔 USB 線</b>，要等閃爍結束。</p>
+      </div>
+    </div>
+    <div class="slide-up d2">
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--c4);font-size:.85rem;letter-spacing:.08em;margin-bottom:10px">▼ 典型程式積木堆疊</p>
+      <div class="code-block-stack">
+        <div class="code-blk event">⚡ 當啟動時</div>
+        <div class="code-blk loop" style="margin-left:16px">🔄 重複無限次</div>
+        <div class="code-blk basic" style="margin-left:32px">▢ 顯示圖示 ❤️</div>
+        <div class="code-blk basic" style="margin-left:32px">⏱ 暫停 (毫秒) 500</div>
+        <div class="code-blk basic" style="margin-left:32px">▢ 清除畫面</div>
+        <div class="code-blk basic" style="margin-left:32px">⏱ 暫停 (毫秒) 500</div>
+      </div>
+      <p style="text-align:center;margin-top:12px;font-size:.88rem;color:var(--dim);font-family:'JetBrains Mono',monospace">// 效果：心形圖案閃爍</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🧩</div>
+    <div class="bubble">寫程式像拼樂高——<b>放錯位置會自動彈開</b>，不用怕語法錯。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — 核心機制 ② 麥昆組裝 + 馬達 ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag c2">05 · MECHANIC / 機制 ②</span>
+  <p class="eyebrow c2 slide-up">組裝 + 馬達控制</p>
+  <h2 class="title-md slide-up d1">兩輪速度差，<span class="accent-c1">就是轉彎的秘密</span>。</h2>
+
+  <div class="two-col">
+    <div class="neon-card c2 slide-up d1">
+      <h3 style="color:var(--c2);font-weight:900;font-size:1.25rem;margin-bottom:12px;text-shadow:0 0 6px var(--c2)">🔧 組裝四步驟</h3>
+      <ul class="bullet-list c2" style="font-size:.95rem">
+        <li><b>裝電池</b>：3 顆 AAA(7號)，注意正負極</li>
+        <li><b>插超音波</b>：T 對 trig、E 對 echo</li>
+        <li><b>插 micro:bit</b>：金手指朝下、LED 朝前</li>
+        <li><b>開電源</b>：車尾開關切 ON ⚡</li>
+      </ul>
+      <p style="font-size:.85rem;color:var(--c5);margin-top:10px;text-shadow:0 0 4px var(--c5)">⚠ 插拔感測器前務必先切 OFF！</p>
+    </div>
+    <div class="neon-card c4 slide-up d2">
+      <h3 style="color:var(--c4);font-weight:900;font-size:1.25rem;margin-bottom:12px;text-shadow:0 0 6px var(--c4)">⚡ 馬達速度差 = 轉彎</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:.95rem">
+        <tr><td style="padding:6px;border:1px solid var(--c4)">左 100、右 100</td><td style="padding:6px;border:1px solid var(--c4)"><b style="color:var(--c1)">直走</b></td></tr>
+        <tr><td style="padding:6px;border:1px solid var(--c4)">左 0、右 100</td><td style="padding:6px;border:1px solid var(--c4)"><b style="color:var(--c2)">左轉</b></td></tr>
+        <tr><td style="padding:6px;border:1px solid var(--c4)">左 100、右 0</td><td style="padding:6px;border:1px solid var(--c4)"><b style="color:var(--c2)">右轉</b></td></tr>
+        <tr><td style="padding:6px;border:1px solid var(--c4)">左 200 後退、右 200 前進</td><td style="padding:6px;border:1px solid var(--c4)"><b style="color:var(--c5)">原地打轉</b></td></tr>
+        <tr><td style="padding:6px;border:1px solid var(--c4)">速度範圍</td><td style="padding:6px;border:1px solid var(--c4)"><b>0~255</b></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="terminal slide-up d2" style="margin-top:22px;font-size:.98rem">
+    <span style="color:var(--c4)">💡 馬達校正小技巧</span><br>
+    └── 如果小車直走會偏（兩顆馬達摩擦力不同），<b>調整左右速度差</b>修正。<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;例：左 255、右 240 來補償右輪較滑。
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛠️</div>
+    <div class="bubble">這 4 件事學完，<b>你就會控制機器人的雙腿</b>了。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — 循跡感測器 ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag c3">06 · SENSOR / 循跡感測</span>
+  <p class="eyebrow c3 slide-up">沿著黑線跑的眼睛</p>
+  <h2 class="title-md slide-up d1">兩顆紅外線眼睛<br>+ <span class="accent-c3">如果 / 否則</span> = 自動駕駛雛型。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--c1);font-size:.95rem;margin-bottom:10px;text-shadow:0 0 5px var(--c1)">/* 黑線輸出 0、白色輸出 1 */</p>
+      <table style="width:100%;border-collapse:collapse;font-size:.92rem">
+        <thead><tr><th style="background:var(--c1);color:#000;padding:8px;border:1px solid #000;font-family:'JetBrains Mono',monospace">感測值</th><th style="background:var(--c1);color:#000;padding:8px;border:1px solid #000;font-family:'JetBrains Mono',monospace">判斷</th><th style="background:var(--c1);color:#000;padding:8px;border:1px solid #000;font-family:'JetBrains Mono',monospace">動作</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.06)">L1=0 R1=0</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.06)">兩顆都壓黑</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.06)"><b style="color:var(--c1)">全前進</b></td></tr>
+          <tr><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.12)">L1=0 R1=1</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.12)">左壓黑、右偏白</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.12)"><b style="color:var(--c2)">向左修正</b></td></tr>
+          <tr><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.06)">L1=1 R1=0</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.06)">右壓黑、左偏白</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.06)"><b style="color:var(--c2)">向右修正</b></td></tr>
+          <tr><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.12)">L1=1 R1=1</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.12)">兩顆都白</td><td style="padding:8px;border:1px solid var(--c1);background:rgba(0,255,136,.12)"><b style="color:var(--c5)">跑出黑線！</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-up d2">
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--c4);font-size:.85rem;letter-spacing:.08em;margin-bottom:10px">▼ 循跡程式積木</p>
+      <div class="code-block-stack">
+        <div class="code-blk event">⚡ 重複無限次</div>
+        <div class="code-blk if" style="margin-left:16px">🔀 如果 L1=0 且 R1=0</div>
+        <div class="code-blk motor" style="margin-left:32px">▶ 馬達全前進 100</div>
+        <div class="code-blk if" style="margin-left:16px">否則如果 L1=0 且 R1=1</div>
+        <div class="code-blk motor" style="margin-left:32px">▶ 左輪停、右輪 100</div>
+        <div class="code-blk if" style="margin-left:16px">否則如果 L1=1 且 R1=0</div>
+        <div class="code-blk motor" style="margin-left:32px">▶ 左輪 100、右輪停</div>
+      </div>
+      <p style="font-size:.85rem;color:var(--c4);margin-top:10px;font-family:'JetBrains Mono',monospace;text-shadow:0 0 4px var(--c4)">📐 場地：白色圖畫紙 + 黑色絕緣膠帶</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">👀</div>
+    <div class="bubble">這就是<b>所有自動駕駛車</b>的雛形：偵測 → 判斷 → 修正。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — 8 大關卡 SOP ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag c4">07 · SOP / 8 大關卡</span>
+  <p class="eyebrow c4 slide-up">完整學習路徑</p>
+  <h2 class="title-md slide-up d1">8 個關卡，從<span class="accent-c1">開機</span>到<span class="accent-c5">智慧警車</span>。</h2>
+
+  <div class="stage-grid">
+    <div class="stage-card pop-in d1" style="--c:var(--c1)">
+      <span class="num">01</span><span class="ico">📡</span>
+      <div class="h">micro:bit 大腦</div>
+      <div class="b">25 LED + 按鈕 + 感測器</div>
+    </div>
+    <div class="stage-card pop-in d1" style="--c:var(--c1)">
+      <span class="num">02</span><span class="ico">🧩</span>
+      <div class="h">MakeCode 積木</div>
+      <div class="b">免費線上、拖曳即可</div>
+    </div>
+    <div class="stage-card pop-in d2" style="--c:var(--c2)">
+      <span class="num">03</span><span class="ico">🚗</span>
+      <div class="h">麥昆組裝</div>
+      <div class="b">電池 + 感測器 + 插板</div>
+    </div>
+    <div class="stage-card pop-in d2" style="--c:var(--c2)">
+      <span class="num">04</span><span class="ico">⚡</span>
+      <div class="h">馬達控制</div>
+      <div class="b">兩輪速度差 = 轉彎</div>
+    </div>
+    <div class="stage-card pop-in d3" style="--c:var(--c3)">
+      <span class="num">05</span><span class="ico">📏</span>
+      <div class="h">循跡感測</div>
+      <div class="b">沿黑線 + if/else 判斷</div>
+    </div>
+    <div class="stage-card pop-in d3" style="--c:var(--c3)">
+      <span class="num">06</span><span class="ico">📐</span>
+      <div class="h">超音波避障</div>
+      <div class="b">蝙蝠聲納 + 自動煞車</div>
+    </div>
+    <div class="stage-card pop-in d4" style="--c:var(--c4)">
+      <span class="num">07</span><span class="ico">📱</span>
+      <div class="h">無線遙控</div>
+      <div class="b">紅外線 + 藍牙 App</div>
+    </div>
+    <div class="stage-card pop-in d4" style="--c:var(--c5)">
+      <span class="num">08</span><span class="ico">🚓</span>
+      <div class="h">智慧警車</div>
+      <div class="b">綜合：閃燈 + 警報 + 避障</div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🏁</div>
+    <div class="bubble">8 關循序漸進，<b>每關都有看得見的成果</b>——這是好課程設計。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — 超音波避障 + 警車專題 ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag c5">08 · BOSS / 警車挑戰</span>
+  <p class="eyebrow c5 slide-up">最終 Boss 戰</p>
+  <h2 class="title-md slide-up d1">超音波避障 + 警報音效 + 紅藍車燈閃爍<br>= <span class="accent-c5">智慧警車</span>！</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <div class="terminal c4" style="font-size:.96rem;margin-bottom:14px">
+        <span style="color:var(--c1)">蝙蝠聲納原理</span><br>
+        ├── 發出 <b>超音波</b>（人耳聽不到）<br>
+        ├── 撞到障礙物 → <b>反彈</b><br>
+        ├── 計算「來回時間」 → 距離<br>
+        └── &lt; 30cm → <b style="color:var(--c5)">煞車轉彎！</b>
+      </div>
+      <div class="neon-card c5" style="padding:14px 18px">
+        <p style="color:var(--c5);font-weight:700;font-size:1rem;margin-bottom:6px;text-shadow:0 0 5px var(--c5)">⚠️ 常見坑：距離跳 0 公分</p>
+        <p style="font-size:.92rem;line-height:1.6">超音波偶爾會跳到 0（反射錯誤）。<br><b>解法</b>：條件改成 <span style="color:var(--c4);font-family:monospace">distance ≠ 0 且 &lt; 30</span>，<br>並加 <b>100ms 延遲</b>防錯。</p>
+      </div>
+    </div>
+    <div class="slide-up d2">
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--c4);font-size:.85rem;letter-spacing:.08em;margin-bottom:10px">▼ 警車完整邏輯</p>
+      <div class="code-block-stack">
+        <div class="code-blk event">⚡ 重複無限次</div>
+        <div class="code-blk var" style="margin-left:16px">📐 distance = 讀取超音波</div>
+        <div class="code-blk if" style="margin-left:16px">🔀 如果 distance &lt; 30</div>
+        <div class="code-blk motor" style="margin-left:32px">▶ 馬達後退 + 隨機轉</div>
+        <div class="code-blk sensor" style="margin-left:32px">🔊 播放警報音效</div>
+        <div class="code-blk sensor" style="margin-left:32px">💡 紅藍 RGB 燈閃爍</div>
+        <div class="code-blk if" style="margin-left:16px">否則</div>
+        <div class="code-blk motor" style="margin-left:32px">▶ 馬達全前進巡邏</div>
+      </div>
+      <p style="font-size:.85rem;color:var(--c1);margin-top:10px;font-family:'JetBrains Mono',monospace;text-shadow:0 0 4px var(--c1)">🚓 跟特斯拉 AEB 自動煞車是同一個邏輯！</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🚓</div>
+    <div class="bubble">恭喜！做出來這個，<b>你已經會寫自動駕駛的核心邏輯了</b>。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — 紅外線 + 藍牙遙控 ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag c2">09 · REMOTE / 無線遙控</span>
+  <p class="eyebrow c2 slide-up">紅外線 vs 藍牙</p>
+  <h2 class="title-md slide-up d1">兩種遙控方式，<span class="accent-c2">各有應用情境</span>。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1" style="--c:var(--c1)">
+      <div class="ribbon">紅外線遙控器（像電視）</div>
+      <h4>方便、便宜、近距離</h4>
+      <ul class="bullet-list" style="font-size:.95rem">
+        <li>按鍵代碼：<b>2 前進、8 後退、4 左、6 右、5 停</b></li>
+        <li>需設定紅外線接收引腳</li>
+        <li>遙控器有 <b>KEYES / NEC</b> 兩種規格</li>
+        <li><b>限制</b>：必須對準感測器、會被遮擋</li>
+      </ul>
+    </div>
+    <div class="side-card pop-in d2" style="--c:var(--c2)">
+      <div class="ribbon">藍牙手機 / 平板 App</div>
+      <h4>滑順、無方向限制</h4>
+      <ul class="bullet-list c2" style="font-size:.95rem">
+        <li>平板下載 <b>micro:bit 官方 App</b></li>
+        <li>同按 A+B、按 Reset → <b>30 秒內配對</b></li>
+        <li>加 Devices 擴展，寫 Gamepad 對應</li>
+        <li><b>限制</b>：配對麻煩、需要 App</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="terminal c4 slide-up d2" style="margin-top:22px;font-size:.96rem">
+    <span style="color:var(--c1)">💡 常見問題：按 6 卻往左轉？</span><br>
+    └── 不同遙控器代碼不同（KEYES 與 NEC 解碼格式不同）。<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;先寫一段「<b>顯示 message</b>」測試實際數字，再填正確指令。
+  </div>
+  <div class="speaker">
+    <div class="avatar">📱</div>
+    <div class="bubble">這就是<b>「測試先於寫程式」</b>的工程思維——先看再做。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — 注意事項 ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag c5">10 · NOTES / 注意事項</span>
+  <p class="eyebrow c5 slide-up">過來人的血淚提醒</p>
+  <h2 class="title-md slide-up d1">這 4 件事不注意，<br><span class="accent-c5">會被機器人「氣到摔書」</span>。</h2>
+
+  <div class="three-col">
+    <div class="neon-card c5 slide-up d1">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c5))">⚡</div>
+      <h4 style="color:var(--c5);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c5)">電源安全</h4>
+      <p style="font-size:.92rem;line-height:1.55">插拔感測器前<b>務必切 OFF</b>，<br>避免短路燒板。<br>電池正負極不能反裝。</p>
+    </div>
+    <div class="neon-card c4 slide-up d2">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c4))">📥</div>
+      <h4 style="color:var(--c4);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c4)">下載時不拔線</h4>
+      <p style="font-size:.92rem;line-height:1.55">背面黃燈閃時，<br><b>不可拔 USB 線</b>。<br>等閃爍結束才安全。</p>
+    </div>
+    <div class="neon-card c2 slide-up d3">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c2))">📐</div>
+      <h4 style="color:var(--c2);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c2)">場地要平整</h4>
+      <p style="font-size:.92rem;line-height:1.55">循跡場地：<b>白色圖畫紙</b><br>+ <b>黑色絕緣膠帶</b>。<br>地毯、瓷磚反光會影響。</p>
+    </div>
+  </div>
+
+  <div class="neon-card slide-up d2" style="margin-top:22px">
+    <h3 style="color:var(--c1);font-weight:900;font-size:1.2rem;margin-bottom:10px;text-shadow:0 0 6px var(--c1)">🤝 同學間共享小技巧</h3>
+    <ul class="bullet-list" style="font-size:.95rem">
+      <li>馬達會偏掉？<b>校正左右輪速度差</b>，不要硬撐</li>
+      <li>程式有 Bug？<b>用「顯示 message / 變數」debug</b>，把感測值印出來看</li>
+      <li>同學的小車跑得比較順？<b>請他分享 .hex 檔</b>，馬上抄一份</li>
+      <li>遙控器規格不同？<b>寫測試程式看實際代碼</b>，5 分鐘解決</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🧯</div>
+    <div class="bubble">機器人會壞，但<b>學到的邏輯思維永遠不會壞</b>。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — 對應素養 ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · LITERACY / 對應素養</span>
+  <p class="eyebrow slide-up">這堂課對應 12 年國教的什麼？</p>
+  <h2 class="title-md slide-up d1">不只是「玩機器人」，<br>是培養<span class="accent-c1">科技時代的核心素養</span>。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🧩</div>
+      <h5>① 運算思維</h5>
+      <p>分解、樣式辨識、抽象化、演算法——四大支柱在每關都用上。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🔬</div>
+      <h5>② 科學探究</h5>
+      <p>循跡為何要白底黑線？<b>實驗</b>不同地板的差異。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c4)">
+      <div class="ico">🛠️</div>
+      <h5>③ 動手實作</h5>
+      <p>從組裝到 debug，<b>手腦並用</b>，跨領域整合。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c3)">
+      <div class="ico">🤝</div>
+      <h5>④ 團隊協作</h5>
+      <p>同學間互助 debug、<b>分享 .hex 檔</b>，學會請教與貢獻。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c5)">
+      <div class="ico">💡</div>
+      <h5>⑤ 創新發想</h5>
+      <p>智慧警車能不能變<b>送餐車、寵物車</b>？延伸個人專題。</p>
+    </div>
+  </div>
+
+  <div class="terminal c2 slide-up d2" style="margin-top:22px;font-size:.96rem">
+    十二年國教 · 科技領域核心素養 <span style="color:var(--c4)">A2 / 科 -E -A2</span><br>
+    └── 「運用<b style="color:var(--c4)">運算思維</b>與<b style="color:var(--c4)">電腦科學原理</b>，思考並解決生活問題。」
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">這 5 件事，10 年後 AI 再進步，<b>都還會是好工程師的標誌</b>。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — 5 個叮嚀 ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag c4">12 · ADVICE / 5 個叮嚀</span>
+  <p class="eyebrow c4 slide-up">給未來的程式設計師</p>
+  <h2 class="title-md slide-up d1">在你寫下一行程式之前，<br><span class="accent-c4">請記住這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <h5>慢慢來，<br>不要急</h5>
+      <p>機器人有 8 關，<br>一關一關玩透。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>看到 Bug，<br>不要罵</h5>
+      <p>每個 Bug 都是<br><b>學會新東西</b>的機會。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c4)">
+      <div class="n">03</div>
+      <h5>先想再寫，<br>先測再修</h5>
+      <p>用 debug 印變數，<br>看清楚再動手。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c3)">
+      <div class="n">04</div>
+      <h5>分享你的<br>解法</h5>
+      <p>會了就教別人。<br>教學的過程<b>會更懂</b>。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>大膽<br>創造</h5>
+      <p>警車能變<b>送餐車</b>、<br>變<b>寵物玩具車</b>嗎？</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事，不只程式——<b>任何學習都該如此</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — 結語 ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--c1))">🤖</span></div>
+  <div class="cover-deco tr"><div class="qr-deco">
+    <span></span><span style="--o:.4"></span><span></span><span style="--o:.6"></span><span style="--o:.9"></span><span></span><span style="--o:.4"></span><span></span>
+  </div></div>
+  <div class="cover-deco bl"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--c4))">🚗</span></div>
+  <div class="cover-deco br"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--c5))">🚓</span></div>
+
+  <h2 class="slide-up">機器人不會無聊，<br><span class="em">會無聊的只是還沒想到玩法</span>。</h2>
+  <p class="signoff slide-up d1">下個機器人是<b style="color:var(--c1)">你發明的</b>嗎？</p>
+
+  <div class="url-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/mqueen-microbit/</b>
+    </div>
+    <div class="url-box">
+      🎬 NotebookLM 自學影片<br>
+      <b>YouTube 搜尋「阿凱老師 麥昆」</b>
+    </div>
+  </div>
+
+  <p style="margin-top:40px;font-family:'JetBrains Mono',monospace;color:var(--dim);font-size:.9rem;letter-spacing:.08em">
+    > Q&A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'JetBrains Mono',monospace;color:var(--c1);font-size:1.05rem;letter-spacing:.1em;text-shadow:0 0 8px var(--c1)">
+    THANK YOU · 謝謝各位小小工程師
+  </p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<div class="overview" id="overview">
+  <h3>&gt; CHAPTER OVERVIEW · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+// 矩陣雨
+(function(){
+  const bg = document.getElementById('matrixBg');
+  const chars = 'micro:bitMakeCodeMaqueenIF01アイウエオ@#$%';
+  const cols = Math.floor(window.innerWidth / 22);
+  for(let i=0; i<cols; i++){
+    const col = document.createElement('div');
+    col.className = 'matrix-col';
+    col.style.left = (i*22+Math.random()*6) + 'px';
+    col.style.animationDuration = (8 + Math.random()*10) + 's';
+    col.style.animationDelay = (-Math.random()*15) + 's';
+    let txt = '';
+    for(let j=0; j<25; j++){ txt += chars[Math.floor(Math.random()*chars.length)] + '\n'; }
+    col.textContent = txt;
+    bg.appendChild(col);
+  }
+})();
+
+const SLIDES = [
+  {n:1,  t:'封面',           s:'麥昆小車程式設計師 · 六年級資訊科技'},
+  {n:2,  t:'開場 · 機器人說話', s:'micro:bit + 麥昆 = 會跑會閃會說話'},
+  {n:3,  t:'大腦 + 身體',    s:'micro:bit 六大超能力 + 麥昆配備'},
+  {n:4,  t:'為什麼好玩',     s:'積木 · 看得見 · 解決真實問題'},
+  {n:5,  t:'MakeCode 機制',  s:'免費線上、拖曳積木、5 步入門'},
+  {n:6,  t:'組裝 + 馬達',    s:'四步驟組裝 + 兩輪速度差 = 轉彎'},
+  {n:7,  t:'循跡感測器',     s:'兩顆紅外線眼睛 + if/else 判斷'},
+  {n:8,  t:'8 大關卡',       s:'從開機到智慧警車的學習路徑'},
+  {n:9,  t:'超音波避障警車', s:'蝙蝠聲納 + AEB 自動煞車'},
+  {n:10, t:'紅外線 + 藍牙',   s:'兩種遙控方式比較'},
+  {n:11, t:'注意事項',       s:'電源 / 下載 / 場地 / debug 技巧'},
+  {n:12, t:'對應素養',       s:'12 年國教 A2 五大實踐'},
+  {n:13, t:'5 個叮嚀',        s:'給未來的程式設計師'},
+  {n:14, t:'結語 + Q&A',      s:'下個機器人是你發明的嗎？'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active', i === idx));
+  curIdx = idx;
+  document.getElementById('progress-fill').style.width = ((idx+1)/N*100).toFixed(2) + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>s.style.display = (s.style.display === 'none') ? '' : 'none');
+}
+
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(['Escape','m','M'].includes(e.key)){ document.getElementById('overview').classList.remove('show'); e.preventDefault(); }
+    return;
+  }
+  const k = e.key;
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(k)){ next(); e.preventDefault(); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ prev(); e.preventDefault(); }
+  else if(k === 'Home'){ goSlide(0); e.preventDefault(); }
+  else if(k === 'End'){ goSlide(N-1); e.preventDefault(); }
+  else if(['m','M'].includes(k)){ toggleOverview(); e.preventDefault(); }
+  else if(['f','F'].includes(k)){ toggleFullscreen(); e.preventDefault(); }
+  else if(['s','S'].includes(k)){ toggleSpeaker(); e.preventDefault(); }
+  else if(k === 'Escape'){ if(document.fullscreenElement) document.exitFullscreen(); }
+  if(/^[1-9]$/.test(k)){ const t = parseInt(k)-1; if(t < N){ goSlide(t); e.preventDefault(); } }
+});
+
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next(); else prev();
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){ const i = parseInt(hashMatch[1])-1; if(i >= 0 && i < N) goSlide(i); }
+</script>
+</body>
+</html>

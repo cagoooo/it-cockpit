@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>故事生圖 Gem 機器人｜演講簡報模式</title>
+<meta name="description" content="阿凱老師｜六年級資訊科技：Gemini Gem + Nano Banana 2 Q 版繪本創作演講簡報。Pixel-game 沉浸風 × 14 張投影片。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#0d0d2b; --surface:#1a1a3e; --panel:#252552; --panel2:#2f2f66;
+  --c1:#00e5ff; --c2:#ffd740; --c3:#ff4081; --c4:#69ff47; --c5:#c47bff;
+  --text:#e8e4f8; --dim:#7070a0;
+  --shadow-px:4px 4px 0 #000;
+  --shadow-px-lg:6px 6px 0 #000;
+  --glow:0 0 14px rgba(196,123,255,.4);
+}
+body{font-family:'Noto Sans TC','PingFang TC',sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.6;-webkit-font-smoothing:antialiased;user-select:none}
+body::before{content:'';position:fixed;inset:0;z-index:9990;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(196,123,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(196,123,255,.025) 1px,transparent 1px);
+  background-size:32px 32px;opacity:.7}
+
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+  padding:5vh 6vw;opacity:0;transition:opacity .4s}
+.slide.active{display:flex;opacity:1}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:8px;
+  background:repeating-linear-gradient(90deg,
+    var(--c5) 0 16px,var(--c2) 16px 32px,
+    var(--c3) 32px 48px,var(--c4) 48px 64px,
+    var(--c1) 64px 80px,var(--bg) 80px 88px);opacity:.85}
+.slide-num{position:absolute;bottom:24px;right:32px;
+  font-family:'Press Start 2P',monospace;font-size:.65rem;color:var(--dim);
+  letter-spacing:.1em;z-index:5}
+.slide-title-tag{position:absolute;top:32px;left:32px;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  letter-spacing:.18em;color:var(--bg);background:var(--c5);
+  padding:6px 12px;z-index:5;box-shadow:3px 3px 0 #000}
+
+.title-xl{font-weight:900;font-size:clamp(3.5rem,8vw,6.5rem);line-height:1.05;
+  letter-spacing:-.02em;color:var(--c5);text-shadow:4px 4px 0 #000}
+.title-lg{font-weight:900;font-size:clamp(2.6rem,5.5vw,4.4rem);line-height:1.15;
+  letter-spacing:-.01em;color:var(--c5);text-shadow:3px 3px 0 #000}
+.title-md{font-weight:900;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.2;color:var(--text)}
+.eyebrow{font-family:'Press Start 2P',monospace;font-size:.7rem;
+  letter-spacing:.2em;color:var(--c2);text-transform:uppercase;
+  margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:'';flex:1;height:3px;background:var(--c2);max-width:200px;box-shadow:0 3px 0 #000}
+.lead{font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.7;color:var(--text);max-width:1100px}
+.lead b{color:var(--c2);font-weight:900}
+.accent-cyan{color:var(--c1)} .accent-yellow{color:var(--c2)}
+.accent-pink{color:var(--c3)} .accent-green{color:var(--c4)} .accent-purple{color:var(--c5)}
+
+.speaker{position:absolute;bottom:24px;left:32px;
+  display:flex;align-items:flex-end;gap:14px;z-index:8;max-width:55%}
+.speaker .avatar{width:64px;height:64px;flex-shrink:0;background:var(--c5);
+  border:3px solid #000;display:flex;align-items:center;justify-content:center;
+  font-size:2rem;box-shadow:var(--shadow-px)}
+.speaker .bubble{background:var(--surface);color:var(--text);
+  border:3px solid var(--c5);padding:10px 16px;
+  font-size:.95rem;font-weight:600;position:relative;
+  box-shadow:var(--shadow-px);max-width:500px;line-height:1.5}
+.speaker .bubble::before{content:'';position:absolute;left:-14px;bottom:18px;
+  width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;
+  border-color:transparent #000 transparent transparent}
+.speaker .bubble::after{content:'';position:absolute;left:-10px;bottom:18px;
+  width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;
+  border-color:transparent var(--surface) transparent transparent}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:6px;background:#000;z-index:99}
+.progress-fill{height:100%;background:var(--c5);transition:width .4s;box-shadow:0 0 12px var(--c5)}
+.hint{position:fixed;top:14px;right:24px;z-index:99;
+  font-family:'Press Start 2P',monospace;font-size:.55rem;
+  color:var(--c5);background:var(--bg);border:2px solid var(--c5);
+  padding:6px 12px;letter-spacing:.1em;pointer-events:none;opacity:.85}
+.kbd{display:inline-block;padding:2px 6px;background:#000;color:var(--c2);
+  font-family:'Press Start 2P',monospace;font-size:.85em;border:1px solid var(--c2)}
+
+.overview{position:fixed;inset:0;background:#000;display:none;
+  padding:32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-family:'Press Start 2P',monospace;color:var(--c2);
+  font-size:1rem;margin-bottom:24px;letter-spacing:.05em}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.ov-card{background:var(--surface);border:3px solid var(--c5);
+  padding:14px 16px;cursor:pointer;transition:.15s;position:relative}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--c3)}
+.ov-card .num{position:absolute;top:8px;right:10px;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;color:var(--c3)}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--c2);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+@keyframes coinSpin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(-.3)}}
+.coin{width:36px;height:36px;background:var(--c2);
+  border:3px solid #000;border-radius:50%;
+  animation:coinSpin 1.2s ease-in-out infinite;
+  box-shadow:inset -4px -4px 0 rgba(0,0,0,.35),3px 3px 0 #000;
+  display:inline-block;position:relative}
+.coin::after{content:'★';position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;font-family:'Press Start 2P',monospace;font-size:.65rem;color:#000}
+.hp-bar{width:200px;height:24px;background:#000;border:3px solid var(--c5);
+  display:flex;padding:2px;gap:2px;box-shadow:3px 3px 0 #000}
+.hp-cell{flex:1;background:var(--c3)}
+.hp-cell.empty{background:#3a3a5e}
+.pixel-heart{width:36px;height:36px;position:relative;display:inline-block}
+.pixel-heart::before,.pixel-heart::after{content:'';position:absolute;
+  width:22px;height:22px;background:var(--c3);
+  border-radius:50% 50% 0 0;transform-origin:bottom;
+  box-shadow:inset -3px -3px 0 rgba(0,0,0,.3)}
+.pixel-heart::before{left:0;transform:rotate(-45deg)}
+.pixel-heart::after{right:0;transform:rotate(45deg)}
+.stage-portal{background:var(--c5);color:#fff;
+  font-family:'Press Start 2P',monospace;font-size:.6rem;
+  padding:12px 16px;border:3px solid #000;
+  box-shadow:5px 5px 0 #000;letter-spacing:.08em;display:inline-block}
+
+/* Gem (寶石) decoration */
+.gem-icon{width:40px;height:40px;background:var(--c5);
+  clip-path:polygon(50% 0,100% 35%,80% 100%,20% 100%,0 35%);
+  display:inline-block;box-shadow:0 0 12px var(--c5);
+  filter:drop-shadow(3px 3px 0 #000)}
+
+.px-box{background:var(--surface);border:3px solid var(--c5);
+  padding:24px 28px;position:relative;box-shadow:var(--shadow-px-lg)}
+.px-box.yellow{border-color:var(--c2);box-shadow:6px 6px 0 var(--c2)}
+.px-box.pink{border-color:var(--c3);box-shadow:6px 6px 0 var(--c3)}
+.px-box.green{border-color:var(--c4);box-shadow:6px 6px 0 var(--c4)}
+.px-box.purple{border-color:var(--c5);box-shadow:6px 6px 0 var(--c5)}
+.px-box.cyan{border-color:var(--c1);box-shadow:6px 6px 0 var(--c1)}
+
+.stat-card{background:var(--surface);border:3px solid #000;
+  padding:22px 26px;text-align:center;
+  box-shadow:6px 6px 0 var(--c5);flex:1;min-width:200px}
+.stat-card .n{font-family:'Press Start 2P',monospace;
+  font-size:clamp(2.2rem,4.5vw,3.2rem);line-height:1.1;color:var(--c5)}
+.stat-card .l{font-size:.95rem;color:var(--text);margin-top:10px;letter-spacing:.05em}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;
+  font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.7;margin-bottom:12px}
+.bullet-list li::before{content:'';flex-shrink:0;width:22px;height:22px;
+  background:var(--c5);border:2px solid #000;margin-top:6px;box-shadow:2px 2px 0 #000}
+.bullet-list.yellow li::before{background:var(--c2)}
+.bullet-list.pink li::before{background:var(--c3)}
+.bullet-list.green li::before{background:var(--c4)}
+.bullet-list.cyan li::before{background:var(--c1)}
+
+.tag{display:inline-block;padding:6px 14px;background:var(--c2);color:#000;
+  border:2px solid #000;font-weight:700;font-size:.9rem;
+  font-family:'Noto Sans TC',sans-serif;box-shadow:2px 2px 0 #000;margin:4px 6px 4px 0}
+.tag.cyan{background:var(--c1);color:#000}
+.tag.pink{background:var(--c3);color:#fff}
+.tag.green{background:var(--c4);color:#000}
+.tag.purple{background:var(--c5);color:#fff}
+
+.cover{align-items:center;justify-content:center;text-align:center}
+.cover .badge{display:inline-block;background:var(--c3);color:#fff;
+  font-family:'Press Start 2P',monospace;font-size:.75rem;
+  letter-spacing:.2em;padding:10px 20px;margin-bottom:32px;box-shadow:4px 4px 0 #000}
+.cover h1{font-weight:900;font-size:clamp(3.2rem,8vw,7rem);line-height:1;
+  margin-bottom:18px;color:var(--c5);letter-spacing:-.03em;text-shadow:5px 5px 0 #000}
+.cover h1 .accent{color:var(--c2);font-family:'Press Start 2P',monospace;
+  font-size:.55em;display:inline-block;transform:translateY(-12px);
+  margin:0 12px;text-shadow:3px 3px 0 #000}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.7rem);color:var(--text);
+  margin-bottom:48px;font-weight:500;max-width:1000px}
+.cover .meta{display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:.65rem;
+  letter-spacing:.05em;color:var(--c2)}
+.cover .meta b{color:var(--text);font-weight:700;font-family:'Noto Sans TC',sans-serif;font-size:1rem}
+.cover-deco{position:absolute;display:flex;gap:18px;align-items:center;z-index:3}
+.cover-deco.tl{top:80px;left:80px}
+.cover-deco.tr{top:80px;right:80px}
+.cover-deco.bl{bottom:90px;left:80px}
+.cover-deco.br{bottom:90px;right:80px}
+
+.hook-quote{font-weight:900;font-size:clamp(2rem,4.2vw,3.5rem);line-height:1.45;
+  color:var(--text);max-width:1100px}
+.hook-quote .em{color:var(--c3);font-style:italic}
+.hook-quote .em2{color:var(--c2)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;flex:1;margin-top:24px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;flex:1;margin-top:24px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:24px}
+
+.pillar{background:var(--surface);border:3px solid #000;
+  padding:24px 22px;text-align:center;position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--c5))}
+.pillar .ico{width:80px;height:80px;background:var(--c,var(--c5));
+  border:3px solid #000;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;font-size:2.4rem;box-shadow:3px 3px 0 #000}
+.pillar .h{font-weight:900;font-size:1.35rem;color:var(--c,var(--c5));margin-bottom:10px}
+.pillar .b{font-size:1rem;line-height:1.6;color:var(--text)}
+
+.cmp-table{width:100%;border-collapse:collapse;
+  background:var(--surface);font-size:clamp(.95rem,1.2vw,1.1rem)}
+.cmp-table th{background:var(--c5);color:#fff;
+  padding:12px 16px;text-align:left;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;border:2px solid #000}
+.cmp-table td{padding:12px 16px;border:2px solid #000;font-weight:600;color:var(--text)}
+.cmp-table tr:nth-child(2n) td{background:var(--panel)}
+.cmp-table .big{font-size:1.1em;color:var(--c2);font-weight:900}
+
+.scenario-fan{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:30px}
+.scenario-card{background:var(--surface);border:3px solid var(--c,var(--c5));
+  padding:22px 20px;position:relative;box-shadow:6px 6px 0 #000}
+.scenario-card .num{position:absolute;top:-18px;left:18px;
+  width:42px;height:42px;background:var(--c,var(--c5));color:#fff;
+  border:3px solid #000;display:flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:1rem;box-shadow:3px 3px 0 #000}
+.scenario-card .icon{font-size:2.4rem;margin-bottom:8px;text-align:center}
+.scenario-card h4{font-weight:900;font-size:1.3rem;color:var(--c,var(--c5));margin:8px 0 10px}
+.scenario-card p{font-size:.98rem;line-height:1.6;color:var(--text)}
+
+.step-row{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin-top:32px}
+.step-item{background:var(--surface);border:3px solid #000;
+  padding:12px 6px;text-align:center;position:relative;font-size:.8rem;
+  box-shadow:3px 3px 0 var(--c,var(--c5));min-height:130px}
+.step-item .n{font-family:'Press Start 2P',monospace;font-size:1.1rem;
+  color:var(--c,var(--c5));display:block;margin-bottom:6px}
+.step-item .t{font-weight:700;font-size:.7rem;line-height:1.35;color:var(--text)}
+
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
+.side-card{background:var(--surface);border:3px solid var(--c,var(--c4));
+  padding:24px 26px;position:relative;box-shadow:6px 6px 0 #000}
+.side-card.bad{--c:var(--c3)}
+.side-card .ribbon{position:absolute;top:-16px;left:18px;
+  background:var(--c);color:#fff;padding:4px 14px;
+  font-family:'Press Start 2P',monospace;font-size:.7rem;
+  border:2px solid #000;box-shadow:2px 2px 0 #000}
+.side-card.good .ribbon{color:#000}
+.side-card h4{font-weight:900;font-size:1.25rem;color:var(--c);margin:8px 0 12px}
+
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.a2-card{background:var(--surface);border:3px solid var(--c,var(--c5));
+  padding:18px 14px;position:relative;box-shadow:5px 5px 0 #000}
+.a2-card .ico{font-size:2rem;margin-bottom:8px}
+.a2-card h5{font-size:1.05rem;color:var(--c,var(--c5));
+  font-weight:900;margin-bottom:8px;line-height:1.3}
+.a2-card p{font-size:.85rem;line-height:1.5;color:var(--text)}
+
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.advice-card{background:var(--surface);border:3px solid #000;
+  padding:20px 16px;text-align:center;position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--c3))}
+.advice-card .n{font-family:'Press Start 2P',monospace;font-size:1.6rem;
+  color:var(--c,var(--c3));line-height:1}
+.advice-card h5{font-weight:900;font-size:1.05rem;color:var(--text);margin:10px 0 8px}
+.advice-card p{font-size:.85rem;line-height:1.55;color:var(--dim)}
+
+.cmp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.cmp-tile{background:var(--surface);border:3px solid #000;
+  padding:18px 16px;text-align:center;position:relative;
+  box-shadow:4px 4px 0 var(--c,var(--c5))}
+.cmp-tile.star{background:var(--c2);box-shadow:4px 4px 0 var(--c3);transform:scale(1.06)}
+.cmp-tile .nm{font-family:'Press Start 2P',monospace;font-size:.85rem;
+  color:var(--c,var(--c5));margin-bottom:8px;line-height:1.3}
+.cmp-tile.star .nm{color:#000}
+.cmp-tile .when{font-size:.85rem;line-height:1.5;color:var(--text)}
+.cmp-tile.star .when{color:#000}
+.cmp-tile .ribbon{position:absolute;top:-12px;right:-8px;
+  background:var(--c3);color:#fff;padding:3px 10px;
+  font-size:.65rem;font-weight:700;
+  font-family:'Press Start 2P',monospace;border:2px solid #000}
+
+.closing{align-items:center;justify-content:center;text-align:center}
+.closing h2{font-weight:900;font-size:clamp(2.6rem,5.5vw,5rem);line-height:1.2;
+  color:var(--c5);margin-bottom:24px;letter-spacing:-.02em;text-shadow:4px 4px 0 #000}
+.closing h2 .em{color:var(--c3)}
+.closing .signoff{font-size:1.25rem;color:var(--c2);margin-bottom:32px;font-weight:700}
+.closing .qr-row{display:flex;gap:24px;align-items:center;margin-top:32px;flex-wrap:wrap;justify-content:center}
+.closing .url-box{background:var(--surface);border:3px solid #000;
+  padding:14px 22px;font-family:'Press Start 2P',monospace;font-size:.65rem;
+  box-shadow:4px 4px 0 var(--c5);color:var(--text);line-height:1.8}
+.closing .url-box b{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;color:var(--c2)}
+
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 4vw}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .three-col,.cmp-row,.a2-grid,.advice-grid,.scenario-fan{grid-template-columns:1fr 1fr}
+  .step-row{grid-template-columns:repeat(3,1fr)}
+  .speaker{max-width:80%}
+  .cover-deco{display:none}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- SLIDE 1 — COVER -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="gem-icon"></div><div class="gem-icon" style="background:var(--c1)"></div></div>
+  <div class="cover-deco tr"><div class="coin"></div><div class="coin"></div></div>
+  <div class="cover-deco bl"><div class="pixel-heart"></div><div class="pixel-heart"></div></div>
+  <div class="cover-deco br"><div class="stage-portal">▶ GEM ON</div></div>
+
+  <span class="badge slide-up">六年級資訊科技 · 故事生圖 Gem 機器人</span>
+  <h1 class="slide-up d1">Gem<span class="accent">×</span>Q 版繪本</h1>
+  <p class="sub slide-up d2">在 Gemini 裡養一隻「會自己寫劇本＋畫漫畫」的<b style="color:var(--c2)">客製化機器人</b>，主角永遠不變裝！</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026</span>
+    <span>40–60 分鐘</span>
+  </div>
+</section>
+
+<!-- SLIDE 2 — HOOK -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div style="margin-top:14vh">
+    <p class="eyebrow pop-in">想像一下…</p>
+    <p class="hook-quote pop-in d1">
+      你用 AI 畫了 4 張繪本，<br>
+      主角的<span class="em">帽子</span>、<span class="em">衣服</span>、<span class="em">髮型</span>，<br>
+      <span class="em2">每張都不一樣</span>！
+    </p>
+    <p class="lead slide-up d2" style="margin-top:32px;font-size:1.2rem">
+      讓 AI 連續畫 4 幕 Q 版繪本，最大的悲劇就是<b>主角每幕都變裝</b>。<br>
+      解法是 — 在 Gemini 裡建立一隻<b style="color:var(--c5)">「Gem 機器人」</b>，<br>
+      <span style="color:var(--c2);font-weight:900">讓它永遠記得「主角戴黃星帽、穿紅吊帶褲、肩上有小綠龍」！</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎨</div>
+    <div class="bubble">嗨，六甲！今天我們要做一隻<b>自己專屬的 AI 小幫手</b>，永遠記得「你要畫的主角長什麼樣」。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- SLIDE 3 — WHAT IS GEM -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · Gem 是什麼 / WHAT</span>
+  <p class="eyebrow slide-up">Gem 是什麼？</p>
+  <h2 class="title-lg slide-up d1">Gem ＝ Gemini 裡的<br><span class="accent-purple">「專屬客製化機器人」</span>。</h2>
+  <div class="two-col">
+    <div class="px-box purple slide-up d2">
+      <h3 style="color:var(--c5);font-size:1.4rem;font-weight:900;margin-bottom:14px">🔍 核心定義</h3>
+      <p class="lead" style="font-size:1.05rem">
+        你<b>設定一次「角色＋指令」</b>，它就<br><b style="color:var(--c4)">永遠記住自己是誰</b>，<br>
+        每次都會以同一個專家口吻幫你工作。
+      </p>
+      <p class="lead" style="font-size:1rem;margin-top:12px;color:var(--dim)">
+        💡 <b style="color:var(--c2)">所有 Google 帳戶都能免費建立</b>，13 歲以上適用。
+      </p>
+    </div>
+    <div class="px-box yellow slide-up d2">
+      <h3 style="color:var(--c2);font-size:1.4rem;font-weight:900;margin-bottom:14px">☕ 飲料店比喻</h3>
+      <p class="lead" style="font-size:1rem">
+        <b>一般 Gemini</b>：你每次去都要重講「珍奶半糖少冰」<br><br>
+        <b style="color:var(--c5)">Gem</b>：認識你的老店長 — 你說「嗨～」<br>店長就回「老樣子，珍奶半糖少冰、加珍珠！」
+      </p>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:24px;color:var(--dim);text-align:center;font-size:1.05rem">
+    💡 <b style="color:var(--c2)">什麼時候值得做 Gem？</b>「<b>會重複做很多次的工作</b>」（畫繪本、寫日記、出考題、翻譯…）
+  </p>
+  <div class="speaker">
+    <div class="avatar">🤖</div>
+    <div class="bubble">Gem 不是「<b>更強的 AI</b>」，是「<b>客製化的 AI</b>」 — 把 Gemini 變成只做某件事的專家。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- SLIDE 4 — WHY THREE PILLARS -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 三大骨架 / PILLARS</span>
+  <p class="eyebrow slide-up">提示詞三大骨架</p>
+  <h2 class="title-md slide-up d1">一個好的 Gem ＝ <span class="accent-yellow">三大骨架</span>，<br>缺一不可。</h2>
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c5)">
+      <div class="ico">🎭</div>
+      <div class="h">① 角色定位</div>
+      <p class="b">＝ 發劇本<br>告訴 AI「<b>你是誰</b>」「要做什麼」<br><br><b>例：</b>你是一位專業的「Q 版繪本創作導演」。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c4)">
+      <div class="ico">🚦</div>
+      <div class="h">② SOP 流程</div>
+      <p class="b">＝ 規定走位<br>每一步要做什麼、何時暫停<br><br><b>例：</b>先寫劇本暫停 → 等我輸入「1」才畫第一幕。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c2)">
+      <div class="ico">⚓</div>
+      <div class="h">③ 一致性錨點</div>
+      <p class="b">＝ 發披風皇冠<br>讓主角每幕都長得一樣<br><br><b>例：</b>永遠戴黃星帽、穿紅吊帶褲、肩上有小綠龍。</p>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:30px;color:var(--dim);text-align:center;font-size:1.05rem">
+    💡 想像你在當「話劇導演」 — Gem 提示詞 ＝ 給 AI 演員的<b style="color:var(--c2)">完整劇本包</b>。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎬</div>
+    <div class="bubble">這三件事缺一不可。<b>沒角色 → AI 沒方向；沒 SOP → 配額用光；沒錨點 → 主角變裝</b>。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- SLIDE 5 — ANCHOR TRIO -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 一致性錨點 / ANCHOR</span>
+  <p class="eyebrow slide-up">一致性錨點三件套</p>
+  <h2 class="title-md slide-up d1">最重要的骨架 ─<br><span class="accent-purple">服裝＋顏色＋配件</span>，主角招牌制服。</h2>
+  <div class="scenario-fan">
+    <div class="scenario-card pop-in d1" style="--c:var(--c1)">
+      <div class="num">1</div>
+      <div class="icon">👕</div>
+      <h4>服裝</h4>
+      <p>主角穿什麼？<br><b>例：</b>紅色吊帶褲 / 太空衣 / 校服 / 巫師袍</p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--c3)">
+      <div class="num">2</div>
+      <div class="icon">🎨</div>
+      <h4>主要顏色</h4>
+      <p>整體用色基調？<br><b>例：</b>紅黃對比 / 粉嫩柔色 / 黑白簡約</p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--c2)">
+      <div class="num">3</div>
+      <div class="icon">👑</div>
+      <h4>永久配件</h4>
+      <p>每幕都會出現的標誌？<br><b>例：</b>黃色星星帽 / 肩上小綠龍 / 紅圍巾</p>
+    </div>
+  </div>
+  <div class="px-box yellow slide-up d2" style="margin-top:24px">
+    <h3 style="color:var(--c2);font-size:1.2rem;font-weight:900;margin-bottom:10px">🌐 為什麼錨點要用英文寫？</h3>
+    <p class="lead" style="font-size:1.05rem">
+      畫圖模型 Nano Banana 2 的訓練資料<b>多是英文標籤</b>。<br>
+      錨點寫成 <b style="color:var(--c5)">highly detailed collectible vinyl toy style, chibi aesthetics</b> 比中文「Q 版風格」更精準！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚓</div>
+    <div class="bubble">記住三件套：<b>服裝、顏色、配件</b>。寫進 Gem 提示詞，主角就<b>永遠不變裝</b>。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- SLIDE 6 — SOP DEMO -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · SOP 流程 / FLOW</span>
+  <p class="eyebrow slide-up">標準互動流程</p>
+  <h2 class="title-md slide-up d1">Gem 跟你玩「<span class="accent-green">三階段接力賽</span>」 ─ <br>每階段暫停，等你回應才繼續。</h2>
+  <div class="two-col">
+    <div class="slide-up d2">
+      <div class="px-box cyan" style="margin-bottom:14px">
+        <h3 style="color:var(--c1);font-size:1.15rem;font-weight:900;margin-bottom:8px">📍 第一階段｜需求確認</h3>
+        <p class="lead" style="font-size:1rem">Gem 問你「故事主題 + 幾幕？」<br><b>【暫停】</b>等你回覆。</p>
+      </div>
+      <div class="px-box pink" style="margin-bottom:14px">
+        <h3 style="color:var(--c3);font-size:1.15rem;font-weight:900;margin-bottom:8px">📍 第二階段｜劇本＋提示詞</h3>
+        <p class="lead" style="font-size:1rem">產出每幕中文大綱 + 英文生圖提示詞。<br><b>【絕對暫停】</b>等你輸入「1」才畫。</p>
+      </div>
+      <div class="px-box green">
+        <h3 style="color:var(--c4);font-size:1.15rem;font-weight:900;margin-bottom:8px">📍 第三階段｜逐幕生成</h3>
+        <p class="lead" style="font-size:1rem">輸入 <b>1, 2, 3, 4</b> 對應 4 幕。<br>滿意？下一幕；不滿意？說「保留主角，改 X」。</p>
+      </div>
+    </div>
+    <div class="px-box yellow slide-up d2">
+      <h3 style="color:var(--c2);font-size:1.3rem;font-weight:900;margin-bottom:14px">⚠️ 為什麼要「絕對暫停」？</h3>
+      <p class="lead" style="font-size:1.05rem">
+        免費版 Gemini <b>每天只能生 20 張圖</b>！<br><br>
+        如果不寫【絕對暫停】，Gem 會<br><b>一口氣把 4 幕都畫了</b>，劇本根本還沒確認。<br><br>
+        <b style="color:var(--c3)">配額一秒用光，整天玩完！</b>
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛑</div>
+    <div class="bubble">「<b>【絕對暫停】等我輸入 1</b>」這句話<b>是防呆神器</b> — 一定要寫進 Gem 提示詞。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- SLIDE 7 — 9 STEPS -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 操作 / SOP</span>
+  <p class="eyebrow slide-up">9 步驟動手建立 Gem</p>
+  <h2 class="title-md slide-up d1">記住這 9 步，<br>下節課<span class="accent-yellow">10 分鐘</span>就能建好你的 Gem。</h2>
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c1)"><span class="n">1</span><span class="t">輸入<br>gemini<br>.google<br>.com</span></div>
+    <div class="step-item pop-in d1" style="--c:var(--c1)"><span class="n">2</span><span class="t">左下<br>Gem 管理<br>工具</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c2)"><span class="n">3</span><span class="t">點<br>+ 新增<br>Gem</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c2)"><span class="n">4</span><span class="t">命名 +<br>寫描述</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c5)"><span class="n">5</span><span class="t">貼入<br>老師<br>範本</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c5)"><span class="n">6</span><span class="t">右上角<br>儲存 ⭐</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c4)"><span class="n">7</span><span class="t">回對話<br>輸入<br>主題</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c4)"><span class="n">8</span><span class="t">看劇本<br>OK<br>輸入 1</span></div>
+    <div class="step-item pop-in d5" style="--c:var(--c3)"><span class="n">9</span><span class="t">2/3/4<br>連續生<br>或微調</span></div>
+  </div>
+  <div class="two-col slide-up d2" style="margin-top:24px">
+    <div class="px-box pink">
+      <h3 style="color:var(--c3);font-size:1.2rem;font-weight:900;margin-bottom:10px">⚠️ 第 6 步很重要！</h3>
+      <p class="lead" style="font-size:1.05rem"><b>「儲存」</b>沒按 → Gem 不會被建立 → 你下次來找不到它！老師巡班<b>第一個檢查</b>就是這個。</p>
+    </div>
+    <div class="px-box green">
+      <h3 style="color:var(--c4);font-size:1.2rem;font-weight:900;margin-bottom:10px">💡 第 9 步微調訣竅</h3>
+      <p class="lead" style="font-size:1.05rem">不滿意主角的帽子？說「<b>保持主角不變，把帽子改成黃色星星帽</b>」— 不要按「重新生成」會整張變！</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛠️</div>
+    <div class="bubble">9 步聽起來多，但真的<b>10 分鐘</b>就能跑完。最常出錯：<b>沒按儲存</b>、<b>錨點 [填入] 沒換</b>。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- SLIDE 8 — APPLICATION -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 應用 / SCENARIOS</span>
+  <p class="eyebrow slide-up">不只繪本！Gem 還能做這些</p>
+  <h2 class="title-md slide-up d1">建一隻 Gem，<br>能解決<span class="accent-cyan">5 大重複性作業</span>。</h2>
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c5)">
+      <div class="ico">🎨</div>
+      <h5>① Q 版<br>繪本創作</h5>
+      <p>本日主角。4 幕主角不變裝，<b>送給家人朋友</b>的最佳禮物。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">📝</div>
+      <h5>② 日記<br>陪伴</h5>
+      <p>「同樣口吻」記錄每天 — 讓 Gem 變你的<b>專屬筆友</b>。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c4)">
+      <div class="ico">📋</div>
+      <h5>③ 出題<br>機器</h5>
+      <p>讓 Gem 變「<b>數學出題老師</b>」— 想練幾題就生幾題。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c3)">
+      <div class="ico">🌐</div>
+      <h5>④ 中翻<br>英助理</h5>
+      <p>固定風格的翻譯 — 信件、作業說明都統一語氣。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c1)">
+      <div class="ico">📚</div>
+      <h5>⑤ 讀書<br>講解員</h5>
+      <p>把難懂的課本內容<b>用同樣方式拆解</b>給你聽。</p>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem;color:var(--dim)">
+    💡 <b style="color:var(--c2)">關鍵：</b>會「<b>重複做」的工作</b>，就值得做 Gem。每次都不一樣的任務，用一般 Gemini 就好。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🚀</div>
+    <div class="bubble">你可以同時養好幾隻 Gem — 每隻專長不同。<b>30 隻學生 ＝ 30 隻不一樣的繪本 Gem</b>！</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- SLIDE 9 — COMPARE -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">Gem vs 其他 AI 工具</p>
+  <h2 class="title-md slide-up d1">沒有「最強的 AI」，<br>只有<span class="accent-purple">「最對的場合」</span>。</h2>
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--c1)">
+      <div class="nm">一般 Gemini</div>
+      <div class="when"><b>每次重新開始</b><br><br>🎯 <b>單次查詢</b>／隨機畫圖</div>
+    </div>
+    <div class="cmp-tile pop-in d2" style="--c:var(--c3)">
+      <div class="nm">ChatGPT GPTs</div>
+      <div class="when"><b>類似 Gem，但要付費</b><br><br>🎯 ChatGPT Plus 用戶<b>客製化助手</b></div>
+    </div>
+    <div class="cmp-tile pop-in d3" style="--c:var(--c4)">
+      <div class="nm">Canva Magic</div>
+      <div class="when"><b>單張圖排版整合強</b><br><br>🎯 <b>海報、簡報</b>一站完成</div>
+    </div>
+    <div class="cmp-tile star pop-in d4">
+      <div class="ribbon">本日主角</div>
+      <div class="nm">Gemini Gem</div>
+      <div class="when"><b>免費 + 連續 + 一致性</b><br><br>🎯 <b>連環繪本／重複性任務</b></div>
+    </div>
+  </div>
+  <div class="px-box pink slide-up d2" style="margin-top:30px;text-align:center">
+    <h3 style="color:var(--c3);font-size:1.2rem;font-weight:900;margin-bottom:8px">⚖️ 黃金法則</h3>
+    <p class="lead" style="font-size:1.1rem">
+      要<b>連環一致的多張圖</b>用 <b>Gem</b>；<br>
+      要<b>一張完美海報</b>用 Canva；<br>
+      要<b>單次對話 / 查資料</b>用一般 Gemini ／ ChatGPT。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤝</div>
+    <div class="bubble">Gem 不是「<b>替代</b>」其他 AI — 是「<b>加碼</b>」一個會記憶的專家。<b>各有各的用途</b>！</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- SLIDE 10 — SAFETY -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 注意 / SAFETY</span>
+  <p class="eyebrow slide-up">用 AI 生圖的雙面刃</p>
+  <h2 class="title-md slide-up d1">Gem 很強，<br>但有些事<span class="accent-pink">絕對不能做</span>。</h2>
+  <div class="two-side">
+    <div class="side-card good pop-in d1">
+      <div class="ribbon">✓ 可以做</div>
+      <h4>合理且安全的用法</h4>
+      <ul class="bullet-list green" style="font-size:1rem">
+        <li>用<b>虛擬主角</b>做 Q 版繪本</li>
+        <li>幫<b>家人朋友</b>客製化故事（先描述外表，不上傳真照）</li>
+        <li>練<b>自然 / 社會作業</b>的視覺化講解</li>
+        <li>幫<b>校刊 / 班級活動</b>做插圖</li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 絕對不能</div>
+      <h4>會惹麻煩的事</h4>
+      <ul class="bullet-list pink" style="font-size:1rem">
+        <li><b>真實姓名 / 學校 / 地址 / 電話</b>絕不放進 Gem 對話</li>
+        <li>未經<b>同學同意</b>用他的照片做 Gem 主角</li>
+        <li>假裝 AI 圖是<b>自己親手畫的</b>（SynthID 浮水印可被驗）</li>
+        <li>把 Gem 當<b>抄作業機器</b>（會被老師看穿）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="px-box yellow slide-up d2" style="margin-top:24px">
+    <h3 style="color:var(--c2);font-size:1.1rem;font-weight:900;margin-bottom:10px">🛡️ Google 三大保護機制</h3>
+    <p class="lead" style="font-size:1.02rem">
+      <b>(1)</b> Gem 對話<b>不會公開</b>　<b>(2)</b> 所有 AI 圖都有<b style="color:var(--c1)">隱形 SynthID 浮水印</b>　<b>(3)</b> 拒絕生成<b>名人 / 不雅</b>內容
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛡️</div>
+    <div class="bubble">最重要：<b>對話絕不放真實個資</b>。Google 條款雖然保護，但<b>謹慎是最好的習慣</b>。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- SLIDE 11 — TASK -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 課後實作 / TASK</span>
+  <p class="eyebrow slide-up">課後實作任務</p>
+  <h2 class="title-md slide-up d1">回家做出<span class="accent-cyan">第一本 Q 版 AI 繪本</span>，<br>下節課分享！</h2>
+  <div class="scenario-fan">
+    <div class="scenario-card pop-in d1" style="--c:var(--c1)">
+      <div class="num">1</div>
+      <div class="icon">📝</div>
+      <h4>想故事主題</h4>
+      <p>例：上學遲到記、拯救宇宙的貓咪、會說話的橡皮擦、魔法布丁。告訴 Gem 主題後讓它寫 4 幕劇本。</p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--c5)">
+      <div class="num">2</div>
+      <div class="icon">🎨</div>
+      <h4>跑 4 幕生圖</h4>
+      <p>確認劇本後依序輸入 1 → 2 → 3 → 4。注意<b>每幕主角是否一致</b>！</p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--c4)">
+      <div class="num">3</div>
+      <div class="icon">📊</div>
+      <h4>做成簡報</h4>
+      <p>4 張圖貼到 Google Slides，每張一頁配故事文字。下節課分享 + 自評一致性 1-10 分。</p>
+    </div>
+  </div>
+  <div class="px-box yellow slide-up d2" style="margin-top:24px">
+    <h3 style="color:var(--c2);font-size:1.2rem;font-weight:900;margin-bottom:10px">🏆 下節課票選兩大獎</h3>
+    <p class="lead" style="font-size:1.05rem">
+      <b>「最可愛角色獎」</b>：誰的 Q 版主角最萌？<br>
+      <b>「最神準一致性獎」</b>：誰的 4 張圖主角<b>細節都一致</b>（不變裝、不換髮型、配件都在）？
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🏆</div>
+    <div class="bubble">這個作業很好玩 — <b>不像「作業」</b>，比較像「禮物」。做完記得 Show 給家人看！</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- SLIDE 12 — LITERACY -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / LITERACY</span>
+  <p class="eyebrow slide-up">資訊科技核心素養</p>
+  <h2 class="title-md slide-up d1">學 Gem 練的不只是「畫圖」，<br>是<span class="accent-purple">「跟 AI 共生」的 5 大能力</span>。</h2>
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">📝</div>
+      <h5>① 系統化<br>表達力</h5>
+      <p>角色＋SOP＋錨點三大骨架 — <b>結構化思考</b>的最佳練習。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🛠️</div>
+      <h5>② 工具<br>客製力</h5>
+      <p>不只用工具，是<b>改造工具</b>變成自己的助手 — 未來職場關鍵能力。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c4)">
+      <div class="ico">🔧</div>
+      <h5>③ 故障<br>排除力</h5>
+      <p>主角變裝？配額用光？— 知道<b>哪裡寫錯</b>並修好的能力。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c3)">
+      <div class="ico">🛡️</div>
+      <h5>④ 倫理<br>判斷力</h5>
+      <p>什麼能放進 Gem、什麼不能 — 隱私、版權、AI 標示。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c5)">
+      <div class="ico">🎨</div>
+      <h5>⑤ 創意<br>協作力</h5>
+      <p>故事是你的、Gem 是工具 — <b>創意人＋技術助手</b>的協作模式。</p>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem">
+    💡 <b style="color:var(--c2)">這 5 件事 10 年後還會有用</b>。<br>
+    <span style="color:var(--dim)">Gem 工具會換，但「結構化、客製化、排錯、倫理、協作」永遠是好習慣。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">「會用 Gem」其實是「<b>會設計流程</b>」 — 這個能力放到任何工作都好用。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- SLIDE 13 — 5 ADVICE -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給六年級的 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">回家動手做之前，<br>記住<span class="accent-pink">這 5 件事</span>。</h2>
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c3)">
+      <div class="n">01</div>
+      <h5>記得<br>按「儲存」</h5>
+      <p>第 6 步沒按 → Gem <b>沒被建立</b>！老師巡班<b>第一個檢查</b>就是這個。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>錨點<br>三件套</h5>
+      <p>服裝＋顏色＋配件，<b>缺一不可</b>。沒有錨點，主角每幕都變裝。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c4)">
+      <div class="n">03</div>
+      <h5>絕對<br>暫停</h5>
+      <p>「【絕對暫停】等我輸入 1」— <b>沒寫配額會被一口氣用光</b>。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c1)">
+      <div class="n">04</div>
+      <h5>不放<br>個資</h5>
+      <p>真實姓名 / 學校 / 同學照片絕不進 Gem 對話。<b>謹慎是好習慣</b>。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>故事<br>是你的</h5>
+      <p>Gem 是<b>畫圖工具</b>，<b>故事創意是你的</b>。不要讓 AI 幫你想題目。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事適用所有 AI 客製化工具 — 不只 Gem，<b>適用未來 30 年</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- SLIDE 14 — CLOSING -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="gem-icon"></div></div>
+  <div class="cover-deco tr"><div class="coin"></div></div>
+  <div class="cover-deco bl"><div class="pixel-heart"></div><div class="pixel-heart"></div></div>
+  <div class="cover-deco br"><div class="stage-portal">▶ CLEAR!</div></div>
+
+  <h2 class="slide-up">當主角每幕都一樣，<br>故事就有<span class="em">生命</span>。</h2>
+  <p class="signoff slide-up d1">把 Gemini 變成你的專屬畫師 — 這是 2026 年六年級該有的能力。</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/gem-storymaker/</b>
+    </div>
+    <div class="url-box">
+      🎬 NotebookLM 自學影片<br>
+      <b>youtu.be/HDLCBMJOwHE</b>
+    </div>
+  </div>
+
+  <p style="margin-top:42px;font-family:'Press Start 2P',monospace;color:var(--dim);font-size:.65rem;letter-spacing:.1em">
+    Q&A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Press Start 2P',monospace;color:var(--c3);font-size:.85rem;letter-spacing:.05em;text-shadow:3px 3px 0 #000">THANK YOU · 謝謝六甲</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div>
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'故事生圖 Gem 機器人 · Q 版繪本創作'},
+  {n:2,  t:'開場暖身',       s:'從「主角每幕都變裝」的悲劇開始'},
+  {n:3,  t:'Gem 是什麼',     s:'飲料店老店長比喻 · 客製化 AI 機器人'},
+  {n:4,  t:'三大骨架',       s:'角色定位 · SOP 流程 · 一致性錨點'},
+  {n:5,  t:'一致性錨點三件套', s:'服裝 + 顏色 + 配件，主角招牌制服'},
+  {n:6,  t:'SOP 流程',       s:'三階段接力賽 + 絕對暫停防呆'},
+  {n:7,  t:'9 步驟建立 Gem', s:'從輸入網址到生第一幕圖'},
+  {n:8,  t:'5 大應用情境',   s:'不只繪本！日記、出題、翻譯、講解都能做'},
+  {n:9,  t:'與其他工具比較', s:'Gemini vs GPTs vs Canva 各有強項'},
+  {n:10, t:'倫理與安全',     s:'可以做 vs 不能做 + SynthID 浮水印'},
+  {n:11, t:'課後實作任務',   s:'回家做一本 4 幕 Q 版繪本'},
+  {n:12, t:'5 大核心素養',   s:'表達 · 客製 · 排錯 · 倫理 · 創意協作'},
+  {n:13, t:'5 個叮嚀',       s:'儲存、錨點、暫停、個資、創意'},
+  {n:14, t:'結語 + Q&A',     s:'駕駛艙 + NLM 自學影片'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active', i === idx));
+  curIdx = idx;
+  document.getElementById('progress-fill').style.width = ((idx+1)/N*100) + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s,i)=>{
+  const c = document.createElement('div');
+  c.className = 'ov-card';
+  c.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  c.onclick = ()=>{ goSlide(i); toggleOverview(); };
+  ovGrid.appendChild(c);
+});
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(['Escape','m','M'].includes(e.key)){
+      document.getElementById('overview').classList.remove('show'); e.preventDefault();
+    }
+    return;
+  }
+  const k = e.key;
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(k)){ next(); e.preventDefault(); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ prev(); e.preventDefault(); }
+  else if(k === 'Home'){ goSlide(0); e.preventDefault(); }
+  else if(k === 'End'){ goSlide(N-1); e.preventDefault(); }
+  else if(['m','M'].includes(k)){ toggleOverview(); e.preventDefault(); }
+  else if(['f','F'].includes(k)){ toggleFullscreen(); e.preventDefault(); }
+  else if(['s','S'].includes(k)){ toggleSpeaker(); e.preventDefault(); }
+  else if(/^[1-9]$/.test(k)){
+    const t = parseInt(k)-1;
+    if(t < N){ goSlide(t); e.preventDefault(); }
+  }
+});
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next(); else prev();
+});
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+const m = location.hash.match(/^#s(\d+)$/);
+if(m){ const i = parseInt(m[1])-1; if(i >= 0 && i < N) goSlide(i); }
+</script>
+</body>
+</html>

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>滑手機前先想一下｜數位安全小公民演講簡報</title>
+<meta name="description" content="五年級資訊科技｜數位安全 4 大關卡：演算法成癮、拍照分享、App 帳號、求救站。comic-soft 漫畫風 × 14 張投影片。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Bungee&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#fff9f0; --surface:#fff3e0; --panel:#ffffff;
+  --c1:#e94057; --c2:#ffa94d; --c3:#51cf66; --c4:#4dabf7; --c5:#9775fa;
+  --text:#3d3d3d; --dim:#888; --border:#2c2c2c;
+}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:9990;
+  pointer-events:none;opacity:.06;
+  background-image:radial-gradient(circle,var(--border) 1px,transparent 1.5px);
+  background-size:10px 10px;
+}
+
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  padding:5vh 6vw;
+  opacity:0;transition:opacity .4s;
+  background:var(--bg);
+}
+.slide.active{display:flex;opacity:1}
+
+.slide-num{position:absolute;bottom:24px;right:32px;font-family:'Bungee',sans-serif;font-size:.95rem;color:var(--dim);letter-spacing:.1em;z-index:5;}
+.slide-title-tag{position:absolute;top:28px;left:32px;font-family:'Bungee',sans-serif;font-size:.72rem;letter-spacing:.18em;color:#fff;background:var(--c1);padding:5px 12px;border:2px solid var(--border);box-shadow:3px 3px 0 var(--border);z-index:5;}
+
+.title-xl{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(3rem,7vw,6rem);line-height:1.05;letter-spacing:-.02em;color:var(--text);}
+.title-lg{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(2.4rem,5vw,4.5rem);line-height:1.1;color:var(--text);}
+.title-md{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.2;color:var(--text);}
+.eyebrow{font-family:'Bungee',sans-serif;font-size:1rem;letter-spacing:.16em;color:var(--c1);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:14px;}
+.eyebrow::after{content:'';flex:1;height:3px;background:var(--c1);max-width:180px}
+.lead{font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.75;color:var(--text);max-width:1100px;}
+.lead b{color:var(--c1);font-weight:900}
+.accent-1{color:var(--c1);font-weight:900}.accent-2{color:var(--c2);font-weight:900}.accent-3{color:var(--c3);font-weight:900}.accent-4{color:var(--c4);font-weight:900}.accent-5{color:var(--c5);font-weight:900}
+
+.speech-bubble{background:#fff;border:3px solid var(--border);padding:14px 20px;border-radius:24px;position:relative;box-shadow:5px 5px 0 var(--border);font-size:1.1rem;font-weight:600;}
+.speech-bubble::after{content:'';position:absolute;bottom:-18px;left:36px;width:0;height:0;border:12px solid transparent;border-top:18px solid #fff;border-right:0}
+.speech-bubble::before{content:'';position:absolute;bottom:-22px;left:34px;width:0;height:0;border:14px solid transparent;border-top:22px solid var(--border);border-right:0}
+
+.speaker{position:absolute;bottom:20px;left:32px;display:flex;align-items:flex-end;gap:14px;z-index:8;max-width:55%;}
+.speaker .avatar{width:64px;height:64px;flex-shrink:0;background:var(--c2);border:3px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:4px 4px 0 var(--border);}
+.speaker .bubble{background:#fff;border:3px solid var(--border);padding:10px 16px;border-radius:18px;font-size:.95rem;font-weight:600;position:relative;box-shadow:4px 4px 0 var(--border);max-width:520px;line-height:1.5;}
+.speaker .bubble::before{content:'';position:absolute;left:-14px;bottom:16px;width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent var(--border) transparent transparent;}
+.speaker .bubble::after{content:'';position:absolute;left:-10px;bottom:16px;width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;border-color:transparent #fff transparent transparent;}
+
+.comic-panel{background:#fff;border:3px solid var(--border);padding:18px 22px;position:relative;box-shadow:6px 6px 0 var(--border);border-radius:6px;}
+.comic-panel.c1{box-shadow:6px 6px 0 var(--c1)}
+.comic-panel.c2{box-shadow:6px 6px 0 var(--c2)}
+.comic-panel.c3{box-shadow:6px 6px 0 var(--c3)}
+.comic-panel.c4{box-shadow:6px 6px 0 var(--c4)}
+.comic-panel.c5{box-shadow:6px 6px 0 var(--c5)}
+
+@keyframes sfxPop{0%{transform:scale(.5) rotate(-5deg);opacity:0}60%{transform:scale(1.2) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+.sfx{font-family:'Bungee',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);color:#fff;text-shadow:4px 4px 0 var(--border);letter-spacing:.04em;display:inline-block;background:var(--c1);padding:10px 24px;border:3px solid var(--border);transform:rotate(-3deg);box-shadow:5px 5px 0 var(--border);clip-path:polygon(0 10%,8% 0,30% 5%,50% 0,70% 8%,90% 0,100% 12%,96% 50%,100% 88%,85% 100%,60% 96%,40% 100%,15% 96%,0 90%);}
+.sfx.c2{background:var(--c2)}.sfx.c3{background:var(--c3)}.sfx.c4{background:var(--c4)}.sfx.c5{background:var(--c5)}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:5px;background:#f0e8d8;z-index:99;}
+.progress-fill{height:100%;background:var(--c1);transition:width .4s;box-shadow:0 0 8px var(--c1);}
+
+.hint{position:fixed;top:14px;right:24px;z-index:99;font-family:'Bungee',sans-serif;font-size:.72rem;color:var(--dim);background:#fff;border:2px solid var(--border);padding:5px 12px;letter-spacing:.05em;pointer-events:none;opacity:.85;box-shadow:2px 2px 0 var(--border);}
+.kbd{display:inline-block;padding:2px 7px;background:var(--border);color:var(--c2);font-family:'Bungee',monospace;font-size:.78em;margin:0 2px;}
+
+.overview{position:fixed;inset:0;background:var(--text);display:none;padding:32px;overflow-y:auto;z-index:200;flex-direction:column;}
+.overview.show{display:flex}
+.overview h3{font-family:'Bungee',sans-serif;color:var(--c2);font-size:1.4rem;margin-bottom:18px;letter-spacing:.05em;}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.ov-card{background:var(--bg);border:3px solid var(--c2);padding:14px 16px;cursor:pointer;transition:.15s;position:relative;border-radius:8px;}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--c1)}
+.ov-card .num{position:absolute;top:8px;right:10px;font-family:'Bungee',sans-serif;font-size:.85rem;color:var(--c1);}
+.ov-card .t{font-family:'Noto Sans TC';font-weight:900;font-size:1.05rem;color:var(--c4);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;margin-top:22px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:22px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:22px}
+
+.tag{display:inline-block;padding:6px 14px;background:var(--c2);color:#fff;border:2px solid var(--border);border-radius:16px;font-weight:700;font-size:.95rem;box-shadow:2px 2px 0 var(--border);margin:4px 6px 4px 0;}
+.tag.t1{background:var(--c1)}.tag.t3{background:var(--c3)}.tag.t4{background:var(--c4)}.tag.t5{background:var(--c5)}
+
+.pillar{background:#fff;border:3px solid var(--border);padding:22px 20px;text-align:center;position:relative;border-radius:10px;box-shadow:6px 6px 0 var(--c,var(--c1));}
+.pillar .ico{width:78px;height:78px;background:var(--c,var(--c1));border:3px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:2.4rem;box-shadow:3px 3px 0 var(--border);}
+.pillar .h{font-family:'Noto Sans TC';font-weight:900;font-size:1.3rem;color:var(--c,var(--c1));margin-bottom:10px;}
+.pillar .b{font-size:.98rem;line-height:1.6;color:var(--text)}
+
+.stat-card{background:#fff;border:3px solid var(--border);padding:22px 24px;text-align:center;box-shadow:6px 6px 0 var(--c,var(--c1));flex:1;min-width:200px;border-radius:8px;}
+.stat-card .n{font-family:'Bungee',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;color:var(--c,var(--c1));}
+.stat-card .l{font-size:.95rem;color:var(--dim);margin-top:6px;letter-spacing:.05em;}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(.98rem,1.3vw,1.18rem);line-height:1.7;margin-bottom:12px;}
+.bullet-list li::before{content:'';flex-shrink:0;width:24px;height:24px;background:var(--c4);border:2px solid var(--border);border-radius:50%;margin-top:6px;box-shadow:2px 2px 0 var(--border);}
+.bullet-list.red li::before{background:var(--c1)}
+.bullet-list.green li::before{background:var(--c3)}
+.bullet-list.orange li::before{background:var(--c2)}
+.bullet-list.purple li::before{background:var(--c5)}
+
+/* Warning panel */
+.warning-panel{background:#fff5f5;border:4px solid var(--c1);padding:20px 22px;position:relative;border-radius:10px;box-shadow:6px 6px 0 var(--border);}
+.warning-panel::before{content:'⚠';position:absolute;top:-22px;left:18px;background:var(--c1);color:#fff;width:44px;height:44px;border:3px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;box-shadow:3px 3px 0 var(--border);}
+.warning-panel h4{font-family:'Noto Sans TC';font-weight:900;color:var(--c1);font-size:1.2rem;margin:6px 0 10px 36px}
+
+/* Hook 4 step card */
+.hook-step{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.hook-step .step{background:#fff;border:3px solid var(--border);padding:18px 14px;text-align:center;border-radius:8px;box-shadow:5px 5px 0 var(--c,var(--c1));position:relative}
+.hook-step .step .n{font-family:'Bungee',sans-serif;font-size:2rem;color:var(--c,var(--c1));line-height:1}
+.hook-step .step .emoji{font-size:2.4rem;margin:8px 0}
+.hook-step .step h5{font-family:'Noto Sans TC';font-weight:900;font-size:1.05rem;color:var(--text);margin-bottom:6px;line-height:1.3}
+.hook-step .step p{font-size:.86rem;color:var(--dim);line-height:1.5}
+.hook-step .step::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:var(--border);z-index:2}
+.hook-step .step:last-child::after{display:none}
+
+/* Help line grid */
+.help-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.help-card{background:#fff;border:3px solid var(--border);padding:18px 14px;text-align:center;position:relative;border-radius:10px;box-shadow:5px 5px 0 var(--c,var(--c1));}
+.help-card .num{font-family:'Bungee',sans-serif;font-size:2rem;color:var(--c,var(--c1));line-height:1;}
+.help-card .emoji{font-size:1.8rem;margin:6px 0 4px}
+.help-card h5{font-family:'Noto Sans TC';font-weight:900;font-size:1rem;color:var(--text);margin-bottom:6px;line-height:1.3}
+.help-card p{font-size:.82rem;line-height:1.45;color:var(--dim)}
+
+/* Scenario card */
+.scenario-fan{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px}
+.scenario-card{background:#fff;border:3px solid var(--border);padding:22px 16px;position:relative;box-shadow:6px 6px 0 var(--c,var(--c1));border-radius:10px;}
+.scenario-card .num{position:absolute;top:-16px;left:18px;width:38px;height:38px;background:var(--c,var(--c1));color:#fff;border:3px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bungee',sans-serif;font-size:1.1rem;}
+.scenario-card .icon{font-size:2.4rem;margin-bottom:8px;text-align:center}
+.scenario-card h4{font-family:'Noto Sans TC';font-weight:900;font-size:1.15rem;color:var(--c,var(--c1));margin:8px 0 10px;}
+.scenario-card p{font-size:.92rem;line-height:1.6}
+
+/* Compare */
+.cmp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.cmp-tile{background:#fff;border:3px solid var(--border);padding:18px 14px;text-align:center;position:relative;border-radius:8px;box-shadow:4px 4px 0 var(--c,var(--c4));}
+.cmp-tile.star{background:#fff5e8;box-shadow:5px 5px 0 var(--c1);transform:scale(1.06)}
+.cmp-tile .nm{font-family:'Bungee',sans-serif;font-size:1.3rem;color:var(--c,var(--c4));margin-bottom:8px;}
+.cmp-tile.star .nm{color:var(--c1)}
+.cmp-tile .when{font-size:.85rem;line-height:1.5;color:var(--text);}
+.cmp-tile .ribbon{position:absolute;top:-14px;right:-8px;background:var(--c1);color:#fff;padding:3px 10px;font-size:.72rem;font-weight:700;font-family:'Bungee',sans-serif;letter-spacing:.05em;border:2px solid var(--border);box-shadow:2px 2px 0 var(--border);}
+
+/* Two-side */
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
+.side-card{background:#fff;border:3px solid var(--c,var(--c3));padding:24px 26px;position:relative;border-radius:10px;box-shadow:5px 5px 0 var(--border);}
+.side-card.bad{--c:var(--c1)}
+.side-card .ribbon{position:absolute;top:-14px;left:18px;background:var(--c);color:#fff;padding:4px 14px;border-radius:14px;font-family:'Bungee',sans-serif;font-size:.85rem;border:2px solid var(--border);box-shadow:2px 2px 0 var(--border);}
+.side-card h4{font-family:'Noto Sans TC';font-weight:900;font-size:1.3rem;color:var(--c);margin:8px 0 12px;}
+
+/* A2 grid */
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px;}
+.a2-card{background:#fff;border:3px solid var(--border);padding:18px 14px;position:relative;box-shadow:5px 5px 0 var(--c,var(--c4));border-radius:10px;}
+.a2-card .ico{font-size:1.9rem;margin-bottom:8px;}
+.a2-card h5{font-family:'Noto Sans TC';font-size:1rem;color:var(--c,var(--c4));font-weight:900;margin-bottom:8px;line-height:1.3;}
+.a2-card p{font-size:.85rem;line-height:1.5}
+
+/* Advice */
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.advice-card{background:#fff;border:3px solid var(--border);padding:18px 14px;text-align:center;position:relative;border-radius:10px;box-shadow:6px 6px 0 var(--c,var(--c1));}
+.advice-card .n{font-family:'Bungee',sans-serif;font-size:2.6rem;color:var(--c,var(--c1));line-height:1;}
+.advice-card h5{font-family:'Noto Sans TC';font-weight:900;font-size:1.05rem;color:var(--text);margin:10px 0 8px;line-height:1.3;}
+.advice-card p{font-size:.85rem;line-height:1.55}
+
+/* Cover */
+.cover{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fff9f0 0%,#ffe8e8 100%);}
+.cover .badge{display:inline-block;background:var(--c1);color:#fff;font-family:'Bungee',sans-serif;font-size:1rem;letter-spacing:.18em;padding:8px 18px;margin-bottom:28px;border:3px solid var(--border);box-shadow:4px 4px 0 var(--border);}
+.cover h1{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(3.2rem,7.5vw,6.5rem);line-height:1;margin-bottom:18px;color:var(--text);letter-spacing:-.02em;}
+.cover h1 .accent{color:var(--c1)}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.7rem);color:var(--text);margin-bottom:42px;font-weight:500;}
+.cover .meta{display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;font-family:'Bungee',sans-serif;font-size:.9rem;letter-spacing:.05em;color:var(--dim);}
+.cover .meta b{color:var(--text);font-weight:700}
+.cover-deco{position:absolute;display:flex;gap:18px;}
+.cover-deco.tl{top:8vh;left:6vw}.cover-deco.tr{top:8vh;right:6vw}.cover-deco.bl{bottom:8vh;left:6vw}.cover-deco.br{bottom:8vh;right:6vw}
+.cover-bubble{background:#fff;border:3px solid var(--border);padding:10px 16px;border-radius:24px;font-weight:700;font-size:1rem;box-shadow:4px 4px 0 var(--border);transform:rotate(var(--rot,-3deg));}
+
+/* Closing */
+.closing{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fff9f0 0%,#ffe8e8 100%);}
+.closing h2{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(2.6rem,5.5vw,5rem);line-height:1.15;color:var(--text);margin-bottom:22px;letter-spacing:-.02em;}
+.closing h2 .em{color:var(--c1)}
+.closing .signoff{font-size:1.2rem;color:var(--dim);margin-bottom:30px;}
+.closing .qr-row{display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.closing .url-box{background:#fff;border:3px solid var(--border);padding:14px 22px;border-radius:8px;font-family:'Bungee',sans-serif;font-size:.9rem;box-shadow:4px 4px 0 var(--c1);text-align:left;}
+.closing .url-box b{color:var(--c4);font-family:'Noto Sans TC',sans-serif}
+
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col,.two-side{grid-template-columns:1fr;gap:18px}
+  .three-col,.cmp-row,.a2-grid,.advice-grid,.hook-step,.help-grid,.scenario-fan{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 1 — COVER -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="cover-bubble" style="--rot:-5deg">📱 滑滑滑</div></div>
+  <div class="cover-deco tr"><div class="cover-bubble" style="--rot:4deg">🪝 鉤癮</div></div>
+  <div class="cover-deco bl"><div class="cover-bubble" style="--rot:-3deg">🔐 帳號</div></div>
+  <div class="cover-deco br"><div class="cover-bubble" style="--rot:5deg">🆘 求救</div></div>
+
+  <span class="badge slide-up">五年級｜資訊科技 × 數位安全</span>
+  <h1 class="slide-up d1">滑手機前，<br>先<span class="accent">想一下</span>。</h1>
+  <p class="sub slide-up d2">當網路成為日常 ── 你要當<span class="accent-1">數位小公民</span>，不是被演算法吃掉的人。</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>4 大關卡｜建議 <b>4</b> 節</span>
+  </div>
+</section>
+
+<!-- SLIDE 2 — HOOK -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 開場 / HOOK</span>
+  <div style="margin-top:6vh">
+    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span class="sfx pop-in">STOP!</span>
+      <span class="sfx c2 pop-in d1" style="transform:rotate(4deg)">WAIT!</span>
+    </div>
+    <h2 class="title-lg slide-up d2" style="margin-top:24px">
+      你有沒有過 ── <br>「<span class="accent-1">只想看一下，怎麼一小時就過了？</span>」
+    </h2>
+    <p class="lead slide-up d2" style="margin-top:18px">
+      不是你<b>自制力差</b>，是 App 本來就<b style="color:var(--c1)">被設計成讓你停不下來</b>。<br>
+      今天我們學<b>4 個關卡</b>，把主控權搶回來！
+    </p>
+  </div>
+
+  <div class="hook-step">
+    <div class="step pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <div class="emoji">🪝</div>
+      <h5>演算法吃時間</h5>
+      <p>為什麼停不下來？</p>
+    </div>
+    <div class="step pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <div class="emoji">📸</div>
+      <h5>拍照分享有界線</h5>
+      <p>拍前問三件事</p>
+    </div>
+    <div class="step pop-in d3" style="--c:var(--c3)">
+      <div class="n">03</div>
+      <div class="emoji">🔐</div>
+      <h5>App 帳號要小心</h5>
+      <p>5 大檢查點</p>
+    </div>
+    <div class="step pop-in d4" style="--c:var(--c5)">
+      <div class="n">04</div>
+      <div class="emoji">🆘</div>
+      <h5>遇到困擾求救站</h5>
+      <p>5 大管道任選</p>
+    </div>
+  </div>
+
+  <div class="speaker">
+    <div class="avatar">😄</div>
+    <div class="bubble">不是要禁止你滑手機 ──<b>是要教你「會用、不被用」</b>。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- SLIDE 3 — STAGE 1 -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 關卡 1 / HOOK MODEL</span>
+  <p class="eyebrow slide-up">為什麼停不下來</p>
+  <h2 class="title-md slide-up d1">App 的「<span class="accent-1">鉤癮模式</span>」<br>就像一台<span class="accent-4">「驚喜扭蛋機」</span>。</h2>
+
+  <div class="two-col" style="grid-template-columns:1.2fr 1fr">
+    <div class="comic-panel c1 slide-up d2">
+      <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c1);font-size:1.3rem;margin-bottom:12px">🪝 鉤癮模式 4 步驟</h3>
+      <ul class="bullet-list red" style="font-size:1.02rem">
+        <li><b>觸發</b>：通知紅點、無聊、孤單 → 想拿手機</li>
+        <li><b>行動</b>：解鎖、點 App、開始滑</li>
+        <li><b>變動獎勵</b>：有時爆笑影片、有時收到讚 ──「<b style="color:var(--c1)">不知道下次給什麼</b>」最讓人上癮！</li>
+        <li><b>投入</b>：發文、留言、練等級 → 回到第 1 步，無限循環</li>
+      </ul>
+    </div>
+    <div class="warning-panel slide-up d2">
+      <h4>🐭 老鼠實驗</h4>
+      <p class="lead" style="font-size:1rem">科學家發現：老鼠和人類一樣，只要找到能得到驚喜的開關，<b>就會一直按下去</b>。</p>
+      <p class="lead" style="font-size:1rem;margin-top:12px;color:var(--c1);font-weight:700">
+        我們的大腦就是這樣<br>被「期待感」綁架的！
+      </p>
+    </div>
+  </div>
+
+  <div class="comic-panel c3 slide-up d2" style="margin-top:24px;text-align:center">
+    <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c3);font-size:1.2rem;margin-bottom:10px">💪 4 個解癮術</h3>
+    <p class="lead" style="font-size:1.05rem">
+      <span class="tag t1">A. 灰階模式</span><span class="tag t3">B. 變成任務</span><span class="tag t4">C. 關掉通知</span><span class="tag t5">D. 拉開距離</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🪝</div>
+    <div class="bubble">不是<b>「你」</b>有問題 ──<b>是 App 設計太狡猾</b>。知道了就有對抗的力量。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- SLIDE 4 — STAGE 2 PHOTO -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 關卡 2 / PHOTO ETIQUETTE</span>
+  <p class="eyebrow slide-up">拍照分享有界線</p>
+  <h2 class="title-md slide-up d1">每張照片都可能<span class="accent-1">影響別人</span>。<br>用「拍照三問」當你的好習慣！</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">①</div>
+      <div class="h">他同意嗎？</div>
+      <p class="b">拍人之前先問：「<b>我可以拍你嗎？</b>」<br>分享前再問一次。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">②</div>
+      <div class="h">會讓他不開心嗎？</div>
+      <p class="b">換位想：<b>如果是我被這樣拍</b>，會難過嗎？</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c3)">
+      <div class="ico">③</div>
+      <div class="h">我會想被這樣拍嗎？</div>
+      <p class="b">想想自己會不會猶豫 ──<b style="color:var(--c1)">猶豫就放下手機</b>！</p>
+    </div>
+  </div>
+
+  <div class="warning-panel slide-up d2" style="margin-top:30px">
+    <h4>⚠️ 校園 4 大「不可以」</h4>
+    <p class="lead" style="font-size:1rem">
+      <span class="tag t1">偷拍睡覺同學</span><span class="tag t1">家裡地址入鏡</span><span class="tag t1">亂傳搞笑照</span><span class="tag t1">做惡搞迷因</span>
+    </p>
+    <p class="lead" style="font-size:.95rem;margin-top:10px;color:var(--dim)">
+      💡 <b>記住</b>：限時動態 24 小時消失，<b style="color:var(--c1)">不代表別人沒存下來</b>。「真朋友」也不是「沒風險」。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📸</div>
+    <div class="bubble">同學睡著、家裡角落、自己尷尬照 ──<b>三問之後再決定</b>。一秒鐘救你一輩子的人際關係。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- SLIDE 5 — STAGE 3 APP -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 關卡 3 / APP SAFETY</span>
+  <p class="eyebrow slide-up">App 與帳號要小心</p>
+  <h2 class="title-md slide-up d1">下載前當<span class="accent-1">「停看聽偵探」</span>──<br>5 個檢查點不能少。</h2>
+
+  <div class="two-col" style="grid-template-columns:1.2fr 1fr">
+    <div class="comic-panel c4 slide-up d2">
+      <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c4);font-size:1.3rem;margin-bottom:12px">🔐 下載 App 前 5 大檢查點</h3>
+      <ul class="bullet-list" style="font-size:1rem">
+        <li><b>① 權限合理嗎？</b>畫畫遊戲為什麼要知道我的位置？</li>
+        <li><b>② 年齡限制？</b>標示幾歲以上才能用？</li>
+        <li><b>③ 註冊要哪些個資？</b>真名+生日+電話 = 要謹慎</li>
+        <li><b>④ 資料會給第三方嗎？</b>條款要看（可請大人幫忙）</li>
+        <li><b>⑤ 能關位置追蹤嗎？</b>可手動關閉的才安全</li>
+      </ul>
+    </div>
+    <div class="comic-panel c1 slide-up d2">
+      <h3 style="font-family:'Noto Sans TC';font-weight:900;color:var(--c1);font-size:1.2rem;margin-bottom:10px">🔑 密碼安全 4 原則</h3>
+      <ul class="bullet-list red" style="font-size:.95rem">
+        <li><b>不用生日</b>（最容易被猜）</li>
+        <li><b>混合大小寫+數字+符號</b></li>
+        <li><b>每個帳號不同密碼</b></li>
+        <li><b>不告訴任何人</b>（包括最好的朋友）</li>
+      </ul>
+      <p class="lead" style="font-size:.92rem;margin-top:10px;color:var(--dim)">
+        💡 範例：<code>Cat@8H3p!Day</code>
+      </p>
+    </div>
+  </div>
+
+  <div class="warning-panel slide-up d2" style="margin-top:24px">
+    <h4>🚨 假帳號 3 警訊</h4>
+    <p class="lead" style="font-size:1rem">
+      <b>(1)</b> 帳號剛建立、沒貼文｜<b>(2)</b> 突然要錢、要照片、要見面｜<b>(3)</b> 頭像名字跟你認識的人一模一樣（冒充！）
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🔐</div>
+    <div class="bubble">「<b>權限不合理就拒絕</b>」── 養成這個習慣，你就贏過 90% 的大人了。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- SLIDE 6 — STAGE 4 HELP LINES -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · 關卡 4 / HELP LINES</span>
+  <p class="eyebrow slide-up">遇到困擾求救站</p>
+  <h2 class="title-md slide-up d1">在網路上遇到不舒服 ──<br><span class="accent-1">絕對不是你的錯</span>。</h2>
+
+  <div class="help-grid">
+    <div class="help-card pop-in d1" style="--c:var(--c1)">
+      <div class="num">113</div>
+      <div class="emoji">📞</div>
+      <h5>保護專線</h5>
+      <p>24 小時免費。網路性騷擾、私密照外流、暴力威脅。</p>
+    </div>
+    <div class="help-card pop-in d2" style="--c:var(--c2)">
+      <div class="num">110</div>
+      <div class="emoji">🚓</div>
+      <h5>警察</h5>
+      <p>緊急網路恐嚇、勒索、人身安全受威脅。</p>
+    </div>
+    <div class="help-card pop-in d3" style="--c:var(--c3)">
+      <div class="num">iWIN</div>
+      <div class="emoji">🌐</div>
+      <h5>網路內容防護</h5>
+      <p>私密照外流、嚴重霸凌 → 協助平台移除。</p>
+    </div>
+    <div class="help-card pop-in d4" style="--c:var(--c4)">
+      <div class="num">家</div>
+      <div class="emoji">👨‍👩‍👧</div>
+      <h5>爸媽家人</h5>
+      <p>第一時間告訴信任的家人，他們會陪你想辦法。</p>
+    </div>
+    <div class="help-card pop-in d5" style="--c:var(--c5)">
+      <div class="num">校</div>
+      <div class="emoji">👩‍🏫</div>
+      <h5>導師 / 輔導師</h5>
+      <p>同學霸凌、群組排擠、影響上學 → 找老師。</p>
+    </div>
+  </div>
+
+  <div class="comic-panel c1 slide-up d2" style="margin-top:30px;text-align:center">
+    <p class="lead" style="font-size:1.1rem">
+      💪 <b style="color:var(--c1)">記住：</b>「做錯的是傷害你的人，<b>不是你</b>」<br>
+      勇敢說出來，<b>大人會陪你一起想辦法</b>。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🆘</div>
+    <div class="bubble">任選一個都可以 ── <b>不需要等</b>。沉默不會讓事情變好。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- SLIDE 7 — WHY IT MATTERS -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 為什麼重要 / WHY</span>
+  <p class="eyebrow slide-up">為什麼五年級就要學？</p>
+  <h2 class="title-md slide-up d1">因為現在<span class="accent-1">「網路就是日常」</span>──<br>越早建立好習慣越好。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">⏰</div>
+      <div class="h">時間是你的</div>
+      <p class="b">小學每天<b>多滑 2 小時</b>，一年就少了 700 小時。<br>那是讀 50 本書 + 學會一個樂器的時間。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">👥</div>
+      <div class="h">關係是你的</div>
+      <p class="b">小學時期的<b>人際關係</b>非常重要。<br>一張惡搞照可能讓同學關係<b>裂開</b>。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c5)">
+      <div class="ico">🔒</div>
+      <div class="h">未來是你的</div>
+      <p class="b">數位足跡<b>永遠不會消失</b>。<br>10 年後你應徵工作，<b>HR 真的會 Google 你</b>。</p>
+    </div>
+  </div>
+
+  <div class="comic-panel c2 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.1rem">
+      💡 <b>關鍵心態</b>：「<b style="color:var(--c1)">我會用手機，不是手機會用我</b>」── 這是數位公民的基本宣言。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🚀</div>
+    <div class="bubble">現在學的不是「不要用手機」 ── 是<b>「會用手機」</b>。差別大了。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- SLIDE 8 — SCENARIOS -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 情境 / SCENARIOS</span>
+  <p class="eyebrow slide-up">四大常見情境</p>
+  <h2 class="title-md slide-up d1">下面 4 個情境，<br><span class="accent-1">99% 五年級都遇過</span>。</h2>
+
+  <div class="scenario-fan">
+    <div class="scenario-card pop-in d1" style="--c:var(--c1)">
+      <div class="num">A</div>
+      <div class="icon">📱</div>
+      <h4>滑短影片停不下來</h4>
+      <p>明明只想看 5 分鐘，結果一小時。<br><b>→ 用解癮術 4 招</b></p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--c2)">
+      <div class="num">B</div>
+      <div class="icon">📸</div>
+      <h4>偷拍同學上 IG</h4>
+      <p>同學睡著超好笑想分享。<br><b>→ 拍照三問 + 等他醒</b></p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--c4)">
+      <div class="num">C</div>
+      <div class="icon">🎮</div>
+      <h4>陌生人加好友送遊戲幣</h4>
+      <p>「免費送你 100 鑽石」很心動。<br><b>→ 假帳號 3 警訊</b></p>
+    </div>
+    <div class="scenario-card pop-in d4" style="--c:var(--c5)">
+      <div class="num">D</div>
+      <div class="icon">😢</div>
+      <h4>被網路霸凌</h4>
+      <p>群組被傳尷尬照、被嘲笑。<br><b>→ 5 大求救管道</b></p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;color:var(--dim);font-size:1rem">
+    💡 <b>建議</b>：把這 4 個情境<b>記在腦海</b> ── 遇到時就有 SOP 可用。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎯</div>
+    <div class="bubble">這不是「考試題目」── 是<b>真實生活每天會遇到</b>的事。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- SLIDE 9 — REAL CASE -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 案例 / CASE</span>
+  <p class="eyebrow slide-up">真實事件</p>
+  <h2 class="title-md slide-up d1">這些<span class="accent-1">真的發生</span>在<br>國小校園的案例。</h2>
+
+  <div class="three-col">
+    <div class="comic-panel c1 pop-in d1">
+      <div style="font-size:2.6rem;text-align:center">📸</div>
+      <h4 style="font-family:'Noto Sans TC';font-weight:900;font-size:1.15rem;text-align:center;color:var(--c1);margin:6px 0 10px">偷拍同學睡覺事件</h4>
+      <p class="lead" style="font-size:.9rem">某校五年級偷拍同學睡覺上傳班群<b>瘋傳一整天</b>──同學從此<b>不敢午睡</b>，需要輔導 3 個月才復原。</p>
+    </div>
+    <div class="comic-panel c4 pop-in d2">
+      <div style="font-size:2.6rem;text-align:center">🎮</div>
+      <h4 style="font-family:'Noto Sans TC';font-weight:900;font-size:1.15rem;text-align:center;color:var(--c4);margin:6px 0 10px">假冒同學詐騙</h4>
+      <p class="lead" style="font-size:.9rem">陌生帳號用同學頭像加好友，騙到「<b>家裡地址</b>」── 還好被導師發現，及時阻止。</p>
+    </div>
+    <div class="comic-panel c5 pop-in d3">
+      <div style="font-size:2.6rem;text-align:center">⏰</div>
+      <h4 style="font-family:'Noto Sans TC';font-weight:900;font-size:1.15rem;text-align:center;color:var(--c5);margin:6px 0 10px">手機成癮就醫</h4>
+      <p class="lead" style="font-size:.9rem">六年級學生<b>每天滑 6 小時</b>短影片，<b>學業全部落後</b>──最後家長帶去看身心科。</p>
+    </div>
+  </div>
+
+  <div class="comic-panel c2 slide-up d2" style="margin-top:24px;text-align:center">
+    <p class="lead" style="font-size:1.05rem">
+      🔥 <b>共同點</b>：都是「<b style="color:var(--c1)">沒想清楚就做</b>」造成的傷害 ── 都<b>可以被避免</b>。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📊</div>
+    <div class="bubble">這些不是電視劇情節 ── 是<b>你身邊隨時可能發生</b>的事。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- SLIDE 10 — APP COMPARE -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">App 風險評比</p>
+  <h2 class="title-md slide-up d1">不同 App，<span class="accent-1">不同風險</span>。<br>知己知彼才安全。</h2>
+
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--c1)">
+      <div class="nm">TikTok</div>
+      <div class="when"><b>最強鉤癮</b><br><br>🎯 演算法精準<br>易上癮、未成年限制嚴</div>
+    </div>
+    <div class="cmp-tile pop-in d2" style="--c:var(--c5)">
+      <div class="nm">IG</div>
+      <div class="when"><b>外貌比較</b><br><br>🎯 同儕壓力大<br>限動 24 小時 ≠ 安全</div>
+    </div>
+    <div class="cmp-tile pop-in d3" style="--c:var(--c2)">
+      <div class="nm">LINE</div>
+      <div class="when"><b>封閉群組</b><br><br>🎯 假訊息溫床<br>陌生人加好友風險高</div>
+    </div>
+    <div class="cmp-tile star pop-in d4">
+      <div class="ribbon">較安全</div>
+      <div class="nm">YouTube<br>Kids</div>
+      <div class="when"><b>家長過濾版</b><br><br>🎯 內容受監管<br>適合 13 歲以下</div>
+    </div>
+  </div>
+
+  <div class="comic-panel c1 slide-up d2" style="margin-top:30px;text-align:center">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--c1);margin-bottom:10px">⚖️ 黃金法則</h3>
+    <p class="lead" style="font-size:1.1rem">
+      <b>13 歲以下，建議用「家長帳號 + 親子模式」</b>。<br>
+      不是不能用 ──<b style="color:var(--c4)">是有保護地用</b>。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚖️</div>
+    <div class="bubble">App 不分好壞 ──<b>分「會不會用」</b>。同一個 IG，有人拿來學設計，有人拿來霸凌。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- SLIDE 11 — TEACHER STRATEGY -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 教師策略 / TEACHER</span>
+  <p class="eyebrow slide-up">數位安全教育的雙面刃</p>
+  <h2 class="title-md slide-up d1"><span class="accent-3">「平等的對話」</span>vs<br><span class="accent-1">「恐嚇式禁止」</span>。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 對話模式</div>
+      <h4>培養自主判斷</h4>
+      <ul class="bullet-list green" style="font-size:1rem">
+        <li>承認「<b>科技好用</b>」── 不否認學生樂趣</li>
+        <li>解釋「<b>為什麼會上癮</b>」── 培養理解</li>
+        <li>提供「<b>具體 SOP</b>」── 給工具不只給規定</li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 恐嚇模式</div>
+      <h4>反效果風險</h4>
+      <ul class="bullet-list red" style="font-size:1rem">
+        <li>「<b>滑手機都會變廢人</b>」── 學生不信</li>
+        <li>「<b>不准用 IG</b>」── 偷偷用反而更危險</li>
+        <li>「<b>你自制力差</b>」── 自尊受挫，放棄改</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="comic-panel c4 slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--c4);margin-bottom:14px">🎯 教師三大策略</h3>
+    <ul class="bullet-list" style="font-size:1rem">
+      <li>讓學生<b>實際打開「螢幕使用時間」</b>── 看自己一週數據（不批評）</li>
+      <li>邀請學生<b>分享解癮成功經驗</b>── 同儕影響比老師大</li>
+      <li>強調「<b>做錯的是傷害人，不是被傷害的你</b>」── 建立安全感</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">👨‍🏫</div>
+    <div class="bubble">這不是「<b>禁止教育</b>」── 是<b>「主控權教育」</b>。學生要的是工具，不是規定。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- SLIDE 12 — COMPETENCY -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / COMPETENCY</span>
+  <p class="eyebrow slide-up">對應 108 課綱核心素養</p>
+  <h2 class="title-md slide-up d1">不只是「不要滑手機」 ──<br>是<span class="accent-1">五大素養</span>同時點亮！</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🛡️</div>
+      <h5>① 綜-E-B2<br>媒體素養</h5>
+      <p>理解演算法如何影響我們的注意力與選擇。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🤝</div>
+      <h5>② 社-E-C2<br>人際責任</h5>
+      <p>拍照前同理對方感受，<b>尊重肖像權與隱私</b>。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c3)">
+      <div class="ico">💪</div>
+      <h5>③ 健-E-A1<br>自我管理</h5>
+      <p>用解癮術掌控滑手機時間，<b>培養自律</b>。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c4)">
+      <div class="ico">💻</div>
+      <h5>④ A-E-A1<br>運用科技</h5>
+      <p>會檢查 App 權限、設安全密碼、用螢幕時間。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c5)">
+      <div class="ico">🆘</div>
+      <h5>⑤ 綜-E-A2<br>求助與表達</h5>
+      <p>遇到困擾<b>勇敢說出來</b>，知道 5 大求救管道。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem">
+    💡 <b>記住：科技會變，但這些素養永遠有用</b>。<br>
+    <span style="color:var(--dim)">「<b>知道為什麼、有對抗工具、敢求救</b>」── 這 3 件事護你一輩子。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">同學長大後遇到 AI 戀人、Meta VR 上癮 ── <b>還是用今天學的原則對應</b>。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- SLIDE 13 — FINAL ADVICE -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給未來數位小公民的 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">下次拿起手機之前，<br>請先記住<span class="accent-1">這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <h5>滑手機前<br>先想用幾分</h5>
+      <p>解鎖前問自己：<b>「要用幾分鐘？做什麼？」</b></p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>拍前三問<br>分享再三問</h5>
+      <p>同意？不開心？我想被這樣拍嗎？<b>猶豫就放下</b>。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c3)">
+      <div class="n">03</div>
+      <h5>權限不合理<br>就拒絕</h5>
+      <p>畫畫遊戲要位置？<b>不合理 = 不下載</b>。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c4)">
+      <div class="n">04</div>
+      <h5>陌生人加好友<br>先告訴大人</h5>
+      <p>免費送遊戲幣？<b>97% 是詐騙</b>，告訴爸媽。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>遇到困擾<br>絕不一個人扛</h5>
+      <p>113/110/iWIN/家人/老師 ── <b>任選一個</b>都行。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不是規定 ── 是<b>讓你「會用手機，不被手機用」的工具</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- SLIDE 14 — CLOSING -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="cover-bubble" style="--rot:-4deg">🪝</div></div>
+  <div class="cover-deco tr"><div class="cover-bubble" style="--rot:5deg">📸</div></div>
+  <div class="cover-deco bl"><div class="cover-bubble" style="--rot:3deg">🔐</div></div>
+  <div class="cover-deco br"><div class="cover-bubble" style="--rot:-5deg">🆘</div></div>
+
+  <h2 class="slide-up">你<span class="em">「會用手機」</span>，<br>不是<span class="em">「手機會用你」</span>。</h2>
+  <p class="signoff slide-up d1">主控權，永遠在你這邊。</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/digital-safety/</b>
+    </div>
+    <div class="url-box">
+      📞 緊急求救專線<br>
+      <b>113 · 110 · iWIN</b>
+    </div>
+  </div>
+
+  <p style="margin-top:42px;font-family:'Bungee',sans-serif;color:var(--dim);font-size:.9rem;letter-spacing:.1em">
+    Q&A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Bungee',sans-serif;color:var(--c1);font-size:1.05rem;letter-spacing:.05em">THANK YOU · 從今天開始當數位小公民！</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div>
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'滑手機前先想一下 · 數位安全小公民'},
+  {n:2,  t:'開場暖身',       s:'STOP! WAIT! 為什麼停不下來？'},
+  {n:3,  t:'關卡 1 鉤癮模式', s:'觸發-行動-變動獎勵-投入 + 4 解癮術'},
+  {n:4,  t:'關卡 2 拍照分享', s:'拍照三問 + 校園 4 大不可以'},
+  {n:5,  t:'關卡 3 App 帳號', s:'5 大檢查點 + 密碼 4 原則 + 假帳號警訊'},
+  {n:6,  t:'關卡 4 求救站',   s:'113 / 110 / iWIN / 家 / 校'},
+  {n:7,  t:'為什麼重要',     s:'時間 / 關係 / 未來都是你的'},
+  {n:8,  t:'四大常見情境',   s:'滑短影片 / 偷拍 / 陌生加 / 霸凌'},
+  {n:9,  t:'真實案例',       s:'偷拍同學 / 假帳號詐 / 手機成癮就醫'},
+  {n:10, t:'App 風險評比',   s:'TikTok / IG / LINE / YouTube Kids'},
+  {n:11, t:'教師策略',       s:'對話 vs 恐嚇 + 三大策略'},
+  {n:12, t:'108 課綱素養',    s:'媒體素養 + 人際責任 + 自我管理'},
+  {n:13, t:'5 個叮嚀',        s:'給未來數位小公民'},
+  {n:14, t:'結語 + Q&A',      s:'主控權永遠在你這邊'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

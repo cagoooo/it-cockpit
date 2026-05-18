@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Canva 魔法簡報｜演講簡報模式</title>
+<meta name="description" content="Canva 魔法簡報：用 AI 變身設計高手｜四年級資訊科技 candy-bright 風格演講簡報。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#fef3f8; --surface:#fff0f6; --panel:#ffffff;
+  --c1:#ff85b3; --c2:#ffd54f; --c3:#6cb4ff; --c4:#7be495; --c5:#b388ff; --c6:#ff7043;
+  --text:#2a2244; --dim:#8878aa;
+  --shadow-soft:0 4px 16px rgba(255,133,179,.18);
+  --shadow-pop:0 6px 22px rgba(255,133,179,.30);
+  --radius:16px;
+}
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;
+  -webkit-font-smoothing:antialiased;user-select:none;
+}
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  padding:5vh 6vw;
+  opacity:0;transition:opacity .4s;
+  background:var(--bg);
+}
+.slide.active{display:flex;opacity:1}
+.slide-num{
+  position:absolute;bottom:24px;right:32px;
+  font-size:.95rem;color:var(--dim);font-weight:700;letter-spacing:.1em;z-index:5;
+}
+.slide-title-tag{
+  position:absolute;top:28px;left:32px;
+  font-size:.78rem;font-weight:700;letter-spacing:.2em;color:#fff;
+  background:var(--c1);padding:5px 14px;border-radius:999px;
+  box-shadow:var(--shadow-soft);z-index:5;
+}
+
+/* Typography */
+.title-xl{font-size:clamp(3rem,7vw,5.6rem);line-height:1.05;letter-spacing:-.02em;color:var(--c1);font-weight:900}
+.title-lg{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.1;color:var(--text);font-weight:900}
+.title-md{font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;color:var(--text);font-weight:900}
+.eyebrow{font-size:1.05rem;letter-spacing:.2em;color:var(--c5);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:'';flex:1;height:3px;background:linear-gradient(90deg,var(--c5),transparent);max-width:260px;border-radius:3px}
+.lead{font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--c1);font-weight:900}
+.accent-pink{color:var(--c1)}
+.accent-blue{color:var(--c3)}
+.accent-green{color:#3d9b5a}
+.accent-purple{color:var(--c5)}
+.accent-orange{color:var(--c6)}
+
+/* Speaker bubble */
+.speaker{
+  position:absolute;bottom:18px;left:32px;
+  display:flex;align-items:flex-end;gap:14px;z-index:8;
+  max-width:55%;
+}
+.speaker .avatar{
+  width:62px;height:62px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--c2),#ffb74d);
+  border:3px solid var(--text);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;box-shadow:0 4px 12px rgba(255,213,79,.4);
+}
+.speaker .bubble{
+  background:#fff;border:3px solid var(--c1);
+  padding:10px 16px;border-radius:18px;
+  font-size:.95rem;font-weight:600;
+  position:relative;
+  box-shadow:var(--shadow-soft);
+  max-width:520px;line-height:1.55;
+}
+.speaker .bubble::before{
+  content:'';position:absolute;left:-12px;bottom:18px;
+  width:0;height:0;
+  border-style:solid;border-width:8px 14px 8px 0;
+  border-color:transparent var(--c1) transparent transparent;
+}
+.speaker .bubble::after{
+  content:'';position:absolute;left:-8px;bottom:18px;
+  width:0;height:0;
+  border-style:solid;border-width:8px 14px 8px 0;
+  border-color:transparent #fff transparent transparent;
+}
+
+/* Progress / hint */
+.progress{position:fixed;bottom:0;left:0;right:0;height:6px;background:rgba(255,133,179,.15);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c5));transition:width .4s;border-radius:0 6px 6px 0}
+.hint{
+  position:fixed;top:14px;right:24px;z-index:99;
+  font-size:.78rem;color:var(--dim);background:#fff;
+  border:2px solid var(--c5);padding:5px 12px;
+  border-radius:999px;letter-spacing:.05em;
+  pointer-events:none;opacity:.85;font-weight:700;
+}
+.kbd{display:inline-block;padding:2px 7px;background:var(--c5);color:#fff;font-size:.85em;border-radius:6px;margin:0 2px;font-weight:700}
+
+/* Overview */
+.overview{position:fixed;inset:0;background:rgba(42,34,68,.96);display:none;padding:32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{color:var(--c2);font-size:1.5rem;margin-bottom:18px;letter-spacing:.05em;font-weight:900}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.ov-card{background:#fff;border-radius:14px;padding:14px 16px;cursor:pointer;transition:.18s;position:relative;border:3px solid var(--c1)}
+.ov-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(255,133,179,.4)}
+.ov-card .num{position:absolute;top:8px;right:12px;font-size:.85rem;color:var(--c5);font-weight:900}
+.ov-card .t{font-weight:900;font-size:1.1rem;color:var(--c1);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+/* ==== Candy-bright decorations ==== */
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(8deg)}}
+@keyframes twinkle{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+.deco{position:absolute;z-index:1;pointer-events:none}
+
+.lollipop{width:78px;height:108px;position:relative;animation:bounce 2.3s ease-in-out infinite}
+.lollipop::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:60px;height:60px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff 0%,var(--lp,var(--c1)) 60%);
+  border:3px solid var(--text);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.lollipop::after{content:'';position:absolute;top:55px;left:50%;transform:translateX(-50%);
+  width:4px;height:50px;background:var(--text);border-radius:2px}
+
+.star-deco{width:46px;height:46px;background:var(--sc,var(--c2));
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  filter:drop-shadow(0 0 10px var(--sc,var(--c2)));animation:twinkle 2s ease-in-out infinite}
+
+.rainbow{width:130px;height:65px;border:6px solid var(--c1);border-bottom:0;border-radius:130px 130px 0 0;position:relative}
+.rainbow::before{content:'';position:absolute;top:6px;left:6px;right:6px;bottom:0;border:6px solid var(--c2);border-bottom:0;border-radius:100px 100px 0 0}
+.rainbow::after{content:'';position:absolute;top:18px;left:18px;right:18px;bottom:0;border:6px solid var(--c4);border-bottom:0;border-radius:70px 70px 0 0}
+
+.cloud{width:120px;height:50px;background:#fff;border:3px solid var(--text);border-radius:50px;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.1);animation:float 4s ease-in-out infinite}
+.cloud::before{content:'';position:absolute;top:-28px;left:18px;width:48px;height:48px;background:#fff;border:3px solid var(--text);border-radius:50%;border-bottom:none;clip-path:inset(0 0 50% 0 round 50%)}
+.cloud::after{content:'';position:absolute;top:-18px;right:24px;width:32px;height:32px;background:#fff;border:3px solid var(--text);border-radius:50%;border-bottom:none;clip-path:inset(0 0 50% 0 round 50%)}
+
+.balloon{width:55px;height:75px;position:relative;animation:float 3.5s ease-in-out infinite}
+.balloon::before{content:'';position:absolute;top:0;left:0;width:55px;height:65px;background:radial-gradient(circle at 30% 30%,#fff5,var(--bc,var(--c3)));border:2.5px solid var(--text);border-radius:50%}
+.balloon::after{content:'';position:absolute;bottom:0;left:50%;width:2px;height:18px;background:var(--text);transform:translateX(-50%)}
+
+.cake{width:110px;height:80px;position:relative}
+.cake-layer{position:absolute;left:50%;transform:translateX(-50%);border:3px solid var(--text);border-radius:8px}
+.cake-l1{bottom:0;width:110px;height:30px;background:linear-gradient(180deg,#ff85b3,#ff4081)}
+.cake-l2{bottom:30px;width:88px;height:24px;background:linear-gradient(180deg,#ffd54f,#ffa726)}
+.cake-l3{bottom:54px;width:60px;height:18px;background:linear-gradient(180deg,#7be495,#4caf50)}
+.cake::after{content:'';position:absolute;bottom:72px;left:50%;transform:translateX(-50%);width:6px;height:14px;background:var(--c5);border-radius:3px}
+
+/* Cards & boxes */
+.card-box{background:#fff;border:3px solid var(--c1);border-radius:18px;padding:22px 26px;box-shadow:var(--shadow-soft);position:relative}
+.card-box.blue{border-color:var(--c3)}
+.card-box.green{border-color:var(--c4)}
+.card-box.purple{border-color:var(--c5)}
+.card-box.yellow{border-color:var(--c2)}
+.card-box.orange{border-color:var(--c6)}
+
+.stat-card{background:#fff;border:3px solid var(--text);border-radius:18px;padding:22px 26px;text-align:center;box-shadow:0 6px 0 var(--c1);flex:1;min-width:200px}
+.stat-card .n{font-size:clamp(2.6rem,4.5vw,4rem);line-height:1;color:var(--c1);font-weight:900}
+.stat-card .l{font-size:.95rem;color:var(--dim);margin-top:6px;letter-spacing:.05em;font-weight:700}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.75;margin-bottom:14px;color:var(--text)}
+.bullet-list li::before{content:'';flex-shrink:0;width:26px;height:26px;background:var(--c1);border:3px solid var(--text);border-radius:50%;margin-top:6px;box-shadow:2px 2px 0 var(--text)}
+.bullet-list.blue li::before{background:var(--c3)}
+.bullet-list.green li::before{background:var(--c4)}
+.bullet-list.yellow li::before{background:var(--c2)}
+.bullet-list.purple li::before{background:var(--c5)}
+
+.tag{display:inline-block;padding:6px 14px;background:var(--c2);border:2px solid var(--text);border-radius:999px;font-weight:700;font-size:.95rem;box-shadow:2px 2px 0 var(--text);margin:4px 6px 4px 0}
+.tag.pink{background:var(--c1);color:#fff}
+.tag.blue{background:var(--c3);color:#fff}
+.tag.green{background:var(--c4);color:#1a4a2a}
+.tag.purple{background:var(--c5);color:#fff}
+
+/* Layout helpers */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:flex-start;flex:1;margin-top:24px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;flex:1;margin-top:24px}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;margin-top:24px}
+.five-col{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;flex:1;margin-top:24px}
+.flex-row{display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;margin-top:22px}
+
+/* Pillar (3-col) */
+.pillar{background:#fff;border:3px solid var(--text);border-radius:18px;padding:22px 20px;text-align:center;position:relative;box-shadow:0 6px 0 var(--c,var(--c1))}
+.pillar .ico{width:74px;height:74px;background:var(--c,var(--c1));border:3px solid var(--text);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2.2rem;box-shadow:3px 3px 0 var(--text)}
+.pillar .h{font-size:1.3rem;color:var(--c,var(--c1));margin-bottom:8px;font-weight:900}
+.pillar .b{font-size:.98rem;line-height:1.6;color:var(--text)}
+
+/* Steps */
+.step-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:24px}
+.step-item{background:#fff;border:3px solid var(--text);border-radius:14px;padding:14px 10px;text-align:center;position:relative;box-shadow:3px 3px 0 var(--c,var(--c3))}
+.step-item .n{font-size:1.5rem;color:var(--c,var(--c3));display:block;margin-bottom:4px;font-weight:900}
+.step-item .t{font-weight:700;font-size:.88rem;line-height:1.35}
+
+/* Compare tile */
+.cmp-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.cmp-tile{background:#fff;border:3px solid var(--text);border-radius:16px;padding:18px 14px;text-align:center;position:relative;box-shadow:4px 4px 0 var(--c,var(--c3))}
+.cmp-tile.star{background:linear-gradient(135deg,#fff5fa,#fff0e6);box-shadow:4px 4px 0 var(--c1);transform:scale(1.05)}
+.cmp-tile .nm{font-size:1.25rem;color:var(--c,var(--c3));margin-bottom:6px;font-weight:900}
+.cmp-tile.star .nm{color:var(--c1)}
+.cmp-tile .when{font-size:.88rem;line-height:1.55;color:var(--text)}
+.cmp-tile .ribbon{position:absolute;top:-12px;right:-8px;background:var(--c1);color:#fff;padding:3px 12px;font-size:.75rem;font-weight:700;border:2px solid var(--text);border-radius:999px}
+
+/* Two-side */
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
+.side-card{background:#fff;border:3px solid var(--c,var(--c4));border-radius:18px;padding:24px 26px;position:relative;box-shadow:var(--shadow-soft)}
+.side-card.bad{--c:var(--c6)}
+.side-card .ribbon{position:absolute;top:-16px;left:18px;background:var(--c);color:#fff;padding:5px 14px;font-size:.95rem;border:2px solid var(--text);border-radius:999px;font-weight:900}
+.side-card h4{font-size:1.3rem;color:var(--c);margin:8px 0 12px;font-weight:900}
+
+/* A2 / 5-card grid */
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:24px}
+.a2-card{background:#fff;border:3px solid var(--c,var(--c3));border-radius:16px;padding:18px 14px;position:relative;box-shadow:4px 4px 0 var(--text)}
+.a2-card .ico{font-size:2rem;margin-bottom:8px}
+.a2-card h5{font-size:1rem;color:var(--c,var(--c3));font-weight:900;margin-bottom:8px;line-height:1.3}
+.a2-card p{font-size:.85rem;line-height:1.55;color:var(--text)}
+
+/* Advice grid */
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.advice-card{background:#fff;border:3px solid var(--text);border-radius:16px;padding:20px 16px;text-align:center;position:relative;box-shadow:0 6px 0 var(--c,var(--c1))}
+.advice-card .n{font-size:2.6rem;color:var(--c,var(--c1));line-height:1;font-weight:900;display:block}
+.advice-card h5{font-size:1rem;color:var(--text);margin:10px 0 6px;font-weight:900;line-height:1.3}
+.advice-card p{font-size:.85rem;line-height:1.55;color:var(--text)}
+
+/* Cover */
+.cover{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fff5fa,var(--bg))}
+.cover .badge{display:inline-block;background:var(--c1);color:#fff;font-size:1rem;letter-spacing:.2em;padding:8px 20px;margin-bottom:32px;border-radius:999px;box-shadow:0 6px 0 var(--text);font-weight:700}
+.cover h1{font-size:clamp(3.4rem,8vw,7rem);line-height:1.05;margin-bottom:18px;color:var(--c1);letter-spacing:-.03em;font-weight:900}
+.cover h1 .accent{color:var(--c5)}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.7rem);color:var(--text);margin-bottom:38px;font-weight:600;max-width:900px}
+.cover .meta{display:flex;gap:36px;align-items:center;font-size:.95rem;letter-spacing:.05em;color:var(--dim);flex-wrap:wrap;justify-content:center}
+.cover .meta b{color:var(--text);font-weight:700}
+
+/* Closing */
+.closing{align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#fff5fa,var(--bg))}
+.closing h2{font-size:clamp(2.6rem,5.5vw,4.8rem);line-height:1.15;color:var(--c1);margin-bottom:24px;letter-spacing:-.02em;font-weight:900}
+.closing h2 .em{color:var(--c5)}
+.closing .signoff{font-size:1.25rem;color:var(--dim);margin-bottom:32px}
+.closing .url-row{display:flex;gap:24px;align-items:center;margin-top:24px;flex-wrap:wrap;justify-content:center}
+.closing .url-box{background:#fff;border:3px solid var(--c1);border-radius:14px;padding:14px 22px;font-size:.95rem;box-shadow:0 6px 0 var(--c5);color:var(--text);font-weight:700}
+
+/* Hook quote */
+.hook-quote{font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.45;color:var(--text);font-weight:700;max-width:1100px}
+.hook-quote .em{color:var(--c1);font-style:italic}
+
+/* Animations */
+@keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.12s}
+.slide.active .pop-in.d2{animation-delay:.25s}
+.slide.active .pop-in.d3{animation-delay:.38s}
+.slide.active .pop-in.d4{animation-delay:.51s}
+.slide.active .pop-in.d5{animation-delay:.64s}
+@keyframes slideUp{from{transform:translateY(36px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .55s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.16s}
+.slide.active .slide-up.d2{animation-delay:.32s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col,.three-col,.four-col,.five-col{grid-template-columns:1fr;gap:16px}
+  .cmp-row,.a2-grid,.advice-grid,.step-row,.two-side{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="deco" style="top:60px;left:80px"><div class="lollipop" style="--lp:#ff85b3"></div></div>
+  <div class="deco" style="top:80px;right:90px"><div class="star-deco" style="--sc:#ffd54f"></div></div>
+  <div class="deco" style="bottom:90px;left:90px"><div class="cloud"></div></div>
+  <div class="deco" style="bottom:80px;right:90px"><div class="balloon" style="--bc:#b388ff"></div></div>
+  <div class="deco" style="top:48%;left:40px;opacity:.65"><div class="star-deco" style="--sc:#7be495;width:32px;height:32px"></div></div>
+  <div class="deco" style="top:30%;right:60px;opacity:.7"><div class="rainbow" style="transform:scale(.7)"></div></div>
+
+  <span class="badge slide-up">四年級 · 資訊科技 · 演講簡報</span>
+  <h1 class="slide-up d1">Canva 魔法<span class="accent">×</span>AI 設計</h1>
+  <p class="sub slide-up d2">把學校的 Google 帳號變成 <b style="color:var(--c1)">魔法棒</b>，<br>讓 AI 精靈幫你做出比 PowerPoint 還漂亮的簡報！</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>14 張投影片 · 全螢幕投影</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div class="deco" style="top:90px;right:80px"><div class="lollipop" style="--lp:#ffd54f;transform:scale(.85)"></div></div>
+  <div class="deco" style="bottom:140px;right:120px"><div class="star-deco" style="--sc:#b388ff"></div></div>
+  <div style="margin-top:14vh;position:relative;z-index:2">
+    <p class="eyebrow pop-in">還記得嗎？</p>
+    <p class="hook-quote pop-in d1">
+      你第一次拿到<span class="em">彩色筆</span>的下午——<br>
+      你會多麼<span class="em">捨不得放下</span>。<br>
+      <b style="color:var(--c5)">設計這件事，</b>本來就該這麼<b style="color:var(--c1)">好玩</b>。
+    </p>
+    <p class="lead slide-up d2" style="margin-top:28px">
+      可是長大後，做簡報變成「<b>排得對齊就好</b>」、「<b>能交差就好</b>」。<br>
+      <span style="color:var(--c5);font-weight:900">Canva + AI 魔法，要把那個「想自己動手」的感覺搬回課堂裡。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😄</div>
+    <div class="bubble">嗨，四年級的小設計師們！今天我們不講「PowerPoint 怎麼用」，<b>我們講「怎麼用 AI 把簡報變漂亮」</b>。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT IS CANVA ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 起源 / WHAT</span>
+  <p class="eyebrow slide-up">Canva 是什麼？</p>
+  <h2 class="title-lg slide-up d1">一個讓<span class="accent-pink">「不會畫畫的人」</span>也能做出漂亮設計的<br>線上百寶箱。</h2>
+  <div class="two-col">
+    <div class="card-box slide-up d2">
+      <p class="lead">
+        <b>2013 年</b>，澳洲團隊推出 Canva。<br>
+        他們發現：「全世界 99% 的人不會用 Photoshop，但人人都需要做海報、簡報、卡片。」
+      </p>
+      <p class="lead" style="margin-top:14px">
+        所以他們做了一個「<b>拖拉就會的設計工具</b>」——選範本、改文字、拉素材，<b style="color:var(--c1)">三步驟就能完成作品</b>。
+      </p>
+    </div>
+    <div class="flex-row slide-up d2" style="margin:0">
+      <div class="stat-card pop-in d3">
+        <div class="n">1.7 億+</div>
+        <div class="l">全球使用者</div>
+      </div>
+      <div class="stat-card pop-in d4" style="box-shadow:0 6px 0 var(--c3)">
+        <div class="n" style="color:var(--c3)">免費</div>
+        <div class="l">教育版<br>全功能解鎖</div>
+      </div>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:28px;color:var(--dim);text-align:center">
+    🎓 <b>Canva for Education 教育版</b>：學校老師邀請學生後，全部「皇冠 👑」素材免費用、AI 工具次數變多、沒煩人廣告。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎨</div>
+    <div class="bubble">所以 Canva 不是「PowerPoint 的升級版」，<b>它是一個全新的設計世界</b>。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — WHY IT WORKS ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 三大優勢 / WHY</span>
+  <p class="eyebrow slide-up">為什麼小朋友適合用 Canva？</p>
+  <h2 class="title-md slide-up d1">三個讓<span class="accent-pink">老師最愛、學生最快上手</span>的原因。</h2>
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🖱️</div>
+      <div class="h">拖拉就會</div>
+      <p class="b">所有素材<b>滑鼠拖到畫布</b>就好，雙擊改文字。連幼兒園都能上手，沒有複雜的功能表迷宮。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c3)">
+      <div class="ico">☁️</div>
+      <div class="h">自動雲端</div>
+      <p class="b">沒有「儲存」按鈕——<b>每個動作都自動存到雲端</b>。學校電腦做一半，回家打開繼續做！</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c5)">
+      <div class="ico">🪄</div>
+      <div class="h">AI 魔法</div>
+      <p class="b">5 個 AI 精靈住在 Canva 裡，幫你<b>寫文字、畫圖、排版、去背</b>。讓「不會設計的人」也能做出 80 分作品。</p>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:28px;text-align:center;color:var(--dim)">
+    💡 「為什麼不用 PowerPoint？」—— Canva <b>跨平台</b>、<b>範本超多</b>、<b>AI 內建</b>。三大優勢決定一切。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🤔</div>
+    <div class="bubble">這三件事在 Canva 裡是天生內建的，學生不用學「怎麼存檔」、「怎麼排版」——<b>直接玩</b>就會。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — CORE: TEMPLATE & ELEMENT ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 機制 / CORE</span>
+  <p class="eyebrow slide-up">核心機制 ─ 範本與素材</p>
+  <h2 class="title-md slide-up d1">Canva 的兩大核心：<span class="accent-pink">範本</span>與<span class="accent-purple">元素</span>。</h2>
+
+  <div class="two-col" style="grid-template-columns:1.1fr 1fr">
+    <div class="slide-up d2">
+      <div class="card-box pink" style="margin-bottom:18px">
+        <h3 style="font-size:1.4rem;color:var(--c1);margin-bottom:10px;font-weight:900">📋 範本（Template）</h3>
+        <p class="lead" style="font-size:1.05rem">已經有人<b>幫你設計好的版面</b>。<br>只要<b>雙擊改文字、換照片</b>，整份簡報就完成 80%。</p>
+        <p class="lead" style="font-size:.95rem;margin-top:10px;color:var(--dim)">📌 教育版 <b>50 萬+ 範本</b>免費用。</p>
+      </div>
+      <div class="card-box purple">
+        <h3 style="font-size:1.4rem;color:var(--c5);margin-bottom:10px;font-weight:900">🎨 元素（Element）</h3>
+        <p class="lead" style="font-size:1.05rem">左邊工具列點「元素」，搜尋「<b>星星 / 小狗 / 火箭</b>」，<br>看到喜歡的<b>拖到畫布</b>就好。</p>
+      </div>
+    </div>
+    <div class="card-box blue slide-up d2">
+      <h3 style="font-size:1.4rem;color:var(--c3);margin-bottom:14px;font-weight:900">💡 設計小撇步</h3>
+      <ul class="bullet-list blue" style="font-size:1rem">
+        <li>挑範本時找「<b>結構順</b>」的，不要找「100 分完美」的</li>
+        <li>搜尋元素時，<b>關鍵字越具體越好</b>（「黃色拉布拉多」&gt;「狗」）</li>
+        <li>誤刪了？按 <b>Ctrl + Z</b> 是「時光倒流魔法」</li>
+        <li>沒有「儲存」按鈕，Canva <b>每秒鐘都在自動存</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😏</div>
+    <div class="bubble">範本 + 元素 = 90% 的 Canva 操作。<b>剩下的 10% 才需要進階技巧</b>。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — 5 AI MAGIC TOOLS ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · 主角 / 5 MAGIC</span>
+  <p class="eyebrow slide-up">5 個 AI 魔法精靈</p>
+  <h2 class="title-md slide-up d1">Magic Studio 魔法工作室住著<span class="accent-pink">五個 AI 精靈</span>，<br>每個都有專長。</h2>
+
+  <div class="five-col" style="margin-top:30px">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">✍️</div>
+      <div class="h">Magic Write</div>
+      <p class="b">幫你<b>寫文字</b>、<br>找關鍵字、想標題</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c2)">
+      <div class="ico">✨</div>
+      <div class="h">Magic Design</div>
+      <p class="b">輸入主題，<br>AI <b>自動排版</b>整份簡報</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c3)">
+      <div class="ico">🎨</div>
+      <div class="h">Magic Media</div>
+      <p class="b">用文字描述，<br><b>AI 畫出你想要的圖</b></p>
+    </div>
+    <div class="pillar pop-in d4" style="--c:var(--c5)">
+      <div class="ico">🧹</div>
+      <div class="h">Magic Eraser</div>
+      <p class="b">把照片裡的<br><b>路人擦掉</b></p>
+    </div>
+    <div class="pillar pop-in d5" style="--c:var(--c4)">
+      <div class="ico">✂️</div>
+      <div class="h">BG Remover</div>
+      <p class="b">一鍵把<br><b>背景去掉</b></p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:32px;text-align:center;font-size:1.1rem">
+    💡 <b>關鍵心法</b>：AI 幫你做 80 分初稿，<b style="color:var(--c1)">剩下 20 分加上自己的創意</b> = 100 分作品！
+  </p>
+  <div class="speaker">
+    <div class="avatar">🪄</div>
+    <div class="bubble">這 5 個工具不用全部都會。先<b>熟練 Magic Media（畫圖）和 BG Remover（去背）</b>，就能讓作品大躍進。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — 5 STEPS OPERATION ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 操作 / 5 STEPS</span>
+  <p class="eyebrow slide-up">學生端 5 步操作</p>
+  <h2 class="title-md slide-up d1">記住這 5 步，<span class="accent-pink">回家就能立刻開始做</span>。</h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c1)"><span class="n">1</span><span class="t">canva.com<br>用學校帳號登入</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--c2)"><span class="n">2</span><span class="t">「+建立設計」<br>選簡報 16:9</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--c3)"><span class="n">3</span><span class="t">挑範本<br>雙擊改文字</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--c5)"><span class="n">4</span><span class="t">加元素<br>+ AI 魔法</span></div>
+    <div class="step-item pop-in d5" style="--c:var(--c4)"><span class="n">5</span><span class="t">分享/下載<br>交給老師</span></div>
+  </div>
+
+  <div class="two-col slide-up d2" style="margin-top:32px">
+    <div class="card-box pink">
+      <h3 style="color:var(--c1);font-size:1.25rem;margin-bottom:10px;font-weight:900">⚠️ 學生最常踩雷</h3>
+      <p class="lead" style="font-size:1.02rem">登入錯帳號！<br>一定要用<b>學校發的 Google 帳號</b>，不是爸媽的私人 Gmail。<br>否則找不到老師班級、皇冠素材也用不了。</p>
+    </div>
+    <div class="card-box blue">
+      <h3 style="color:var(--c3);font-size:1.25rem;margin-bottom:10px;font-weight:900">💡 必告訴學生的事</h3>
+      <p class="lead" style="font-size:1.02rem">交作業<b>用「分享連結」</b>比下載 PDF 還方便。<br>連結會即時更新——老師看到的永遠是最新版！</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📋</div>
+    <div class="bubble">這 5 步背下來，學生回家就能立刻試。<b>實際做一次比聽 30 分鐘還有用</b>。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — APPLICATION SCENARIOS ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 情境 / SCENARIOS</span>
+  <p class="eyebrow slide-up">三大教學情境</p>
+  <h2 class="title-md slide-up d1">在班上你最常用的<br><span class="accent-pink">會是第 1 個</span>。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">👋</div>
+      <div class="h">自我介紹簡報</div>
+      <p class="b"><b>最推薦初學者</b>。6 頁：封面 + 興趣 + 家人 + 食物 + 夢想 + 感謝。<b style="color:var(--c1)">人人都有題材</b>。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--c5)">
+      <div class="ico">💖</div>
+      <div class="h">我的最愛分享</div>
+      <p class="b">介紹最愛的書 / 動物 / 地方。用 <b>Magic Design</b> 自動排版，<b>結尾頁寫「為什麼喜歡」</b>。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c4)">
+      <div class="ico">🎉</div>
+      <div class="h">校園活動報導 ★</div>
+      <p class="b">運動會 / 園遊會 / 母親節。用 <b>BG Remover</b> 去背路人，<b>Magic Eraser</b> 擦掉雜物。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:36px;text-align:center;color:var(--dim);font-size:1.05rem">
+    💡 教學建議：第一學期只做「<b>自我介紹簡報</b>」單一情境，熟練後再做「最愛分享」、「活動報導」。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🌟</div>
+    <div class="bubble">自我介紹簡報是入門金鑰——<b>學生有自己的素材、有情感、有動機</b>。試過就知道很神！</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — EVIDENCE & VALUE ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 實證 / EVIDENCE</span>
+  <p class="eyebrow slide-up">為什麼國小該教 Canva？</p>
+  <h2 class="title-md slide-up d1">不是「老師覺得好用」，<br>是<span class="accent-pink">教育部 12 年國教課綱</span>明確要求。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <div class="card-box yellow" style="margin-bottom:18px">
+        <h3 style="font-size:1.2rem;color:#d49a00;margin-bottom:10px;font-weight:900">📚 12 年國教 · 資訊科技領域</h3>
+        <p class="lead" style="font-size:.98rem">
+          <span class="tag pink">資-E-A1 運算思維</span>
+          <span class="tag blue">資-E-A2 解決問題</span>
+          <span class="tag green">資-E-C2 數位合作</span>
+        </p>
+        <p class="lead" style="font-size:.95rem;margin-top:10px;color:var(--dim)">
+          Canva 同時涵蓋這三大素養指標。
+        </p>
+      </div>
+      <div class="card-box pink">
+        <h3 style="font-size:1.2rem;color:var(--c1);margin-bottom:10px;font-weight:900">⭐ 黃金發現</h3>
+        <p class="lead" style="font-size:1.05rem">
+          Canva 對<b style="color:var(--c1)">不喜歡寫字的學生</b>提升效果<b>最為顯著</b>。
+        </p>
+        <p class="lead" style="font-size:.95rem;margin-top:8px;color:var(--dim)">
+          —— 因為它把「寫」變成了「拖拉設計」。
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-up d2">
+      <div class="card-box green">
+        <h4 style="color:#3d9b5a;font-size:1.05rem;margin-bottom:14px;font-weight:900;letter-spacing:.1em">📊 國小四年級 Canva 教學實驗</h4>
+        <div style="display:flex;gap:16px;margin-bottom:16px">
+          <div style="flex:1;text-align:center;padding:16px;background:#fff;border:3px solid var(--c4);border-radius:14px">
+            <div style="font-size:3.2rem;color:var(--c4);line-height:1;font-weight:900">85%</div>
+            <div style="font-size:.9rem;color:var(--dim);font-weight:600;margin-top:4px">Canva 班 · 完成率</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--text);font-weight:900">VS</div>
+          <div style="flex:1;text-align:center;padding:16px;background:#fff;border:3px solid var(--dim);border-radius:14px">
+            <div style="font-size:3.2rem;color:var(--dim);line-height:1;font-weight:900">52%</div>
+            <div style="font-size:.9rem;color:var(--dim);font-weight:600;margin-top:4px">PowerPoint 班 · 完成率</div>
+          </div>
+        </div>
+        <p class="lead" style="font-size:.98rem;text-align:center">作業繳交率 <b class="accent-green">顯著高於對照組</b>（單元 8 堂課，桃園某國小）</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📊</div>
+    <div class="bubble">當家長問「打開 Canva 算學習嗎？」 —— <b>請把這個對照表給他看</b>。完成率才是真正的學習證據。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — COMPARE ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">設計工具五款比較</p>
+  <h2 class="title-md slide-up d1">沒有「最好的工具」，<br>只有<span class="accent-pink">「最對的年紀」</span>。</h2>
+
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--c3)">
+      <div class="nm">小畫家</div>
+      <div class="when"><b>單張塗鴉</b><br><br>🎯 三年級<br>畫圖入門</div>
+    </div>
+    <div class="cmp-tile pop-in d2" style="--c:var(--c5)">
+      <div class="nm">PowerPoint</div>
+      <div class="when"><b>傳統簡報</b><br><br>🎯 國中以上<br>商務正式場合</div>
+    </div>
+    <div class="cmp-tile star pop-in d3">
+      <div class="ribbon">本日主角</div>
+      <div class="nm">Canva</div>
+      <div class="when"><b>拖拉設計 + AI</b><br><br>🎯 <b>國小 3-6 年級</b><br>創作、海報、簡報</div>
+    </div>
+    <div class="cmp-tile pop-in d4" style="--c:var(--c6)">
+      <div class="nm">Photoshop</div>
+      <div class="when"><b>專業修圖</b><br><br>🎯 高中以上<br>需要付費</div>
+    </div>
+    <div class="cmp-tile pop-in d5" style="--c:var(--c4)">
+      <div class="nm">Figma</div>
+      <div class="when"><b>UI / 介面設計</b><br><br>🎯 大學以上<br>協作為主</div>
+    </div>
+  </div>
+
+  <div class="card-box pink slide-up d2" style="margin-top:34px;text-align:center">
+    <h3 style="font-size:1.3rem;color:var(--c1);margin-bottom:10px;font-weight:900">⚖️ 黃金法則</h3>
+    <p class="lead" style="font-size:1.1rem">
+      國小先用 <b>小畫家 → Canva</b> 培養設計感；<br>
+      國中以後可選用 <b style="color:var(--c1)">Canva / PowerPoint / Photoshop</b> 因應不同任務。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚖️</div>
+    <div class="bubble">Canva 不是「最強大」的設計工具——<b>是最適合國小學生上手</b>的那一個。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — DOUBLE EDGE ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 雙面刃 / DOUBLE EDGE</span>
+  <p class="eyebrow slide-up">教 Canva 的隱憂</p>
+  <h2 class="title-md slide-up d1">AI 工具是<span class="accent-pink">雙面刃</span>——<br>用對了培養素養，用錯了取代思考。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 正面效應</div>
+      <h4>引導學生創作</h4>
+      <ul class="bullet-list green" style="font-size:1rem">
+        <li>把「不會畫」的孩子拉回設計世界</li>
+        <li>讓「靈感卡關」變成「先試試 AI 給的初稿」</li>
+        <li>降低技術門檻，<b>聚焦在內容創意</b></li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 負面效應</div>
+      <h4>變相懶得思考</h4>
+      <ul class="bullet-list" style="font-size:1rem">
+        <li>學生直接複製 AI 結果不改一個字</li>
+        <li>失去「為什麼這樣排版」的判斷力</li>
+        <li>形成<b>「AI 給什麼我交什麼」</b>的惰性</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card-box blue slide-up d2" style="margin-top:30px">
+    <h3 style="color:var(--c3);font-size:1.25rem;margin-bottom:12px;font-weight:900">🎯 老師的三大救援策略</h3>
+    <ul class="bullet-list blue" style="font-size:1.02rem">
+      <li>強制要求「<b>AI 初稿 → 改三處 → 才能交</b>」</li>
+      <li>每份作品要附「<b>我改了什麼、為什麼改</b>」說明</li>
+      <li>定期辦「<b>純手作 vs AI 輔助</b>」對照展，讓孩子看見差別</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌈</div>
+    <div class="bubble">記得：你是<b>老師</b>不是 Canva 的代理人。<b>制度怎麼設計，孩子的思考就怎麼長</b>。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — A2 / 5 LITERACIES ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / 5 LITERACIES</span>
+  <p class="eyebrow slide-up">學生要學到的 5 件事</p>
+  <h2 class="title-md slide-up d1">不是「會點 5 個按鈕」就好，<br>是<span class="accent-pink">這五件事一起做到</span>。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🔑</div>
+      <h5>① 帳號<br>管理</h5>
+      <p>學會用學校 Google 帳號登入，<b>分清楚個人帳號和學校帳號</b>。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">📋</div>
+      <h5>② 範本<br>選擇</h5>
+      <p>挑「結構順、風格我喜歡」，<b>不挑「100 分完美」</b>。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c3)">
+      <div class="ico">🎨</div>
+      <h5>③ 素材<br>運用</h5>
+      <p>用元素 + 上傳照片，<b>練「拖拉」與「等比例縮放」</b>。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c5)">
+      <div class="ico">🪄</div>
+      <h5>④ AI <br>協作</h5>
+      <p>5 個 AI 精靈，學會<b>「下指令」與「篩選結果」</b>。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c4)">
+      <div class="ico">📤</div>
+      <h5>⑤ 分享<br>交付</h5>
+      <p>下載 PDF 或用「分享連結」，<b>把作品傳給老師</b>。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:28px;text-align:center;font-size:1.05rem;color:var(--text)">
+    💡 <b>10 年後 Canva 可能消失，但「帳號管理、版面思維、AI 協作、分享發表」會跟著孩子一輩子。</b>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">我們教的不是「Canva」，<b>是孩子未來的數位素養底盤</b>。工具會變，素養不會。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — FINAL ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">5 個給老師的叮嚀</p>
+  <h2 class="title-md slide-up d1">教 Canva 之前，<br>請先記住<span class="accent-pink">這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <span class="n">01</span>
+      <h5>先當<br>學生</h5>
+      <p>自己先做一份簡報，<b>玩 1-2 天</b>，理解學生會卡在哪。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <span class="n">02</span>
+      <h5>小步<br>啟動</h5>
+      <p>第一學期只做「<b>自我介紹</b>」單一情境，熟練再擴展。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c4)">
+      <span class="n">03</span>
+      <h5>強調<br>原創</h5>
+      <p>AI 生成的圖<b>不能模仿米老鼠、Nike</b>。版權教育從國小開始。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c3)">
+      <span class="n">04</span>
+      <h5>關注<br>每個學生</h5>
+      <p>Canva 最大的價值是讓<b>不愛寫作業的孩子也想交</b>。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <span class="n">05</span>
+      <h5>永遠<br>記得素養</h5>
+      <p>不是「會用工具」，是<b>培養長期數位學習能力</b>。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不只適用 Canva，<b>適用所有 AI 工具的教學現場</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="deco" style="top:80px;left:90px"><div class="lollipop" style="--lp:#b388ff;transform:scale(.9)"></div></div>
+  <div class="deco" style="top:90px;right:100px"><div class="star-deco" style="--sc:#ff85b3"></div></div>
+  <div class="deco" style="bottom:120px;left:100px"><div class="cloud"></div></div>
+  <div class="deco" style="bottom:100px;right:90px"><div class="balloon" style="--bc:#7be495"></div></div>
+  <div class="deco" style="top:48%;left:60px;opacity:.7"><div class="rainbow" style="transform:scale(.65)"></div></div>
+
+  <h2 class="slide-up">設計的本質，是讓孩子<br>「<span class="em">捨不得放下</span>」地創作。</h2>
+  <p class="signoff slide-up d1">Canva + AI 提醒我們的，是這件事本來該怎樣。</p>
+
+  <div class="url-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b style="color:var(--c1)">cagoooo.github.io/it-cockpit/canva-magic/</b>
+    </div>
+    <div class="url-box">
+      🎬 NotebookLM 自學影片<br>
+      <b style="color:var(--c5)">見駕駛艙首頁 YouTube 連結</b>
+    </div>
+  </div>
+
+  <p style="margin-top:42px;color:var(--dim);font-size:.95rem;letter-spacing:.1em">
+    Q&amp;A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;color:var(--c1);font-size:1.1rem;letter-spacing:.05em;font-weight:900">THANK YOU · 謝謝小設計師們</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'Canva 魔法 × AI 設計 · 四年級資訊科技'},
+  {n:2,  t:'開場暖身',       s:'從彩色筆的下午 → 設計的初衷'},
+  {n:3,  t:'Canva 是什麼',   s:'澳洲團隊 2013 · 1.7 億用戶 · 教育版免費'},
+  {n:4,  t:'為什麼好用',     s:'三大優勢：拖拉就會、自動雲端、AI 魔法'},
+  {n:5,  t:'核心 ─ 範本與素材', s:'雙擊改文字 + 拖拉元素 = 90% 操作'},
+  {n:6,  t:'五大 AI 魔法精靈', s:'Magic Write/Design/Media/Eraser + BG Remover'},
+  {n:7,  t:'學生端 5 步操作',  s:'登入 → 建立 → 範本 → AI → 分享'},
+  {n:8,  t:'三大教學情境',    s:'自我介紹 · 最愛分享 · 校園活動報導'},
+  {n:9,  t:'課綱對應 + 實證',  s:'12 年國教資訊科技 · 桃園實驗'},
+  {n:10, t:'工具五款比較',    s:'小畫家 · Canva ★ · PowerPoint · PS · Figma'},
+  {n:11, t:'AI 雙面刃',       s:'正面 vs 負面 · 老師的救援策略'},
+  {n:12, t:'5 大數位素養',     s:'帳號 · 範本 · 素材 · AI · 分享'},
+  {n:13, t:'5 個給老師的叮嚀',  s:'先當學生 · 小步啟動 · 原創 · 關注 · 素養'},
+  {n:14, t:'結語 + Q&A',      s:'設計的本質 · 謝謝小設計師們'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape': if(document.fullscreenElement) document.exitFullscreen(); break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

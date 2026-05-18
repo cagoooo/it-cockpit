@@ -55,6 +55,21 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-body);font-size
 #objectives h2{font-family:var(--ff-head);font-size:12px;color:var(--c2);margin-bottom:14px}
 .obj-grid{display:flex;flex-wrap:wrap;gap:10px}
 .obj-chip{background:var(--panel);border:2px solid var(--c1);padding:10px 18px;font-size:16px;font-weight:700;color:var(--c1);display:flex;align-items:center;gap:8px}
+
+/* Lecture CTA */
+.lecture-cta{display:block;margin:20px 0 28px;padding:18px 22px;
+  background:var(--c2);color:var(--bg);
+  border:3px solid var(--text);box-shadow:5px 5px 0 var(--c1);
+  text-decoration:none;transition:.2s;position:relative}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--c1)}
+.lecture-cta:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--c1)}
+.lecture-cta .cta-tag{display:inline-block;font-family:var(--ff-head);
+  font-size:.55rem;letter-spacing:.15em;background:var(--bg);color:var(--c2);
+  padding:3px 8px;margin-bottom:8px}
+.lecture-cta .cta-title{display:block;font-size:1.3rem;font-weight:900;
+  letter-spacing:-.01em;margin-bottom:4px;font-family:var(--ff-body)}
+.lecture-cta .cta-sub{display:block;font-size:.85rem;opacity:.9;line-height:1.5;
+  font-family:var(--ff-body)}
 #section-nav{background:var(--surface);border-bottom:2px solid var(--panel);padding:12px 20px;position:sticky;top:54px;z-index:90;overflow-x:auto;white-space:nowrap}
 .nav-pills{display:inline-flex;gap:8px}
 .nav-pill{font-family:var(--ff-head);font-size:10px;padding:8px 16px;border:2px solid var(--dim);color:var(--dim);background:transparent;cursor:pointer;white-space:nowrap;transition:.2s}
@@ -231,6 +246,14 @@ footer a{color:var(--c1);text-decoration:none}
     <div class="obj-chip"><span>🔗</span>完成 Gemini→Canva 完整串接流程</div>
   </div>
 </section>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 20px">
+  <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：14 張投影片，全螢幕投影模式">
+    <span class="cta-tag">老師上課用 ⮕</span>
+    <span class="cta-title">🎬 進入演講簡報模式</span>
+    <span class="cta-sub">14 張投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+  </a>
+</div>
 
 <div style="max-width:1100px;margin:0 auto 32px;padding:0 20px">
   <div class="img-frame"><img src="../assets/slide_02.jpg" alt="今日學習路線圖" loading="lazy"></div>

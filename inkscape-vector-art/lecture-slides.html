@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Inkscape 向量繪圖魔法｜五年級資訊科技 · 演講簡報模式</title>
+<meta name="description" content="阿凱老師 × 桃園市石門國小｜Inkscape 向量繪圖魔法 14 張 Risograph 風投影片。免費開源 · 無限放大不失真 · 6 大核心技能。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&family=Bungee&family=Bungee+Shade&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset & Base ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --paper:#f6efe3;
+  --paper-2:#fff8ec;
+  --paper-3:#ecdfc4;
+  --ink:#2d2418;
+  --ink-1:#2a5fb4;
+  --ink-2:#ec5a4a;
+  --ink-3:#f4b942;
+  --ink-4:#5a8d3a;
+  --ink-5:#9a4ec9;
+  --blue:#2a5fb4;
+  --red:#ec5a4a;
+  --orange:#ec5a4a;
+  --yellow:#f4b942;
+  --green:#5a8d3a;
+  --purple:#9a4ec9;
+  --pink:#e85d8a;
+  --dim:#7a6a4f;
+}
+body{
+  font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:9990;
+  pointer-events:none;mix-blend-mode:multiply;opacity:.4;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.14 0 0 0 0 0.09 0 0 0 0.45 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+}
+
+/* ===== Slide Container ===== */
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  padding:5vh 7vw;
+  opacity:0;transition:opacity .4s;
+  overflow:hidden;
+}
+.slide.active{display:flex;opacity:1}
+
+/* Universal slide deco */
+.slide::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:8px;
+  background:repeating-linear-gradient(90deg,var(--red) 0 16px,var(--paper) 16px 24px);
+  opacity:.7;
+}
+.slide-num{
+  position:absolute;bottom:24px;right:32px;
+  font-family:'Bungee',sans-serif;font-size:.95rem;color:var(--dim);
+  letter-spacing:.1em;z-index:5;
+}
+.slide-title-tag{
+  position:absolute;top:32px;left:32px;
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  letter-spacing:.2em;color:var(--red);text-transform:uppercase;
+  padding:4px 10px;border:1.5px solid var(--red);
+  background:var(--paper-2);
+  z-index:5;
+}
+
+/* Typography */
+.title-xl{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(3.5rem,8vw,7rem);line-height:1.05;
+  letter-spacing:-.02em;color:var(--blue)}
+.title-lg{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(2.8rem,6vw,5rem);line-height:1.1;
+  letter-spacing:-.02em;color:var(--blue)}
+.title-md{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.15;color:var(--ink)}
+.eyebrow{font-family:'Space Mono',monospace;font-size:1.05rem;
+  letter-spacing:.2em;color:var(--red);text-transform:uppercase;
+  margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:'';flex:1;height:2px;background:var(--red);max-width:200px}
+.lead{font-size:clamp(1.1rem,1.8vw,1.45rem);line-height:1.7;
+  color:var(--ink);max-width:1100px}
+.lead b{color:var(--red);font-weight:900}
+.accent-red{color:var(--red)}
+.accent-blue{color:var(--blue)}
+.accent-green{color:var(--green)}
+.accent-orange{color:var(--orange)}
+.accent-purple{color:var(--purple)}
+
+/* Speaker */
+.speaker{position:absolute;bottom:20px;left:32px;
+  display:flex;align-items:flex-end;gap:14px;z-index:8;max-width:55%}
+.speaker .avatar{width:64px;height:64px;flex-shrink:0;
+  background:var(--yellow);border:3px solid var(--ink);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;box-shadow:3px 3px 0 var(--ink)}
+.speaker .bubble{background:var(--paper-2);border:2.5px solid var(--ink);
+  padding:10px 16px;font-size:.95rem;font-weight:600;position:relative;
+  box-shadow:3px 3px 0 var(--ink);max-width:520px;line-height:1.5}
+.speaker .bubble::before{content:'';position:absolute;left:-12px;bottom:18px;
+  width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;
+  border-color:transparent var(--ink) transparent transparent}
+.speaker .bubble::after{content:'';position:absolute;left:-9px;bottom:18px;
+  width:0;height:0;border-style:solid;border-width:8px 14px 8px 0;
+  border-color:transparent var(--paper-2) transparent transparent}
+
+/* Progress */
+.progress{position:fixed;bottom:0;left:0;right:0;height:5px;
+  background:var(--paper-3);z-index:99}
+.progress-fill{height:100%;background:var(--red);transition:width .4s;
+  box-shadow:0 0 8px var(--red)}
+
+/* Hint */
+.hint{position:fixed;top:14px;right:24px;z-index:99;
+  font-family:'Space Mono',monospace;font-size:.75rem;color:var(--dim);
+  background:var(--paper-2);border:1.5px solid var(--dim);padding:5px 12px;
+  letter-spacing:.05em;pointer-events:none;opacity:.7}
+
+/* Overview */
+.overview{position:fixed;inset:0;background:var(--ink);
+  display:none;padding:32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-family:'Bungee',sans-serif;color:var(--yellow);
+  font-size:1.4rem;margin-bottom:18px;letter-spacing:.05em}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.ov-card{background:var(--paper);border:3px solid var(--yellow);
+  padding:14px 16px;cursor:pointer;transition:.15s;position:relative}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--red)}
+.ov-card .num{position:absolute;top:8px;right:10px;
+  font-family:'Bungee',sans-serif;font-size:.85rem;color:var(--red)}
+.ov-card .t{font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.05rem;color:var(--blue);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+/* ===== Risograph childhood decorations ===== */
+.marble{width:60px;height:60px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff 0%,var(--ink-c,#d63842) 60%,#000 100%);
+  border:2px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink),inset -4px -4px 12px rgba(0,0,0,.3);
+  display:inline-block}
+.marble.m1{--ink-c:#d63842}
+.marble.m2{--ink-c:#2a5fb4}
+.marble.m3{--ink-c:#f4b942}
+.marble.m4{--ink-c:#5a8d3a}
+.marble.m5{--ink-c:#9a4ec9}
+
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.pinwheel{width:80px;height:80px;position:relative;
+  animation:spin 4s linear infinite;transform-origin:center}
+.pinwheel-blade{position:absolute;top:0;left:50%;width:40px;height:40px;
+  background:var(--blade-c,var(--red));border:2px solid var(--ink);
+  clip-path:polygon(50% 100%,100% 50%,50% 50%);transform-origin:0 100%}
+.pinwheel-blade.b2{transform:rotate(90deg);--blade-c:var(--yellow)}
+.pinwheel-blade.b3{transform:rotate(180deg);--blade-c:var(--green)}
+.pinwheel-blade.b4{transform:rotate(270deg);--blade-c:var(--purple)}
+.pinwheel::after{content:'';position:absolute;top:50%;left:50%;width:12px;height:12px;
+  background:var(--ink);border-radius:50%;transform:translate(-50%,-50%)}
+
+@keyframes wobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.spinning-top{width:60px;height:80px;position:relative;
+  animation:wobble 1.5s ease-in-out infinite;transform-origin:bottom center}
+.top-body{position:absolute;top:0;left:0;width:60px;height:50px;
+  background:linear-gradient(180deg,var(--red) 0 33%,var(--yellow) 33% 66%,var(--blue) 66% 100%);
+  border:2px solid var(--ink);clip-path:polygon(0 0,100% 0,50% 100%)}
+.top-stick{position:absolute;bottom:0;left:50%;width:4px;height:30px;
+  background:var(--ink);transform:translateX(-50%)}
+
+.polaroid{background:var(--paper-2);border:1px solid var(--ink);
+  padding:8px 8px 24px;box-shadow:4px 4px 0 var(--ink);
+  transform:rotate(var(--rot,3deg));width:140px}
+.polaroid .box{width:100%;aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;background:var(--bg,var(--paper-3))}
+.polaroid .cap{font-family:'Noto Serif TC',serif;font-size:.75rem;
+  text-align:center;margin-top:6px;color:var(--ink)}
+
+/* Cards & Boxes */
+.riso-box{background:var(--paper-2);border:3px solid var(--blue);
+  padding:24px 28px;position:relative}
+.riso-box::before{content:'';position:absolute;top:8px;left:8px;
+  right:-8px;bottom:-8px;border:3px solid var(--orange);z-index:-1}
+.riso-box.red{border-color:var(--red)}
+.riso-box.red::before{border-color:var(--yellow)}
+.riso-box.green{border-color:var(--green)}
+.riso-box.green::before{border-color:var(--yellow)}
+.riso-box.purple{border-color:var(--purple)}
+.riso-box.purple::before{border-color:var(--orange)}
+.riso-box.yellow{border-color:var(--yellow)}
+.riso-box.yellow::before{border-color:var(--red)}
+
+.stat-card{background:var(--paper-2);border:3px solid var(--ink);
+  padding:22px 26px;text-align:center;
+  box-shadow:6px 6px 0 var(--red);flex:1;min-width:200px}
+.stat-card .n{font-family:'Bungee Shade','Bungee',sans-serif;
+  font-size:clamp(3rem,5vw,4.5rem);line-height:1;color:var(--red)}
+.stat-card .l{font-size:.95rem;color:var(--dim);margin-top:6px;letter-spacing:.05em}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:16px;align-items:flex-start;
+  font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.7;margin-bottom:14px}
+.bullet-list li::before{content:'';flex-shrink:0;
+  width:28px;height:28px;background:var(--blue);
+  border:2px solid var(--ink);border-radius:50%;
+  margin-top:6px;box-shadow:2px 2px 0 var(--ink)}
+.bullet-list.red li::before{background:var(--red)}
+.bullet-list.green li::before{background:var(--green)}
+.bullet-list.yellow li::before{background:var(--yellow)}
+.bullet-list.purple li::before{background:var(--purple)}
+
+.tag{display:inline-block;padding:6px 14px;background:var(--yellow);
+  border:2px solid var(--ink);font-weight:700;font-size:.95rem;
+  box-shadow:2px 2px 0 var(--ink);margin:4px 6px 4px 0}
+.tag.red{background:var(--red);color:var(--paper)}
+.tag.blue{background:var(--blue);color:var(--paper)}
+.tag.green{background:var(--green);color:var(--paper)}
+.tag.purple{background:var(--purple);color:var(--paper)}
+
+.kbd{display:inline-block;padding:3px 8px;background:var(--ink);
+  color:var(--yellow);font-family:'Space Mono',monospace;font-size:.85em;
+  border-radius:3px}
+
+/* Cover */
+.cover{align-items:center;justify-content:center;
+  text-align:center;background:var(--paper)}
+.cover .badge{display:inline-block;background:var(--red);color:var(--paper);
+  font-family:'Space Mono',monospace;font-size:1.05rem;letter-spacing:.2em;
+  padding:8px 18px;margin-bottom:32px;box-shadow:4px 4px 0 var(--ink)}
+.cover h1{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(3.5rem,8vw,7rem);line-height:1;margin-bottom:18px;
+  color:var(--blue);letter-spacing:-.03em}
+.cover h1 .accent{color:var(--red);font-family:'Bungee',sans-serif;
+  font-size:.7em;display:inline-block;transform:translateY(-12px);margin:0 8px}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.6rem);
+  color:var(--ink);margin-bottom:40px;font-weight:500}
+.cover .meta{display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:.9rem;
+  letter-spacing:.05em;color:var(--dim)}
+.cover .meta b{color:var(--ink);font-weight:700}
+.cover-deco{position:absolute;display:flex;gap:18px}
+.cover-deco.tl{top:80px;left:80px}
+.cover-deco.tr{top:80px;right:80px}
+.cover-deco.bl{bottom:80px;left:80px}
+.cover-deco.br{bottom:80px;right:80px}
+
+/* Hook quote */
+.hook-quote{font-family:'Noto Serif TC',serif;
+  font-size:clamp(2rem,4.5vw,3.6rem);line-height:1.4;color:var(--ink);
+  font-weight:700;max-width:1100px}
+.hook-quote .em{color:var(--red);font-style:italic}
+.hook-photos{position:absolute;display:flex;gap:14px;bottom:90px;right:80px}
+
+/* Layout helpers */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;
+  align-items:center;flex:1;margin-top:24px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;flex:1;margin-top:24px}
+.flex-row{display:flex;gap:24px;flex-wrap:wrap;align-items:stretch;margin-top:24px}
+.center-content{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+
+/* Pillars */
+.pillar{background:var(--paper-2);border:3px solid var(--ink);
+  padding:24px 22px;text-align:center;position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--red))}
+.pillar .ico{width:80px;height:80px;background:var(--c,var(--red));
+  border:2.5px solid var(--ink);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;font-size:2.5rem;box-shadow:3px 3px 0 var(--ink)}
+.pillar .h{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.35rem;color:var(--c,var(--red));margin-bottom:10px}
+.pillar .b{font-size:1rem;line-height:1.6;color:var(--ink)}
+
+/* Vector vs Raster (slide 4) */
+.vr-table{width:100%;border-collapse:collapse;
+  background:var(--paper-2);font-size:clamp(.95rem,1.2vw,1.1rem)}
+.vr-table th{background:var(--blue);color:var(--paper);
+  padding:12px 16px;text-align:left;
+  font-family:'Space Mono',monospace;font-size:.85rem;
+  border:2px solid var(--ink)}
+.vr-table td{padding:14px 18px;border:2px solid var(--ink);font-weight:600}
+.vr-table tr:nth-child(2n) td{background:var(--paper-3)}
+.vr-table .big{font-size:1.15em;color:var(--red);font-weight:900}
+
+/* Scenario cards */
+.scenario-fan{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:30px}
+.scenario-card{background:var(--paper-2);border:3px solid var(--c,var(--blue));
+  padding:24px 22px;position:relative;box-shadow:6px 6px 0 var(--ink)}
+.scenario-card .num{position:absolute;top:-18px;left:18px;
+  width:40px;height:40px;background:var(--c,var(--blue));color:var(--paper);
+  border:2.5px solid var(--ink);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bungee',sans-serif;font-size:1.2rem}
+.scenario-card .icon{font-size:2.5rem;margin-bottom:8px;text-align:center}
+.scenario-card h4{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.35rem;color:var(--c,var(--blue));margin:8px 0 12px}
+.scenario-card p{font-size:.95rem;line-height:1.6}
+
+/* Comparison tile */
+.cmp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.cmp-tile{background:var(--paper-2);border:3px solid var(--ink);
+  padding:18px 16px;text-align:center;position:relative;
+  box-shadow:4px 4px 0 var(--c,var(--blue))}
+.cmp-tile.star{background:var(--yellow);box-shadow:4px 4px 0 var(--red);transform:scale(1.06)}
+.cmp-tile .nm{font-family:'Bungee',sans-serif;font-size:1.4rem;
+  color:var(--c,var(--blue));margin-bottom:8px}
+.cmp-tile.star .nm{color:var(--ink)}
+.cmp-tile .when{font-size:.9rem;line-height:1.5;color:var(--ink)}
+.cmp-tile .ribbon{position:absolute;top:-12px;right:-8px;
+  background:var(--red);color:var(--paper);padding:3px 10px;font-size:.75rem;font-weight:700;
+  font-family:'Space Mono',monospace;border:2px solid var(--ink)}
+
+/* Steps row (slide 7 — 6 stages) */
+.step-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:32px}
+.step-item{background:var(--paper-2);border:2.5px solid var(--ink);
+  padding:12px 8px;text-align:center;position:relative;font-size:.85rem;
+  box-shadow:3px 3px 0 var(--c,var(--blue))}
+.step-item .n{font-family:'Bungee',sans-serif;font-size:1.6rem;
+  color:var(--c,var(--blue));display:block;margin-bottom:4px}
+.step-item .t{font-weight:700;font-size:.82rem;line-height:1.3}
+.step-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+  font-size:1.3rem;color:var(--ink);z-index:2;font-weight:900}
+
+/* Two-side */
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
+.side-card{background:var(--paper-2);border:3px solid var(--c,var(--green));
+  padding:24px 26px;position:relative}
+.side-card.bad{--c:var(--red)}
+.side-card .ribbon{position:absolute;top:-16px;left:18px;
+  background:var(--c);color:var(--paper);padding:4px 14px;
+  font-family:'Bungee',sans-serif;font-size:.9rem;border:2px solid var(--ink)}
+.side-card h4{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.3rem;color:var(--c);margin:8px 0 12px}
+
+/* A2 pentagon */
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.a2-card{background:var(--paper-2);border:3px solid var(--c,var(--blue));
+  padding:18px 14px;position:relative;box-shadow:5px 5px 0 var(--ink)}
+.a2-card .ico{font-size:2rem;margin-bottom:8px}
+.a2-card h5{font-family:'Noto Serif TC',serif;font-size:1rem;
+  color:var(--c,var(--blue));font-weight:900;margin-bottom:8px}
+.a2-card p{font-size:.85rem;line-height:1.5}
+
+/* Final advice */
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.advice-card{background:var(--paper-2);border:3px solid var(--ink);
+  padding:20px 16px;text-align:center;position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--red))}
+.advice-card .n{font-family:'Bungee Shade','Bungee',sans-serif;
+  font-size:3rem;color:var(--c,var(--red));line-height:1}
+.advice-card h5{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.1rem;color:var(--ink);margin:10px 0 8px}
+.advice-card p{font-size:.85rem;line-height:1.55}
+
+/* Closing */
+.closing{align-items:center;justify-content:center;text-align:center;
+  background:var(--paper)}
+.closing h2{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(2.6rem,5vw,4.5rem);line-height:1.15;
+  color:var(--blue);margin-bottom:24px;letter-spacing:-.02em}
+.closing h2 .em{color:var(--red)}
+.closing .signoff{font-size:1.2rem;color:var(--dim);margin-bottom:32px}
+.closing .qr-row{display:flex;gap:24px;align-items:center;margin-top:24px;flex-wrap:wrap;justify-content:center}
+.closing .url-box{background:var(--paper-2);border:3px solid var(--ink);
+  padding:14px 22px;font-family:'Space Mono',monospace;font-size:.95rem;
+  box-shadow:4px 4px 0 var(--red)}
+
+/* SVG vs Raster demo (slide 4) */
+.format-demo{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:18px}
+.format-tile{background:var(--paper-2);border:3px solid var(--ink);
+  padding:16px;text-align:center;box-shadow:5px 5px 0 var(--c,var(--blue))}
+.format-tile h5{font-family:'Bungee',sans-serif;font-size:1.4rem;
+  color:var(--c,var(--blue));margin-bottom:10px}
+.format-tile .demo-box{
+  height:80px;display:flex;align-items:center;justify-content:center;
+  background:var(--paper-3);font-family:'Bungee',sans-serif;font-size:3rem;
+  color:var(--ink);border:2px solid var(--ink);margin-bottom:8px;overflow:hidden}
+.format-tile.pixelated .demo-box{
+  image-rendering:pixelated;filter:blur(1px) contrast(1.4);
+  background:repeating-linear-gradient(0deg,var(--paper-3) 0 6px,var(--paper-2) 6px 12px),
+             repeating-linear-gradient(90deg,var(--paper-3) 0 6px,var(--paper-2) 6px 12px)}
+.format-tile p{font-size:.95rem;line-height:1.5}
+
+/* Boolean ops icons */
+.bool-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
+.bool-card{background:var(--paper-2);border:3px solid var(--ink);
+  padding:20px 18px;text-align:center;position:relative;
+  box-shadow:5px 5px 0 var(--c,var(--orange))}
+.bool-card .op-svg{width:120px;height:90px;margin:0 auto 12px;display:block}
+.bool-card h4{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.2rem;color:var(--c,var(--orange));margin-bottom:8px}
+.bool-card p{font-size:.9rem;line-height:1.55}
+.bool-card .kshort{display:inline-block;margin-top:8px;
+  background:var(--ink);color:var(--yellow);
+  font-family:'Space Mono',monospace;font-size:.85rem;
+  padding:3px 10px;border-radius:3px}
+
+/* Tool list (slide 3 / 5) */
+.tool-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.tool-tile{background:var(--paper-2);border:2.5px solid var(--ink);
+  padding:14px 16px;box-shadow:4px 4px 0 var(--c,var(--blue))}
+.tool-tile .ic{font-size:1.8rem;margin-bottom:6px}
+.tool-tile h5{font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.05rem;color:var(--c,var(--blue));margin-bottom:4px}
+.tool-tile p{font-size:.9rem;line-height:1.55}
+
+/* Animations */
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+/* Responsive */
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .three-col,.cmp-row,.a2-grid,.advice-grid,.step-row,.bool-row,.tool-list,.scenario-fan,.format-demo{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+  .hook-photos{display:none}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="marble m1"></div><div class="marble m2"></div></div>
+  <div class="cover-deco tr"><div class="pinwheel"><span class="pinwheel-blade b1"></span><span class="pinwheel-blade b2"></span><span class="pinwheel-blade b3"></span><span class="pinwheel-blade b4"></span></div></div>
+  <div class="cover-deco bl"><div class="spinning-top"><div class="top-body"></div><div class="top-stick"></div></div></div>
+  <div class="cover-deco br"><div class="marble m4"></div><div class="marble m3"></div></div>
+
+  <span class="badge slide-up">五年級資訊科技 · 設計與印刷美學</span>
+  <h1 class="slide-up d1">Inkscape<span class="accent">×</span>向量魔法</h1>
+  <p class="sub slide-up d2">把學生的塗鴉，<span class="accent-red"><b>變成</b></span>不會糊掉、可以無限放大的設計作品。</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>14 張 Risograph 風投影片</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div style="margin-top:18vh">
+    <p class="eyebrow pop-in">還記得嗎？</p>
+    <p class="hook-quote pop-in d1">
+      國小那個下午，你<span class="em">蹲在地上用蠟筆塗鴉</span>，<br>
+      把<span class="em">最得意的那張畫</span>貼在房門上——<br>
+      可惜過了三年，蠟筆暈開、紙也黃了，<br>
+      <b style="color:var(--red)">那張畫，再也回不來了。</b>
+    </p>
+    <p class="lead slide-up d2" style="margin-top:32px">
+      可是如果當時你用的是<b>「向量畫筆」</b>呢？<br>
+      30 年後印成 100 公分的大海報，<br>
+      <span style="color:var(--blue);font-weight:900">線條依舊像第一天那樣銳利乾淨。</span>
+    </p>
+  </div>
+  <div class="hook-photos">
+    <div class="polaroid" style="--rot:-5deg"><div class="box" style="--bg:#ec5a4a44">🎨</div><div class="cap">蠟筆塗鴉｜1998</div></div>
+    <div class="polaroid" style="--rot:4deg"><div class="box" style="--bg:#f4b94244">📐</div><div class="cap">三角板</div></div>
+    <div class="polaroid" style="--rot:-2deg"><div class="box" style="--bg:#2a5fb444">✏️</div><div class="cap">鉛筆素描</div></div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😄</div>
+    <div class="bubble">嗨小朋友們好！我是阿凱老師。今天我們要學一個<b>不會糊掉的蠟筆</b>——免費而且全世界都在用。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT IS INKSCAPE ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 工具 / TOOL</span>
+  <p class="eyebrow slide-up">Inkscape 是什麼？</p>
+  <h2 class="title-lg slide-up d1">一群熱愛畫畫的人，<br><span class="accent-red">寫程式</span>送給全世界的禮物。</h2>
+  <div class="two-col">
+    <div class="riso-box slide-up d2">
+      <p class="lead" style="margin-bottom:18px">
+        <b>2003 年</b>誕生的<b class="accent-blue">免費開源</b>向量繪圖軟體，
+        全球有上百萬人每天在用——從<b>專業設計師</b>到<b>小學生</b>都在用。
+      </p>
+      <p class="lead">作品檔案的副檔名是 <b>.svg</b>（Scalable Vector Graphics），是 W3C 制定的<b class="accent-red">國際網路標準格式</b>。</p>
+    </div>
+    <div class="flex-row slide-up d2" style="margin:0">
+      <div class="stat-card pop-in d3">
+        <div class="n">$0</div>
+        <div class="l">永遠免費<br>VS Illustrator 月費 300+</div>
+      </div>
+      <div class="stat-card pop-in d4" style="box-shadow:6px 6px 0 var(--blue)">
+        <div class="n" style="color:var(--blue)">SVG</div>
+        <div class="l">W3C 國際標準<br>所有瀏覽器都看懂</div>
+      </div>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:32px;color:var(--dim)">
+    💻 跨平台：Windows / macOS / Linux 都能跑｜🌐 中文介面｜🆓 不需註冊不需登入｜📦 安裝即用
+  </p>
+  <div class="speaker">
+    <div class="avatar">😎</div>
+    <div class="bubble">這不只是一款「免費軟體」——它是<b>跟 Illustrator 同等級</b>的專業工具，全世界的設計師都在用。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — VECTOR VS RASTER ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 原理 / WHY</span>
+  <p class="eyebrow slide-up">為什麼要學向量？</p>
+  <h2 class="title-md slide-up d1">向量 vs 點陣 ─ <br>就像<span class="accent-red">「樂譜」對上「錄音」</span>。</h2>
+  <div class="format-demo">
+    <div class="format-tile pop-in d1" style="--c:var(--blue)">
+      <h5>🎼 SVG 向量</h5>
+      <div class="demo-box">A</div>
+      <p>電腦記住「圓心 + 半徑」這些<b>數學公式</b>。<br>放大 100 倍依然<b class="accent-blue">完美清晰</b>。</p>
+    </div>
+    <div class="format-tile pop-in d2 pixelated" style="--c:var(--red)">
+      <h5>🎤 JPG/PNG 點陣</h5>
+      <div class="demo-box">A</div>
+      <p>記住每一個像素點的<b>顏色和位置</b>。<br>放大就變<b class="accent-red">馬賽克</b>看不清。</p>
+    </div>
+  </div>
+  <table class="vr-table" style="margin-top:24px">
+    <thead><tr><th>比較項目</th><th>向量（SVG）</th><th>點陣（JPG/PNG）</th></tr></thead>
+    <tbody>
+      <tr><td>無限放大</td><td class="big">✓ 永遠清晰</td><td>✗ 變馬賽克</td></tr>
+      <tr><td>檔案大小</td><td class="big">小</td><td>大（高解析度）</td></tr>
+      <tr><td>典型用途</td><td>Logo、圖示、海報</td><td>照片、繪畫</td></tr>
+    </tbody>
+  </table>
+  <div class="speaker">
+    <div class="avatar">🤔</div>
+    <div class="bubble">所以<b>Logo 永遠用向量</b>，因為它要印名片小、印招牌大，都得清楚。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — CORE 1: SHAPES & COLORS ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 核心 ① / SHAPES</span>
+  <p class="eyebrow slide-up">核心技能 ①+② ─ 從積木開始。</p>
+  <h2 class="title-md slide-up d1">基本形狀 + 填色描邊：<br><span class="accent-red">任何圖案都從圓和方開始</span>。</h2>
+
+  <div class="two-col" style="grid-template-columns:1fr 1fr">
+    <div class="slide-up d2">
+      <div class="riso-box">
+        <h3 style="font-family:'Noto Serif TC',serif;color:var(--blue);font-size:1.3rem;font-weight:900;margin-bottom:10px">🔷 STAGE 1 · 基本形狀</h3>
+        <p class="lead" style="font-size:1rem">點工具列 → 拖拉繪製。<br>
+          <b>按住 <span class="kbd">Ctrl</span></b> 畫出完美正圓、正方形！<br>
+          <span class="kbd">Ctrl+S</span> 存檔、<span class="kbd">Ctrl+Z</span> 復原。</p>
+      </div>
+    </div>
+    <div class="slide-up d2">
+      <div class="riso-box red">
+        <h3 style="font-family:'Noto Serif TC',serif;color:var(--red);font-size:1.3rem;font-weight:900;margin-bottom:10px">🌈 STAGE 2 · 填色 × 描邊 × 漸層</h3>
+        <p class="lead" style="font-size:1rem">點下方<b>色票</b>改填色。<br>
+          <b>Shift + 色票</b>改描邊。<br>
+          <span class="kbd">Ctrl+Shift+F</span> 開填充與邊框面板。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="riso-box yellow slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--orange);margin-bottom:10px">⚠️ 學生最常踩雷</h3>
+    <p class="lead" style="font-size:1rem">
+      <b>圖形塗不上顏色或文字看不見？</b>
+      打開填充與邊框面板，檢查最下方的<b class="accent-red">透明度（Alpha）拉桿</b>是不是被拉到 0 了！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎨</div>
+    <div class="bubble">注意：Alpha 拉桿是 99% 學生會踩到的雷。教第一節就一定要提醒。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — CORE 2: NODES & BOOLEAN ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · 核心 ② / NODES & BOOLEAN</span>
+  <p class="eyebrow slide-up">核心技能 ③+④ ─ 進階魔法。</p>
+  <h2 class="title-md slide-up d1">節點編輯 + 布林運算：<br><span class="accent-red">把簡單形狀組合成全新作品</span>。</h2>
+
+  <div class="bool-row">
+    <div class="bool-card pop-in d1" style="--c:var(--blue)">
+      <svg class="op-svg" viewBox="0 0 120 90">
+        <circle cx="48" cy="45" r="32" fill="#2a5fb4" opacity=".8" stroke="#2d2418" stroke-width="2"/>
+        <circle cx="78" cy="45" r="32" fill="#ec5a4a" opacity=".8" stroke="#2d2418" stroke-width="2"/>
+      </svg>
+      <h4>⊕ 相加（Union）</h4>
+      <p>兩塊黏土揉成一塊大黏土。<br>
+        <span class="kshort">Ctrl + +</span></p>
+    </div>
+    <div class="bool-card pop-in d2" style="--c:var(--red)">
+      <svg class="op-svg" viewBox="0 0 120 90">
+        <defs><mask id="m1"><rect width="120" height="90" fill="#fff"/><circle cx="75" cy="40" r="25" fill="#000"/></mask></defs>
+        <circle cx="48" cy="48" r="32" fill="#2a5fb4" mask="url(#m1)" stroke="#2d2418" stroke-width="2"/>
+      </svg>
+      <h4>⊖ 減去（Difference）</h4>
+      <p>拿星星模具壓麵團，挖個洞！<br><b>最上層當餅乾模具</b>。<br>
+        <span class="kshort">Ctrl + -</span></p>
+    </div>
+    <div class="bool-card pop-in d3" style="--c:var(--green)">
+      <svg class="op-svg" viewBox="0 0 120 90">
+        <defs><clipPath id="c1"><circle cx="48" cy="45" r="32"/></clipPath></defs>
+        <circle cx="78" cy="45" r="32" fill="#5a8d3a" clip-path="url(#c1)" stroke="#2d2418" stroke-width="2"/>
+      </svg>
+      <h4>⊗ 交集（Intersection）</h4>
+      <p>只保留兩個圖形<b>重疊</b>的部分。<br>
+        <span class="kshort">Ctrl + *</span></p>
+    </div>
+  </div>
+
+  <div class="riso-box purple slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.15rem;color:var(--purple);margin-bottom:8px">🪄 還有節點編輯</h3>
+    <p class="lead" style="font-size:.98rem">
+      白箭頭工具 → 拖拉節點 = 像捏黏土自由變形。<br>
+      <b>形狀轉路徑：<span class="kbd">Ctrl+Shift+C</span></b>　·　<b>原地複製：<span class="kbd">Ctrl+D</span></b>（最常用！）
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🍪</div>
+    <div class="bubble">布林運算是「<b>剪刀和膠水</b>」——Apple Logo 就是一個圓 + 一個小圓「減去」做的。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — 6 STAGE SOP ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 流程 / SOP</span>
+  <p class="eyebrow slide-up">六大核心技能 ─ 完整教學流程</p>
+  <h2 class="title-md slide-up d1">建議分 <span class="accent-red">6 節課</span> 完成 ─ <br>每節聚焦一個核心技能。</h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--blue)"><span class="n">1</span><span class="t">基本形狀<br>Ctrl 完美比例</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d1" style="--c:var(--red)"><span class="n">2</span><span class="t">填色描邊<br>+ 漸層魔法</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--purple)"><span class="n">3</span><span class="t">節點編輯<br>貝茲曲線</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--orange)"><span class="n">4</span><span class="t">布林運算<br>剪刀膠水</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--green)"><span class="n">5</span><span class="t">文字 + 圖層<br>置於路徑</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--blue)"><span class="n">6</span><span class="t">匯出 SVG<br>+ PNG 透明</span></div>
+  </div>
+
+  <div class="two-col slide-up d2" style="margin-top:36px">
+    <div class="riso-box red">
+      <h3 style="font-family:'Noto Serif TC',serif;font-weight:900;color:var(--red);font-size:1.25rem;margin-bottom:10px">⚠️ 老師注意</h3>
+      <p class="lead" style="font-size:1rem">第 1+2 節 (形狀+填色) 學生上手最快，<b>請務必排在開頭</b>。<br>第 3 節（節點）會卡關，建議拆兩節。</p>
+    </div>
+    <div class="riso-box green">
+      <h3 style="font-family:'Noto Serif TC',serif;font-weight:900;color:var(--green);font-size:1.25rem;margin-bottom:10px">💡 必告訴學生的事</h3>
+      <p class="lead" style="font-size:1rem">每次開新檔的<b>第一個動作</b>就是 <span class="kbd">Ctrl+S</span> 存 SVG！<br>沒存檔 = 沒繼續修改的權利。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📋</div>
+    <div class="bubble">6 個技能用 6 節課剛剛好——每節有明確目標，學生帶得走一個成品。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — APPLICATIONS ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 應用 / SCENARIOS</span>
+  <p class="eyebrow slide-up">三大應用情境</p>
+  <h2 class="title-md slide-up d1">學生作品最常出現的<br>三種<span class="accent-red">真實應用</span>。</h2>
+
+  <div class="scenario-fan">
+    <div class="scenario-card pop-in d1" style="--c:var(--blue)">
+      <div class="num">1</div>
+      <div class="icon">🏅</div>
+      <h4>個人大頭貼 / 班徽</h4>
+      <p>圓形 + 星形 + 文字置於路徑。<b>每個學生帶得走一個成品</b>，可以印成貼紙貼在水壺或筆袋上。</p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--orange)">
+      <div class="num">2</div>
+      <div class="icon">🍎</div>
+      <h4>Logo 設計練習</h4>
+      <p>仿做 Apple、Nike、星巴克 Logo。<b>用布林運算拆解經典設計</b>，學生會驚呼「原來這樣做的！」</p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--green)">
+      <div class="num">3</div>
+      <div class="icon">📰</div>
+      <h4>班刊 / 活動海報 ★</h4>
+      <p><b>跨領域整合最強場合</b>。<br>圖層管理 + 文字工具 + 匯出 PNG 貼到 Google 簡報，<b class="accent-red">寒暑假作業尤其適合</b>。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:36px;text-align:center;color:var(--dim);font-size:1.05rem">
+    🎨 跨領域連結：<b>美術課</b>學配色 → <b>資訊課</b>學工具 → <b>國語課</b>學文案 → <b>綜合活動</b>展出。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🏅</div>
+    <div class="bubble">第 1 個（大頭貼）做為入門最有成就感。海報則是 6 節課後的<b>總結驗收</b>作品。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — COMPARE WITH OTHER TOOLS ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">向量繪圖工具四款比較</p>
+  <h2 class="title-md slide-up d1">沒有「最好的工具」，<br>只有<span class="accent-red">「最對的對象」</span>。</h2>
+
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--purple)">
+      <div class="nm">Illustrator</div>
+      <div class="when"><b>業界標準 · 月費 300+</b><br><br>🎯 <b>專業設計師</b>、出版業</div>
+    </div>
+    <div class="cmp-tile pop-in d2" style="--c:var(--orange)">
+      <div class="nm">Affinity Designer</div>
+      <div class="when"><b>一次買斷 · NT$1000+</b><br><br>🎯 <b>進階愛好者</b>、預算有限的工作室</div>
+    </div>
+    <div class="cmp-tile pop-in d3" style="--c:var(--blue)">
+      <div class="nm">Canva</div>
+      <div class="when"><b>網頁版 · 拖拉模板</b><br><br>🎯 <b>非設計者</b>快速做海報</div>
+    </div>
+    <div class="cmp-tile star pop-in d4">
+      <div class="ribbon">本日主角</div>
+      <div class="nm">Inkscape</div>
+      <div class="when"><b>免費開源 · 跨平台</b><br><br>🎯 <b>學校教學、學生練習</b></div>
+    </div>
+  </div>
+
+  <div class="riso-box red slide-up d2" style="margin-top:36px;text-align:center">
+    <h3 class="title-md" style="font-size:1.3rem;color:var(--red);margin-bottom:10px">⚖️ 黃金法則</h3>
+    <p class="lead" style="font-size:1.1rem">
+      國小階段用 <b class="accent-red">Inkscape 學會「向量思維」</b>；<br>
+      未來想專精設計，<b>無痛轉到 Illustrator/Affinity 都很容易</b>（觀念一模一樣）。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚖️</div>
+    <div class="bubble">不要為了「業界標準」逼學生用 Illustrator——免費的 Inkscape 對五年級<b>剛剛好</b>。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — EXPORT & PRINT ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 匯出 / EXPORT</span>
+  <p class="eyebrow slide-up">第 6 個核心技能 ─ 匯出</p>
+  <h2 class="title-md slide-up d1">SVG vs PNG ─ <br><span class="accent-red">魔法原始檔</span> vs <span class="accent-blue">平面貼紙</span>。</h2>
+
+  <div class="two-col">
+    <div class="riso-box slide-up d2">
+      <h3 style="font-family:'Noto Serif TC',serif;color:var(--blue);font-size:1.3rem;font-weight:900;margin-bottom:10px">💾 SVG（原始檔）</h3>
+      <p class="lead" style="font-size:1rem">
+        <span class="kbd">Ctrl+S</span> 直接存。<br>
+        <b>記住每個物件</b>，下次打開<b class="accent-blue">能繼續修改</b>。<br>
+        作品的「秘密配方」一定要存！
+      </p>
+    </div>
+    <div class="riso-box red slide-up d2">
+      <h3 style="font-family:'Noto Serif TC',serif;color:var(--red);font-size:1.3rem;font-weight:900;margin-bottom:10px">🖼️ PNG（成品）</h3>
+      <p class="lead" style="font-size:1rem">
+        <span class="kbd">Ctrl+Shift+E</span> 匯出。<br>
+        選<b>「選取範圍」</b>做透明背景去背。<br>
+        貼到 Google 簡報 / Word / LINE 貼圖。
+      </p>
+    </div>
+  </div>
+
+  <div class="riso-box yellow slide-up d2" style="margin-top:24px">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--orange);margin-bottom:10px">💡 匯出三步驟</h3>
+    <p class="lead" style="font-size:1rem">
+      <b class="accent-orange">①</b> 先存 SVG（Ctrl+S）保住原始檔　→
+      <b class="accent-orange">②</b> 再匯出 PNG（Ctrl+Shift+E）做成品　→
+      <b class="accent-orange">③</b> 選對<b>「匯出範圍」</b>（頁面 / 繪圖 / 選取範圍）
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💾</div>
+    <div class="bubble">永遠先存 SVG 再匯 PNG——這個順序錯了，學生明天就修不到原稿。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — CLASSROOM TIPS ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 班經 / CLASSROOM</span>
+  <p class="eyebrow slide-up">教學班級經營</p>
+  <h2 class="title-md slide-up d1">五年級學生的<br>三大<span class="accent-red">「典型踩雷」</span>。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 容易上手</div>
+      <h4>學生最快學會的</h4>
+      <ul class="bullet-list green" style="font-size:1rem">
+        <li>基本形狀 + Ctrl 畫正圓</li>
+        <li>填色（點下方色票）</li>
+        <li>Ctrl+Z 復原（按到爆）</li>
+        <li>Ctrl+S 存檔（一定要養成習慣）</li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 常見踩雷</div>
+      <h4>老師最常被問的問題</h4>
+      <ul class="bullet-list red" style="font-size:1rem">
+        <li>「圖形看不見了」← Alpha 透明度被拉到 0</li>
+        <li>「貝茲曲線停不下來」← 按 Enter 或滑鼠右鍵</li>
+        <li>「文字打不出字」← 用「點擊」開字，不是「拖拉」</li>
+        <li>「布林運算沒效」← 圖形是群組或文字，要先轉路徑</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="riso-box slide-up d2" style="margin-top:24px;border-color:var(--blue)">
+    <h3 class="title-md" style="font-size:1.2rem;color:var(--blue);margin-bottom:10px">🎯 教師三大救援策略</h3>
+    <ul class="bullet-list" style="font-size:1rem">
+      <li><b>每節課第一張投影片放「常見踩雷 + 救援」</b> ─ 預防式教學</li>
+      <li>準備一張「<b>快捷鍵書籤</b>」印給每位學生貼桌上：Ctrl+S/Z/D/Shift+C</li>
+      <li>讓動作快的學生當<b>「小助教」</b>四處走動幫忙 ─ 三贏：學生有成就感、慢的得到幫助、老師專注教學</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛟</div>
+    <div class="bubble">第一節下課時，記得問：「<b>有沒有人圖形看不見</b>？」一定有人舉手，當場示範救援。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — A2 SHA PENTAGON ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / A-E-A2</span>
+  <p class="eyebrow slide-up">A-E-A2 系統思考與解決問題</p>
+  <h2 class="title-md slide-up d1">不是「會用工具就好」，<br>是<span class="accent-red">這五件事一起做到</span>。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--blue)">
+      <div class="ico">🎯</div>
+      <h5>① 問題<br>拆解</h5>
+      <p>看到 Logo 問：<b>「這由哪些基本形狀組成？」</b><br>培養系統思考。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--green)">
+      <div class="ico">📐</div>
+      <h5>② 邏輯<br>推理</h5>
+      <p>布林運算的「最上層當模具」<br><b>順序邏輯</b>是計算思維的基礎。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--orange)">
+      <div class="ico">⚙️</div>
+      <h5>③ 工具<br>運用</h5>
+      <p>選對工具（向量 vs 點陣）<br><b>解決真實需求</b>（Logo vs 照片）。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--red)">
+      <div class="ico">🎨</div>
+      <h5>④ 創意<br>表達</h5>
+      <p>從技能 → <b>個人風格</b>，<br>大頭貼、班徽、海報都是「我」的展現。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--purple)">
+      <div class="ico">🤝</div>
+      <h5>⑤ 跨域<br>連結</h5>
+      <p>美術 + 資訊 + 國語 = <br><b>真實的跨領域作品</b>。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:24px;text-align:center;font-size:1.05rem;color:var(--ink)">
+    💡 <b>記住：工具會變，但 A-E-A2 素養永遠不會過時。</b><br>
+    <span style="color:var(--dim)">「拆解問題、推理邏輯、選對工具、創意表達、跨域連結」── 這 5 件事，10 年後還會是好設計師的標誌。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">當學生說「我不會畫圖」，請回答：「<b>你會拆形狀就會用 Inkscape</b>。」</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — FINAL ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給老師的 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">在第一堂課上場前，<br>請記住<span class="accent-red">這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--red)">
+      <div class="n">01</div>
+      <h5>先自己做<br>一個成品</h5>
+      <p>老師上課前先做一個<b>班徽</b>，學生看到實品才會有目標感。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--orange)">
+      <div class="n">02</div>
+      <h5>強迫存檔<br>養成習慣</h5>
+      <p>每 10 分鐘喊一次「<b>Ctrl+S</b>」。沒存檔 = 重做。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--green)">
+      <div class="n">03</div>
+      <h5>踩雷清單<br>貼桌上</h5>
+      <p>4 大常見問題（Alpha、Enter、點擊、轉路徑）<b>印書籤</b>貼桌上。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--blue)">
+      <div class="n">04</div>
+      <h5>鼓勵<br>「拆 Logo」</h5>
+      <p>看到 Apple/Nike Logo 問「<b>由什麼形狀組成</b>」，培養設計眼。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--purple)">
+      <div class="n">05</div>
+      <h5>展出作品<br>給家長看</h5>
+      <p>學期末做<b>班級海報</b>展，讓學生作品被看見最有成就感。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不只適用 Inkscape，<b>適用任何創作課</b>——美術、攝影、寫作都一樣。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="marble m3"></div></div>
+  <div class="cover-deco tr"><div class="pinwheel"><span class="pinwheel-blade b1"></span><span class="pinwheel-blade b2"></span><span class="pinwheel-blade b3"></span><span class="pinwheel-blade b4"></span></div></div>
+  <div class="cover-deco bl"><div class="spinning-top"><div class="top-body"></div><div class="top-stick"></div></div></div>
+  <div class="cover-deco br"><div class="marble m5"></div></div>
+
+  <h2 class="slide-up">設計的本質，<br>是讓孩子相信<span class="em">「我畫的東西也可以很美」</span>。</h2>
+  <p class="signoff slide-up d1">Inkscape 提醒我們的，是這件事本來就是<b>免費而平等</b>的。</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b style="color:var(--blue)">cagoooo.github.io/it-cockpit/inkscape-vector-art/</b>
+    </div>
+    <div class="url-box">
+      🎬 NotebookLM 自學影片<br>
+      <b style="color:var(--red)">官方 YouTube 教學頻道</b>
+    </div>
+  </div>
+
+  <p style="margin-top:40px;font-family:'Space Mono',monospace;color:var(--dim);font-size:.9rem;letter-spacing:.1em">
+    Q&amp;A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Bungee',sans-serif;color:var(--red);font-size:1.05rem;letter-spacing:.05em">THANK YOU · 一起印出孩子的設計</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- Progress bar -->
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<!-- Hint -->
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<!-- Overview -->
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'Inkscape × 向量魔法 · 五年級資訊科技'},
+  {n:2,  t:'開場暖身',       s:'蠟筆會糊 · 向量永不糊（hook）'},
+  {n:3,  t:'Inkscape 是什麼', s:'2003 年免費開源 · SVG 國際標準'},
+  {n:4,  t:'向量 vs 點陣',    s:'樂譜 vs 錄音 · 為什麼選向量'},
+  {n:5,  t:'核心 ①+② 形狀+填色', s:'STAGE 1+2 · Ctrl 完美比例 · Alpha 踩雷'},
+  {n:6,  t:'核心 ③+④ 節點+布林', s:'STAGE 3+4 · 剪刀和膠水'},
+  {n:7,  t:'六大核心技能 SOP', s:'6 節課完整流程'},
+  {n:8,  t:'三大應用情境',    s:'大頭貼 · Logo · 海報'},
+  {n:9,  t:'四款工具比較',    s:'Illustrator · Affinity · Canva · Inkscape'},
+  {n:10, t:'匯出 SVG / PNG',  s:'原始檔 vs 成品的關鍵差異'},
+  {n:11, t:'班級經營踩雷',    s:'四大常見問題 + 救援策略'},
+  {n:12, t:'A-E-A2 素養五大實踐', s:'拆解 · 推理 · 工具 · 創意 · 跨域'},
+  {n:13, t:'5 個叮嚀',        s:'給未來教 Inkscape 的老師'},
+  {n:14, t:'結語 + Q&A',      s:'設計是免費而平等的'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+// Build overview
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{
+    goSlide(i);
+    document.getElementById('overview').classList.remove('show');
+  };
+  ovGrid.appendChild(card);
+});
+
+// Keyboard
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+// Click navigation
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+// Swipe
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+// Hash init
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

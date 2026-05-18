@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scratch 遊戲設計師：水果接接樂｜阿凱老師 neon-tech 演講簡報</title>
+<meta name="description" content="阿凱老師｜五年級資訊科技 · Scratch 9 種顏色積木做完整遊戲 · neon-tech 霓虹科技風 · 14 張投影片">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --bg:#0a0a1e;--surface:#111130;--panel:#1a1a40;
+  --c1:#00ff88;--c2:#0088ff;--c3:#aa44ff;--c4:#ffcc00;--c5:#ff4466;
+  --text:#e0f0ff;--dim:#5060a0;
+  --sb-motion:#4C97FF;--sb-looks:#9966FF;--sb-sound:#CF63CF;
+  --sb-events:#FFBF00;--sb-control:#FFAB19;--sb-sensing:#5CB1D6;
+  --sb-operators:#59C059;--sb-variables:#FF8C1A;--sb-myblocks:#FF6680;
+}
+body{
+  font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  background-image:
+    radial-gradient(circle at 20% 20%,rgba(0,255,136,.10),transparent 45%),
+    radial-gradient(circle at 80% 60%,rgba(76,151,255,.08),transparent 45%),
+    radial-gradient(circle at 50% 100%,rgba(207,99,207,.06),transparent 60%);
+  user-select:none;
+  -webkit-font-smoothing:antialiased;
+}
+
+.matrix-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;opacity:.3}
+@keyframes matrixRain{from{transform:translateY(-110vh)}to{transform:translateY(110vh)}}
+.matrix-col{position:absolute;top:0;width:14px;color:var(--c1);
+  font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.1;opacity:.55;
+  animation:matrixRain linear infinite;text-shadow:0 0 8px var(--c1);
+  white-space:pre-line;letter-spacing:1px}
+
+.deck{position:fixed;inset:0;overflow:hidden;z-index:1}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+  padding:5vh 6vw;opacity:0;transition:opacity .4s}
+.slide.active{display:flex;opacity:1}
+
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--sb-events),var(--sb-control),var(--sb-motion),var(--sb-operators));
+  box-shadow:0 0 16px var(--c1)}
+.slide-num{position:absolute;bottom:18px;right:32px;
+  font-family:'JetBrains Mono',monospace;font-size:.95rem;
+  color:var(--c1);letter-spacing:.15em;z-index:5;text-shadow:0 0 8px var(--c1)}
+.slide-title-tag{position:absolute;top:24px;left:32px;
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.18em;
+  color:var(--c1);padding:4px 12px;border:1.5px solid var(--c1);
+  background:rgba(0,255,136,.06);box-shadow:0 0 8px var(--c1);z-index:5;text-transform:uppercase}
+.slide-title-tag.c2{color:var(--c2);border-color:var(--c2);box-shadow:0 0 8px var(--c2)}
+.slide-title-tag.c3{color:var(--c3);border-color:var(--c3);box-shadow:0 0 8px var(--c3)}
+.slide-title-tag.c4{color:var(--c4);border-color:var(--c4);box-shadow:0 0 8px var(--c4)}
+.slide-title-tag.c5{color:var(--c5);border-color:var(--c5);box-shadow:0 0 8px var(--c5)}
+
+.title-lg{font-weight:900;font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.1;color:var(--c1);
+  text-shadow:0 0 10px var(--c1);font-family:'JetBrains Mono','Noto Sans TC',sans-serif}
+.title-md{font-weight:900;font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.2;color:var(--text)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:1rem;letter-spacing:.18em;
+  color:var(--c1);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:14px;
+  text-shadow:0 0 6px var(--c1)}
+.eyebrow::before{content:'> ';font-weight:700;color:var(--c1)}
+.eyebrow::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--c1),transparent);max-width:240px;box-shadow:0 0 6px var(--c1)}
+.eyebrow.c2{color:var(--c2);text-shadow:0 0 6px var(--c2)}
+.eyebrow.c2::before{color:var(--c2)}
+.eyebrow.c2::after{background:linear-gradient(90deg,var(--c2),transparent);box-shadow:0 0 6px var(--c2)}
+.eyebrow.c3{color:var(--c3);text-shadow:0 0 6px var(--c3)}
+.eyebrow.c3::before{color:var(--c3)}
+.eyebrow.c3::after{background:linear-gradient(90deg,var(--c3),transparent);box-shadow:0 0 6px var(--c3)}
+.eyebrow.c4{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+.eyebrow.c4::before{color:var(--c4)}
+.eyebrow.c4::after{background:linear-gradient(90deg,var(--c4),transparent);box-shadow:0 0 6px var(--c4)}
+.eyebrow.c5{color:var(--c5);text-shadow:0 0 6px var(--c5)}
+.eyebrow.c5::before{color:var(--c5)}
+.eyebrow.c5::after{background:linear-gradient(90deg,var(--c5),transparent);box-shadow:0 0 6px var(--c5)}
+
+.lead{font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--c1);font-weight:800}
+.accent-c1{color:var(--c1)}.accent-c2{color:var(--c2)}.accent-c3{color:var(--c3)}
+.accent-c4{color:var(--c4)}.accent-c5{color:var(--c5)}
+
+/* 主講者 - 終端機 */
+.speaker{position:absolute;bottom:28px;left:32px;display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:55%}
+.speaker .avatar{width:60px;height:60px;flex-shrink:0;background:#000;
+  border:2px solid var(--c1);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;box-shadow:0 0 12px var(--c1),inset 0 0 8px rgba(0,255,136,.2)}
+.speaker .bubble{background:#000;border:2px solid var(--c1);
+  font-family:'JetBrains Mono',monospace;color:var(--c1);
+  padding:10px 16px;font-size:.95rem;font-weight:500;line-height:1.5;
+  position:relative;max-width:520px;
+  box-shadow:0 0 12px var(--c1),inset 0 0 6px rgba(0,255,136,.15)}
+.speaker .bubble::before{content:'> ';color:var(--c1)}
+.speaker .bubble::after{content:'▊';animation:cursorBlink 1s infinite;margin-left:4px;color:var(--c1)}
+@keyframes cursorBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.speaker .bubble b{color:var(--c4)}
+
+.progress{position:fixed;bottom:0;left:0;right:0;height:4px;background:rgba(255,255,255,.05);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .4s;box-shadow:0 0 10px var(--c1)}
+
+.hint{position:fixed;top:14px;right:24px;z-index:99;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+  color:var(--c1);background:rgba(0,0,0,.6);border:1px solid var(--c1);
+  box-shadow:0 0 8px var(--c1);padding:5px 12px;pointer-events:none;opacity:.85}
+.kbd{display:inline-block;padding:1px 6px;background:var(--c1);color:#000;
+  font-family:'JetBrains Mono',monospace;font-size:.85em;font-weight:700;border-radius:2px;margin:0 2px}
+
+.overview{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;padding:32px;
+  overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-family:'JetBrains Mono',monospace;color:var(--c1);font-size:1.4rem;margin-bottom:18px;
+  letter-spacing:.08em;text-shadow:0 0 8px var(--c1)}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.ov-card{background:var(--surface);border:2px solid var(--c1);padding:14px 16px;cursor:pointer;
+  transition:.18s;position:relative;box-shadow:0 0 8px rgba(0,255,136,.3)}
+.ov-card:hover{box-shadow:0 0 16px var(--c1);transform:translateY(-2px)}
+.ov-card .num{position:absolute;top:6px;right:10px;font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;color:var(--c4);font-weight:700}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--c1);margin-bottom:4px}
+.ov-card .s{font-size:.82rem;color:var(--dim);line-height:1.5}
+
+/* neon-tech 元素 */
+.terminal{background:#000;border:2px solid var(--c1);color:var(--c1);
+  font-family:'JetBrains Mono',monospace;padding:14px 18px;font-size:1rem;
+  box-shadow:0 0 16px var(--c1),inset 0 0 8px rgba(0,255,136,.18);
+  position:relative;line-height:1.75;letter-spacing:.02em}
+.terminal::before{content:'> ';color:var(--c1)}
+.terminal.c2{border-color:var(--c2);color:var(--c2);box-shadow:0 0 16px var(--c2),inset 0 0 8px rgba(0,136,255,.18)}
+.terminal.c2::before{color:var(--c2)}
+.terminal.c4{border-color:var(--c4);color:var(--c4);box-shadow:0 0 16px var(--c4),inset 0 0 8px rgba(255,204,0,.18)}
+.terminal.c4::before{color:var(--c4)}
+
+.neon-card{background:var(--surface);border:2px solid var(--c1);padding:22px 24px;
+  box-shadow:0 0 8px var(--c1),0 0 16px rgba(0,255,136,.2),inset 0 0 6px rgba(0,255,136,.1)}
+.neon-card.c2{border-color:var(--c2);box-shadow:0 0 8px var(--c2),0 0 16px rgba(0,136,255,.2)}
+.neon-card.c3{border-color:var(--c3);box-shadow:0 0 8px var(--c3),0 0 16px rgba(170,68,255,.2)}
+.neon-card.c4{border-color:var(--c4);box-shadow:0 0 8px var(--c4),0 0 16px rgba(255,204,0,.2)}
+.neon-card.c5{border-color:var(--c5);box-shadow:0 0 8px var(--c5),0 0 16px rgba(255,68,102,.2)}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 8px var(--c1),0 0 16px rgba(0,255,136,.3)}
+  50%{box-shadow:0 0 24px var(--c1),0 0 48px var(--c1)}}
+.neon-glow{animation:pulse 2.5s ease-in-out infinite}
+
+/* Scratch 積木視覺 */
+.sb{display:inline-block;padding:5px 12px;color:#fff;border-radius:4px;font-size:.88rem;font-weight:700;
+  margin:2px 2px;box-shadow:0 0 8px rgba(0,0,0,.6),inset 0 -2px 0 rgba(0,0,0,.2);
+  text-shadow:1px 1px 0 rgba(0,0,0,.3);font-family:'Noto Sans TC',sans-serif}
+.sb.motion{background:var(--sb-motion)}
+.sb.looks{background:var(--sb-looks)}
+.sb.sound{background:var(--sb-sound)}
+.sb.events{background:var(--sb-events);color:#333;text-shadow:none}
+.sb.control{background:var(--sb-control);color:#333;text-shadow:none}
+.sb.sensing{background:var(--sb-sensing);color:#000;text-shadow:none}
+.sb.operators{background:var(--sb-operators)}
+.sb.variables{background:var(--sb-variables)}
+.sb.myblocks{background:var(--sb-myblocks)}
+
+/* 9 色積木卡 grid */
+.block-cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}
+.bc{padding:12px 10px;background:var(--surface);border:2px solid #000;text-align:center;position:relative;
+  border-radius:4px;transition:.2s}
+.bc:hover{transform:translateY(-3px)}
+.bc.motion{border-color:var(--sb-motion);box-shadow:0 0 10px var(--sb-motion)}
+.bc.looks{border-color:var(--sb-looks);box-shadow:0 0 10px var(--sb-looks)}
+.bc.sound{border-color:var(--sb-sound);box-shadow:0 0 10px var(--sb-sound)}
+.bc.events{border-color:var(--sb-events);box-shadow:0 0 10px var(--sb-events)}
+.bc.control{border-color:var(--sb-control);box-shadow:0 0 10px var(--sb-control)}
+.bc.sensing{border-color:var(--sb-sensing);box-shadow:0 0 10px var(--sb-sensing)}
+.bc.operators{border-color:var(--sb-operators);box-shadow:0 0 10px var(--sb-operators)}
+.bc.variables{border-color:var(--sb-variables);box-shadow:0 0 10px var(--sb-variables)}
+.bc.myblocks{border-color:var(--sb-myblocks);box-shadow:0 0 10px var(--sb-myblocks)}
+.bc .dot{width:24px;height:24px;border-radius:50%;margin:0 auto 6px}
+.bc .nm{font-size:.95rem;font-weight:900;line-height:1.2;margin-bottom:3px;color:var(--text)}
+.bc .en{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--dim);margin-bottom:4px;letter-spacing:.04em}
+.bc .desc{font-size:.78rem;line-height:1.4;color:var(--dim)}
+
+/* code-stack 風格 */
+.code-stack{background:#000;border:2px solid var(--c1);padding:14px 18px;
+  font-family:'JetBrains Mono',monospace;font-size:.92rem;
+  box-shadow:0 0 12px var(--c1),inset 0 0 6px rgba(0,255,136,.1);margin-top:14px}
+.code-stack .cs-title{color:var(--c1);font-size:.85rem;font-weight:700;margin-bottom:10px;letter-spacing:.04em;text-shadow:0 0 4px var(--c1)}
+.cs-line{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:6px;padding-left:0}
+.cs-line.i1{padding-left:24px}
+.cs-line.i2{padding-left:48px}
+.cs-line.i3{padding-left:72px}
+
+.qr-deco{display:grid;grid-template-columns:repeat(8,8px);gap:2px;width:auto}
+.qr-deco span{width:8px;height:8px;background:var(--c1);box-shadow:0 0 4px var(--c1);opacity:var(--o,.8)}
+
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px;align-items:start}
+
+.pillar{background:var(--surface);border:2px solid var(--c,var(--c1));padding:22px 20px;text-align:center;
+  position:relative;box-shadow:0 0 10px var(--c,var(--c1))}
+.pillar .ico{width:72px;height:72px;background:var(--c,var(--c1));color:#000;
+  border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;font-size:2.2rem;box-shadow:0 0 12px var(--c,var(--c1))}
+.pillar .h{font-weight:900;font-size:1.3rem;color:var(--c,var(--c1));margin-bottom:10px;
+  text-shadow:0 0 6px var(--c,var(--c1))}
+.pillar .b{font-size:.98rem;line-height:1.6;color:var(--text)}
+
+.step-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:24px}
+.step-item{background:var(--surface);border:2px solid var(--c,var(--c1));padding:14px 8px;text-align:center;
+  position:relative;font-size:.85rem;box-shadow:0 0 8px var(--c,var(--c1))}
+.step-item .n{font-family:'JetBrains Mono',monospace;font-size:1.7rem;color:var(--c,var(--c1));
+  display:block;margin-bottom:4px;font-weight:800;text-shadow:0 0 6px var(--c,var(--c1))}
+.step-item .t{font-weight:600;font-size:.82rem;line-height:1.3;color:var(--text)}
+.step-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+  font-size:1.3rem;color:var(--c4);z-index:2;text-shadow:0 0 6px var(--c4)}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{display:flex;gap:14px;align-items:flex-start;font-size:1rem;line-height:1.65;margin-bottom:10px}
+.bullet-list li::before{content:'▸';flex-shrink:0;color:var(--c1);font-weight:700;font-size:1.1em;text-shadow:0 0 6px var(--c1)}
+.bullet-list.c2 li::before{color:var(--c2);text-shadow:0 0 6px var(--c2)}
+.bullet-list.c4 li::before{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+.bullet-list.c5 li::before{color:var(--c5);text-shadow:0 0 6px var(--c5)}
+
+/* Stage 6 cards */
+.stage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.stage-card{background:var(--surface);border:2px solid var(--c,var(--c1));padding:18px 16px;
+  position:relative;box-shadow:0 0 10px var(--c,var(--c1))}
+.stage-card .num{position:absolute;top:8px;right:12px;font-family:'JetBrains Mono',monospace;
+  font-size:1.2rem;color:var(--c,var(--c1));font-weight:800;text-shadow:0 0 6px var(--c,var(--c1))}
+.stage-card .ico{font-size:1.8rem;margin-bottom:6px;display:block}
+.stage-card .h{font-weight:900;font-size:1.1rem;color:var(--c,var(--c1));margin-bottom:6px;
+  text-shadow:0 0 5px var(--c,var(--c1))}
+.stage-card .b{font-size:.88rem;line-height:1.55;color:var(--text)}
+
+.a2-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.a2-card{background:var(--surface);border:2px solid var(--c,var(--c1));padding:18px 14px;
+  box-shadow:0 0 10px var(--c,var(--c1))}
+.a2-card .ico{font-size:1.9rem;margin-bottom:8px}
+.a2-card h5{font-size:1.02rem;color:var(--c,var(--c1));font-weight:900;margin-bottom:8px;line-height:1.3;
+  text-shadow:0 0 5px var(--c,var(--c1))}
+.a2-card p{font-size:.85rem;line-height:1.55}
+
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.advice-card{background:var(--surface);border:2px solid var(--c,var(--c1));padding:18px 14px;text-align:center;
+  box-shadow:0 0 10px var(--c,var(--c1))}
+.advice-card .n{font-family:'JetBrains Mono',monospace;font-size:2.6rem;color:var(--c,var(--c1));line-height:1;
+  font-weight:800;text-shadow:0 0 8px var(--c,var(--c1))}
+.advice-card h5{font-weight:900;font-size:1.05rem;color:var(--text);margin:10px 0 8px;line-height:1.3}
+.advice-card p{font-size:.85rem;line-height:1.55;color:var(--dim)}
+
+/* 封面 */
+.cover{align-items:center;justify-content:center;text-align:center}
+.cover .badge{display:inline-block;background:transparent;border:2px solid var(--c1);
+  color:var(--c1);font-family:'JetBrains Mono',monospace;font-size:1rem;letter-spacing:.18em;
+  padding:8px 18px;margin-bottom:32px;box-shadow:0 0 12px var(--c1);text-transform:uppercase}
+.cover h1{font-family:'JetBrains Mono','Noto Sans TC',sans-serif;font-weight:900;
+  font-size:clamp(3rem,7vw,6rem);line-height:1.05;margin-bottom:20px;color:var(--c1);
+  letter-spacing:-.02em;text-shadow:0 0 16px var(--c1),0 0 32px rgba(0,255,136,.5)}
+.cover h1 .accent{color:var(--sb-events);text-shadow:0 0 12px var(--sb-events)}
+.cover h1 .accent2{color:var(--sb-motion);text-shadow:0 0 12px var(--sb-motion)}
+.cover .sub{font-size:clamp(1.2rem,2vw,1.6rem);color:var(--text);margin-bottom:40px;font-weight:500;line-height:1.6}
+.cover .sub b{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+.cover .meta{display:flex;gap:42px;align-items:center;flex-wrap:wrap;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--dim);letter-spacing:.04em}
+.cover .meta b{color:var(--c1);text-shadow:0 0 4px var(--c1)}
+.cover-deco{position:absolute;display:flex;gap:14px;align-items:center}
+.cover-deco.tl{top:64px;left:64px}
+.cover-deco.tr{top:64px;right:64px}
+.cover-deco.bl{bottom:60px;left:64px}
+.cover-deco.br{bottom:60px;right:64px}
+
+.hook-quote{font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.4;color:var(--text);font-weight:700;
+  max-width:1200px;font-family:'JetBrains Mono','Noto Sans TC',sans-serif}
+.hook-quote .em{color:var(--c1);text-shadow:0 0 8px var(--c1)}
+.hook-quote .em2{color:var(--sb-events);text-shadow:0 0 8px var(--sb-events)}
+.hook-quote .em3{color:var(--c5);text-shadow:0 0 8px var(--c5)}
+
+.closing{align-items:center;justify-content:center;text-align:center}
+.closing h2{font-family:'JetBrains Mono','Noto Sans TC',sans-serif;font-weight:900;
+  font-size:clamp(2.5rem,5vw,4.5rem);line-height:1.2;color:var(--c1);margin-bottom:24px;
+  text-shadow:0 0 12px var(--c1);letter-spacing:-.01em}
+.closing h2 .em{color:var(--c5);text-shadow:0 0 12px var(--c5)}
+.closing .signoff{font-size:1.2rem;color:var(--dim);margin-bottom:32px;line-height:1.7}
+.closing .url-row{display:flex;gap:24px;align-items:stretch;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.closing .url-box{background:var(--surface);border:2px solid var(--c1);padding:14px 20px;
+  font-family:'JetBrains Mono',monospace;font-size:.95rem;box-shadow:0 0 10px var(--c1)}
+.closing .url-box b{color:var(--c4);text-shadow:0 0 6px var(--c4)}
+
+@keyframes fadeUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:fadeUp .55s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.15s}
+.slide.active .slide-up.d2{animation-delay:.3s}
+.slide.active .slide-up.d3{animation-delay:.45s}
+.slide.active .slide-up.d4{animation-delay:.6s}
+.slide.active .slide-up.d5{animation-delay:.75s}
+
+@keyframes popIn{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:popIn .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.2s}
+.slide.active .pop-in.d2{animation-delay:.35s}
+.slide.active .pop-in.d3{animation-delay:.5s}
+.slide.active .pop-in.d4{animation-delay:.65s}
+.slide.active .pop-in.d5{animation-delay:.8s}
+
+@media (max-width:1100px){
+  .slide{padding:4vh 4vw}
+  .two-col{grid-template-columns:1fr;gap:18px}
+  .three-col,.advice-grid,.a2-grid,.step-row,.stage-grid,.block-cat-grid{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+}
+@media print{.progress,.hint,.matrix-bg{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}}
+</style>
+</head>
+<body>
+
+<div class="matrix-bg" id="matrixBg" aria-hidden="true"></div>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="qr-deco">
+    <span style="--o:.9"></span><span style="--o:.6"></span><span style="--o:.9"></span><span style="--o:.3"></span><span style="--o:.7"></span><span style="--o:.9"></span><span style="--o:.4"></span><span style="--o:.8"></span>
+  </div></div>
+  <div class="cover-deco tr"><span style="font-size:2.5rem;filter:drop-shadow(0 0 12px var(--c1))">🍎</span><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--sb-events))">🧺</span></div>
+  <div class="cover-deco bl"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--sb-motion))">🎮</span></div>
+  <div class="cover-deco br"><div class="qr-deco">
+    <span></span><span style="--o:.4"></span><span></span><span style="--o:.6"></span><span style="--o:.9"></span><span></span><span style="--o:.4"></span><span></span>
+  </div></div>
+
+  <span class="badge slide-up neon-glow">SMES IT · GRADE 5 · SCRATCH GAME DESIGNER</span>
+  <h1 class="slide-up d1">SCRATCH<span class="accent">×</span><br><span class="accent2">水果接接樂</span></h1>
+  <p class="sub slide-up d2">用 <b>9 種顏色積木</b>，<br>把腦中的遊戲<span style="color:var(--c1);text-shadow:0 0 8px var(--c1)">變成真的能玩</span>。</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>6 關卡 · <b>完整遊戲</b>產出</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · OPENING / 暖場</span>
+  <div style="margin-top:14vh">
+    <p class="eyebrow pop-in">玩遊戲長智慧…</p>
+    <p class="hook-quote pop-in d1">
+      你玩過 <span class="em">Switch、手機遊戲、Roblox</span>，<br>
+      有沒有想過：<br>
+      <span class="em2">「我自己也能做一個遊戲讓同學玩」？</span><br>
+      <b style="color:var(--c4);text-shadow:0 0 10px var(--c4)">今天就帶你做到。</b>
+    </p>
+    <p class="lead slide-up d2" style="margin-top:28px;font-size:1.25rem">
+      <b style="color:var(--c1)">Scratch</b> 是 MIT 麻省理工學院開發的<b style="color:var(--c1)">免費</b>程式平台。<br>
+      不用打字、不用裝軟體，<b>拖拖積木就能做遊戲</b>。<br>
+      <span style="color:var(--sb-events);font-weight:800;text-shadow:0 0 6px var(--sb-events)">今天的成品：水果接接樂 — 一個你可以分享給朋友玩的完整遊戲！</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎮</div>
+    <div class="bubble">嗨！我是阿凱老師。從現在開始，<b>你不只是玩家，你是遊戲設計師</b>。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT 9 色積木 ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag c2">02 · WHAT / 9 色積木家族</span>
+  <p class="eyebrow c2 slide-up">先認識武器庫</p>
+  <h2 class="title-md slide-up d1">Scratch 把所有功能分成<span class="accent-c1">9 種顏色</span>，<br>就像超級英雄團隊。</h2>
+
+  <div class="block-cat-grid">
+    <div class="bc motion pop-in d1">
+      <div class="dot" style="background:var(--sb-motion)"></div>
+      <div class="nm">🔵 動作</div>
+      <div class="en">Motion</div>
+      <div class="desc">移動、轉彎、滑行</div>
+    </div>
+    <div class="bc looks pop-in d1">
+      <div class="dot" style="background:var(--sb-looks)"></div>
+      <div class="nm">🟣 外觀</div>
+      <div class="en">Looks</div>
+      <div class="desc">造型、說話、顯示</div>
+    </div>
+    <div class="bc sound pop-in d2">
+      <div class="dot" style="background:var(--sb-sound)"></div>
+      <div class="nm">🩷 音效</div>
+      <div class="en">Sound</div>
+      <div class="desc">播聲音、音量音調</div>
+    </div>
+    <div class="bc events pop-in d2">
+      <div class="dot" style="background:var(--sb-events)"></div>
+      <div class="nm">🟡 事件</div>
+      <div class="en">Events</div>
+      <div class="desc">開關（旗、按鍵）</div>
+    </div>
+    <div class="bc control pop-in d3">
+      <div class="dot" style="background:var(--sb-control)"></div>
+      <div class="nm">🟠 控制</div>
+      <div class="en">Control</div>
+      <div class="desc">重複、判斷、分身</div>
+    </div>
+    <div class="bc sensing pop-in d3">
+      <div class="dot" style="background:var(--sb-sensing)"></div>
+      <div class="nm">🩵 偵測</div>
+      <div class="en">Sensing</div>
+      <div class="desc">碰到？按鍵？</div>
+    </div>
+    <div class="bc operators pop-in d4">
+      <div class="dot" style="background:var(--sb-operators)"></div>
+      <div class="nm">🟢 運算</div>
+      <div class="en">Operators</div>
+      <div class="desc">加減乘除、隨機數</div>
+    </div>
+    <div class="bc variables pop-in d4">
+      <div class="dot" style="background:var(--sb-variables)"></div>
+      <div class="nm">🟧 變數</div>
+      <div class="en">Variables</div>
+      <div class="desc">記分數、生命值</div>
+    </div>
+    <div class="bc myblocks pop-in d5">
+      <div class="dot" style="background:var(--sb-myblocks)"></div>
+      <div class="nm">🩷 函式</div>
+      <div class="en">My Blocks</div>
+      <div class="desc">自定新積木</div>
+    </div>
+  </div>
+
+  <div class="terminal slide-up d2" style="margin-top:22px;font-size:.95rem">
+    💡 <span style="color:var(--c4)">記住口訣</span> — 藍動、紫外觀、黃事件、橘控制、淺藍偵測、綠運算、深橘變數。
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌈</div>
+    <div class="bubble">不用背每個積木，<b>知道顏色 = 功能</b> 就夠了——用到時自然會學會。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — WHY 為什麼要學 ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag c4">03 · WHY / 為什麼好玩</span>
+  <p class="eyebrow c4 slide-up">為什麼學 Scratch？</p>
+  <h2 class="title-md slide-up d1">不只是寫程式，<br>是學<span class="accent-c1">「把想法變成真的」</span>的能力。</h2>
+
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🌎</div>
+      <div class="h">全球 1 億用戶</div>
+      <p class="b">MIT 媒體實驗室開發，<b>全世界 7000 萬個專案</b>。<br>你的作品全球都看得到。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--sb-events)">
+      <div class="ico">🧩</div>
+      <div class="h">門檻最低</div>
+      <p class="b">不打字、不裝軟體、<b>瀏覽器即用</b>。<br>放錯位置會自動彈開，不怕語法錯。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--c5)">
+      <div class="ico">🚀</div>
+      <div class="h">作品能分享</div>
+      <p class="b">遊戲做完按「分享」，<br>立刻得到<b>網址</b>讓朋友玩。<br>還能看別人的程式抄技巧。</p>
+    </div>
+  </div>
+
+  <div class="terminal c4 slide-up d2" style="margin-top:26px">
+    <span style="color:var(--c1)">寫遊戲 = 學「運算思維」</span><br>
+    ├── <b>分解</b>：把遊戲拆解（移動 + 掉落 + 碰撞 + 計分）<br>
+    ├── <b>樣式辨識</b>：用「如果碰到 X 就…」處理事件<br>
+    ├── <b>抽象化</b>：用變數記分數 / 生命<br>
+    └── <b>演算法</b>：迴圈 + 判斷的流程設計
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌟</div>
+    <div class="bubble">這四件事，AI 時代<b>更重要</b>——你要會用程式思維跟電腦對話。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — 核心 ① 移動 + 控制 ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · MECHANIC / 機制 ①</span>
+  <p class="eyebrow slide-up">遊戲的第一條積木鏈</p>
+  <h2 class="title-md slide-up d1">「<span class="accent-c1">當綠旗點擊</span>」+ 「<span class="accent-c4">重複無限次</span>」<br>= 所有遊戲的起點。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--c4);font-size:.85rem;letter-spacing:.08em;margin-bottom:10px">▼ 籃子角色 BASKET 程式</p>
+      <div class="code-stack">
+        <div class="cs-title">📦 BASKET 籃子的程式</div>
+        <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+        <div class="cs-line"><span class="sb motion">定位到 x:0 y:-150</span></div>
+        <div class="cs-line"><span class="sb control">重複無限次</span></div>
+        <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb sensing">按下 [右→]?</span> <span class="sb control">那麼</span></div>
+        <div class="cs-line i2"><span class="sb motion">x 改變 (10)</span></div>
+        <div class="cs-line i1"><span class="sb control">如果</span> <span class="sb sensing">按下 [左←]?</span> <span class="sb control">那麼</span></div>
+        <div class="cs-line i2"><span class="sb motion">x 改變 (-10)</span></div>
+      </div>
+    </div>
+    <div class="slide-up d2">
+      <div class="neon-card c4" style="margin-bottom:14px">
+        <h3 style="color:var(--c4);font-weight:900;font-size:1.2rem;margin-bottom:10px;text-shadow:0 0 5px var(--c4)">🎯 設計概念</h3>
+        <ul class="bullet-list c4" style="font-size:.95rem">
+          <li><b>x 改變 +10</b> → 往右移 10 步</li>
+          <li><b>x 改變 -10</b> → 往左移 10 步</li>
+          <li><b>y:-150</b> 是舞台底部附近</li>
+          <li>數字越大移動越快</li>
+        </ul>
+      </div>
+      <div class="neon-card c5">
+        <p style="color:var(--c5);font-weight:700;font-size:1rem;margin-bottom:6px;text-shadow:0 0 5px var(--c5)">⚠️ 沒反應？</p>
+        <p style="font-size:.92rem">先點擊舞台（讓 Scratch 取得焦點），<br>再按方向鍵。</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⌨️</div>
+    <div class="bubble">這 7 行積木，就是所有遊戲<b>「角色移動」</b>的基本盤——學會這個就過半了。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — 核心 ② 分身掉落 ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag c2">05 · MECHANIC / 機制 ②</span>
+  <p class="eyebrow c2 slide-up">分身術 ─ 一個變成很多</p>
+  <h2 class="title-md slide-up d1">「<span class="accent-c4">建立自己的分身</span>」<br>讓<span class="accent-c2">一顆水果變成滿天水果</span>。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--c4);font-size:.85rem;letter-spacing:.08em;margin-bottom:10px">▼ 水果分身產生程式</p>
+      <div class="code-stack">
+        <div class="cs-title">📦 FRUIT 程式一：產生分身</div>
+        <div class="cs-line"><span class="sb events">當 ⚑ 被點擊</span></div>
+        <div class="cs-line"><span class="sb looks">隱藏</span></div>
+        <div class="cs-line"><span class="sb control">重複無限次</span></div>
+        <div class="cs-line i1"><span class="sb control">等待 (1) 秒</span></div>
+        <div class="cs-line i1"><span class="sb control">建立 [自己] 的分身</span></div>
+      </div>
+      <div class="code-stack" style="margin-top:10px">
+        <div class="cs-title">📦 FRUIT 程式二：分身行為</div>
+        <div class="cs-line"><span class="sb control">當分身產生</span></div>
+        <div class="cs-line"><span class="sb looks">顯示</span></div>
+        <div class="cs-line"><span class="sb motion">定位 x:</span><span class="sb operators">隨機 -200~200</span><span class="sb motion">y:170</span></div>
+        <div class="cs-line"><span class="sb control">重複無限次</span></div>
+        <div class="cs-line i1"><span class="sb motion">y 改變 (-3)</span></div>
+      </div>
+    </div>
+    <div class="slide-up d2">
+      <div class="neon-card c3">
+        <h3 style="color:var(--c3);font-weight:900;font-size:1.3rem;margin-bottom:12px;text-shadow:0 0 6px var(--c3)">🥷 分身 = 影分身之術</h3>
+        <p class="lead" style="font-size:1rem">
+          <b>本體</b>只有一個（Fruit 角色），<br>
+          但可以<b>不斷複製分身</b>。<br>
+          每個分身有自己的：
+        </p>
+        <ul class="bullet-list" style="font-size:.95rem;margin-top:12px">
+          <li><b>隨機位置</b>（x 隨機）</li>
+          <li><b>獨立掉落</b>（y 減 3）</li>
+          <li><b>獨立碰撞判斷</b></li>
+          <li><b>獨立消失</b>（碰到籃子或落地）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🥷</div>
+    <div class="bubble">分身是 Scratch 最強大的概念之一——<b>「殭屍大戰」、「彈幕射擊」</b>原理都一樣！</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — 6 大關卡 SOP ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag c4">06 · SOP / 6 大關卡</span>
+  <p class="eyebrow c4 slide-up">完整製作流程</p>
+  <h2 class="title-md slide-up d1">6 關，<span class="accent-c1">從零到分享給朋友玩</span>。</h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--c1)"><span class="n">1</span><span class="t">認識 9 色<br>積木家族</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d1" style="--c:var(--sb-motion)"><span class="n">2</span><span class="t">準備角色<br>背景</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--sb-events)"><span class="n">3</span><span class="t">鍵盤操控<br>籃子</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--sb-control)"><span class="n">4</span><span class="t">水果分身<br>掉落</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--sb-variables)"><span class="n">5</span><span class="t">碰撞計分<br>+ 生命</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--sb-sound)"><span class="n">6</span><span class="t">音效特效<br>+ 分享 🎉</span></div>
+  </div>
+
+  <div class="stage-grid">
+    <div class="stage-card slide-up d2" style="--c:var(--sb-motion)">
+      <span class="num">2-3</span><span class="ico">🎭</span>
+      <div class="h">舞台 + 操控</div>
+      <div class="b">從 scratch.mit.edu 開始 → 刪貓 → 加籃子 + 蘋果 → 寫方向鍵控制</div>
+    </div>
+    <div class="stage-card slide-up d2" style="--c:var(--sb-control)">
+      <span class="num">4-5</span><span class="ico">🍎</span>
+      <div class="h">分身 + 碰撞</div>
+      <div class="b">分身產生 → 隨機掉落 → 碰到籃子 +1、掉落 -1 → 生命歸零 Game Over</div>
+    </div>
+    <div class="stage-card slide-up d2" style="--c:var(--sb-sound)">
+      <span class="num">6</span><span class="ico">🎵</span>
+      <div class="h">音效 + 發表</div>
+      <div class="b">接到 Collect 音、漏接 Oops → 存檔 → 分享網址給同學 → 收回饋調整</div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🏁</div>
+    <div class="bubble">6 關，<b>40 分鐘可以做完一遍</b>。然後就花時間美化、加功能。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — 碰撞 + 變數 ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag c3">07 · COLLIDE / 碰撞計分</span>
+  <p class="eyebrow c3 slide-up">遊戲的靈魂</p>
+  <h2 class="title-md slide-up d1">變數 + 碰撞偵測<br>= <span class="accent-c3">「分數」與「生命」</span>的真實感。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d1">
+      <div class="neon-card c4" style="margin-bottom:12px">
+        <h3 style="color:var(--c4);font-weight:900;font-size:1.2rem;margin-bottom:10px;text-shadow:0 0 5px var(--c4)">📦 變數 = 記得住數字的小盒子</h3>
+        <p class="lead" style="font-size:.96rem">盒子上寫「分數」，裡面放數字 0。<br><b>隨時可以改變</b>，舞台上自動顯示。</p>
+        <p style="font-size:.9rem;color:var(--dim);margin-top:8px">⚠️ 設為（=）vs 改變（+） — 最常搞混！<br><b>設為 0</b>：直接換成 0；<b>改變 1</b>：在現有數字上 +1。</p>
+      </div>
+    </div>
+    <div class="slide-up d2">
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--c4);font-size:.85rem;letter-spacing:.08em;margin-bottom:10px">▼ 碰撞偵測核心</p>
+      <div class="code-stack">
+        <div class="cs-title">📦 FRUIT 碰撞判斷</div>
+        <div class="cs-line"><span class="sb control">當分身產生</span></div>
+        <div class="cs-line"><span class="sb control">重複無限次</span></div>
+        <div class="cs-line i1"><span class="sb motion">y 改變 (-3)</span></div>
+        <div class="cs-line i1"><span class="sb control">如果</span><span class="sb sensing">碰到 [Basket]?</span></div>
+        <div class="cs-line i2"><span class="sb variables">分數 改變 (1)</span> <span class="sb sound">播放 Collect</span></div>
+        <div class="cs-line i2"><span class="sb control">分身刪除</span></div>
+        <div class="cs-line i1"><span class="sb control">如果</span><span class="sb operators">y &lt; -170</span></div>
+        <div class="cs-line i2"><span class="sb variables">生命 改變 (-1)</span></div>
+        <div class="cs-line i2"><span class="sb control">如果</span><span class="sb operators">生命=0</span></div>
+        <div class="cs-line i3"><span class="sb control">停止 [全部]</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⭐</div>
+    <div class="bubble">這段邏輯一通，<b>所有「打怪、接物、躲避」遊戲</b>都做得出來。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — 應用 / 延伸玩法 ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag c2">08 · EXPAND / 延伸玩法</span>
+  <p class="eyebrow c2 slide-up">同一套積木，做出 4 種遊戲</p>
+  <h2 class="title-md slide-up d1">學會這 6 關，<br><span class="accent-c1">這些遊戲你都會做了</span>。</h2>
+
+  <div class="three-col">
+    <div class="neon-card slide-up d1">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c1))">🧟</div>
+      <h4 style="color:var(--c1);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c1)">殭屍大戰</h4>
+      <p style="font-size:.92rem;line-height:1.55">水果換殭屍、籃子換主角、<br><b>方向鍵改 WASD</b>、加攻擊鍵。</p>
+    </div>
+    <div class="neon-card c2 slide-up d2">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c2))">⭐</div>
+      <h4 style="color:var(--c2);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c2)">流星雨</h4>
+      <p style="font-size:.92rem;line-height:1.55">水果換流星、籃子換太空船、<br><b>背景換成宇宙</b>、避開不是接。</p>
+    </div>
+    <div class="neon-card c3 slide-up d3">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c3))">🐍</div>
+      <h4 style="color:var(--c3);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c3)">貪食蛇</h4>
+      <p style="font-size:.92rem;line-height:1.55">分身改成<b>追隨前一節</b>、<br>蘋果隨機出現、吃到變長。</p>
+    </div>
+  </div>
+
+  <div class="terminal c4 slide-up d2" style="margin-top:24px;font-size:1rem">
+    <span style="color:var(--c1)">💡 進階挑戰：難度遞增</span><br>
+    └── 加變數「<b style="color:var(--c4)">速度</b>」初始 3，每 10 分加 1：<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--c4)">如果 分數除以 10 餘 0 → 速度改變 +1</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;然後把 y 改變 (-3) 換成 y 改變 (0-速度)。
+  </div>
+  <div class="speaker">
+    <div class="avatar">🚀</div>
+    <div class="bubble">同一套積木，<b>換貼圖跟參數就能變新遊戲</b>——這就是程式設計的厲害。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — 比較：Scratch vs 其他 ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag c5">09 · COMPARE / 工具比較</span>
+  <p class="eyebrow c5 slide-up">為什麼小學要先學 Scratch？</p>
+  <h2 class="title-md slide-up d1">寫程式工具很多，<br><span class="accent-c5">Scratch 是「最對的起點」</span>。</h2>
+
+  <div class="slide-up d2" style="margin-top:24px">
+    <table style="width:100%;border-collapse:collapse;font-size:.92rem;background:var(--surface)">
+      <thead>
+        <tr>
+          <th style="background:var(--c1);color:#000;padding:10px;border:1px solid #000;font-family:'JetBrains Mono',monospace;font-size:.85rem">工具</th>
+          <th style="background:var(--c1);color:#000;padding:10px;border:1px solid #000;font-family:'JetBrains Mono',monospace;font-size:.85rem">門檻</th>
+          <th style="background:var(--c1);color:#000;padding:10px;border:1px solid #000;font-family:'JetBrains Mono',monospace;font-size:.85rem">特色</th>
+          <th style="background:var(--c1);color:#000;padding:10px;border:1px solid #000;font-family:'JetBrains Mono',monospace;font-size:.85rem">適合誰</th>
+          <th style="background:var(--c1);color:#000;padding:10px;border:1px solid #000;font-family:'JetBrains Mono',monospace;font-size:.85rem">能做什麼</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)"><b style="color:var(--c1)">Scratch</b> ★</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)"><b style="color:var(--c4)">最低</b></td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)">9 色積木拖曳</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)">小 1-6</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)">遊戲、動畫、互動故事</td></tr>
+        <tr><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)"><b style="color:var(--c2)">MakeCode</b></td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">低</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">積木 + JS 切換</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">小 5 -國中</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">micro:bit 機器人</td></tr>
+        <tr><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)"><b style="color:var(--c3)">Python</b></td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)">中</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)">打字寫程式</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)">國中-大學</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.08)">AI、資料分析、爬蟲</td></tr>
+        <tr><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)"><b style="color:var(--c5)">Roblox Studio</b></td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">中</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">Lua 程式碼</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">國中以上</td><td style="padding:10px;border:1px solid var(--c1);background:rgba(0,255,136,.14)">3D 多人遊戲</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="neon-card c4 slide-up d2" style="margin-top:24px;text-align:center">
+    <h3 style="color:var(--c4);font-weight:900;font-size:1.3rem;margin-bottom:10px;text-shadow:0 0 6px var(--c4)">⚖️ 黃金法則</h3>
+    <p class="lead" style="font-size:1.1rem">
+      <b style="color:var(--c1)">先 Scratch 玩 1-2 年</b>把運算思維打好底，<br>
+      <b>再轉 Python / MakeCode</b>進階。<br>
+      跳過 Scratch 直接學 Python，<span style="color:var(--c5)">99% 會痛苦放棄</span>。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📈</div>
+    <div class="bubble">學寫程式像學鋼琴——<b>不會先學貝多芬</b>。先把基礎打穩。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — 注意事項 / 班級 ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag c5">10 · NOTES / 注意事項</span>
+  <p class="eyebrow c5 slide-up">過來人的踩坑提醒</p>
+  <h2 class="title-md slide-up d1">這 4 件事不注意，<br><span class="accent-c5">會卡 30 分鐘還做不出來</span>。</h2>
+
+  <div class="three-col">
+    <div class="neon-card c5 slide-up d1">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c5))">🎯</div>
+      <h4 style="color:var(--c5);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c5)">角色名稱要一致</h4>
+      <p style="font-size:.92rem;line-height:1.55">「碰到 Basket」的<b>大小寫</b>必須<br>跟角色名稱<b>完全一樣</b>。<br>basket ≠ Basket 是常見錯誤！</p>
+    </div>
+    <div class="neon-card c4 slide-up d2">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c4))">📏</div>
+      <h4 style="color:var(--c4);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c4)">大小要適中</h4>
+      <p style="font-size:.92rem;line-height:1.55">籃子建議 <b>80-100</b>、<br>水果建議 <b>50-70</b>。<br>太大會擋畫面，太小看不到。</p>
+    </div>
+    <div class="neon-card c2 slide-up d3">
+      <div style="font-size:2rem;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c2))">💾</div>
+      <h4 style="color:var(--c2);font-weight:900;font-size:1.15rem;margin-bottom:8px;text-shadow:0 0 5px var(--c2)">先存檔再實驗</h4>
+      <p style="font-size:.92rem;line-height:1.55">每完成一關，<b>檔案→儲存到電腦</b>。<br>當天加新功能弄壞了，<br>還能回到上次的版本。</p>
+    </div>
+  </div>
+
+  <div class="neon-card slide-up d2" style="margin-top:22px">
+    <h3 style="color:var(--c1);font-weight:900;font-size:1.2rem;margin-bottom:10px;text-shadow:0 0 6px var(--c1)">🤝 全班合作小技巧</h3>
+    <ul class="bullet-list" style="font-size:.95rem">
+      <li>遇到不會的<b>不要喊「老師！」</b>，先問<b>左右兩個同學</b></li>
+      <li>同學的遊戲跑得比較順？<b>請他開「程式區」</b>，<b>抄一份來試</b></li>
+      <li>會了就主動<b>「教兩個同學」</b>——教學會讓你更懂</li>
+      <li>遊戲做完<b>分享網址</b>給同學玩，<b>收他們的回饋</b>調整</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌈</div>
+    <div class="bubble">寫程式從來不是「一個人寫」——<b>分享 + 抄 + 教，是學最快的方法</b>。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — 對應素養 ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · LITERACY / 對應素養</span>
+  <p class="eyebrow slide-up">這堂課對應 12 年國教的什麼？</p>
+  <h2 class="title-md slide-up d1">做一個遊戲，<br>練到<span class="accent-c1">5 種未來素養</span>。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--c1)">
+      <div class="ico">🧩</div>
+      <h5>① 運算思維</h5>
+      <p>分解、判斷、迴圈、變數——<b>9 色積木全用上</b>。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--c2)">
+      <div class="ico">🎨</div>
+      <h5>② 美感設計</h5>
+      <p>選背景、配色、調大小，<b>跨域整合</b>美術能力。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--c4)">
+      <div class="ico">🛠️</div>
+      <h5>③ debug 思維</h5>
+      <p>遊戲不會動？<b>逐步測試找問題</b>，培養冷靜分析力。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--c3)">
+      <div class="ico">🤝</div>
+      <h5>④ 分享協作</h5>
+      <p>分享網址、<b>看別人的程式</b>、收回饋——數位公民素養。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--c5)">
+      <div class="ico">💡</div>
+      <h5>⑤ 創新發想</h5>
+      <p>同一套積木做<b>不同遊戲</b>，培養「<b>變形思維</b>」。</p>
+    </div>
+  </div>
+
+  <div class="terminal c2 slide-up d2" style="margin-top:24px;font-size:.96rem">
+    十二年國教 · 科技領域核心素養 <span style="color:var(--c4)">A2 / 科 -E -A2</span><br>
+    └── 「運用<b style="color:var(--c4)">運算思維</b>與<b style="color:var(--c4)">電腦科學原理</b>，思考並解決生活問題。」
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">這 5 件事，<b>30 年後 AI 再進步都還是好開發者的標誌</b>。</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — 5 個叮嚀 ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag c4">12 · ADVICE / 5 個叮嚀</span>
+  <p class="eyebrow c4 slide-up">給未來的遊戲設計師</p>
+  <h2 class="title-md slide-up d1">在你做下一款遊戲前，<br><span class="accent-c4">請記住這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--c1)">
+      <div class="n">01</div>
+      <h5>做小一點，<br>完成最重要</h5>
+      <p>不要一開始<br>就做<b>RPG 大作</b>。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--c2)">
+      <div class="n">02</div>
+      <h5>常常存檔</h5>
+      <p>每加一個功能<br>就<b>存一次</b>。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--c4)">
+      <div class="n">03</div>
+      <h5>看別人的<br>程式</h5>
+      <p>Scratch 社群<br><b>抄技巧最快</b>。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--c3)">
+      <div class="n">04</div>
+      <h5>分享 +<br>收回饋</h5>
+      <p>朋友玩完<b>給你的建議</b><br>就是你的進步來源。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--c5)">
+      <div class="n">05</div>
+      <h5>大膽改數字</h5>
+      <p>覺得遊戲不好玩？<br><b>改個數字試試</b>。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不只是 Scratch——<b>所有創作都該如此</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — 結語 ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--c1))">🍎</span></div>
+  <div class="cover-deco tr"><div class="qr-deco">
+    <span></span><span style="--o:.4"></span><span></span><span style="--o:.6"></span><span style="--o:.9"></span><span></span><span style="--o:.4"></span><span></span>
+  </div></div>
+  <div class="cover-deco bl"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--sb-motion))">🎮</span></div>
+  <div class="cover-deco br"><span style="font-size:2rem;filter:drop-shadow(0 0 10px var(--c5))">🧺</span></div>
+
+  <h2 class="slide-up">你不再只是<b style="color:var(--text)">玩家</b>，<br><span class="em">你是遊戲設計師。</span></h2>
+  <p class="signoff slide-up d1">下一個讓全班停不下來的遊戲，<b style="color:var(--c1)">會是你的</b>嗎？</p>
+
+  <div class="url-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b>cagoooo.github.io/it-cockpit/scratch-game/</b>
+    </div>
+    <div class="url-box">
+      🎬 NotebookLM 自學影片<br>
+      <b>YouTube 搜尋「阿凱老師 Scratch 水果」</b>
+    </div>
+  </div>
+
+  <p style="margin-top:40px;font-family:'JetBrains Mono',monospace;color:var(--dim);font-size:.9rem;letter-spacing:.08em">
+    > Q&A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'JetBrains Mono',monospace;color:var(--c1);font-size:1.05rem;letter-spacing:.1em;text-shadow:0 0 8px var(--c1)">
+    THANK YOU · 謝謝各位小小遊戲設計師
+  </p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<div class="overview" id="overview">
+  <h3>&gt; CHAPTER OVERVIEW · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+// 矩陣雨
+(function(){
+  const bg = document.getElementById('matrixBg');
+  const chars = 'ScratchFruitBasketIFforever01アイウエオ';
+  const cols = Math.floor(window.innerWidth / 22);
+  for(let i=0; i<cols; i++){
+    const col = document.createElement('div');
+    col.className = 'matrix-col';
+    col.style.left = (i*22+Math.random()*6) + 'px';
+    col.style.animationDuration = (8 + Math.random()*10) + 's';
+    col.style.animationDelay = (-Math.random()*15) + 's';
+    let txt = '';
+    for(let j=0; j<25; j++){ txt += chars[Math.floor(Math.random()*chars.length)] + '\n'; }
+    col.textContent = txt;
+    bg.appendChild(col);
+  }
+})();
+
+const SLIDES = [
+  {n:1,  t:'封面',           s:'Scratch 水果接接樂 · 五年級資訊科技'},
+  {n:2,  t:'開場 · 玩家變設計師', s:'從玩遊戲到做遊戲的跨越'},
+  {n:3,  t:'9 色積木家族',    s:'動作/外觀/音效/事件/控制/偵測/運算/變數/函式'},
+  {n:4,  t:'為什麼好玩',     s:'1 億用戶 · 門檻最低 · 作品能分享'},
+  {n:5,  t:'核心 ① 移動控制', s:'綠旗 + 重複無限次 = 起點'},
+  {n:6,  t:'核心 ② 分身術',   s:'一顆水果變滿天水果'},
+  {n:7,  t:'6 大關卡 SOP',   s:'從認識積木到分享網址'},
+  {n:8,  t:'碰撞 + 變數',    s:'分數 / 生命的真實感'},
+  {n:9,  t:'延伸玩法',       s:'殭屍 · 流星雨 · 貪食蛇 · 難度遞增'},
+  {n:10, t:'工具比較',       s:'Scratch vs MakeCode vs Python vs Roblox'},
+  {n:11, t:'注意事項',       s:'命名一致 · 大小適中 · 先存檔 · 互助'},
+  {n:12, t:'對應素養',       s:'12 年國教 A2 五大實踐'},
+  {n:13, t:'5 個叮嚀',        s:'給未來的遊戲設計師'},
+  {n:14, t:'結語 + Q&A',      s:'從玩家到設計師的轉變'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active', i === idx));
+  curIdx = idx;
+  document.getElementById('progress-fill').style.width = ((idx+1)/N*100).toFixed(2) + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>s.style.display = (s.style.display === 'none') ? '' : 'none');
+}
+
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{ goSlide(i); document.getElementById('overview').classList.remove('show'); };
+  ovGrid.appendChild(card);
+});
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(['Escape','m','M'].includes(e.key)){ document.getElementById('overview').classList.remove('show'); e.preventDefault(); }
+    return;
+  }
+  const k = e.key;
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(k)){ next(); e.preventDefault(); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ prev(); e.preventDefault(); }
+  else if(k === 'Home'){ goSlide(0); e.preventDefault(); }
+  else if(k === 'End'){ goSlide(N-1); e.preventDefault(); }
+  else if(['m','M'].includes(k)){ toggleOverview(); e.preventDefault(); }
+  else if(['f','F'].includes(k)){ toggleFullscreen(); e.preventDefault(); }
+  else if(['s','S'].includes(k)){ toggleSpeaker(); e.preventDefault(); }
+  else if(k === 'Escape'){ if(document.fullscreenElement) document.exitFullscreen(); }
+  if(/^[1-9]$/.test(k)){ const t = parseInt(k)-1; if(t < N){ goSlide(t); e.preventDefault(); } }
+});
+
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next(); else prev();
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){ const i = parseInt(hashMatch[1])-1; if(i >= 0 && i < N) goSlide(i); }
+</script>
+</body>
+</html>

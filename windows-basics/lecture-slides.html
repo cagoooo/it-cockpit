@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Windows 電腦小尖兵｜三年級資訊科技 · 演講簡報模式</title>
+<meta name="description" content="阿凱老師 × 桃園市石門國小｜Windows 電腦小尖兵 14 張 Retro Win98 風投影片。四大關卡：硬體、開關機、桌面滑鼠、視窗檔案總管。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --desktop:#2a8b8b;
+  --desktop-pattern:#1f6b6b;
+  --window:#c3c7cb;
+  --window-inset:#d4d0c8;
+  --title-start:#000080;
+  --title-end:#1084d0;
+  --title-inactive:#808080;
+  --light:#ffffff;
+  --dim:#808080;
+  --dark:#000000;
+  --text:#000000;
+  --text-white:#ffffff;
+  --link:#0a3a8a;
+  --yellow:#ffd700;
+  --red-x:#c00000;
+  --green-ok:#008000;
+  --accent-purple:#5a0090;
+  --accent-orange:#b04000;
+  --bsod:#0000aa;
+}
+body{
+  font-family:'Microsoft JhengHei','MS Sans Serif','Tahoma','Noto Sans TC',sans-serif;
+  background:var(--desktop);
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--desktop-pattern) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--desktop-pattern) 1px, transparent 1px);
+  background-size:40px 40px;
+  color:var(--text);
+  line-height:1.6;
+  user-select:none;
+}
+
+/* ===== Slide Container ===== */
+.deck{position:fixed;inset:0;overflow:hidden;padding:50px 24px 14px}
+.slide{
+  position:absolute;
+  top:50px;left:24px;right:24px;bottom:14px;
+  display:none;flex-direction:column;
+  opacity:0;transition:opacity .3s;
+}
+.slide.active{display:flex;opacity:1}
+
+/* Each slide IS a Win98 window */
+.slide{
+  background:var(--window);
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 4px 4px 12px rgba(0,0,0,.5);
+  overflow:hidden;
+}
+.win-titlebar{
+  flex-shrink:0;
+  background:linear-gradient(to right, var(--title-start), var(--title-end));
+  color:var(--text-white);
+  padding:5px 8px;
+  display:flex;align-items:center;gap:8px;
+  font-weight:700;font-size:1rem;
+  font-family:inherit;
+}
+.win-titlebar.alt-purple{background:linear-gradient(to right, #4a0080, #aa55ff)}
+.win-titlebar.alt-green{background:linear-gradient(to right, #006000, #50c450)}
+.win-titlebar.alt-orange{background:linear-gradient(to right, #b04000, #ff9040)}
+.win-titlebar.alt-red{background:linear-gradient(to right, #800000, #d04040)}
+.win-titlebar .ico{font-size:1.2rem}
+.win-titlebar .name{flex:1}
+.win-titlebar .controls{display:flex;gap:3px}
+.win-titlebar .controls .btn{
+  width:24px;height:22px;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  font-family:inherit;font-weight:900;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.win-menubar{
+  flex-shrink:0;
+  padding:4px 10px;background:var(--window);
+  border-bottom:1px solid var(--dim);
+  font-size:.9rem;display:flex;gap:14px;
+}
+.win-menubar span u{text-decoration:underline}
+.win-content{
+  flex:1;padding:32px 44px;overflow:auto;
+  display:flex;flex-direction:column;position:relative;
+}
+.win-statusbar{
+  flex-shrink:0;
+  background:var(--window);
+  border-top:1px solid var(--dim);
+  padding:3px 10px;font-size:.8rem;
+  display:flex;justify-content:space-between;
+  color:#444;
+}
+.win-statusbar .sb-section{
+  padding:1px 8px;
+  border:1px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+
+/* ===== Top Taskbar (fixed) ===== */
+.taskbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:var(--window);
+  border-bottom:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 0 1px 0 var(--light), inset 0 -1px 0 var(--dim), 0 2px 6px rgba(0,0,0,.4);
+  padding:4px 10px;height:42px;
+  display:flex;align-items:center;gap:10px;
+}
+.start-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--window);color:var(--text);
+  padding:4px 12px;font-weight:700;font-size:1rem;font-family:inherit;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  cursor:default;
+}
+.start-btn .logo{
+  display:inline-block;width:18px;height:18px;
+  background:
+    linear-gradient(135deg,#ff5050 0 50%,transparent 50%) 0 0/50% 50% no-repeat,
+    linear-gradient(135deg,#50ff50 0 50%,transparent 50%) 100% 0/50% 50% no-repeat,
+    linear-gradient(135deg,#5050ff 0 50%,transparent 50%) 0 100%/50% 50% no-repeat,
+    linear-gradient(135deg,#ffff50 0 50%,transparent 50%) 100% 100%/50% 50% no-repeat;
+}
+.tb-divider{width:2px;height:24px;background:linear-gradient(to right,var(--dim),var(--light));margin:0 4px}
+.tb-app{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:3px 12px;font-size:.9rem;font-weight:700;
+  background:var(--window);
+  border:2px solid;border-color:var(--dark) var(--light) var(--light) var(--dark);
+  box-shadow:inset 1px 1px 0 var(--dim);
+  color:var(--text);max-width:380px;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.tb-spacer{flex:1}
+.tb-tray{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:3px 10px;font-size:.8rem;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  background:var(--window);
+}
+.tb-clock{font-family:'VT323',monospace;font-size:1rem;font-weight:700}
+
+/* ===== Typography ===== */
+.title-xl{font-weight:900;font-size:clamp(2.6rem,5vw,4.5rem);line-height:1.1;color:var(--link)}
+.title-lg{font-weight:900;font-size:clamp(2rem,4vw,3.4rem);line-height:1.15;color:var(--link)}
+.title-md{font-weight:900;font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.2;color:var(--text)}
+.eyebrow{font-size:1rem;letter-spacing:.05em;color:var(--link);font-weight:700;
+  margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.eyebrow::after{content:'';flex:1;height:2px;
+  background:linear-gradient(to right,var(--link),transparent);max-width:240px}
+.lead{font-size:clamp(1.05rem,1.4vw,1.25rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--link);font-weight:900}
+.accent-red{color:var(--red-x);font-weight:900}
+.accent-blue{color:var(--link);font-weight:900}
+.accent-green{color:var(--green-ok);font-weight:900}
+.accent-purple{color:var(--accent-purple);font-weight:900}
+.kbd{display:inline-block;padding:2px 8px;
+  background:var(--window);color:var(--text);font-family:'Microsoft JhengHei',monospace;
+  font-size:.85em;font-weight:700;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light);}
+
+/* ===== Slide top tag & num ===== */
+.slide-title-tag{
+  position:absolute;top:14px;left:24px;
+  font-family:'VT323',monospace;font-size:1rem;
+  letter-spacing:.1em;color:var(--link);
+  padding:2px 10px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  z-index:5;
+}
+.slide-num{
+  position:absolute;bottom:38px;right:24px;
+  font-family:'VT323',monospace;font-size:1.2rem;color:var(--dim);
+  z-index:5;
+}
+
+/* ===== Speaker ===== */
+.speaker{position:absolute;bottom:46px;left:24px;
+  display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:55%}
+.speaker .avatar{
+  width:60px;height:60px;flex-shrink:0;
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 2px 2px 4px rgba(0,0,0,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;
+}
+.speaker .bubble{
+  background:#ffffe1;
+  border:1px solid var(--dark);
+  padding:9px 14px;font-size:.95rem;font-weight:600;
+  position:relative;max-width:520px;line-height:1.5;
+  box-shadow:2px 2px 0 var(--dim);
+}
+.speaker .bubble::before{
+  content:'';position:absolute;left:-9px;bottom:16px;
+  border-style:solid;border-width:7px 10px 7px 0;
+  border-color:transparent var(--dark) transparent transparent;
+}
+.speaker .bubble::after{
+  content:'';position:absolute;left:-7px;bottom:17px;
+  border-style:solid;border-width:6px 9px 6px 0;
+  border-color:transparent #ffffe1 transparent transparent;
+}
+
+/* ===== Progress ===== */
+.progress{position:fixed;bottom:0;left:0;right:0;height:5px;
+  background:var(--dark);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(to right,var(--title-start),var(--title-end));transition:width .4s;
+  box-shadow:0 0 6px var(--title-end)}
+
+/* ===== Hint ===== */
+.hint{position:fixed;top:8px;right:24px;z-index:99;
+  font-family:'VT323',monospace;font-size:.9rem;color:var(--text);
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  padding:3px 10px;pointer-events:none;opacity:.9}
+
+/* ===== Overview ===== */
+.overview{position:fixed;inset:0;background:var(--desktop);
+  display:none;padding:48px 32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-size:1.4rem;color:#fff;margin-bottom:18px;
+  text-shadow:2px 2px 0 var(--dark);font-weight:900}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.ov-card{background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 3px 3px 6px rgba(0,0,0,.3);
+  padding:14px 16px;cursor:pointer;position:relative}
+.ov-card:hover{background:var(--title-end);color:#fff}
+.ov-card:hover .t,.ov-card:hover .num,.ov-card:hover .s{color:#fff}
+.ov-card .num{position:absolute;top:6px;right:10px;
+  font-family:'VT323',monospace;font-size:1.1rem;color:var(--link)}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--text);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:#555;line-height:1.4}
+
+/* ===== Win98 inner elements ===== */
+/* 3D 凸起 / 凹陷 generic */
+.bevel-out{border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim)}
+.bevel-in{border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark)}
+
+.info-box{
+  background:var(--window-inset);padding:14px 18px;margin:10px 0;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  font-size:1rem;line-height:1.7;
+}
+.info-box.tip{background:#fffacd}
+.info-box.warn{background:#ffe4e1;border-left:4px solid var(--red-x)}
+.info-box.bsod{background:var(--bsod);color:#fff;font-family:'VT323',monospace;
+  font-size:1.4rem;text-align:center;padding:20px 16px;border:none}
+.info-box.bsod b{color:var(--yellow)}
+
+.steps-list{list-style:none;padding:0;margin:14px 0}
+.steps-list li{display:flex;gap:14px;align-items:flex-start;
+  font-size:1.05rem;line-height:1.7;margin-bottom:8px;padding:10px 14px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.steps-list li .step-num{
+  flex-shrink:0;min-width:32px;height:32px;
+  background:var(--title-start);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.95rem;
+}
+.steps-list li b{color:var(--link)}
+
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px;align-items:stretch}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+
+.stage-card{background:var(--window-inset);padding:18px 20px;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 3px 3px 0 var(--c,var(--title-start));
+  position:relative;}
+.stage-card .badge{
+  display:inline-block;background:var(--c,var(--title-start));color:#fff;
+  font-weight:900;font-size:.85rem;padding:3px 12px;margin-bottom:10px;
+  border:1px solid var(--dark);
+}
+.stage-card h4{font-size:1.15rem;color:var(--text);margin-bottom:8px;font-weight:900}
+.stage-card p{font-size:.95rem;line-height:1.6;color:var(--text)}
+
+/* Desktop icons */
+.desktop-icons-mini{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px;justify-content:center}
+.di-mini{display:flex;flex-direction:column;align-items:center;gap:4px;width:84px;text-align:center}
+.di-mini .img{width:42px;height:42px;
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  display:flex;align-items:center;justify-content:center;font-size:1.7rem}
+.di-mini .lab{color:#fff;font-size:.8rem;text-shadow:1px 1px 0 #000;font-weight:700;line-height:1.2}
+
+/* Compare table (slide 10) */
+.cmp-table{width:100%;border-collapse:collapse;
+  background:var(--window-inset);margin-top:14px;font-size:1rem}
+.cmp-table th{background:var(--title-start);color:#fff;
+  padding:10px 14px;text-align:left;font-size:.9rem;border:1px solid var(--dark)}
+.cmp-table td{padding:10px 14px;border:1px solid var(--dim);font-weight:600}
+.cmp-table tr:nth-child(2n) td{background:var(--window)}
+.cmp-table .ok{color:var(--green-ok);font-weight:900}
+.cmp-table .no{color:var(--red-x);font-weight:900}
+
+/* Mouse-action grid (slide 7 / 11) */
+.mouse-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.mouse-tile{background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  padding:14px;text-align:center}
+.mouse-tile .ic{font-size:2.2rem;margin-bottom:4px}
+.mouse-tile h5{font-weight:900;color:var(--link);font-size:1rem;margin-bottom:4px}
+.mouse-tile p{font-size:.88rem;line-height:1.5;color:var(--text)}
+
+/* Cover special */
+.cover .win-content{align-items:center;justify-content:center;text-align:center}
+.cover-title{
+  font-weight:900;font-size:clamp(3rem,6vw,5.5rem);
+  color:var(--link);line-height:1;margin-bottom:14px;
+  text-shadow:3px 3px 0 var(--yellow);
+}
+.cover-sub{font-size:clamp(1.2rem,2vw,1.6rem);color:var(--text);margin-bottom:32px;font-weight:700}
+.cover-meta{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;
+  font-size:.95rem;color:var(--text);font-weight:700}
+.cover-meta b{color:var(--link)}
+.cover-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 32px}
+.cover-chips .chip{
+  display:inline-block;padding:5px 14px;font-weight:700;font-size:.9rem;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.cover-chips .chip.blue{background:var(--title-start);color:#fff}
+.cover-chips .chip.yellow{background:var(--yellow);color:#000;border-color:#fff #806000 #806000 #fff}
+
+/* Hook (slide 2) */
+.hook-quote{font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.5;
+  color:var(--text);font-weight:700;max-width:1100px}
+.hook-quote .em{color:var(--red-x);font-weight:900}
+
+/* Closing (slide 14) */
+.closing .win-content{align-items:center;justify-content:center;text-align:center}
+.closing h2{font-size:clamp(2.4rem,4.5vw,4rem);line-height:1.2;
+  color:var(--link);margin-bottom:24px;font-weight:900;
+  text-shadow:3px 3px 0 var(--yellow);}
+.closing h2 .em{color:var(--red-x)}
+.closing .signoff{font-size:1.15rem;color:var(--text);margin-bottom:24px;font-weight:700}
+.closing .url-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.closing .url-box{background:#fff;color:var(--text);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  padding:12px 18px;font-family:'VT323',monospace;font-size:1rem;}
+
+/* Animations */
+@keyframes winOpen{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.slide.active{animation:winOpen .35s ease-out}
+
+@keyframes blink{50%{opacity:0}}
+.blink{animation:blink 1s infinite}
+
+@keyframes pop{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .45s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .5s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+/* Responsive */
+@media (max-width:1100px){
+  .deck{padding:46px 12px 14px}
+  .slide{top:46px;left:12px;right:12px}
+  .win-content{padding:24px 22px}
+  .three-col,.two-col,.four-col,.mouse-grid{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+  .taskbar{height:38px}
+}
+@media print{
+  .progress,.hint,.taskbar{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh;top:0;left:0;right:0;bottom:0}
+}
+</style>
+</head>
+<body>
+
+<!-- Top fixed Win98 taskbar -->
+<div class="taskbar">
+  <span class="start-btn"><span class="logo"></span>開始</span>
+  <span class="tb-divider"></span>
+  <span class="tb-app" id="tb-current">🖥️ Windows 電腦小尖兵 - 簡報模式</span>
+  <span class="tb-spacer"></span>
+  <span class="tb-tray">
+    <span style="font-size:1.1rem">🔊</span>
+    <span style="font-size:1.1rem">🌐</span>
+    <span class="tb-clock" id="tb-clock">00:00</span>
+  </span>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="win-titlebar">
+    <span class="ico">💻</span>
+    <span class="name">歡迎 - Windows 電腦小尖兵 v1.0</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" style="background:var(--red-x);color:#fff">✕</button></div>
+  </div>
+  <div class="win-menubar">
+    <span><u>F</u>檔案</span><span><u>E</u>編輯</span><span><u>V</u>檢視</span><span><u>H</u>說明</span>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">01 / 14 · COVER</span>
+    <div class="cover-chips">
+      <span class="chip blue">三年級資訊科技</span>
+      <span class="chip">資訊融入教學</span>
+      <span class="chip yellow">RETRO WIN98</span>
+    </div>
+    <h1 class="cover-title">Windows 電腦小尖兵</h1>
+    <p class="cover-sub">四大關卡 · 跟著阿凱老師變成<span class="accent-blue">班上的電腦高手</span>！</p>
+    <div class="cover-meta">
+      <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+      <span>2026.05</span>
+      <span>時長　約 80 分鐘</span>
+    </div>
+  </div>
+  <div class="win-statusbar"><span class="sb-section">就緒</span><span class="sb-section">14 張投影片</span></div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <div class="win-titlebar">
+    <span class="ico">📷</span>
+    <span class="name">My Documents\\我的童年回憶.bmp</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">02 / 14 · OPENING</span>
+    <p class="eyebrow pop-in">⏰ 還記得嗎？</p>
+    <p class="hook-quote pop-in d1" style="margin-top:18px">
+      國小那個下午，<br>
+      你<span class="em">第一次按下電腦的「開機鈕」</span>，<br>
+      聽到那聲<span class="em">「叮咚～」</span>的歡迎音效，<br>
+      <b style="color:var(--link)">你會記得一輩子。</b>
+    </p>
+    <p class="lead slide-up d2" style="margin-top:24px">
+      30 年後，我們的學生第一次接觸 Windows，<br>
+      看到的也許不是 Windows 98，<br>
+      但<b class="accent-blue">「開機 → 桌面 → 滑鼠 → 視窗 → 檔案」</b>這 5 件事，<br>
+      <span style="color:var(--red-x);font-weight:900">跟我們小時候<u>一模一樣</u>。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😄</div>
+    <div class="bubble">嗨小朋友們好！我是阿凱老師。今天我們要學的，是<b>每個大人小時候都學過</b>的電腦基本功。</div>
+  </div>
+  <span class="slide-num">02 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">2 / 14</span><span class="sb-section">CAPS</span></div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT IS WINDOWS ═══════ -->
+<section class="slide" id="s3">
+  <div class="win-titlebar">
+    <span class="ico">🪟</span>
+    <span class="name">關於 Windows.txt - 記事本</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">03 / 14 · WHAT</span>
+    <p class="eyebrow slide-up">Windows 是什麼？</p>
+    <h2 class="title-lg slide-up d1">電腦的<span class="accent-red">「大總管」</span>，<br>負責指揮所有零件乖乖聽話。</h2>
+    <div class="two-col">
+      <div class="info-box slide-up d2" style="font-size:1.05rem">
+        <b>什麼是「作業系統」？</b><br>
+        就像學校有<b>校長</b>負責管理老師和學生，<br>
+        Windows 就是電腦裡面的「校長」——<br>
+        指揮 <span class="kbd">CPU</span>、<span class="kbd">記憶體</span>、<span class="kbd">硬碟</span>、<span class="kbd">螢幕</span> 一起工作！
+      </div>
+      <div class="info-box tip slide-up d2">
+        <b>📅 Windows 大事紀</b>
+        <ul style="margin-top:8px;padding-left:20px">
+          <li><b>1995</b>：Windows 95 第一個有「開始按鈕」</li>
+          <li><b>1998</b>：Windows 98（今天簡報的風格）</li>
+          <li><b>2001</b>：Windows XP（最長壽版本）</li>
+          <li><b>2015</b>：Windows 10</li>
+          <li><b>2021</b>：Windows 11（學生現在用的）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box bsod slide-up d2" style="margin-top:14px">
+      ⚠ ATTENTION! ⚠<br>
+      <b>不管哪一代 Windows，基本操作都一樣</b>：<br>
+      開機 · 桌面 · 滑鼠 · 視窗 · 檔案 · 關機
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😎</div>
+    <div class="bubble">所以學會 Windows 不只是學「會用 Win11」——是學<b>所有作業系統的通用語言</b>。</div>
+  </div>
+  <span class="slide-num">03 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">3 / 14</span><span class="sb-section">已連線</span></div>
+</section>
+
+<!-- ═══════ SLIDE 4 — FOUR STAGES OVERVIEW ═══════ -->
+<section class="slide" id="s4">
+  <div class="win-titlebar alt-purple">
+    <span class="ico">🎯</span>
+    <span class="name">四大關卡總覽 - 課程地圖.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">04 / 14 · ROADMAP</span>
+    <p class="eyebrow slide-up">課程地圖</p>
+    <h2 class="title-md slide-up d1">三年級資訊課的<br><span class="accent-blue">四大關卡</span>，每一關都是一個小遊戲。</h2>
+
+    <div class="four-col">
+      <div class="stage-card pop-in d1" style="--c:var(--title-start)">
+        <span class="badge">第 1 關</span>
+        <h4>🖥️ 硬體大發現</h4>
+        <p>螢幕、主機、滑鼠、鍵盤、喇叭——<b>認識家族成員</b>。</p>
+      </div>
+      <div class="stage-card pop-in d2" style="--c:var(--green-ok)">
+        <span class="badge" style="background:var(--green-ok)">第 2 關</span>
+        <h4>🔌 開關機程序</h4>
+        <p>叫醒電腦 + <b>哄電腦睡覺</b>。絕對不可以拔插頭！</p>
+      </div>
+      <div class="stage-card pop-in d3" style="--c:var(--accent-purple)">
+        <span class="badge" style="background:var(--accent-purple)">第 3 關</span>
+        <h4>🖱️ 桌面 + 滑鼠</h4>
+        <p>單擊、雙擊、右鍵、拖曳 — <b>滑鼠四大功夫</b>。</p>
+      </div>
+      <div class="stage-card pop-in d4" style="--c:var(--accent-orange)">
+        <span class="badge" style="background:var(--accent-orange)">第 4 關</span>
+        <h4>📁 視窗 + 檔案</h4>
+        <p>三個按鈕（_ □ ✕）+ <b>檔案總管整理術</b>。</p>
+      </div>
+    </div>
+
+    <div class="info-box tip slide-up d2" style="margin-top:18px">
+      <b>💡 通關時長</b>：4 關共 <b class="accent-blue">80 分鐘</b>，每關約 20 分鐘（5 分鐘講解 + 10 分鐘練習 + 5 分鐘小考）。
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🗺️</div>
+    <div class="bubble">老師建議：<b>一週上一關</b>，4 週剛剛好，讓孩子有時間消化。</div>
+  </div>
+  <span class="slide-num">04 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">4 / 14</span><span class="sb-section">建議節奏：4 週</span></div>
+</section>
+
+<!-- ═══════ SLIDE 5 — STAGE 1: HARDWARE ═══════ -->
+<section class="slide" id="s5">
+  <div class="win-titlebar">
+    <span class="ico">🖥️</span>
+    <span class="name">關卡 1 - 認識電腦家族成員.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">05 / 14 · STAGE 1</span>
+    <p class="eyebrow slide-up">第 1 關 · 硬體大發現</p>
+    <h2 class="title-md slide-up d1">電腦不是一個東西，<br>是<span class="accent-blue">「一個家族」</span>—— 5 位成員一起合作。</h2>
+
+    <ol class="steps-list slide-up d2">
+      <li><span class="step-num">1</span><div><b>螢幕</b> 📺 ＝ 電視機，<b>讓我們看到</b>電腦裡面的畫面。</div></li>
+      <li><span class="step-num">2</span><div><b>主機</b> 🧠 ＝ 大腦，<b>處理所有重要工作</b>（最重要的成員！）。</div></li>
+      <li><span class="step-num">3</span><div><b>滑鼠</b> 🖱️ ＝ 小手，<b>移動游標、點選東西</b>。</div></li>
+      <li><span class="step-num">4</span><div><b>鍵盤</b> ⌨️ ＝ 嘴巴，<b>打字、輸入指令</b>給電腦。</div></li>
+      <li><span class="step-num">5</span><div><b>喇叭 / 耳機</b> 🔊 ＝ 耳朵，<b>讓我們聽見</b>音樂和影片聲音。</div></li>
+    </ol>
+
+    <div class="info-box warn slide-up d2">
+      <b>⚠️ 電腦教室三大守則</b>：（1）雙手乾淨再來碰 　（2）絕對不在電腦旁飲食 　（3）輕按鍵盤，不要用敲的
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤲</div>
+    <div class="bubble">老師建議：把一台<b>拆開外殼</b>的舊主機帶到教室，讓小朋友親眼看見「大腦長什麼樣子」。</div>
+  </div>
+  <span class="slide-num">05 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">5 / 14</span><span class="sb-section">關卡 1</span></div>
+</section>
+
+<!-- ═══════ SLIDE 6 — STAGE 2: POWER ON/OFF ═══════ -->
+<section class="slide" id="s6">
+  <div class="win-titlebar alt-green">
+    <span class="ico">🔌</span>
+    <span class="name">關卡 2 - 開關機儀式.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">06 / 14 · STAGE 2</span>
+    <p class="eyebrow slide-up">第 2 關 · 正確開關機程序</p>
+    <h2 class="title-md slide-up d1">關機就像<span class="accent-red">「睡前儀式」</span>，<br>不能亂跳步驟，不然電腦會生病。</h2>
+
+    <div class="two-col">
+      <div class="info-box slide-up d2">
+        <b>🌅 開機流程</b>
+        <ol style="margin-top:8px;padding-left:22px">
+          <li>按主機 + 螢幕<b>電源按鈕</b></li>
+          <li>等待 <b>Windows 啟動畫面</b></li>
+          <li>登入帳號密碼</li>
+          <li>看到桌面 = 開機完成 ✓</li>
+        </ol>
+      </div>
+      <div class="info-box tip slide-up d2">
+        <b>🌙 關機流程（不可跳步驟！）</b>
+        <ol style="margin-top:8px;padding-left:22px">
+          <li>點 <b>「開始」</b> ⊞</li>
+          <li>點 <b>「電源」</b> ⏻</li>
+          <li>點 <b>「關機」</b></li>
+          <li>等主機燈號熄滅 = 關機完成 ✓</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="info-box bsod slide-up d2" style="margin-top:14px">
+      ❌ FATAL ERROR：絕對不可以做的 3 件事 ❌<br>
+      <span style="font-size:1rem">直接拔電源插頭　|　強制長按電源鍵　|　還沒啟動完就一直按鍵</span>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌙</div>
+    <div class="bubble">比喻：電腦關機 = 整理書包。<b>還沒整理完就被搶走</b>，明天找不到課本！</div>
+  </div>
+  <span class="slide-num">06 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">6 / 14</span><span class="sb-section">關卡 2</span></div>
+</section>
+
+<!-- ═══════ SLIDE 7 — STAGE 3: DESKTOP & MOUSE ═══════ -->
+<section class="slide" id="s7">
+  <div class="win-titlebar alt-purple">
+    <span class="ico">🖱️</span>
+    <span class="name">關卡 3 - 桌面與滑鼠四大絕招.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">07 / 14 · STAGE 3</span>
+    <p class="eyebrow slide-up">第 3 關 · 桌面探險 + 滑鼠功夫</p>
+    <h2 class="title-md slide-up d1">桌面是<span class="accent-purple">「你的專屬大書桌」</span>，<br>滑鼠是「<span class="accent-red">武林四大絕招</span>」。</h2>
+
+    <div class="info-box slide-up d2" style="font-size:1rem">
+      <b>📋 桌面元素 5 個比喻</b>：
+      🏠 <b>桌面</b> ＝ 大書桌　|　🪄 <b>圖示</b> ＝ 魔法貼紙　|　🔧 <b>工作列</b> ＝ 工具腰帶　|　⏰ <b>系統匣</b> ＝ 小口袋　|　🎒 <b>開始功能表</b> ＝ 哆啦A夢百寶袋
+    </div>
+
+    <div class="mouse-grid">
+      <div class="mouse-tile pop-in d1">
+        <div class="ic">👆</div>
+        <h5>單擊（左鍵 ×1）</h5>
+        <p><b>選取</b>東西用</p>
+      </div>
+      <div class="mouse-tile pop-in d2">
+        <div class="ic">👆👆</div>
+        <h5>雙擊（左鍵 ×2）</h5>
+        <p><b>打開</b>東西用（快！）</p>
+      </div>
+      <div class="mouse-tile pop-in d3">
+        <div class="ic">👉</div>
+        <h5>右鍵</h5>
+        <p>叫出<b>隱藏選單</b></p>
+      </div>
+      <div class="mouse-tile pop-in d4">
+        <div class="ic">✊</div>
+        <h5>拖曳（按住 + 移動）</h5>
+        <p><b>搬東西</b>到別的位置</p>
+      </div>
+    </div>
+
+    <div class="info-box tip slide-up d2" style="margin-top:14px">
+      <b>💡 Win11 特別提醒</b>：右鍵選單預設只顯示圖示，要點「<b>顯示其他選項</b>」才能看到完整選單。
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🥋</div>
+    <div class="bubble">滑鼠四大絕招要<b>分開練習</b>！老師上課用「氣球戳戳樂」遊戲，30 秒看誰戳最多分。</div>
+  </div>
+  <span class="slide-num">07 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">7 / 14</span><span class="sb-section">關卡 3</span></div>
+</section>
+
+<!-- ═══════ SLIDE 8 — STAGE 4: WINDOWS & FILES ═══════ -->
+<section class="slide" id="s8">
+  <div class="win-titlebar alt-orange">
+    <span class="ico">📁</span>
+    <span class="name">關卡 4 - 視窗大師與檔案總管.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">08 / 14 · STAGE 4</span>
+    <p class="eyebrow slide-up">第 4 關 · 視窗按鈕 + 檔案總管</p>
+    <h2 class="title-md slide-up d1">視窗是「<span class="accent-blue">任意門</span>」，<br>檔案總管是「<span class="accent-red">電腦的圖書館</span>」。</h2>
+
+    <div class="two-col">
+      <div class="info-box slide-up d2">
+        <b>🪟 視窗右上角三按鈕</b>
+        <ul style="margin-top:8px;padding-left:22px;list-style:none">
+          <li style="margin-bottom:6px">
+            <span class="kbd" style="font-size:1.1rem">_</span>　<b>最小化</b>（縮到工作列）
+          </li>
+          <li style="margin-bottom:6px">
+            <span class="kbd" style="font-size:1.1rem">□</span>　<b>最大化</b>（鋪滿螢幕）
+          </li>
+          <li>
+            <span class="kbd" style="font-size:1.1rem;background:var(--red-x);color:#fff;border-color:#fff #800 #800 #fff">✕</span>　<b>關閉</b>（結束程式）
+          </li>
+        </ul>
+      </div>
+      <div class="info-box tip slide-up d2">
+        <b>📂 檔案總管必學動作</b>
+        <ul style="margin-top:8px;padding-left:22px">
+          <li>右鍵 → <b>新增</b> → <b>資料夾</b>（建立資料夾）</li>
+          <li><span class="kbd">Ctrl+C</span> → <span class="kbd">Ctrl+V</span>（複製貼上）</li>
+          <li>選檔案 → <span class="kbd">F2</span>（重新命名）</li>
+          <li>選檔案 → <span class="kbd">Delete</span>（丟垃圾桶）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box warn slide-up d2" style="margin-top:14px">
+      <b>♻️ 垃圾桶有救援魔法！</b> 不小心刪錯了？打開桌面的「<b>資源回收筒</b>」找到檔案，右鍵 → <b>還原</b> 就可以救回來！但<b class="accent-red">「清空垃圾桶」後就真的消失</b>了。
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📂</div>
+    <div class="bubble">第 4 關最重要：學會<b>「資料夾分類」</b>。讓小朋友幫桌面分類：作業、遊戲、相片各一個資料夾。</div>
+  </div>
+  <span class="slide-num">08 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">8 / 14</span><span class="sb-section">關卡 4</span></div>
+</section>
+
+<!-- ═══════ SLIDE 9 — TEACHING WORKFLOW ═══════ -->
+<section class="slide" id="s9">
+  <div class="win-titlebar">
+    <span class="ico">📋</span>
+    <span class="name">教學流程 - 老師上課 SOP.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">09 / 14 · TEACHING SOP</span>
+    <p class="eyebrow slide-up">教師端 · 每堂課 5 步流程</p>
+    <h2 class="title-md slide-up d1">每一節資訊課，<br>都按這 <span class="accent-blue">5 個步驟</span> 走。</h2>
+
+    <ol class="steps-list slide-up d2">
+      <li><span class="step-num">1</span><div><b>暖場 5 分鐘</b>：複習上週重點（用問答 / 抽籤），讓孩子重新進入「資訊腦」模式。</div></li>
+      <li><span class="step-num">2</span><div><b>講解 10 分鐘</b>：螢幕示範今天的新關卡，<b>邊講邊讓孩子跟著做一次</b>。</div></li>
+      <li><span class="step-num">3</span><div><b>互動練習 15 分鐘</b>：用駕駛艙上的 Canvas 遊戲（連連看 / 氣球戳戳樂 / 視窗按鈕大師）。</div></li>
+      <li><span class="step-num">4</span><div><b>小考 5 分鐘</b>：每關有 2 題快問快答，<b>答對舉手集點</b>，期末兌換獎品。</div></li>
+      <li><span class="step-num">5</span><div><b>下課前 5 分鐘</b>：請學生<b>正確關機</b>（順便再練一次第 2 關！）。</div></li>
+    </ol>
+
+    <div class="info-box tip slide-up d2" style="margin-top:14px">
+      <b>💡 老師獨家技巧</b>：把<b>「正確關機」變成下課儀式</b>——學生越練越熟，到第 4 週每個人都會自動關機。
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⏰</div>
+    <div class="bubble">5 步驟剛好 40 分鐘 = 一節課，<b>不會超時也不會空堂</b>。第一週緊張正常，第二週開始上手。</div>
+  </div>
+  <span class="slide-num">09 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">9 / 14</span><span class="sb-section">教學節奏</span></div>
+</section>
+
+<!-- ═══════ SLIDE 10 — SAFETY RULES ═══════ -->
+<section class="slide" id="s10">
+  <div class="win-titlebar alt-red">
+    <span class="ico">⚠️</span>
+    <span class="name">電腦教室安全須知 - 警告.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">10 / 14 · SAFETY</span>
+    <p class="eyebrow slide-up">三年級電腦教室安全清單</p>
+    <h2 class="title-md slide-up d1">這 4 件事 <span class="accent-red">每節課一定要提醒</span>，<br>三年級沒講就會做。</h2>
+
+    <table class="cmp-table">
+      <thead><tr><th style="width:30%">事項</th><th>✓ 應該做</th><th>✗ 不可以做</th></tr></thead>
+      <tbody>
+        <tr><td>🍪 飲食</td><td class="ok">出教室才吃</td><td class="no">在電腦旁邊吃</td></tr>
+        <tr><td>👐 雙手</td><td class="ok">擦乾淨再來</td><td class="no">手濕濕的就摸</td></tr>
+        <tr><td>⌨️ 鍵盤</td><td class="ok">輕按、力道適中</td><td class="no">用拳頭敲、按到爆</td></tr>
+        <tr><td>🔌 電源</td><td class="ok">按開始 → 電源 → 關機</td><td class="no">拔插頭 / 長按關機鍵</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box bsod slide-up d2" style="margin-top:18px">
+      🔴 三年級「黃金 5 字訣」 🔴<br>
+      <b>淨 · 輕 · 慢 · 等 · 報</b><br>
+      <span style="font-size:.95rem">手乾淨、輕按鍵、慢點擊、耐心等、有問題報老師</span>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛟</div>
+    <div class="bubble">把「黃金 5 字訣」<b>貼在電腦螢幕邊</b>，學生抬頭就看見，違規率瞬間降 80%。</div>
+  </div>
+  <span class="slide-num">10 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">10 / 14</span><span class="sb-section">安全第一</span></div>
+</section>
+
+<!-- ═══════ SLIDE 11 — CLASSROOM MANAGEMENT ═══════ -->
+<section class="slide" id="s11">
+  <div class="win-titlebar alt-purple">
+    <span class="ico">👩‍🏫</span>
+    <span class="name">班級經營 - 三大常見場景.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">11 / 14 · CLASSROOM</span>
+    <p class="eyebrow slide-up">班級經營</p>
+    <h2 class="title-md slide-up d1">三年級教資訊課，<br>三大<span class="accent-red">「典型場景」</span>怎麼處理？</h2>
+
+    <div class="three-col">
+      <div class="stage-card pop-in d1" style="--c:var(--red-x)">
+        <span class="badge" style="background:var(--red-x)">場景 1</span>
+        <h4>🥱 動作慢的學生</h4>
+        <p><b>不要催！</b>讓動作快的當「小助教」走動幫忙。三贏：快的有成就感、慢的得到幫助、老師專注教學。</p>
+      </div>
+      <div class="stage-card pop-in d2" style="--c:var(--accent-orange)">
+        <span class="badge" style="background:var(--accent-orange)">場景 2</span>
+        <h4>😤 把電腦弄當機</h4>
+        <p><b>不要罵！</b>趁機教「<b>強制重新啟動</b>」（Ctrl+Alt+Del），學生會覺得自己「解決問題」很酷。</p>
+      </div>
+      <div class="stage-card pop-in d3" style="--c:var(--green-ok)">
+        <span class="badge" style="background:var(--green-ok)">場景 3</span>
+        <h4>🤩 已經會用的學生</h4>
+        <p><b>給他更難的挑戰！</b>「幫老師整理桌面圖示」「示範給同學看」「教老師用某個功能」。</p>
+      </div>
+    </div>
+
+    <div class="info-box tip slide-up d2" style="margin-top:18px">
+      <b>💡 老師金句</b>：「電腦不會壞，只是<b>暫時迷路</b>。重新開機就會找到路了。」 ── 把「當機」變成正常事件，減低焦慮。
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌈</div>
+    <div class="bubble">三年級最怕「<b>學生分化</b>」。用「小助教制度」反而能讓快慢同學<b>一起進步</b>。</div>
+  </div>
+  <span class="slide-num">11 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">11 / 14</span><span class="sb-section">班經策略</span></div>
+</section>
+
+<!-- ═══════ SLIDE 12 — CURRICULUM ALIGN ═══════ -->
+<section class="slide" id="s12">
+  <div class="win-titlebar">
+    <span class="ico">🎓</span>
+    <span class="name">對應 108 課綱 - 資訊科技素養.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">12 / 14 · CURRICULUM</span>
+    <p class="eyebrow slide-up">對應 108 課綱</p>
+    <h2 class="title-md slide-up d1">不是「教孩子用電腦」，<br>是培養<span class="accent-blue">「資訊素養」</span>的五件事。</h2>
+
+    <div class="four-col">
+      <div class="stage-card pop-in d1" style="--c:var(--title-start)">
+        <span class="badge">① 工具操作</span>
+        <h4>🛠️ 基本能力</h4>
+        <p>會用滑鼠、鍵盤、視窗 — <b>數位生活的入場券</b>。</p>
+      </div>
+      <div class="stage-card pop-in d2" style="--c:var(--green-ok)">
+        <span class="badge" style="background:var(--green-ok)">② 資訊倫理</span>
+        <h4>🤝 尊重與安全</h4>
+        <p>不亂動別人電腦、<b>不分享密碼</b>、不亂下載 — 數位公民第一課。</p>
+      </div>
+      <div class="stage-card pop-in d3" style="--c:var(--accent-purple)">
+        <span class="badge" style="background:var(--accent-purple)">③ 自學能力</span>
+        <h4>🧭 找答案</h4>
+        <p>會用<b>搜尋引擎</b>、會看<b>圖示提示</b> — 不再依賴老師「手把手教」。</p>
+      </div>
+      <div class="stage-card pop-in d4" style="--c:var(--red-x)">
+        <span class="badge" style="background:var(--red-x)">④ 解決問題</span>
+        <h4>🔧 不慌張</h4>
+        <p>電腦怪怪的 → 先<b>重開機</b>，再不行就<b>找老師</b>。系統化處理。</p>
+      </div>
+    </div>
+
+    <p class="lead slide-up d2" style="margin-top:18px;text-align:center;font-size:1rem;color:var(--text)">
+      💡 <b>記住：工具會變，但素養不會。</b><br>
+      <span style="color:var(--dim)">10 年後 Windows 可能改名了，但「不慌張、會找答案、會關機」這 3 件事永遠用得到。</span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">當有家長問「為什麼資訊課要學那麼基礎的開關機」——這四個素養就是答案。</div>
+  </div>
+  <span class="slide-num">12 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">12 / 14</span><span class="sb-section">108 課綱</span></div>
+</section>
+
+<!-- ═══════ SLIDE 13 — TEACHER ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <div class="win-titlebar alt-orange">
+    <span class="ico">💡</span>
+    <span class="name">給資訊老師的 5 個叮嚀.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">13 / 14 · ADVICE</span>
+    <p class="eyebrow slide-up">教三年級資訊課的 5 個叮嚀</p>
+    <h2 class="title-md slide-up d1">在開學第一堂課前，<br>請記住<span class="accent-red">這 5 件事</span>。</h2>
+
+    <ol class="steps-list slide-up d2">
+      <li><span class="step-num">1</span><div><b>比喻比定義重要</b>：三年級聽不懂「作業系統」，但聽得懂「電腦的校長」。</div></li>
+      <li><span class="step-num">2</span><div><b>少講多做</b>：每節 10 分鐘講解上限，超過小朋友就放空了。<b>動手做才會記住</b>。</div></li>
+      <li><span class="step-num">3</span><div><b>關機儀式化</b>：每節下課前 5 分鐘練「正確關機」，4 週下來人人會。</div></li>
+      <li><span class="step-num">4</span><div><b>不要怕學生把電腦弄壞</b>：作業系統很穩，<b>重開機 = 還原 80% 問題</b>。</div></li>
+      <li><span class="step-num">5</span><div><b>把電腦課變遊戲</b>：用駕駛艙的 Canvas 遊戲、戳氣球、視窗按鈕大師，小朋友會搶著上課！</div></li>
+    </ol>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不只適用 Windows——<b>未來教 Chromebook、平板都一樣有效</b>。</div>
+  </div>
+  <span class="slide-num">13 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">13 / 14</span><span class="sb-section">老師加油</span></div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="win-titlebar">
+    <span class="ico">🎉</span>
+    <span class="name">謝謝 - Thank You.bmp</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">14 / 14 · CLOSING</span>
+
+    <div class="desktop-icons-mini" style="margin-bottom:24px">
+      <div class="di-mini"><div class="img">🖥️</div><div class="lab">硬體</div></div>
+      <div class="di-mini"><div class="img">🔌</div><div class="lab">開關機</div></div>
+      <div class="di-mini"><div class="img">🖱️</div><div class="lab">滑鼠</div></div>
+      <div class="di-mini"><div class="img">📁</div><div class="lab">檔案</div></div>
+    </div>
+
+    <h2 class="slide-up">資訊教育的本質，<br>是讓孩子相信<span class="em">「我也可以掌握電腦」</span>。</h2>
+    <p class="signoff slide-up d1">Windows 提醒我們的，是 30 年來這件事的<b>初心</b>沒變。</p>
+
+    <div class="url-row slide-up d2">
+      <div class="url-box">
+        🌐 駕駛艙完整版<br>
+        <b style="color:var(--link)">cagoooo.github.io/it-cockpit/windows-basics/</b>
+      </div>
+      <div class="url-box">
+        🎬 NotebookLM 自學影片<br>
+        <b style="color:var(--red-x)">YouTube 教學頻道</b>
+      </div>
+    </div>
+
+    <p style="margin-top:32px;font-family:'VT323',monospace;color:var(--text);font-size:1rem;letter-spacing:.08em">
+      Q&amp;A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+    </p>
+    <p style="margin-top:10px;font-size:1.15rem;color:var(--red-x);font-weight:900" class="blink">▶ THANK YOU · 謝謝大家 ◀</p>
+  </div>
+  <span class="slide-num">14 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">完成</span><span class="sb-section">14 / 14</span></div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- Progress -->
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<!-- Hint -->
+<div class="hint">← → 換頁 · <span class="kbd" style="background:#000;color:var(--yellow);border-color:var(--yellow) #000 #000 var(--yellow);font-family:'VT323',monospace">M</span> 章節 · <span class="kbd" style="background:#000;color:var(--yellow);border-color:var(--yellow) #000 #000 var(--yellow);font-family:'VT323',monospace">F</span> 全螢幕 · <span class="kbd" style="background:#000;color:var(--yellow);border-color:var(--yellow) #000 #000 var(--yellow);font-family:'VT323',monospace">S</span> 主講</div>
+
+<!-- Overview -->
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+// Clock
+function updateClock(){
+  const d = new Date();
+  const h = String(d.getHours()).padStart(2,'0');
+  const m = String(d.getMinutes()).padStart(2,'0');
+  document.getElementById('tb-clock').textContent = h + ':' + m;
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+const SLIDES = [
+  {n:1,  t:'封面',           s:'Windows 電腦小尖兵 · 三年級資訊科技'},
+  {n:2,  t:'開場暖身',       s:'你第一次開機的「叮咚」聲還記得嗎？'},
+  {n:3,  t:'Windows 是什麼', s:'電腦的大總管 · 作業系統概念'},
+  {n:4,  t:'四大關卡總覽',   s:'課程地圖 · 硬體/開關機/滑鼠/檔案'},
+  {n:5,  t:'關卡 1：硬體大發現', s:'5 位成員 · 螢幕主機滑鼠鍵盤喇叭'},
+  {n:6,  t:'關卡 2：開關機儀式', s:'絕對不可以拔插頭！'},
+  {n:7,  t:'關卡 3：桌面+滑鼠',  s:'四大絕招 · 單擊雙擊右鍵拖曳'},
+  {n:8,  t:'關卡 4：視窗+檔案',  s:'三按鈕 _ □ ✕ · 檔案總管'},
+  {n:9,  t:'教學流程 SOP',    s:'每節課 5 步驟 · 40 分鐘節奏'},
+  {n:10, t:'安全須知',        s:'淨輕慢等報 · 黃金五字訣'},
+  {n:11, t:'班級經營',        s:'動作慢/當機/已會的 三大場景'},
+  {n:12, t:'108 課綱對應',     s:'4 大資訊素養 · 工具/倫理/自學/解決'},
+  {n:13, t:'5 個叮嚀',        s:'給三年級資訊老師'},
+  {n:14, t:'結語 + Q&A',      s:'讓孩子相信「我也能掌握電腦」'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+const TB = document.getElementById('tb-current');
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+  // Sync taskbar active app
+  const s = SLIDES[idx];
+  if(TB) TB.textContent = `🖥️ ${String(s.n).padStart(2,'0')} · ${s.t}`;
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+// Build overview
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{
+    goSlide(i);
+    document.getElementById('overview').classList.remove('show');
+  };
+  ovGrid.appendChild(card);
+});
+
+// Keyboard
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+// Click navigation
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, .taskbar, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+// Swipe
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+// Hash init
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+// Set initial taskbar
+goSlide(curIdx);
+</script>
+
+</body>
+</html>
