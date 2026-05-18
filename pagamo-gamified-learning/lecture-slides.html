@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>A2 PaGamO 遊戲化教學平台｜中央大學師培演講簡報</title>
+<meta name="description" content="阿凱老師 × 中央大學師資培育中心｜A2 數位學習平臺應用：PaGamO 遊戲化教學平台演講簡報。童玩沉浸風 × 14 張投影片。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&family=Bungee&family=Bungee+Shade&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset & Base ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --paper:#f6efe3;
+  --paper-2:#fff8ec;
+  --paper-3:#ecdfc4;
+  --ink:#2d2418;
+  --red:#d63842;
+  --blue:#2a5fb4;
+  --green:#5a8d3a;
+  --yellow:#f4b942;
+  --purple:#9a4ec9;
+  --orange:#ec5a4a;
+  --pink:#e85d8a;
+  --teal:#3aa6a6;
+  --dim:#7a6a4f;
+}
+body{
+  font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+
+/* Grain texture overlay (Risograph 質感) */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9990;
+  pointer-events:none;mix-blend-mode:multiply;opacity:.4;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.14 0 0 0 0 0.09 0 0 0 0.45 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+}
+
+/* ===== Slide Container ===== */
+.deck{position:fixed;inset:0;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  padding:5vh 7vw;
+  opacity:0;transition:opacity .4s;
+}
+.slide.active{display:flex;opacity:1}
+
+/* ===== Universal Slide Decorations ===== */
+.slide::after{
+  /* paper edge decoration */
+  content:'';position:absolute;top:0;left:0;right:0;height:8px;
+  background:repeating-linear-gradient(90deg,var(--red) 0 16px,var(--paper) 16px 24px);
+  opacity:.7;
+}
+.slide-num{
+  position:absolute;bottom:24px;right:32px;
+  font-family:'Bungee',sans-serif;font-size:.95rem;color:var(--dim);
+  letter-spacing:.1em;z-index:5;
+}
+.slide-title-tag{
+  position:absolute;top:32px;left:32px;
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  letter-spacing:.2em;color:var(--red);text-transform:uppercase;
+  padding:4px 10px;border:1.5px solid var(--red);
+  background:var(--paper-2);
+  z-index:5;
+}
+
+/* ===== Typography ===== */
+.title-xl{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(3.5rem,8vw,7rem);line-height:1.05;
+  letter-spacing:-.02em;color:var(--blue);
+}
+.title-lg{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(2.8rem,6vw,5rem);line-height:1.1;
+  letter-spacing:-.02em;color:var(--blue);
+}
+.title-md{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.15;
+  color:var(--ink);
+}
+.eyebrow{
+  font-family:'Space Mono',monospace;font-size:1.05rem;
+  letter-spacing:.2em;color:var(--red);text-transform:uppercase;
+  margin-bottom:18px;display:flex;align-items:center;gap:14px;
+}
+.eyebrow::after{content:'';flex:1;height:2px;background:var(--red);max-width:200px}
+.lead{
+  font-size:clamp(1.1rem,1.8vw,1.5rem);line-height:1.7;
+  color:var(--ink);max-width:1100px;
+}
+.lead b{color:var(--red);font-weight:900}
+.accent-red{color:var(--red)}
+.accent-blue{color:var(--blue)}
+.accent-green{color:var(--green)}
+.accent-orange{color:var(--orange)}
+
+/* ===== Speaker Bubble ===== */
+.speaker{
+  position:absolute;bottom:20px;left:32px;
+  display:flex;align-items:flex-end;gap:14px;z-index:8;
+  max-width:50%;
+}
+.speaker .avatar{
+  width:64px;height:64px;flex-shrink:0;
+  background:var(--yellow);
+  border:3px solid var(--ink);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  box-shadow:3px 3px 0 var(--ink);
+}
+.speaker .bubble{
+  background:var(--paper-2);
+  border:2.5px solid var(--ink);
+  padding:10px 16px;
+  font-size:.95rem;font-weight:600;
+  position:relative;
+  box-shadow:3px 3px 0 var(--ink);
+  max-width:480px;line-height:1.5;
+}
+.speaker .bubble::before{
+  content:'';position:absolute;left:-12px;bottom:18px;
+  width:0;height:0;
+  border-style:solid;
+  border-width:8px 14px 8px 0;
+  border-color:transparent var(--ink) transparent transparent;
+}
+.speaker .bubble::after{
+  content:'';position:absolute;left:-9px;bottom:18px;
+  width:0;height:0;
+  border-style:solid;
+  border-width:8px 14px 8px 0;
+  border-color:transparent var(--paper-2) transparent transparent;
+}
+
+/* ===== Progress Bar ===== */
+.progress{
+  position:fixed;bottom:0;left:0;right:0;height:5px;
+  background:var(--paper-3);z-index:99;
+}
+.progress-fill{
+  height:100%;background:var(--red);transition:width .4s;
+  box-shadow:0 0 8px var(--red);
+}
+
+/* ===== Hint Bar ===== */
+.hint{
+  position:fixed;top:14px;right:24px;z-index:99;
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  color:var(--dim);
+  background:var(--paper-2);
+  border:1.5px solid var(--dim);
+  padding:5px 12px;
+  letter-spacing:.05em;
+  pointer-events:none;
+  opacity:.7;
+}
+
+/* ===== Overview Mode ===== */
+.overview{
+  position:fixed;inset:0;background:var(--ink);
+  display:none;padding:32px;overflow-y:auto;z-index:200;
+  flex-direction:column;
+}
+.overview.show{display:flex}
+.overview h3{
+  font-family:'Bungee',sans-serif;color:var(--yellow);
+  font-size:1.4rem;margin-bottom:18px;letter-spacing:.05em;
+}
+.overview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.ov-card{
+  background:var(--paper);
+  border:3px solid var(--yellow);
+  padding:14px 16px;cursor:pointer;
+  transition:.15s;position:relative;
+}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--red)}
+.ov-card .num{
+  position:absolute;top:8px;right:10px;
+  font-family:'Bungee',sans-serif;font-size:.85rem;
+  color:var(--red);
+}
+.ov-card .t{font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.05rem;color:var(--blue);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:var(--dim);line-height:1.5}
+
+/* ===== Childhood Decorations ===== */
+.marble{
+  width:60px;height:60px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff 0%,var(--ink-c,#d63842) 60%,#000 100%);
+  border:2px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink), inset -4px -4px 12px rgba(0,0,0,.3);
+  display:inline-block;
+}
+.marble.m1{--ink-c:#d63842}
+.marble.m2{--ink-c:#2a5fb4}
+.marble.m3{--ink-c:#f4b942}
+.marble.m4{--ink-c:#5a8d3a}
+.marble.m5{--ink-c:#9a4ec9}
+
+.hopscotch{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:6px;
+  width:200px;
+}
+.hop-cell{
+  aspect-ratio:1;background:var(--paper-2);
+  border:2.5px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bungee',sans-serif;font-size:1.5rem;color:var(--ink);
+  position:relative;
+}
+.hop-cell.x2{grid-column:1/-1;aspect-ratio:2/1}
+
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.pinwheel{
+  width:80px;height:80px;position:relative;
+  animation:spin 4s linear infinite;
+  transform-origin:center;
+}
+.pinwheel-blade{
+  position:absolute;top:0;left:50%;width:40px;height:40px;
+  background:var(--blade-c,var(--red));
+  border:2px solid var(--ink);
+  clip-path:polygon(50% 100%, 100% 50%, 50% 50%);
+  transform-origin:0 100%;
+}
+.pinwheel-blade.b2{transform:rotate(90deg);--blade-c:var(--yellow)}
+.pinwheel-blade.b3{transform:rotate(180deg);--blade-c:var(--green)}
+.pinwheel-blade.b4{transform:rotate(270deg);--blade-c:var(--purple)}
+.pinwheel::after{
+  content:'';position:absolute;top:50%;left:50%;width:12px;height:12px;
+  background:var(--ink);border-radius:50%;transform:translate(-50%,-50%);
+}
+
+@keyframes wobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.spinning-top{
+  width:60px;height:80px;position:relative;
+  animation:wobble 1.5s ease-in-out infinite;
+  transform-origin:bottom center;
+}
+.top-body{
+  position:absolute;top:0;left:0;width:60px;height:50px;
+  background:linear-gradient(180deg,var(--red) 0 33%,var(--yellow) 33% 66%,var(--blue) 66% 100%);
+  border:2px solid var(--ink);
+  clip-path:polygon(0 0, 100% 0, 50% 100%);
+}
+.top-stick{
+  position:absolute;bottom:0;left:50%;width:4px;height:30px;
+  background:var(--ink);transform:translateX(-50%);
+}
+
+/* ===== Cards & Boxes ===== */
+.riso-box{
+  background:var(--paper-2);
+  border:3px solid var(--blue);
+  padding:24px 28px;position:relative;
+}
+.riso-box::before{
+  content:'';position:absolute;top:8px;left:8px;right:-8px;bottom:-8px;
+  border:3px solid var(--orange);z-index:-1;
+}
+.riso-box.red{border-color:var(--red)}
+.riso-box.red::before{border-color:var(--yellow)}
+.riso-box.green{border-color:var(--green)}
+.riso-box.green::before{border-color:var(--yellow)}
+.riso-box.purple{border-color:var(--purple)}
+.riso-box.purple::before{border-color:var(--orange)}
+
+.stat-card{
+  background:var(--paper-2);
+  border:3px solid var(--ink);
+  padding:22px 26px;
+  text-align:center;
+  box-shadow:6px 6px 0 var(--red);
+  flex:1;min-width:200px;
+}
+.stat-card .n{
+  font-family:'Bungee Shade','Bungee',sans-serif;
+  font-size:clamp(3rem,5vw,4.5rem);line-height:1;
+  color:var(--red);
+}
+.stat-card .l{
+  font-size:.95rem;color:var(--dim);margin-top:6px;letter-spacing:.05em;
+}
+
+.bullet-list{list-style:none;padding:0;margin:0}
+.bullet-list li{
+  display:flex;gap:16px;align-items:flex-start;
+  font-size:clamp(1rem,1.4vw,1.25rem);
+  line-height:1.7;margin-bottom:14px;
+}
+.bullet-list li::before{
+  content:'';flex-shrink:0;
+  width:28px;height:28px;
+  background:var(--blue);
+  border:2px solid var(--ink);
+  border-radius:50%;
+  margin-top:6px;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.bullet-list.red li::before{background:var(--red)}
+.bullet-list.green li::before{background:var(--green)}
+.bullet-list.yellow li::before{background:var(--yellow)}
+.bullet-list.purple li::before{background:var(--purple)}
+
+.tag{
+  display:inline-block;
+  padding:6px 14px;
+  background:var(--yellow);
+  border:2px solid var(--ink);
+  font-weight:700;font-size:.95rem;
+  box-shadow:2px 2px 0 var(--ink);
+  margin:4px 6px 4px 0;
+}
+.tag.red{background:var(--red);color:var(--paper)}
+.tag.blue{background:var(--blue);color:var(--paper)}
+.tag.green{background:var(--green);color:var(--paper)}
+.tag.purple{background:var(--purple);color:var(--paper)}
+
+.kbd{
+  display:inline-block;padding:3px 8px;
+  background:var(--ink);color:var(--yellow);
+  font-family:'Space Mono',monospace;font-size:.85em;
+  border-radius:3px;
+}
+
+/* ===== SLIDE 1: COVER ===== */
+.cover{
+  align-items:center;justify-content:center;
+  text-align:center;background:var(--paper);
+}
+.cover .badge{
+  display:inline-block;
+  background:var(--red);color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-size:1.05rem;letter-spacing:.2em;
+  padding:8px 18px;margin-bottom:32px;
+  box-shadow:4px 4px 0 var(--ink);
+}
+.cover h1{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(4rem,9vw,8rem);
+  line-height:1;margin-bottom:18px;
+  color:var(--blue);letter-spacing:-.03em;
+}
+.cover h1 .accent{
+  color:var(--red);font-family:'Bungee',sans-serif;
+  font-size:.7em;display:inline-block;
+  transform:translateY(-12px);margin:0 8px;
+}
+.cover .sub{
+  font-size:clamp(1.3rem,2.2vw,1.8rem);
+  color:var(--ink);margin-bottom:48px;font-weight:500;
+}
+.cover .meta{
+  display:flex;gap:48px;align-items:center;
+  font-family:'Space Mono',monospace;font-size:.95rem;
+  letter-spacing:.05em;color:var(--dim);
+}
+.cover .meta b{color:var(--ink);font-weight:700}
+.cover-deco{
+  position:absolute;display:flex;gap:18px;
+}
+.cover-deco.tl{top:80px;left:80px}
+.cover-deco.tr{top:80px;right:80px}
+.cover-deco.bl{bottom:80px;left:80px}
+.cover-deco.br{bottom:80px;right:80px}
+
+/* ===== Slide 2: Hook ===== */
+.hook-quote{
+  font-family:'Noto Serif TC',serif;
+  font-size:clamp(2.4rem,5vw,4rem);
+  line-height:1.4;color:var(--ink);
+  font-weight:700;
+  max-width:1100px;
+}
+.hook-quote .em{color:var(--red);font-style:italic}
+.hook-photos{
+  position:absolute;display:flex;gap:14px;
+  bottom:80px;right:80px;
+}
+.polaroid{
+  background:var(--paper-2);
+  border:1px solid var(--ink);
+  padding:8px 8px 24px;
+  box-shadow:4px 4px 0 var(--ink);
+  transform:rotate(var(--rot,3deg));
+  width:140px;
+}
+.polaroid .box{
+  width:100%;aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+  background:var(--bg,var(--paper-3));
+}
+.polaroid .cap{
+  font-family:'Noto Serif TC',serif;font-size:.75rem;
+  text-align:center;margin-top:6px;color:var(--ink);
+}
+
+/* ===== Slide 3-13: layout helpers ===== */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;flex:1;margin-top:24px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;flex:1;margin-top:24px}
+.flex-row{display:flex;gap:24px;flex-wrap:wrap;align-items:stretch;margin-top:24px}
+.center-content{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+
+/* Pillars (slide 4) */
+.pillar{
+  background:var(--paper-2);
+  border:3px solid var(--ink);
+  padding:24px 22px;text-align:center;
+  position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--red));
+}
+.pillar .ico{
+  width:80px;height:80px;
+  background:var(--c,var(--red));
+  border:2.5px solid var(--ink);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;font-size:2.5rem;
+  box-shadow:3px 3px 0 var(--ink);
+}
+.pillar .h{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.35rem;color:var(--c,var(--red));margin-bottom:10px;
+}
+.pillar .b{font-size:1rem;line-height:1.6;color:var(--ink)}
+
+/* Energy gauge (slide 5) */
+.energy-table{
+  width:100%;border-collapse:collapse;
+  background:var(--paper-2);font-size:clamp(.95rem,1.2vw,1.1rem);
+}
+.energy-table th{
+  background:var(--blue);color:var(--paper);
+  padding:12px 16px;text-align:left;
+  font-family:'Space Mono',monospace;font-size:.85rem;
+  border:2px solid var(--ink);
+}
+.energy-table td{padding:14px 18px;border:2px solid var(--ink);font-weight:600}
+.energy-table tr:nth-child(2n) td{background:var(--paper-3)}
+.energy-table .big{font-size:1.3em;color:var(--red);font-weight:900}
+
+/* Pinwheel display (slide 8) */
+.scenario-fan{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;
+  margin-top:30px;
+}
+.scenario-card{
+  background:var(--paper-2);
+  border:3px solid var(--c,var(--blue));
+  padding:24px 22px;position:relative;
+  box-shadow:6px 6px 0 var(--ink);
+}
+.scenario-card .num{
+  position:absolute;top:-18px;left:18px;
+  width:40px;height:40px;
+  background:var(--c,var(--blue));color:var(--paper);
+  border:2.5px solid var(--ink);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bungee',sans-serif;font-size:1.2rem;
+}
+.scenario-card .icon{font-size:2.5rem;margin-bottom:8px;text-align:center}
+.scenario-card h4{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.4rem;color:var(--c,var(--blue));
+  margin:8px 0 12px;
+}
+.scenario-card p{font-size:1rem;line-height:1.6}
+
+/* Comparison row (slide 10) */
+.cmp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.cmp-tile{
+  background:var(--paper-2);
+  border:3px solid var(--ink);
+  padding:18px 16px;text-align:center;
+  position:relative;
+  box-shadow:4px 4px 0 var(--c,var(--blue));
+}
+.cmp-tile.star{background:var(--yellow);box-shadow:4px 4px 0 var(--red);transform:scale(1.06)}
+.cmp-tile .nm{
+  font-family:'Bungee',sans-serif;font-size:1.5rem;
+  color:var(--c,var(--blue));margin-bottom:8px;
+}
+.cmp-tile.star .nm{color:var(--ink)}
+.cmp-tile .when{
+  font-size:.9rem;line-height:1.5;color:var(--ink);
+}
+.cmp-tile .ribbon{
+  position:absolute;top:-12px;right:-8px;
+  background:var(--red);color:var(--paper);
+  padding:3px 10px;font-size:.75rem;font-weight:700;
+  font-family:'Space Mono',monospace;
+  border:2px solid var(--ink);
+}
+
+/* Steps (slide 7) */
+.step-row{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:32px}
+.step-item{
+  background:var(--paper-2);
+  border:2.5px solid var(--ink);
+  padding:12px 8px;text-align:center;
+  position:relative;font-size:.85rem;
+  box-shadow:3px 3px 0 var(--c,var(--blue));
+}
+.step-item .n{
+  font-family:'Bungee',sans-serif;font-size:1.6rem;
+  color:var(--c,var(--blue));display:block;margin-bottom:4px;
+}
+.step-item .t{font-weight:700;font-size:.85rem;line-height:1.3}
+.step-arrow{
+  position:absolute;right:-18px;top:50%;transform:translateY(-50%);
+  font-size:1.5rem;color:var(--ink);z-index:2;
+}
+
+/* Two-side (slide 11) */
+.two-side{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
+.side-card{
+  background:var(--paper-2);
+  border:3px solid var(--c,var(--green));
+  padding:24px 26px;position:relative;
+}
+.side-card.bad{--c:var(--red)}
+.side-card .ribbon{
+  position:absolute;top:-16px;left:18px;
+  background:var(--c);color:var(--paper);
+  padding:4px 14px;
+  font-family:'Bungee',sans-serif;font-size:.9rem;
+  border:2px solid var(--ink);
+}
+.side-card h4{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.35rem;color:var(--c);margin:8px 0 12px;
+}
+
+/* A2 pentagon (slide 12) */
+.a2-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px;
+}
+.a2-card{
+  background:var(--paper-2);
+  border:3px solid var(--c,var(--blue));
+  padding:18px 14px;position:relative;
+  box-shadow:5px 5px 0 var(--ink);
+}
+.a2-card .ico{
+  font-size:2rem;margin-bottom:8px;
+}
+.a2-card h5{
+  font-family:'Noto Serif TC',serif;
+  font-size:1rem;color:var(--c,var(--blue));
+  font-weight:900;margin-bottom:8px;
+}
+.a2-card p{font-size:.85rem;line-height:1.5}
+
+/* Final advice (slide 13) */
+.advice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.advice-card{
+  background:var(--paper-2);
+  border:3px solid var(--ink);
+  padding:20px 16px;text-align:center;
+  position:relative;
+  box-shadow:6px 6px 0 var(--c,var(--red));
+}
+.advice-card .n{
+  font-family:'Bungee Shade','Bungee',sans-serif;
+  font-size:3rem;color:var(--c,var(--red));line-height:1;
+}
+.advice-card h5{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:1.1rem;color:var(--ink);margin:10px 0 8px;
+}
+.advice-card p{font-size:.88rem;line-height:1.55}
+
+/* Closing slide */
+.closing{
+  align-items:center;justify-content:center;text-align:center;
+  background:var(--paper);
+}
+.closing h2{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(3rem,6vw,5.5rem);line-height:1.15;
+  color:var(--blue);margin-bottom:24px;letter-spacing:-.02em;
+}
+.closing h2 .em{color:var(--red)}
+.closing .signoff{
+  font-size:1.3rem;color:var(--dim);margin-bottom:32px;
+}
+.closing .qr-row{display:flex;gap:32px;align-items:center;margin-top:32px}
+.closing .url-box{
+  background:var(--paper-2);border:3px solid var(--ink);
+  padding:14px 22px;
+  font-family:'Space Mono',monospace;font-size:1rem;
+  box-shadow:4px 4px 0 var(--red);
+}
+
+/* ===== Animations ===== */
+@keyframes pop{
+  0%{transform:scale(.3);opacity:0}
+  60%{transform:scale(1.05)}
+  100%{transform:scale(1);opacity:1}
+}
+.slide.active .pop-in{animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .6s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+/* ===== Responsive ===== */
+@media (max-width:1100px){
+  .slide{padding:4vh 5vw}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .three-col,.cmp-row,.a2-grid,.advice-grid,.step-row{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+  .hook-photos{display:none}
+}
+@media print{
+  .progress,.hint{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="cover-deco tl"><div class="marble m1"></div><div class="marble m2"></div></div>
+  <div class="cover-deco tr"><div class="pinwheel"><span class="pinwheel-blade b1"></span><span class="pinwheel-blade b2"></span><span class="pinwheel-blade b3"></span><span class="pinwheel-blade b4"></span></div></div>
+  <div class="cover-deco bl"><div class="spinning-top"><div class="top-body"></div><div class="top-stick"></div></div></div>
+  <div class="cover-deco br"><div class="marble m4"></div><div class="marble m3"></div></div>
+
+  <span class="badge slide-up">中央大學師資培育中心 · A2 教師專業素養</span>
+  <h1 class="slide-up d1">PaGamO<span class="accent">×</span>遊戲化教學</h1>
+  <p class="sub slide-up d2">把學習，<span class="accent-red"><b>變回</b></span>童年裡那個讓人捨不得放下的遊戲。</p>
+  <div class="meta slide-up d2">
+    <span>講師　<b>阿凱老師</b>　桃園市石門國小</span>
+    <span>2026.05</span>
+    <span>時長　90–120 分鐘</span>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <span class="slide-title-tag">01 · 暖場 / OPENING</span>
+  <div style="margin-top:18vh">
+    <p class="eyebrow pop-in">還記得嗎？</p>
+    <p class="hook-quote pop-in d1">
+      國小那個下午，你<span class="em">蹲在地上彈彈珠</span>、<br>
+      <span class="em">用粉筆畫跳房子</span>、躲在桌子下面轉<span class="em">紙陀螺</span>——<br>
+      老師敲鐘要你回教室，<br>
+      <b style="color:var(--red)">你會多麼地不甘願。</b>
+    </p>
+    <p class="lead slide-up d2" style="margin-top:32px">
+      可是當老師翻開課本的那一刻，<br>
+      你心裡那個<b>「捨不得放下」</b>的感覺，瞬間消失了。<br>
+      <span style="color:var(--blue);font-weight:900">遊戲化教學，就是要把那個感覺搬回課本裡。</span>
+    </p>
+  </div>
+  <div class="hook-photos">
+    <div class="polaroid" style="--rot:-5deg"><div class="box" style="--bg:#f4b94244">🌟</div><div class="cap">彈珠｜1995</div></div>
+    <div class="polaroid" style="--rot:4deg"><div class="box" style="--bg:#d6384244">🎯</div><div class="cap">跳房子</div></div>
+    <div class="polaroid" style="--rot:-2deg"><div class="box" style="--bg:#5a8d3a44">🌀</div><div class="cap">紙陀螺</div></div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😄</div>
+    <div class="bubble">嗨，師培生們好！我是阿凱老師。今天的演講，我們不用 PowerPoint 的口氣，用童年下午的口氣聊。</div>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT IS PAGAMO ═══════ -->
+<section class="slide" id="s3">
+  <span class="slide-title-tag">02 · 起源 / ORIGIN</span>
+  <p class="eyebrow slide-up">PaGamO 是什麼？</p>
+  <h2 class="title-lg slide-up d1">一場關於<span class="accent-red">「學生為什麼不想學」</span>的反擊。</h2>
+  <div class="two-col">
+    <div class="riso-box slide-up d2">
+      <p class="lead" style="margin-bottom:18px">
+        <b>2014 年</b>，<b class="accent-blue">葉丙成</b>教授帶著台大團隊，
+        把線上 MOOC「機率」課程變成一款<b>多人線上競技遊戲（MMO）</b>。
+      </p>
+      <p class="lead">學生扮演國王，<b>答對題目才能擴張領土</b>、賺金幣、收寶物——學習，成為玩遊戲的「<b class="accent-red">必要條件</b>」。</p>
+    </div>
+    <div class="flex-row slide-up d2" style="margin:0">
+      <div class="stat-card pop-in d3">
+        <div class="n">400+</div>
+        <div class="l">擊敗哈佛等全球團隊</div>
+      </div>
+      <div class="stat-card pop-in d4" style="box-shadow:6px 6px 0 var(--blue)">
+        <div class="n" style="color:var(--blue)">#1</div>
+        <div class="l">Reimagine Education<br>2014 總冠軍</div>
+      </div>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:32px;color:var(--dim)">
+    🏆 美國賓州大學華頓商學院第一屆教學創新大獎｜🏛 葉教授後續任 2024-25 教育部政務次長
+  </p>
+  <div class="speaker">
+    <div class="avatar">😎</div>
+    <div class="bubble">所以這不是一款「遊戲化的學習工具」——它是一款「<b>學習化的多人線上遊戲</b>」。</div>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 4 — WHY IT WORKS ═══════ -->
+<section class="slide" id="s4">
+  <span class="slide-title-tag">03 · 理論 / WHY</span>
+  <p class="eyebrow slide-up">為什麼遊戲化有效？</p>
+  <h2 class="title-md slide-up d1">背後有三大教育心理學支柱，<br>每一個都跟你小時候的童玩一模一樣。</h2>
+  <div class="three-col">
+    <div class="pillar pop-in d1" style="--c:var(--red)">
+      <div class="ico">🎯</div>
+      <div class="h">成就動機</div>
+      <p class="b">擴張領土、收集寶物，<b>每答對一題版圖就大一點</b>。就像你彈珠贏一顆就多一顆，永遠不會玩膩。</p>
+    </div>
+    <div class="pillar pop-in d2" style="--c:var(--blue)">
+      <div class="ico">⚡</div>
+      <div class="h">即時回饋</div>
+      <p class="b">答對立刻擴張、答錯立刻受阻。就像跳房子<b>踩到線就要回起點</b>——回饋越即時，學習越深刻。</p>
+    </div>
+    <div class="pillar pop-in d3" style="--c:var(--green)">
+      <div class="ico">🌀</div>
+      <div class="h">心流理論</div>
+      <p class="b">適切的<b>挑戰</b> × 適切的<b>技能門檻</b>，引導學生進入專注沉浸狀態。就像紙陀螺，轉到剛剛好，停不下來。</p>
+    </div>
+  </div>
+  <p class="lead slide-up d2" style="margin-top:32px;color:var(--dim);text-align:center">
+    心流理論代表學者：<b class="accent-blue">Mihaly Csikszentmihalyi（米哈里·契克森）</b> · 著作《Flow: The Psychology of Optimal Experience》
+  </p>
+  <div class="speaker">
+    <div class="avatar">🤔</div>
+    <div class="bubble">注意這三件事在童玩裡是天生內建的。PaGamO 只是把它<b>還原</b>到課本裡。</div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 5 — CORE MECHANIC: ENERGY ═══════ -->
+<section class="slide" id="s5">
+  <span class="slide-title-tag">04 · 機制 / MECHANIC</span>
+  <p class="eyebrow slide-up">核心機制 ─ 彈珠也有規則。</p>
+  <h2 class="title-md slide-up d1">能量值機制：<span class="accent-red">如何從根源遏止「亂猜」</span>？</h2>
+
+  <div class="two-col" style="grid-template-columns:1.3fr 1fr">
+    <div class="slide-up d2">
+      <table class="energy-table">
+        <thead><tr><th>動作</th><th>消耗</th><th>答對淨損失</th><th>答錯淨損失</th></tr></thead>
+        <tbody>
+          <tr><td>⚔ 攻擊土地</td><td>15 點</td><td class="big">6 點</td><td>15 點</td></tr>
+          <tr><td>🛡 訓練土地</td><td>10 點</td><td class="big">4 點</td><td>10 點</td></tr>
+          <tr><td>⚡ 省力模式</td><td>2 點</td><td class="big">1 點</td><td>2 點</td></tr>
+        </tbody>
+      </table>
+      <p class="lead" style="margin-top:20px;font-size:1.05rem">
+        每位學生每 <b>24 小時</b> 回復 <b class="accent-red">300 點</b>能量 ≈ 約 50 題的作答量。
+      </p>
+    </div>
+    <div class="riso-box red slide-up d2">
+      <h3 class="title-md" style="font-size:1.6rem;color:var(--red);margin-bottom:14px">💡 設計哲學</h3>
+      <p class="lead" style="font-size:1.1rem">
+        答錯不歸還能量。<br>
+        <b class="accent-red">亂猜的代價極高</b>——<br>
+        別人還在玩，你只能乾瞪眼。
+      </p>
+      <p class="lead" style="font-size:1.05rem;margin-top:14px;color:var(--dim)">
+        這個機制把「<b>認真思考</b>」這件事，<br>
+        編織進了遊戲規則裡。<br>
+        <b style="color:var(--blue)">不需要老師另外耳提面命。</b>
+      </p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😏</div>
+    <div class="bubble">這就是<b>好遊戲化設計</b>的精髓：把教育目的，藏進規則裡，讓孩子自己去發現。</div>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 6 — TREASURES & ATTRIBUTES ═══════ -->
+<section class="slide" id="s6">
+  <span class="slide-title-tag">05 · 寶物 / TREASURES</span>
+  <p class="eyebrow slide-up">核心機制 ─ 寶物與屬性</p>
+  <h2 class="title-md slide-up d1">玩家不是只有答題，<br>他們<span class="accent-red">在經營一個遊戲人生</span>。</h2>
+
+  <div class="three-col">
+    <div class="riso-box pop-in d1" style="border-color:var(--green)">
+      <h3 style="font-family:'Noto Serif TC',serif;color:var(--green);font-size:1.4rem;font-weight:900;margin-bottom:12px">🧪 能量道具</h3>
+      <p class="lead" style="font-size:1rem">補充能量。<br>魔法藥水、月餅、心靈雞湯、<br>素養能量香蕉塔、馬卡龍、狀元糕…</p>
+    </div>
+    <div class="riso-box red pop-in d2">
+      <h3 style="font-family:'Noto Serif TC',serif;color:var(--red);font-size:1.4rem;font-weight:900;margin-bottom:12px">💣 攻擊道具</h3>
+      <p class="lead" style="font-size:1rem">炸彈、水球、暴躁南瓜（單格）。<br>火焰噴射槍、女巫魔杖（三連格）。<br>捕獸夾（怪獸專用）。</p>
+    </div>
+    <div class="riso-box purple pop-in d3">
+      <h3 style="font-family:'Noto Serif TC',serif;color:var(--purple);font-size:1.4rem;font-weight:900;margin-bottom:12px">🛡 防禦道具</h3>
+      <p class="lead" style="font-size:1rem">黃金 / 鑽石 / 天使<b>防護罩</b>。<br>假期模式（耗 300 點啟用，<br>長期不上線時保護領土）。</p>
+    </div>
+  </div>
+
+  <div class="riso-box slide-up d2" style="margin-top:32px">
+    <h3 class="title-md" style="font-size:1.3rem;color:var(--blue);margin-bottom:10px">🎭 角色屬性 — 培養決策思考</h3>
+    <p class="lead" style="font-size:1rem">
+      <span class="tag blue">生命</span><span class="tag green">能量</span><span class="tag red">攻擊</span>
+      <span class="tag purple">回復</span><span class="tag">財富</span><span class="tag" style="background:var(--orange);color:var(--paper)">功勳</span>
+    </p>
+    <p class="lead" style="font-size:1rem;margin-top:10px">
+      學生根據自己的玩法選角色 — <b>培養的是 12 年國教強調的「策略判斷」素養。</b>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤩</div>
+    <div class="bubble">寶物不是花俏，<b>每一個都對應一種學習行為</b>——這就是遊戲化的細膩之處。</div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 7 — TEACHER 7 STEPS ═══════ -->
+<section class="slide" id="s7">
+  <span class="slide-title-tag">06 · 操作 / TEACHER SOP</span>
+  <p class="eyebrow slide-up">教師端 7 步操作</p>
+  <h2 class="title-md slide-up d1">不要在開學第一天才申請帳號。<br><span class="accent-red">教師審核要等 3-7 天！</span></h2>
+
+  <div class="step-row">
+    <div class="step-item pop-in d1" style="--c:var(--blue)"><span class="n">1</span><span class="t">註冊登入<br>(教育雲)</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d1" style="--c:var(--blue)"><span class="n">2</span><span class="t">選遊戲世界<br>(國小/國中)</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--red)"><span class="n">3</span><span class="t">填教師證號<br>等 3-7 天 ⏰</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d2" style="--c:var(--green)"><span class="n">4</span><span class="t">新增班級<br>勾選座號 ✓</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--green)"><span class="n">5</span><span class="t">給班級代碼<br>學生加入</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d3" style="--c:var(--orange)"><span class="n">6</span><span class="t">指派任務<br>(省力模式!)</span><span class="step-arrow">→</span></div>
+    <div class="step-item pop-in d4" style="--c:var(--purple)"><span class="n">7</span><span class="t">看成績分析<br>調整教學</span></div>
+  </div>
+
+  <div class="two-col slide-up d2">
+    <div class="riso-box red">
+      <h3 style="font-family:'Noto Serif TC',serif;font-weight:900;color:var(--red);font-size:1.3rem;margin-bottom:12px">⚠️ 師培生注意</h3>
+      <p class="lead" style="font-size:1.05rem">教師證號審核要等 <b>3-7 天</b>！<br>計劃實習要用 PaGamO 的話，<br><b class="accent-red">實習前 1 個月就要開始申請</b>。</p>
+    </div>
+    <div class="riso-box green">
+      <h3 style="font-family:'Noto Serif TC',serif;font-weight:900;color:var(--green);font-size:1.3rem;margin-bottom:12px">💡 必告訴學生的事</h3>
+      <p class="lead" style="font-size:1.05rem">解任務時，務必<b>開啟「省力模式」</b>。<br>能用最少能量完成最多任務。<br>否則容易因為能量耗盡而中斷。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📋</div>
+    <div class="bubble">把這 7 步背下來，回家就能立刻試 — 你會發現比想像中還容易。</div>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 8 — THREE SCENARIOS ═══════ -->
+<section class="slide" id="s8">
+  <span class="slide-title-tag">07 · 情境 / SCENARIOS</span>
+  <p class="eyebrow slide-up">三大教學情境</p>
+  <h2 class="title-md slide-up d1">紙風車的三片葉子 ─ <br>你最常用的會是<span class="accent-red">第三片</span>。</h2>
+
+  <div class="scenario-fan">
+    <div class="scenario-card pop-in d1" style="--c:var(--blue)">
+      <div class="num">1</div>
+      <div class="icon">📖</div>
+      <h4>課前預習</h4>
+      <p>推薦初學者使用。用公版題庫指派預習，<b>學生帶著「我知道」進教室</b>，課堂直接進入深入討論。</p>
+    </div>
+    <div class="scenario-card pop-in d2" style="--c:var(--orange)">
+      <div class="num">2</div>
+      <div class="icon">⚡</div>
+      <h4>課中翻轉</h4>
+      <p>10-15 分鐘隨堂測驗，<b>結合排行榜營造短期競賽</b>。缺點：壓縮講課時間、需每生都有設備。</p>
+    </div>
+    <div class="scenario-card pop-in d3" style="--c:var(--green)">
+      <div class="num">3</div>
+      <div class="icon">🏆</div>
+      <h4>課後複習 ★</h4>
+      <p><b>最推薦的長期模式。</b>每週固定任務量，能量機制天然限制玩太久。<br><b class="accent-red">寒暑假任務尤其適合</b>。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:36px;text-align:center;color:var(--dim);font-size:1.05rem">
+    📊 學術證據：徐揚智 2020 清華大學碩論證實 — PaGamO 應用於國小六年級數學<b class="accent-red">低成就學生「課後複習」</b>，效果最為顯著。
+  </p>
+  <div class="speaker">
+    <div class="avatar">🌀</div>
+    <div class="bubble">紙風車要三片葉子一起轉才會迴旋；教學也一樣。但其中第 3 片（課後）是讓風持續吹的關鍵。</div>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 9 — CROSS-DISCIPLINE & EVIDENCE ═══════ -->
+<section class="slide" id="s9">
+  <span class="slide-title-tag">08 · 實證 / EVIDENCE</span>
+  <p class="eyebrow slide-up">跨學科應用 + 實證研究</p>
+  <h2 class="title-md slide-up d1">不是「我覺得有用」，<br>是<span class="accent-red">15+ 篇學術文獻</span>已證實有用。</h2>
+
+  <div class="two-col">
+    <div class="slide-up d2">
+      <div class="riso-box" style="margin-bottom:18px">
+        <h3 style="font-family:'Noto Serif TC',serif;color:var(--blue);font-size:1.2rem;font-weight:900;margin-bottom:10px">📚 學術文獻分布</h3>
+        <p class="lead" style="font-size:.98rem">
+          <span class="tag">國語文</span><span class="tag green">數學</span>
+          <span class="tag red">英語</span><span class="tag purple">自然</span>
+          <span class="tag blue">社會</span>
+        </p>
+        <p class="lead" style="font-size:.95rem;margin-top:10px;color:var(--dim)">
+          涵蓋 G3-G9 全學段，超過 15 篇碩博論文與期刊文章。
+        </p>
+      </div>
+      <div class="riso-box red">
+        <h3 style="font-family:'Noto Serif TC',serif;color:var(--red);font-size:1.2rem;font-weight:900;margin-bottom:10px">⭐ 黃金發現</h3>
+        <p class="lead" style="font-size:1.05rem">
+          PaGamO 對<b class="accent-red">「中、低成就」學生</b>提升效果<b>最為顯著</b>。
+        </p>
+        <p class="lead" style="font-size:.95rem;margin-top:8px;color:var(--dim)">
+          — 這是教師最該珍惜的價值。
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-up d2">
+      <div class="riso-box green">
+        <p class="eyebrow" style="margin-bottom:14px;color:var(--green)">楊時芬、歐陽誾（2020）國中七年級數學</p>
+        <div style="display:flex;gap:18px;margin-bottom:18px">
+          <div style="flex:1;text-align:center;padding:18px;background:var(--paper);border:2px solid var(--ink)">
+            <div style="font-family:'Bungee Shade',sans-serif;font-size:3.5rem;color:var(--green);line-height:1">57.00</div>
+            <div style="font-size:.9rem;color:var(--dim);font-weight:600">PaGamO 實驗組</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;font-family:'Bungee',sans-serif;font-size:2rem;color:var(--ink)">VS</div>
+          <div style="flex:1;text-align:center;padding:18px;background:var(--paper);border:2px solid var(--ink)">
+            <div style="font-family:'Bungee Shade',sans-serif;font-size:3.5rem;color:var(--dim);line-height:1">50.84</div>
+            <div style="font-size:.9rem;color:var(--dim);font-weight:600">傳統教學對照組</div>
+          </div>
+        </div>
+        <p class="lead" style="font-size:1rem;text-align:center">學習成就分數 <b class="accent-green">顯著高於對照組</b>（8 週實驗，台南某國中 50 位學生）</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📊</div>
+    <div class="bubble">當你被家長質疑「打電動有用嗎？」 — <b>請把這張表拿出來給他看</b>。</div>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 10 — COMPARE ═══════ -->
+<section class="slide" id="s10">
+  <span class="slide-title-tag">09 · 比較 / COMPARE</span>
+  <p class="eyebrow slide-up">遊戲化平台四款比較</p>
+  <h2 class="title-md slide-up d1">沒有「最好的工具」，<br>只有<span class="accent-red">「最對的時機」</span>。</h2>
+
+  <div class="cmp-row">
+    <div class="cmp-tile pop-in d1" style="--c:var(--purple)">
+      <div class="nm">Kahoot!</div>
+      <div class="when"><b>全班同步、節奏快</b><br><br>🎯 課堂<b>開場</b> 5 分鐘炒熱氣氛</div>
+    </div>
+    <div class="cmp-tile pop-in d2" style="--c:var(--orange)">
+      <div class="nm">Quizizz</div>
+      <div class="when"><b>非同步、各自作答</b><br><br>🎯 課堂中段<b>隨堂測驗</b></div>
+    </div>
+    <div class="cmp-tile pop-in d3" style="--c:var(--blue)">
+      <div class="nm">Wordwall</div>
+      <div class="when"><b>多元版型、互動小遊戲</b><br><br>🎯 低年級<b>單字配對記憶</b></div>
+    </div>
+    <div class="cmp-tile star pop-in d4">
+      <div class="ribbon">本日主角</div>
+      <div class="nm">PaGamO</div>
+      <div class="when"><b>長期領土經營 + MMO</b><br><br>🎯 <b>課後複習、寒暑假作業</b></div>
+    </div>
+  </div>
+
+  <div class="riso-box red slide-up d2" style="margin-top:36px;text-align:center">
+    <h3 class="title-md" style="font-size:1.3rem;color:var(--red);margin-bottom:10px">⚖️ 黃金法則</h3>
+    <p class="lead" style="font-size:1.15rem">
+      課堂內用 <b>Kahoot / Wordwall 短平快</b>切換節奏；<br>
+      課後用 <b class="accent-red">PaGamO 長期累積</b>領土經營。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚔️</div>
+    <div class="bubble">不要花整節課讓學生玩 PaGamO 攻城掠地 — <b>那會吃掉你的講課時間</b>。</div>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 11 — LEADERBOARD DOUBLE EDGE ═══════ -->
+<section class="slide" id="s11">
+  <span class="slide-title-tag">10 · 雙面刃 / DOUBLE EDGE</span>
+  <p class="eyebrow slide-up">班級經營</p>
+  <h2 class="title-md slide-up d1">排行榜是<span class="accent-red">雙面刃</span> ─ <br>對好勝者是動力，對挫敗者是傷害。</h2>
+
+  <div class="two-side">
+    <div class="side-card pop-in d1">
+      <div class="ribbon">✓ 正面效應</div>
+      <h4>對好勝學生</h4>
+      <ul class="bullet-list green" style="font-size:1rem">
+        <li>帶來持續動力</li>
+        <li>產生「我也要拚」的同儕效應</li>
+        <li>提供公開可見的學習成就感</li>
+      </ul>
+    </div>
+    <div class="side-card bad pop-in d2">
+      <div class="ribbon">⚠ 負面效應</div>
+      <h4>對低成就學生</h4>
+      <ul class="bullet-list red" style="font-size:1rem">
+        <li>感到挫折、刻意敷衍</li>
+        <li>變相懲罰<b>學習慢但深入</b>的孩子</li>
+        <li>助長外在動機過度依賴</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="riso-box slide-up d2" style="margin-top:32px;border-color:var(--blue)">
+    <h3 class="title-md" style="font-size:1.3rem;color:var(--blue);margin-bottom:14px">🎯 教師三大救援策略</h3>
+    <ul class="bullet-list" style="font-size:1.05rem">
+      <li>同時公布「<b>進步幅度榜</b>」與「占地榜」 ─ 讓每個學生都有被看見的機會</li>
+      <li>活動設計「<b>組內互助</b>」而非「組間競爭」</li>
+      <li>強調「<b class="accent-red">個人 PR 進步值</b>」勝過「全班排名」</li>
+    </ul>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌈</div>
+    <div class="bubble">記得：你是<b>老師</b>不是 PaGamO 的代理人。<b>制度怎麼設計，孩子怎麼長</b>。</div>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 12 — A2 SHA PENTAGON ═══════ -->
+<section class="slide" id="s12">
+  <span class="slide-title-tag">11 · 素養 / A2</span>
+  <p class="eyebrow slide-up">A2 教師專業素養</p>
+  <h2 class="title-md slide-up d1">「數位學習平台應用」<br>不是會用工具就好，<span class="accent-red">是這五件事一起做到</span>。</h2>
+
+  <div class="a2-grid">
+    <div class="a2-card pop-in d1" style="--c:var(--blue)">
+      <div class="ico">🎯</div>
+      <h5>① 教學目標<br>選擇</h5>
+      <p>適合「練習精熟、複習、動機激發」；<br>不適合「初次學新概念」。</p>
+    </div>
+    <div class="a2-card pop-in d2" style="--c:var(--green)">
+      <div class="ico">📐</div>
+      <h5>② 課程<br>設計</h5>
+      <p>運用課前 → 課中 → 課後<br><b>三段式學習迴圈</b>。</p>
+    </div>
+    <div class="a2-card pop-in d3" style="--c:var(--orange)">
+      <div class="ico">⚙️</div>
+      <h5>③ 教學<br>實施</h5>
+      <p>透過班級代碼、任務書、<br><b>能量機制</b>控管學生節奏。</p>
+    </div>
+    <div class="a2-card pop-in d4" style="--c:var(--red)">
+      <div class="ico">📊</div>
+      <h5>④ 評量<br>回饋</h5>
+      <p>後台答對率分析、章節落點，<br><b>調整下一節教學內容</b>。</p>
+    </div>
+    <div class="a2-card pop-in d5" style="--c:var(--purple)">
+      <div class="ico">🚀</div>
+      <h5>⑤ 自主學習<br>引導</h5>
+      <p>寒暑假任務培養學生<br><b>長期自主學習能力</b>。</p>
+    </div>
+  </div>
+
+  <p class="lead slide-up d2" style="margin-top:32px;text-align:center;font-size:1.1rem;color:var(--ink)">
+    💡 <b>記住：工具會變，但 A2 素養永遠不會過時。</b><br>
+    <span style="color:var(--dim)">「依目標選工具、設計適性任務、分析學習數據、引導自主學習」── 這 4 件事 10 年後還會是好老師的標誌。</span>
+  </p>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">當你被問「你會不會用 PaGamO」，請回答：「我會用 A2 素養設計教學，PaGamO 只是工具之一。」</div>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 13 — FINAL ADVICE ═══════ -->
+<section class="slide" id="s13">
+  <span class="slide-title-tag">12 · 叮嚀 / ADVICE</span>
+  <p class="eyebrow slide-up">給師培生的 5 個叮嚀</p>
+  <h2 class="title-md slide-up d1">在成為老師之前，<br>請先記住<span class="accent-red">這 5 件事</span>。</h2>
+
+  <div class="advice-grid">
+    <div class="advice-card pop-in d1" style="--c:var(--red)">
+      <div class="n">01</div>
+      <h5>先當學生<br>再當老師</h5>
+      <p>自己先註冊一個學生帳號，<b>玩 1-2 週</b>，理解學生感受。</p>
+    </div>
+    <div class="advice-card pop-in d2" style="--c:var(--orange)">
+      <div class="n">02</div>
+      <h5>小步走<br>不要全壓</h5>
+      <p>第一學期只做「<b>課後複習</b>」單一情境，熟練後再擴展。</p>
+    </div>
+    <div class="advice-card pop-in d3" style="--c:var(--green)">
+      <div class="n">03</div>
+      <h5>保留<br>人味</h5>
+      <p>科技不能取代<b>老師親自關心</b>。<br>PaGamO 是工具，<b class="accent-red">你才是主體</b>。</p>
+    </div>
+    <div class="advice-card pop-in d4" style="--c:var(--blue)">
+      <div class="n">04</div>
+      <h5>拉拔<br>低成就學生</h5>
+      <p>PaGamO 最珍貴的價值是讓<b>不愛學的孩子願意打開書本</b>。</p>
+    </div>
+    <div class="advice-card pop-in d5" style="--c:var(--purple)">
+      <div class="n">05</div>
+      <h5>永遠記得<br>A2 素養</h5>
+      <p>不是「會用工具」，是<b>培養學生長期數位學習能力</b>。</p>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💪</div>
+    <div class="bubble">這 5 件事不只適用 PaGamO，<b>適用你未來教書的 30 年</b>。</div>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</section>
+
+<!-- ═══════ SLIDE 14 — CLOSING ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="cover-deco tl"><div class="marble m3"></div></div>
+  <div class="cover-deco tr"><div class="pinwheel"><span class="pinwheel-blade b1"></span><span class="pinwheel-blade b2"></span><span class="pinwheel-blade b3"></span><span class="pinwheel-blade b4"></span></div></div>
+  <div class="cover-deco bl"><div class="spinning-top"><div class="top-body"></div><div class="top-stick"></div></div></div>
+  <div class="cover-deco br"><div class="marble m5"></div></div>
+
+  <h2 class="slide-up">教學的本質，<br>是讓孩子<span class="em">「捨不得放下」</span>地學習。</h2>
+  <p class="signoff slide-up d1">PaGamO 提醒我們的，是這件事本來該怎樣。</p>
+
+  <div class="qr-row slide-up d2">
+    <div class="url-box">
+      🌐 駕駛艙完整版<br>
+      <b style="color:var(--blue)">cagoooo.github.io/it-cockpit/pagamo-gamified-learning/</b>
+    </div>
+    <div class="url-box">
+      🎬 NotebookLM 自學影片<br>
+      <b style="color:var(--red)">youtu.be/DIm0Rhac3vw</b>
+    </div>
+  </div>
+
+  <p style="margin-top:48px;font-family:'Space Mono',monospace;color:var(--dim);font-size:.95rem;letter-spacing:.1em">
+    Q&A · 阿凱老師　桃園市石門國小　ipad@mail2.smes.tyc.edu.tw
+  </p>
+  <p style="margin-top:14px;font-family:'Bungee',sans-serif;color:var(--red);font-size:1.05rem;letter-spacing:.05em">THANK YOU · 謝謝中央大學</p>
+  <div class="slide-num">14 / 14</div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- ===== Progress bar ===== -->
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<!-- ===== Hint ===== -->
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講</div>
+
+<!-- ===== Overview ===== -->
+<div class="overview" id="overview">
+  <h3>▶ 章節導覽 · 14 張投影片</h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',           s:'A2 PaGamO 遊戲化教學 · 中央大學師培演講'},
+  {n:2,  t:'開場暖身',       s:'童年下午的童玩記憶 → 教學的初衷'},
+  {n:3,  t:'PaGamO 是什麼',  s:'葉丙成台大團隊 · Reimagine Education 冠軍'},
+  {n:4,  t:'為什麼有效',     s:'三大教育心理學支柱：成就動機、即時回饋、心流'},
+  {n:5,  t:'核心機制 ─ 能量', s:'答錯不歸還的智慧設計'},
+  {n:6,  t:'核心機制 ─ 寶物', s:'能量道具 · 攻擊道具 · 防禦道具 · 角色屬性'},
+  {n:7,  t:'教師端 7 步操作', s:'從註冊到指派任務（記得審核 3-7 天）'},
+  {n:8,  t:'三大教學情境',   s:'課前預習 · 課中翻轉 · 課後複習 ★'},
+  {n:9,  t:'跨學科 + 實證',   s:'15+ 學術文獻 · 中低成就學生效果最佳'},
+  {n:10, t:'平台四款比較',   s:'Kahoot · Quizizz · Wordwall · PaGamO'},
+  {n:11, t:'排行榜雙面刃',   s:'班級經營：正面與負面效應 + 救援策略'},
+  {n:12, t:'A2 素養五大實踐', s:'目標 · 設計 · 實施 · 評量 · 自主學習'},
+  {n:13, t:'5 個叮嚀',        s:'給未來的老師'},
+  {n:14, t:'結語 + Q&A',      s:'教學的本質 · 謝謝中央大學'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  // Update URL hash for bookmark/share
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){
+  document.getElementById('overview').classList.toggle('show');
+}
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+// ===== Build overview =====
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{
+    goSlide(i);
+    document.getElementById('overview').classList.remove('show');
+  };
+  ovGrid.appendChild(card);
+});
+
+// ===== Keyboard =====
+document.addEventListener('keydown', e=>{
+  // If overview is open, only Esc/M closes it
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight':
+    case 'ArrowDown':
+    case ' ':
+    case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft':
+    case 'ArrowUp':
+    case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  // Number keys 1-9 jump
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+// ===== Click navigation =====
+document.addEventListener('click', e=>{
+  // Don't capture clicks on speaker bubbles / overview cards / hint
+  if(e.target.closest('.speaker, .overview, .hint, .progress, .url-box, a, button')) return;
+  // Right half = next, left half = prev
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+// ===== Swipe (mobile) =====
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+// ===== Initial slide from hash =====
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>

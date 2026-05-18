@@ -171,6 +171,33 @@ img{max-width:100%;display:block}
 .lecture-meta dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:.95rem}
 .lecture-meta dt{font-weight:700;color:var(--ink-1)}
 .lecture-meta dd{margin:0;color:var(--text)}
+.lecture-cta{
+  display:block;margin-top:20px;padding:18px 22px;
+  background:var(--ink-2);color:var(--paper);
+  border:3px solid var(--text);
+  box-shadow:5px 5px 0 var(--ink-1);
+  text-decoration:none;
+  transition:.2s;position:relative;
+}
+.lecture-cta:hover{
+  transform:translate(-2px,-2px);
+  box-shadow:7px 7px 0 var(--ink-1);
+}
+.lecture-cta:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink-1)}
+.lecture-cta .cta-tag{
+  display:inline-block;
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  letter-spacing:.15em;background:var(--paper);color:var(--ink-2);
+  padding:2px 8px;margin-bottom:8px;
+}
+.lecture-cta .cta-title{
+  display:block;font-family:'Noto Serif TC',serif;
+  font-size:1.4rem;font-weight:900;letter-spacing:-.01em;
+  margin-bottom:4px;
+}
+.lecture-cta .cta-sub{
+  display:block;font-size:.85rem;opacity:.9;line-height:1.5;
+}
 
 /* ===== Stage Pills ===== */
 .stage-nav{
@@ -659,6 +686,11 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
       <dt>關卡</dt><dd>5 大關 · 12 題評量</dd>
       <dt>素材</dt><dd>NotebookLM × Claude Code</dd>
     </dl>
+    <a href="lecture-slides.html" class="lecture-cta" title="演講當天用：14 張童玩沉浸風投影片，全螢幕投影模式">
+      <span class="cta-tag">演講當天用 ⮕</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張童玩沉浸風投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+    </a>
   </div>
 </section>
 
