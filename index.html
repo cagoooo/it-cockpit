@@ -122,7 +122,7 @@
   .tracks-h em { font-style: italic; color: #c2410c; font-weight: 700; }
   .tracks-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: #1b243899; text-transform: uppercase; text-align: right; line-height: 1.6; }
 
-  .tracks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
   @media (max-width: 960px) { .tracks { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .tracks { grid-template-columns: 1fr; } }
   .track { background: #fffcf3; border-radius: 18px; padding: 22px 22px 18px; border: 1.5px solid #1b243822; transition: all .2s; cursor: pointer; position: relative; overflow: hidden; display: block; }
@@ -255,6 +255,10 @@
     { id: "suno-class-song", grade: 6, category: "AI 音樂", color: "#b5305c",
       title: "用 Suno 設計班級神曲", short: "SU",
       desc: "ChatGPT 寫歌詞 × Suno AI 作曲 × Canva 製作 MV。從班級主題曲到專屬畢業歌，5 大關卡完整教學。" },
+    // 教師研習 · 師培演講
+    { id: "pagamo-gamified-learning", grade: 0, category: "師培演講", color: "#2a5fb4",
+      title: "A2 PaGamO 遊戲化教學", short: "TR",
+      desc: "中央大學師培演講駕駛艙 — 葉丙成台大團隊背景、PaGamO 核心遊戲機制、教師端 7 步操作、A2 素養實踐。Risograph 復古印刷風 × 5 大關卡 × 12 題評量。" },
   ];
 
   const GRADES = [
@@ -270,6 +274,9 @@
     { grade: 6, label: "六年級", short: "G6", color: "#8b5fc4",
       track: "AI 與媒體素養", caption: "AI 創作 · 媒體識讀 · 機器人 · 穿戴",
       markerPos: { top: "75%", left: "72%" } },
+    { grade: 0, label: "教師研習", short: "TCR", color: "#2a5fb4",
+      track: "師資培育", caption: "中央大學師培演講 · 工作坊",
+      markerPos: { top: "50%", left: "50%" } },
   ];
 
   const el = (tag, attrs = {}, children = []) => {
@@ -382,7 +389,7 @@
         el("div", { class: "track-stripe", style: { background: g.color } }),
         el("div", { class: "track-top" }, [
           el("span", { class: "track-tag", style: { background: g.color + "26", color: g.color }, text: g.short }),
-          el("span", { class: "track-num", text: `${String(i + 1).padStart(2, "0")} / 04` }),
+          el("span", { class: "track-num", text: `${String(i + 1).padStart(2, "0")} / ${String(GRADES.length).padStart(2, "0")}` }),
         ]),
         el("div", { class: "track-grade", text: g.label }),
         el("div", { class: "track-name", text: g.track }),
