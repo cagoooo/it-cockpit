@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>痞客邦部落格教學｜六年級資訊科技教學駕駛艙</title>
+<meta name="description" content="國小六年級資訊科技｜痞客邦 PIXNET 部落格教學駕駛艙。從平台介紹、6 個吸睛標題公式、圖片排版、網路霸凌防範、隱私設定、智慧財產權到數位足跡，5 大關卡完整教材，scrapbook 剪貼簿手帳風格。">
+<meta name="theme-color" content="#fdf6e3">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/pixnet-blog/">
+<meta property="og:title" content="痞客邦部落格教學｜六年級資訊科技駕駛艙">
+<meta property="og:description" content="從平台介紹、6 個吸睛標題公式、圖片排版、網路霸凌防範到智慧財產權，scrapbook 手帳風 × 5 大關卡 × 12 題評量。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/pixnet-blog/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/pixnet-blog/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=Caveat:wght@400;700&family=Patrick+Hand&family=Indie+Flower&family=Bungee&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+:root{
+  --paper:#fdf6e3;
+  --paper-2:#fffaf0;
+  --paper-3:#f7eed5;
+  --paper-line:#e8dab8;
+  --ink:#3a3a3a;
+  --ink-pen:#2a4a8a;
+  --pencil:#7a6a5a;
+  --tape-mint:#a8d8c8;
+  --tape-peach:#f5b8a0;
+  --tape-purple:#c8a8d8;
+  --tape-yellow:#f5e5a0;
+  --washi-yellow:#fff4a8;
+  --washi-pink:#ffd0d0;
+  --washi-green:#d4eecc;
+  --highlight:#fff7a8;
+  --ribbon-red:#d65555;
+  --stamp-blue:#5577aa;
+  --c1:var(--ribbon-red);
+  --c2:var(--stamp-blue);
+  --c3:var(--tape-mint);
+  --c4:var(--tape-peach);
+  --c5:var(--tape-purple);
+  --text:var(--ink);
+  --dim:var(--pencil);
+}
+body{
+  margin:0;font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.7;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  position:relative;
+}
+/* 手帳本內頁的隱約橫線 */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:repeating-linear-gradient(transparent 0 27px, var(--paper-line) 27px 28px);
+  opacity:.5;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ===== Header (手帳本頂部 + 紙膠帶裝飾) ===== */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:var(--paper);
+  border-bottom:3px solid var(--ink);
+  box-shadow:0 4px 0 var(--ribbon-red);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  position:relative;
+}
+/* 紙膠帶斜貼裝飾 */
+.header-inner::before{
+  content:'';position:absolute;top:-10px;left:80px;
+  width:120px;height:24px;background:var(--tape-mint);
+  transform:rotate(-8deg);opacity:.85;
+}
+.header-inner::after{
+  content:'';position:absolute;top:-12px;right:120px;
+  width:100px;height:22px;background:var(--tape-peach);
+  transform:rotate(6deg);opacity:.85;
+}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;background:var(--paper-2);color:var(--ribbon-red);
+  border:2px solid var(--ribbon-red);
+  font-family:'Caveat','Patrick Hand',cursive;font-weight:700;
+  font-size:1.05rem;letter-spacing:.02em;
+  transition:.2s;white-space:nowrap;
+  box-shadow:3px 3px 0 var(--ink);
+}
+.home-btn:hover{
+  background:var(--ribbon-red);color:#fff;
+  transform:translate(-1px,-1px);
+  box-shadow:4px 4px 0 var(--ink);
+}
+.header-title{flex:1;min-width:200px;position:relative;z-index:2}
+.header-title h1{
+  margin:0;font-family:'Noto Serif TC',serif;
+  font-size:1.5rem;font-weight:900;
+  color:var(--ink-pen);letter-spacing:-.01em;
+  position:relative;display:inline-block;
+}
+.header-title h1::after{
+  content:'';position:absolute;bottom:2px;left:0;right:-4px;
+  height:10px;background:var(--highlight);z-index:-1;
+}
+.header-title .sub{
+  font-family:'Caveat',cursive;font-size:1.05rem;
+  color:var(--pencil);letter-spacing:.02em;
+}
+.mode-bar{display:flex;gap:8px;align-items:center}
+.mode-btn{
+  padding:6px 12px;background:transparent;color:var(--ink-pen);
+  border:2px solid var(--ink-pen);
+  font-family:'Caveat',cursive;font-size:.95rem;font-weight:700;
+  cursor:pointer;transition:.15s;
+}
+.mode-btn.active{background:var(--ink-pen);color:var(--paper);box-shadow:2px 2px 0 var(--ink)}
+.mode-btn:hover{transform:translate(-1px,-1px);box-shadow:2px 2px 0 var(--ink)}
+
+/* ===== Hero ===== */
+.hero{
+  max-width:1400px;margin:0 auto;padding:48px 24px 32px;
+  display:grid;grid-template-columns:1.5fr 1fr;gap:48px;
+  position:relative;
+}
+@media(max-width:960px){.hero{grid-template-columns:1fr;gap:24px}}
+.hero-tag{
+  display:inline-block;background:var(--ribbon-red);color:#fff;
+  font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700;
+  padding:6px 20px;letter-spacing:.05em;
+  box-shadow:3px 3px 0 var(--ink);margin-bottom:20px;
+  position:relative;
+}
+.hero-tag::before,.hero-tag::after{
+  content:'';position:absolute;top:0;width:12px;height:100%;
+  background:var(--ribbon-red);filter:brightness(.7);
+}
+.hero-tag::before{left:-12px;clip-path:polygon(0 0,100% 0,100% 50%,0 100%)}
+.hero-tag::after{right:-12px;clip-path:polygon(0 0,100% 50%,0 100%,100% 100%)}
+.hero h2{
+  margin:0 0 16px;font-family:'Noto Serif TC',serif;
+  font-size:clamp(2rem,3.8vw,2.8rem);font-weight:900;line-height:1.2;
+  color:var(--ink-pen);letter-spacing:-.02em;
+}
+.hero h2 .em{
+  position:relative;display:inline-block;color:var(--ribbon-red);
+}
+.hero h2 .em::after{
+  content:'';position:absolute;bottom:-2px;left:-4px;right:-4px;
+  height:14px;background:var(--highlight);z-index:-1;
+}
+.hero .lead{
+  font-size:1.1rem;line-height:1.8;color:var(--ink);margin:0 0 22px;
+}
+.hero .lead b{color:var(--ribbon-red);font-weight:900}
+.obj-chips{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+/* 學習目標 chip = 便利貼風 */
+.obj-chip{
+  display:inline-block;padding:10px 16px;
+  background:var(--washi-yellow);color:var(--ink);
+  font-family:'Caveat','Patrick Hand',cursive;font-size:1.1rem;font-weight:700;
+  box-shadow:3px 4px 8px rgba(0,0,0,.1);
+  transform:rotate(-2deg);transition:.2s;cursor:default;
+}
+.obj-chip:nth-child(2n){background:var(--washi-pink);transform:rotate(2deg)}
+.obj-chip:nth-child(3n){background:var(--washi-green);transform:rotate(-1deg)}
+.obj-chip:nth-child(4n){background:var(--tape-mint);transform:rotate(1deg)}
+.obj-chip:hover{transform:rotate(0deg) scale(1.05);box-shadow:4px 6px 12px rgba(0,0,0,.15)}
+
+/* Hero 右側：拍立得照片框 + 課程資訊 */
+.lecture-meta{
+  background:var(--paper-2);border:2px solid var(--ink);
+  padding:24px 26px 32px;position:relative;
+  box-shadow:0 8px 20px rgba(0,0,0,.1);
+  transform:rotate(1deg);
+}
+.lecture-meta::before{
+  content:'';position:absolute;top:-12px;left:-12px;
+  width:130px;height:24px;background:var(--tape-purple);
+  transform:rotate(-8deg);opacity:.85;
+}
+.lecture-meta::after{
+  content:'';position:absolute;top:-15px;right:-10px;
+  width:110px;height:22px;background:var(--tape-yellow);
+  transform:rotate(7deg);opacity:.85;
+}
+.lecture-meta h3{
+  margin:0 0 14px;font-family:'Bungee','Caveat',cursive;
+  font-size:.95rem;letter-spacing:.15em;color:var(--ribbon-red);
+}
+.lecture-meta dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:1rem}
+.lecture-meta dt{font-weight:700;color:var(--ink-pen)}
+.lecture-meta dd{margin:0;color:var(--ink)}
+
+/* ===== CTA 進演講簡報 ===== */
+.lecture-cta{
+  display:block;margin:24px 0 0;padding:18px 22px;
+  background:var(--ribbon-red);color:#fff;border:3px solid var(--ink);
+  text-decoration:none;transition:.2s;position:relative;
+  box-shadow:5px 5px 0 var(--ink-pen);
+  font-family:'Noto Sans TC',sans-serif;
+}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink-pen)}
+.lecture-cta:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink-pen)}
+.lecture-cta .cta-tag{
+  display:inline-block;background:var(--washi-yellow);color:var(--ribbon-red);
+  font-family:'Caveat',cursive;font-size:.95rem;font-weight:700;
+  padding:3px 12px;margin-bottom:8px;letter-spacing:.02em;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.lecture-cta .cta-title{
+  display:block;font-family:'Noto Serif TC',serif;
+  font-size:1.4rem;font-weight:900;margin-bottom:4px;
+}
+.lecture-cta .cta-sub{
+  display:block;font-size:.9rem;opacity:.95;line-height:1.5;
+  font-family:'Noto Sans TC',sans-serif;
+}
+
+/* ===== Stage Nav (彩色便利貼) ===== */
+.stage-nav{
+  max-width:1400px;margin:0 auto;padding:24px;
+  display:flex;flex-wrap:wrap;gap:14px;
+}
+.stage-pill{
+  padding:12px 22px;background:var(--washi-yellow);color:var(--ink);
+  font-family:'Caveat','Patrick Hand',cursive;font-size:1.15rem;font-weight:700;
+  cursor:pointer;transition:.2s;
+  box-shadow:3px 4px 8px rgba(0,0,0,.1);
+  transform:rotate(var(--rot,-1deg));
+}
+.stage-pill:nth-child(1){background:var(--washi-yellow)}
+.stage-pill:nth-child(2){background:var(--washi-pink);--rot:1deg}
+.stage-pill:nth-child(3){background:var(--washi-green);--rot:-1.5deg}
+.stage-pill:nth-child(4){background:var(--tape-mint);--rot:1.5deg}
+.stage-pill:nth-child(5){background:var(--tape-purple);--rot:-1deg}
+.stage-pill:hover{transform:rotate(0deg) scale(1.05);box-shadow:4px 6px 12px rgba(0,0,0,.15)}
+
+/* ===== Section (每個關卡像個剪貼簿頁面) ===== */
+.level-section{
+  max-width:1400px;margin:48px auto;padding:0 24px;
+}
+.section-header{
+  display:flex;align-items:flex-start;gap:18px;margin-bottom:24px;flex-wrap:wrap;
+  position:relative;
+}
+.stage-badge{
+  display:inline-flex;align-items:center;
+  background:var(--ribbon-red);color:#fff;
+  font-family:'Bungee','Patrick Hand',cursive;
+  font-size:.85rem;letter-spacing:.15em;
+  padding:10px 20px;
+  box-shadow:4px 4px 0 var(--ink);
+  white-space:nowrap;position:relative;
+  transform:rotate(-2deg);
+}
+.section-header h3{
+  margin:0;font-family:'Noto Serif TC',serif;
+  font-size:1.8rem;font-weight:900;
+  color:var(--ink-pen);letter-spacing:-.02em;
+  position:relative;display:inline-block;
+}
+.section-header h3::after{
+  content:'';position:absolute;bottom:0;left:-4px;right:-4px;
+  height:12px;background:var(--highlight);z-index:-1;
+}
+.section-sub{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--pencil);margin-top:4px}
+
+/* 紙膠帶斜貼的卡片 */
+.scrap-card{
+  background:var(--paper-2);border:2px solid var(--ink);
+  padding:24px 28px;margin-bottom:24px;
+  box-shadow:5px 8px 18px rgba(0,0,0,.1);
+  position:relative;
+}
+.scrap-card::before{
+  content:'';position:absolute;top:-12px;left:30px;
+  width:100px;height:22px;background:var(--tape-c,var(--tape-mint));
+  transform:rotate(-3deg);opacity:.85;
+}
+.scrap-card.peach::before{--tape-c:var(--tape-peach)}
+.scrap-card.purple::before{--tape-c:var(--tape-purple)}
+.scrap-card.yellow::before{--tape-c:var(--tape-yellow)}
+.scrap-card h4{
+  margin:0 0 16px;font-family:'Noto Serif TC',serif;
+  font-size:1.25rem;color:var(--ribbon-red);font-weight:900;
+}
+
+/* 步驟列表 */
+.steps-list{margin:0;padding:0;list-style:none}
+.steps-list li{
+  display:flex;gap:14px;margin-bottom:14px;
+  font-size:1.05rem;line-height:1.7;
+}
+.steps-list li:last-child{margin-bottom:0}
+.step-num{
+  flex-shrink:0;min-width:36px;height:36px;
+  background:var(--ink-pen);color:var(--paper);
+  font-family:'Caveat',cursive;font-size:1.2rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;box-shadow:2px 2px 0 var(--ink);
+}
+.step-num.alt{background:var(--ribbon-red)}
+.step-num.warn{background:var(--ribbon-red);color:#fff}
+
+/* 螢光筆劃線 */
+.hl{
+  background:linear-gradient(transparent 50%,var(--highlight) 50%);
+  padding:0 4px;font-weight:700;
+}
+/* inline code 風 */
+.tape-code{
+  background:var(--tape-yellow);color:var(--ink);
+  font-family:'Patrick Hand',monospace;
+  padding:2px 10px;border:1px solid var(--ink);font-size:.95em;
+}
+
+/* tip-box (用便利貼風) */
+.tip-box{
+  background:var(--washi-yellow);color:var(--ink);
+  border:1px solid var(--ink);
+  padding:16px 20px;margin-top:14px;
+  font-size:1rem;line-height:1.7;
+  box-shadow:3px 5px 12px rgba(0,0,0,.12);
+  transform:rotate(-.5deg);position:relative;
+}
+.tip-box::before{
+  content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  width:50px;height:14px;background:rgba(0,0,0,.08);border-radius:2px;
+}
+.tip-box.warn{background:var(--washi-pink)}
+.tip-box.success{background:var(--washi-green)}
+.tip-box b{color:var(--ribbon-red)}
+
+/* 表格 */
+.scrap-table{
+  width:100%;border-collapse:collapse;margin:14px 0;
+  background:var(--paper-2);font-size:.98rem;
+}
+.scrap-table th{
+  background:var(--ink-pen);color:var(--paper);
+  padding:11px 14px;text-align:left;
+  font-family:'Patrick Hand',monospace;font-size:.95rem;font-weight:700;
+  border:2px solid var(--ink);
+}
+.scrap-table td{padding:12px 14px;border:1px solid var(--pencil);font-weight:500}
+.scrap-table tr:nth-child(2n) td{background:var(--paper-3)}
+.scrap-table .big{font-size:1.15em;color:var(--ribbon-red);font-weight:900}
+
+/* 比較卡片 */
+.cmp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:14px 0}
+.cmp-card{
+  background:var(--paper-2);border:2px solid var(--ink-pen);
+  padding:16px 18px;position:relative;
+  box-shadow:3px 5px 12px rgba(0,0,0,.1);
+}
+.cmp-card .nm{font-family:'Noto Serif TC',serif;color:var(--ribbon-red);font-size:1.15rem;font-weight:900;margin-bottom:6px}
+.cmp-card .pt{font-family:'Caveat',cursive;font-size:1rem;color:var(--pencil);margin-bottom:4px}
+.cmp-card .ctx{font-size:.95rem;line-height:1.7}
+
+/* Canvas section */
+.canvas-section{
+  background:var(--paper-3);border:2px solid var(--ink);
+  padding:22px 26px;margin-bottom:24px;
+  box-shadow:5px 8px 18px rgba(0,0,0,.1);
+  position:relative;
+}
+.canvas-section::before{
+  content:'';position:absolute;top:-12px;right:30px;
+  width:100px;height:22px;background:var(--tape-purple);
+  transform:rotate(4deg);opacity:.85;
+}
+.canvas-section h4{
+  margin:0 0 14px;font-family:'Noto Serif TC',serif;font-size:1.2rem;
+  color:var(--ink-pen);
+}
+.canvas-wrap{background:var(--paper-2);border:1px solid var(--ink);padding:16px}
+
+.btn-primary{
+  background:var(--ribbon-red);color:#fff;border:2px solid var(--ink);
+  padding:10px 18px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;font-size:1rem;
+  box-shadow:3px 3px 0 var(--ink);transition:.15s;
+}
+.btn-primary:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn-primary:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+
+/* Quiz */
+.quiz-section{
+  background:var(--paper-2);border:2px solid var(--ink-pen);
+  padding:24px 28px;margin-bottom:24px;
+  box-shadow:5px 8px 18px rgba(0,0,0,.1);
+  position:relative;
+}
+.quiz-section::before{
+  content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  width:120px;height:22px;background:var(--tape-mint);opacity:.85;
+}
+.quiz-section h4{
+  margin:0 0 16px;font-family:'Noto Serif TC',serif;font-size:1.2rem;
+  color:var(--ink-pen);
+}
+.quiz-q{margin-bottom:18px}
+.quiz-q .stem{font-weight:700;font-size:1.1rem;margin-bottom:10px;color:var(--ink)}
+.quiz-opt{
+  display:block;width:100%;text-align:left;
+  background:var(--paper-3);border:2px solid var(--pencil);color:var(--ink);
+  padding:11px 18px;margin-bottom:6px;font-size:1rem;cursor:pointer;
+  font-family:inherit;transition:.15s;
+}
+.quiz-opt:hover{background:var(--washi-yellow);border-color:var(--ink-pen)}
+.quiz-opt.correct{background:var(--washi-green);color:var(--ink);border-color:var(--ink);font-weight:700}
+.quiz-opt.wrong{background:var(--washi-pink);color:var(--ink);border-color:var(--ribbon-red)}
+.quiz-feedback{
+  margin-top:10px;padding:12px 16px;
+  background:var(--washi-yellow);color:var(--ink);border:1px solid var(--ink);
+  font-size:1rem;display:none;
+}
+.quiz-feedback.show{display:block}
+
+/* Teacher Note */
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+.teacher-note{
+  background:var(--stamp-blue);color:#fff;border:2px solid var(--ink);
+  padding:18px 22px;margin-top:14px;position:relative;
+}
+.teacher-note::before{
+  content:'老師備課筆記';position:absolute;top:-12px;left:14px;
+  background:var(--ink);color:var(--washi-yellow);
+  font-family:'Caveat',cursive;font-size:.95rem;
+  padding:3px 12px;letter-spacing:.05em;
+}
+.teacher-note h5{margin:0 0 8px;font-size:1.05rem;font-weight:900}
+.teacher-note p{margin:0;font-size:.95rem;line-height:1.7}
+
+/* Slide Player */
+.slide-section{max-width:1400px;margin:48px auto;padding:0 24px}
+.slide-section h3{
+  font-family:'Noto Serif TC',serif;font-size:1.3rem;color:var(--ink-pen);
+  margin-bottom:8px;
+}
+.slide-section .sub{
+  font-family:'Caveat',cursive;font-size:1.1rem;color:var(--pencil);margin-bottom:18px;
+}
+.slide-player{
+  background:var(--paper-2);border:3px solid var(--ink-pen);
+  box-shadow:6px 8px 18px rgba(0,0,0,.15);position:relative;
+}
+.slide-player::before{
+  content:'';position:absolute;top:-14px;left:60px;
+  width:140px;height:24px;background:var(--tape-peach);
+  transform:rotate(-4deg);opacity:.85;z-index:1;
+}
+.slide-main{
+  position:relative;background:var(--paper-3);
+  aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;cursor:zoom-in;
+}
+.slide-main img{width:100%;height:100%;object-fit:contain;background:var(--paper-3)}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:60px;background:rgba(42,74,138,.9);color:#fff;
+  border:2px solid var(--ink);font-size:1.6rem;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;z-index:3;
+}
+.slide-nav-btn:hover{background:var(--ink-pen)}
+.slide-nav-btn.prev{left:12px}.slide-nav-btn.next{right:12px}
+.slide-fs-btn{
+  position:absolute;top:12px;right:12px;
+  background:var(--ribbon-red);color:#fff;border:2px solid var(--ink);
+  padding:8px 14px;font-family:'Caveat',cursive;font-size:1rem;font-weight:700;
+  cursor:pointer;z-index:5;box-shadow:2px 2px 0 var(--ink);
+}
+.slide-fs-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.slide-counter{
+  position:absolute;bottom:12px;left:12px;background:rgba(58,58,58,.9);color:var(--washi-yellow);
+  padding:5px 12px;font-family:'Patrick Hand',monospace;font-size:.95rem;z-index:5;
+}
+.slide-strip{display:flex;gap:6px;padding:10px;background:var(--paper-3);overflow-x:auto;border-top:2px solid var(--ink-pen)}
+.strip-thumb{flex-shrink:0;width:120px;aspect-ratio:16/10;background:var(--paper-2);border:2px solid var(--pencil);cursor:pointer;transition:.15s;overflow:hidden}
+.strip-thumb img{width:100%;height:100%;object-fit:contain}
+.strip-thumb:hover{border-color:var(--ink-pen)}
+.strip-thumb.active{border-color:var(--ribbon-red);box-shadow:2px 2px 0 var(--ink)}
+
+#slide-fs{display:none;position:fixed;inset:0;background:rgba(58,46,30,.95);z-index:9999;align-items:center;justify-content:center}
+#slide-fs.show{display:flex}
+#slide-fs-img{max-width:95%;max-height:90vh;object-fit:contain}
+.fs-close{position:absolute;top:18px;right:18px;width:48px;height:48px;background:var(--ribbon-red);color:#fff;border:2px solid var(--paper);font-size:1.5rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5}
+.fs-nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--washi-yellow);color:var(--washi-yellow);font-size:2rem;font-weight:900;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center}
+.fs-nav.prev{left:20px}.fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--washi-yellow);color:var(--ink)}
+.fs-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ribbon-red);color:#fff;padding:8px 18px;font-family:'Caveat',cursive;font-size:1.1rem}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar{display:none !important}
+
+/* Video */
+.nlm-video-section{max-width:1400px;margin:48px auto;padding:0 24px}
+.nlm-video-section h3{font-family:'Noto Serif TC',serif;font-size:1.3rem;color:var(--ink-pen);margin-bottom:8px}
+.nlm-video-section .sub{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--pencil);margin-bottom:18px}
+.video-wrap{background:var(--paper-2);border:3px solid var(--ribbon-red);box-shadow:6px 8px 18px rgba(0,0,0,.15);position:relative;overflow:hidden}
+.video-ratio{position:relative;padding-top:56.25%;width:100%;background:var(--paper-3)}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{background:var(--paper-3);border-top:2px solid var(--ribbon-red);padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:.95rem}
+.video-meta .nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--ribbon-red);color:#fff;font-size:.85rem;font-weight:700;padding:4px 12px;white-space:nowrap;font-family:'Caveat',cursive}
+.video-no-id{padding:50px 20px;text-align:center;font-size:1.05rem;color:var(--pencil);border:2px dashed var(--pencil)}
+
+/* NLM resources */
+.nb-section{max-width:1400px;margin:48px auto 24px;padding:0 24px}
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:18px 0}
+.nb-card{
+  background:var(--paper-2);border:2px solid var(--ink);
+  padding:20px 22px;position:relative;display:block;transition:.2s;
+  box-shadow:4px 6px 14px rgba(0,0,0,.1);
+}
+.nb-card::before{
+  content:'';position:absolute;top:-10px;left:20px;
+  width:80px;height:18px;background:var(--tape-mint);transform:rotate(-5deg);opacity:.85;
+}
+.nb-card:nth-child(2)::before{background:var(--tape-peach);transform:rotate(4deg)}
+.nb-card:nth-child(3)::before{background:var(--tape-yellow);transform:rotate(-3deg)}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:6px 8px 18px rgba(0,0,0,.15)}
+.nb-card h4{margin:0 0 8px;color:var(--ribbon-red);font-size:1.05rem;font-family:'Noto Serif TC',serif;font-weight:900}
+.nb-card p{margin:0;font-size:.95rem;color:var(--pencil);line-height:1.6}
+
+.faq-item{
+  background:var(--paper-2);border:2px solid var(--ink-pen);
+  padding:18px 22px;margin-bottom:14px;
+  box-shadow:3px 5px 12px rgba(0,0,0,.1);
+}
+.faq-q{font-weight:900;color:var(--ribbon-red);font-size:1.05rem;margin-bottom:6px;font-family:'Noto Serif TC',serif}
+.faq-a{font-size:1rem;line-height:1.7;color:var(--ink)}
+
+/* Floating Tools */
+.float-tools{position:fixed;right:18px;bottom:18px;z-index:400;display:flex;flex-direction:column;gap:8px}
+.float-btn{
+  width:50px;height:50px;background:var(--paper-2);border:2px solid var(--ink);
+  font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:.15s;box-shadow:3px 3px 0 var(--ribbon-red);border-radius:50%;
+}
+.float-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ribbon-red)}
+.float-btn.active{background:var(--ribbon-red);color:#fff}
+
+.tool-panel{
+  position:fixed;right:80px;bottom:18px;z-index:400;
+  background:var(--paper-2);border:3px solid var(--ink-pen);
+  padding:18px;display:none;width:300px;
+  box-shadow:6px 8px 18px rgba(0,0,0,.2);
+}
+.tool-panel.show{display:block}
+.tool-panel h4{margin:0 0 12px;font-family:'Noto Serif TC',serif;font-size:1.1rem;color:var(--ribbon-red);display:flex;justify-content:space-between}
+.tool-panel .close{cursor:pointer;color:var(--ribbon-red);font-weight:900}
+.lottery-result{text-align:center;font-family:'Caveat',cursive;font-size:2.2rem;color:var(--ribbon-red);padding:14px;background:var(--washi-yellow);border:1px solid var(--ink);margin-top:10px}
+#timer-display{text-align:center;font-family:'Patrick Hand',monospace;font-size:2.5rem;color:var(--ink-pen);padding:14px;background:var(--paper-3);border:1px solid var(--ink);margin:10px 0;font-weight:700}
+
+/* Drawing Canvas */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;z-index:300;
+  background:var(--paper-2);border:2px solid var(--ink);padding:10px 14px;
+  display:none;gap:8px;align-items:center;box-shadow:3px 3px 0 var(--ink-pen);
+}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:26px;height:26px;border:2px solid var(--ink);cursor:pointer;padding:0;transition:.15s;border-radius:50%}
+.draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor}
+.draw-toolbar .draw-clear{background:transparent;border:2px solid var(--ribbon-red);color:var(--ribbon-red);padding:4px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem}
+
+/* Footer */
+.site-footer{
+  border-top:3px solid var(--ink);background:var(--paper-2);
+  padding:48px 24px 32px;margin-top:64px;text-align:center;
+  position:relative;
+}
+.site-footer::before{
+  content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  width:200px;height:24px;background:var(--tape-mint);opacity:.85;
+}
+.site-footer .brand{font-family:'Bungee',sans-serif;font-size:1.2rem;color:var(--ribbon-red);margin-bottom:10px;letter-spacing:.05em}
+.site-footer .made{font-size:1rem;color:var(--ink);margin-bottom:6px;font-family:'Caveat',cursive;font-size:1.2rem}
+.site-footer .made a{color:var(--ribbon-red);font-weight:900;border-bottom:2px solid var(--washi-yellow)}
+.site-footer .copy{font-size:.85rem;color:var(--pencil);font-family:'Patrick Hand',monospace}
+
+@media(max-width:720px){
+  html{font-size:16px}
+  .header-inner{padding:10px 14px}
+  .header-title h1{font-size:1.15rem}
+  .hero{padding:32px 14px 20px}
+  .stage-nav{padding:14px}
+  .level-section{padding:0 14px}
+  .float-tools{right:10px;bottom:10px}
+  .tool-panel{right:10px;bottom:64px;width:calc(100% - 20px);max-width:300px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← 回 IT COCKPIT</a>
+    <div class="header-title">
+      <h1>痞客邦部落格教學</h1>
+      <div class="sub">六年級資訊科技 · 你的網路小天地</div>
+    </div>
+    <div class="mode-bar">
+      <button class="mode-btn active" id="btn-student" onclick="setMode('student')">學生模式</button>
+      <button class="mode-btn" id="btn-teacher" onclick="setMode('teacher')">老師模式</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="hero-tag">六年級 · 數位創作 + 網路素養</span>
+    <h2>把你的生活，<br>變成一本<span class="em">永遠存在的書</span>。</h2>
+    <p class="lead">嗨同學！今天我們要學的是「<b>痞客邦 PIXNET</b>」 — 台灣 2003 年就有的老牌部落格平台！從<b>怎麼寫吸睛標題</b>、<b>怎麼插入圖片</b>、<b>遇到網路霸凌怎麼辦</b>、到<b>智慧財產權</b>，5 大關卡帶你成為負責任的數位小公民。</p>
+    <div class="obj-chips">
+      <span class="obj-chip">📖 痞客邦平台</span>
+      <span class="obj-chip">✏️ 6 個標題公式</span>
+      <span class="obj-chip">📷 圖片排版</span>
+      <span class="obj-chip">🚨 網路霸凌</span>
+      <span class="obj-chip">🔐 隱私設定</span>
+      <span class="obj-chip">📜 智慧財產權</span>
+      <span class="obj-chip">👣 數位足跡</span>
+    </div>
+  </div>
+  <div class="lecture-meta">
+    <h3>// 課程資訊</h3>
+    <dl>
+      <dt>單元</dt><dd>痞客邦部落格教學</dd>
+      <dt>年級</dt><dd>六年級資訊科技</dd>
+      <dt>關卡</dt><dd>5 大關 · 12 題評量</dd>
+      <dt>風格</dt><dd>Scrapbook 剪貼簿手帳風</dd>
+      <dt>素材</dt><dd>NotebookLM × Claude</dd>
+    </dl>
+    <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+      <span class="cta-tag">老師上課用 ⮕</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+    </a>
+  </div>
+</section>
+
+<nav class="stage-nav">
+  <a class="stage-pill" href="#sec1">① 認識痞客邦</a>
+  <a class="stage-pill" href="#sec2">② 標題公式</a>
+  <a class="stage-pill" href="#sec3">③ 圖片排版</a>
+  <a class="stage-pill" href="#sec4">④ 網路安全</a>
+  <a class="stage-pill" href="#sec5">⑤ 創作倫理</a>
+</nav>
+
+<!-- ═══ STAGE 1 ═══ -->
+<section id="sec1" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge">STAGE 01</span>
+    <div>
+      <h3>認識痞客邦：台灣最大的部落格平台</h3>
+      <div class="section-sub">從 2003 年到今天，這個小天地 22 歲了！</div>
+    </div>
+  </div>
+
+  <div class="scrap-card">
+    <h4>📚 痞客邦的成長故事</h4>
+    <ul class="steps-list">
+      <li><span class="step-num">1</span><div><b class="hl">2003 年</b>：兩個交通大學的大學生（曾皇霖、劉昊恩），因為「興趣與朋友需求」用學校資源創立了 PIXNET。</div></li>
+      <li><span class="step-num">2</span><div><b class="hl">2007 年</b>：城邦媒體集團以 <b>1 億餘元</b>入股，正式定名「<b>痞客邦</b>」。</div></li>
+      <li><span class="step-num">3</span><div><b class="hl">2016 年</b>：Alexa 流量超越 Google，成為 <b>台灣第一</b> 的網站。</div></li>
+      <li><span class="step-num">4</span><div><b class="hl">2025 年 5 月</b>：沛獅力控股收購痞客邦全部股權，開啟新階段。</div></li>
+    </ul>
+    <div class="tip-box success">
+      💡 <b>超驚人數據</b>：痞客邦累積超過 <b>9 億篇文章</b>，內容量超過台灣所有新聞媒體報導的總和！70% 的使用者是台灣人喔！
+    </div>
+  </div>
+
+  <div class="scrap-card peach">
+    <h4>🌟 為什麼國小生超適合寫部落格？（蔡依橙醫師親身實驗）</h4>
+    <p style="margin:0 0 12px;color:var(--ink)">蔡醫師帶兩個小孩（小四女兒、大班兒子）寫部落格 <b class="hl">4 個月</b>，發現驚人成長：</p>
+    <ul class="steps-list">
+      <li><span class="step-num alt">A</span><div><b>鍛鍊恆毅力</b> — 持續寫作學會設定目標、突破困難</div></li>
+      <li><span class="step-num alt">B</span><div><b>作文能力大進步</b> — 胖丁學部落格 3 個月後，作文得 <b class="hl">98 分</b>（有史以來第二高）！</div></li>
+      <li><span class="step-num alt">C</span><div><b>成為科技小達人</b> — 學會 Google 搜尋、排版、語音輸入</div></li>
+      <li><span class="step-num alt">D</span><div><b>提早學會社會化</b> — 用「經過思考的語言」跟世界溝通</div></li>
+      <li><span class="step-num alt">E</span><div><b>情緒抒發出口</b> — 難過的事可以安靜地寫，爸媽也更懂你</div></li>
+    </ul>
+  </div>
+
+  <div class="quiz-section">
+    <h4>📝 形成性評量（Stage 01）</h4>
+    <div class="quiz-q" data-correct="1">
+      <div class="stem">Q1：痞客邦是哪一年由哪所大學的學生創立的？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">2000 年 · 台大資工系</button>
+      <button class="quiz-opt" onclick="ans(this,1)">2003 年 · 交通大學</button>
+      <button class="quiz-opt" onclick="ans(this,2)">2007 年 · 清華大學</button>
+      <button class="quiz-opt" onclick="ans(this,3)">2010 年 · 政治大學</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q" data-correct="3">
+      <div class="stem">Q2：哪一項<b>不是</b>寫部落格的好處？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">鍛鍊恆毅力</button>
+      <button class="quiz-opt" onclick="ans(this,1)">作文能力進步</button>
+      <button class="quiz-opt" onclick="ans(this,2)">成為情緒抒發出口</button>
+      <button class="quiz-opt" onclick="ans(this,3)">立刻變成網紅賺大錢</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="teacher-note teacher-only">
+      <h5>老師提問</h5>
+      <p>請學生分享：「如果你已經有部落格，會想寫什麼主題？」引導學生思考為「自己」寫而不是為「流量」寫的核心觀念。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAGE 2 ═══ -->
+<section id="sec2" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--ink-pen)">STAGE 02</span>
+    <div>
+      <h3>6 個吸睛標題公式 + 寫作 SOP</h3>
+      <div class="section-sub">80% 的人會看標題，只有 20% 點進文章 — 所以標題超重要！</div>
+    </div>
+  </div>
+
+  <div class="scrap-card peach">
+    <h4>✏️ 6 個標題公式（直接套用就有效！）</h4>
+    <ul class="steps-list">
+      <li><span class="step-num">1</span><div><b>受眾 + 關鍵字 + 利益</b><br><span class="tape-code">範例：「上班族救星！飛航模式膠囊讓你睡好覺」</span></div></li>
+      <li><span class="step-num">2</span><div><b>奇數 + 形容詞 + 關鍵字 + 承諾</b>（奇數比偶數更有公信力！）<br><span class="tape-code">範例：「<b>5 大</b>簡單秘訣，讓你的部落格被看見」</span></div></li>
+      <li><span class="step-num">3</span><div><b>為什麼 / 如何 / 哪裡 + 解答</b><br><span class="tape-code">範例：「<b>為什麼</b>有些鍋具不能用 IH 感應爐？」</span></div></li>
+      <li><span class="step-num">4</span><div><b>關鍵字 + 最 / 唯一</b><br><span class="tape-code">範例：「全世界<b>最大規模</b>的無印良品門市」</span></div></li>
+      <li><span class="step-num">5</span><div><b>時事 / 名人</b>（蹭熱門話題流量）<br><span class="tape-code">範例：「《山道猴子的一生》心得分享」</span></div></li>
+      <li><span class="step-num">6</span><div><b>具體情境 + 解決方法</b><br><span class="tape-code">範例：「<b>三個月減 8Kg</b>，我做了這 <b>5 件事</b>」</span></div></li>
+    </ul>
+  </div>
+
+  <div class="scrap-card yellow">
+    <h4>📝 第一篇文章 SOP（3 段式結構）</h4>
+    <ul class="steps-list">
+      <li><span class="step-num">A</span><div><b>開頭引言（Hook）</b> — 直接點痛點或用數據破題<br>例：「<span class="hl">有 80% 的人看你的標題，但只有 20% 會點進文章</span>。所以你不能只寫好內容，標題更要寫得好！」</div></li>
+      <li><span class="step-num">B</span><div><b>段落結構（Body）</b> — 善用大標題分段、目錄、錨點。一段不要超過 5-7 行（手機讀起來才舒服）。</div></li>
+      <li><span class="step-num">C</span><div><b>結尾呼籲（CTA）</b> — 引導讀者互動<br>例：「如果你有興趣，<span class="hl">可以練習下標題並留言告訴我</span>！」</div></li>
+    </ul>
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎮 互動：標題產生器</h4>
+    <p style="font-size:1rem;color:var(--pencil);margin:0 0 14px">挑公式 → 填關鍵字 → 自動產生 5 個吸睛標題！</p>
+    <div class="canvas-wrap" id="title-gen">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div>
+          <label style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--ink-pen);font-weight:700">主題（如：學習筆記、Minecraft）</label>
+          <input type="text" id="t-topic" value="Minecraft 蓋房子" style="width:100%;padding:8px 12px;border:2px solid var(--ink);background:var(--paper-2);font-family:inherit;font-size:1rem;margin-top:4px">
+        </div>
+        <div>
+          <label style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--ink-pen);font-weight:700">受眾（如：新手、初學者）</label>
+          <input type="text" id="t-audience" value="新手玩家" style="width:100%;padding:8px 12px;border:2px solid var(--ink);background:var(--paper-2);font-family:inherit;font-size:1rem;margin-top:4px">
+        </div>
+      </div>
+      <button class="btn-primary" onclick="genTitles()">✨ 產生 5 個標題</button>
+      <div id="title-out" style="margin-top:14px;font-family:'Patrick Hand',monospace;font-size:1.05rem;background:var(--paper-3);border:1px solid var(--ink);padding:14px;min-height:80px;line-height:1.9">點上面按鈕產生標題…</div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <h4>📝 形成性評量（Stage 02）</h4>
+    <div class="quiz-q" data-correct="2">
+      <div class="stem">Q3：根據研究，數字在標題中用奇數比偶數更有什麼？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">更短</button>
+      <button class="quiz-opt" onclick="ans(this,1)">更可愛</button>
+      <button class="quiz-opt" onclick="ans(this,2)">更有公信力（讓人相信）</button>
+      <button class="quiz-opt" onclick="ans(this,3)">更難寫</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q" data-correct="1">
+      <div class="stem">Q4：第一篇文章的「結尾呼籲（CTA）」最主要的目的是什麼？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">告訴讀者「故事結束了」</button>
+      <button class="quiz-opt" onclick="ans(this,1)">引導讀者互動（按讚、留言、追蹤）</button>
+      <button class="quiz-opt" onclick="ans(this,2)">放上廣告連結賺錢</button>
+      <button class="quiz-opt" onclick="ans(this,3)">不重要，可以省略</button>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAGE 3 ═══ -->
+<section id="sec3" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--tape-peach);color:var(--ink)">STAGE 03</span>
+    <div>
+      <h3>圖片插入 + 排版 + 分類標籤</h3>
+      <div class="section-sub">2025 新版痞客邦：一次上傳 30 張圖片！</div>
+    </div>
+  </div>
+
+  <div class="scrap-card purple">
+    <h4>📷 圖片插入 3 種方法</h4>
+    <ul class="steps-list">
+      <li><span class="step-num">1</span><div><b>從電腦上傳</b>：一次最多 <b class="hl">30 張</b>（支援 PNG、JPG、GIF，單張上限 10MB）</div></li>
+      <li><span class="step-num">2</span><div><b>從相簿匯入</b>：先在「相簿」管理區建立資料夾，可編輯「相片描述」（最多 100 字）</div></li>
+      <li><span class="step-num">3</span><div><b>引用外部相簿</b>：目前 <b style="color:var(--ribbon-red)">不支援</b> Flickr 等外部匯入，只能從電腦選</div></li>
+    </ul>
+  </div>
+
+  <div class="scrap-card yellow">
+    <h4>🎨 排版基本技巧（2025 新版功能）</h4>
+    <table class="scrap-table">
+      <thead><tr><th>功能</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td><b>字體大小</b></td><td>可自由調整大中小，標示重點用</td></tr>
+        <tr><td><b>文字顏色</b></td><td>設定顏色強調重要內容</td></tr>
+        <tr><td><b>表格插入</b></td><td>支援直接插入，或從 Excel / Word 複製貼上</td></tr>
+        <tr><td><b>原始碼模式</b></td><td>進階：可微調 HTML 結構（加 CSS 或錨點）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scrap-card">
+    <h4>🗂️ 分類 vs 標籤（很多人搞錯！）</h4>
+    <div class="cmp-grid">
+      <div class="cmp-card">
+        <div class="nm">📁 分類（Category）</div>
+        <div class="pt">文章的大房間</div>
+        <div class="ctx">像圖書館的書架。例：「美食」「旅遊」「親子」<br>一篇文章只屬於<b>一個</b>分類</div>
+      </div>
+      <div class="cmp-card" style="border-color:var(--ribbon-red)">
+        <div class="nm">🏷️ 標籤（Tag）</div>
+        <div class="pt">文章的便利貼</div>
+        <div class="ctx">關鍵字，方便搜尋。例：「台北美食」「信義區牛排」「約會餐廳」<br>一篇文章可以有<b>多個</b>標籤</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      💡 <b>範例</b>：寫一篇台北餐廳文章 → <b>分類</b>選「美食情報」；<b>標籤</b>加「台北美食、信義區、牛排、約會」
+    </div>
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎯 互動：分類還是標籤？</h4>
+    <p style="font-size:1rem;color:var(--pencil);margin:0 0 14px">點選下面情境，判斷該用「分類」還是「標籤」：</p>
+    <div class="canvas-wrap" id="cat-tag-game">
+      <div id="ct-q" style="font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:14px">準備好了嗎？</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn-primary" onclick="ctAns('cat')">📁 分類</button>
+        <button class="btn-primary" style="background:var(--ink-pen)" onclick="ctAns('tag')">🏷️ 標籤</button>
+        <button class="btn-primary" style="background:var(--pencil)" onclick="ctNext()">↻ 下一題</button>
+      </div>
+      <div id="ct-fb" style="margin-top:14px;font-size:1rem;color:var(--ink-pen);min-height:40px;line-height:1.7">點「下一題」開始 →</div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <h4>📝 形成性評量（Stage 03）</h4>
+    <div class="quiz-q" data-correct="2">
+      <div class="stem">Q5：2025 新版痞客邦一次最多可以上傳幾張圖片？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">10 張</button>
+      <button class="quiz-opt" onclick="ans(this,1)">20 張</button>
+      <button class="quiz-opt" onclick="ans(this,2)">30 張</button>
+      <button class="quiz-opt" onclick="ans(this,3)">100 張</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q" data-correct="0">
+      <div class="stem">Q6：以下哪個比喻最適合「分類（Category）」？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">圖書館的書架（大房間）</button>
+      <button class="quiz-opt" onclick="ans(this,1)">便利貼（小提示）</button>
+      <button class="quiz-opt" onclick="ans(this,2)">搜尋引擎</button>
+      <button class="quiz-opt" onclick="ans(this,3)">表情符號</button>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAGE 4 ═══ -->
+<section id="sec4" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--tape-purple);color:var(--ink)">STAGE 04</span>
+    <div>
+      <h3>網路霸凌防範 + 隱私設定 + 留言禮儀</h3>
+      <div class="section-sub">學會保護自己，也尊重別人</div>
+    </div>
+  </div>
+
+  <div class="scrap-card" style="border-color:var(--ribbon-red)">
+    <h4>🚨 網路霸凌 4 大類型</h4>
+    <div class="cmp-grid">
+      <div class="cmp-card"><div class="nm">😡 語言霸凌</div><div class="ctx">用難聽的話攻擊<br>例：「寫這什麼爛東西」</div></div>
+      <div class="cmp-card"><div class="nm">🚫 排擠霸凌</div><div class="ctx">號召大家孤立某人<br>例：「大家不要看他的文章」</div></div>
+      <div class="cmp-card"><div class="nm">🗣 散播謠言</div><div class="ctx">捏造不實事情<br>例：「我聽說他考試作弊」</div></div>
+      <div class="cmp-card"><div class="nm">🎭 假冒身份</div><div class="ctx">取相似暱稱去惹事<br>讓別人以為是你做的</div></div>
+    </div>
+  </div>
+
+  <div class="scrap-card peach">
+    <h4>🛡️ 3 步驟自救法（教育部「截圖、反映、找 iWIN」）</h4>
+    <ul class="steps-list">
+      <li><span class="step-num warn">1</span><div><b>保留證據（截圖）</b>：用鍵盤右上角 <span class="tape-code">Print Screen</span> 鍵截圖存證！</div></li>
+      <li><span class="step-num warn">2</span><div><b>阻斷管道</b>：用「<b>封鎖</b>」或「<b>解除朋友關係</b>」功能阻斷霸凌者</div></li>
+      <li><span class="step-num warn">3</span><div><b>告訴大人</b>：勇敢向導師、輔導老師、爸媽反映，撥打 <b class="hl">1953 教育部反霸凌專線</b>（24 小時專人接聽）</div></li>
+    </ul>
+    <div class="tip-box warn">
+      🆘 <b>求助資源</b>：教育部反霸凌專線 <b>1953</b>（24 小時）｜防制校園霸凌專區 bully.moe.edu.tw｜iWIN 網路內容防護機構 win.org.tw
+    </div>
+  </div>
+
+  <div class="scrap-card purple">
+    <h4>🔐 4 種文章隱私設定</h4>
+    <table class="scrap-table">
+      <thead><tr><th>設定</th><th>誰看得到</th><th>適合場合</th></tr></thead>
+      <tbody>
+        <tr><td><b class="big">公開</b></td><td>所有人都能搜尋</td><td>跟全世界分享 Minecraft 教學</td></tr>
+        <tr><td><b>不公開 / 草稿</b></td><td>只有你自己</td><td>寫到一半的文章、私密日記</td></tr>
+        <tr><td><b>僅好友</b></td><td>部落格好友</td><td>班級同樂會的趣事</td></tr>
+        <tr><td><b>密碼保護</b></td><td>輸入密碼才能讀</td><td>家族聚餐照片給親戚</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box">
+      🆕 <b>2025 新規</b>：痞客邦留言改為「<b>僅限登入會員留言</b>」，學 Instagram、Facebook 的做法，減少詐騙與惡意攻擊。
+    </div>
+  </div>
+
+  <div class="scrap-card yellow">
+    <h4>💬 留言禮儀 5 條黃金法則</h4>
+    <ul class="steps-list">
+      <li><span class="step-num">1</span><div><b>發送前深呼吸</b>：留言前想想「當著對方面說，對方會不會難過？」</div></li>
+      <li><span class="step-num">2</span><div><b>具體的讚美</b>：「你這篇九族文化村介紹得很詳細！」勝過「好棒喔」</div></li>
+      <li><span class="step-num">3</span><div><b>尊重不同意見</b>：「雖然我比較喜歡皮卡丘，但你畫的傑尼龜也很可愛喔」</div></li>
+      <li><span class="step-num">4</span><div><b>絕不透露個資</b>：「我住台中」可以，「我住東光路 XXX 號」<b style="color:var(--ribbon-red)">絕對不行</b></div></li>
+      <li><span class="step-num">5</span><div><b>不洗版、不打廣告</b>：不要去別人版上瘋狂貼自己的網址</div></li>
+    </ul>
+  </div>
+
+  <div class="canvas-section">
+    <h4>🎯 互動：隱私設定推薦器</h4>
+    <p style="font-size:1rem;color:var(--pencil);margin:0 0 14px">告訴我你的情境，我推薦該用哪種隱私設定：</p>
+    <div class="canvas-wrap" id="privacy-rec">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px">
+        <button class="btn-primary" onclick="recPrivacy('public')">想分享 Minecraft 教學給世界</button>
+        <button class="btn-primary" style="background:var(--ink-pen)" onclick="recPrivacy('draft')">寫到一半還沒寫完</button>
+        <button class="btn-primary" style="background:var(--tape-peach);color:var(--ink)" onclick="recPrivacy('friends')">分享給同學的同樂會</button>
+        <button class="btn-primary" style="background:var(--tape-purple);color:var(--ink)" onclick="recPrivacy('password')">家族聚餐照給親戚</button>
+      </div>
+      <div id="rec-out" style="font-size:1.05rem;padding:14px 18px;background:var(--paper-3);border:1px solid var(--ink);min-height:60px;line-height:1.7">點選你的情境看推薦…</div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <h4>📝 形成性評量（Stage 04）</h4>
+    <div class="quiz-q" data-correct="2">
+      <div class="stem">Q7：遇到網路霸凌的第一個步驟應該是？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">立刻在留言區跟對方對罵</button>
+      <button class="quiz-opt" onclick="ans(this,1)">假裝沒看到、不管它</button>
+      <button class="quiz-opt" onclick="ans(this,2)">截圖保留證據（按 Print Screen）</button>
+      <button class="quiz-opt" onclick="ans(this,3)">刪除自己的部落格逃避</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q" data-correct="1">
+      <div class="stem">Q8：教育部反霸凌專線是幾號？（24 小時專人接聽）</div>
+      <button class="quiz-opt" onclick="ans(this,0)">110</button>
+      <button class="quiz-opt" onclick="ans(this,1)">1953</button>
+      <button class="quiz-opt" onclick="ans(this,2)">119</button>
+      <button class="quiz-opt" onclick="ans(this,3)">113</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q" data-correct="3">
+      <div class="stem">Q9：留言禮儀中，<b>絕對不能</b>做的是？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">具體稱讚別人的文章</button>
+      <button class="quiz-opt" onclick="ans(this,1)">尊重不同的意見</button>
+      <button class="quiz-opt" onclick="ans(this,2)">問清楚作者意思再回應</button>
+      <button class="quiz-opt" onclick="ans(this,3)">寫出自己的學校名稱、家裡地址</button>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAGE 5 ═══ -->
+<section id="sec5" class="level-section">
+  <div class="section-header">
+    <span class="stage-badge" style="background:var(--tape-mint);color:var(--ink)">STAGE 05</span>
+    <div>
+      <h3>智慧財產權 + 創用 CC + 數位足跡</h3>
+      <div class="section-sub">凡走過必留下痕跡 — 學會當負責任的數位公民</div>
+    </div>
+  </div>
+
+  <div class="scrap-card">
+    <h4>📜 為什麼不能抄襲？</h4>
+    <p style="margin:0 0 12px">別人寫的文字、拍的照片、畫的圖，都受到「<b class="hl">著作權</b>」保護！「人類的精神創作」才會受保護。</p>
+    <div class="tip-box">
+      💎 <b>真實故事</b>：蔡醫師的孩子剛架部落格時，從網路上「借」寶可夢圖片當招牌。後來經爸爸解釋「智慧財產權」後，他們改用 Windows 內建畫圖軟體 <b>Fresh Paint</b> 親手畫出招牌 — 從此覺得這真的是「我的」部落格！
+    </div>
+  </div>
+
+  <div class="scrap-card peach">
+    <h4>🎨 創用 CC（Creative Commons）4 大授權要素</h4>
+    <ul class="steps-list">
+      <li><span class="step-num">1</span><div><b>姓名標示（Attribution）</b>：必須標明創作者名稱、出處</div></li>
+      <li><span class="step-num">2</span><div><b>非商業性（Noncommercial）</b>：不能拿去賣錢</div></li>
+      <li><span class="step-num">3</span><div><b>禁止改作（No Derivatives）</b>：不能改原圖</div></li>
+      <li><span class="step-num">4</span><div><b>相同方式分享（Share Alike）</b>：如果改作，要用同樣免費分享方式</div></li>
+    </ul>
+  </div>
+
+  <div class="scrap-card yellow">
+    <h4>📸 國小生可用的 3 大免費圖庫</h4>
+    <div class="cmp-grid">
+      <div class="cmp-card"><div class="nm">Unsplash</div><div class="pt">unsplash.com</div><div class="ctx">高品質攝影照片</div></div>
+      <div class="cmp-card"><div class="nm">Pexels</div><div class="pt">pexels.com</div><div class="ctx">圖片 + 影片</div></div>
+      <div class="cmp-card"><div class="nm">Pixabay</div><div class="pt">pixabay.com</div><div class="ctx">圖片 + 插畫 + 音樂</div></div>
+    </div>
+    <div class="tip-box success">
+      💡 <b>超棒習慣</b>：即使免費圖庫不要求標示，主動加「圖片來源：Unsplash / 攝影師名字」是尊重創作者的表現！
+    </div>
+  </div>
+
+  <div class="scrap-card purple">
+    <h4>👣 數位足跡：凡走過必留下痕跡</h4>
+    <p style="margin:0 0 12px">你在網路上發表的<b>每一篇文章、每一句留言、每一個讚</b>，都會留下紀錄。</p>
+    <ul class="steps-list">
+      <li><span class="step-num warn">!</span><div>即使刪除，可能早就被人截圖備份</div></li>
+      <li><span class="step-num warn">!</span><div>未來申請大學、找工作時，老師或老闆可能 Google 你的名字看到國小時的貼文</div></li>
+    </ul>
+    <div class="tip-box warn">
+      ⚠️ <b>每次發文前自問</b>：「這篇文章未來的我看到，會覺得驕傲嗎？」<br><br>
+      <b>最高保護原則</b>：千萬不要在文章中暴露<b>真實長相、學校細節、家裡地址、補習班位置、真實姓名</b>！
+    </div>
+  </div>
+
+  <div class="scrap-card">
+    <h4>🌐 6 大平台比較（選擇時機）</h4>
+    <table class="scrap-table">
+      <thead><tr><th>平台</th><th>特色</th><th>適合場合</th></tr></thead>
+      <tbody>
+        <tr><td><b class="big">痞客邦</b></td><td>台灣最大、長圖文</td><td>長篇遊記、美食、學習筆記</td></tr>
+        <tr><td>Blogger</td><td>Google 提供、簡單</td><td>學習基本網頁排版</td></tr>
+        <tr><td>Medium</td><td>國外平台、雜誌感</td><td>嚴肅讀書心得、專業知識</td></tr>
+        <tr><td>Instagram</td><td>圖片 + 短影片</td><td>隨手拍漂亮風景</td></tr>
+        <tr><td>Threads</td><td>短文字、即時</td><td>一兩句心情、跟網友對話</td></tr>
+        <tr><td>Facebook</td><td>大人世界</td><td>班級社團、家庭相簿給長輩</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="quiz-section">
+    <h4>📝 形成性評量（Stage 05）</h4>
+    <div class="quiz-q" data-correct="1">
+      <div class="stem">Q10：以下哪個<b>不是</b>創用 CC 的 4 大授權要素？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">姓名標示（Attribution）</button>
+      <button class="quiz-opt" onclick="ans(this,1)">永久免費（Forever Free）</button>
+      <button class="quiz-opt" onclick="ans(this,2)">非商業性（Noncommercial）</button>
+      <button class="quiz-opt" onclick="ans(this,3)">禁止改作（No Derivatives）</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q" data-correct="2">
+      <div class="stem">Q11：發文前最該問自己的一個問題是？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">這篇能拿到多少讚？</button>
+      <button class="quiz-opt" onclick="ans(this,1)">這篇能讓我變成網紅嗎？</button>
+      <button class="quiz-opt" onclick="ans(this,2)">這篇未來的我看到會覺得驕傲嗎？</button>
+      <button class="quiz-opt" onclick="ans(this,3)">這篇能讓我賺多少錢？</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="quiz-q" data-correct="0">
+      <div class="stem">Q12：以下哪個是國小生可以放心使用的免費圖庫？</div>
+      <button class="quiz-opt" onclick="ans(this,0)">Unsplash、Pexels、Pixabay</button>
+      <button class="quiz-opt" onclick="ans(this,1)">直接 Google 圖片下載</button>
+      <button class="quiz-opt" onclick="ans(this,2)">同學部落格的照片</button>
+      <button class="quiz-opt" onclick="ans(this,3)">電影海報</button>
+      <div class="quiz-feedback"></div>
+    </div>
+    <div class="teacher-note teacher-only">
+      <h5>老師結語</h5>
+      <p>引導學生討論「數位足跡的影響」：你 5 年後、10 年後、20 年後會被 Google 到的東西，會是現在你想留下的嗎？這就是負責任的數位公民最重要的覺醒。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Slide Player ═══ -->
+<section class="slide-section">
+  <h3>📔 課程簡報手帳</h3>
+  <p class="sub">NotebookLM AI 生成的 15 頁授課簡報 + 4 張 sketch_note 資訊圖表，雙擊或按右上「⛶ 全螢幕」進入投影模式</p>
+  <div class="slide-player">
+    <div class="slide-main" ondblclick="openSlideFullscreen()">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="Slide">
+      <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+      <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+      <div class="slide-counter" id="slide-counter">1 / 15</div>
+    </div>
+    <div class="slide-strip" id="slide-strip"></div>
+  </div>
+</section>
+
+<!-- ═══ Video ═══ -->
+<section class="nlm-video-section">
+  <h3>🎬 自學影片</h3>
+  <p class="sub">NotebookLM AI 自動生成的 8 分鐘自學影片，搭配上方資訊圖一起複習</p>
+  <div class="video-wrap">
+    <div class="video-ratio">
+      <iframe
+        src="https://www.youtube.com/embed/CaYyuEwdAXU?rel=0&modestbranding=1"
+        title="痞客邦部落格教學｜六年級資訊科技 - NotebookLM 教學影片"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+    <div class="video-meta">
+      <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+      <span style="color:var(--pencil)">💡 建議用耳機觀看，搭配上方資訊圖複習</span>
+      <a href="https://www.youtube.com/watch?v=CaYyuEwdAXU" target="_blank" rel="noopener"
+         style="margin-left:auto;color:var(--ribbon-red);font-size:.9rem;text-decoration:none;font-weight:700;font-family:'Caveat',cursive">
+        ↗ 在 YouTube 開啟
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NLM Resources & FAQ ═══ -->
+<section class="nb-section">
+  <h3 style="font-family:'Noto Serif TC',serif;color:var(--ink-pen);font-size:1.3rem;margin-bottom:6px">📚 NotebookLM 資源站</h3>
+  <p style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--pencil);margin:0 0 14px">本駕駛艙由 NotebookLM 自動研究 14 個來源 + Claude 整合生成</p>
+  <div class="nb-grid">
+    <a class="nb-card" href="https://notebooklm.google.com/notebook/9eefe6c9-5137-48aa-be06-57ca563c40b4" target="_blank" rel="noopener">
+      <h4>📚 研究本（14 來源）</h4>
+      <p>痞客邦 Wikipedia、蔡依橙醫師文章、痞客邦官方標題教學、JessieLAB 寫作公式、教育部反霸凌資源</p>
+    </a>
+    <a class="nb-card" href="https://notebooklm.google.com/notebook/3a25868b-106d-42e3-8087-0b7e7d191903" target="_blank" rel="noopener">
+      <h4>🎯 精簡本（簡報用）</h4>
+      <p>萃取精華文字 + 主講者.pdf，生成 4 張 sketch_note 資訊圖表與授課簡報</p>
+    </a>
+    <a class="nb-card" href="https://notebooklm.google.com/notebook/388500a3-ce73-4f80-9578-854ee29541ac" target="_blank" rel="noopener">
+      <h4>🎬 影片版精簡本</h4>
+      <p>純精華文字，專門生成國小六年級學生的自學影片</p>
+    </a>
+  </div>
+
+  <h3 style="font-family:'Noto Serif TC',serif;color:var(--ink-pen);font-size:1.3rem;margin:32px 0 14px">❓ FAQ · 國小六年級小站長 6 大常見問題</h3>
+
+  <div class="faq-item">
+    <div class="faq-q">Q1：我覺得沒什麼好寫的，怎麼辦？</div>
+    <div class="faq-a">回憶一天發生的事情，找一個「點」來寫！從興趣出發（Minecraft、寶可夢）、寫學習筆記（自然課、歷史課）、記錄生活（假日遊記、心情）。蔡醫師說：「<b>小孩一開始會哀嚎『不知道要寫什麼』，這時協助他回憶一天的事情，找一個點來寫</b>。」</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Q2：我寫的文章沒人看，怎麼辦？</div>
+    <div class="faq-a"><b>不要為流量寫，為自己寫！</b> 寫部落格的價值是訓練「恆毅力」、鍛鍊文字能力，不是賺讚數。把網址傳給爸媽、阿公阿嬤，過年時親戚會用文章內容跟你聊天，超有成就感！</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Q3：同學在留言區嘲笑我？</div>
+    <div class="faq-a">3 步驟自救：(1) 截圖保留證據（Print Screen）(2) 不要跟對方對罵 (3) 立刻告訴老師或爸媽，撥 <b>1953</b> 教育部反霸凌專線諮詢。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Q4：家長說網路很危險不准我寫？</div>
+    <div class="faq-a">邀請爸媽當你的「教練」！約定 (1) 每次寫完先給爸媽檢查再發布 (2) 承諾不沉迷、不影響功課（30 分鐘睡前固定任務）(3) 學會聽爸媽的隱私建議。蔡醫師說：「<b>讓他們成為數位工具的主人，而不是玩具的奴隸</b>。」</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Q5：文章被人抄走了，怎麼辦？</div>
+    <div class="faq-a">在部落格加上「<b>創用 CC</b>」標示（姓名標示 + 非商業性）。文章寫作紀錄是最好的證明。如果惡意抄襲，請爸媽協助向平台檢舉。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Q6：可以放自己的照片嗎？個資怎麼保護？</div>
+    <div class="faq-a">最高保護原則：(1) <b>避免清楚的臉部特徵</b>（可用貼圖遮臉）(2) <b>不要拍到學校制服的學號</b> (3) 文字敘述絕對不寫真實姓名、學校名稱、家裡地址、補習班位置。</div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="brand">IT COCKPIT · PIXNET BLOG GUIDE</div>
+  <div class="made">Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/?account=ipad" target="_blank" rel="noopener">阿凱老師</a> · 桃園市龍潭區石門國民小學</div>
+  <div class="copy">痞客邦部落格教學駕駛艙 · Scrapbook 剪貼簿手帳風 · NotebookLM × Claude · 2026</div>
+</footer>
+
+<!-- Fullscreen overlay -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)">›</button>
+  <div class="fs-counter" id="slide-fs-counter">1 / 15</div>
+</div>
+
+<!-- Floating tools -->
+<div class="float-tools">
+  <button class="float-btn" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+  <button class="float-btn" onclick="togglePanel('timer')" title="計時器">⏱</button>
+  <button class="float-btn" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn" onclick="goTop()" title="回頂部">▲</button>
+</div>
+
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.9rem;color:var(--pencil);flex-wrap:wrap">
+    <span>範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;background:var(--paper-2);border:1px solid var(--ink-pen);color:var(--ink);font-family:inherit">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;background:var(--paper-2);border:1px solid var(--ink-pen);color:var(--ink);font-family:inherit">
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--pencil)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱ 倒數計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div id="timer-display">05:00</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px">
+    <button class="btn-primary" style="padding:6px;font-size:.85rem" onclick="setTimer(60)">1m</button>
+    <button class="btn-primary" style="padding:6px;font-size:.85rem" onclick="setTimer(180)">3m</button>
+    <button class="btn-primary" style="padding:6px;font-size:.85rem" onclick="setTimer(300)">5m</button>
+    <button class="btn-primary" style="padding:6px;font-size:.85rem" onclick="setTimer(600)">10m</button>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1;background:var(--ink-pen)">▶ 開始</button>
+    <button class="btn-primary" onclick="resetTimerFn()" style="background:var(--pencil)">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.95rem;color:var(--ribbon-red);font-family:'Caveat',cursive;font-weight:700">PEN</span>
+  <button class="color-dot active" style="background:#d65555" onclick="setPenColor('#d65555',this)"></button>
+  <button class="color-dot" style="background:#2a4a8a" onclick="setPenColor('#2a4a8a',this)"></button>
+  <button class="color-dot" style="background:#f4b942" onclick="setPenColor('#f4b942',this)"></button>
+  <button class="color-dot" style="background:#5a8d3a" onclick="setPenColor('#5a8d3a',this)"></button>
+  <button class="color-dot" style="background:#3a3a3a" onclick="setPenColor('#3a3a3a',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+// Slide Player
+const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+const SLIDE_TITLES = SLIDE_LIST.map((_,i)=>`簡報第 ${i+1} 頁`);
+let curSlide = 0;
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((src,i)=>{
+    const div = document.createElement('div');
+    div.className = 'strip-thumb' + (i===0?' active':'');
+    div.onclick = ()=>goSlide(i);
+    div.innerHTML = `<img src="${src}" alt="${SLIDE_TITLES[i]}">`;
+    strip.appendChild(div);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n<0) n=SLIDE_LIST.length-1;
+  if(n>=SLIDE_LIST.length) n=0;
+  curSlide=n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active',i===n));
+  const activeThumb = document.querySelector('.strip-thumb.active');
+  if(activeThumb){
+    const strip = document.getElementById('slide-strip');
+    const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+  }
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+  }
+}
+function slideNav(dir){ goSlide(curSlide+dir); }
+function openSlideFullscreen(){
+  const fs = document.getElementById('slide-fs');
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+  fs.classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+document.addEventListener('keydown',e=>{
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    if(e.key==='Escape') closeSlideFullscreen();
+    if(e.key==='ArrowLeft') slideNav(-1);
+    if(e.key==='ArrowRight') slideNav(1);
+  }
+});
+
+// Mode
+function setMode(mode){
+  const isTeacher = (mode==='teacher');
+  if(isTeacher){
+    const pwd = prompt('請輸入老師密碼：');
+    if(pwd !== 'it2026'){ alert('密碼錯誤！'); return; }
+  }
+  document.body.classList.toggle('teacher-mode', isTeacher);
+  document.getElementById('btn-student').classList.toggle('active',!isTeacher);
+  document.getElementById('btn-teacher').classList.toggle('active',isTeacher);
+}
+
+// Quiz
+const ENCOURAGE = ['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','💎 完美！'];
+function ans(btn, idx){
+  const q = btn.closest('.quiz-q');
+  const correct = parseInt(q.dataset.correct);
+  const opts = q.querySelectorAll('.quiz-opt');
+  const fb = q.querySelector('.quiz-feedback');
+  opts.forEach((o,i)=>{
+    o.disabled = true;
+    if(i===correct) o.classList.add('correct');
+    else if(i===idx && idx!==correct) o.classList.add('wrong');
+  });
+  if(idx===correct){
+    fb.textContent = ENCOURAGE[Math.floor(Math.random()*ENCOURAGE.length)];
+  } else {
+    fb.textContent = '✏️ 正確答案是「' + opts[correct].textContent + '」。再看一次說明，下次就會了！';
+  }
+  fb.classList.add('show');
+}
+
+// Title generator
+function genTitles(){
+  const topic = document.getElementById('t-topic').value || 'Minecraft 蓋房子';
+  const aud = document.getElementById('t-audience').value || '新手玩家';
+  const out = document.getElementById('title-out');
+  const numbers = [3, 5, 7, 9, 11];
+  const adjs = ['超簡單', '必學', '神級', '秒懂', '驚人'];
+  const benefits = ['手殘也學得會', '一次學起來', '今天就上手', '超強進步'];
+  const samples = [
+    `公式1：【${aud}】必看！${topic} 的 5 個秘訣`,
+    `公式2：${numbers[Math.floor(Math.random()*5)]} 個${adjs[Math.floor(Math.random()*5)]}的 ${topic} 技巧 — ${benefits[Math.floor(Math.random()*4)]}`,
+    `公式3：為什麼 ${topic} 對國小生這麼好玩？`,
+    `公式4：全班最強！我的 ${topic} 心得分享`,
+    `公式5：${topic} × 寶可夢 — 我的 ${aud} 第一次體驗`
+  ];
+  out.innerHTML = samples.map((s,i)=>`<div style="margin-bottom:6px"><b>${i+1}.</b> ${s}</div>`).join('');
+}
+
+// Cat/Tag game
+const CT_QS = [
+  {text:'我寫了一篇「九族文化村遊記」，要放進哪裡？', a:'cat', exp:'分類！這是文章的大主題（旅遊類）'},
+  {text:'我想加上「南投景點」、「親子旅遊」、「暑假玩什麼」這些關鍵字方便別人搜尋', a:'tag', exp:'標籤！這些是文章的關鍵字'},
+  {text:'我把所有寫過的「美食」文章放在一起方便管理', a:'cat', exp:'分類！像書架一樣分大主題'},
+  {text:'我想讓別人搜「鼎泰豐」「小籠包」「信義區美食」找到我的文章', a:'tag', exp:'標籤！搜尋用的關鍵字'},
+  {text:'痞客邦規定每篇文章「只能屬於一個」', a:'cat', exp:'分類！一篇文章一個大房間'},
+  {text:'每篇文章可以加「很多個」', a:'tag', exp:'標籤！像便利貼可以貼很多張'}
+];
+let ctIdx = -1;
+function ctNext(){
+  ctIdx = (ctIdx + 1) % CT_QS.length;
+  const q = CT_QS[ctIdx];
+  document.getElementById('ct-q').textContent = `第 ${ctIdx+1} 題：${q.text}`;
+  document.getElementById('ct-fb').textContent = '請選擇上方按鈕…';
+}
+function ctAns(choice){
+  if(ctIdx < 0){ ctNext(); return; }
+  const q = CT_QS[ctIdx];
+  const fb = document.getElementById('ct-fb');
+  if(choice === q.a){
+    fb.innerHTML = `<b style="color:var(--ink-pen)">✓ 答對了！</b> ${q.exp}`;
+  } else {
+    fb.innerHTML = `<b style="color:var(--ribbon-red)">✗ 答錯了</b>，正確答案是「${q.a === 'cat' ? '分類' : '標籤'}」。${q.exp}`;
+  }
+}
+
+// Privacy recommender
+const PRIV_REC = {
+  public: '🌍 推薦：<b>公開</b><br>任何人都可以搜尋觀看，最適合分享教學或心得！記得不要寫真實姓名喔。',
+  draft: '✏️ 推薦：<b>不公開 / 草稿</b><br>只有你自己看得到，可以慢慢寫，寫好再決定要不要發布！',
+  friends: '👥 推薦：<b>僅好友</b><br>只有部落格好友可以看，適合班級內部分享，外人看不到。',
+  password: '🔐 推薦：<b>密碼保護</b><br>輸入密碼才能讀，最適合家族聚餐照片 — 把密碼給親戚就好。'
+};
+function recPrivacy(t){
+  document.getElementById('rec-out').innerHTML = PRIV_REC[t];
+}
+
+// Floating tools
+function togglePanel(name){
+  document.querySelectorAll('.tool-panel').forEach(p=>{
+    if(p.id === `panel-${name}`) p.classList.toggle('show');
+    else p.classList.remove('show');
+  });
+}
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+
+// Lottery
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){alert('最小號必須 ≤ 最大號！');return;}
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const timer = setInterval(()=>{
+    const n = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = n + ' 號';
+  }, 60);
+  setTimeout(()=>{
+    clearInterval(timer);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random()*lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random()*(max-min+1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+// Timer
+let timerSec = 300, timerInt = null, timerRunning = false;
+function setTimer(s){ if(!timerRunning){ timerSec = s; renderTimer(); } }
+function renderTimer(){
+  const m = String(Math.floor(timerSec/60)).padStart(2,'0');
+  const s = String(timerSec%60).padStart(2,'0');
+  document.getElementById('timer-display').textContent = `${m}:${s}`;
+}
+function startTimer(){
+  if(timerRunning){clearInterval(timerInt);timerRunning=false;return;}
+  timerRunning = true;
+  timerInt = setInterval(()=>{
+    if(timerSec <= 0){clearInterval(timerInt);timerRunning=false;alert('⏰ 時間到！');return;}
+    timerSec--;renderTimer();
+  }, 1000);
+}
+function resetTimerFn(){clearInterval(timerInt);timerRunning=false;timerSec=300;renderTimer();}
+
+// Drawing
+let drawActive=false, penColor='#d65555', penSize=4;
+let drawCanvas, drawCtx, isDrawing=false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas=document.getElementById('drawCanvas');
+  drawCtx=drawCanvas.getContext('2d');
+  drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight;
+  drawCanvas.addEventListener('mousedown',e=>{if(!drawActive)return;isDrawing=true;dLastX=e.clientX;dLastY=e.clientY;});
+  drawCanvas.addEventListener('mousemove',e=>{
+    if(!drawActive||!isDrawing)return;
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(e.clientX,e.clientY);drawCtx.stroke();
+    dLastX=e.clientX;dLastY=e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup',()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart',e=>{if(!drawActive)return;e.preventDefault();const t=e.touches[0];isDrawing=true;dLastX=t.clientX;dLastY=t.clientY;},{passive:false});
+  drawCanvas.addEventListener('touchmove',e=>{
+    if(!drawActive||!isDrawing)return;e.preventDefault();
+    const t=e.touches[0];
+    drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';
+    drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(t.clientX,t.clientY);drawCtx.stroke();
+    dLastX=t.clientX;dLastY=t.clientY;
+  },{passive:false});
+  drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+  window.addEventListener('resize',()=>{drawCanvas.width=window.innerWidth;drawCanvas.height=window.innerHeight;});
+}
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').classList.toggle('active',drawActive);
+}
+function setPenColor(c,el){
+  penColor=c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){if(drawCtx)drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height);}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  initSlidePlayer();
+  initDraw();
+  renderTimer();
+});
+</script>
+
+</body>
+</html>

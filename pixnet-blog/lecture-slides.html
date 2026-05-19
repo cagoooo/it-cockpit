@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>痞客邦部落格教學｜演講簡報模式（14 張 · scrapbook 手帳風）</title>
+<meta name="description" content="阿凱老師 × 桃園市石門國民小學｜六年級資訊科技：痞客邦部落格教學演講簡報。Scrapbook 剪貼簿手帳風 × 14 張投影片 × 5 大關卡。">
+<meta name="theme-color" content="#fdf6e3">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=Caveat:wght@400;700&family=Patrick+Hand&family=Indie+Flower&family=Bungee&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset & Base ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --paper:#fdf6e3;
+  --paper-2:#fffaf0;
+  --paper-3:#f7eed5;
+  --paper-line:#e8dab8;
+  --ink:#3a3a3a;
+  --ink-pen:#2a4a8a;
+  --pencil:#7a6a5a;
+  --tape-mint:#a8d8c8;
+  --tape-peach:#f5b8a0;
+  --tape-purple:#c8a8d8;
+  --tape-yellow:#f5e5a0;
+  --washi-yellow:#fff4a8;
+  --washi-pink:#ffd0d0;
+  --washi-green:#d4eecc;
+  --highlight:#fff7a8;
+  --ribbon-red:#d65555;
+  --stamp-blue:#5577aa;
+}
+body{
+  font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+
+/* 手帳本內頁的隱約橫線 */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(transparent 0 27px, var(--paper-line) 27px 28px);
+  opacity:.5;
+}
+
+/* ===== Slide Container ===== */
+.deck{position:fixed;inset:0;overflow:hidden;z-index:1}
+.slide{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  padding:5vh 6vw;
+  opacity:0;transition:opacity .35s;
+  overflow:hidden;
+}
+.slide.active{display:flex;opacity:1}
+
+/* 紙膠帶頂邊裝飾 */
+.slide::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:7px;
+  background:repeating-linear-gradient(90deg,
+    var(--ribbon-red) 0 18px, transparent 18px 28px);
+  opacity:.55;z-index:5;
+}
+
+/* 投影片角落紙膠帶（隨 slide 變色） */
+.washi-corner{
+  position:absolute;width:140px;height:26px;opacity:.88;
+  pointer-events:none;z-index:4;box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.washi-corner.tl{top:18px;left:-26px;transform:rotate(-12deg);background:var(--tape-mint)}
+.washi-corner.tr{top:14px;right:-24px;transform:rotate(11deg);background:var(--tape-peach)}
+.washi-corner.bl{bottom:34px;left:-30px;transform:rotate(8deg);background:var(--tape-purple)}
+.washi-corner.br{bottom:30px;right:-32px;transform:rotate(-9deg);background:var(--tape-yellow)}
+
+/* 左上：投影片標題標籤（緞帶紅） */
+.slide-title-tag{
+  position:absolute;top:26px;left:30px;z-index:6;
+  display:inline-block;background:var(--ribbon-red);color:#fff;
+  font-family:'Bungee','Caveat',cursive;font-size:.8rem;
+  letter-spacing:.18em;padding:6px 16px;
+  box-shadow:3px 3px 0 var(--ink);
+  position:absolute;
+}
+.slide-title-tag::before,.slide-title-tag::after{
+  content:'';position:absolute;top:0;width:11px;height:100%;
+  background:var(--ribbon-red);filter:brightness(.7);
+}
+.slide-title-tag::before{left:-11px;clip-path:polygon(0 0,100% 0,100% 50%,0 100%)}
+.slide-title-tag::after{right:-11px;clip-path:polygon(0 0,100% 50%,0 100%,100% 100%)}
+
+/* 右下：投影片頁碼（手寫感） */
+.slide-num{
+  position:absolute;bottom:22px;right:32px;z-index:6;
+  font-family:'Caveat','Patrick Hand',cursive;font-weight:700;
+  font-size:1.45rem;color:var(--pencil);letter-spacing:.04em;
+  background:var(--paper-2);padding:4px 14px;
+  border:1.5px solid var(--pencil);
+  box-shadow:2px 2px 0 var(--pencil);
+  transform:rotate(2deg);
+}
+
+/* 左下：主講者便利貼泡泡 */
+.speaker{
+  position:absolute;bottom:22px;left:32px;z-index:7;
+  max-width:55%;
+  display:flex;align-items:flex-end;gap:12px;
+}
+.speaker .avatar{
+  width:58px;height:58px;flex-shrink:0;
+  background:var(--washi-pink);
+  border:2.5px solid var(--ink);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.65rem;
+  box-shadow:3px 3px 0 var(--ink);
+  transform:rotate(-4deg);
+}
+.speaker .bubble{
+  background:var(--washi-yellow);
+  border:2px solid var(--ink);
+  padding:11px 16px 12px;
+  font-size:1rem;font-weight:600;line-height:1.55;
+  font-family:'Noto Sans TC',sans-serif;
+  position:relative;
+  box-shadow:3px 4px 10px rgba(0,0,0,.15);
+  max-width:520px;
+  transform:rotate(-.8deg);
+}
+.speaker .bubble::before{
+  content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  width:48px;height:14px;background:rgba(0,0,0,.08);border-radius:2px;
+}
+.speaker .bubble b{color:var(--ribbon-red)}
+
+/* ===== Typography ===== */
+.title-xl{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(3rem,7vw,6rem);line-height:1.08;
+  letter-spacing:-.02em;color:var(--ink-pen);
+}
+.title-lg{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(2.4rem,5.2vw,4.2rem);line-height:1.12;
+  letter-spacing:-.02em;color:var(--ink-pen);
+}
+.title-md{
+  font-family:'Noto Serif TC',serif;font-weight:900;
+  font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1.18;
+  color:var(--ink-pen);margin-bottom:18px;
+}
+.eyebrow{
+  font-family:'Caveat','Patrick Hand',cursive;font-size:1.4rem;font-weight:700;
+  letter-spacing:.04em;color:var(--ribbon-red);
+  margin-bottom:14px;display:flex;align-items:center;gap:14px;
+}
+.eyebrow::after{content:'';flex:1;height:2.5px;background:var(--ribbon-red);max-width:240px;border-radius:2px}
+.lead{
+  font-size:clamp(1.05rem,1.5vw,1.35rem);line-height:1.75;
+  color:var(--ink);max-width:1100px;font-weight:500;
+}
+.lead b{color:var(--ribbon-red);font-weight:900}
+.lead em{font-style:normal;background:linear-gradient(transparent 55%,var(--highlight) 55%);padding:0 4px;font-weight:700}
+
+.hl{
+  background:linear-gradient(transparent 50%,var(--highlight) 50%);
+  padding:0 6px;font-weight:800;
+}
+.tape-code{
+  background:var(--tape-yellow);color:var(--ink);
+  font-family:'Patrick Hand',monospace;
+  padding:2px 10px;border:1px solid var(--ink);font-size:.95em;
+  white-space:nowrap;
+}
+
+/* ===== Sticky-note grid (彈性便利貼牆) ===== */
+.notes-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;margin:8px 0;
+}
+.note{
+  background:var(--washi-yellow);color:var(--ink);
+  padding:18px 20px 20px;
+  font-size:1rem;line-height:1.65;
+  box-shadow:4px 6px 14px rgba(0,0,0,.12);
+  position:relative;
+  border:1px solid rgba(0,0,0,.1);
+}
+.note.pink{background:var(--washi-pink)}
+.note.green{background:var(--washi-green)}
+.note.mint{background:var(--tape-mint)}
+.note.peach{background:var(--tape-peach)}
+.note.purple{background:var(--tape-purple)}
+.note:nth-child(3n){transform:rotate(-1.5deg)}
+.note:nth-child(3n+1){transform:rotate(1.2deg)}
+.note:nth-child(3n+2){transform:rotate(-.6deg)}
+.note::before{
+  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:60px;height:16px;background:rgba(0,0,0,.1);border-radius:2px;
+}
+.note h5{
+  font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:900;
+  color:var(--ribbon-red);margin-bottom:8px;
+}
+.note h5 .ic{font-size:1.4rem;margin-right:6px}
+.note p,.note ul{font-size:.98rem;line-height:1.65}
+.note ul{padding-left:1.1rem;margin-top:6px}
+.note ul li{margin-bottom:4px}
+.note .pen-note{
+  font-family:'Caveat',cursive;color:var(--ink-pen);font-size:1.15rem;
+  margin-top:6px;font-weight:700;
+}
+
+/* 拍立得照片框 */
+.polaroid{
+  background:#fff;padding:14px 14px 38px;
+  box-shadow:6px 8px 18px rgba(0,0,0,.18);
+  border:1px solid rgba(0,0,0,.08);
+  position:relative;display:inline-block;
+}
+.polaroid .photo{
+  width:100%;background:var(--paper-3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:5rem;color:var(--pencil);
+}
+.polaroid .caption{
+  position:absolute;bottom:8px;left:14px;right:14px;
+  font-family:'Caveat',cursive;font-size:1.15rem;color:var(--ink);
+  text-align:center;font-weight:700;
+}
+
+/* 緞帶印章 */
+.stamp{
+  display:inline-block;font-family:'Bungee',cursive;font-size:.95rem;
+  color:var(--ribbon-red);border:3px double var(--ribbon-red);
+  padding:8px 18px;letter-spacing:.14em;
+  transform:rotate(-6deg);background:rgba(255,255,255,.4);
+  box-shadow:inset 0 0 0 1px rgba(214,85,85,.3);
+}
+.stamp.blue{color:var(--stamp-blue);border-color:var(--stamp-blue);box-shadow:inset 0 0 0 1px rgba(85,119,170,.3)}
+
+/* 手繪箭頭 */
+.arrow-hand{
+  font-family:'Caveat',cursive;font-size:2rem;font-weight:700;
+  color:var(--ribbon-red);display:inline-block;transform:rotate(-8deg);
+}
+
+/* SCRAPBOOK 卡 - 大型內文卡片 */
+.scrap-card{
+  background:var(--paper-2);border:2px solid var(--ink);
+  padding:22px 26px;
+  box-shadow:5px 8px 18px rgba(0,0,0,.12);
+  position:relative;
+}
+.scrap-card::before{
+  content:'';position:absolute;top:-11px;left:36px;
+  width:110px;height:22px;background:var(--tape-mint);
+  transform:rotate(-3deg);opacity:.85;
+}
+.scrap-card.peach::before{background:var(--tape-peach)}
+.scrap-card.purple::before{background:var(--tape-purple)}
+.scrap-card.yellow::before{background:var(--tape-yellow)}
+.scrap-card h4{
+  margin:0 0 14px;font-family:'Noto Serif TC',serif;
+  font-size:1.4rem;color:var(--ribbon-red);font-weight:900;
+}
+
+/* 步驟標記 */
+.step-pill{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--ink-pen);color:var(--paper);
+  font-family:'Caveat',cursive;font-size:1.2rem;font-weight:700;
+  padding:4px 14px;letter-spacing:.04em;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.step-pill.red{background:var(--ribbon-red)}
+
+/* 表格 */
+.scrap-table{
+  width:100%;border-collapse:collapse;margin:8px 0;
+  background:var(--paper-2);font-size:1rem;
+}
+.scrap-table th{
+  background:var(--ink-pen);color:var(--paper);
+  padding:10px 14px;text-align:left;
+  font-family:'Patrick Hand',monospace;font-size:1rem;font-weight:700;
+  border:2px solid var(--ink);
+}
+.scrap-table td{padding:11px 14px;border:1px solid var(--pencil);font-weight:500;line-height:1.55;font-size:.97rem}
+.scrap-table tr:nth-child(2n) td{background:var(--paper-3)}
+.scrap-table .big{font-size:1.1em;color:var(--ribbon-red);font-weight:900}
+
+/* ===== Progress Bar ===== */
+.progress{
+  position:fixed;bottom:0;left:0;right:0;height:5px;
+  background:var(--paper-3);z-index:99;
+}
+.progress-fill{
+  height:100%;background:var(--ribbon-red);transition:width .35s;
+  box-shadow:0 0 6px var(--ribbon-red);
+}
+
+/* ===== Hint Bar ===== */
+.hint{
+  position:fixed;top:12px;right:22px;z-index:99;
+  font-family:'Caveat','Patrick Hand',cursive;font-size:1rem;font-weight:700;
+  color:var(--pencil);
+  background:var(--paper-2);
+  border:1.5px solid var(--pencil);
+  padding:5px 14px;
+  letter-spacing:.03em;
+  pointer-events:none;opacity:.82;
+}
+.hint .kbd{
+  display:inline-block;background:var(--washi-yellow);color:var(--ink);
+  border:1px solid var(--ink);padding:0 6px;font-size:.85rem;
+  font-family:'Patrick Hand',monospace;margin:0 2px;
+}
+
+/* ===== Overview Mode ===== */
+.overview{
+  position:fixed;inset:0;background:var(--paper-3);
+  display:none;padding:32px 36px;overflow-y:auto;z-index:200;
+  flex-direction:column;
+}
+.overview.show{display:flex}
+.overview::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:14px;
+  background:repeating-linear-gradient(90deg,
+    var(--ribbon-red) 0 22px, var(--tape-mint) 22px 38px, var(--tape-peach) 38px 56px,
+    var(--tape-purple) 56px 70px, var(--tape-yellow) 70px 88px);
+  opacity:.7;
+}
+.overview h3{
+  font-family:'Noto Serif TC',serif;color:var(--ink-pen);
+  font-size:1.8rem;margin:18px 0 22px;letter-spacing:-.01em;
+  font-weight:900;
+}
+.overview h3 .stamp{margin-left:14px}
+.overview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:18px;
+}
+.ov-card{
+  background:var(--paper-2);
+  border:2px solid var(--ink);
+  padding:14px 16px;cursor:pointer;
+  transition:.15s;position:relative;
+  box-shadow:3px 4px 0 var(--ink);
+}
+.ov-card::before{
+  content:'';position:absolute;top:-8px;left:18px;width:70px;height:16px;
+  background:var(--tape-mint);transform:rotate(-3deg);opacity:.85;
+}
+.ov-card:nth-child(3n)::before{background:var(--tape-peach)}
+.ov-card:nth-child(3n+1)::before{background:var(--tape-purple)}
+.ov-card:nth-child(3n+2)::before{background:var(--tape-yellow)}
+.ov-card:hover{transform:translate(-2px,-2px);box-shadow:5px 6px 0 var(--ribbon-red)}
+.ov-card .num{
+  position:absolute;top:8px;right:12px;
+  font-family:'Bungee',sans-serif;font-size:.85rem;
+  color:var(--ribbon-red);
+}
+.ov-card .t{font-family:'Noto Serif TC',serif;font-weight:900;font-size:1.1rem;color:var(--ink-pen);margin-top:6px;margin-bottom:4px}
+.ov-card .s{font-size:.88rem;color:var(--pencil);line-height:1.55;font-family:'Noto Sans TC',sans-serif}
+
+/* ===== Slide-specific layouts ===== */
+/* Slide 1 cover */
+.cover-stage{
+  flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;position:relative;padding:0 4vw;
+}
+.cover-stage .quote{
+  font-family:'Caveat',cursive;font-size:clamp(1.4rem,2.4vw,2rem);
+  color:var(--ribbon-red);letter-spacing:.03em;margin-bottom:16px;font-weight:700;
+}
+.cover-stage .meta{
+  margin-top:28px;display:flex;gap:24px;flex-wrap:wrap;justify-content:center;
+}
+.cover-stage .meta .chip{
+  background:var(--paper-2);border:2px solid var(--ink);
+  padding:8px 18px;font-family:'Patrick Hand',monospace;
+  font-size:1rem;box-shadow:3px 3px 0 var(--ink);
+  transform:rotate(var(--r,-1deg));
+}
+.cover-stage .meta .chip:nth-child(2){--r:1deg;background:var(--washi-green)}
+.cover-stage .meta .chip:nth-child(3){--r:-1deg;background:var(--washi-pink)}
+
+/* 2-col layout */
+.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;flex:1;min-height:0}
+.cols.even{grid-template-columns:1fr 1fr}
+.cols.text-img{grid-template-columns:1.5fr 1fr}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;flex:1;min-height:0}
+.col{display:flex;flex-direction:column;justify-content:center;min-width:0}
+
+/* Hashtag chips */
+.tag-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.tag-chip{
+  background:var(--washi-green);color:var(--ink);
+  font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700;
+  padding:6px 14px;border:1.5px solid var(--ink);
+  box-shadow:2px 2px 0 var(--ink);
+  transform:rotate(var(--r,-1deg));
+}
+.tag-chip:nth-child(2n){background:var(--washi-pink);--r:1.2deg}
+.tag-chip:nth-child(3n){background:var(--washi-yellow);--r:-.6deg}
+
+/* Big number callout */
+.big-num{
+  font-family:'Bungee',sans-serif;font-size:clamp(3.6rem,7vw,5.6rem);
+  color:var(--ribbon-red);line-height:.95;letter-spacing:-.02em;
+  text-shadow:4px 4px 0 var(--ink);
+}
+.big-num .unit{font-size:.4em;color:var(--ink);text-shadow:none;margin-left:6px;font-family:'Caveat',cursive;font-weight:700}
+
+/* Title formulas list */
+.formula-list{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.formula-card{
+  background:var(--paper-2);border:2px solid var(--ink);
+  padding:14px 18px;position:relative;
+  box-shadow:4px 5px 0 var(--ink-pen);
+}
+.formula-card::before{
+  content:'';position:absolute;top:-9px;left:18px;width:80px;height:16px;
+  background:var(--tape-peach);transform:rotate(-4deg);opacity:.85;
+}
+.formula-card:nth-child(2)::before{background:var(--tape-mint)}
+.formula-card:nth-child(3)::before{background:var(--tape-purple)}
+.formula-card:nth-child(4)::before{background:var(--tape-yellow)}
+.formula-card:nth-child(5)::before{background:var(--washi-pink)}
+.formula-card:nth-child(6)::before{background:var(--washi-green)}
+.formula-card h6{
+  font-family:'Noto Serif TC',serif;font-size:1.1rem;font-weight:900;
+  color:var(--ribbon-red);margin-bottom:4px;
+}
+.formula-card .ex{font-family:'Caveat',cursive;font-size:1.15rem;color:var(--ink-pen);font-weight:700}
+
+/* SOP arrow flow */
+.sop-flow{display:flex;align-items:stretch;gap:14px;flex-wrap:wrap;margin-top:12px}
+.sop-step{
+  flex:1;min-width:200px;background:var(--paper-2);
+  border:2.5px solid var(--ink);padding:18px 18px 22px;
+  position:relative;box-shadow:4px 5px 0 var(--ribbon-red);
+}
+.sop-step .sop-num{
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  width:42px;height:42px;background:var(--ribbon-red);color:#fff;
+  border:2.5px solid var(--ink);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bungee',sans-serif;font-size:1.1rem;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.sop-step h6{
+  font-family:'Noto Serif TC',serif;font-size:1.15rem;font-weight:900;
+  color:var(--ink-pen);margin:14px 0 8px;text-align:center;
+}
+.sop-step p{font-size:.95rem;line-height:1.6}
+
+/* Bullying types grid */
+.bully-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.bully-card{
+  background:var(--paper-2);border:2px solid var(--ink);
+  padding:16px 18px;position:relative;
+  box-shadow:4px 5px 0 var(--ink);
+}
+.bully-card .ic{font-size:2.2rem;display:block;margin-bottom:4px}
+.bully-card h6{
+  font-family:'Noto Serif TC',serif;font-size:1.15rem;font-weight:900;
+  color:var(--ribbon-red);margin-bottom:4px;
+}
+.bully-card p{font-size:.95rem;line-height:1.6}
+
+/* Privacy 4-card */
+.priv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.priv-card{
+  background:var(--washi-yellow);padding:14px 12px;
+  border:2px solid var(--ink);box-shadow:3px 4px 0 var(--ink);
+  text-align:center;transform:rotate(var(--r,-1deg));
+}
+.priv-card:nth-child(2){background:var(--washi-pink);--r:1deg}
+.priv-card:nth-child(3){background:var(--washi-green);--r:-.6deg}
+.priv-card:nth-child(4){background:var(--tape-mint);--r:1.2deg}
+.priv-card .ic{font-size:2rem;display:block;margin-bottom:6px}
+.priv-card h6{font-family:'Noto Serif TC',serif;font-size:1.1rem;color:var(--ink-pen);margin-bottom:4px;font-weight:900}
+.priv-card p{font-size:.85rem;line-height:1.5}
+
+/* CC icons */
+.cc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:10px 0}
+.cc-item{
+  background:var(--paper-2);border:2px solid var(--ink);padding:14px 12px;
+  text-align:center;box-shadow:3px 4px 0 var(--ink);
+}
+.cc-item .ic{
+  display:inline-block;width:48px;height:48px;border-radius:50%;
+  background:var(--ink);color:var(--paper);
+  font-family:'Bungee',sans-serif;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 8px;
+}
+.cc-item h6{font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:900;color:var(--ink-pen)}
+.cc-item p{font-size:.85rem;line-height:1.5;color:var(--pencil);margin-top:2px}
+
+/* Print quote / digital footprint */
+.q-block{
+  border-left:5px solid var(--ribbon-red);
+  padding:12px 18px;background:var(--paper-2);
+  font-family:'Noto Serif TC',serif;font-style:italic;
+  font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1.5;
+  color:var(--ink-pen);margin:14px 0;font-weight:700;
+}
+
+/* Closing slide */
+.close-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:32px;flex:1;align-items:center}
+.qr-fake{
+  width:200px;height:200px;background:#fff;border:3px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Patrick Hand',monospace;color:var(--ink);
+  box-shadow:6px 6px 0 var(--ink);
+  background:
+    linear-gradient(45deg,#000 25%,transparent 25%) 0 0/16px 16px,
+    linear-gradient(-45deg,#000 25%,transparent 25%) 0 0/16px 16px,
+    linear-gradient(45deg,transparent 75%,#000 75%) 0 0/16px 16px,
+    linear-gradient(-45deg,transparent 75%,#000 75%) 0 0/16px 16px,#fff;
+  position:relative;
+}
+.qr-fake::after{
+  content:'掃我看駕駛艙';position:absolute;bottom:-32px;left:0;right:0;
+  font-family:'Caveat',cursive;color:var(--ink);font-size:1.1rem;font-weight:700;text-align:center;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .slide{padding:6vh 6vw}
+  .cols,.cols.text-img,.close-grid{grid-template-columns:1fr}
+  .cols-3,.priv-grid,.cc-grid{grid-template-columns:repeat(2,1fr)}
+  .formula-list,.bully-grid{grid-template-columns:1fr}
+  .speaker{max-width:90%;bottom:14px;left:18px}
+  .slide-title-tag{top:18px;left:18px;font-size:.7rem}
+  .slide-num{right:18px;bottom:14px;font-size:1.1rem}
+}
+
+@media print{
+  body::before{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh}
+  .progress,.hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ============ SLIDE 1 · 封面 ============ -->
+  <section class="slide active" data-slide="1">
+    <div class="washi-corner tl"></div>
+    <div class="washi-corner tr"></div>
+    <div class="washi-corner bl"></div>
+    <div class="washi-corner br"></div>
+    <div class="slide-title-tag">01 · COVER</div>
+    <div class="slide-num">01 / 14</div>
+
+    <div class="cover-stage">
+      <div class="quote">「✏️ 不只是寫字，是把生活留下來。」</div>
+      <h1 class="title-xl">把生活變成<br><span style="color:var(--ribbon-red)">永遠存在的書</span></h1>
+      <div style="margin-top:24px;font-family:'Caveat',cursive;font-size:1.6rem;color:var(--ink-pen);font-weight:700">
+        痞客邦部落格教學 · 六年級資訊科技
+      </div>
+      <div class="meta">
+        <span class="chip">📅 1 節課（40 分鐘）</span>
+        <span class="chip">🎯 六年級 · 5 大關卡</span>
+        <span class="chip">👨‍🏫 阿凱老師 · 石門國小</span>
+      </div>
+      <div style="margin-top:30px"><span class="stamp">FROM PIXNET · WITH ❤️</span></div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">👨‍🏫</div>
+      <div class="bubble">
+        各位小朋友早安！今天我們要學的不只是「怎麼貼文章」，而是 <b>怎麼把生活變成一本永遠存在的書</b>。準備好了嗎？翻開你的「網路日記本」～
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 2 · 開場暖身 ============ -->
+  <section class="slide" data-slide="2">
+    <div class="washi-corner tl" style="background:var(--tape-peach)"></div>
+    <div class="washi-corner tr" style="background:var(--tape-yellow)"></div>
+    <div class="slide-title-tag">02 · OPENING</div>
+    <div class="slide-num">02 / 14</div>
+
+    <div class="eyebrow">📖 開場暖身 · WARM UP</div>
+    <h2 class="title-lg">還記得你<span class="hl">第一次自己做日記</span>的感覺嗎？</h2>
+
+    <div class="cols text-img" style="margin-top:24px">
+      <div class="col">
+        <p class="lead">
+          可能是一本封面亂亂貼貼紙的本子<br>
+          可能是一張你寫滿心情的<em>勞作紙</em><br>
+          也可能是你<b>畫了 8 隻小人</b>的便條紙。<br><br>
+          那種「我想把這件事留下來」的感覺<br>
+          ——其實就是<b>寫部落格的開始</b>。
+        </p>
+        <div class="tag-chips">
+          <span class="tag-chip">#貼紙</span>
+          <span class="tag-chip">#塗鴉</span>
+          <span class="tag-chip">#小祕密</span>
+          <span class="tag-chip">#我自己的書</span>
+        </div>
+      </div>
+      <div class="col" style="align-items:center;display:flex;justify-content:center">
+        <div class="polaroid" style="transform:rotate(-4deg);width:260px">
+          <div class="photo" style="height:200px">📔</div>
+          <div class="caption">2018.06 · 我的第一本日記</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">💭</div>
+      <div class="bubble">
+        舉手：誰小時候做過自己的「秘密本」？（停 5 秒）這節課，我們要做的就是<b>把這個本子搬到網路上</b>，全世界都看得到喔！
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3 · 痞客邦是什麼 ============ -->
+  <section class="slide" data-slide="3">
+    <div class="washi-corner tl"></div>
+    <div class="washi-corner br" style="background:var(--tape-mint)"></div>
+    <div class="slide-title-tag">03 · WHAT IS PIXNET</div>
+    <div class="slide-num">03 / 14</div>
+
+    <div class="eyebrow">🏠 第 1 關 · 認識痞客邦</div>
+    <h2 class="title-lg">痞客邦 PIXNET ——<br>台灣最大的<span class="hl">部落格之家</span></h2>
+
+    <div class="cols" style="margin-top:18px">
+      <div class="col">
+        <div class="scrap-card peach">
+          <h4>🕰️ 22 年的時光膠囊</h4>
+          <p class="lead" style="font-size:1rem">
+            <b>2003</b>　誕生於交大照片分享網<br>
+            <b>2007</b>　被城邦媒體集團收購<br>
+            <b>2016</b>　Alexa 排名衝上<em>台灣第 1 名</em><br>
+            <b>2025</b>　被「沛獅力」收購，重新出發 🚀
+          </p>
+        </div>
+        <div class="tag-chips" style="margin-top:14px">
+          <span class="tag-chip">#美食</span>
+          <span class="tag-chip">#旅遊</span>
+          <span class="tag-chip">#親子</span>
+          <span class="tag-chip">#3C</span>
+        </div>
+      </div>
+      <div class="col" style="justify-content:center;gap:18px">
+        <div style="display:flex;gap:14px;align-items:flex-end;justify-content:center">
+          <div style="text-align:center">
+            <div class="big-num">9<span class="unit">億篇</span></div>
+            <div style="font-family:'Caveat',cursive;color:var(--pencil);font-size:1.15rem;font-weight:700">累計文章數</div>
+          </div>
+          <div style="text-align:center">
+            <div class="big-num" style="color:var(--ink-pen);text-shadow:4px 4px 0 var(--washi-yellow)">70<span class="unit">%</span></div>
+            <div style="font-family:'Caveat',cursive;color:var(--pencil);font-size:1.15rem;font-weight:700">台灣訪客比例</div>
+          </div>
+        </div>
+        <div class="stamp blue" style="align-self:center;margin-top:12px">SINCE 2003 · TAIWAN</div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">📚</div>
+      <div class="bubble">
+        痞客邦比在座很多小朋友還年長唷！它幾乎收藏了 <b>22 年的台灣生活記憶</b>。等等我們就要在這個「大書架」上放上自己的書。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 4 · 為什麼國小生要寫 ============ -->
+  <section class="slide" data-slide="4">
+    <div class="washi-corner tr" style="background:var(--tape-purple)"></div>
+    <div class="washi-corner bl"></div>
+    <div class="slide-title-tag">04 · WHY KIDS</div>
+    <div class="slide-num">04 / 14</div>
+
+    <div class="eyebrow">🌱 為什麼國小生就該寫部落格</div>
+    <h2 class="title-md">蔡依橙醫師講的 5 大好處 <span class="stamp blue" style="font-size:.7rem;margin-left:10px">EXPERT TIP</span></h2>
+
+    <div class="notes-grid" style="margin-top:14px">
+      <div class="note">
+        <h5><span class="ic">💪</span>1. 練恆毅力</h5>
+        <p>持續寫 1 個月 = 練到「<b>不放棄</b>」的肌肉。比體育課跑操場還累，但帶得走一輩子。</p>
+      </div>
+      <div class="note pink">
+        <h5><span class="ic">✍️</span>2. 作文進步</h5>
+        <p>蔡醫師女兒寫了半年，<b>會考作文拿了 98 分</b>！因為每天練「把事情講清楚」。</p>
+      </div>
+      <div class="note green">
+        <h5><span class="ic">🎨</span>3. 變科技達人</h5>
+        <p>會排版、會放圖、會貼影片，<b>數位素養</b>自動點滿。電腦課老師都驚呆。</p>
+      </div>
+      <div class="note mint">
+        <h5><span class="ic">🤝</span>4. 社會化</h5>
+        <p>讀者會留言、會討論，學會<b>溫和回應陌生人</b>，比 IG 訊息禮貌很多。</p>
+      </div>
+      <div class="note peach">
+        <h5><span class="ic">🫧</span>5. 情緒出口</h5>
+        <p>心情不好怎麼辦？把它<b>寫下來</b>。寫完之後，你會發現自己長大了一點點。</p>
+      </div>
+      <div class="note purple">
+        <h5><span class="ic">🏆</span>真實案例</h5>
+        <p class="pen-note">「我女兒從三年級寫到國中<br>結果作文 98 分，<br>還上了第一志願！」</p>
+        <p style="font-size:.85rem;color:var(--pencil);margin-top:6px">—— 蔡依橙醫師</p>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">🌟</div>
+      <div class="bubble">
+        所以寫部落格 <b>真的不只是玩</b>。它是把「練功」藏在「玩」裡面 —— 半年後你會發現自己變好強！
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 5 · 6 個吸睛標題公式 ============ -->
+  <section class="slide" data-slide="5">
+    <div class="washi-corner tl" style="background:var(--tape-yellow)"></div>
+    <div class="washi-corner br" style="background:var(--tape-mint)"></div>
+    <div class="slide-title-tag">05 · 6 TITLE FORMULAS</div>
+    <div class="slide-num">05 / 14</div>
+
+    <div class="eyebrow">🎯 第 2 關 · 文案開外掛</div>
+    <h2 class="title-md">6 個「<span class="hl">點下去就停不下來</span>」的標題公式</h2>
+
+    <div class="formula-list" style="margin-top:14px">
+      <div class="formula-card">
+        <h6>① 受眾 + 利益</h6>
+        <p style="font-size:.95rem">明確告訴讀者「這是給誰看 + 看了能得到什麼」。</p>
+        <div class="ex">→ 國小生也能 30 分鐘做出第一篇文章！</div>
+      </div>
+      <div class="formula-card">
+        <h6>② 奇數 + 承諾</h6>
+        <p style="font-size:.95rem">用 <b>3、5、7</b> 等奇數比偶數更吸睛。</p>
+        <div class="ex">→ 5 個讓你媽說「好棒」的部落格主題</div>
+      </div>
+      <div class="formula-card">
+        <h6>③ 為什麼 / 如何</h6>
+        <p style="font-size:.95rem">引發好奇心 + 教方法，最受讀者愛。</p>
+        <div class="ex">→ 為什麼我的貼文都沒人看？</div>
+      </div>
+      <div class="formula-card">
+        <h6>④ 最 / 唯一</h6>
+        <p style="font-size:.95rem">用最高級形容詞讓人忍不住點。</p>
+        <div class="ex">→ 全班最低調但點閱最高的部落格秘密</div>
+      </div>
+      <div class="formula-card">
+        <h6>⑤ 時事 / 名人</h6>
+        <p style="font-size:.95rem">搭話題或紅人，能蹭到流量。</p>
+        <div class="ex">→ 從周杰倫新 MV 學寫日記的 3 個技巧</div>
+      </div>
+      <div class="formula-card">
+        <h6>⑥ 具體情境</h6>
+        <p style="font-size:.95rem">寫出畫面，讀者一秒進入腦中影像。</p>
+        <div class="ex">→ 在下雨天的便利商店遇到一隻黑貓</div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">🎯</div>
+      <div class="bubble">
+        記住一句話：「<b>標題不好，內容再棒也沒人點</b>」。今天回家試試把今天午餐的標題改成這 6 種寫法，看哪一種最讓你期待。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 6 · 第一篇 SOP ============ -->
+  <section class="slide" data-slide="6">
+    <div class="washi-corner tl" style="background:var(--tape-peach)"></div>
+    <div class="washi-corner br" style="background:var(--tape-purple)"></div>
+    <div class="slide-title-tag">06 · WRITING SOP</div>
+    <div class="slide-num">06 / 14</div>
+
+    <div class="eyebrow">✍️ 第一篇文章 · 3 段式 SOP</div>
+    <h2 class="title-md">Hook → Body → CTA<br><span style="font-family:'Caveat',cursive;color:var(--pencil);font-size:1.4rem">記住這 3 個字，永遠不會卡稿</span></h2>
+
+    <div class="sop-flow" style="margin-top:32px">
+      <div class="sop-step">
+        <div class="sop-num">1</div>
+        <h6>🎣 Hook 開頭</h6>
+        <p><b>3 秒勾住讀者</b>。用問題、故事、驚人數字。</p>
+        <p style="font-family:'Caveat',cursive;color:var(--ink-pen);margin-top:8px;font-size:1.05rem;font-weight:700">
+          「你知道嗎？我們班一半的同學都還沒用過部落格…」
+        </p>
+      </div>
+      <div class="sop-step" style="box-shadow:4px 5px 0 var(--ink-pen)">
+        <div class="sop-num" style="background:var(--ink-pen)">2</div>
+        <h6>📝 Body 段落</h6>
+        <p>每段一個重點，<b>圖文交替</b>，行距留白。</p>
+        <p style="font-family:'Caveat',cursive;color:var(--ink-pen);margin-top:8px;font-size:1.05rem;font-weight:700">
+          一段 ≤ 4 行 · 標題 + 圖片 + 內文 + 圖片
+        </p>
+      </div>
+      <div class="sop-step" style="box-shadow:4px 5px 0 var(--stamp-blue)">
+        <div class="sop-num" style="background:var(--stamp-blue)">3</div>
+        <h6>📣 CTA 結尾</h6>
+        <p>引導讀者<b>留言、分享、收藏</b>，互動率翻倍。</p>
+        <p style="font-family:'Caveat',cursive;color:var(--ink-pen);margin-top:8px;font-size:1.05rem;font-weight:700">
+          「留言告訴我你想看下一篇寫什麼？」
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top:22px;display:flex;justify-content:center;gap:14px;align-items:center">
+      <span class="stamp">✏️ 一篇文章 = 300 ~ 600 字</span>
+      <span class="arrow-hand">→</span>
+      <span class="stamp blue">每天 30 分鐘 = 1 篇</span>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">📝</div>
+      <div class="bubble">
+        卡稿的時候，回頭看這三個字：「<b>Hook → Body → CTA</b>」。寫不出來？先寫最後一段邀請留言，再倒推寫 Body，最後想 Hook。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 7 · 圖片+排版+分類標籤 ============ -->
+  <section class="slide" data-slide="7">
+    <div class="washi-corner tl"></div>
+    <div class="washi-corner tr" style="background:var(--tape-yellow)"></div>
+    <div class="slide-title-tag">07 · IMAGES & TAGS</div>
+    <div class="slide-num">07 / 14</div>
+
+    <div class="eyebrow">🎨 第 3 關 · 圖片排版 + 分類標籤</div>
+    <h2 class="title-md">讓你的部落格<span class="hl">看起來像專業雜誌</span></h2>
+
+    <div class="cols even" style="margin-top:18px">
+      <div class="col">
+        <div class="scrap-card">
+          <h4>📷 圖片小撇步</h4>
+          <ul style="padding-left:1.2rem;line-height:1.8">
+            <li><b>一次上傳 30 張</b>都沒問題（拖曳即可）</li>
+            <li>建議寬度 <span class="tape-code">800 px</span>，太大會跑很慢</li>
+            <li>每張圖加<b>圖說文字</b>（SEO 加分）</li>
+            <li>會員享 <b>200 GB</b> 雲端空間 ☁️</li>
+            <li>切換到「原始碼模式」可塞 HTML 表格、字體顏色</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <div class="scrap-card purple">
+          <h4>🏷️ 分類 vs 標籤</h4>
+          <table class="scrap-table">
+            <thead>
+              <tr><th></th><th>分類 Category</th><th>標籤 Tag</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>數量</b></td><td>3 ~ 5 個</td><td class="big">無限</td></tr>
+              <tr><td><b>用途</b></td><td>像書本目錄</td><td>像便利貼</td></tr>
+              <tr><td><b>例子</b></td><td>美食 / 旅遊 / 學習</td><td>#夜市 #台北 #雞排</td></tr>
+            </tbody>
+          </table>
+          <p style="font-family:'Caveat',cursive;color:var(--ink-pen);font-size:1.15rem;font-weight:700;margin-top:8px">
+            👉 分類 = 大書架；標籤 = 小書籤
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">🎨</div>
+      <div class="bubble">
+        排版口訣：「<b>圖文交替、留白寬鬆、字體統一</b>」。記住一張圖配一段話，看的人才不會累。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 8 · 網路霸凌 ============ -->
+  <section class="slide" data-slide="8">
+    <div class="washi-corner tl" style="background:var(--ribbon-red);opacity:.7"></div>
+    <div class="washi-corner br" style="background:var(--tape-peach)"></div>
+    <div class="slide-title-tag">08 · CYBER BULLYING</div>
+    <div class="slide-num">08 / 14</div>
+
+    <div class="eyebrow">🛡️ 第 4 關 · 自我保護</div>
+    <h2 class="title-md">遇到網路霸凌？<span class="hl">3 步驟自救法</span></h2>
+
+    <div class="cols" style="margin-top:14px">
+      <div class="col">
+        <div class="bully-grid">
+          <div class="bully-card">
+            <span class="ic">💬</span>
+            <h6>① 語言型</h6>
+            <p>留言罵髒話、嘲笑長相、攻擊家人。</p>
+          </div>
+          <div class="bully-card">
+            <span class="ic">🚫</span>
+            <h6>② 排擠型</h6>
+            <p>刻意已讀不回、群組踢人、孤立同學。</p>
+          </div>
+          <div class="bully-card">
+            <span class="ic">📢</span>
+            <h6>③ 謠言型</h6>
+            <p>散播假消息、PS 圖片、惡意爆料。</p>
+          </div>
+          <div class="bully-card">
+            <span class="ic">🎭</span>
+            <h6>④ 假冒型</h6>
+            <p>盜用照片開假帳號，假裝是別人發言。</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="scrap-card peach" style="background:var(--washi-pink)">
+          <h4 style="color:var(--ribbon-red)">⛑️ 3 步驟自救</h4>
+          <ol style="padding-left:1.5rem;line-height:2;font-size:1.05rem">
+            <li><b>📸 截圖保留證據</b><br><span style="font-family:'Caveat',cursive;color:var(--pencil)">不要刪除，這是日後的關鍵</span></li>
+            <li><b>🚪 封鎖加檢舉</b><br><span style="font-family:'Caveat',cursive;color:var(--pencil)">每個平台都有「檢舉」按鈕</span></li>
+            <li><b>🗣️ 告訴大人</b><br><span style="font-family:'Caveat',cursive;color:var(--pencil)">爸媽 / 老師 / 輔導室</span></li>
+          </ol>
+          <div style="margin-top:14px;padding:10px 14px;background:var(--paper-2);border:2px dashed var(--ribbon-red);text-align:center">
+            <span style="font-family:'Bungee',sans-serif;color:var(--ribbon-red);font-size:1.4rem">☎️ 1953</span><br>
+            <span style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--ink)">反霸凌專線 · 24 小時免費</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">🛡️</div>
+      <div class="bubble">
+        記住：<b>被霸凌不是你的錯</b>。第一步永遠是「截圖」，第二步「封鎖」，第三步「找大人」。打 1953 不用錢、不會被罵。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 9 · 隱私+留言禮儀 ============ -->
+  <section class="slide" data-slide="9">
+    <div class="washi-corner tl" style="background:var(--tape-mint)"></div>
+    <div class="washi-corner tr" style="background:var(--tape-purple)"></div>
+    <div class="slide-title-tag">09 · PRIVACY & MANNERS</div>
+    <div class="slide-num">09 / 14</div>
+
+    <div class="eyebrow">🔐 4 種隱私 + 5 條禮儀</div>
+    <h2 class="title-md">寫之前先問自己 ——「<span class="hl">這篇要給誰看</span>？」</h2>
+
+    <div class="priv-grid" style="margin-top:18px">
+      <div class="priv-card">
+        <span class="ic">🌍</span>
+        <h6>公開</h6>
+        <p>所有人都能看到、搜尋得到</p>
+      </div>
+      <div class="priv-card">
+        <span class="ic">🚫</span>
+        <h6>不公開</h6>
+        <p>只有自己看得到（私人日記）</p>
+      </div>
+      <div class="priv-card">
+        <span class="ic">👯</span>
+        <h6>僅好友</h6>
+        <p>追蹤者 / 好友才能看到</p>
+      </div>
+      <div class="priv-card">
+        <span class="ic">🔑</span>
+        <h6>密碼保護</h6>
+        <p>輸入密碼才能看（最安全）</p>
+      </div>
+    </div>
+
+    <div class="scrap-card yellow" style="margin-top:14px;background:var(--paper-2)">
+      <h4>💬 留言禮儀 5 條</h4>
+      <div class="cols-3" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;flex:none">
+        <div style="text-align:center;padding:8px 6px;background:var(--washi-yellow);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)">
+          <div style="font-size:1.6rem">😮‍💨</div>
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem">① 發送前<br>深呼吸</div>
+        </div>
+        <div style="text-align:center;padding:8px 6px;background:var(--washi-pink);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)">
+          <div style="font-size:1.6rem">🎯</div>
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem">② 讚美<br>要具體</div>
+        </div>
+        <div style="text-align:center;padding:8px 6px;background:var(--washi-green);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)">
+          <div style="font-size:1.6rem">🔐</div>
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem">③ 別洩<br>個資</div>
+        </div>
+        <div style="text-align:center;padding:8px 6px;background:var(--tape-mint);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)">
+          <div style="font-size:1.6rem">🌈</div>
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem">④ 不同意<br>也禮貌</div>
+        </div>
+        <div style="text-align:center;padding:8px 6px;background:var(--tape-peach);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)">
+          <div style="font-size:1.6rem">📝</div>
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem">⑤ 簽名<br>不匿名</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">🔐</div>
+      <div class="bubble">
+        小提醒：<b>寫家裡地址、電話、學校全名</b>都算洩個資！可以寫「我家附近的公園」、「我們學校的操場」就好。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 10 · 智財權+創用CC ============ -->
+  <section class="slide" data-slide="10">
+    <div class="washi-corner tl" style="background:var(--tape-yellow)"></div>
+    <div class="washi-corner br"></div>
+    <div class="slide-title-tag">10 · COPYRIGHT & CC</div>
+    <div class="slide-num">10 / 14</div>
+
+    <div class="eyebrow">©️ 第 5 關 · 智慧財產權</div>
+    <h2 class="title-md">用別人的圖之前<span class="hl">先問這 4 個字</span></h2>
+
+    <div class="cc-grid" style="margin-top:18px">
+      <div class="cc-item">
+        <div class="ic">BY</div>
+        <h6>姓名標示</h6>
+        <p>一定要寫出原作者</p>
+      </div>
+      <div class="cc-item">
+        <div class="ic">NC</div>
+        <h6>非商業</h6>
+        <p>不能拿來賺錢</p>
+      </div>
+      <div class="cc-item">
+        <div class="ic">ND</div>
+        <h6>禁止改作</h6>
+        <p>不能修改原作品</p>
+      </div>
+      <div class="cc-item">
+        <div class="ic">SA</div>
+        <h6>相同方式分享</h6>
+        <p>改作後也要 CC 授權</p>
+      </div>
+    </div>
+
+    <div class="cols even" style="margin-top:18px">
+      <div class="col">
+        <div class="scrap-card peach">
+          <h4>🆓 3 大免費圖庫</h4>
+          <ul style="padding-left:1.2rem;font-size:1.05rem;line-height:1.9">
+            <li><b>Unsplash</b> · 高解析度攝影作品</li>
+            <li><b>Pexels</b> · 照片 + 影片都有</li>
+            <li><b>Pixabay</b> · 照片、向量圖、插畫</li>
+          </ul>
+          <p style="font-family:'Caveat',cursive;color:var(--ink-pen);font-size:1.15rem;font-weight:700;margin-top:8px">
+            👉 都是 CC0 授權 = 完全免費可商用
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="scrap-card" style="background:var(--washi-pink)">
+          <h4 style="color:var(--ribbon-red)">⚠️ 絕對不可以</h4>
+          <ul style="padding-left:1.2rem;font-size:1.05rem;line-height:1.85">
+            <li>🚫 直接複製貼上別人文章</li>
+            <li>🚫 從 Google 圖片右鍵下載就用</li>
+            <li>🚫 用同學的照片不問就 PO</li>
+            <li>🚫 把別人的內容當成自己的</li>
+          </ul>
+          <p style="font-family:'Caveat',cursive;color:var(--ribbon-red);font-size:1.15rem;font-weight:900;margin-top:8px">
+            這些都是「抄襲」，會被罰錢喔！
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">©️</div>
+      <div class="bubble">
+        口訣：「<b>不確定，就先問</b>」。沒得問就去 Unsplash / Pexels / Pixabay 找，永遠安全。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 11 · 數位足跡 ============ -->
+  <section class="slide" data-slide="11">
+    <div class="washi-corner tl" style="background:var(--tape-purple)"></div>
+    <div class="washi-corner tr" style="background:var(--tape-mint)"></div>
+    <div class="slide-title-tag">11 · DIGITAL FOOTPRINT</div>
+    <div class="slide-num">11 / 14</div>
+
+    <div class="eyebrow">👣 數位足跡 · DIGITAL FOOTPRINT</div>
+    <h2 class="title-md">凡走過必<span class="hl">留下痕跡</span> ——<br>網路也一樣，<span style="color:var(--ribbon-red)">而且永遠擦不掉</span></h2>
+
+    <div class="q-block" style="margin-top:24px">
+      「10 年後的我，看到這篇文章還會驕傲嗎？」
+      <div style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--pencil);margin-top:8px;font-style:normal;text-align:right">— 阿凱老師的「未來自問法則」</div>
+    </div>
+
+    <div class="notes-grid" style="margin-top:18px">
+      <div class="note green">
+        <h5><span class="ic">✅</span>會留下的是…</h5>
+        <ul>
+          <li>每一篇你發過的文章</li>
+          <li>每一張你上傳的圖片</li>
+          <li>每一則你留過的言</li>
+          <li>每一次你按過的讚 👍</li>
+        </ul>
+      </div>
+      <div class="note pink">
+        <h5><span class="ic">❌</span>就算刪掉也…</h5>
+        <ul>
+          <li>截圖可能已經傳遍班群</li>
+          <li>網路備份永遠存在</li>
+          <li>Google 快取讀得到</li>
+          <li>Wayback Machine 也救得回</li>
+        </ul>
+      </div>
+      <div class="note mint">
+        <h5><span class="ic">💡</span>未來的我會感謝…</h5>
+        <ul>
+          <li>記錄成長日記的我</li>
+          <li>分享學習筆記的我</li>
+          <li>不發脾氣鬧文的我</li>
+          <li>沒貼囧照的我 😅</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">👣</div>
+      <div class="bubble">
+        練習：每次發文按下「發布」之前，先想一下：「<b>10 年後我會不會後悔？</b>」會的話就不要發。簡單。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 12 · 6 大平台比較 ============ -->
+  <section class="slide" data-slide="12">
+    <div class="washi-corner tl"></div>
+    <div class="washi-corner br" style="background:var(--tape-yellow)"></div>
+    <div class="slide-title-tag">12 · PLATFORM COMPARE</div>
+    <div class="slide-num">12 / 14</div>
+
+    <div class="eyebrow">🆚 6 大平台 · PIXNET vs OTHERS</div>
+    <h2 class="title-md">為什麼<span class="hl">部落格還是適合練長文</span>？</h2>
+
+    <table class="scrap-table" style="margin-top:14px;font-size:.95rem">
+      <thead>
+        <tr><th>平台</th><th>長短</th><th>主打</th><th>最適合什麼？</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="big">痞客邦</td><td>長文</td><td>圖文部落格</td><td>📚 心得、教學、旅遊紀錄</td></tr>
+        <tr><td><b>Blogger</b></td><td>長文</td><td>Google 旗下、無廣告</td><td>💻 個人技術筆記</td></tr>
+        <tr><td><b>Medium</b></td><td>長文</td><td>排版乾淨、國際化</td><td>🌎 英文文章、產業觀察</td></tr>
+        <tr><td><b>Instagram</b></td><td>極短</td><td>照片 + 限動</td><td>📸 視覺生活分享</td></tr>
+        <tr><td><b>Threads</b></td><td>短文</td><td>純文字快回應</td><td>💬 即時想法、討論</td></tr>
+        <tr><td><b>Facebook</b></td><td>中短</td><td>社群動態</td><td>👨‍👩‍👧 家族長輩朋友</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:14px;display:flex;justify-content:center;gap:18px;align-items:center;flex-wrap:wrap">
+      <span class="stamp">長文寫作 → 痞客邦</span>
+      <span class="arrow-hand">＋</span>
+      <span class="stamp blue">每日短想 → Threads</span>
+      <span class="arrow-hand">＝</span>
+      <span class="stamp" style="border-color:var(--stamp-blue);color:var(--stamp-blue)">完美組合 ✨</span>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">🆚</div>
+      <div class="bubble">
+        沒有「最好的平台」，<b>只有最適合你的平台</b>。我自己長文寫部落格、短想寫 Threads，照片才放 IG。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 13 · 5 個叮嚀 ============ -->
+  <section class="slide" data-slide="13">
+    <div class="washi-corner tl" style="background:var(--tape-peach)"></div>
+    <div class="washi-corner tr" style="background:var(--tape-mint)"></div>
+    <div class="washi-corner bl" style="background:var(--tape-purple)"></div>
+    <div class="washi-corner br" style="background:var(--tape-yellow)"></div>
+    <div class="slide-title-tag">13 · 5 REMINDERS</div>
+    <div class="slide-num">13 / 14</div>
+
+    <div class="eyebrow">💌 給小站長的 5 個叮嚀</div>
+    <h2 class="title-md">寫部落格之前，<span class="hl">先把這 5 件事釘在心裡</span></h2>
+
+    <div class="notes-grid" style="margin-top:18px">
+      <div class="note">
+        <h5><span class="ic">👨‍👩‍👧</span>1. 家長同意</h5>
+        <p>先讓爸媽知道你在寫部落格，<b>不要偷偷來</b>。出事時他們能罩你。</p>
+      </div>
+      <div class="note pink">
+        <h5><span class="ic">⏰</span>2. 每天 30 分鐘</h5>
+        <p>不用一次寫 3 小時。<b>每天 30 分鐘</b>，半年後你就是「老作家」。</p>
+      </div>
+      <div class="note green">
+        <h5><span class="ic">🔐</span>3. 保留隱私</h5>
+        <p>不寫家裡地址、不寫學校全名、不放<b>同學的清晰大頭照</b>。</p>
+      </div>
+      <div class="note mint">
+        <h5><span class="ic">©️</span>4. 尊重創作</h5>
+        <p>引用別人內容一定要<b>標出處</b>。自己的圖才是最棒的。</p>
+      </div>
+      <div class="note peach" style="grid-column:span 2">
+        <h5><span class="ic">❤️</span>5. 為自己寫，不為流量寫</h5>
+        <p>追點閱數會累。記住你寫部落格的初衷 ——「<b>把這一刻的我留下來</b>」。10 年後重看，那才是最值錢的寶物。</p>
+        <p class="pen-note" style="margin-top:10px">寫給未來的自己 · 比寫給網友重要 100 倍</p>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">💌</div>
+      <div class="bubble">
+        這 5 條像是「<b>網路駕照守則</b>」。今天回家把它抄在你的筆記本第一頁，每次寫新文章前看一眼。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 14 · 結語 + Q&A ============ -->
+  <section class="slide" data-slide="14">
+    <div class="washi-corner tl"></div>
+    <div class="washi-corner tr" style="background:var(--tape-yellow)"></div>
+    <div class="washi-corner bl" style="background:var(--tape-peach)"></div>
+    <div class="washi-corner br" style="background:var(--tape-purple)"></div>
+    <div class="slide-title-tag">14 · Q&A · 阿凱老師</div>
+    <div class="slide-num">14 / 14</div>
+
+    <div class="eyebrow">🎬 結語 · THE END</div>
+    <h2 class="title-lg">把生活<span class="hl">寫下來</span><br><span style="color:var(--ribbon-red)">就會永遠留下來。</span></h2>
+
+    <div class="close-grid" style="margin-top:24px">
+      <div class="col">
+        <div class="scrap-card" style="background:var(--paper-2)">
+          <h4>🔗 課後資源</h4>
+          <p style="font-size:1.05rem;line-height:1.9">
+            🏠 <b>駕駛艙完整教材</b><br>
+            <span class="tape-code">cagoooo.github.io/it-cockpit/pixnet-blog/</span><br><br>
+
+            📺 <b>YouTube 播放清單</b><br>
+            <span style="font-family:'Caveat',cursive;color:var(--pencil)">（教學影片 / NotebookLM 解說 / 學生作品）</span><br><br>
+
+            👨‍🏫 <b>聯絡阿凱老師</b><br>
+            <span class="tape-code">ipad@mail2.smes.tyc.edu.tw</span>
+          </p>
+        </div>
+        <div style="margin-top:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <span class="stamp">THANKS FOR LISTENING</span>
+          <span class="stamp blue">2026 · SMES · 石門國小</span>
+        </div>
+      </div>
+      <div class="col" style="align-items:center;justify-content:center;display:flex;flex-direction:column;gap:36px">
+        <div class="qr-fake"></div>
+        <div style="text-align:center">
+          <div style="font-family:'Bungee',sans-serif;color:var(--ribbon-red);font-size:1.6rem;line-height:1.2">Q &amp; A</div>
+          <div style="font-family:'Caveat',cursive;color:var(--pencil);font-size:1.3rem;font-weight:700;margin-top:6px">問問題吧～</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker">
+      <div class="avatar">👨‍🏫</div>
+      <div class="bubble">
+        謝謝大家！今天回家請打開電腦試著寫一篇 100 字的「<b>今天我學到什麼</b>」。下週上課我們一起分享！記得 ——「<b>為自己寫</b>」就好。
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== Progress bar ===== -->
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:7.14%"></div></div>
+
+<!-- ===== Hint ===== -->
+<div class="hint">← → 換頁 · <span class="kbd">M</span> 章節 · <span class="kbd">F</span> 全螢幕 · <span class="kbd">S</span> 主講 · <span class="kbd">Esc</span> 退出</div>
+
+<!-- ===== Overview ===== -->
+<div class="overview" id="overview">
+  <h3>📖 章節導覽 · 14 張投影片<span class="stamp">PIXNET · SCRAPBOOK</span></h3>
+  <div class="overview-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1,  t:'封面',                 s:'把生活變成永遠存在的書 · 痞客邦六年級資訊科技'},
+  {n:2,  t:'開場暖身',             s:'還記得你第一次自己做日記的感覺嗎？'},
+  {n:3,  t:'痞客邦是什麼',         s:'2003 創立 · 9 億篇文章 · 70% 台灣訪客'},
+  {n:4,  t:'為什麼國小生要寫',     s:'蔡依橙醫師 5 大好處 · 98 分作文真實案例'},
+  {n:5,  t:'6 個吸睛標題公式',     s:'受眾+利益 / 奇數 / 為什麼 / 最唯一 / 時事 / 情境'},
+  {n:6,  t:'第一篇文章 SOP',       s:'Hook → Body → CTA · 3 段式永遠不卡稿'},
+  {n:7,  t:'圖片排版+分類標籤',    s:'30 張一次上傳 · 分類像書架、標籤像便利貼'},
+  {n:8,  t:'網路霸凌 + 3 步驟自救',s:'4 大類型 · 截圖→封鎖→告訴大人 · 1953 專線'},
+  {n:9,  t:'4 種隱私 + 5 條禮儀',  s:'公開/不公開/僅好友/密碼 + 留言深呼吸法則'},
+  {n:10, t:'智財權 + 創用 CC',      s:'BY/NC/ND/SA · Unsplash/Pexels/Pixabay 免費圖庫'},
+  {n:11, t:'數位足跡',              s:'凡走過必留下痕跡 · 10 年後的我會驕傲嗎？'},
+  {n:12, t:'6 大平台比較',          s:'痞客邦 vs Blogger vs Medium vs IG vs Threads vs FB'},
+  {n:13, t:'5 個叮嚀',              s:'家長同意 · 每日 30 分鐘 · 隱私 · 尊重 · 為自己寫'},
+  {n:14, t:'結語 + Q&A',            s:'駕駛艙連結 · YouTube · 阿凱老師聯絡資訊'},
+];
+
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    s.classList.toggle('active', i === idx);
+  });
+  curIdx = idx;
+  const pct = ((idx + 1) / N * 100).toFixed(2);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){
+  document.getElementById('overview').classList.toggle('show');
+}
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s=>{
+    s.style.display = (s.style.display === 'none') ? '' : 'none';
+  });
+}
+
+// ===== Build overview =====
+const ovGrid = document.getElementById('ov-grid');
+SLIDES.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'ov-card';
+  card.innerHTML = `<div class="num">${String(s.n).padStart(2,'0')}</div><div class="t">${s.t}</div><div class="s">${s.s}</div>`;
+  card.onclick = ()=>{
+    goSlide(i);
+    document.getElementById('overview').classList.remove('show');
+  };
+  ovGrid.appendChild(card);
+});
+
+// ===== Keyboard =====
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('overview').classList.contains('show')){
+    if(e.key === 'Escape' || e.key === 'm' || e.key === 'M'){
+      document.getElementById('overview').classList.remove('show');
+      e.preventDefault();
+    }
+    return;
+  }
+  switch(e.key){
+    case 'ArrowRight':
+    case 'ArrowDown':
+    case ' ':
+    case 'PageDown':
+      next(); e.preventDefault(); break;
+    case 'ArrowLeft':
+    case 'ArrowUp':
+    case 'PageUp':
+      prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End':  goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement) document.exitFullscreen();
+      break;
+  }
+  if(/^[1-9]$/.test(e.key)){
+    const target = parseInt(e.key) - 1;
+    if(target < N){ goSlide(target); e.preventDefault(); }
+  }
+});
+
+// ===== Click navigation =====
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+// ===== Swipe (mobile) =====
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+// ===== Initial slide from hash =====
+const hashMatch = location.hash.match(/^#s(\d+)$/);
+if(hashMatch){
+  const idx = parseInt(hashMatch[1]) - 1;
+  if(idx >= 0 && idx < N) goSlide(idx);
+}
+</script>
+
+</body>
+</html>
