@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>micro:bit 創客小英雄｜五年級資訊科技演講簡報</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&family=VT323&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ circuit-glow 演講模式 ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a1f1a;--surface:#0e2a22;--panel:#143832;--pcb-line:#1a4f42;
+  --c1:#4cd964;--c2:#ffb300;--c3:#ff3d3d;--c4:#ffe000;--c5:#42a5f5;
+  --text:#e0f0e8;--dim:#5a7d70;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(0deg,transparent 95%,var(--pcb-line) 95%,var(--pcb-line) 96%,transparent 96%),
+    linear-gradient(90deg,transparent 95%,var(--pcb-line) 95%,var(--pcb-line) 96%,transparent 96%),
+    radial-gradient(circle at 50% 50%,var(--c2) 0 1.5px,transparent 1.5px);
+  background-size:120px 120px,120px 120px,240px 240px;opacity:.25;
+}
+.deck{position:relative;width:100%;height:100vh;z-index:1}
+.slide{
+  position:absolute;inset:0;display:none;
+  padding:40px 60px 80px;flex-direction:column;justify-content:center;
+  background:transparent;
+}
+.slide.active{display:flex;animation:slideIn .4s ease-out}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* 共用元件 */
+.slide-num{
+  position:absolute;top:24px;left:60px;
+  font-family:'Orbitron',monospace;font-size:.85rem;letter-spacing:.2em;color:var(--c2);font-weight:900;
+}
+.slide-num::before{content:'STAGE ';color:var(--dim)}
+.slide-title{
+  font-size:3.4rem;font-weight:900;color:var(--c1);
+  text-shadow:0 0 16px rgba(76,217,100,.4),3px 3px 0 var(--c3);
+  letter-spacing:-.01em;line-height:1.2;margin-bottom:20px;
+}
+.slide-sub{font-size:1.6rem;color:var(--c2);font-weight:700;margin-bottom:34px}
+.slide-body{font-size:1.5rem;line-height:1.7;max-width:1180px}
+.slide-body p{margin:14px 0}
+.slide-body ul{list-style:none;margin:18px 0}
+.slide-body li{padding:10px 0 10px 44px;position:relative;font-size:1.4rem;line-height:1.6}
+.slide-body li::before{
+  content:'▶';position:absolute;left:0;top:10px;color:var(--c2);font-size:1.1rem;
+}
+strong{color:var(--c4)}
+.hl{background:linear-gradient(transparent 60%,rgba(76,217,100,.3) 60%);padding:0 4px}
+
+/* speaker bubble */
+.speaker{
+  position:absolute;bottom:30px;left:60px;display:flex;align-items:flex-end;gap:14px;z-index:8;max-width:55%;
+}
+.speaker .avatar{
+  width:72px;height:72px;background:var(--c4);border:3px solid var(--c1);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:2.2rem;
+  box-shadow:4px 4px 0 #000,0 0 14px rgba(76,217,100,.4);flex-shrink:0;
+}
+.speaker .bubble{
+  background:var(--panel);border:2.5px solid var(--c1);padding:14px 22px;
+  font-size:1.15rem;font-weight:600;color:var(--text);position:relative;
+  box-shadow:4px 4px 0 #000,0 0 12px rgba(76,217,100,.25);
+}
+.speaker .bubble::before{content:'';position:absolute;left:-14px;bottom:18px;
+  border-style:solid;border-width:8px 14px 8px 0;border-color:transparent var(--c1) transparent transparent}
+.speaker .bubble::after{content:'';position:absolute;left:-11px;bottom:18px;
+  border-style:solid;border-width:8px 14px 8px 0;border-color:transparent var(--panel) transparent transparent}
+
+/* Progress bar */
+.progress{
+  position:fixed;bottom:0;left:0;right:0;height:5px;background:var(--surface);z-index:50;
+}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c4));box-shadow:0 0 8px var(--c1);transition:width .4s}
+
+/* Hint */
+.hint{
+  position:fixed;top:24px;right:60px;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--dim);
+  background:rgba(10,31,26,.9);padding:8px 14px;border:1px solid var(--pcb-line);z-index:50;
+}
+
+/* Overview */
+.overview{
+  position:fixed;inset:0;background:rgba(10,31,26,.97);z-index:200;display:none;
+  align-items:center;justify-content:center;flex-direction:column;padding:40px;overflow-y:auto;
+}
+.overview.show{display:flex}
+.overview h3{font-family:'Orbitron',monospace;color:var(--c2);font-size:1.4rem;letter-spacing:.2em;margin-bottom:24px}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;max-width:1200px;width:100%}
+.ov-card{
+  background:var(--panel);border:2px solid var(--c1);padding:18px;cursor:pointer;transition:.2s;
+}
+.ov-card:hover{box-shadow:0 0 18px rgba(76,217,100,.5);transform:translateY(-2px)}
+.ov-card .ov-num{font-family:'Orbitron',monospace;color:var(--c2);font-size:.8rem;letter-spacing:.15em;margin-bottom:6px}
+.ov-card h4{color:var(--c1);font-size:1.15rem;margin-bottom:6px}
+.ov-card p{color:var(--dim);font-size:.9rem;line-height:1.5}
+
+/* 沉浸感元素 */
+.led-mat{display:inline-grid;grid-template-columns:repeat(5,1fr);gap:3px;background:#000;border:3px solid var(--c2);padding:8px;width:140px;height:140px;box-shadow:0 0 16px rgba(255,179,0,.4)}
+.led-mat .px{background:#1a0000;border-radius:1px}
+.led-mat .px.on{background:var(--c3);box-shadow:0 0 6px var(--c3),inset 0 0 3px rgba(255,255,255,.4)}
+.btn-AB{display:inline-flex;align-items:center;gap:12px;margin:14px 0}
+.ab-btn{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ddd 0,#888 60%,#444 100%);border:3px solid var(--c1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.6rem;color:#000;box-shadow:0 4px 8px rgba(0,0,0,.5),0 0 12px rgba(76,217,100,.3)}
+.microbit-svg{display:inline-block;width:200px;height:120px;background:var(--surface);border:3px solid var(--c1);border-radius:8px;position:relative;box-shadow:0 0 16px rgba(76,217,100,.3)}
+.binary-rain{position:absolute;top:0;color:var(--c1);font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1;opacity:.3;text-shadow:0 0 4px var(--c1);pointer-events:none}
+.solder{display:inline-block;width:12px;height:12px;background:radial-gradient(circle,var(--c2) 0 50%,#8b6a00 60%,#4a3800 100%);border-radius:50%;box-shadow:0 0 8px var(--c2),inset 0 0 2px rgba(255,255,255,.4);vertical-align:middle;margin:0 4px}
+
+/* 卡片組 */
+.card-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:24px 0}
+.spec-card{
+  background:var(--panel);border:2px solid var(--c1);padding:18px;position:relative;
+  box-shadow:4px 4px 0 #000;
+}
+.spec-card::before{content:'';position:absolute;top:-5px;left:-5px;width:10px;height:10px;background:var(--c2);border-radius:50%;box-shadow:0 0 6px var(--c2)}
+.spec-card::after{content:'';position:absolute;bottom:-5px;right:-5px;width:10px;height:10px;background:var(--c2);border-radius:50%;box-shadow:0 0 6px var(--c2)}
+.spec-card.c2{border-color:var(--c2)}
+.spec-card.c3{border-color:var(--c3)}
+.spec-card.c4{border-color:var(--c4)}
+.spec-card.c5{border-color:var(--c5)}
+.spec-card h5{font-size:1.15rem;font-weight:900;margin-bottom:10px;color:var(--c1)}
+.spec-card.c2 h5{color:var(--c2)}
+.spec-card.c3 h5{color:var(--c3)}
+.spec-card.c4 h5{color:var(--c4)}
+.spec-card.c5 h5{color:var(--c5)}
+.spec-card p{font-size:1rem;line-height:1.6;color:var(--text)}
+
+.big-num{font-family:'Orbitron',sans-serif;font-size:5rem;font-weight:900;color:var(--c4);text-shadow:0 0 16px rgba(255,224,0,.4),3px 3px 0 var(--c3);display:inline-block;line-height:1}
+
+.code-block{background:#000;border:2px solid var(--c1);padding:18px 22px;font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:var(--c1);margin:18px 0;box-shadow:0 0 12px rgba(76,217,100,.2)}
+.code-block .cmd{color:var(--c4)}
+.code-block .com{color:var(--dim)}
+
+table.compare{width:100%;border-collapse:collapse;margin:18px 0;font-size:1.1rem}
+table.compare th,table.compare td{padding:14px 18px;border:1px solid var(--pcb-line);text-align:left}
+table.compare th{background:var(--panel);color:var(--c2);font-weight:900}
+table.compare td:first-child{color:var(--c1);font-weight:700}
+
+.qr-cta{text-align:center;margin:24px 0;padding:24px;background:var(--panel);border:3px dashed var(--c4)}
+.qr-cta a{color:var(--c4);font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:900;text-decoration:none;letter-spacing:.05em}
+.qr-cta a:hover{text-shadow:0 0 10px var(--c4)}
+
+@media (max-width:1024px){
+  .slide{padding:30px 36px 70px}
+  .slide-title{font-size:2.5rem}
+  .slide-sub{font-size:1.2rem}
+  .slide-body{font-size:1.2rem}
+  .slide-body li{font-size:1.1rem}
+}
+@media (max-width:720px){
+  .slide-title{font-size:1.8rem}
+  .slide-sub{font-size:1rem}
+  .slide-body{font-size:1rem}
+  .speaker{display:none}
+  .hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 01: 封面 -->
+<section class="slide active" id="s1">
+  <span class="slide-num">01 ｜ 封面</span>
+  <div style="text-align:center;width:100%">
+    <h1 class="slide-title" style="font-size:5rem;margin-bottom:30px">micro:bit 創客小英雄</h1>
+    <p class="slide-sub" style="font-size:2rem">第一次接觸 MakeCode 積木程式</p>
+    <div style="margin:36px 0;display:flex;justify-content:center;gap:30px;flex-wrap:wrap">
+      <div class="led-mat" id="cover-led-1"></div>
+      <div class="led-mat" id="cover-led-2"></div>
+      <div class="led-mat" id="cover-led-3"></div>
+    </div>
+    <p style="color:var(--c2);font-family:'JetBrains Mono',monospace;font-size:1.1rem;letter-spacing:.15em;margin-top:34px">
+      五年級 ｜ 資訊科技 ｜ 90 分鐘
+    </p>
+    <p style="color:var(--dim);margin-top:18px;font-size:1rem">
+      <span class="solder"></span>　桃園市龍潭區石門國民小學 　<span class="solder"></span>　主講：阿凱老師　<span class="solder"></span>
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤖</div>
+    <div class="bubble">嗨各位小朋友！今天我們要把這個火柴盒大小的小東西，變成你人生第一個會發光、會搖、會猜拳的迷你電腦！</div>
+  </div>
+</section>
+
+<!-- SLIDE 02: 開場暖身 HOOK -->
+<section class="slide" id="s2">
+  <span class="slide-num">02 ｜ 暖身</span>
+  <h2 class="slide-title">如果手機是消費科技，micro:bit 就是<span class="hl">「創造」科技</span></h2>
+  <div class="slide-body">
+    <p>你平常打開手機，是在「<strong>用</strong>別人寫的程式」。</p>
+    <p>但 micro:bit 不一樣 — 它要你「<strong>寫</strong>自己的程式，做出別人沒有的東西」。</p>
+    <div class="card-row" style="margin-top:30px">
+      <div class="spec-card c3">
+        <h5>📱 消費科技</h5>
+        <p>看 YouTube、玩遊戲、刷 IG — 別人決定你能做什麼</p>
+      </div>
+      <div class="spec-card c1">
+        <h5>🔧 創造科技</h5>
+        <p>寫程式、做專案、解決問題 — 你決定電腦能做什麼</p>
+      </div>
+    </div>
+    <p style="margin-top:24px;font-size:1.3rem;color:var(--c2)">💡 今天結束，每個人都會成為「程式創造者」。</p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🧠</div>
+    <div class="bubble">舉手問同學：你昨天打開幾個 App？這些 App 都是別人寫的喔！今天你要寫一個出來給家人看！</div>
+  </div>
+</section>
+
+<!-- SLIDE 03: WHAT 是什麼 -->
+<section class="slide" id="s3">
+  <span class="slide-num">03 ｜ 什麼是 micro:bit</span>
+  <h2 class="slide-title">什麼是 micro:bit？</h2>
+  <p class="slide-sub">英國 BBC 為 5 歲以上孩子設計的<span class="hl">微型電腦</span></p>
+  <div class="slide-body">
+    <div class="card-row">
+      <div class="spec-card c1">
+        <h5><span class="big-num" style="font-size:3rem">25</span> 顆 LED</h5>
+        <p>5×5 紅色矩陣，能顯示文字、數字、圖案、表情，也是光感測器！</p>
+      </div>
+      <div class="spec-card c2">
+        <h5><span class="big-num" style="font-size:3rem">2</span> 個按鈕</h5>
+        <p>A、B 按鈕，能單按、長按、A+B 同時按 — 三種事件</p>
+      </div>
+      <div class="spec-card c3">
+        <h5><span class="big-num" style="font-size:3rem">8</span> 個感測器</h5>
+        <p>加速度、指南針、溫度、光、麥克風（V2）、按鈕、觸控、無線電</p>
+      </div>
+      <div class="spec-card c5">
+        <h5><span class="big-num" style="font-size:3rem">1</span> 顆 USB</h5>
+        <p>連電腦傳程式 + 供電，搭配電池盒可獨立運作</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📏</div>
+    <div class="bubble">它只有火柴盒這麼大，但裡面塞了八種感測器！這就是 BBC 為了讓全英國學生都能學程式而設計的！</div>
+  </div>
+</section>
+
+<!-- SLIDE 04: WHY 為什麼有效 -->
+<section class="slide" id="s4">
+  <span class="slide-num">04 ｜ 為什麼有效</span>
+  <h2 class="slide-title">為什麼用 micro:bit 學程式特別有效？</h2>
+  <div class="slide-body">
+    <div class="card-row">
+      <div class="spec-card c1">
+        <h5>🧱 拼積木式</h5>
+        <p>不用打英文、不用記語法 — 拖積木拼起來就是程式。像玩樂高。</p>
+      </div>
+      <div class="spec-card c2">
+        <h5>👀 看得到結果</h5>
+        <p>程式跑起來會「LED 發亮、喇叭發聲、馬達轉動」 — 不是抽象螢幕字。</p>
+      </div>
+      <div class="spec-card c3">
+        <h5>🚀 寫完馬上玩</h5>
+        <p>下載 .hex 拖一下 USB，立刻能在實機上跑 — 不用等編譯、不用配環境。</p>
+      </div>
+    </div>
+    <p style="margin-top:24px;font-size:1.3rem;color:var(--c4);text-align:center">
+      💡 <strong>具體 → 抽象</strong> 是國小階段最有效的學習路徑（皮亞傑認知發展理論）
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎓</div>
+    <div class="bubble">五年級的孩子正在從「具體運算」走向「形式運算」階段，硬體 + 視覺化反饋是最棒的鷹架！</div>
+  </div>
+</section>
+
+<!-- SLIDE 05: MakeCode 編輯器 -->
+<section class="slide" id="s5">
+  <span class="slide-num">05 ｜ MakeCode 編輯器</span>
+  <h2 class="slide-title">MakeCode：免費 × 不用註冊 × 全中文</h2>
+  <p class="slide-sub">打開瀏覽器，前往 <code style="background:#000;padding:4px 10px;color:var(--c1);font-family:'JetBrains Mono',monospace">makecode.microbit.org</code></p>
+  <div class="slide-body">
+    <div class="card-row">
+      <div class="spec-card c5">
+        <h5>🟦 左側模擬器</h5>
+        <p>不用接實機就能跑！可模擬搖晃、按鈕、傾斜、感測器</p>
+      </div>
+      <div class="spec-card c2">
+        <h5>🟧 中央積木抽屜</h5>
+        <p>10 大分類 — 基本、輸入、音樂、LED、迴圈、邏輯、變數、數學、廣播、進階</p>
+      </div>
+      <div class="spec-card c1">
+        <h5>🟩 右側工作區</h5>
+        <p>拖積木組合程式的畫布。拼錯不會壞，安心嘗試！</p>
+      </div>
+    </div>
+    <div class="code-block" style="margin-top:24px">
+      <span class="com">// 兩個最重要的事件積木 ↓</span><br>
+      <span class="cmd">當啟動時</span> &nbsp;— 電源開啟只執行一次（初始化用）<br>
+      <span class="cmd">重複無限次</span> &nbsp;— 電源開著一直跑（動畫、輪流顯示）
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💻</div>
+    <div class="bubble">記住三大區塊就像賣場分類：模擬器是試吃區、積木抽屜是貨架、工作區是你的購物車！</div>
+  </div>
+</section>
+
+<!-- SLIDE 06: 10 大積木分類 -->
+<section class="slide" id="s6">
+  <span class="slide-num">06 ｜ 10 大積木分類</span>
+  <h2 class="slide-title">10 大積木分類 — <span class="hl">顏色就是分類</span></h2>
+  <div class="slide-body">
+    <table class="compare">
+      <thead><tr><th>顏色</th><th>分類</th><th>常用積木</th></tr></thead>
+      <tbody>
+        <tr><td><span style="background:#1e90ff;color:#fff;padding:2px 12px">基本</span></td><td>顯示</td><td>顯示文字、顯示圖示、暫停</td></tr>
+        <tr><td><span style="background:#8b5cf6;color:#fff;padding:2px 12px">輸入</span></td><td>互動</td><td>當按鈕被按下、當姿勢晃動</td></tr>
+        <tr><td><span style="background:#fbbf24;color:#000;padding:2px 12px">LED</span></td><td>畫圖</td><td>顯示指示燈、點亮 x y</td></tr>
+        <tr><td><span style="background:#10b981;color:#fff;padding:2px 12px">迴圈</span></td><td>重複</td><td>重複 N 次、當條件成立</td></tr>
+        <tr><td><span style="background:#06b6d4;color:#000;padding:2px 12px">邏輯</span></td><td>判斷</td><td>如果 那麼 否則、比較大小</td></tr>
+        <tr><td><span style="background:#f97316;color:#fff;padding:2px 12px">變數</span></td><td>記分</td><td>建立變數、設為 0、加 1</td></tr>
+        <tr><td><span style="background:#1e3a8a;color:#fff;padding:2px 12px">數學</span></td><td>運算</td><td>+ − × ÷、隨機取數</td></tr>
+        <tr><td><span style="background:#dc2626;color:#fff;padding:2px 12px">廣播</span></td><td>無線</td><td>廣播傳送、當收到廣播</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🌈</div>
+    <div class="bubble">同色積木通常會一起用！邏輯藍綠跟變數橘特別常配對，下一張我們就會用到！</div>
+  </div>
+</section>
+
+<!-- SLIDE 07: 三大入門專案 -->
+<section class="slide" id="s7">
+  <span class="slide-num">07 ｜ 三大入門專案</span>
+  <h2 class="slide-title">三個專案從易到難，<span class="hl">90 分鐘全部完成</span></h2>
+  <div class="slide-body">
+    <div class="card-row">
+      <div class="spec-card c1">
+        <h5>🪪 專案 1：姓名 + 笑臉</h5>
+        <p style="margin:10px 0">用 2 個積木做出徽章</p>
+        <p style="color:var(--c2);font-size:.95rem">✔ 學會：基本/顯示、重複無限次</p>
+        <p style="color:var(--dim);font-size:.9rem;margin-top:6px">⏱️ 約 10 分鐘</p>
+      </div>
+      <div class="spec-card c4">
+        <h5>🎲 專案 2：搖一搖骰子</h5>
+        <p style="margin:10px 0">搖晃顯示 1～6 點</p>
+        <p style="color:var(--c2);font-size:.95rem">✔ 學會：變數、隨機、條件判斷</p>
+        <p style="color:var(--dim);font-size:.9rem;margin-top:6px">⏱️ 約 25 分鐘</p>
+      </div>
+      <div class="spec-card c5">
+        <h5>✂️ 專案 3：剪刀石頭布</h5>
+        <p style="margin:10px 0">A=剪、B=石、A+B=布</p>
+        <p style="color:var(--c2);font-size:.95rem">✔ 學會：事件驅動、按鈕組合</p>
+        <p style="color:var(--dim);font-size:.9rem;margin-top:6px">⏱️ 約 15 分鐘</p>
+      </div>
+    </div>
+    <p style="margin-top:24px;font-size:1.3rem;color:var(--c4);text-align:center">
+      🚀 進階挑戰：用「廣播」讓兩塊 micro:bit 互通訊 → 遠距猜拳！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📋</div>
+    <div class="bubble">三個專案剛好用上「重複 → 變數 → 事件」三大程式核心概念！學完五年級程式設計就解鎖了！</div>
+  </div>
+</section>
+
+<!-- SLIDE 08: USB 燒錄流程 -->
+<section class="slide" id="s8">
+  <span class="slide-num">08 ｜ USB 燒錄</span>
+  <h2 class="slide-title">.hex 檔燒錄 — <span class="hl">拖一下就完成</span></h2>
+  <div class="slide-body">
+    <div class="code-block">
+      <span class="com"># 7 步驟完整流程</span><br>
+      <span class="cmd">1.</span> USB 線連電腦（資料傳輸線，不要純充電線）<br>
+      <span class="cmd">2.</span> 檔案總管出現 <strong style="color:var(--c4)">MICROBIT (D:)</strong> 磁碟機<br>
+      <span class="cmd">3.</span> MakeCode 左下角輸入專案名 → 紫色「下載」<br>
+      <span class="cmd">4.</span> 產生 <strong style="color:var(--c4)">microbit-XXX.hex</strong> 在「下載」資料夾<br>
+      <span class="cmd">5.</span> 把 .hex 檔拖到 MICROBIT(D:) 磁碟機<br>
+      <span class="cmd">6.</span> 背面黃燈閃爍 → 正在燒錄<br>
+      <span class="cmd">7.</span> 黃燈熄滅 + 磁碟重新整理 → ✅ 完成！
+    </div>
+    <p style="margin-top:18px;color:var(--c3);font-size:1.2rem;font-weight:700">
+      ⚠️ 注意：micro:bit 只能寫入，<strong>不能反向讀回</strong>程式！記得存 .hex 到隨身碟。
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚡</div>
+    <div class="bubble">就像把音樂放進隨身聽 — USB 線拖一下就好！第一次成功燒錄時，全班會「哇～」叫起來，準備迎接這個 moment！</div>
+  </div>
+</section>
+
+<!-- SLIDE 09: 常見問題 + 解法 -->
+<section class="slide" id="s9">
+  <span class="slide-num">09 ｜ 常見問題</span>
+  <h2 class="slide-title">學生最常踩的 5 個雷</h2>
+  <div class="slide-body">
+    <table class="compare" style="font-size:1.1rem">
+      <thead><tr><th style="width:50%">學生問題</th><th>解答</th></tr></thead>
+      <tbody>
+        <tr><td>找不到 MICROBIT 磁碟機</td><td>USB 線是純充電？換資料線；或按到 Reset 變 MAINTENANCE，下載韌體拖過去</td></tr>
+        <tr><td>模擬器跑得動實機沒反應</td><td>「下載」只是存到電腦，要再「拖到 MICROBIT」才算燒錄</td></tr>
+        <tr><td>積木拼不上去/變灰色</td><td>沒放進 C 型「事件積木」開口裡 — 必須卡在「重複無限次」或「當按鈕」內</td></tr>
+        <tr><td>下次接著做檔案不見</td><td>學校電腦會還原！下課前存 .hex 到 USB 隨身碟，下次「匯入」回來</td></tr>
+        <tr><td>沒接電池怎麼也亮燈</td><td>USB 線一邊傳程式一邊供電；要離開電腦才用電池盒（2 顆 AAA）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🩹</div>
+    <div class="bubble">這 5 個問題你會聽 100 次！把這張投影片印出來貼牆上，學生自己會找答案，老師輕鬆很多！</div>
+  </div>
+</section>
+
+<!-- SLIDE 10: V1 vs V2 -->
+<section class="slide" id="s10">
+  <span class="slide-num">10 ｜ V1 vs V2</span>
+  <h2 class="slide-title">micro:bit V1 vs V2 — <span class="hl">翻過來看右下角</span></h2>
+  <div class="slide-body">
+    <table class="compare">
+      <thead><tr><th>功能</th><th style="color:var(--c5)">V1 舊版</th><th style="color:var(--c1)">V2 新版</th></tr></thead>
+      <tbody>
+        <tr><td>麥克風</td><td>無</td><td>✅ 內建（偵測音量、感應掌聲）</td></tr>
+        <tr><td>喇叭</td><td>外接蜂鳴器</td><td>✅ 內建</td></tr>
+        <tr><td>觸控 Logo</td><td>無</td><td>✅ 金色 Logo 是第三顆按鈕</td></tr>
+        <tr><td>處理器</td><td>nRF51 (16MHz)</td><td>✅ nRF52833 (64MHz，4 倍快)</td></tr>
+        <tr><td>記憶體</td><td>16KB</td><td>✅ 128KB (8 倍大)</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:18px;color:var(--c3);font-size:1.2rem;font-weight:700">
+      ⚠️ V2 程式燒到 V1 板會顯示哭臉 + <strong style="color:var(--c4)">錯誤碼 927</strong>。發板子前確認版本！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🔍</div>
+    <div class="bubble">如果學校混用 V1/V2，先寫好班級「板子編號 ↔ 版本」對照表，能省下無數次「為什麼我的不行」！</div>
+  </div>
+</section>
+
+<!-- SLIDE 11: 班級經營策略 -->
+<section class="slide" id="s11">
+  <span class="slide-num">11 ｜ 班級經營</span>
+  <h2 class="slide-title">3 個讓 micro:bit 課<span class="hl">順利進行</span>的策略</h2>
+  <div class="slide-body">
+    <div class="card-row">
+      <div class="spec-card c1">
+        <h5>1️⃣ 兩人一組，分工輪換</h5>
+        <p>一人「組裝硬體 / 接 USB」，一人「電腦上寫程式」。每 15 分鐘輪換角色，每個人都動手。</p>
+      </div>
+      <div class="spec-card c2">
+        <h5>2️⃣ 材料預先分裝</h5>
+        <p>micro:bit + USB 線 + 鱷魚夾用夾鏈袋分裝編號。發放與回收都用編號，遺失立刻知道。</p>
+      </div>
+      <div class="spec-card c3">
+        <h5>3️⃣ 三層除錯求救法</h5>
+        <p>① 看模擬器是否動 → ② 問同組夥伴 → ③ 舉手請老師。避免老師一直被「我的不會跑」攻擊。</p>
+      </div>
+    </div>
+    <p style="margin-top:24px;font-size:1.2rem;color:var(--c4);text-align:center">
+      💡 第一次燒錄成功的學生立刻請他當「助教」，幫卡關的同學 → 教學相長！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">👥</div>
+    <div class="bubble">小組合作不只是分工，是讓「會的學生」教「卡住的學生」— 講出來才是真的會！</div>
+  </div>
+</section>
+
+<!-- SLIDE 12: 素養對應 -->
+<section class="slide" id="s12">
+  <span class="slide-num">12 ｜ 素養對應</span>
+  <h2 class="slide-title">對應 108 課綱核心素養</h2>
+  <div class="slide-body">
+    <div class="card-row">
+      <div class="spec-card c1">
+        <h5>A2 系統思考與解決問題</h5>
+        <p>從「按鈕事件 → 變數設定 → 條件判斷 → LED 顯示」拆解程式邏輯，是經典系統思考鷹架。</p>
+      </div>
+      <div class="spec-card c2">
+        <h5>B2 科技資訊與媒體素養</h5>
+        <p>從消費 App 的使用者，變成創造 App 的設計者 — 培養下個世代的數位主體性。</p>
+      </div>
+      <div class="spec-card c5">
+        <h5>C2 人際關係與團隊合作</h5>
+        <p>兩人一組共寫程式、互相 debug，學會用程式語言「對話」。</p>
+      </div>
+      <div class="spec-card c3">
+        <h5>科技領域 D-III-1</h5>
+        <p>能運用基礎程式設計概念，分析、規劃並完成簡單的數位作品。</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📜</div>
+    <div class="bubble">這堂課同時對應 4 個素養指標！寫課程報告時可以直接引用。</div>
+  </div>
+</section>
+
+<!-- SLIDE 13: 5 個老師叮嚀 -->
+<section class="slide" id="s13">
+  <span class="slide-num">13 ｜ 5 個老師叮嚀</span>
+  <h2 class="slide-title">給老師的 5 個叮嚀</h2>
+  <div class="slide-body" style="font-size:1.4rem;line-height:1.9">
+    <p><span class="big-num" style="font-size:2.5rem;color:var(--c1)">1</span>　第一節先「玩」實體 micro:bit 不寫程式，建立熟悉感。</p>
+    <p><span class="big-num" style="font-size:2.5rem;color:var(--c2)">2</span>　永遠先讓學生<strong>看到模擬器跑出來</strong>，再叫他下載到實機。</p>
+    <p><span class="big-num" style="font-size:2.5rem;color:var(--c3)">3</span>　準備備用 USB 線、備用板子（每 6 個學生多 1 套），不開天窗。</p>
+    <p><span class="big-num" style="font-size:2.5rem;color:var(--c4)">4</span>　學生卡住先問「你看模擬器有動嗎？」— <strong>分離「程式錯」與「燒錄錯」</strong>。</p>
+    <p><span class="big-num" style="font-size:2.5rem;color:var(--c5)">5</span>　成品立刻舉辦「全班展示」，得到回饋的學生會主動想做下一個專案。</p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">👨‍🏫</div>
+    <div class="bubble">這 5 條來自踩過坑的老師血淚總結！第 4 條尤其重要 — 90% 的「不會跑」其實是燒錄沒做完。</div>
+  </div>
+</section>
+
+<!-- SLIDE 14: 結語 + Q&A -->
+<section class="slide" id="s14">
+  <span class="slide-num">14 ｜ 結語</span>
+  <div style="text-align:center;width:100%">
+    <h2 class="slide-title" style="font-size:3.6rem">把學生變成<span class="hl">「程式創造者」</span></h2>
+    <p style="font-size:1.5rem;color:var(--c2);margin:20px 0 30px">下課時，他們會自己跟同學說：<br><strong style="color:var(--c1);font-size:1.8rem">「我做的！」</strong></p>
+
+    <div class="qr-cta">
+      <p style="color:var(--text);margin-bottom:14px;font-size:1.1rem">🎮 駕駛艙網站（學生自學）</p>
+      <a href="index.html">cagoooo.github.io/it-cockpit/microbit-makecode/</a>
+    </div>
+
+    <div style="margin-top:24px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;color:var(--dim);font-size:1rem">
+      <span><span class="solder"></span> 阿凱老師</span>
+      <span><span class="solder"></span> 桃園市龍潭區石門國民小學</span>
+      <span><span class="solder"></span> NotebookLM × Claude × micro:bit</span>
+    </div>
+
+    <p style="margin-top:36px;color:var(--c4);font-size:1.4rem;font-weight:900;letter-spacing:.1em;font-family:'Orbitron',sans-serif">Q &amp; A　TIME</p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎉</div>
+    <div class="bubble">最後一張了！期待看到老師們把這套帶進你們的教室。有問題歡迎舉手！</div>
+  </div>
+</section>
+
+</div>
+
+<div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="hint">← → 換頁 ｜ M 章節 ｜ F 全螢幕 ｜ S 隱藏主講 ｜ Esc 返回</div>
+
+<div class="overview" id="overview">
+  <h3>▶ CHAPTER OVERVIEW</h3>
+  <div class="ov-grid" id="ov-grid"></div>
+</div>
+
+<script>
+const SLIDES = [
+  {n:1, t:'封面', s:'micro:bit 創客小英雄'},
+  {n:2, t:'暖身 HOOK', s:'消費科技 vs 創造科技'},
+  {n:3, t:'WHAT', s:'micro:bit 是什麼'},
+  {n:4, t:'WHY', s:'為什麼這樣學程式有效'},
+  {n:5, t:'MakeCode 編輯器', s:'三大區塊'},
+  {n:6, t:'10 大積木分類', s:'顏色就是分類'},
+  {n:7, t:'三大入門專案', s:'姓名 / 骰子 / 猜拳'},
+  {n:8, t:'USB 燒錄流程', s:'.hex 拖一下完成'},
+  {n:9, t:'學生常見 5 雷', s:'問題對照表'},
+  {n:10, t:'V1 vs V2', s:'規格差異與錯誤碼 927'},
+  {n:11, t:'班級經營', s:'3 個關鍵策略'},
+  {n:12, t:'素養對應', s:'108 課綱 4 大指標'},
+  {n:13, t:'5 個叮嚀', s:'給老師的血淚總結'},
+  {n:14, t:'結語 + Q&A', s:'駕駛艙 + 聯絡資訊'}
+];
+let curIdx = 0;
+const N = SLIDES.length;
+
+function goSlide(idx){
+  if(idx < 0) idx = 0;
+  if(idx >= N) idx = N - 1;
+  document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === idx));
+  curIdx = idx;
+  document.getElementById('progress-fill').style.width = ((idx+1)/N*100) + '%';
+  history.replaceState(null,'','#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx + 1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx - 1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){
+  document.querySelectorAll('.speaker').forEach(s => s.style.display = (s.style.display === 'none') ? '' : 'none');
+}
+
+// 鍵盤
+document.addEventListener('keydown', e => {
+  const k = e.key;
+  if(document.getElementById('overview').classList.contains('show')){
+    if(['Escape','m','M'].includes(k)){ document.getElementById('overview').classList.remove('show'); e.preventDefault(); }
+    return;
+  }
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(k)){ next(); e.preventDefault(); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ prev(); e.preventDefault(); }
+  else if(k === 'Home'){ goSlide(0); e.preventDefault(); }
+  else if(k === 'End'){ goSlide(N-1); e.preventDefault(); }
+  else if(['m','M'].includes(k)){ toggleOverview(); e.preventDefault(); }
+  else if(['f','F'].includes(k)){ toggleFullscreen(); e.preventDefault(); }
+  else if(['s','S'].includes(k)){ toggleSpeaker(); e.preventDefault(); }
+  else if(/^[1-9]$/.test(k)){
+    const t = parseInt(k) - 1;
+    if(t < N){ goSlide(t); e.preventDefault(); }
+  }
+  // ⭐ 兩段式 Esc：先退全螢幕，再返回駕駛艙
+  else if(k === 'Escape'){
+    if(document.fullscreenElement){
+      document.exitFullscreen();
+    } else {
+      window.location.href = 'index.html';
+    }
+    e.preventDefault();
+  }
+});
+
+// 滑鼠左右半邊
+document.addEventListener('click', e => {
+  if(e.target.closest('.speaker, .overview, .hint, .progress, a, button')) return;
+  if(e.clientX > window.innerWidth / 2) next(); else prev();
+});
+
+// 手機 swipe
+let tStartX = 0;
+document.addEventListener('touchstart', e => { tStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+
+// URL hash 書籤
+const m = location.hash.match(/^#s(\d+)$/);
+if(m){ const i = parseInt(m[1])-1; if(i >= 0 && i < N) goSlide(i); }
+
+// Overview render
+function renderOverview(){
+  const grid = document.getElementById('ov-grid');
+  grid.innerHTML = '';
+  SLIDES.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'ov-card';
+    card.innerHTML = '<div class="ov-num">SLIDE ' + String(s.n).padStart(2,'0') + '</div><h4>' + s.t + '</h4><p>' + s.s + '</p>';
+    card.onclick = () => { toggleOverview(); goSlide(i); };
+    grid.appendChild(card);
+  });
+}
+
+// 封面 LED 點陣（笑臉/愛心/星星）
+function drawCoverLed(elId, pattern){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  el.innerHTML = '';
+  pattern.forEach(on => {
+    const d = document.createElement('div');
+    d.className = 'px' + (on ? ' on' : '');
+    el.appendChild(d);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderOverview();
+  drawCoverLed('cover-led-1', [0,1,0,1,0, 0,1,0,1,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0]); // 笑臉
+  drawCoverLed('cover-led-2', [0,1,0,1,0, 1,1,1,1,1, 1,1,1,1,1, 0,1,1,1,0, 0,0,1,0,0]); // 愛心
+  drawCoverLed('cover-led-3', [0,0,1,0,0, 1,1,1,1,1, 0,1,1,1,0, 0,1,0,1,0, 1,0,0,0,1]); // 星星
+  document.getElementById('progress-fill').style.width = (1/N*100) + '%';
+});
+</script>
+</body>
+</html>

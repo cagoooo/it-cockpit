@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>micro:bit 創客小英雄｜五年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/microbit-makecode/">
+<meta property="og:title" content="micro:bit 創客小英雄｜五年級資訊科技">
+<meta property="og:description" content="第一次接觸 MakeCode 積木程式：認識 micro:bit 硬體 × 5 大關卡 × 5×5 LED 點陣繪圖 × 搖一搖骰子 × 剪刀石頭布 × USB 燒錄全流程">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/microbit-makecode/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/microbit-makecode/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&family=VT323&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ circuit-glow 風格全域 ============ */
+html{font-size:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a1f1a;--surface:#0e2a22;--panel:#143832;--pcb-line:#1a4f42;
+  --c1:#4cd964;--c2:#ffb300;--c3:#ff3d3d;--c4:#ffe000;--c5:#42a5f5;
+  --text:#e0f0e8;--dim:#5a7d70;--solder:#c0c8d0;
+}
+body{
+  font-family:'Noto Sans TC','PingFang TC',sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;
+  position:relative;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background-image:
+    linear-gradient(0deg,transparent 95%,var(--pcb-line) 95%,var(--pcb-line) 96%,transparent 96%),
+    linear-gradient(90deg,transparent 95%,var(--pcb-line) 95%,var(--pcb-line) 96%,transparent 96%),
+    radial-gradient(circle at 50% 50%,var(--c2) 0 1.5px,transparent 1.5px);
+  background-size:120px 120px,120px 120px,240px 240px;opacity:.35;
+}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+a{color:var(--c1)}
+::selection{background:var(--c2);color:#000}
+
+/* ============ Header ============ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,31,26,.92);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--c1);box-shadow:0 4px 16px rgba(0,0,0,.5),0 0 24px rgba(76,217,100,.15);
+}
+.header-inner{max-width:1400px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 14px;
+  border:2px solid var(--c2);background:transparent;color:var(--c2);
+  text-decoration:none;font-family:'JetBrains Mono',monospace;font-weight:700;
+  font-size:.85rem;letter-spacing:.05em;transition:.15s;white-space:nowrap;
+}
+.home-btn:hover{background:var(--c2);color:#000;box-shadow:0 0 12px var(--c2)}
+.header-title{font-size:1.5rem;font-weight:900;color:var(--c1);text-shadow:0 0 12px rgba(76,217,100,.4)}
+.header-sub{font-size:.95rem;color:var(--dim);font-family:'JetBrains Mono',monospace}
+.grade-chip{
+  display:inline-block;padding:5px 14px;background:var(--c1);color:var(--bg);
+  font-weight:900;font-size:.85rem;letter-spacing:.05em;
+  box-shadow:3px 3px 0 #000,0 0 8px var(--c1);
+}
+.mode-bar{margin-left:auto;display:flex;gap:8px;align-items:center}
+.mode-btn{
+  padding:6px 14px;border:2px solid var(--c5);background:transparent;color:var(--c5);
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem;cursor:pointer;transition:.15s;
+}
+.mode-btn.active{background:var(--c5);color:#000;box-shadow:0 0 10px var(--c5)}
+.mode-btn:hover{box-shadow:0 0 8px var(--c5)}
+.progress-bar{
+  flex-basis:100%;height:8px;background:var(--surface);border:1px solid var(--pcb-line);
+  position:relative;overflow:hidden;border-radius:2px;
+}
+.progress-fill{
+  position:absolute;top:0;left:0;height:100%;width:0%;
+  background:linear-gradient(90deg,var(--c1),var(--c4));
+  box-shadow:0 0 8px var(--c1);transition:width .5s;
+}
+
+/* ============ 學習目標 chips ============ */
+.objectives{margin:32px 0;text-align:center}
+.objectives h3{font-family:'Orbitron',monospace;font-size:.95rem;color:var(--c2);letter-spacing:.2em;margin-bottom:14px}
+.obj-chips{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+.obj-chip{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 18px;
+  background:var(--panel);border:2px solid var(--c1);color:var(--c1);
+  font-size:1rem;font-weight:700;position:relative;
+  box-shadow:4px 4px 0 #000,0 0 8px rgba(76,217,100,.2);
+}
+.obj-chip::before{
+  content:'';position:absolute;top:-5px;left:-5px;width:8px;height:8px;
+  background:var(--c2);border-radius:50%;box-shadow:0 0 6px var(--c2);
+}
+.obj-chip.c2{border-color:var(--c2);color:var(--c2);box-shadow:4px 4px 0 #000,0 0 8px rgba(255,179,0,.2)}
+.obj-chip.c3{border-color:var(--c3);color:var(--c3);box-shadow:4px 4px 0 #000,0 0 8px rgba(255,61,61,.2)}
+.obj-chip.c4{border-color:var(--c4);color:var(--c4);box-shadow:4px 4px 0 #000,0 0 8px rgba(255,224,0,.2)}
+.obj-chip.c5{border-color:var(--c5);color:var(--c5);box-shadow:4px 4px 0 #000,0 0 8px rgba(66,165,245,.2)}
+
+/* ============ STAGE 導覽 pills ============ */
+.stage-nav{margin:32px 0;display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.stage-pill{
+  padding:11px 22px;background:var(--surface);border:2px solid var(--pcb-line);
+  color:var(--dim);text-decoration:none;cursor:pointer;font-weight:700;font-size:.95rem;
+  font-family:'JetBrains Mono',monospace;transition:.2s;
+}
+.stage-pill:hover,.stage-pill.active{
+  background:var(--panel);border-color:var(--c1);color:var(--c1);
+  box-shadow:0 0 12px rgba(76,217,100,.3);
+}
+
+/* ============ LECTURE CTA（演講簡報入口）============ */
+.lecture-cta{
+  display:block;max-width:680px;margin:24px auto 12px;padding:18px 22px;
+  background:var(--c3);color:#fff;border:3px solid var(--text);
+  box-shadow:5px 5px 0 var(--c1);text-decoration:none;transition:.2s;position:relative;
+}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--c1)}
+.lecture-cta:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--c1)}
+.lecture-cta .cta-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.15em;background:#fff;color:var(--c3);padding:2px 10px;margin-bottom:8px}
+.lecture-cta .cta-title{display:block;font-family:'Orbitron',sans-serif;
+  font-size:1.4rem;font-weight:900;letter-spacing:-.01em;margin-bottom:4px}
+.lecture-cta .cta-sub{display:block;font-size:.85rem;opacity:.9;line-height:1.5}
+
+/* ============ STAGE Section ============ */
+.level-section{
+  margin:48px 0;padding:32px;background:var(--surface);
+  border:3px solid var(--c1);position:relative;
+  box-shadow:6px 6px 0 #000,0 0 24px rgba(76,217,100,.15);
+}
+.level-section::before,.level-section::after{
+  content:'';position:absolute;width:14px;height:14px;background:radial-gradient(circle,var(--c2) 0 50%,#8b6a00 60%,#4a3800 100%);
+  border-radius:50%;box-shadow:0 0 8px var(--c2),inset 0 0 2px rgba(255,255,255,.4);
+}
+.level-section::before{top:-7px;left:-7px}
+.level-section::after{bottom:-7px;right:-7px}
+.level-section.c2{border-color:var(--c2);box-shadow:6px 6px 0 #000,0 0 24px rgba(255,179,0,.15)}
+.level-section.c3{border-color:var(--c3);box-shadow:6px 6px 0 #000,0 0 24px rgba(255,61,61,.15)}
+.level-section.c4{border-color:var(--c4);box-shadow:6px 6px 0 #000,0 0 24px rgba(255,224,0,.15)}
+.level-section.c5{border-color:var(--c5);box-shadow:6px 6px 0 #000,0 0 24px rgba(66,165,245,.15)}
+
+.section-header{display:flex;align-items:center;gap:18px;margin-bottom:24px;flex-wrap:wrap}
+.stage-badge{
+  display:inline-block;background:var(--c1);color:var(--bg);
+  padding:8px 16px;font-family:'Orbitron',monospace;font-weight:900;font-size:.7rem;letter-spacing:.2em;
+  box-shadow:3px 3px 0 #000;
+}
+.level-section.c2 .stage-badge{background:var(--c2)}
+.level-section.c3 .stage-badge{background:var(--c3);color:#fff}
+.level-section.c4 .stage-badge{background:var(--c4)}
+.level-section.c5 .stage-badge{background:var(--c5);color:#fff}
+.section-title{font-size:1.5rem;font-weight:900;color:var(--text);flex:1;min-width:200px}
+.section-sub{font-size:1rem;color:var(--dim);margin-bottom:20px}
+
+/* ============ 操作步驟卡 ============ */
+.steps-card{
+  background:var(--panel);border:2px solid var(--pcb-line);
+  padding:20px 22px;margin:18px 0;position:relative;
+}
+.steps-card h4{font-size:1.1rem;color:var(--c1);margin-bottom:14px;font-weight:900;display:flex;align-items:center;gap:8px}
+.steps-card h4::before{content:'▶';color:var(--c2);font-size:.85rem}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{
+  counter-increment:step;padding:9px 0 9px 48px;position:relative;
+  font-size:1rem;line-height:1.7;
+}
+.steps-list li::before{
+  content:counter(step,decimal-leading-zero);position:absolute;left:0;top:9px;
+  display:inline-block;width:34px;height:34px;
+  background:var(--c2);color:#000;border-radius:50%;
+  font-family:'VT323',monospace;font-size:1.2rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 6px var(--c2);
+}
+.inline-code{
+  display:inline-block;padding:2px 8px;background:#000;color:var(--c1);
+  font-family:'JetBrains Mono',monospace;font-size:.95rem;
+  border:1px solid var(--c1);border-radius:3px;
+}
+.tip-box{
+  margin:14px 0;padding:14px 18px;background:rgba(255,224,0,.08);
+  border-left:4px solid var(--c4);font-size:.95rem;color:var(--text);
+}
+.tip-box strong{color:var(--c4)}
+.warn-box{
+  margin:14px 0;padding:14px 18px;background:rgba(255,61,61,.08);
+  border-left:4px solid var(--c3);font-size:.95rem;color:var(--text);
+}
+.warn-box strong{color:var(--c3)}
+
+/* ============ Canvas 互動區 ============ */
+.canvas-section{
+  margin:24px 0;padding:24px;background:#000;
+  border:2px solid var(--c2);position:relative;
+}
+.canvas-section h4{font-family:'Orbitron',monospace;color:var(--c2);font-size:.95rem;letter-spacing:.15em;margin-bottom:14px}
+.canvas-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.btn-circuit{
+  background:var(--surface);color:var(--c1);border:2px solid var(--c1);
+  padding:9px 20px;font-weight:700;font-size:.95rem;cursor:pointer;
+  font-family:'Noto Sans TC',sans-serif;letter-spacing:.03em;transition:.15s;
+}
+.btn-circuit:hover{background:var(--c1);color:var(--bg);box-shadow:0 0 14px var(--c1)}
+.btn-circuit:active{transform:translateY(1px)}
+.btn-circuit.c2{color:var(--c2);border-color:var(--c2)}
+.btn-circuit.c2:hover{background:var(--c2);color:#000;box-shadow:0 0 14px var(--c2)}
+.btn-circuit.c3{color:var(--c3);border-color:var(--c3)}
+.btn-circuit.c3:hover{background:var(--c3);color:#fff;box-shadow:0 0 14px var(--c3)}
+
+/* ============ 5x5 LED 點陣（共用元件）============ */
+.led-matrix{
+  display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);
+  gap:4px;background:#000;border:3px solid var(--c2);padding:10px;
+  width:200px;height:200px;box-shadow:0 0 16px rgba(255,179,0,.3);
+}
+.led-pixel{background:#1a0000;cursor:pointer;transition:.1s;border-radius:1px}
+.led-pixel.on{background:var(--c3);box-shadow:0 0 6px var(--c3),inset 0 0 3px rgba(255,255,255,.4)}
+.led-pixel:hover{outline:1px solid var(--c1)}
+
+/* ============ 評量區 ============ */
+.quiz-section{margin:24px 0;padding:22px;background:var(--panel);border-left:4px solid var(--c4)}
+.quiz-section h4{font-family:'Orbitron',monospace;color:var(--c4);font-size:.95rem;letter-spacing:.15em;margin-bottom:14px}
+.quiz-q{margin:18px 0;font-size:1.05rem;font-weight:700;line-height:1.6;color:var(--text)}
+.quiz-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:12px 0}
+.quiz-opt{
+  padding:11px 16px;background:var(--surface);border:2px solid var(--pcb-line);
+  color:var(--text);cursor:pointer;text-align:left;font-size:1rem;
+  font-family:inherit;transition:.15s;
+}
+.quiz-opt:hover{border-color:var(--c1);box-shadow:0 0 8px rgba(76,217,100,.3)}
+.quiz-opt.correct{background:var(--c1);color:#000;border-color:var(--c1)}
+.quiz-opt.wrong{background:var(--c3);color:#fff;border-color:var(--c3)}
+.quiz-fb{margin-top:10px;padding:10px 14px;font-size:.95rem;font-weight:700;border-left:3px solid var(--c1);background:rgba(76,217,100,.08)}
+.quiz-fb.wrong{border-color:var(--c3);background:rgba(255,61,61,.08);color:var(--c3)}
+
+/* ============ 教師提示 ============ */
+.teacher-note{
+  margin:18px 0;padding:16px 18px;background:rgba(66,165,245,.08);
+  border:2px dashed var(--c5);font-size:.95rem;color:var(--text);position:relative;
+}
+.teacher-note::before{
+  content:'TEACHER NOTE';position:absolute;top:-10px;left:14px;
+  background:var(--bg);padding:0 8px;font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.15em;color:var(--c5);font-weight:700;
+}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* ============ 今日任務 + NLM 資源站 ============ */
+.task-section,.nb-section{margin:48px 0;padding:32px;background:var(--surface);border:2px solid var(--pcb-line);position:relative}
+.task-section h2,.nb-section h2{font-family:'Orbitron',monospace;color:var(--c2);font-size:1.3rem;letter-spacing:.1em;margin-bottom:18px}
+.task-section h2{color:var(--c4)}
+.task-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:18px}
+.task-item{padding:18px;background:var(--panel);border:2px solid var(--c4);position:relative}
+.task-item h5{color:var(--c4);font-size:1.05rem;margin-bottom:8px}
+.task-item p{font-size:.95rem;color:var(--text);line-height:1.6}
+
+.nb-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:18px 0}
+.nb-card{
+  display:block;padding:18px;background:var(--panel);border:2px solid var(--c5);
+  text-decoration:none;color:var(--text);transition:.2s;
+}
+.nb-card:hover{box-shadow:0 0 16px rgba(66,165,245,.4);transform:translateY(-2px)}
+.nb-card h4{color:var(--c5);font-size:1rem;margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.nb-card .nb-tag{
+  display:inline-block;padding:2px 8px;background:var(--c5);color:#000;
+  font-size:.7rem;font-weight:900;letter-spacing:.1em;margin-bottom:8px;
+}
+
+.flow-diagram{margin:20px 0;padding:18px;background:#000;border:1px solid var(--pcb-line);overflow-x:auto}
+.flow-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:.95rem}
+.flow-node{padding:10px 14px;background:var(--surface);border:2px solid var(--c1);color:var(--c1)}
+.flow-arrow{color:var(--c2);font-size:1.3rem}
+
+.faq-item{margin:14px 0;padding:14px 18px;background:var(--panel);border-left:4px solid var(--c1)}
+.faq-q{font-weight:900;color:var(--c1);font-size:1rem;margin-bottom:6px}
+.faq-q::before{content:'Q. ';color:var(--c2)}
+.faq-a{font-size:.95rem;line-height:1.7;color:var(--text)}
+.faq-a::before{content:'A. ';color:var(--c2);font-weight:900}
+
+/* ============ 簡報播放器 ============ */
+.slide-player{margin:48px 0;background:var(--surface);border:3px solid var(--c1);box-shadow:6px 6px 0 #000,0 0 24px rgba(76,217,100,.15);position:relative}
+.slide-player h3{padding:14px 20px;background:var(--panel);font-family:'Orbitron',monospace;color:var(--c1);font-size:.95rem;letter-spacing:.15em;border-bottom:2px solid var(--pcb-line)}
+.slide-main{position:relative;background:#000}
+.slide-main img{display:block;width:100%;height:auto}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:50px;height:70px;background:rgba(10,31,26,.85);
+  border:2px solid var(--c1);color:var(--c1);font-size:1.8rem;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.2s;z-index:3;
+}
+.slide-nav-btn.prev{left:10px}
+.slide-nav-btn.next{right:10px}
+.slide-nav-btn:hover{background:var(--c1);color:var(--bg);box-shadow:0 0 16px var(--c1)}
+.slide-fs-btn{
+  position:absolute;top:12px;right:12px;
+  background:var(--c1);color:var(--bg);border:none;padding:8px 14px;
+  font-size:.95rem;cursor:pointer;font-weight:700;font-family:inherit;
+  box-shadow:3px 3px 0 #000;z-index:3;
+}
+.slide-fs-btn:hover{transform:translateY(-1px);box-shadow:4px 4px 0 #000}
+.slide-counter{position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.7);color:var(--c2);padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:.85rem;z-index:3}
+.slide-strip{display:flex;gap:6px;padding:12px;background:var(--panel);overflow-x:auto}
+.strip-thumb{flex-shrink:0;width:100px;height:auto;cursor:pointer;border:2px solid transparent;opacity:.6;transition:.2s}
+.strip-thumb.active{border-color:var(--c1);opacity:1;box-shadow:0 0 8px var(--c1)}
+.strip-thumb:hover{opacity:1;border-color:var(--c2)}
+
+/* 全螢幕 */
+#slide-fs{position:fixed;inset:0;background:#000;z-index:9999;display:none;align-items:center;justify-content:center}
+#slide-fs.show{display:flex}
+#slide-fs img{max-width:96%;max-height:96vh;object-fit:contain}
+.fs-close{position:absolute;top:18px;right:18px;width:44px;height:44px;background:var(--c3);color:#fff;border:none;font-size:1.4rem;font-weight:900;cursor:pointer}
+.fs-nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--c1);color:var(--c1);font-size:2rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.fs-nav.prev{left:20px}
+.fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--c1);color:var(--bg);box-shadow:0 0 16px var(--c1)}
+.fs-counter{position:absolute;bottom:18px;left:18px;background:rgba(0,0,0,.7);color:var(--c2);padding:6px 14px;font-family:'JetBrains Mono',monospace}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar{display:none!important}
+
+/* ============ NLM 影片區 ============ */
+.nlm-video-section{margin:48px 0}
+.nlm-video-section h3{padding:14px 20px;background:var(--panel);font-family:'Orbitron',monospace;color:var(--c3);font-size:.95rem;letter-spacing:.15em;border:2px solid var(--c3);border-bottom:none}
+.video-wrap{background:var(--surface);border:3px solid var(--c3);box-shadow:6px 6px 0 #000;position:relative;overflow:hidden}
+.video-ratio{position:relative;padding-top:56.25%;width:100%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{background:var(--panel);border-top:2px solid var(--c3);padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.video-meta .nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c3);color:#fff;font-size:.8rem;font-weight:700;padding:5px 12px}
+.video-meta .hint{font-size:.9rem;color:var(--dim)}
+.video-no-id{padding:50px 20px;text-align:center;font-size:1rem;color:var(--dim);border:2px dashed var(--dim)}
+
+/* ============ 浮動工具面板 ============ */
+.float-tools{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:10px;z-index:400}
+.float-btn{
+  width:56px;height:56px;border-radius:50%;border:3px solid var(--c1);
+  background:var(--surface);color:var(--c1);font-size:1.5rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.2s;
+  box-shadow:4px 4px 0 #000,0 0 12px rgba(76,217,100,.3);
+}
+.float-btn:hover{background:var(--c1);color:var(--bg);box-shadow:4px 4px 0 #000,0 0 20px var(--c1);transform:translateY(-2px)}
+.float-btn.c2{border-color:var(--c2);color:var(--c2);box-shadow:4px 4px 0 #000,0 0 12px rgba(255,179,0,.3)}
+.float-btn.c2:hover{background:var(--c2);color:#000;box-shadow:4px 4px 0 #000,0 0 20px var(--c2)}
+.float-btn.c3{border-color:var(--c3);color:var(--c3);box-shadow:4px 4px 0 #000,0 0 12px rgba(255,61,61,.3)}
+.float-btn.c3:hover{background:var(--c3);color:#fff}
+
+.tool-panel{
+  position:fixed;right:90px;bottom:20px;z-index:400;display:none;
+  background:var(--surface);border:3px solid var(--c1);padding:20px;width:300px;
+  box-shadow:6px 6px 0 #000,0 0 20px rgba(76,217,100,.3);
+}
+.tool-panel.show{display:block}
+.tool-panel h4{color:var(--c1);font-size:1.1rem;font-weight:900;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.tool-panel h4 .close{cursor:pointer;color:var(--c3);font-size:1.3rem;font-weight:900}
+.tool-panel input[type=number]{background:var(--bg);border:2px solid var(--c1);color:var(--text);padding:5px 8px;font-family:inherit;width:60px}
+.lottery-result{margin-top:14px;padding:18px;background:#000;border:2px solid var(--c2);text-align:center;font-family:'VT323',monospace;font-size:2.4rem;font-weight:900;color:var(--c2);text-shadow:0 0 8px var(--c2);min-height:80px;display:flex;align-items:center;justify-content:center}
+.timer-display{font-family:'VT323',monospace;font-size:3.4rem;font-weight:900;color:var(--c4);text-align:center;text-shadow:0 0 12px var(--c4);background:#000;border:2px solid var(--c4);padding:18px;margin:14px 0}
+
+/* ============ 畫筆標註 ============ */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;z-index:300;
+  background:var(--surface);border:2px solid var(--c1);padding:10px 14px;
+  display:none;gap:8px;align-items:center;box-shadow:4px 4px 0 #000,0 0 12px rgba(76,217,100,.3);
+}
+.draw-toolbar.show{display:flex}
+.color-dot{width:28px;height:28px;border:2px solid #000;cursor:pointer;padding:0;transition:.2s;border-radius:50%}
+.color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor}
+.draw-clear{background:transparent;border:2px solid var(--c3);color:var(--c3);padding:5px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.9rem}
+.draw-clear:hover{background:var(--c3);color:#fff}
+
+/* ============ Footer ============ */
+.site-footer{margin-top:80px;padding:40px 24px;background:var(--surface);border-top:3px solid var(--c1);text-align:center}
+.site-footer .made-by{font-size:1rem;color:var(--text);margin-bottom:10px}
+.site-footer .made-by a{color:var(--c1);text-decoration:none;font-weight:900}
+.site-footer .made-by a:hover{text-decoration:underline}
+.site-footer .copy{font-size:.85rem;color:var(--dim);font-family:'JetBrains Mono',monospace}
+
+/* ============ RWD ============ */
+@media (max-width:720px){
+  html{font-size:16px}
+  .container{padding:14px}
+  .header-inner{padding:12px 16px}
+  .level-section{padding:20px}
+  .slide-nav-btn{width:40px;height:60px;font-size:1.4rem}
+  .float-tools{right:12px;bottom:12px}
+  .float-btn{width:48px;height:48px;font-size:1.2rem}
+  .tool-panel{right:12px;left:12px;width:auto;bottom:80px}
+  #slide-fs .fs-nav{width:44px;height:64px;font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回 IT COCKPIT 主頁">&larr; IT COCKPIT</a>
+    <div>
+      <div class="header-title">micro:bit 創客小英雄</div>
+      <div class="header-sub">FIRST_TOUCH · MakeCode × micro:bit</div>
+    </div>
+    <span class="grade-chip">五年級｜資訊科技</span>
+    <div class="mode-bar">
+      <button class="mode-btn active" id="mode-student" onclick="setMode('student')">👨‍🎓 學生</button>
+      <button class="mode-btn" id="mode-teacher" onclick="setMode('teacher')">👨‍🏫 教師</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 學習目標 -->
+  <section class="objectives">
+    <h3>▶ MISSION OBJECTIVES</h3>
+    <div class="obj-chips">
+      <span class="obj-chip">🔬 認識 micro:bit 硬體零件</span>
+      <span class="obj-chip c2">🎮 MakeCode 拖積木寫程式</span>
+      <span class="obj-chip c3">💡 5×5 LED 矩陣畫圖案</span>
+      <span class="obj-chip c4">🎲 搖一搖隨機骰子</span>
+      <span class="obj-chip c5">✂️ A/B 按鈕剪刀石頭布</span>
+    </div>
+  </section>
+
+  <!-- 演講簡報 CTA -->
+  <a href="lecture-slides.html" class="lecture-cta" title="上課當天用：14 張 circuit-glow 投影片">
+    <span class="cta-tag">老師上課專用 ⮕</span>
+    <span class="cta-title">🎬 進入演講簡報模式</span>
+    <span class="cta-sub">14 張 circuit-glow 風投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+  </a>
+
+  <!-- 關卡導覽 -->
+  <nav class="stage-nav">
+    <a class="stage-pill" onclick="goTo('sec1')">STAGE 1｜認識 micro:bit</a>
+    <a class="stage-pill" onclick="goTo('sec2')">STAGE 2｜MakeCode 啟程</a>
+    <a class="stage-pill" onclick="goTo('sec3')">STAGE 3｜姓名 + 笑臉</a>
+    <a class="stage-pill" onclick="goTo('sec4')">STAGE 4｜搖一搖骰子</a>
+    <a class="stage-pill" onclick="goTo('sec5')">STAGE 5｜剪刀石頭布</a>
+  </nav>
+
+  <!-- ============ STAGE 1 ============ -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 01</span>
+      <h2 class="section-title">認識 micro:bit 硬體 — 火柴盒大小的迷你電腦</h2>
+    </div>
+    <p class="section-sub">micro:bit 是英國 BBC 為 5 歲以上孩子設計的微型電腦。它雖然只有<strong style="color:var(--c2)">火柴盒大小</strong>，卻內建了處理器、感測器、25 顆 LED、無線電 — 把它想像成一個「迷你大腦」，你教它做什麼，它就會做！</p>
+
+    <div class="steps-card">
+      <h4>正面有什麼？</h4>
+      <ul class="steps-list">
+        <li><strong style="color:var(--c3)">25 顆 LED 矩陣（5×5）</strong>：紅色 LED 燈，可顯示文字、數字、圖案；同時也能當光感測器，測量周圍亮度。</li>
+        <li><strong style="color:var(--c1)">A、B 按鈕</strong>：可單獨按、也可同時按（A+B），用來控制程式。</li>
+        <li><strong style="color:var(--c4)">V2 金色 Logo</strong>：第三顆觸控感應器（手指碰就觸發）。</li>
+        <li><strong style="color:var(--c5)">V2 麥克風</strong>：偵測音量、感應掌聲。</li>
+      </ul>
+    </div>
+
+    <div class="steps-card">
+      <h4>背面有什麼？</h4>
+      <ul class="steps-list">
+        <li><strong>處理器</strong>：micro:bit 的「大腦」，負責執行你寫的程式。</li>
+        <li><strong>加速度感測器</strong>：三軸偵測，可感知搖晃、傾斜、自由落體（玩骰子靠它）。</li>
+        <li><strong>指南針 / 磁力感測器</strong>：偵測方向、磁場強度。</li>
+        <li><strong>溫度感測器</strong>：測量處理器附近的溫度。</li>
+        <li><strong>V2 喇叭</strong>：內建發聲裝置，可放音樂。</li>
+        <li><strong>無線電 / 藍牙</strong>：可與其他 micro:bit 通訊，或連手機平板。</li>
+        <li><strong>Reset 重設按鈕</strong>：當機時重新啟動。</li>
+      </ul>
+    </div>
+
+    <div class="steps-card">
+      <h4>底部金手指與電源</h4>
+      <ul class="steps-list">
+        <li><strong style="color:var(--c2)">0、1、2 號腳位</strong>：GPIO，可用鱷魚夾接耳機、外接 LED、馬達。</li>
+        <li><strong>3V</strong>：3 伏特電源輸出。<strong>GND</strong>：接地（完成電路用）。</li>
+        <li><strong>microUSB</strong>：連電腦傳程式 + 順便供電。</li>
+        <li><strong>電池座</strong>：接 2 顆 AAA 電池，可離開電腦獨立運作。</li>
+      </ul>
+    </div>
+
+    <div class="tip-box"><strong>💡 V1 vs V2 怎麼分？</strong>翻過板子看右下角，印著「micro:bit V1.x」或「V2.x」。V2 多了麥克風、喇叭、觸控金 Logo。若用 V2 程式（如聽聲音）燒到 V1 板，會顯示哭臉 + 錯誤碼 927。</div>
+
+    <!-- Canvas 互動 -->
+    <div class="canvas-section">
+      <h4>▶ 互動探索：點擊硬體部位看說明</h4>
+      <canvas id="cv1" width="700" height="420" style="width:100%;max-width:700px;background:#0a1f1a;border:2px solid var(--c1);display:block"></canvas>
+      <div id="cv1-info" style="margin-top:14px;padding:14px;background:var(--panel);border:1px solid var(--c2);min-height:60px;font-size:1rem">點擊上方 micro:bit 的任何部位，看看它有什麼祕密！</div>
+    </div>
+
+    <!-- 評量 -->
+    <div class="quiz-section">
+      <h4>▶ STAGE 1 闖關評量</h4>
+      <div class="quiz-q">Q1. micro:bit 上負責偵測「搖晃」與「傾斜」的感測器是？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">光線感測器</button>
+        <button class="quiz-opt" onclick="ans(this,1)">加速度感測器</button>
+        <button class="quiz-opt" onclick="ans(this,0)">溫度感測器</button>
+        <button class="quiz-opt" onclick="ans(this,0)">麥克風</button>
+      </div>
+      <div class="quiz-q">Q2. micro:bit 正面的 LED 矩陣總共有幾顆？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">9 顆 (3×3)</button>
+        <button class="quiz-opt" onclick="ans(this,0)">16 顆 (4×4)</button>
+        <button class="quiz-opt" onclick="ans(this,1)">25 顆 (5×5)</button>
+        <button class="quiz-opt" onclick="ans(this,0)">36 顆 (6×6)</button>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only"><strong>教師提示：</strong>建議先讓學生「翻面觀察」實體 micro:bit 5 分鐘，找出 LED、按鈕、Reset 三個位置。發板子時提醒「捏邊緣」避免按到背面 Reset。</div>
+  </section>
+
+  <!-- ============ STAGE 2 ============ -->
+  <section id="sec2" class="level-section c2">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 02</span>
+      <h2 class="section-title">MakeCode 啟程 — 認識編輯器與積木抽屜</h2>
+    </div>
+    <p class="section-sub">MakeCode 是微軟為 micro:bit 設計的免費線上編輯器，<strong style="color:var(--c2)">不用註冊帳號</strong>，打開瀏覽器就能寫程式。寫完按下載得到 .hex 檔，拖到 micro:bit 就會跑！</p>
+
+    <div class="steps-card">
+      <h4>打開 MakeCode 三步驟</h4>
+      <ul class="steps-list">
+        <li>打開瀏覽器（建議 Chrome），輸入 <span class="inline-code">makecode.microbit.org</span></li>
+        <li>點「<strong style="color:var(--c1)">+ 新增專案</strong>」，幫專案取個英文名字（例如 <span class="inline-code">my-badge</span>）</li>
+        <li>右上角齒輪 → Language → 中文（繁體），介面立刻變中文</li>
+      </ul>
+    </div>
+
+    <div class="steps-card">
+      <h4>認識主畫面三大區塊</h4>
+      <ul class="steps-list">
+        <li><strong style="color:var(--c5)">🟦 左側模擬器</strong>：不用接實機就能測試，可模擬搖動、按鈕、傾斜。</li>
+        <li><strong style="color:var(--c2)">🟧 中央積木抽屜</strong>：10 大分類（基本、輸入、音樂、LED、迴圈、邏輯、變數、數學、廣播、進階）。</li>
+        <li><strong style="color:var(--c1)">🟩 右側工作區</strong>：拖積木組合程式的「畫布」，可像拼圖一樣拼起來。</li>
+      </ul>
+    </div>
+
+    <div class="steps-card">
+      <h4>10 大積木分類 — 顏色就是分類！</h4>
+      <ul class="steps-list">
+        <li><span style="display:inline-block;width:14px;height:14px;background:#1e90ff;vertical-align:middle;margin-right:6px"></span><strong>基本</strong>（藍）：顯示文字、圖示、暫停</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#8b5cf6;vertical-align:middle;margin-right:6px"></span><strong>輸入</strong>（紫）：按鈕、搖晃、感測器</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#ec4899;vertical-align:middle;margin-right:6px"></span><strong>音樂</strong>（桃紅）：播放音調、旋律</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#fbbf24;vertical-align:middle;margin-right:6px"></span><strong>LED</strong>（黃）：控制 25 顆 LED 亮滅</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#10b981;vertical-align:middle;margin-right:6px"></span><strong>迴圈</strong>（綠）：重複執行</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#06b6d4;vertical-align:middle;margin-right:6px"></span><strong>邏輯</strong>（藍綠）：如果 ... 那麼 ... 否則</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#f97316;vertical-align:middle;margin-right:6px"></span><strong>變數</strong>（橘）：記錄數值（像記分板）</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#1e3a8a;vertical-align:middle;margin-right:6px"></span><strong>數學</strong>（深藍）：加減乘除、隨機</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#dc2626;vertical-align:middle;margin-right:6px"></span><strong>廣播 Radio</strong>（紅）：兩塊 micro:bit 無線通訊</li>
+        <li><span style="display:inline-block;width:14px;height:14px;background:#6b7280;vertical-align:middle;margin-right:6px"></span><strong>進階</strong>（灰）：函式、陣列、引腳、控制（高階用）</li>
+      </ul>
+    </div>
+
+    <div class="tip-box"><strong>🎯 兩種事件積木最重要：</strong>「當啟動時」電源開只執行一次；「重複無限次」電源開著一直跑。所有指令積木都要放進事件積木的 C 型開口裡，孤零零放空白處不會跑！</div>
+
+    <!-- Canvas 互動：積木抽屜 -->
+    <div class="canvas-section">
+      <h4>▶ 互動探索：積木分類抽屜模擬</h4>
+      <canvas id="cv2" width="700" height="380" style="width:100%;max-width:700px;background:#0a1f1a;border:2px solid var(--c2);display:block"></canvas>
+      <div id="cv2-info" style="margin-top:14px;padding:14px;background:var(--panel);border:1px solid var(--c2);min-height:60px;font-size:1rem">把滑鼠移到積木上，看看每個分類能做什麼！</div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE 2 闖關評量</h4>
+      <div class="quiz-q">Q1. 想用「如果 ... 那麼 ... 否則」做判斷，要打開哪個積木抽屜？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">基本</button>
+        <button class="quiz-opt" onclick="ans(this,1)">邏輯</button>
+        <button class="quiz-opt" onclick="ans(this,0)">數學</button>
+        <button class="quiz-opt" onclick="ans(this,0)">變數</button>
+      </div>
+      <div class="quiz-q">Q2. MakeCode 左側的「模擬器」可以做什麼？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">直接燒錄到 micro:bit</button>
+        <button class="quiz-opt" onclick="ans(this,1)">不用實機就能測試程式</button>
+        <button class="quiz-opt" onclick="ans(this,0)">下載 .hex 檔</button>
+        <button class="quiz-opt" onclick="ans(this,0)">連接藍牙耳機</button>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only"><strong>教師提示：</strong>學生第一次開 MakeCode 容易迷失，建議讓他們先「拖一個基本/顯示圖示積木 進工作區」，看模擬器即時反應，馬上理解「左寫右跑」的概念。</div>
+  </section>
+
+  <!-- ============ STAGE 3 ============ -->
+  <section id="sec3" class="level-section c3">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 03</span>
+      <h2 class="section-title">姓名徽章 + 笑臉 — 第一個程式 5 分鐘速成</h2>
+    </div>
+    <p class="section-sub">用 <strong style="color:var(--c3)">2 個積木</strong>就能完成你的第一個程式！讓 micro:bit 顯示你的英文名字，再加一個大大的笑臉。</p>
+
+    <div class="steps-card">
+      <h4>程式邏輯（拼成這樣就對了）</h4>
+      <ul class="steps-list">
+        <li>把「<span class="inline-code">重複無限次</span>」（工作區已自動有）保留</li>
+        <li>從「基本」抽屜拖「<span class="inline-code">顯示文字</span>」放進「重複無限次」C 型開口</li>
+        <li>點字串改成自己的名字，例如 <span class="inline-code">Hello! KAI</span></li>
+        <li>再拖「<span class="inline-code">顯示圖示</span>」放在「顯示文字」下方</li>
+        <li>下拉選單選「😊 笑臉」</li>
+        <li>左側模擬器自動播放預覽，看到名字和笑臉輪流出現！</li>
+      </ul>
+    </div>
+
+    <div class="tip-box"><strong>💡 為什麼名字「跑」很正常？</strong>因為 25 顆 LED 一次顯示不下英文字，會自動「滾動」（scroll）。如果你想要每個字停久一點，可以加「<span class="inline-code">暫停 1000 毫秒</span>」（基本抽屜）。</div>
+
+    <!-- Canvas 互動：自己畫 5x5 LED -->
+    <div class="canvas-section">
+      <h4>▶ 互動實作：自己畫 5×5 LED 圖案</h4>
+      <p style="color:var(--dim);margin-bottom:14px;font-size:.95rem">點擊 LED 格子切換亮暗，做出你自己的笑臉、星星、心或任何圖案。MakeCode 的「顯示指示燈」積木就是這樣畫的！</p>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+        <div class="led-matrix" id="ledGrid"></div>
+        <div>
+          <div class="canvas-controls">
+            <button class="btn-circuit" onclick="ledPreset('smile')">😊 笑臉</button>
+            <button class="btn-circuit c2" onclick="ledPreset('heart')">❤️ 愛心</button>
+            <button class="btn-circuit c2" onclick="ledPreset('star')">⭐ 星星</button>
+            <button class="btn-circuit c3" onclick="ledPreset('clear')">🗑️ 清除</button>
+          </div>
+          <div id="ledCount" style="margin-top:14px;color:var(--c2);font-family:'JetBrains Mono',monospace;font-size:.95rem">亮起：0 / 25</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE 3 闖關評量</h4>
+      <div class="quiz-q">Q1. 為什麼 micro:bit 顯示英文名字會「跑來跑去」？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">程式寫錯了</button>
+        <button class="quiz-opt" onclick="ans(this,1)">LED 太少裝不下，自動滾動</button>
+        <button class="quiz-opt" onclick="ans(this,0)">電池快沒電</button>
+        <button class="quiz-opt" onclick="ans(this,0)">沒接 USB</button>
+      </div>
+      <div class="quiz-q">Q2. 想讓笑臉顯示後停一下再換下個圖案，要加哪個積木？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">變數 設為 0</button>
+        <button class="quiz-opt" onclick="ans(this,1)">暫停 1000 毫秒</button>
+        <button class="quiz-opt" onclick="ans(this,0)">隨機取數</button>
+        <button class="quiz-opt" onclick="ans(this,0)">當按鈕被按下</button>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only"><strong>教師提示：</strong>這關超容易，所有學生都能完成。重點是讓他們<strong>第一次按下載、第一次成功燒錄</strong>，建立成就感。記得提醒：燒錄前先確認看到 MICROBIT 磁碟機才把 .hex 檔拖過去。</div>
+  </section>
+
+  <!-- ============ STAGE 4 ============ -->
+  <section id="sec4" class="level-section c4">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 04</span>
+      <h2 class="section-title">搖一搖電子骰子 — 學會變數、隨機、條件判斷</h2>
+    </div>
+    <p class="section-sub">把 micro:bit 變成一顆<strong style="color:var(--c4)">電子骰子</strong>！搖一搖，LED 隨機顯示 1～6 點。這關會用到變數（記分板）+ 隨機（亂數）+ 條件判斷（如果那麼）。</p>
+
+    <div class="steps-card">
+      <h4>程式邏輯（4 個步驟）</h4>
+      <ul class="steps-list">
+        <li>從「輸入」抽屜拖「<span class="inline-code">當姿勢 晃動</span>」放進工作區</li>
+        <li>從「變數」抽屜點「建立一個變數」→ 取名 <span class="inline-code">roll</span></li>
+        <li>「變數」→「<span class="inline-code">變數 roll 設為 0</span>」拖進「當晃動」C 型開口</li>
+        <li>「數學」→「<span class="inline-code">隨機取數 0 到 10</span>」放在 0 的位置，把 10 改成 6</li>
+        <li>「邏輯」→「<span class="inline-code">如果 ... 那麼 ... 否則</span>」拖在變數設定下面</li>
+        <li>「邏輯」→ 比較積木 <span class="inline-code">=</span> 放進「如果」空格</li>
+        <li>「變數」→ <span class="inline-code">roll</span> + 數字 <span class="inline-code">1</span> 放兩邊</li>
+        <li>「基本」→「<span class="inline-code">顯示指示燈</span>」放「那麼」開口，點中間一格代表 1 點</li>
+        <li>點「+」加更多條件，依此類推到 6 點</li>
+        <li>命名 <span class="inline-code">dice</span> → 下載 → 燒錄 → 搖搖看！</li>
+      </ul>
+    </div>
+
+    <div class="tip-box"><strong>🧠 變數是什麼？</strong>變數就像籃球比賽旁邊的「記分板」，可以隨時擦掉改寫數字。我們建立 <span class="inline-code">roll</span> 來記住骰子點數。<strong>隨機取數</strong>就像在抽號碼球，每次抽出來都不一樣！</div>
+
+    <!-- Canvas 互動：骰子模擬器 -->
+    <div class="canvas-section">
+      <h4>▶ 互動實作：電子骰子模擬器</h4>
+      <p style="color:var(--dim);margin-bottom:14px;font-size:.95rem">按下「搖一搖」按鈕，看看 micro:bit 怎麼隨機顯示 1～6 點。多搖幾次，每次都不一樣！</p>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+        <div class="led-matrix" id="diceGrid"></div>
+        <div>
+          <div class="canvas-controls">
+            <button class="btn-circuit c4" onclick="rollDice()" style="font-size:1.1rem;padding:14px 28px">🎲 搖一搖！</button>
+          </div>
+          <div id="diceResult" style="margin-top:14px;font-family:'VT323',monospace;font-size:2.4rem;color:var(--c4);text-shadow:0 0 10px var(--c4)">等待搖動...</div>
+          <div id="diceStat" style="margin-top:8px;color:var(--dim);font-size:.9rem;font-family:'JetBrains Mono',monospace">搖動次數：0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE 4 闖關評量</h4>
+      <div class="quiz-q">Q1. 想用 micro:bit 偵測「搖晃」事件，要用哪個積木？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,1)">當姿勢 晃動</button>
+        <button class="quiz-opt" onclick="ans(this,0)">當按鈕 A 被按下</button>
+        <button class="quiz-opt" onclick="ans(this,0)">當啟動時</button>
+        <button class="quiz-opt" onclick="ans(this,0)">重複無限次</button>
+      </div>
+      <div class="quiz-q">Q2. 「隨機取數 1 到 6」會抽出什麼樣的數字？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">永遠是 6</button>
+        <button class="quiz-opt" onclick="ans(this,0)">永遠從 1 開始往上加</button>
+        <button class="quiz-opt" onclick="ans(this,1)">1、2、3、4、5、6 任一個</button>
+        <button class="quiz-opt" onclick="ans(this,0)">只會抽 1 和 6</button>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only"><strong>教師提示：</strong>這關是難度躍升點。建議先讓全班一起「建立 roll 變數」「拖隨機取數」「驗證亂數真的會跳」，再開放讓他們自己加 6 個 if 條件。提供「骰子流程圖」當鷹架。</div>
+  </section>
+
+  <!-- ============ STAGE 5 ============ -->
+  <section id="sec5" class="level-section c5">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 05</span>
+      <h2 class="section-title">A/B 按鈕剪刀石頭布 — 學會事件驅動</h2>
+    </div>
+    <p class="section-sub">把 micro:bit 變成<strong style="color:var(--c5)">猜拳機</strong>！按 A 出剪刀、按 B 出石頭、A+B 同時按出布。這關學「事件驅動」— 有事情發生才做動作。</p>
+
+    <div class="steps-card">
+      <h4>程式邏輯（3 個事件積木）</h4>
+      <ul class="steps-list">
+        <li>「輸入」→「<span class="inline-code">當按鈕 A 被按下</span>」放進工作區</li>
+        <li>「基本」→「<span class="inline-code">顯示指示燈</span>」放裡面 → 自畫剪刀（兩支斜線）</li>
+        <li>重複上面動作換成「按鈕 B」→ 畫石頭（實心方塊）</li>
+        <li>「輸入」→「<span class="inline-code">當按鈕 A+B 被按下</span>」→ 畫布（5×5 全亮）</li>
+        <li>下載 <span class="inline-code">rps</span>.hex → 燒錄 → 跟同學猜拳大戰！</li>
+      </ul>
+    </div>
+
+    <div class="tip-box"><strong>🎮 事件驅動是什麼？</strong>就像家裡的「防盜鬧鐘」平常安靜，「當有人開門」才會逼逼叫。MakeCode 的「當按鈕 A 被按下」就是事件積木 — 平常不做事，按下去才執行裡面的指令。</div>
+
+    <div class="warn-box"><strong>🚀 進階挑戰：</strong>學會 STAGE 5 後，可以試試「廣播 Radio」讓兩塊 micro:bit 互通訊。A 同學出剪刀，無線傳送 → B 同學的板子顯示結果（贏 / 輸 / 平手）！</div>
+
+    <!-- Canvas 互動：A/B 按鈕模擬 -->
+    <div class="canvas-section">
+      <h4>▶ 互動實作：A/B 按鈕剪刀石頭布</h4>
+      <p style="color:var(--dim);margin-bottom:14px;font-size:.95rem">按下 A、B 或同時按兩個按鈕，看看 LED 矩陣顯示什麼！</p>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+        <div class="led-matrix" id="rpsGrid"></div>
+        <div>
+          <div class="canvas-controls" style="flex-direction:column;align-items:stretch;gap:8px">
+            <button class="btn-circuit c2" onclick="rps('A')" style="font-size:1.1rem;padding:14px 28px">🔵 按鈕 A（剪刀）</button>
+            <button class="btn-circuit c2" onclick="rps('B')" style="font-size:1.1rem;padding:14px 28px">🟢 按鈕 B（石頭）</button>
+            <button class="btn-circuit c2" onclick="rps('AB')" style="font-size:1.1rem;padding:14px 28px">🟣 同時按 A+B（布）</button>
+          </div>
+          <div id="rpsResult" style="margin-top:14px;font-size:1.2rem;color:var(--c5);font-weight:700">等待出招...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>▶ STAGE 5 闖關評量</h4>
+      <div class="quiz-q">Q1. micro:bit 上想做「按 A 和 B 同時按下」的特殊事件，要用哪個積木？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">當按鈕 A 被按下</button>
+        <button class="quiz-opt" onclick="ans(this,0)">當啟動時</button>
+        <button class="quiz-opt" onclick="ans(this,1)">當按鈕 A+B 被按下</button>
+        <button class="quiz-opt" onclick="ans(this,0)">當姿勢晃動</button>
+      </div>
+      <div class="quiz-q">Q2. 想讓兩塊 micro:bit 互相傳訊息（例如猜拳結果），要用哪個積木抽屜？</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="ans(this,0)">基本</button>
+        <button class="quiz-opt" onclick="ans(this,0)">音樂</button>
+        <button class="quiz-opt" onclick="ans(this,1)">廣播 Radio</button>
+        <button class="quiz-opt" onclick="ans(this,0)">迴圈</button>
+      </div>
+    </div>
+
+    <div class="teacher-note teacher-only"><strong>教師提示：</strong>STAGE 5 最容易讓全班嗨起來（玩猜拳對戰）。寫完程式立刻舉辦小組賽，最積極的學生可帶他們進到「廣播 Radio」拓展。</div>
+  </section>
+
+  <!-- ============ 下載與燒錄專區 ============ -->
+  <section class="level-section">
+    <div class="section-header">
+      <span class="stage-badge" style="background:var(--c4);color:#000">FLASH</span>
+      <h2 class="section-title">⚡ 下載 .hex 並燒錄到 micro:bit</h2>
+    </div>
+    <div class="steps-card">
+      <h4>完整燒錄流程</h4>
+      <ul class="steps-list">
+        <li>用 USB 線把 micro:bit 連到電腦（確認線是「資料傳輸線」，不是純充電線）</li>
+        <li>檢查檔案總管出現 <span class="inline-code">MICROBIT (D:)</span> 磁碟機</li>
+        <li>MakeCode 左下角輸入專案名 → 按紫色「下載」按鈕</li>
+        <li>檔案存到電腦「下載」資料夾 → 產生 <span class="inline-code">microbit-XXX.hex</span></li>
+        <li>把 .hex 檔拖到 MICROBIT(D:) 磁碟機（拖曳即可）</li>
+        <li>背面黃燈閃爍 → 表示正在燒錄</li>
+        <li>黃燈熄滅 + 磁碟重新整理 → 完成！程式自動執行</li>
+      </ul>
+    </div>
+    <div class="warn-box"><strong>⚠️ 常見錯誤：</strong>找不到 MICROBIT 磁碟機 — 可能是 USB 線只能充電 / 不小心按到背面 Reset 進入 MAINTENANCE 模式 / USB port 接觸不良。<br><strong>解法：</strong>換線、換 port，或請老師更新韌體。</div>
+    <div class="warn-box"><strong>💾 學校電腦小提醒：</strong>很多學校電腦關機後會自動還原，.hex 檔會被清掉！下課前一定要把 .hex 檔存到自己的 USB 隨身碟，下次用「匯入」讀回來繼續做。</div>
+  </section>
+
+  <!-- ============ 今日實作任務 ============ -->
+  <section class="task-section">
+    <h2>🎯 今日實作任務</h2>
+    <p style="color:var(--dim)">挑一個或全部完成，做完展示給老師看 + 同學分享！</p>
+    <ul class="task-list">
+      <li class="task-item">
+        <h5>🪪 任務 1：姓名徽章</h5>
+        <p>用「重複無限次 + 顯示文字 + 顯示圖示」做出有自己名字和喜歡圖案的徽章。</p>
+      </li>
+      <li class="task-item">
+        <h5>🎲 任務 2：電子骰子</h5>
+        <p>搖一搖出 1-6 點。挑戰：改成「擲兩顆骰子加總」或「抽撲克 1-10」。</p>
+      </li>
+      <li class="task-item">
+        <h5>✂️ 任務 3：剪刀石頭布</h5>
+        <p>A 出剪刀、B 出石頭、A+B 出布。挑戰：用廣播跟同學遠距猜拳。</p>
+      </li>
+      <li class="task-item">
+        <h5>🌙 進階任務：自動小夜燈</h5>
+        <p>「光線感測值 &lt; 50」時 LED 全亮，亮時自動熄滅。放在書桌當夜燈！</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ NLM 資源站 ============ -->
+  <section class="nb-section">
+    <h2>📚 NotebookLM 資源站｜AI 幫你做的學習素材</h2>
+    <p style="color:var(--dim);margin-bottom:18px">這個駕駛艙的內容由 NotebookLM 深度搜尋 23 個來源（含台灣、香港、日本教學資源）萃取而來，下方是原始筆記本與生成素材。</p>
+    <div class="nb-cards">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/eb0813dd-3dfb-4962-8133-96fce7428c84" target="_blank" rel="noopener">
+        <span class="nb-tag">RESEARCH</span>
+        <h4>研究本（23 來源）</h4>
+        <p>深度搜尋抓回的全部教學文章、教案、入門指南、官方文件。</p>
+      </a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/6689d9a5-a52e-460c-90ce-6c8dccc316d7" target="_blank" rel="noopener">
+        <span class="nb-tag">SLIDE</span>
+        <h4>精簡本 ｜ 教學簡報</h4>
+        <p>萃取後的精華筆記 + 主講者，用來生成簡報、資訊圖表、音訊。</p>
+      </a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/44b017b2-88f2-4422-b14b-a2f93027f53f" target="_blank" rel="noopener">
+        <span class="nb-tag">VIDEO</span>
+        <h4>影片版精簡本</h4>
+        <p>專為 NLM 生成自學影片用的純文字精簡本。</p>
+      </a>
+    </div>
+
+    <h3 style="font-family:'Orbitron',monospace;color:var(--c1);font-size:1rem;letter-spacing:.1em;margin:24px 0 12px">▶ NLM × Claude 串接流程</h3>
+    <div class="flow-diagram">
+      <div class="flow-row">
+        <span class="flow-node">deep search</span><span class="flow-arrow">→</span>
+        <span class="flow-node">研究本 23 來源</span><span class="flow-arrow">→</span>
+        <span class="flow-node">5 條精華查詢</span><span class="flow-arrow">→</span>
+        <span class="flow-node">精簡本 + 主講者.pdf</span><span class="flow-arrow">→</span>
+        <span class="flow-node">slide/info/audio/video</span><span class="flow-arrow">→</span>
+        <span class="flow-node">circuit-glow HTML</span>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Orbitron',monospace;color:var(--c1);font-size:1rem;letter-spacing:.1em;margin:24px 0 12px">▶ 學生最常問的 5 個問題</h3>
+    <div class="faq-item">
+      <div class="faq-q">為什麼我寫好程式按下載，卻找不到 MICROBIT 磁碟機？</div>
+      <div class="faq-a">兩個可能：USB 線只能充電不能傳資料（換條線）；或插線時按到背面 Reset 變成 MAINTENANCE 磁碟機（請老師幫忙下載韌體更新檔拖進去就好）。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">為什麼模擬器跑得動，真正的 micro:bit 卻沒反應？</div>
+      <div class="faq-a">按「下載」只是把 .hex 檔存到電腦「下載」資料夾，還沒送到 micro:bit。要打開檔案總管，把 .hex 檔拖到 MICROBIT 磁碟機，看到背面黃燈閃爍才是真的燒錄。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">為什麼我的積木拼不上去，旁邊還變灰色？</div>
+      <div class="faq-a">MakeCode 的指令積木不能孤零零放空白處。要把它拖進有 C 型開口的「事件積木」裡（像「重複無限次」、「當按鈕被按下」），聽到「喀」一聲卡進去才算對！</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">我可以下次接著做嗎？檔案存在哪裡？</div>
+      <div class="faq-a">MakeCode 自動存在瀏覽器，但學校電腦有還原軟體關機後會消失。下課前一定要按「儲存」下載 .hex 檔，存到自己的 USB 隨身碟，下次用「匯入」讀回來。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">micro:bit 沒接電池盒，怎麼還會亮燈？</div>
+      <div class="faq-a">USB 線有兩個任務：傳程式 + 順便供電給 micro:bit。所以接電腦時不用電池盒。要拔下來帶到操場或當穿戴裝置，才需要接電池盒（2 顆 AAA 電池）。</div>
+    </div>
+  </section>
+
+  <!-- ============ 簡報播放器 ============ -->
+  <section class="slide-player">
+    <h3>▶ COURSE SLIDE DECK</h3>
+    <div class="slide-main" ondblclick="openSlideFullscreen()">
+      <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報" onerror="this.style.opacity=.2;this.alt='簡報生成中…'">
+      <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
+      <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
+      <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+      <div class="slide-counter" id="slide-counter">1 / 1</div>
+    </div>
+    <div class="slide-strip" id="slide-strip"></div>
+  </section>
+
+  <!-- 全螢幕 overlay -->
+  <div id="slide-fs">
+    <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+    <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+    <img id="slide-fs-img" src="" alt="">
+    <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+    <div class="fs-counter" id="slide-fs-counter">1 / 1</div>
+  </div>
+
+  <!-- ============ 學生自學影片 ============ -->
+  <section class="nlm-video-section">
+    <h3>▶ SELF-STUDY VIDEO｜學生自學影片</h3>
+    <div class="video-wrap">
+      <div id="video-placeholder" class="video-no-id" style="display:block">
+        🎬 自學影片由 NotebookLM AI 自動生成中…<br>
+        <span style="font-size:.85rem">完成後將自動嵌入此處。</span>
+      </div>
+      <div id="video-frame" style="display:none">
+        <div class="video-ratio">
+          <iframe id="video-iframe" src="" title="micro:bit × MakeCode 自學影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-meta">
+          <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+          <span class="hint">💡 建議用耳機觀看，可搭配上方簡報一起複習</span>
+          <a id="video-yt-link" href="#" target="_blank" rel="noopener" style="margin-left:auto;color:var(--c3);font-size:.85rem;text-decoration:none">↗ 在 YouTube 開啟</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+  <div class="made-by">Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a> ｜桃園市龍潭區石門國民小學</div>
+  <div class="copy">© 2026 IT COCKPIT · circuit-glow style · NotebookLM × Claude × micro:bit</div>
+</footer>
+
+<!-- ============ 浮動工具 ============ -->
+<div class="float-tools">
+  <button class="float-btn" onclick="togglePanel('lottery')" title="抽號碼">🎲</button>
+  <button class="float-btn c2" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn c3" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn" onclick="goTop()" title="回頂部">⤴️</button>
+</div>
+
+<!-- 抽號 panel -->
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.9rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼</span><input type="number" id="lot-min" value="1" min="1"><span>～</span><input type="number" id="lot-max" value="30" min="1"><span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer;color:var(--c1)">
+      <input type="checkbox" id="lot-unique" checked>不重複
+    </label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-circuit" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-circuit c3" onclick="resetLottery()">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<!-- 計時器 panel -->
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 課堂計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.9rem;color:var(--dim)">
+    <span>分鐘</span><input type="number" id="tmr-m" value="5" min="0"><span>秒</span><input type="number" id="tmr-s" value="0" min="0">
+  </div>
+  <div class="timer-display" id="tmr-disp">05:00</div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-circuit c2" onclick="startTimer()" style="flex:1">▶ 開始</button>
+    <button class="btn-circuit" onclick="pauseTimer()" style="flex:1">⏸ 暫停</button>
+    <button class="btn-circuit c3" onclick="resetTimer()">↻</button>
+  </div>
+</div>
+
+<!-- 畫筆 canvas + toolbar -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim);font-family:'JetBrains Mono',monospace">PEN</span>
+  <button class="color-dot active" style="background:#ff3d3d" onclick="setPenColor('#ff3d3d',this)"></button>
+  <button class="color-dot" style="background:#ffb300" onclick="setPenColor('#ffb300',this)"></button>
+  <button class="color-dot" style="background:#4cd964" onclick="setPenColor('#4cd964',this)"></button>
+  <button class="color-dot" style="background:#42a5f5" onclick="setPenColor('#42a5f5',this)"></button>
+  <button class="color-dot" style="background:#fff" onclick="setPenColor('#fff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+/* ============ 模式切換 ============ */
+function setMode(m){
+  document.getElementById('mode-student').classList.toggle('active', m==='student');
+  document.getElementById('mode-teacher').classList.toggle('active', m==='teacher');
+  document.body.classList.toggle('teacher-mode', m==='teacher');
+  if(m==='teacher'){
+    const pwd = prompt('請輸入教師密碼：');
+    if(pwd !== 'it2026'){
+      document.getElementById('mode-student').click();
+      alert('密碼錯誤！已切回學生模式。');
+    }
+  }
+}
+
+/* ============ 評量 ============ */
+function ans(btn, isRight){
+  const opts = btn.parentElement.querySelectorAll('.quiz-opt');
+  opts.forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+  if(isRight){
+    btn.classList.add('correct');
+    const msgs=['🎉 太棒了！','✨ 答對囉！','🌟 你真厲害！','💡 完美！','⚡ 答對啦！'];
+    showFb(btn, msgs[Math.floor(Math.random()*msgs.length)] + ' 繼續挑戰下一題！', false);
+    updateProgress();
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o => { if(o.dataset && o.dataset.right) o.classList.add('correct'); });
+    opts.forEach(o => {
+      if(o.getAttribute('onclick').includes('1)')) o.classList.add('correct');
+    });
+    showFb(btn, '答案不太對喔～再回去看一次說明吧！', true);
+  }
+}
+function showFb(btn, text, isWrong){
+  const fb = document.createElement('div');
+  fb.className = 'quiz-fb' + (isWrong ? ' wrong' : '');
+  fb.textContent = text;
+  btn.parentElement.parentElement.insertBefore(fb, btn.parentElement.nextSibling);
+}
+function updateProgress(){
+  const total = document.querySelectorAll('.quiz-opt').length / 4;
+  const done = document.querySelectorAll('.quiz-opt.correct').length;
+  document.getElementById('progress').style.width = Math.min(100, (done/total*100)) + '%';
+}
+
+/* ============ STAGE 1 Canvas — 硬體點擊探索 ============ */
+const HW_PARTS = [
+  {x:120, y:120, w:120, h:120, name:'25 顆 LED 矩陣',
+   desc:'5×5 紅色 LED 燈陣，可顯示文字、數字、圖案；同時也是光感測器，能偵測周圍亮度。'},
+  {x:60,  y:160, w:50,  h:50, name:'A 按鈕',
+   desc:'按下會觸發「當按鈕 A 被按下」事件。可單獨按、長按、短按、或和 B 同時按。'},
+  {x:250, y:160, w:50,  h:50, name:'B 按鈕',
+   desc:'和 A 按鈕成對。猜拳遊戲就靠 A=剪刀、B=石頭、A+B=布。'},
+  {x:155, y:60,  w:50,  h:40, name:'V2 金色 Logo（觸控）',
+   desc:'V2 新增的觸控感應器，當作第三顆按鈕。手指碰到就能觸發。'},
+  {x:155, y:260, w:50,  h:30, name:'micro:USB 連接埠',
+   desc:'連電腦傳程式 + 順便供電。記得用「資料傳輸線」不是純充電線。'},
+  {x:50,  y:300, w:260, h:50, name:'邊緣金手指 (0,1,2,3V,GND)',
+   desc:'0/1/2 是 GPIO 腳位，可用鱷魚夾接耳機、外接 LED、馬達；3V 供電；GND 接地。'},
+  {x:380, y:80,  w:280, h:60, name:'V2 麥克風 + LED 指示',
+   desc:'V2 內建麥克風，可偵測音量、感應掌聲。LED 指示燈會顯示是否在錄音。'},
+  {x:380, y:160, w:280, h:60, name:'加速度感測器（背面）',
+   desc:'三軸偵測搖晃、傾斜、自由落體。電子骰子就是靠它做的！'},
+  {x:380, y:240, w:280, h:60, name:'指南針 / 磁力感測器（背面）',
+   desc:'偵測方向、磁場強度。可做電子指南針、門窗磁性警報器。'},
+  {x:380, y:320, w:280, h:50, name:'處理器 + 溫度感測器（背面）',
+   desc:'micro:bit 的「大腦」，nRF52833 晶片。同時內建溫度感測器。'}
+];
+
+function drawHwBoard(){
+  const cv = document.getElementById('cv1'); if(!cv) return;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0,0,cv.width,cv.height);
+  // 板子主體（左：正面，右：背面說明）
+  ctx.fillStyle = '#0e2a22';
+  ctx.fillRect(40, 40, 280, 340);
+  ctx.strokeStyle = '#4cd964';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(40, 40, 280, 340);
+  // 標題
+  ctx.fillStyle = '#4cd964';
+  ctx.font = 'bold 14px Noto Sans TC';
+  ctx.fillText('正面 FRONT', 50, 32);
+  // 部位框
+  HW_PARTS.forEach((p, i) => {
+    ctx.strokeStyle = i < 6 ? '#ffb300' : '#42a5f5';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 3]);
+    ctx.strokeRect(p.x, p.y, p.w, p.h);
+    ctx.setLineDash([]);
+    ctx.fillStyle = i < 6 ? '#ffb300' : '#42a5f5';
+    ctx.font = '11px JetBrains Mono';
+    ctx.fillText(String(i+1), p.x + 2, p.y + 12);
+  });
+  // 右側「背面」標題
+  ctx.fillStyle = '#42a5f5';
+  ctx.font = 'bold 14px Noto Sans TC';
+  ctx.fillText('背面 BACK', 380, 70);
+}
+function initCv1(){
+  const cv = document.getElementById('cv1'); if(!cv) return;
+  const info = document.getElementById('cv1-info');
+  drawHwBoard();
+  cv.addEventListener('click', e => {
+    const r = cv.getBoundingClientRect();
+    const sx = cv.width / r.width, sy = cv.height / r.height;
+    const x = (e.clientX - r.left) * sx, y = (e.clientY - r.top) * sy;
+    for(const p of HW_PARTS){
+      if(x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h){
+        info.innerHTML = '<strong style="color:var(--c1);font-size:1.05rem">' + p.name + '</strong><br>' + p.desc;
+        return;
+      }
+    }
+  });
+}
+
+/* ============ STAGE 2 Canvas — 積木分類 hover ============ */
+const BLOCKS = [
+  {name:'基本',     color:'#1e90ff', uses:'顯示文字、顯示圖示、暫停 (毫秒)'},
+  {name:'輸入',     color:'#8b5cf6', uses:'當按鈕被按下、當姿勢晃動、感測值'},
+  {name:'音樂',     color:'#ec4899', uses:'播放音調、播放旋律'},
+  {name:'LED',     color:'#fbbf24', uses:'顯示指示燈、點亮 x y'},
+  {name:'迴圈',     color:'#10b981', uses:'重複 N 次、重複無限次、當條件成立'},
+  {name:'邏輯',     color:'#06b6d4', uses:'如果 那麼 否則、且 / 或、比較大小'},
+  {name:'變數',     color:'#f97316', uses:'建立變數、設為 0、加 1'},
+  {name:'數學',     color:'#1e3a8a', uses:'+ - × ÷、隨機取數 0 到 N'},
+  {name:'廣播',     color:'#dc2626', uses:'廣播傳送、當收到廣播'},
+  {name:'進階',     color:'#6b7280', uses:'函式、陣列、引腳、控制'}
+];
+function drawBlocks(){
+  const cv = document.getElementById('cv2'); if(!cv) return;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.fillStyle = '#0e2a22';
+  ctx.fillRect(20, 20, 660, 340);
+  ctx.strokeStyle = '#ffb300';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(20, 20, 660, 340);
+  ctx.fillStyle = '#ffb300';
+  ctx.font = 'bold 13px JetBrains Mono';
+  ctx.fillText('▶ BLOCK CATEGORIES (HOVER TO EXPLORE)', 30, 12);
+  // 10 blocks 2x5
+  BLOCKS.forEach((b, i) => {
+    const col = i % 5, row = Math.floor(i / 5);
+    const x = 40 + col * 128, y = 50 + row * 150;
+    ctx.fillStyle = b.color;
+    ctx.fillRect(x, y, 110, 130);
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, 110, 130);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 18px Noto Sans TC';
+    ctx.textAlign = 'center';
+    ctx.fillText(b.name, x + 55, y + 75);
+    ctx.font = '11px JetBrains Mono';
+    ctx.fillText(b.name.toUpperCase(), x + 55, y + 95);
+    ctx.textAlign = 'left';
+  });
+}
+function initCv2(){
+  const cv = document.getElementById('cv2'); if(!cv) return;
+  const info = document.getElementById('cv2-info');
+  drawBlocks();
+  function findBlock(x, y){
+    for(let i = 0; i < 10; i++){
+      const col = i % 5, row = Math.floor(i / 5);
+      const bx = 40 + col * 128, by = 50 + row * 150;
+      if(x >= bx && x <= bx + 110 && y >= by && y <= by + 130) return i;
+    }
+    return -1;
+  }
+  function show(e){
+    const r = cv.getBoundingClientRect();
+    const sx = cv.width / r.width, sy = cv.height / r.height;
+    const x = (e.clientX - r.left) * sx, y = (e.clientY - r.top) * sy;
+    const i = findBlock(x, y);
+    if(i >= 0){
+      const b = BLOCKS[i];
+      info.innerHTML = '<strong style="color:' + b.color + ';font-size:1.05rem">' + b.name + '</strong>　<span style="color:var(--dim)">代表用途：</span>' + b.uses;
+    }
+  }
+  cv.addEventListener('mousemove', show);
+  cv.addEventListener('click', show);
+}
+
+/* ============ STAGE 3 LED Grid（自己畫圖案）============ */
+const PRESETS = {
+  smile:[0,1,0,1,0, 0,1,0,1,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  heart:[0,1,0,1,0, 1,1,1,1,1, 1,1,1,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  star: [0,0,1,0,0, 1,1,1,1,1, 0,1,1,1,0, 0,1,0,1,0, 1,0,0,0,1],
+  clear:[0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0]
+};
+let ledState = [...PRESETS.smile];
+function initLedGrid(){
+  const grid = document.getElementById('ledGrid'); if(!grid) return;
+  grid.innerHTML = '';
+  ledState.forEach((on, i) => {
+    const d = document.createElement('div');
+    d.className = 'led-pixel' + (on ? ' on' : '');
+    d.onclick = () => { ledState[i] = ledState[i] ? 0 : 1; d.classList.toggle('on'); updateLedCount(); };
+    grid.appendChild(d);
+  });
+  updateLedCount();
+}
+function updateLedCount(){
+  const c = ledState.filter(x => x).length;
+  document.getElementById('ledCount').textContent = '亮起：' + c + ' / 25';
+}
+function ledPreset(name){
+  ledState = [...PRESETS[name]];
+  initLedGrid();
+}
+
+/* ============ STAGE 4 骰子模擬器 ============ */
+const DICE_PATTERNS = [
+  [0,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,0,0,0,0, 0,0,0,0,0], // 1
+  [0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0], // 2
+  [0,0,0,0,1, 0,0,0,0,0, 0,0,1,0,0, 0,0,0,0,0, 1,0,0,0,0], // 3
+  [1,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,1], // 4
+  [1,0,0,0,1, 0,0,0,0,0, 0,0,1,0,0, 0,0,0,0,0, 1,0,0,0,1], // 5
+  [1,0,0,0,1, 0,0,0,0,0, 1,0,0,0,1, 0,0,0,0,0, 1,0,0,0,1]  // 6
+];
+let diceState = [...DICE_PATTERNS[0]];
+let diceCount = 0;
+function initDiceGrid(){
+  const grid = document.getElementById('diceGrid'); if(!grid) return;
+  grid.innerHTML = '';
+  diceState.forEach(on => {
+    const d = document.createElement('div');
+    d.className = 'led-pixel' + (on ? ' on' : '');
+    grid.appendChild(d);
+  });
+}
+function rollDice(){
+  const grid = document.getElementById('diceGrid');
+  const result = document.getElementById('diceResult');
+  if(!grid) return;
+  let i = 0;
+  const anim = setInterval(() => {
+    const n = Math.floor(Math.random() * 6);
+    diceState = [...DICE_PATTERNS[n]];
+    initDiceGrid();
+    result.textContent = '搖晃中...' + (n + 1);
+    i++;
+    if(i > 12){
+      clearInterval(anim);
+      const final = Math.floor(Math.random() * 6);
+      diceState = [...DICE_PATTERNS[final]];
+      initDiceGrid();
+      result.textContent = '🎲 結果：' + (final + 1) + ' 點';
+      diceCount++;
+      document.getElementById('diceStat').textContent = '搖動次數：' + diceCount;
+    }
+  }, 80);
+}
+
+/* ============ STAGE 5 剪刀石頭布 ============ */
+const RPS_PATTERNS = {
+  scissors:[1,0,0,0,1, 0,1,0,1,0, 0,0,1,0,0, 0,1,0,1,0, 1,0,0,0,1], // X 兩支斜線
+  rock:    [0,1,1,1,0, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 0,1,1,1,0], // 實心圓
+  paper:   [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1]  // 全亮
+};
+let rpsState = [...RPS_PATTERNS.scissors];
+function initRpsGrid(){
+  const grid = document.getElementById('rpsGrid'); if(!grid) return;
+  grid.innerHTML = '';
+  rpsState.forEach(on => {
+    const d = document.createElement('div');
+    d.className = 'led-pixel' + (on ? ' on' : '');
+    grid.appendChild(d);
+  });
+}
+function rps(btn){
+  const map = {A: 'scissors', B: 'rock', AB: 'paper'};
+  const name = {scissors:'剪刀 ✂️', rock:'石頭 ✊', paper:'布 ✋'};
+  rpsState = [...RPS_PATTERNS[map[btn]]];
+  initRpsGrid();
+  document.getElementById('rpsResult').innerHTML = '出招：<strong style="color:var(--c2)">' + name[map[btn]] + '</strong> (按了 ' + btn + ')';
+}
+
+/* ============ 簡報播放器 ============ */
+const SLIDE_LIST = [
+  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg',
+  'assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg',
+  'assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'
+];
+let slideIdx = 0;
+function initSlidePlayer(){
+  if(SLIDE_LIST.length === 0){
+    document.getElementById('slide-current').alt = '簡報生成中…請稍候';
+    return;
+  }
+  // 縮圖列
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src; img.className = 'strip-thumb' + (i === 0 ? ' active' : '');
+    img.onclick = () => goSlide(i);
+    strip.appendChild(img);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n < 0 || n >= SLIDE_LIST.length) return;
+  slideIdx = n;
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = (n + 1) + ' / ' + SLIDE_LIST.length;
+  document.querySelectorAll('.strip-thumb').forEach((t, i) => t.classList.toggle('active', i === n));
+  // 同步全螢幕
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = (n + 1) + ' / ' + SLIDE_LIST.length;
+  }
+  // 縮圖列水平捲動（不動頁面！）
+  const active = document.querySelectorAll('.strip-thumb')[n];
+  if(active){
+    const left = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, left), behavior: 'smooth'});
+  }
+}
+function slideNav(dir){ goSlide(slideIdx + dir); }
+function openSlideFullscreen(){
+  if(SLIDE_LIST.length === 0) return;
+  const fs = document.getElementById('slide-fs');
+  fs.classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[slideIdx];
+  document.getElementById('slide-fs-counter').textContent = (slideIdx + 1) + ' / ' + SLIDE_LIST.length;
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+
+/* ============ YouTube 影片注入 ============ */
+const YOUTUBE_VIDEO_ID = '';  // 等上傳 YouTube 後填入
+function initVideo(){
+  if(!YOUTUBE_VIDEO_ID){
+    document.getElementById('video-placeholder').style.display = 'block';
+    document.getElementById('video-frame').style.display = 'none';
+    return;
+  }
+  document.getElementById('video-placeholder').style.display = 'none';
+  document.getElementById('video-frame').style.display = 'block';
+  document.getElementById('video-iframe').src = 'https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID + '?rel=0&modestbranding=1';
+  document.getElementById('video-yt-link').href = 'https://www.youtube.com/watch?v=' + YOUTUBE_VIDEO_ID;
+}
+
+/* ============ 浮動工具：抽號 / 計時器 / 畫筆 ============ */
+function togglePanel(name){
+  document.querySelectorAll('.tool-panel').forEach(p => {
+    if(p.id === 'panel-' + name) p.classList.toggle('show');
+    else p.classList.remove('show');
+  });
+}
+let lotPool = [];
+function refillLotPool(){
+  const min = +document.getElementById('lot-min').value || 1;
+  const max = +document.getElementById('lot-max').value || 30;
+  if(min > max) return false;
+  lotPool = [];
+  for(let i = min; i <= max; i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = +document.getElementById('lot-min').value || 1;
+  const max = +document.getElementById('lot-max').value || 30;
+  if(min > max){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const t = setInterval(() => {
+    const n = Math.floor(Math.random() * (max - min + 1)) + min;
+    out.textContent = n + ' 號';
+  }, 60);
+  setTimeout(() => {
+    clearInterval(t);
+    let num;
+    if(unique){
+      if(lotPool.length === 0) refillLotPool();
+      const idx = Math.floor(Math.random() * lotPool.length);
+      num = lotPool.splice(idx, 1)[0];
+    } else {
+      num = Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){ refillLotPool(); document.getElementById('lot-out').textContent = '等待抽號...'; }
+
+let tmrId = null, tmrLeft = 300;
+function fmtTime(s){ const m = Math.floor(s / 60), x = s % 60; return String(m).padStart(2,'0') + ':' + String(x).padStart(2,'0'); }
+function startTimer(){
+  if(tmrId) return;
+  tmrLeft = (+document.getElementById('tmr-m').value || 0) * 60 + (+document.getElementById('tmr-s').value || 0);
+  if(tmrLeft <= 0) return;
+  document.getElementById('tmr-disp').textContent = fmtTime(tmrLeft);
+  tmrId = setInterval(() => {
+    tmrLeft--;
+    document.getElementById('tmr-disp').textContent = fmtTime(tmrLeft);
+    if(tmrLeft <= 0){ clearInterval(tmrId); tmrId = null; document.getElementById('tmr-disp').textContent = '⏰ TIME!'; }
+  }, 1000);
+}
+function pauseTimer(){ if(tmrId){ clearInterval(tmrId); tmrId = null; } }
+function resetTimer(){
+  pauseTimer();
+  tmrLeft = (+document.getElementById('tmr-m').value || 0) * 60 + (+document.getElementById('tmr-s').value || 0);
+  document.getElementById('tmr-disp').textContent = fmtTime(tmrLeft);
+}
+
+/* ============ 畫筆 ============ */
+let drawActive = false, penColor = '#ff3d3d', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLx, dLy;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth;
+  drawCanvas.height = window.innerHeight;
+  drawCanvas.addEventListener('mousedown', e => { if(!drawActive) return; isDrawing = true; dLx = e.clientX; dLy = e.clientY; });
+  drawCanvas.addEventListener('mousemove', e => {
+    if(!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLx, dLy); drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke();
+    dLx = e.clientX; dLy = e.clientY;
+  });
+  drawCanvas.addEventListener('mouseup', () => isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e => { if(!drawActive) return; e.preventDefault(); const t = e.touches[0]; isDrawing = true; dLx = t.clientX; dLy = t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e => {
+    if(!drawActive || !isDrawing) return; e.preventDefault();
+    const t = e.touches[0];
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLx, dLy); drawCtx.lineTo(t.clientX, t.clientY); drawCtx.stroke();
+    dLx = t.clientX; dLy = t.clientY;
+  }, {passive:false});
+  drawCanvas.addEventListener('touchend', () => isDrawing = false);
+  window.addEventListener('resize', () => { drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight; });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  const btn = document.getElementById('drawToggleBtn');
+  if(drawActive){ btn.style.background = 'var(--c4)'; btn.style.color = '#000'; }
+  else{ btn.style.background = ''; btn.style.color = ''; }
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height); }
+
+/* ============ 工具：回頂部 / 跳關 ============ */
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+function goTo(id){
+  const target = document.getElementById(id);
+  if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ============ 鍵盤導覽（簡報全螢幕）============ */
+document.addEventListener('keydown', e => {
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    if(e.key === 'ArrowRight' || e.key === ' '){ slideNav(1); e.preventDefault(); }
+    else if(e.key === 'ArrowLeft'){ slideNav(-1); e.preventDefault(); }
+    else if(e.key === 'Escape'){ closeSlideFullscreen(); e.preventDefault(); }
+  }
+});
+
+/* ============ 初始化 ============ */
+document.addEventListener('DOMContentLoaded', () => {
+  initCv1();
+  initCv2();
+  initLedGrid();
+  initDiceGrid();
+  initRpsGrid();
+  initSlidePlayer();
+  initVideo();
+  initDraw();
+  refillLotPool();
+});
+</script>
+</body>
+</html>
