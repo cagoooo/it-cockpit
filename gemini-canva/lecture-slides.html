@@ -861,6 +861,11 @@ document.addEventListener('keydown', e=>{
   else if(['m','M'].includes(k)){ toggleOverview(); e.preventDefault(); }
   else if(['f','F'].includes(k)){ toggleFullscreen(); e.preventDefault(); }
   else if(['s','S'].includes(k)){ toggleSpeaker(); e.preventDefault(); }
+  else if(k === 'Escape'){
+    if(document.fullscreenElement) document.exitFullscreen();
+    else window.location.href = 'index.html';
+    e.preventDefault();
+  }
   else if(/^[1-9]$/.test(k)){
     const t = parseInt(k)-1;
     if(t < N){ goSlide(t); e.preventDefault(); }

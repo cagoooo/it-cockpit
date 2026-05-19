@@ -746,7 +746,11 @@ document.addEventListener('keydown', e=>{
     case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
     case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
     case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
-    case 'Escape': if(document.fullscreenElement) document.exitFullscreen(); break;
+    case 'Escape':
+      if(document.fullscreenElement){ document.exitFullscreen(); }
+      else { window.location.href = 'index.html'; }
+      e.preventDefault();
+      break;
   }
   if(/^[1-9]$/.test(e.key)){
     const target = parseInt(e.key) - 1;

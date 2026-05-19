@@ -1042,7 +1042,12 @@ document.addEventListener('keydown', e=>{
     case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
     case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
     case 'Escape':
-      if(document.fullscreenElement) document.exitFullscreen();
+      if(document.fullscreenElement){
+        document.exitFullscreen();
+      } else {
+        window.location.href = 'index.html';
+      }
+      e.preventDefault();
       break;
   }
   if(/^[1-9]$/.test(e.key)){
