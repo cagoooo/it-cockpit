@@ -1296,8 +1296,10 @@ function goSlide(n){
     document.getElementById('slide-fs-counter').textContent = (n + 1) + ' / ' + SLIDE_LIST.length;
   }
   // 縮圖列水平捲動（不動頁面！）
+  // FIX 2026-05-19: strip 必須在 goSlide 內重新取得 — 不可依賴 initSlidePlayer 內的 const closure
+  const strip = document.getElementById('slide-strip');
   const active = document.querySelectorAll('.strip-thumb')[n];
-  if(active){
+  if(active && strip){
     const left = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
     strip.scrollTo({left: Math.max(0, left), behavior: 'smooth'});
   }
@@ -1452,16 +1454,22 @@ document.addEventListener('keydown', e => {
 });
 
 /* ============ 初始化 ============ */
+// FIX 2026-05-19: 每個 init 包 try/catch，避免一錯卡全部
+// (尤其關鍵 initVideo 必須跑到，否則 YouTube iframe 不會嵌入)
+function safeInit(name, fn){
+  try{ fn(); }
+  catch(e){ console.error('[init error] ' + name + ':', e); }
+}
 document.addEventListener('DOMContentLoaded', () => {
-  initCv1();
-  initCv2();
-  initLedGrid();
-  initDiceGrid();
-  initRpsGrid();
-  initSlidePlayer();
-  initVideo();
-  initDraw();
-  refillLotPool();
+  safeInit('initCv1', initCv1);
+  safeInit('initCv2', initCv2);
+  safeInit('initLedGrid', initLedGrid);
+  safeInit('initDiceGrid', initDiceGrid);
+  safeInit('initRpsGrid', initRpsGrid);
+  safeInit('initSlidePlayer', initSlidePlayer);
+  safeInit('initVideo', initVideo);
+  safeInit('initDraw', initDraw);
+  safeInit('refillLotPool', refillLotPool);
 });
 </script>
 </body>
