@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>畢業紀念影片 AI 一條龍｜六年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/grad-film-ai/">
+<meta property="og:title" content="畢業紀念影片 AI 一條龍｜六年級資訊科技">
+<meta property="og:description" content="用 Gemini × Suno × Canva 三大 AI 工具，完成一支會唱歌的畢業紀念影片！">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/grad-film-ai/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/grad-film-ai/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0f1a; --surface:#141928; --panel:#1c2236;
+  --c1:#f5c842; --c2:#e85a8a; --c3:#5eb8ff; --c4:#7be495; --c5:#c084fc;
+  --text:#f0eaff; --dim:#6a6f8a;
+  --shadow-sm:0 2px 8px rgba(245,200,66,.12);
+  --shadow-md:0 4px 16px rgba(245,200,66,.18);
+  --shadow-lg:0 8px 28px rgba(245,200,66,.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans TC','Outfit',sans-serif;
+  line-height:1.7;background:var(--bg);color:var(--text);
+  position:relative;overflow-x:hidden;
+}
+/* Starfield */
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:transparent;
+  box-shadow:
+    120px 40px 0 0.5px rgba(255,255,255,.6),
+    340px 80px 0 0.5px rgba(255,255,255,.5),
+    560px 150px 0 1px rgba(245,200,66,.4),
+    780px 60px 0 0.5px rgba(255,255,255,.4),
+    200px 300px 0 0.5px rgba(255,255,255,.5),
+    450px 250px 0 1px rgba(94,184,255,.4),
+    650px 400px 0 0.5px rgba(255,255,255,.6),
+    900px 200px 0 0.5px rgba(255,255,255,.3),
+    100px 500px 0 1px rgba(232,90,138,.3),
+    300px 450px 0 0.5px rgba(255,255,255,.5),
+    1100px 100px 0 0.5px rgba(255,255,255,.4),
+    1300px 350px 0 1px rgba(245,200,66,.3),
+    50px 650px 0 0.5px rgba(255,255,255,.5),
+    750px 550px 0 0.5px rgba(255,255,255,.6),
+    950px 480px 0 1px rgba(123,228,149,.3),
+    1200px 600px 0 0.5px rgba(255,255,255,.4),
+    400px 700px 0 0.5px rgba(255,255,255,.3),
+    600px 680px 0 1px rgba(192,132,252,.3),
+    1050px 520px 0 0.5px rgba(255,255,255,.5),
+    180px 780px 0 0.5px rgba(255,255,255,.4),
+    820px 720px 0 1px rgba(245,200,66,.35),
+    1400px 250px 0 0.5px rgba(255,255,255,.3);
+}
+/* Shooting star */
+body::before{
+  content:'';position:fixed;top:10%;left:70%;z-index:1;pointer-events:none;
+  width:80px;height:2px;
+  background:linear-gradient(90deg,rgba(245,200,66,.9),transparent);
+  border-radius:2px;opacity:0;
+  animation:shootingStar 6s ease-in-out infinite;
+}
+@keyframes shootingStar{
+  0%,90%,100%{opacity:0;transform:translate(0,0) rotate(-35deg)}
+  5%{opacity:1}
+  15%{opacity:0;transform:translate(-300px,200px) rotate(-35deg)}
+}
+.container{max-width:1400px;margin:0 auto;padding:24px;position:relative;z-index:2}
+a{color:var(--c1);text-decoration:none}
+
+/* Lecture CTA */
+.lecture-cta{display:block;margin:20px 0;padding:18px 22px;border-radius:16px;
+  background:linear-gradient(135deg,var(--c1),#e8b800);color:#0c0f1a;border:2px solid var(--c1);
+  box-shadow:0 6px 0 #b8940a,0 8px 20px rgba(245,200,66,.3);
+  text-decoration:none;transition:.2s}
+.lecture-cta:hover{transform:translateY(-3px);box-shadow:0 9px 0 #b8940a,0 12px 28px rgba(245,200,66,.4);color:#0c0f1a}
+.lecture-cta:active{transform:translateY(3px);box-shadow:0 3px 0 #b8940a}
+.lecture-cta .cta-tag{display:inline-block;background:#0c0f1a;color:var(--c1);font-size:.75rem;padding:3px 10px;border-radius:999px;margin-bottom:8px;font-weight:700}
+.lecture-cta .cta-title{display:block;font-size:1.4rem;font-weight:900;margin-bottom:4px}
+.lecture-cta .cta-sub{display:block;font-size:.9rem;opacity:.85;line-height:1.5}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(12,15,26,.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:3px solid var(--c1);
+  box-shadow:0 4px 20px rgba(245,200,66,.15);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;
+  border:2px solid var(--c1);background:rgba(245,200,66,.1);color:var(--c1);
+  text-decoration:none;font-weight:700;font-size:.85rem;
+  border-radius:24px;transition:.2s;white-space:nowrap;
+}
+.home-btn:hover{background:var(--c1);color:#0c0f1a;transform:translateY(-2px)}
+.header-title-area{flex:1;min-width:240px}
+.header-title{font-size:1.4rem;font-weight:900;color:var(--c1);letter-spacing:.5px}
+.header-title .emoji{margin-right:4px}
+.header-sub{font-size:.95rem;color:var(--dim);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.header-chip{
+  display:inline-block;padding:2px 10px;
+  background:var(--c3);color:#fff;border-radius:16px;
+  font-weight:700;font-size:.78rem;
+}
+.mode-toggle{
+  display:flex;gap:6px;background:var(--surface);
+  padding:4px;border-radius:24px;border:2px solid var(--c5);
+}
+.mode-btn{
+  border:none;background:transparent;color:var(--text);
+  padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:700;
+  cursor:pointer;transition:.2s;font-family:inherit;
+}
+.mode-btn.active{background:var(--c5);color:#fff;box-shadow:var(--shadow-sm)}
+
+/* 進度條 — 膠卷風格 */
+.progress-rail{
+  width:100%;background:var(--surface);height:8px;border-radius:6px;
+  overflow:hidden;border:1px solid var(--c1);position:relative;
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  width:0%;transition:width .4s;
+}
+
+/* ============ HERO ============ */
+.hero{
+  background:linear-gradient(135deg,var(--surface),var(--panel));
+  border:2px solid var(--c1);border-radius:24px;
+  padding:32px;margin:24px 0;
+  box-shadow:var(--shadow-lg),0 0 60px rgba(245,200,66,.08);position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'🎬🎞️🎶';position:absolute;top:-20px;right:-10px;
+  font-size:5rem;opacity:.06;letter-spacing:8px;
+}
+.hero h1{font-size:2.2rem;font-weight:900;color:var(--c1);margin-bottom:8px;line-height:1.3}
+.hero h1 .emoji{margin-right:6px}
+.hero p.lead{font-size:1.05rem;color:var(--text);margin-bottom:20px;opacity:.9}
+.objs{display:flex;gap:10px;flex-wrap:wrap}
+.obj-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;background:rgba(245,200,66,.08);border:2px solid var(--c1);
+  border-radius:24px;font-size:.95rem;font-weight:700;color:var(--c1);
+  box-shadow:var(--shadow-sm);transition:.2s;
+}
+.obj-chip:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.obj-chip.c2{border-color:var(--c2);color:var(--c2);background:rgba(232,90,138,.08)}
+.obj-chip.c3{border-color:var(--c3);color:var(--c3);background:rgba(94,184,255,.08)}
+.obj-chip.c4{border-color:var(--c4);color:var(--c4);background:rgba(123,228,149,.08)}
+.obj-chip.c5{border-color:var(--c5);color:var(--c5);background:rgba(192,132,252,.08)}
+
+/* ============ 關卡導覽 ============ */
+.stage-nav{
+  background:var(--panel);border-radius:24px;padding:18px;
+  margin:24px 0;border:2px dashed var(--c5);
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+}
+.stage-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;background:rgba(245,200,66,.08);border:2px solid var(--c1);
+  border-radius:24px;font-size:.95rem;font-weight:700;color:var(--c1);
+  text-decoration:none;cursor:pointer;transition:.2s;
+}
+.stage-pill:hover{background:var(--c1);color:#0c0f1a;transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.stage-pill .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;background:var(--c1);color:#0c0f1a;
+  border-radius:50%;font-weight:900;font-size:.85rem;
+}
+.stage-pill:hover .num{background:#0c0f1a;color:var(--c1)}
+
+/* ============ SECTION ============ */
+.level-section{margin:48px 0;scroll-margin-top:100px;
+  border-left:4px solid transparent;padding-left:20px;
+  background-image:repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 16px,
+    rgba(245,200,66,.15) 16px, rgba(245,200,66,.15) 20px,
+    transparent 20px, transparent 36px
+  );
+  background-size:4px 36px;
+  background-position:left;
+  background-repeat:repeat-y;
+}
+.section-header{
+  display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;
+}
+.stage-badge{
+  display:inline-block;padding:6px 14px;
+  background:var(--c1);color:#0c0f1a;
+  border-radius:16px;font-size:.7rem;font-weight:700;
+  letter-spacing:1.5px;
+  font-family:'Outfit',sans-serif;
+  box-shadow:0 0 12px rgba(245,200,66,.5);
+}
+.section-title{font-size:1.5rem;font-weight:900;color:var(--text);line-height:1.3}
+.section-sub{font-size:1rem;color:var(--dim);margin-bottom:16px}
+
+/* 操作步驟卡 */
+.steps-card{
+  background:var(--panel);border-radius:20px;padding:24px;
+  margin-bottom:18px;border:2px solid rgba(245,200,66,.3);
+  box-shadow:var(--shadow-md);
+}
+.steps-card h4{font-size:1.1rem;color:var(--c1);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;padding:0}
+.steps-list li{
+  display:flex;gap:14px;padding:10px 0;font-size:1rem;line-height:1.7;
+  border-bottom:1px dashed rgba(245,200,66,.2);
+}
+.steps-list li:last-child{border-bottom:none}
+.step-num{
+  flex-shrink:0;width:34px;height:34px;
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  color:#fff;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.9rem;box-shadow:var(--shadow-sm);
+}
+
+/* tip box */
+.tip-box{
+  background:rgba(94,184,255,.08);
+  border-left:4px solid var(--c3);border-radius:12px;
+  padding:14px 18px;font-size:.95rem;margin:14px 0;
+  box-shadow:var(--shadow-sm);
+}
+.tip-box strong{color:var(--c3)}
+
+/* Canvas 互動 */
+.canvas-section{
+  background:var(--panel);border-radius:20px;padding:24px;
+  margin:18px 0;border:2px solid rgba(94,184,255,.3);box-shadow:var(--shadow-md);
+}
+.canvas-section h4{font-size:1.1rem;color:var(--c3);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.canvas-prompt{font-size:.95rem;color:var(--dim);margin-bottom:14px}
+.canvas-wrap{
+  background:var(--surface);border:2px dashed rgba(94,184,255,.3);border-radius:16px;
+  padding:20px;min-height:280px;
+}
+
+/* 評量 */
+.quiz-section{
+  background:var(--panel);
+  border-radius:20px;padding:22px;margin:18px 0;
+  border:2px solid rgba(192,132,252,.3);box-shadow:var(--shadow-md);
+}
+.quiz-section h4{font-size:1.1rem;color:var(--c5);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.quiz-q{font-size:1.05rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.quiz-opt{
+  padding:10px 16px;background:var(--surface);border:2px solid rgba(255,255,255,.1);
+  border-radius:14px;font-size:.95rem;cursor:pointer;text-align:left;
+  font-family:inherit;color:var(--text);transition:.2s;
+}
+.quiz-opt:hover{border-color:var(--c5);background:rgba(192,132,252,.1);transform:translateX(4px)}
+.quiz-opt.correct{background:rgba(123,228,149,.15);border-color:var(--c4);color:#7be495}
+.quiz-opt.wrong{background:rgba(232,90,138,.15);border-color:var(--c2);color:var(--c2)}
+.quiz-feedback{
+  margin-top:8px;padding:10px 14px;border-radius:12px;font-size:.95rem;
+  font-weight:700;display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(123,228,149,.15);color:var(--c4)}
+.quiz-feedback.no{background:rgba(232,90,138,.15);color:var(--c2)}
+.quiz-block{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed rgba(192,132,252,.2)}
+.quiz-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+
+/* 教師提示 */
+.teacher-note{
+  background:rgba(245,200,66,.06);
+  border:2px dashed rgba(245,200,66,.3);border-radius:14px;
+  padding:14px 18px;font-size:.92rem;margin-top:14px;color:var(--c1);
+}
+.teacher-note::before{content:'👩‍🏫 教師提示｜';font-weight:700;color:var(--c1)}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* 簡報播放器 */
+.slide-section{margin:48px auto}
+.slide-player{
+  background:var(--panel);border-radius:20px;
+  border:3px solid var(--c1);overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.slide-main{
+  position:relative;background:#000;aspect-ratio:16/9;
+  display:flex;align-items:center;justify-content:center;
+}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:50px;height:60px;background:rgba(12,15,26,.85);
+  border:2px solid var(--c1);color:var(--c1);font-size:2rem;font-weight:900;
+  cursor:pointer;border-radius:30px;
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s;box-shadow:var(--shadow-md);
+}
+.slide-nav-btn:hover{background:var(--c1);color:#0c0f1a;transform:translateY(-50%) scale(1.05)}
+.slide-nav-btn.prev{left:14px}
+.slide-nav-btn.next{right:14px}
+.slide-fs-btn{
+  position:absolute;top:14px;right:14px;
+  background:var(--c1);color:#0c0f1a;border:none;
+  padding:8px 16px;font-size:.95rem;font-weight:700;
+  cursor:pointer;border-radius:24px;
+  display:flex;align-items:center;gap:6px;
+  z-index:5;font-family:inherit;
+  box-shadow:var(--shadow-md);transition:.2s;
+}
+.slide-fs-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(245,200,66,.4)}
+.slide-counter{
+  position:absolute;left:14px;bottom:14px;
+  background:rgba(0,0,0,.6);color:#fff;
+  padding:5px 12px;border-radius:14px;font-size:.85rem;font-weight:700;
+}
+.slide-strip{
+  display:flex;gap:6px;padding:10px;overflow-x:auto;
+  background:var(--surface);border-top:2px solid var(--c1);
+  scroll-behavior:smooth;
+}
+.slide-strip::-webkit-scrollbar{height:8px}
+.slide-strip::-webkit-scrollbar-track{background:var(--surface);border-radius:4px}
+.slide-strip::-webkit-scrollbar-thumb{background:var(--c1);border-radius:4px}
+.strip-thumb{
+  flex-shrink:0;width:120px;aspect-ratio:16/9;
+  border:3px solid rgba(245,200,66,.2);border-radius:8px;cursor:pointer;
+  background-size:cover;background-position:center;
+  transition:.2s;position:relative;
+}
+.strip-thumb:hover{border-color:var(--c1);transform:translateY(-2px)}
+.strip-thumb.active{border-color:var(--c1);box-shadow:0 0 0 3px var(--c2)}
+.strip-thumb .thumb-num{
+  position:absolute;left:4px;top:4px;
+  background:rgba(0,0,0,.7);color:var(--c1);
+  padding:1px 6px;border-radius:8px;font-size:.7rem;font-weight:700;
+}
+
+/* 全螢幕 */
+#slide-fs{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.96);z-index:9999;
+  align-items:center;justify-content:center;
+}
+#slide-fs.show{display:flex}
+#slide-fs img{max-width:96%;max-height:96%;object-fit:contain}
+.fs-close{
+  position:absolute;top:18px;right:18px;
+  background:var(--c1);color:#0c0f1a;border:none;
+  width:48px;height:48px;border-radius:50%;cursor:pointer;
+  font-size:1.4rem;font-weight:900;z-index:2;font-family:inherit;
+  box-shadow:var(--shadow-lg);
+}
+.fs-close:hover{background:#fff;color:var(--c1)}
+.fs-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:80px;
+  background:rgba(255,255,255,.05);border:2px solid var(--c1);color:var(--c1);
+  font-size:2rem;font-weight:900;cursor:pointer;z-index:2;
+  display:flex;align-items:center;justify-content:center;font-family:inherit;
+  border-radius:14px;transition:.2s;
+}
+.fs-nav.prev{left:24px}
+.fs-nav.next{right:24px}
+.fs-nav:hover{background:var(--c1);color:#0c0f1a}
+.fs-counter{
+  position:absolute;left:24px;bottom:24px;
+  background:rgba(245,200,66,.85);color:#0c0f1a;
+  padding:8px 16px;border-radius:14px;font-weight:700;
+}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none !important}
+
+/* NLM video */
+.nlm-video-section{max-width:1400px;margin:0 auto 48px;padding:0 24px}
+.nlm-video-section h3{font-size:1.2rem;color:var(--c3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.video-wrap{
+  background:var(--panel);border:3px solid var(--c3);
+  border-radius:20px;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.video-ratio{position:relative;padding-top:56.25%;width:100%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{
+  background:var(--surface);border-top:2px solid var(--c3);
+  padding:12px 18px;display:flex;align-items:center;
+  gap:12px;flex-wrap:wrap;
+}
+.nlm-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--c3);color:#fff;font-size:.8rem;font-weight:700;
+  padding:5px 12px;border-radius:16px;white-space:nowrap;
+}
+.video-hint{font-size:.92rem;color:var(--dim)}
+.video-no-id{
+  padding:50px 20px;text-align:center;font-size:.95rem;color:var(--dim);
+  border:2px dashed var(--c3);background:var(--surface);border-radius:16px;
+}
+.video-no-id .big{font-size:2.5rem;margin-bottom:10px}
+
+/* NLM 資源站 */
+.nb-section{
+  background:var(--panel);
+  border:3px solid var(--c4);border-radius:20px;
+  padding:28px;margin:48px 0;box-shadow:var(--shadow-lg);
+}
+.nb-section h3{font-size:1.4rem;color:var(--c4);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px}
+.nb-card{
+  background:var(--surface);border:2px solid rgba(123,228,149,.3);border-radius:16px;
+  padding:18px;text-decoration:none;color:var(--text);
+  transition:.2s;display:block;
+}
+.nb-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--c4)}
+.nb-card .icon{font-size:2rem;margin-bottom:8px}
+.nb-card h4{font-size:1rem;color:var(--c4);margin-bottom:6px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.6}
+.nb-flow{
+  background:var(--surface);border-radius:14px;padding:16px;font-size:.92rem;
+  color:var(--dim);line-height:1.8;margin-bottom:18px;border:1px dashed var(--c4);
+}
+.nb-flow code{
+  background:rgba(245,200,66,.1);color:var(--c1);padding:2px 8px;
+  border-radius:6px;font-family:'VT323',monospace;font-weight:700;font-size:1.1em;
+}
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{
+  background:var(--surface);border:2px solid rgba(123,228,149,.2);border-radius:14px;overflow:hidden;
+}
+.faq-q{
+  padding:14px 18px;font-size:1rem;font-weight:700;cursor:pointer;
+  color:var(--c4);display:flex;justify-content:space-between;align-items:center;
+}
+.faq-q::after{content:'+';font-size:1.4rem;transition:.2s}
+.faq-item.open .faq-q::after{content:'-'}
+.faq-a{
+  padding:0 18px;max-height:0;overflow:hidden;font-size:.95rem;
+  line-height:1.7;color:var(--text);transition:.3s;
+}
+.faq-item.open .faq-a{padding:0 18px 14px;max-height:600px}
+
+/* Project task */
+.project-task{
+  background:var(--panel);
+  border:3px solid var(--c2);border-radius:20px;
+  padding:28px;margin:48px 0;box-shadow:var(--shadow-lg);
+}
+.project-task h3{font-size:1.4rem;color:var(--c2);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.task-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.task-card{
+  background:var(--surface);border:2px dashed rgba(232,90,138,.3);border-radius:14px;
+  padding:14px;font-size:.95rem;
+}
+.task-card strong{color:var(--c2);display:block;margin-bottom:4px;font-size:1rem}
+
+/* 浮動工具 */
+.float-tools{
+  position:fixed;right:18px;bottom:18px;z-index:400;
+  display:flex;flex-direction:column;gap:8px;
+}
+.float-btn{
+  width:54px;height:54px;border-radius:50%;border:none;
+  cursor:pointer;font-size:1.4rem;
+  box-shadow:var(--shadow-lg);transition:.2s;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+.float-btn:hover{transform:scale(1.1) translateY(-2px)}
+.float-btn.gold{background:var(--c1);color:#0c0f1a}
+.float-btn.pink{background:var(--c2);color:#fff}
+.float-btn.blue{background:var(--c3);color:#fff}
+.float-btn.green{background:var(--c4);color:#fff}
+.float-btn.purple{background:var(--c5);color:#fff}
+
+.tool-panel{
+  position:fixed;right:18px;bottom:90px;z-index:401;
+  background:var(--panel);border:2px solid var(--c1);
+  border-radius:18px;padding:18px;width:300px;
+  box-shadow:var(--shadow-lg);display:none;
+}
+.tool-panel.show{display:block}
+.tool-panel h4{
+  font-size:1rem;margin-bottom:12px;color:var(--c1);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.tool-panel h4 .close{cursor:pointer;color:var(--dim);font-size:1.1rem}
+.tool-panel input{
+  width:100%;padding:8px 10px;border:2px solid rgba(245,200,66,.3);
+  border-radius:10px;font-family:inherit;font-size:.95rem;color:var(--text);
+  background:var(--surface);
+}
+.btn-primary{
+  padding:9px 14px;background:var(--c1);color:#0c0f1a;border:none;
+  border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:.2s;font-size:.95rem;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.lottery-result{
+  margin-top:12px;text-align:center;padding:18px;
+  background:var(--surface);
+  border:2px dashed var(--c1);border-radius:12px;
+  font-size:1.4rem;font-weight:900;color:var(--c1);min-height:60px;
+  display:flex;align-items:center;justify-content:center;
+}
+.timer-display{
+  font-size:2.2rem;font-weight:900;color:var(--c1);text-align:center;
+  padding:14px;background:var(--surface);border-radius:12px;margin-bottom:10px;
+  font-family:'VT323',monospace;
+}
+.timer-controls{display:flex;gap:6px}
+
+/* 畫筆工具 */
+#drawCanvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:250;pointer-events:none;background:transparent;
+}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:18px;bottom:18px;z-index:300;
+  background:var(--panel);border:2px solid var(--c1);
+  border-radius:18px;padding:10px 14px;
+  display:none;gap:8px;align-items:center;
+  box-shadow:var(--shadow-lg);
+}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{
+  width:28px;height:28px;border:2px solid rgba(255,255,255,.2);
+  border-radius:50%;cursor:pointer;padding:0;transition:.2s;
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.draw-toolbar .color-dot.active{transform:scale(1.25);box-shadow:0 0 8px currentColor}
+.draw-toolbar .draw-clear{
+  background:transparent;border:2px solid var(--c5);color:var(--c5);
+  padding:5px 12px;border-radius:14px;font-family:inherit;
+  font-weight:700;cursor:pointer;font-size:.85rem;
+}
+.draw-toolbar .draw-clear:hover{background:var(--c5);color:#fff}
+
+/* Canvas interactions */
+.prompt-col{background:var(--surface);border:2px solid rgba(94,184,255,.3);border-radius:12px;padding:10px;margin-bottom:8px}
+.prompt-col label{font-size:.85rem;font-weight:700;color:var(--c3);display:block;margin-bottom:6px}
+.prompt-tags{display:flex;flex-wrap:wrap;gap:6px}
+.prompt-tag{
+  padding:5px 12px;background:rgba(94,184,255,.08);border:2px solid rgba(94,184,255,.3);
+  border-radius:14px;font-size:.88rem;cursor:pointer;color:var(--c3);
+  font-family:inherit;font-weight:600;transition:.2s;
+}
+.prompt-tag:hover{background:rgba(94,184,255,.2)}
+.prompt-tag.selected{background:var(--c3);color:#fff;border-color:var(--c3)}
+.prompt-output{
+  background:rgba(10,20,40,.8);color:var(--c4);
+  font-family:'VT323',monospace;padding:14px;border-radius:10px;
+  font-size:1.05rem;min-height:54px;line-height:1.7;margin-top:10px;
+}
+.prompt-output .placeholder{color:var(--dim)}
+
+/* Storyboard */
+.sb-timeline{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.sb-slot{
+  width:140px;min-height:90px;border:2px dashed rgba(245,200,66,.3);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;color:var(--dim);background:var(--surface);transition:.3s;
+}
+.sb-slot.filled{border-color:var(--c1);background:rgba(245,200,66,.08)}
+.sb-cards{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.sb-card{
+  padding:10px 18px;background:rgba(245,200,66,.1);border:2px solid var(--c1);
+  border-radius:14px;cursor:pointer;font-weight:700;color:var(--c1);
+  font-family:inherit;font-size:.95rem;transition:.2s;
+}
+.sb-card:hover{transform:translateY(-2px);background:var(--c1);color:#0c0f1a}
+.sb-card.used{opacity:.4;pointer-events:none}
+
+/* Lyrics workshop */
+.lyric-bank{display:flex;flex-wrap:wrap;gap:8px;padding:14px;border-radius:12px;min-height:56px;background:var(--surface);border:2px dashed var(--c5);margin-bottom:10px}
+.lyric-target{display:flex;flex-wrap:wrap;gap:8px;padding:14px;border-radius:12px;min-height:56px;background:rgba(123,228,149,.05);border:2px solid rgba(123,228,149,.3);margin-bottom:8px}
+.lyric-chip{
+  padding:6px 14px;background:rgba(192,132,252,.08);border:2px solid var(--c5);
+  border-radius:18px;font-weight:700;cursor:pointer;
+  color:var(--c5);font-size:.95rem;user-select:none;font-family:inherit;transition:.2s;
+}
+.lyric-chip:hover{transform:translateY(-2px)}
+.lyric-chip.placed{opacity:.4;pointer-events:none}
+.lyric-chip.in-target{background:var(--c4);border-color:var(--c4);color:#fff;cursor:pointer}
+
+/* Motion sim */
+.motion-preview{
+  width:100%;aspect-ratio:16/9;background:var(--surface);border-radius:14px;
+  overflow:hidden;position:relative;margin-bottom:14px;
+  border:2px solid rgba(192,132,252,.3);
+}
+.motion-preview img{width:100%;height:100%;object-fit:cover;transition:transform 2s ease}
+.motion-btns{display:flex;gap:8px;flex-wrap:wrap}
+.motion-btn{
+  padding:8px 16px;background:rgba(192,132,252,.08);border:2px solid var(--c5);
+  border-radius:14px;color:var(--c5);font-weight:700;cursor:pointer;
+  font-family:inherit;font-size:.9rem;transition:.2s;
+}
+.motion-btn:hover{background:var(--c5);color:#fff}
+.motion-btn.active{background:var(--c5);color:#fff}
+
+/* Timeline sim */
+.tl-tracks{margin-bottom:14px}
+.tl-track{
+  height:50px;background:var(--surface);border-radius:8px;
+  margin-bottom:8px;position:relative;overflow:hidden;
+  display:flex;align-items:center;padding:0 8px;gap:4px;
+}
+.tl-track-label{
+  position:absolute;left:8px;top:4px;font-size:.7rem;
+  color:var(--dim);font-weight:700;z-index:2;
+}
+.tl-clip{
+  height:36px;border-radius:6px;flex:1;font-size:.7rem;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+}
+
+/* Footer */
+.site-footer{
+  text-align:center;padding:30px 20px;color:var(--dim);
+  font-size:.9rem;border-top:2px dashed rgba(245,200,66,.2);margin-top:48px;
+  position:relative;z-index:2;
+}
+
+/* Responsive */
+@media(max-width:720px){
+  html{font-size:17px}
+  .container{padding:14px}
+  .hero{padding:24px}
+  .hero h1{font-size:1.7rem}
+  .header-title{font-size:1.15rem}
+  .stage-pill{font-size:.85rem;padding:8px 14px}
+  .stage-pill .num{width:24px;height:24px;font-size:.78rem}
+  .float-btn{width:46px;height:46px;font-size:1.2rem}
+  .tool-panel{width:calc(100% - 36px);right:18px;left:18px}
+  .strip-thumb{width:90px}
+  .slide-nav-btn{width:42px;height:50px;font-size:1.5rem}
+  .slide-fs-btn{font-size:.85rem;padding:6px 12px}
+  #slide-fs .fs-nav{width:46px;height:64px;font-size:1.6rem}
+  #slide-fs .fs-nav.prev{left:8px}
+  #slide-fs .fs-nav.next{right:8px}
+  .fs-close{width:40px;height:40px;top:12px;right:12px}
+  .sb-slot{width:110px;min-height:70px}
+  .level-section{padding-left:14px}
+}
+@media(max-width:480px){
+  html{font-size:16px}
+  .header-inner{padding:10px 14px}
+  .hero h1{font-size:1.4rem}
+  .mode-toggle{width:100%}
+  .mode-btn{flex:1;text-align:center;font-size:.8rem;padding:6px 8px}
+  .sb-timeline{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title-area">
+      <div class="header-title"><span class="emoji">🎬</span>用 AI 做出會唱歌的畢業影片</div>
+      <div class="header-sub">
+        <span class="header-chip">六年級</span>
+        <span class="header-chip" style="background:var(--c2)">資訊科技</span>
+        <span style="font-size:.85rem">Gemini × Suno × Canva ｜ 5 個關卡</span>
+        <div class="progress-rail" style="flex:1;min-width:140px;margin-left:8px">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-toggle" title="教師密碼：it2026">
+      <button class="mode-btn active" id="modeStudent">👦 學生模式</button>
+      <button class="mode-btn" id="modeTeacher">👩‍🏫 教師模式</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ▶ 演講簡報模式 CTA -->
+  <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+    <span class="cta-tag">老師上課用 ⮕</span>
+    <span class="cta-title">🎬 進入演講簡報模式</span>
+    <span class="cta-sub">15 張投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線</span>
+  </a>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1><span class="emoji">🎞️</span>用 Gemini × Suno × Canva 打造會唱歌的畢業紀念影片</h1>
+    <p class="lead">畢業季快到了！用 <strong>Gemini 生成回憶插圖</strong>、<strong>Suno 創作畢業歌</strong>、<strong>Canva 剪輯成完整影片</strong>，在畢業典禮上感動全場。5 個關卡帶你完成一支 30 秒的專屬畢業紀念影片！</p>
+    <div class="objs">
+      <div class="obj-chip">🎬 撰寫分鏡腳本</div>
+      <div class="obj-chip c2">🖼️ Gemini AI 生圖</div>
+      <div class="obj-chip c3">🎵 Suno AI 作曲</div>
+      <div class="obj-chip c4">✨ 動態特效製作</div>
+      <div class="obj-chip c5">🎞️ Canva 影片剪輯</div>
+    </div>
+  </section>
+
+  <!-- 關卡導覽 -->
+  <nav class="stage-nav">
+    <a class="stage-pill" href="#sec1"><span class="num">1</span>劇本企劃</a>
+    <a class="stage-pill" href="#sec2"><span class="num">2</span>Gemini 生圖</a>
+    <a class="stage-pill" href="#sec3"><span class="num">3</span>Suno 作曲</a>
+    <a class="stage-pill" href="#sec4"><span class="num">4</span>動態特效</a>
+    <a class="stage-pill" href="#sec5"><span class="num">5</span>Canva 剪輯</a>
+  </nav>
+
+  <!-- ============= STAGE 1 ============= -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 1</span>
+      <h2 class="section-title">🎬 劇本企劃室 — 畢業影片腳本大綱</h2>
+    </div>
+    <p class="section-sub">好的影片從好的劇本開始！先用 4 幕結構（開場→回憶→感謝→展望）規劃你的畢業紀念影片。</p>
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>決定影片主題：例如「六年的時光膠囊」「我們的青春紀念冊」</li>
+        <li><span class="step-num">2</span>寫下 4 幕分鏡大綱：<strong>開場</strong>（校門口/教室）→<strong>回憶</strong>（運動會/校外教學）→<strong>感謝</strong>（師長/同學）→<strong>展望</strong>（畢業典禮/未來夢想）</li>
+        <li><span class="step-num">3</span>列出每一幕需要的畫面素材（照片/AI生圖/影片片段）</li>
+        <li><span class="step-num">4</span>確認音樂氛圍：感性抒情？活力歡樂？溫馨感人？</li>
+      </ol>
+      <div class="tip-box"><strong>💡 小技巧：</strong>30 秒影片大約需要 6-8 個畫面，每個畫面 4-5 秒，搭配一首完整的背景音樂剛剛好！</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：分鏡排序挑戰</h4>
+      <p class="canvas-prompt">把下方 4 張分鏡卡片按正確順序放到時間軸上！</p>
+      <div class="canvas-wrap" id="storyboardArea">
+        <div class="sb-timeline" id="sbTimeline">
+          <div class="sb-slot" data-pos="0">第 1 幕</div>
+          <div class="sb-slot" data-pos="1">第 2 幕</div>
+          <div class="sb-slot" data-pos="2">第 3 幕</div>
+          <div class="sb-slot" data-pos="3">第 4 幕</div>
+        </div>
+        <div class="sb-cards" id="sbCards">
+          <button class="sb-card" data-act="2" onclick="placeCard(this)">🙏 感謝篇</button>
+          <button class="sb-card" data-act="3" onclick="placeCard(this)">🚀 展望篇</button>
+          <button class="sb-card" data-act="0" onclick="placeCard(this)">🎬 開場篇</button>
+          <button class="sb-card" data-act="1" onclick="placeCard(this)">📸 回憶篇</button>
+        </div>
+        <div id="sbFeedback" style="text-align:center;margin-top:14px;font-weight:700;font-size:1.1rem"></div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 隨堂測驗</h4>
+      <div class="quiz-block" id="q1-1">
+        <p class="quiz-q">Q1：畢業紀念影片的 4 幕結構，正確順序是？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q1-1',false)">回憶→開場→展望→感謝</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q1-1',true)">開場→回憶→感謝→展望</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q1-1',false)">感謝→展望→開場→回憶</button>
+        </div>
+        <div class="quiz-feedback" id="q1-1-fb"></div>
+      </div>
+      <div class="quiz-block" id="q1-2">
+        <p class="quiz-q">Q2：30 秒的影片大約需要幾個畫面？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q1-2',false)">2-3 個</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q1-2',true)">6-8 個</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q1-2',false)">20 個以上</button>
+        </div>
+        <div class="quiz-feedback" id="q1-2-fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only teacher-note">建議先用紙筆讓學生畫分鏡草圖（A4 四格漫畫形式），再進入數位工具。可以分組討論主題，每組 2-3 人合作。</div>
+  </section>
+
+  <!-- ============= STAGE 2 ============= -->
+  <section id="sec2" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 2</span>
+      <h2 class="section-title">🖼️ Gemini 圖片工坊 — AI 生成畢業回憶插圖</h2>
+    </div>
+    <p class="section-sub">用 Google Gemini 免費版，輸入提示詞就能生成畢業主題的精美插圖！</p>
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>打開瀏覽器進入 <strong>gemini.google.com</strong>，用 Google 帳號登入</li>
+        <li><span class="step-num">2</span>在對話框輸入「<strong>請幫我生成一張圖片</strong>」開始圖片生成功能</li>
+        <li><span class="step-num">3</span>描述你要的場景：<strong>主體</strong>（畢業生）+<strong>場景</strong>（校園櫻花樹下）+<strong>風格</strong>（水彩插畫風）+<strong>光影</strong>（溫暖夕陽光）</li>
+        <li><span class="step-num">4</span>點擊生成，等待 10-30 秒即可看到結果</li>
+        <li><span class="step-num">5</span>不滿意的話修改提示詞重新生成，滿意就點右下角下載</li>
+      </ol>
+      <div class="tip-box"><strong>💡 配額提醒：</strong>免費版每 5 小時重置算力配額，一張圖約消耗 2% 配額，粗估每 5 小時可生成約 50 張圖。先構思好提示詞再生成！</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：提示詞組裝器</h4>
+      <p class="canvas-prompt">從 4 個類別中各選一個標籤，組裝成完美的 Gemini 提示詞！</p>
+      <div class="canvas-wrap" id="promptArea">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px">
+          <div class="prompt-col">
+            <label>👤 主體</label>
+            <div class="prompt-tags" data-cat="subject">
+              <button class="prompt-tag" onclick="togglePromptTag(this)">小學畢業生</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">校園同學</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">老師和學生</button>
+            </div>
+          </div>
+          <div class="prompt-col">
+            <label>🏫 場景</label>
+            <div class="prompt-tags" data-cat="scene">
+              <button class="prompt-tag" onclick="togglePromptTag(this)">校門口</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">櫻花樹下</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">操場跑道</button>
+            </div>
+          </div>
+          <div class="prompt-col">
+            <label>🎨 風格</label>
+            <div class="prompt-tags" data-cat="style">
+              <button class="prompt-tag" onclick="togglePromptTag(this)">水彩插畫風</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">日系動漫風</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">寫實攝影風</button>
+            </div>
+          </div>
+          <div class="prompt-col">
+            <label>☀️ 光影</label>
+            <div class="prompt-tags" data-cat="light">
+              <button class="prompt-tag" onclick="togglePromptTag(this)">溫暖夕陽光</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">明亮晨光</button>
+              <button class="prompt-tag" onclick="togglePromptTag(this)">夢幻柔焦</button>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-output" id="promptOutput"><span class="placeholder">⬆️ 點選上方標籤，組裝你的提示詞...</span></div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 隨堂測驗</h4>
+      <div class="quiz-block" id="q2-1">
+        <p class="quiz-q">Q1：Gemini 生圖的提示詞需要包含哪些要素？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-1',false)">只要寫「畫一張圖」就好</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-1',true)">主體 + 場景 + 風格 + 光影</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-1',false)">用英文才能生成圖片</button>
+        </div>
+        <div class="quiz-feedback" id="q2-1-fb"></div>
+      </div>
+      <div class="quiz-block" id="q2-2">
+        <p class="quiz-q">Q2：Gemini 免費版的圖片配額多久重置一次？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-2',false)">每天重置</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-2',true)">每 5 小時重置</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-2',false)">每個月重置</button>
+        </div>
+        <div class="quiz-feedback" id="q2-2-fb"></div>
+      </div>
+      <div class="quiz-block" id="q2-3">
+        <p class="quiz-q">Q3：提示詞越___越容易得到滿意的結果？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-3',false)">越短</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-3',true)">越具體、越詳細</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q2-3',false)">越模糊</button>
+        </div>
+        <div class="quiz-feedback" id="q2-3-fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only teacher-note">提醒學生先構思好提示詞再生成，避免浪費配額。可以先用 Google 文件寫好提示詞草稿，同學間互相修改後再貼入 Gemini。</div>
+  </section>
+
+  <!-- ============= STAGE 3 ============= -->
+  <section id="sec3" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 3</span>
+      <h2 class="section-title">🎵 Suno 音樂錄音室 — AI 創作畢業歌曲</h2>
+    </div>
+    <p class="section-sub">用 Suno AI 免費版，輸入歌詞和曲風，AI 就能唱出你的畢業紀念歌！</p>
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>前往 <strong>suno.com</strong>，點右上角 Sign Up，用 Google 帳號註冊登入</li>
+        <li><span class="step-num">2</span>登入後看到左邊選單，點選 <strong>「Create（創作）」</strong></li>
+        <li><span class="step-num">3</span>把模式切到 <strong>「Custom（自訂）」</strong>，才能自己貼歌詞</li>
+        <li><span class="step-num">4</span>在 Lyrics 欄貼入歌詞，用 <strong>[Verse]</strong>（主歌）<strong>[Chorus]</strong>（副歌）<strong>[Bridge]</strong>（過渡）分段</li>
+        <li><span class="step-num">5</span>在 Style 欄輸入曲風，例如 <strong>Pop Ballad, Acoustic, Emotional</strong></li>
+        <li><span class="step-num">6</span>填寫歌名，點 <strong>Create</strong> 生成</li>
+        <li><span class="step-num">7</span>試聽結果，喜歡就下載 MP3，不喜歡就調整重來</li>
+      </ol>
+      <div class="tip-box"><strong>💡 配額提醒：</strong>免費版每天 50 credits，每首歌消耗 10 credits（約可做 5 首），未用完不累積。記得選最滿意的版本下載！</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：歌詞工作坊</h4>
+      <p class="canvas-prompt">點選下方詞語卡片，組裝你的畢業歌歌詞！</p>
+      <div class="canvas-wrap" id="lyricsArea">
+        <p style="font-size:.9rem;color:var(--dim);margin-bottom:8px"><strong>[Verse] 主歌：</strong>點選詞語放入歌詞區</p>
+        <div class="lyric-bank" id="lyricBank">
+          <button class="lyric-chip" onclick="placeLyric(this)">操場上奔跑</button>
+          <button class="lyric-chip" onclick="placeLyric(this)">教室裡的笑聲</button>
+          <button class="lyric-chip" onclick="placeLyric(this)">畢業典禮</button>
+          <button class="lyric-chip" onclick="placeLyric(this)">六年的時光</button>
+          <button class="lyric-chip" onclick="placeLyric(this)">再見了老師</button>
+          <button class="lyric-chip" onclick="placeLyric(this)">我們的夢想</button>
+          <button class="lyric-chip" onclick="placeLyric(this)">校園的櫻花</button>
+          <button class="lyric-chip" onclick="placeLyric(this)">友誼永不變</button>
+        </div>
+        <p style="font-size:.9rem;color:var(--c4);margin:8px 0"><strong>你的歌詞：</strong>（點擊已放入的詞語可移除）</p>
+        <div class="lyric-target" id="lyricTarget"></div>
+        <div class="prompt-output" id="lyricOutput" style="margin-top:10px"><span class="placeholder">⬆️ 點選詞語組裝歌詞...</span></div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 隨堂測驗</h4>
+      <div class="quiz-block" id="q3-1">
+        <p class="quiz-q">Q1：Suno 歌詞中，[Chorus] 標籤代表什麼？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q3-1',false)">前奏</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q3-1',true)">副歌（重複的高潮段落）</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q3-1',false)">結尾</button>
+        </div>
+        <div class="quiz-feedback" id="q3-1-fb"></div>
+      </div>
+      <div class="quiz-block" id="q3-2">
+        <p class="quiz-q">Q2：Suno 免費版每天有幾個 credits？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q3-2',false)">10 credits</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q3-2',true)">50 credits</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q3-2',false)">100 credits</button>
+        </div>
+        <div class="quiz-feedback" id="q3-2-fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only teacher-note">可先用 Google 文件共同編輯歌詞，同學一起討論修改後再貼入 Suno。感性回憶選 Ballad/Acoustic、活力展望選 Pop/Rock、文青感選 Indie/Folk。</div>
+  </section>
+
+  <!-- ============= STAGE 4 ============= -->
+  <section id="sec4" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 4</span>
+      <h2 class="section-title">✨ 動態特效魔法 — 讓照片動起來</h2>
+    </div>
+    <p class="section-sub">用 Canva 的動態效果或 CapCut 免費版，把靜態圖片加上推拉、旋轉、視差等動態效果！</p>
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>選擇要加效果的圖片（Gemini 生成的圖或真實照片都可以）</li>
+        <li><span class="step-num">2</span>匯入 Canva 或 CapCut，選擇「動態效果」功能</li>
+        <li><span class="step-num">3</span>選擇動態效果類型：<strong>推拉（Ken Burns）</strong>、<strong>旋轉</strong>、<strong>視差</strong>、<strong>粒子飄落</strong></li>
+        <li><span class="step-num">4</span>調整效果的速度和方向</li>
+        <li><span class="step-num">5</span>輸出為短片段（5-8 秒一段）</li>
+      </ol>
+      <div class="tip-box"><strong>💡 工具選擇：</strong>CapCut 免費版有浮水印限制，Canva 免費版動態效果較基礎但足夠用。建議優先用 Canva 一站式完成！</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：動態效果模擬器</h4>
+      <p class="canvas-prompt">點擊下方按鈕，看看不同動態效果的示範！</p>
+      <div class="canvas-wrap">
+        <div class="motion-preview" id="motionPreview">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--panel),var(--surface));display:flex;align-items:center;justify-content:center;font-size:3rem" id="motionTarget">🏫</div>
+        </div>
+        <div class="motion-btns" id="motionBtns">
+          <button class="motion-btn" onclick="doMotion('push')">📐 推拉 Ken Burns</button>
+          <button class="motion-btn" onclick="doMotion('rotate')">🔄 旋轉</button>
+          <button class="motion-btn" onclick="doMotion('parallax')">🗺️ 視差位移</button>
+          <button class="motion-btn" onclick="doMotion('pulse')">💫 脈動縮放</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 隨堂測驗</h4>
+      <div class="quiz-block" id="q4-1">
+        <p class="quiz-q">Q1：Ken Burns Effect（推拉效果）是什麼？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q4-1',true)">在靜態圖片上做緩慢的推近或拉遠</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q4-1',false)">讓圖片快速旋轉</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q4-1',false)">在圖片上加文字</button>
+        </div>
+        <div class="quiz-feedback" id="q4-1-fb"></div>
+      </div>
+      <div class="quiz-block" id="q4-2">
+        <p class="quiz-q">Q2：每段動態影片建議做多長？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q4-2',false)">1-2 秒</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q4-2',true)">5-8 秒</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q4-2',false)">30 秒以上</button>
+        </div>
+        <div class="quiz-feedback" id="q4-2-fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only teacher-note">如果教室沒有安裝 CapCut，直接用 Canva 的動態素材功能即可。Canva 的「Magic Animate」功能可以一鍵套用動態效果。</div>
+  </section>
+
+  <!-- ============= STAGE 5 ============= -->
+  <section id="sec5" class="level-section">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 5</span>
+      <h2 class="section-title">🎞️ Canva 剪輯總監 — 組合成完整影片</h2>
+    </div>
+    <p class="section-sub">把前面準備的所有素材匯入 Canva，加上轉場、字幕、音樂，輸出完整的畢業紀念 MP4 影片！</p>
+
+    <div class="steps-card">
+      <h4>📋 操作步驟</h4>
+      <ol class="steps-list">
+        <li><span class="step-num">1</span>登入 <strong>canva.com</strong>，建立新專案選 <strong>「影片」(16:9)</strong></li>
+        <li><span class="step-num">2</span>匯入 Gemini 生成的圖片到素材庫</li>
+        <li><span class="step-num">3</span>匯入 Suno 生成的音樂到素材庫</li>
+        <li><span class="step-num">4</span>把圖片按分鏡順序排列到時間軸</li>
+        <li><span class="step-num">5</span>在每個畫面之間加<strong>轉場特效</strong>（淡入淡出/滑動/溶解）</li>
+        <li><span class="step-num">6</span>在適當位置加<strong>字幕文字</strong>（標題/旁白/歌詞）</li>
+        <li><span class="step-num">7</span>預覽整體效果，調整時間長度和節奏</li>
+        <li><span class="step-num">8</span>點右上角「分享」→「下載」→選 <strong>MP4 格式 1080p</strong></li>
+      </ol>
+      <div class="tip-box"><strong>💡 免費版提醒：</strong>Canva 免費版可下載 1080p MP4，每月有下載次數限制。輸出前多預覽幾次確認沒問題再下載！</div>
+    </div>
+
+    <div class="canvas-section">
+      <h4>🕹️ 互動：時間軸模擬器</h4>
+      <p class="canvas-prompt">這是你的畢業影片時間軸概覽！</p>
+      <div class="canvas-wrap">
+        <div class="tl-tracks">
+          <div class="tl-track">
+            <span class="tl-track-label">🖼️ 影像軌</span>
+            <div class="tl-clip" style="background:linear-gradient(135deg,var(--c1),var(--c2));flex:1">開場 5s</div>
+            <div class="tl-clip" style="background:linear-gradient(135deg,var(--c2),var(--c5));flex:1.5">回憶 8s</div>
+            <div class="tl-clip" style="background:linear-gradient(135deg,var(--c5),var(--c3));flex:1">感謝 5s</div>
+            <div class="tl-clip" style="background:linear-gradient(135deg,var(--c3),var(--c4));flex:1.5">展望 7s</div>
+          </div>
+          <div class="tl-track">
+            <span class="tl-track-label">🎵 音樂軌</span>
+            <div class="tl-clip" style="background:linear-gradient(135deg,var(--c4),#3da870);height:24px;flex:1">♪ Suno 畢業歌 30s</div>
+          </div>
+          <div class="tl-track">
+            <span class="tl-track-label">📝 字幕軌</span>
+            <div class="tl-clip" style="background:rgba(245,200,66,.3);border:1px solid var(--c1);color:var(--c1);flex:.8">標題</div>
+            <div style="flex:.2"></div>
+            <div class="tl-clip" style="background:rgba(192,132,252,.3);border:1px solid var(--c5);color:var(--c5);flex:1.2">歌詞字幕</div>
+            <div style="flex:.2"></div>
+            <div class="tl-clip" style="background:rgba(94,184,255,.3);border:1px solid var(--c3);color:var(--c3);flex:.6">致謝</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem;color:var(--dim)">
+          <span style="padding:4px 10px;background:var(--surface);border-radius:10px">🎬 總長度：~30 秒</span>
+          <span style="padding:4px 10px;background:var(--surface);border-radius:10px">🖼️ 畫面：4 段</span>
+          <span style="padding:4px 10px;background:var(--surface);border-radius:10px">🎵 音樂：1 首</span>
+          <span style="padding:4px 10px;background:var(--surface);border-radius:10px">📝 字幕：3 段</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h4>📝 隨堂測驗</h4>
+      <div class="quiz-block" id="q5-1">
+        <p class="quiz-q">Q1：Canva 影片專案應選什麼比例？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-1',true)">16:9（標準寬螢幕）</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-1',false)">1:1（正方形）</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-1',false)">9:16（直式手機）</button>
+        </div>
+        <div class="quiz-feedback" id="q5-1-fb"></div>
+      </div>
+      <div class="quiz-block" id="q5-2">
+        <p class="quiz-q">Q2：影片輸出時建議選什麼格式？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-2',false)">GIF 動圖</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-2',true)">MP4 影片 1080p</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-2',false)">PNG 圖片</button>
+        </div>
+        <div class="quiz-feedback" id="q5-2-fb"></div>
+      </div>
+      <div class="quiz-block" id="q5-3">
+        <p class="quiz-q">Q3：下面哪項不是 Canva 的轉場特效？</p>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-3',false)">淡入淡出</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-3',false)">滑動</button>
+          <button class="quiz-opt" onclick="checkQuiz(this,'q5-3',true)">3D 全息投影</button>
+        </div>
+        <div class="quiz-feedback" id="q5-3-fb"></div>
+      </div>
+    </div>
+
+    <div class="teacher-only teacher-note">建議一組 2-3 人合作，分工擔任導演（分鏡）/ 美術（AI 圖片）/ 音樂（Suno 歌曲）。最後由「導演」在 Canva 統一剪輯。</div>
+  </section>
+
+  <!-- ============= 今日實作任務 ============= -->
+  <section class="project-task">
+    <h3>🎯 今日實作任務</h3>
+    <p style="font-size:1.05rem;margin-bottom:6px"><strong>任務：</strong>用 4 個 AI 工具，在 2 堂課內完成一支 <strong>30 秒畢業紀念影片</strong></p>
+    <p style="font-size:.95rem;color:var(--dim);margin-bottom:14px">流程：劇本 → Gemini 生圖 → Suno 作曲 → Canva 剪輯 → 輸出 MP4</p>
+    <div class="task-grid">
+      <div class="task-card"><strong>🎯 主題清晰 25%</strong>4 幕結構完整、主題明確</div>
+      <div class="task-card"><strong>🖼️ AI 圖片美感 25%</strong>提示詞精準、構圖和諧</div>
+      <div class="task-card"><strong>🎵 音樂搭配 25%</strong>歌詞有意義、曲風搭配畫面</div>
+      <div class="task-card"><strong>🎞️ 剪輯流暢度 25%</strong>轉場自然、節奏流暢</div>
+    </div>
+  </section>
+
+  <!-- ============= YouTube Video ============= -->
+  <section class="nlm-video-section">
+    <h3>📺 教學影片</h3>
+    <div id="videoContainer"></div>
+  </section>
+
+  <!-- ============= 簡報播放器 ============= -->
+  <section class="slide-section">
+    <h3 style="font-size:1.3rem;color:var(--c1);margin-bottom:14px;display:flex;align-items:center;gap:8px">📽️ 教學簡報</h3>
+    <div class="slide-player">
+      <div class="slide-main">
+        <img id="slideImg" src="" alt="教學簡報" loading="lazy">
+        <button class="slide-nav-btn prev" onclick="goSlide(currentSlide-1)">‹</button>
+        <button class="slide-nav-btn next" onclick="goSlide(currentSlide+1)">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFS()">⛶ 全螢幕</button>
+        <span class="slide-counter" id="slideCounter">1 / 15</span>
+      </div>
+      <div class="slide-strip" id="slideStrip"></div>
+    </div>
+  </section>
+
+  <!-- ============= NLM 資源站 ============= -->
+  <section class="nb-section">
+    <h3>📚 NotebookLM 資源站</h3>
+    <div class="nb-grid">
+      <a class="nb-card" href="#" target="_blank">
+        <div class="icon">📓</div>
+        <h4>Gemini 生圖筆記本</h4>
+        <p>收錄提示詞範例、生圖技巧、配額管理秘訣</p>
+      </a>
+      <a class="nb-card" href="#" target="_blank">
+        <div class="icon">🎵</div>
+        <h4>Suno 作曲筆記本</h4>
+        <p>歌詞結構教學、曲風對照表、Credit 管理指南</p>
+      </a>
+      <a class="nb-card" href="#" target="_blank">
+        <div class="icon">🎞️</div>
+        <h4>Canva 剪輯筆記本</h4>
+        <p>影片編輯流程、轉場特效教學、輸出設定指南</p>
+      </a>
+    </div>
+    <div class="nb-flow">
+      <strong>🔄 NLM 學習流程：</strong>先讀 <code>Gemini 筆記本</code> 學提示詞 → 再讀 <code>Suno 筆記本</code> 寫歌詞 → 最後讀 <code>Canva 筆記本</code> 學剪輯 → 開始實作！
+    </div>
+
+    <h4 style="font-size:1.1rem;color:var(--c4);margin-bottom:12px">❓ 常見問題 FAQ</h4>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this.parentElement)">Gemini 免費版一天能生幾張圖？</div><div class="faq-a">算力配額制，每 5 小時重置，一張圖約用 2% 配額，粗估每 5 小時可生成約 50 張。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this.parentElement)">Suno 歌詞怎麼寫才好聽？</div><div class="faq-a">用 [Verse] 標記主歌段落、[Chorus] 標記副歌，加入具體場景描述（如：操場上奔跑的身影），避免太抽象的詞彙。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this.parentElement)">影片多長比較好？</div><div class="faq-a">30 秒到 1 分鐘最佳，太長容易失焦。畢業典禮播放通常限時 1 分鐘。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this.parentElement)">可以用自己的照片嗎？</div><div class="faq-a">可以！混合 AI 生成圖和真實照片效果更好，真實照片增加情感連結。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this.parentElement)">怎麼選畢業歌的曲風？</div><div class="faq-a">感性回憶選 Ballad/Acoustic、活力展望選 Pop/Rock、文青感選 Indie/Folk。可以在 Style 欄組合多個風格！</div></div>
+    </div>
+  </section>
+
+</div><!-- /.container -->
+
+<!-- 全螢幕簡報 -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFS()">✕</button>
+  <button class="fs-nav prev" onclick="goSlide(currentSlide-1)">‹</button>
+  <img id="slide-fs-img" src="" alt="全螢幕簡報">
+  <button class="fs-nav next" onclick="goSlide(currentSlide+1)">›</button>
+  <span class="fs-counter" id="fs-counter">1 / 15</span>
+</div>
+
+<!-- 畫布 -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <button class="color-dot active" style="background:#f5c842" onclick="setDrawColor(this,'#f5c842')"></button>
+  <button class="color-dot" style="background:#e85a8a" onclick="setDrawColor(this,'#e85a8a')"></button>
+  <button class="color-dot" style="background:#5eb8ff" onclick="setDrawColor(this,'#5eb8ff')"></button>
+  <button class="color-dot" style="background:#7be495" onclick="setDrawColor(this,'#7be495')"></button>
+  <button class="color-dot" style="background:#c084fc" onclick="setDrawColor(this,'#c084fc')"></button>
+  <button class="draw-clear" onclick="clearDraw()">清除</button>
+</div>
+
+<!-- 浮動工具 -->
+<div class="float-tools">
+  <button class="float-btn gold" id="btnLottery" title="抽號碼" onclick="togglePanel('lotteryPanel')">🎲</button>
+  <button class="float-btn pink" id="btnTimer" title="計時器" onclick="togglePanel('timerPanel')">⏱️</button>
+  <button class="float-btn blue" id="btnDraw" title="畫筆" onclick="toggleDraw()">✏️</button>
+  <button class="float-btn purple" id="btnTop" title="回到頂部" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️</button>
+</div>
+
+<!-- 抽號碼面板 -->
+<div class="tool-panel" id="lotteryPanel">
+  <h4>🎲 抽號碼 <span class="close" onclick="togglePanel('lotteryPanel')">✕</span></h4>
+  <div style="display:flex;gap:6px;margin-bottom:10px">
+    <input type="number" id="lotMax" value="30" min="1" max="99" style="width:80px" placeholder="最大號">
+    <button class="btn-primary" onclick="drawLottery()">抽！</button>
+    <button class="btn-primary" style="background:var(--c5)" onclick="resetLottery()">重置</button>
+  </div>
+  <div class="lottery-result" id="lotResult">點擊「抽！」開始</div>
+  <p style="font-size:.8rem;color:var(--dim);margin-top:6px" id="lotHistory"></p>
+</div>
+
+<!-- 計時器面板 -->
+<div class="tool-panel" id="timerPanel">
+  <h4>⏱️ 倒數計時 <span class="close" onclick="togglePanel('timerPanel')">✕</span></h4>
+  <div class="timer-display" id="timerDisplay">05:00</div>
+  <div style="display:flex;gap:6px;margin-bottom:10px">
+    <input type="number" id="timerMin" value="5" min="1" max="60" style="width:80px" placeholder="分鐘">
+    <span style="line-height:38px;color:var(--dim)">分鐘</span>
+  </div>
+  <div class="timer-controls">
+    <button class="btn-primary" onclick="startTimer()">開始</button>
+    <button class="btn-primary" style="background:var(--c2)" onclick="pauseTimer()">暫停</button>
+    <button class="btn-primary" style="background:var(--c5)" onclick="resetTimer()">重設</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>🎓 畢業紀念影片 AI 一條龍 — Gemini × Suno × Canva</p>
+  <p style="margin-top:4px">IT COCKPIT © 2025 — 專為資訊科技課程打造的教學駕駛艙</p>
+</footer>
+<script>
+/* === safeInit wrapper === */
+function safeInit(name, fn){
+  try{ fn() }catch(e){ console.warn('Init error ['+name+']:', e) }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* --- Teacher / Student Mode --- */
+  safeInit('mode', function(){
+    var mS = document.getElementById('modeStudent');
+    var mT = document.getElementById('modeTeacher');
+    mS.addEventListener('click', function(){
+      document.body.classList.remove('teacher-mode');
+      mS.classList.add('active'); mT.classList.remove('active');
+    });
+    mT.addEventListener('click', function(){
+      var pw = prompt('請輸入教師密碼：');
+      if(pw === 'it2026'){
+        document.body.classList.add('teacher-mode');
+        mT.classList.add('active'); mS.classList.remove('active');
+      } else if(pw !== null){
+        alert('密碼錯誤！');
+      }
+    });
+  });
+
+  /* --- Progress Bar --- */
+  safeInit('progress', function(){
+    var sections = document.querySelectorAll('.level-section');
+    var fill = document.getElementById('progressFill');
+    function updateProgress(){
+      var scrollTop = window.scrollY;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docHeight > 0 ? Math.min(100, Math.round(scrollTop / docHeight * 100)) : 0;
+      fill.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+  });
+
+  /* --- Slide Player --- */
+  safeInit('slides', function(){
+    var SLIDE_LIST = [];
+    for(var i = 1; i <= 15; i++){
+      SLIDE_LIST.push('assets/slide_' + (i < 10 ? '0'+i : i) + '.jpg');
+    }
+    window.currentSlide = 0;
+    var img = document.getElementById('slideImg');
+    var counter = document.getElementById('slideCounter');
+    var strip = document.getElementById('slideStrip');
+    var fsOverlay = document.getElementById('slide-fs');
+    var fsImg = document.getElementById('slide-fs-img');
+    var fsCounter = document.getElementById('fs-counter');
+
+    // Build thumbnails
+    SLIDE_LIST.forEach(function(src, idx){
+      var div = document.createElement('div');
+      div.className = 'strip-thumb' + (idx === 0 ? ' active' : '');
+      div.style.backgroundImage = 'url(' + src + ')';
+      div.innerHTML = '<span class="thumb-num">' + (idx+1) + '</span>';
+      div.addEventListener('click', function(){ goSlide(idx) });
+      strip.appendChild(div);
+    });
+
+    window.goSlide = function(n){
+      if(n < 0) n = SLIDE_LIST.length - 1;
+      if(n >= SLIDE_LIST.length) n = 0;
+      window.currentSlide = n;
+      img.src = SLIDE_LIST[n];
+      counter.textContent = (n+1) + ' / ' + SLIDE_LIST.length;
+      var thumbs = strip.querySelectorAll('.strip-thumb');
+      thumbs.forEach(function(t, i){ t.classList.toggle('active', i === n) });
+      // Scroll thumbnail into view
+      var activeThumb = thumbs[n];
+      if(activeThumb){
+        var scrollLeft = activeThumb.offsetLeft - strip.offsetWidth/2 + activeThumb.offsetWidth/2;
+        strip.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      }
+      // Sync fullscreen
+      if(fsOverlay.classList.contains('show')){
+        fsImg.src = SLIDE_LIST[n];
+        fsCounter.textContent = (n+1) + ' / ' + SLIDE_LIST.length;
+      }
+    };
+
+    window.openSlideFS = function(){
+      fsOverlay.classList.add('show');
+      document.body.classList.add('slides-fullscreen');
+      fsImg.src = SLIDE_LIST[window.currentSlide];
+      fsCounter.textContent = (window.currentSlide+1) + ' / ' + SLIDE_LIST.length;
+    };
+
+    window.closeSlideFS = function(){
+      fsOverlay.classList.remove('show');
+      document.body.classList.remove('slides-fullscreen');
+    };
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight') goSlide(window.currentSlide + 1);
+      else if(e.key === 'ArrowLeft') goSlide(window.currentSlide - 1);
+      else if(e.key === 'Escape') closeSlideFS();
+    });
+
+    goSlide(0);
+  });
+
+  /* --- YouTube Video --- */
+  safeInit('video', function(){
+    var YOUTUBE_VIDEO_ID = '';
+    var container = document.getElementById('videoContainer');
+    if(YOUTUBE_VIDEO_ID){
+      container.innerHTML = '<div class="video-wrap"><div class="video-ratio"><iframe src="https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID + '" allowfullscreen></iframe></div><div class="video-meta"><span class="nlm-badge">📺 教學影片</span><span class="video-hint">課前觀看效果更好</span></div></div>';
+    } else {
+      container.innerHTML = '<div class="video-no-id"><div class="big">📺</div><p>教學影片準備中，敬請期待！</p></div>';
+    }
+  });
+
+  /* --- Quiz System --- */
+  safeInit('quiz', function(){
+    window.checkQuiz = function(btn, qid, isCorrect){
+      var block = document.getElementById(qid);
+      var fb = document.getElementById(qid + '-fb');
+      var opts = block.querySelectorAll('.quiz-opt');
+      opts.forEach(function(o){ o.disabled = true; o.style.pointerEvents = 'none' });
+      if(isCorrect){
+        btn.classList.add('correct');
+        fb.textContent = '✅ 答對了！太棒了！';
+        fb.className = 'quiz-feedback show ok';
+      } else {
+        btn.classList.add('wrong');
+        fb.textContent = '❌ 再想想看喔！';
+        fb.className = 'quiz-feedback show no';
+        // Highlight correct
+        opts.forEach(function(o){
+          if(o.getAttribute('onclick') && o.getAttribute('onclick').indexOf('true') > -1){
+            o.classList.add('correct');
+          }
+        });
+      }
+    };
+  });
+
+  /* --- Storyboard Card Sorter --- */
+  safeInit('storyboard', function(){
+    var placed = [];
+    var slots = document.querySelectorAll('#sbTimeline .sb-slot');
+    var correctOrder = ['🎬 開場篇','📸 回憶篇','🙏 感謝篇','🚀 展望篇'];
+
+    window.placeCard = function(btn){
+      if(placed.length >= 4) return;
+      var idx = placed.length;
+      slots[idx].textContent = btn.textContent;
+      slots[idx].classList.add('filled');
+      btn.classList.add('used');
+      placed.push(btn.textContent);
+
+      if(placed.length === 4){
+        var fb = document.getElementById('sbFeedback');
+        var correct = placed.every(function(v,i){ return v === correctOrder[i] });
+        if(correct){
+          fb.innerHTML = '🎉 完美！你已經掌握了 4 幕結構的正確順序！';
+          fb.style.color = 'var(--c4)';
+        } else {
+          fb.innerHTML = '🤔 順序不太對喔！正確順序是：開場→回憶→感謝→展望。<br><button class="btn-primary" style="margin-top:8px" onclick="resetStoryboard()">再試一次</button>';
+          fb.style.color = 'var(--c2)';
+        }
+      }
+    };
+
+    window.resetStoryboard = function(){
+      placed = [];
+      slots.forEach(function(s, i){ s.textContent = '第 ' + (i+1) + ' 幕'; s.classList.remove('filled') });
+      document.querySelectorAll('#sbCards .sb-card').forEach(function(c){ c.classList.remove('used') });
+      document.getElementById('sbFeedback').innerHTML = '';
+    };
+  });
+
+  /* --- Prompt Builder (Gemini) --- */
+  safeInit('prompt', function(){
+    var selected = {};
+    window.togglePromptTag = function(btn){
+      var col = btn.closest('[data-cat]');
+      if(!col) col = btn.parentElement;
+      var cat = col.getAttribute('data-cat') || 'default';
+      // Deselect siblings
+      col.querySelectorAll('.prompt-tag').forEach(function(t){ t.classList.remove('selected') });
+      btn.classList.add('selected');
+      selected[cat] = btn.textContent;
+      updatePromptOutput();
+    };
+
+    function updatePromptOutput(){
+      var out = document.getElementById('promptOutput');
+      var parts = [];
+      if(selected.subject) parts.push(selected.subject);
+      if(selected.scene) parts.push('在' + selected.scene);
+      if(selected.style) parts.push(selected.style);
+      if(selected.light) parts.push(selected.light);
+      if(parts.length === 0){
+        out.innerHTML = '<span class="placeholder">⬆️ 點選上方標籤，組裝你的提示詞...</span>';
+      } else {
+        out.textContent = '📝 請幫我生成一張圖片：' + parts.join('，') + '。';
+      }
+    }
+  });
+
+  /* --- Lyrics Workshop --- */
+  safeInit('lyrics', function(){
+    window.placeLyric = function(btn){
+      if(btn.classList.contains('placed')) return;
+      btn.classList.add('placed');
+      var target = document.getElementById('lyricTarget');
+      var chip = document.createElement('button');
+      chip.className = 'lyric-chip in-target';
+      chip.textContent = btn.textContent;
+      chip.addEventListener('click', function(){
+        target.removeChild(chip);
+        btn.classList.remove('placed');
+        updateLyricOutput();
+      });
+      target.appendChild(chip);
+      updateLyricOutput();
+    };
+
+    function updateLyricOutput(){
+      var target = document.getElementById('lyricTarget');
+      var out = document.getElementById('lyricOutput');
+      var chips = target.querySelectorAll('.lyric-chip');
+      if(chips.length === 0){
+        out.innerHTML = '<span class="placeholder">⬆️ 點選詞語組裝歌詞...</span>';
+      } else {
+        var lyrics = '[Verse]\n';
+        chips.forEach(function(c, i){
+          lyrics += c.textContent;
+          if(i < chips.length - 1) lyrics += '\n';
+        });
+        out.textContent = lyrics;
+      }
+    }
+  });
+
+  /* --- Motion Effect Simulator --- */
+  safeInit('motion', function(){
+    var target = document.getElementById('motionTarget');
+    var animTimer = null;
+    window.doMotion = function(type){
+      // Reset
+      target.style.transition = 'none';
+      target.style.transform = 'none';
+      clearTimeout(animTimer);
+      // Set active button
+      document.querySelectorAll('#motionBtns .motion-btn').forEach(function(b){ b.classList.remove('active') });
+      event.target.classList.add('active');
+
+      setTimeout(function(){
+        target.style.transition = 'transform 2s ease';
+        switch(type){
+          case 'push':
+            target.style.transform = 'scale(1.3)';
+            animTimer = setTimeout(function(){ target.style.transform = 'scale(1)' }, 2200);
+            break;
+          case 'rotate':
+            target.style.transform = 'rotate(15deg) scale(1.1)';
+            animTimer = setTimeout(function(){ target.style.transform = 'none' }, 2200);
+            break;
+          case 'parallax':
+            target.style.transform = 'translateX(30px) scale(1.05)';
+            animTimer = setTimeout(function(){ target.style.transform = 'translateX(-30px) scale(1.05)'; }, 2200);
+            break;
+          case 'pulse':
+            target.style.transition = 'transform 0.6s ease';
+            target.style.transform = 'scale(1.2)';
+            animTimer = setTimeout(function(){
+              target.style.transform = 'scale(0.95)';
+              setTimeout(function(){ target.style.transform = 'scale(1.1)' }, 600);
+              setTimeout(function(){ target.style.transform = 'scale(1)' }, 1200);
+            }, 600);
+            break;
+        }
+      }, 50);
+    };
+  });
+
+  /* --- FAQ --- */
+  safeInit('faq', function(){
+    window.toggleFaq = function(item){
+      item.classList.toggle('open');
+    };
+  });
+
+  /* --- Lottery --- */
+  safeInit('lottery', function(){
+    var drawn = [];
+    window.drawLottery = function(){
+      var max = parseInt(document.getElementById('lotMax').value) || 30;
+      var available = [];
+      for(var i = 1; i <= max; i++){ if(drawn.indexOf(i) === -1) available.push(i) }
+      if(available.length === 0){
+        document.getElementById('lotResult').textContent = '已抽完！請重置';
+        return;
+      }
+      var pick = available[Math.floor(Math.random() * available.length)];
+      drawn.push(pick);
+      document.getElementById('lotResult').textContent = pick;
+      document.getElementById('lotResult').style.animation = 'none';
+      document.getElementById('lotResult').offsetHeight;
+      document.getElementById('lotResult').style.animation = '';
+      document.getElementById('lotHistory').textContent = '已抽：' + drawn.join(', ');
+    };
+    window.resetLottery = function(){
+      drawn = [];
+      document.getElementById('lotResult').textContent = '點擊「抽！」開始';
+      document.getElementById('lotHistory').textContent = '';
+    };
+  });
+
+  /* --- Timer --- */
+  safeInit('timer', function(){
+    var timerInterval = null;
+    var timerSeconds = 300;
+    var timerRunning = false;
+
+    function renderTimer(){
+      var m = Math.floor(timerSeconds / 60);
+      var s = timerSeconds % 60;
+      document.getElementById('timerDisplay').textContent =
+        (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+    }
+
+    window.startTimer = function(){
+      if(timerRunning) return;
+      if(timerSeconds <= 0){
+        timerSeconds = parseInt(document.getElementById('timerMin').value) * 60 || 300;
+      }
+      timerRunning = true;
+      timerInterval = setInterval(function(){
+        timerSeconds--;
+        renderTimer();
+        if(timerSeconds <= 0){
+          clearInterval(timerInterval);
+          timerRunning = false;
+          document.getElementById('timerDisplay').textContent = '⏰ 時間到！';
+          document.getElementById('timerDisplay').style.color = 'var(--c2)';
+        }
+      }, 1000);
+    };
+
+    window.pauseTimer = function(){
+      clearInterval(timerInterval);
+      timerRunning = false;
+    };
+
+    window.resetTimer = function(){
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = parseInt(document.getElementById('timerMin').value) * 60 || 300;
+      document.getElementById('timerDisplay').style.color = 'var(--c1)';
+      renderTimer();
+    };
+
+    renderTimer();
+  });
+
+  /* --- Float Panel Toggle --- */
+  safeInit('panels', function(){
+    window.togglePanel = function(id){
+      var panel = document.getElementById(id);
+      var isOpen = panel.classList.contains('show');
+      document.querySelectorAll('.tool-panel').forEach(function(p){ p.classList.remove('show') });
+      if(!isOpen) panel.classList.add('show');
+    };
+  });
+
+  /* --- Drawing Canvas --- */
+  safeInit('draw', function(){
+    var canvas = document.getElementById('drawCanvas');
+    var ctx = canvas.getContext('2d');
+    var drawing = false;
+    var drawColor = '#f5c842';
+    var toolbar = document.getElementById('drawToolbar');
+    var drawActive = false;
+
+    function resizeCanvas(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    window.toggleDraw = function(){
+      drawActive = !drawActive;
+      canvas.classList.toggle('active', drawActive);
+      toolbar.classList.toggle('show', drawActive);
+    };
+
+    window.setDrawColor = function(btn, color){
+      drawColor = color;
+      toolbar.querySelectorAll('.color-dot').forEach(function(d){ d.classList.remove('active') });
+      btn.classList.add('active');
+    };
+
+    window.clearDraw = function(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    function startDraw(x, y){
+      drawing = true;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.strokeStyle = drawColor;
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+    function moveDraw(x, y){
+      if(!drawing) return;
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+    function endDraw(){ drawing = false }
+
+    canvas.addEventListener('mousedown', function(e){ startDraw(e.clientX, e.clientY) });
+    canvas.addEventListener('mousemove', function(e){ moveDraw(e.clientX, e.clientY) });
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseleave', endDraw);
+
+    canvas.addEventListener('touchstart', function(e){
+      e.preventDefault();
+      var t = e.touches[0];
+      startDraw(t.clientX, t.clientY);
+    }, {passive:false});
+    canvas.addEventListener('touchmove', function(e){
+      e.preventDefault();
+      var t = e.touches[0];
+      moveDraw(t.clientX, t.clientY);
+    }, {passive:false});
+    canvas.addEventListener('touchend', function(e){
+      e.preventDefault();
+      endDraw();
+    }, {passive:false});
+  });
+
+});
+</script>
+</body>
+</html>
