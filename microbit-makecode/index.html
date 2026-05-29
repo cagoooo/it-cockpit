@@ -398,6 +398,37 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
   #slide-fs .fs-nav{width:44px;height:64px;font-size:1.6rem}
 }
 </style>
+<script>
+  // ─────────────────────────────────────────────────────────────
+  // Akai 排行榜流量歸因 beacon (cagoooo/Akai · toolId 81 stage="microbit-makecode")
+  // 進站時送一次像素 beacon 給 Akai Cloud Function 累計 totalClicks
+  //   + stageBreakdown.microbit-makecode +1（v3.6.70 細粒度單元熱度）
+  // 同分頁 sessionStorage 去重；同學生切換 stage 各算一次
+  // ─────────────────────────────────────────────────────────────
+  (function () {
+    try {
+      var TOOL_ID = 81;
+      var STAGE_ID = 'microbit-makecode';
+      var SENT_KEY = 'akai_beacon_' + TOOL_ID + '_' + STAGE_ID + '_sent';
+      if (sessionStorage.getItem(SENT_KEY)) return;
+      var SID_KEY = 'akai_beacon_sid';
+      var sid = sessionStorage.getItem(SID_KEY);
+      if (!sid) {
+        sid = 'cockpit-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+        sessionStorage.setItem(SID_KEY, sid);
+      }
+      var device = window.innerWidth < 768 ? 'mobile' : (window.innerWidth < 1024 ? 'tablet' : 'desktop');
+      var url = 'https://asia-east1-akai-e693f.cloudfunctions.net/beaconToolClick'
+        + '?toolId=' + TOOL_ID
+        + '&stageId=' + STAGE_ID
+        + '&referrer=' + encodeURIComponent(document.referrer || '')
+        + '&device=' + device
+        + '&sessionId=' + encodeURIComponent(sid);
+      new Image().src = url;
+      sessionStorage.setItem(SENT_KEY, '1');
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
 
