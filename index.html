@@ -25,6 +25,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  // ─────────────────────────────────────────────────────────────
+  // Akai 排行榜流量歸因 beacon (cagoooo/Akai · toolId 81)
+  // 進站時送一次像素 beacon 給 Akai Cloud Function 累計 totalClicks
+  // 同分頁 sessionStorage 去重；reload / 短時間重新訪問不會重複計數
+  // 完全異步、零阻塞、失敗不影響 cockpit 主流程
+  // ─────────────────────────────────────────────────────────────
+  (function () {
+    try {
+      var SENT_KEY = 'akai_beacon_81_sent';
+      if (sessionStorage.getItem(SENT_KEY)) return;
+      var SID_KEY = 'akai_beacon_sid';
+      var sid = sessionStorage.getItem(SID_KEY);
+      if (!sid) {
+        sid = 'cockpit-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+        sessionStorage.setItem(SID_KEY, sid);
+      }
+      var device = window.innerWidth < 768 ? 'mobile' : (window.innerWidth < 1024 ? 'tablet' : 'desktop');
+      var url = 'https://asia-east1-akai-e693f.cloudfunctions.net/beaconToolClick'
+        + '?toolId=81'
+        + '&referrer=' + encodeURIComponent(document.referrer || '')
+        + '&device=' + device
+        + '&sessionId=' + encodeURIComponent(sid);
+      // 經典 pixel beacon — 不需 CORS preflight，瀏覽器在 unload 時也會送
+      new Image().src = url;
+      sessionStorage.setItem(SENT_KEY, '1');
+    } catch (e) {
+      // 安靜失敗，cockpit 體驗永遠優先
+    }
+  })();
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
