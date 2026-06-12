@@ -1,7 +1,7 @@
 // IT Cockpit Service Worker
 // 策略：HTML network-first（永遠拿最新）、靜態資源 cache-first（offline 友善）
 // 新版本部署時 bump CACHE_VERSION，舊快取會被自動清掉
-const CACHE_VERSION = '2026-05-26-grad-film-ai-complete';
+const CACHE_VERSION = '2026-06-12-security-squad';
 const HTML_CACHE = `it-cockpit-html-${CACHE_VERSION}`;
 const ASSET_CACHE = `it-cockpit-asset-${CACHE_VERSION}`;
 
