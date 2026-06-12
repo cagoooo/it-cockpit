@@ -492,7 +492,7 @@
     <div class="sec-head"><span class="stage-badge">SLIDES</span><h2 class="sec-title">授課簡報（遊戲說明書）</h2><div class="sec-rule"></div></div>
     <div class="slide-player">
       <div class="slide-main" ondblclick="openSlideFullscreen()">
-        <img id="slide-current" src="assets/slide_01.png" alt="投影片">
+        <img id="slide-current" src="assets/slide_01.jpg" decoding="async" alt="投影片">
         <button class="slide-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
         <button class="slide-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
         <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
@@ -586,13 +586,13 @@
 
 <script>
   /* ===== 簡報播放器 ===== */
-  const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.png`);
+  const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
   let curSlide = 0;
   function initSlidePlayer(){
     const strip = document.getElementById('slide-strip');
     SLIDE_LIST.forEach((src,i)=>{
       const t = document.createElement('img');
-      t.src = src; t.alt = `第 ${i+1} 頁`; if(i===0) t.className='active';
+      t.src = src; t.loading='lazy'; t.decoding='async'; t.alt = `第 ${i+1} 頁`; if(i===0) t.className='active';
       t.onclick = ()=>goSlide(i);
       strip.appendChild(t);
     });
