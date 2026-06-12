@@ -496,7 +496,7 @@
         <button class="slide-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
         <button class="slide-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
         <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
-        <div class="slide-counter" id="slide-counter">1 / 15</div>
+        <div class="slide-counter" id="slide-counter">1 / 8</div>
       </div>
       <div class="slide-strip" id="slide-strip"></div>
     </div>
@@ -535,7 +535,7 @@
   <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
   <img id="slide-fs-img" src="" alt="">
   <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
-  <div class="fs-counter" id="slide-fs-counter">1 / 15</div>
+  <div class="fs-counter" id="slide-fs-counter">1 / 8</div>
 </div>
 
 <!-- 浮動工具 -->
@@ -586,7 +586,7 @@
 
 <script>
   /* ===== 簡報播放器 ===== */
-  const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+  const SLIDE_LIST = Array.from({length:8},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
   let curSlide = 0;
   function initSlidePlayer(){
     const strip = document.getElementById('slide-strip');
