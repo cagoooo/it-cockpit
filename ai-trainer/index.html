@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 訓練師：調教你的第一個 AI｜六年級 AI 素養教學駕駛艙</title>
+<meta name="description" content="扮演 AI 訓練師調教 AI 小元，學會 AI 怎麼學習、資料偏誤、提示詞工程、AI 幻覺把關與負責任使用 AI。情境闖關 × NotebookLM AI 教官。">
+<meta name="theme-color" content="#0a0a1a">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/ai-trainer/">
+<meta property="og:title" content="AI 訓練師：調教你的第一個 AI｜六年級 AI 素養">
+<meta property="og:description" content="調教 AI 小元，學 AI 怎麼學習、資料偏誤、提示詞、AI 幻覺與負責任使用 AI。情境闖關 × NotebookLM AI 教官。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/ai-trainer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/ai-trainer/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html{font-size:18px;scroll-behavior:smooth}
+  :root{
+    --bg:#0a0a1a; --panel:#161430; --panel2:#1f1b40; --surface:#161430;
+    --c1:#a855f7; --c2:#fbbf24; --c3:#f472b6; --c4:#34d399; --c5:#fb7185;
+    --purple:#a855f7; --green:#34d399; --gold:#fbbf24; --pink:#f472b6;
+    --ink:#f0eaff; --text:#f0eaff; --muted:#b3a9d4; --dim:#b3a9d4;
+    --line:rgba(168,120,255,.2); --shadow:0 10px 30px rgba(0,0,0,.5); --shadow-px:0 6px 20px rgba(0,0,0,.55);
+  }
+  body{margin:0;font-family:'Noto Sans TC',system-ui,-apple-system,sans-serif;line-height:1.7;color:var(--ink);
+    background:var(--bg);
+    background-image:
+      radial-gradient(900px 500px at 85% -10%, rgba(168,85,247,.16), transparent 60%),
+      radial-gradient(800px 500px at -5% 12%, rgba(52,211,153,.08), transparent 55%),
+      linear-gradient(rgba(168,120,255,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(168,120,255,.05) 1px,transparent 1px);
+    background-size:auto,auto,42px 42px,42px 42px;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  .site-header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(10,10,26,.8);border-bottom:1px solid var(--line)}
+  .header-inner{max-width:1180px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .home-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border:2px solid var(--c1);background:transparent;color:var(--c1);font-weight:700;font-size:.82rem;letter-spacing:1px;transition:.2s;white-space:nowrap;border-radius:8px}
+  .home-btn:hover{background:var(--c1);color:#190a2a;transform:translateY(-1px)}
+  .header-title{font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+  .grade-chip{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:1px;color:#190a2a;background:var(--c1);padding:3px 9px;border-radius:6px}
+  .progress-wrap{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:.78rem;color:var(--muted)}
+  .progress-bar{width:120px;height:8px;background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+  .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--c4),var(--c1));transition:width .4s}
+
+  .mode-bar{background:rgba(0,0,0,.3);border-bottom:1px solid var(--line)}
+  .mode-inner{max-width:1180px;margin:0 auto;padding:7px 24px;display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--muted)}
+  .mode-btn{border:1px solid var(--line);background:transparent;color:var(--muted);padding:4px 12px;border-radius:99px;cursor:pointer;font-family:inherit;font-size:.78rem;font-weight:700;transition:.15s}
+  .mode-btn.active{background:var(--c2);color:#190a2a;border-color:var(--c2)}
+  .teacher-only{display:none}
+  body.teacher-mode .teacher-only{display:block}
+
+  header.hero{position:relative;padding:48px 0 34px;text-align:center;overflow:hidden}
+  .scan{position:absolute;inset:0;pointer-events:none;background:linear-gradient(transparent,rgba(168,85,247,.07) 50%,transparent);background-size:100% 6px;animation:scan 7s linear infinite;opacity:.5}
+  @keyframes scan{from{background-position:0 -100vh}to{background-position:0 100vh}}
+  .bot{font-size:3.8rem;filter:drop-shadow(0 0 18px rgba(168,85,247,.6));animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .hero h1{font-size:2.4rem;margin:.25em 0 .1em;font-weight:900;letter-spacing:.5px;background:linear-gradient(90deg,#fff,var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .sub{color:var(--muted);font-size:1.05rem;max-width:660px;margin:0 auto 14px}
+  .obj-chips{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:16px 0 22px}
+  .obj-chip{background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:7px 15px;font-size:.9rem;color:var(--ink)}
+  .obj-chip b{color:var(--c1)}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:800;padding:14px 26px;border-radius:14px;font-size:1.05rem;transition:.18s;border:1px solid transparent;cursor:pointer}
+  .btn-main{background:linear-gradient(135deg,var(--c1),#7c3aed);color:#fff;box-shadow:0 8px 24px rgba(168,85,247,.4)}
+  .btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(168,85,247,.55)}
+  .btn-ghost{background:var(--panel);color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--c1);color:var(--c1)}
+
+  .stage-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:6px 0 0}
+  .stage-pill{display:inline-flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:9px 16px;font-size:.92rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
+  .stage-pill:hover{border-color:var(--c1);color:var(--c1)}
+  .stage-pill .dot{width:9px;height:9px;border-radius:50%;background:var(--c1)}
+
+  section.level{padding:34px 0 6px}
+  .sec-head{display:flex;align-items:center;gap:13px;margin-bottom:18px;flex-wrap:wrap}
+  .stage-badge{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.7rem;letter-spacing:1px;color:#190a2a;background:var(--c1);padding:7px 13px;border-radius:7px;white-space:nowrap}
+  .sec-title{font-size:1.4rem;font-weight:900;margin:0}
+  .sec-rule{flex:1;height:1px;min-width:20px;background:linear-gradient(90deg,rgba(168,85,247,.5),transparent)}
+
+  .steps-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:14px}
+  .steps-card h4{margin:0 0 10px;font-size:1.08rem;font-weight:800;color:var(--c1)}
+  .concept{color:var(--muted);font-size:1rem;margin:0 0 14px}
+  .steps-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+  .steps-list li{display:flex;gap:12px;align-items:flex-start;font-size:1rem}
+  .step-num{flex-shrink:0;min-width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;background:var(--c1);color:#190a2a;font-weight:900;border-radius:9px;font-size:.95rem}
+  .tip-box{margin-top:12px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);border-radius:10px;padding:12px 16px;font-size:.95rem;color:var(--c4)}
+  .tip-box b{color:#fff}
+
+  .lab{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
+  .lab h4{margin:0 0 6px;font-size:1.08rem;color:var(--c2)}
+  .lab .hint{color:var(--muted);font-size:.92rem;margin:0 0 14px}
+  .lab-choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .lab-btn{background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--ink);padding:16px;border-radius:12px;cursor:pointer;font-family:inherit;font-size:1rem;font-weight:700;transition:.15s;text-align:center}
+  .lab-btn:hover{border-color:var(--c1);transform:translateY(-2px)}
+  .lab-btn .em{font-size:1.8rem;display:block;margin-bottom:6px}
+  .lab-result{display:none;background:rgba(0,0,0,.3);border-radius:12px;padding:16px;font-size:.98rem;line-height:1.7}
+  .lab-result.show{display:block}
+  .lab-result.good{border:1px solid var(--c4);color:var(--ink)}
+  .lab-result.bad{border:1px solid var(--c5);color:var(--ink)}
+  .lab-result b.g{color:var(--c4)} .lab-result b.b{color:var(--c5)}
+
+  .quiz{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
+  .quiz h4{margin:0 0 14px;font-size:1.05rem;color:var(--c1)}
+  .quiz-q{margin-bottom:18px}
+  .quiz-q:last-child{margin-bottom:0}
+  .quiz-q .q{font-weight:700;font-size:1.05rem;margin-bottom:9px}
+  .quiz-opts{display:grid;gap:7px}
+  .quiz-opt{text-align:left;background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--ink);padding:10px 16px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:.98rem;transition:.13s}
+  .quiz-opt:hover{border-color:var(--c1)}
+  .quiz-opt.correct{background:rgba(52,211,153,.18);border-color:var(--c4);color:var(--c4);font-weight:700}
+  .quiz-opt.wrong{background:rgba(251,113,133,.15);border-color:var(--c5);color:var(--c5)}
+  .quiz-fb{margin-top:9px;font-size:.95rem;display:none;padding:9px 14px;border-radius:9px}
+  .quiz-fb.show{display:block}
+  .quiz-fb.ok{background:rgba(52,211,153,.1);color:var(--c4)}
+  .quiz-fb.no{background:rgba(251,113,133,.1);color:var(--c5)}
+
+  .teacher-note{background:rgba(251,191,36,.08);border:1px dashed rgba(251,191,36,.45);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .teacher-note .tn-tag{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:1px;color:var(--c2);font-weight:700;margin-bottom:6px}
+  .teacher-note p{margin:4px 0;font-size:.95rem;color:var(--muted)}
+  .teacher-note b{color:#fff}
+
+  .game{background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid rgba(168,85,247,.35);border-radius:22px;padding:28px;position:relative;overflow:hidden}
+  .game::before{content:"🤖";position:absolute;right:-14px;top:-20px;font-size:8rem;opacity:.06}
+  .game h3{font-size:1.4rem;margin:0 0 4px;font-weight:900}
+  .game .lead{color:var(--muted);margin:0 0 20px}
+  .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:22px}
+  .step3{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:13px;padding:15px}
+  .step3 .n{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;background:var(--c1);color:#190a2a;font-weight:900;border-radius:8px;margin-bottom:7px}
+  .step3 .st{font-weight:800;font-size:.96rem}
+  .step3 .sx{color:var(--muted);font-size:.86rem}
+
+  .slide-player{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .slide-main{position:relative;border-radius:12px;overflow:hidden;background:#000;border:1px solid var(--line)}
+  .slide-main img{display:block;width:100%;height:auto}
+  .slide-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:64px;background:rgba(0,0,0,.55);border:2px solid var(--c1);color:var(--c1);font-size:1.6rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:10px}
+  .slide-nav:hover{background:var(--c1);color:#190a2a}
+  .slide-nav.prev{left:12px}.slide-nav.next{right:12px}
+  .slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#190a2a;border:none;padding:7px 13px;font-size:.9rem;cursor:pointer;border-radius:20px;font-weight:800;font-family:inherit}
+  .slide-counter{position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:99px;font-family:'JetBrains Mono',monospace;font-size:.82rem}
+  .slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px}
+  .slide-strip img{height:58px;border-radius:6px;border:2px solid transparent;cursor:pointer;opacity:.6;transition:.15s}
+  .slide-strip img.active{border-color:var(--c1);opacity:1}
+  #slide-fs{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center}
+  #slide-fs.show{display:flex}
+  #slide-fs img{max-width:94vw;max-height:88vh}
+  .fs-close{position:absolute;top:16px;right:18px;width:42px;height:42px;background:rgba(255,255,255,.1);border:1px solid var(--c1);color:var(--c1);font-size:1.3rem;border-radius:50%;cursor:pointer}
+  .fs-nav{position:absolute;top:50%;transform:translateY(-50%);width:54px;height:78px;background:rgba(0,0,0,.6);border:2px solid var(--c1);color:var(--c1);font-size:2rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:12px}
+  .fs-nav.prev{left:18px}.fs-nav.next{right:18px}
+  .fs-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;padding:6px 16px;border-radius:99px;font-family:'JetBrains Mono',monospace}
+  body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar{display:none!important}
+
+  .nb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:16px}
+  .nb-card{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;transition:.15s}
+  .nb-card:hover{transform:translateY(-3px);border-color:var(--c1)}
+  .nb-card .e{font-size:1.7rem}
+  .nb-card h5{margin:0 0 3px;font-size:1rem;font-weight:800}
+  .nb-card p{margin:0;font-size:.86rem;color:var(--muted)}
+  .flow{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:.92rem;color:var(--muted);margin-bottom:16px}
+  .flow b{color:var(--c1)}
+  .faq{display:grid;gap:9px}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px 16px}
+  .faq summary{cursor:pointer;font-weight:700;padding:11px 0;font-size:1rem}
+  .faq summary::marker{color:var(--c1)}
+  .faq p{margin:0 0 12px;color:var(--muted);font-size:.95rem}
+
+  .float-tools{position:fixed;right:18px;bottom:18px;z-index:400;display:flex;flex-direction:column;gap:10px}
+  .float-btn{width:52px;height:52px;border-radius:50%;border:2px solid var(--c1);cursor:pointer;background:var(--surface);color:var(--ink);font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-px);transition:.15s}
+  .float-btn:hover{transform:translateY(-2px);box-shadow:0 0 16px var(--c1);color:var(--c1)}
+  .float-btn.pink{border-color:var(--c3)}
+  .tool-panel{position:fixed;right:84px;z-index:401;width:250px;background:var(--surface);border:2px solid var(--c1);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-px);display:none}
+  .tool-panel.show{display:block}
+  #panel-lottery{bottom:18px}#panel-timer{bottom:80px}
+  .tool-panel h4{margin:0 0 10px;font-size:1rem;display:flex;justify-content:space-between}
+  .tool-panel h4 .close{cursor:pointer;color:var(--muted)}
+  .btn-primary{background:var(--c1);color:#190a2a;border:none;padding:8px 12px;border-radius:9px;font-family:inherit;font-weight:800;cursor:pointer;font-size:.9rem}
+  .lottery-result{margin-top:10px;text-align:center;font-size:1.5rem;font-weight:900;color:var(--c2);min-height:34px;padding:6px;background:rgba(0,0,0,.25);border-radius:9px}
+  .timer-display{text-align:center;font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:700;color:var(--c4);margin:6px 0}
+
+  #drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+  #drawCanvas.active{pointer-events:all;cursor:crosshair}
+  .draw-toolbar{position:fixed;left:18px;bottom:18px;z-index:300;background:var(--surface);border:2px solid var(--c1);border-radius:12px;padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-px)}
+  .draw-toolbar.show{display:flex}
+  .draw-toolbar .color-dot{width:26px;height:26px;border:2px solid #000;border-radius:50%;cursor:pointer;padding:0;transition:.2s}
+  .draw-toolbar .color-dot.active{transform:scale(1.2);box-shadow:0 0 8px currentColor}
+  .draw-toolbar .draw-clear{background:transparent;border:2px solid var(--c5);color:var(--c5);padding:4px 12px;border-radius:8px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem}
+
+  .site-credit{text-align:center;padding:30px 16px 40px;font-size:.82rem;color:rgba(255,255,255,.5);border-top:1px solid var(--line);margin-top:30px}
+  .site-credit__heart{display:inline-block;margin:0 2px;filter:saturate(1.2)}
+  .site-credit__author{color:rgba(255,255,255,.7);border-bottom:1px dotted currentColor;transition:.2s}
+  .site-credit__author:hover{color:var(--c1);border-bottom-color:var(--c1)}
+  .skd{color:rgba(255,255,255,.32);font-size:.72rem;margin-top:8px}
+
+  @media(max-width:820px){
+    html{font-size:17px}
+    .steps3,.nb-grid{grid-template-columns:1fr}
+    .lab-choices{grid-template-columns:1fr}
+    .progress-wrap{display:none}.hero h1{font-size:1.9rem}
+    .tool-panel{right:18px}#panel-timer{bottom:80px}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title">🤖 AI 訓練師 <span class="grade-chip">六年級 · AI 素養</span></div>
+    <div class="progress-wrap">
+      <span>訓練進度</span>
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <span id="progText" class="mono">0/5</span>
+    </div>
+  </div>
+</header>
+
+<div class="mode-bar">
+  <div class="mode-inner">
+    <span class="mono">MODE</span>
+    <button class="mode-btn active" id="mb-student" onclick="setMode('student')">👦 學生模式</button>
+    <button class="mode-btn" id="mb-teacher" onclick="askTeacher()">👩‍🏫 教師模式</button>
+    <span style="margin-left:auto;font-size:.74rem" class="teacher-only">✅ 教師模式：已顯示教學提示與解答</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="scan"></div>
+  <div class="wrap">
+    <div class="bot">🤖</div>
+    <h1>AI 訓練師：調教你的第一個 AI</h1>
+    <p class="sub">你是 AI 訓練學院的見習訓練師，要把剛出廠、笨笨的 AI「小元」教成能幹的好幫手。跟元博士闖 5 關，集滿訓練徽章成為 AI 認證訓練師！</p>
+    <div class="obj-chips">
+      <span class="obj-chip">📦 <b>資料</b>偏誤</span>
+      <span class="obj-chip">💬 <b>提示詞</b>工程</span>
+      <span class="obj-chip">🔍 AI <b>幻覺</b>把關</span>
+      <span class="obj-chip">⚖️ <b>負責任</b>用 AI</span>
+    </div>
+    <div class="stage-nav">
+      <span class="stage-pill" onclick="jump('s1')"><span class="dot"></span>1 AI 怎麼學</span>
+      <span class="stage-pill" onclick="jump('s2')"><span class="dot"></span>2 資料偏誤</span>
+      <span class="stage-pill" onclick="jump('s3')"><span class="dot"></span>3 提示詞</span>
+      <span class="stage-pill" onclick="jump('s4')"><span class="dot"></span>4 AI 幻覺</span>
+      <span class="stage-pill" onclick="jump('play')"><span class="dot"></span>5 實戰闖關</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- STAGE 1 -->
+  <section class="level" id="s1">
+    <div class="sec-head"><span class="stage-badge">STAGE 1</span><h2 class="sec-title">小元出廠：AI 是怎麼「學」的？</h2><div class="sec-rule"></div></div>
+    <div class="steps-card">
+      <h4>🤖 核心概念</h4>
+      <p class="concept">小元剛出廠，腦袋空空像一張白紙。AI 不是天生聰明的——<b style="color:#fff">每個能幹的 AI 背後，都有一位訓練師</b>。AI 靠人類餵「資料」、下「指令」、給「回饋」一步步學會本領。</p>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><div><b>給資料</b>：餵大量例子讓 AI 看（圖片、文字…），牠從中找規律。</div></li>
+        <li><span class="step-num">2</span><div><b>下指令</b>：用清楚的話告訴 AI 你要牠做什麼。</div></li>
+        <li><span class="step-num">3</span><div><b>給回饋</b>：牠做錯時指正、做對時肯定，牠就越學越好。</div></li>
+      </ul>
+      <div class="tip-box">🔑 一句話：<b>AI 不是天生的，是「訓練」出來的——你教什麼，牠學什麼。</b></div>
+    </div>
+    <div class="quiz" data-stage="1">
+      <h4>✅ 形成性評量</h4>
+      <div class="quiz-q" data-correct="1">
+        <div class="q">Q1. AI 是怎麼變聰明的？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,0)">天生就很聰明，什麼都會</button>
+          <button class="quiz-opt" onclick="answer(this,1)">靠人類餵資料、下指令、給回饋訓練出來的</button>
+          <button class="quiz-opt" onclick="answer(this,0)">自己會憑空變聰明</button>
+          <button class="quiz-opt" onclick="answer(this,0)">插上電就什麼都懂</button>
+        </div>
+        <div class="quiz-fb"></div>
+      </div>
+    </div>
+    <div class="teacher-note teacher-only">
+      <div class="tn-tag">👩‍🏫 教師提示</div>
+      <p><b>引導重點</b>：用「白紙小元」的比喻破除「AI 是魔法/天生全知」的迷思。可連結學生用過的 Gemini / 生圖工具，問「它怎麼知道你要什麼？」</p>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="level" id="s2">
+    <div class="sec-head"><span class="stage-badge">STAGE 2</span><h2 class="sec-title">教小元分類：資料偏誤</h2><div class="sec-rule"></div></div>
+    <div class="steps-card">
+      <h4>📦 核心概念</h4>
+      <p class="concept">AI 學到的本領，完全看你餵牠什麼資料。資料若不公平、不多元，AI 就會<b style="color:#fff">學出偏見、判斷錯誤</b>。電腦界有句話：「Garbage in, garbage out」——餵垃圾資料，就得到垃圾結果。</p>
+      <div class="tip-box">🔑 口訣：<b>餵的資料偏了，AI 就學歪了；要給多元、公平、正確的資料。</b></div>
+    </div>
+    <div class="lab">
+      <h4>🧪 資料偏誤實驗室：你要怎麼教小元認識「貓」？</h4>
+      <p class="hint">小元要學會分辨貓和狗。選一種訓練資料餵給牠，看看牠會學成什麼樣 👇</p>
+      <div class="lab-choices">
+        <button class="lab-btn" onclick="labPick('bad')"><span class="em">🟠🐱</span>只給牠看「橘色的貓」</button>
+        <button class="lab-btn" onclick="labPick('good')"><span class="em">🐱🐈‍⬛🐈</span>給牠看「各種顏色品種的貓和狗」</button>
+      </div>
+      <div class="lab-result" id="labResult"></div>
+    </div>
+    <div class="quiz" data-stage="2">
+      <h4>✅ 形成性評量</h4>
+      <div class="quiz-q" data-correct="1">
+        <div class="q">Q2. 只給小元看橘色的貓，最可能發生什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,0)">小元變得超級厲害</button>
+          <button class="quiz-opt" onclick="answer(this,1)">小元以為「橘色＝貓」，把橘色的狗也當成貓</button>
+          <button class="quiz-opt" onclick="answer(this,0)">小元會自己去找更多資料</button>
+          <button class="quiz-opt" onclick="answer(this,0)">完全沒影響</button>
+        </div>
+        <div class="quiz-fb"></div>
+      </div>
+      <div class="quiz-q" data-correct="2">
+        <div class="q">Q3. 怎樣的訓練資料才好？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,0)">越少越好</button>
+          <button class="quiz-opt" onclick="answer(this,0)">全部同一種樣子</button>
+          <button class="quiz-opt" onclick="answer(this,1)">多元、公平、正確</button>
+          <button class="quiz-opt" onclick="answer(this,0)">隨便給就好</button>
+        </div>
+        <div class="quiz-fb"></div>
+      </div>
+    </div>
+    <div class="teacher-note teacher-only">
+      <div class="tn-tag">👩‍🏫 教師提示</div>
+      <p><b>延伸</b>：可舉真實例子——只用某族群照片訓練的人臉辨識會認不準其他人。資料偏誤會造成「AI 歧視」，連結公平議題。</p>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="level" id="s3">
+    <div class="sec-head"><span class="stage-badge">STAGE 3</span><h2 class="sec-title">下好指令：提示詞工程</h2><div class="sec-rule"></div></div>
+    <div class="steps-card">
+      <h4>💬 核心概念</h4>
+      <p class="concept">跟 AI 說話要「<b style="color:#fff">清楚、具體</b>」。模糊的指令 AI 只能亂猜；清楚的指令 AI 才做得好。會下好「提示詞（prompt）」，是 AI 時代的超能力。</p>
+      <ul class="steps-list">
+        <li><span class="step-num">✕</span><div>模糊：「畫一個好東西」→ 小元一臉困惑，亂畫一通。</div></li>
+        <li><span class="step-num">✓</span><div>清楚：「畫一張<b>藍底</b>、寫著<b>『班遊快樂』</b>、有<b>兩隻卡通小狗</b>的海報」→ 小元做得又快又好。</div></li>
+      </ul>
+      <div class="tip-box">🔑 口訣：<b>指令越清楚具體（誰、做什麼、什麼風格），AI 做得越好。</b></div>
+    </div>
+    <div class="quiz" data-stage="3">
+      <h4>✅ 形成性評量</h4>
+      <div class="quiz-q" data-correct="2">
+        <div class="q">Q4. 下列哪個指令，小元最能做出你要的海報？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,0)">「畫一個東西」</button>
+          <button class="quiz-opt" onclick="answer(this,0)">「畫好看一點」</button>
+          <button class="quiz-opt" onclick="answer(this,1)">「畫藍底、寫『班遊快樂』、有兩隻卡通小狗的海報」</button>
+          <button class="quiz-opt" onclick="answer(this,0)">「隨便你」</button>
+        </div>
+        <div class="quiz-fb"></div>
+      </div>
+    </div>
+    <div class="teacher-note teacher-only">
+      <div class="tn-tag">👩‍🏫 教師提示</div>
+      <p><b>實作</b>：讓學生用學校的 Gemini / 生圖工具，比較「模糊 vs 清楚」兩種提示詞的結果差異，親身體會提示詞工程。</p>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="level" id="s4">
+    <div class="sec-head"><span class="stage-badge">STAGE 4</span><h2 class="sec-title">小元凸槌：AI 幻覺與人類把關</h2><div class="sec-rule"></div></div>
+    <div class="steps-card">
+      <h4>🔍 核心概念</h4>
+      <p class="concept">AI 有時會「<b style="color:#fff">一本正經地說錯話</b>」，這叫「AI 幻覺」。牠不是故意騙人，是真的「以為」是對的。例如小元很有自信地說：「台灣最高的山是玉山，高 8848 公尺！」——玉山是最高沒錯，但高 <b style="color:var(--c4)">3952</b> 公尺；8848 是聖母峰的高度，小元把資料搞混了。</p>
+      <div class="tip-box">🔑 口訣：<b>AI 說的不一定對，重要的事要自己查證、由人類把關。</b></div>
+    </div>
+    <div class="quiz" data-stage="4">
+      <h4>✅ 形成性評量</h4>
+      <div class="quiz-q" data-correct="1">
+        <div class="q">Q5. 小元很有自信地講出錯誤的答案，這叫什麼？該怎麼辦？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="answer(this,0)">叫做超能力，完全相信牠</button>
+          <button class="quiz-opt" onclick="answer(this,1)">叫做「AI 幻覺」，重要的事要自己查證把關</button>
+          <button class="quiz-opt" onclick="answer(this,0)">叫做故障，把小元丟掉</button>
+          <button class="quiz-opt" onclick="answer(this,0)">沒關係，AI 永遠是對的</button>
+        </div>
+        <div class="quiz-fb"></div>
+      </div>
+    </div>
+    <div class="teacher-note teacher-only">
+      <div class="tn-tag">👩‍🏫 教師提示</div>
+      <p><b>建立習慣</b>：強調「AI 是助手不是答案機」。教學生用 AI 後「再查一次官方來源」的查證習慣，呼應媒體素養。</p>
+    </div>
+  </section>
+
+  <!-- STAGE 5 / 實戰 -->
+  <section class="level" id="play">
+    <div class="sec-head"><span class="stage-badge">STAGE 5</span><h2 class="sec-title">負責任的訓練師：實戰闖關</h2><div class="sec-rule"></div></div>
+    <div class="game">
+      <h3>🤖 進入 AI 訓練學院，跟元博士實戰</h3>
+      <p class="lead">學完訓練守則，上場調教小元！元博士會出 5 個訓練任務，你提出「怎麼教小元」，他會演出小元的反應，教得好就過關得徽章，集滿 5 枚晉升「AI 認證訓練師」！</p>
+      <div class="steps3">
+        <div class="step3"><span class="n">1</span><div class="st">進入訓練室</div><div class="sx">點下方按鈕打開訓練學院，向元博士報到。</div></div>
+        <div class="step3"><span class="n">2</span><div class="st">接任務、教小元</div><div class="sx">提出要給什麼資料、下什麼指令、怎麼判斷。</div></div>
+        <div class="step3"><span class="n">3</span><div class="st">看反應、修正過關</div><div class="sx">小元翻車就修正，集滿 5 枚訓練徽章。</div></div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <a class="btn btn-main" href="https://notebooklm.google.com/notebook/db42fc7a-4fbf-4998-85f5-52ebac39c213" target="_blank" rel="noopener">🎮 開始訓練（進入學院）</a>
+        <span style="color:var(--muted);font-size:.9rem"><b style="color:var(--c2)">🏅</b> 集滿 5 枚訓練徽章晉升 AI 認證訓練師</span>
+      </div>
+    </div>
+    <div class="tip-box" style="margin-top:14px;background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.3);color:var(--c1)">
+      ⚖️ <b style="color:#fff">負責任的訓練師守則</b>：用 AI 幫忙學習、查資料、激發創意 👍；拿來騙人、傷害別人、整份作業代寫交差 👎。用 AI 完成的東西，要誠實說明、自己負責。
+    </div>
+    <div class="teacher-note teacher-only">
+      <div class="tn-tag">👩‍🏫 教師提示</div>
+      <p><b>分組</b>：兩三人一組各自闖關，用右下角 🎲 抽籤點組別分享「小元在哪一關翻車最好笑、學到什麼」。</p>
+      <p><b>AI 教官說明</b>：元博士是用 NotebookLM「設定筆記本」把對話變成遊戲主持人；它會扮演小元演出訓練的因果，學生答錯不會被罵。</p>
+    </div>
+  </section>
+
+  <!-- 簡報播放器 -->
+  <section class="level" id="slides">
+    <div class="sec-head"><span class="stage-badge">SLIDES</span><h2 class="sec-title">授課簡報（遊戲說明書）</h2><div class="sec-rule"></div></div>
+    <div class="slide-player">
+      <div class="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="assets/slide_01.jpg" alt="投影片" decoding="async">
+        <button class="slide-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+        <button class="slide-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 8</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
+    </div>
+  </section>
+
+  <!-- NotebookLM 資源站 -->
+  <section class="level" id="nlm">
+    <div class="sec-head"><span class="stage-badge">NOTEBOOKLM</span><h2 class="sec-title">資源站：AI 教官與教材</h2><div class="sec-rule"></div></div>
+    <div class="nb-grid">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/db42fc7a-4fbf-4998-85f5-52ebac39c213" target="_blank" rel="noopener">
+        <span class="e">🤖</span><div><h5>AI 教官訓練室</h5><p>進去跟元博士實戰調教小元</p></div></a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/db42fc7a-4fbf-4998-85f5-52ebac39c213" target="_blank" rel="noopener">
+        <span class="e">📖</span><div><h5>遊戲說明書</h5><p>訓練五守則（右側工作室）</p></div></a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/db42fc7a-4fbf-4998-85f5-52ebac39c213" target="_blank" rel="noopener">
+        <span class="e">📊</span><div><h5>核心學習總表</h5><p>AI 素養重點對照，複習一目了然</p></div></a>
+    </div>
+    <div class="flow">🔗 <b>本頁怎麼來的</b>：阿凱老師用 Claude Code 構思情境文本 → 餵進 <b>NotebookLM</b> → 用「設定筆記本」把對話變成元博士教官 → 生成說明書與學習總表 → 串成這個互動駕駛艙。<b>NotebookLM × Claude Code</b> 打造。</div>
+    <div class="faq">
+      <details><summary>Q：這個「元博士」是真的老師嗎？</summary><p>不是真人，是 NotebookLM 依照阿凱老師預先寫好的「設定筆記本」與情境資料扮演的遊戲主持人。它會扮演小元、演出訓練的因果，答錯也只會引導你再想一次。</p></details>
+      <details><summary>Q：玩這個會用到真的 AI 嗎？</summary><p>會！元博士本身就是 AI。你也可以把學到的「清楚下指令、給多元資料、查證把關」直接用在學校的 Gemini、生圖工具上，當個負責任的小訓練師。</p></details>
+      <details><summary>Q：用 AI 寫作業可以嗎？</summary><p>用 AI 幫你「想點子、查資料、修改」是好的，但「整份作業叫 AI 代寫交差」是不負責任的。用 AI 完成的部分要誠實說明，學習成果還是要靠自己。</p></details>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-credit">
+  Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+  <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+  <div class="skd">桃園市龍潭區石門國民小學 · IT COCKPIT 教學駕駛艙　|　NotebookLM × Claude Code 打造</div>
+</footer>
+
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="fs-counter" id="slide-fs-counter">1 / 8</div>
+</div>
+
+<div class="float-tools">
+  <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+  <button class="float-btn" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn" onclick="toggleFullscreen()" title="全螢幕">⛶</button>
+  <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到頂端">🔝</button>
+</div>
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:52px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit;border-radius:6px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:52px;padding:4px 6px;background:var(--bg);border:1px solid var(--c1);color:var(--text);font-family:inherit;border-radius:6px">
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c5);color:#fff">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="timer-disp">00:00</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="btn-primary" onclick="timerPreset(60)">1分</button>
+    <button class="btn-primary" onclick="timerPreset(180)">3分</button>
+    <button class="btn-primary" onclick="timerPreset(300)">5分</button>
+    <button class="btn-primary" onclick="timerToggle()" id="timerToggleBtn" style="flex:1">▶ 開始</button>
+    <button class="btn-primary" onclick="timerReset()" style="background:var(--c5);color:#fff">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#f472b6" onclick="setPenColor('#f472b6',this)"></button>
+  <button class="color-dot" style="background:#fbbf24" onclick="setPenColor('#fbbf24',this)"></button>
+  <button class="color-dot" style="background:#a855f7" onclick="setPenColor('#a855f7',this)"></button>
+  <button class="color-dot" style="background:#34d399" onclick="setPenColor('#34d399',this)"></button>
+  <button class="color-dot" style="background:#fff" onclick="setPenColor('#fff',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+  const SLIDE_LIST = Array.from({length:8},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+  let curSlide = 0;
+  function initSlidePlayer(){
+    const strip = document.getElementById('slide-strip');
+    SLIDE_LIST.forEach((src,i)=>{
+      const t = document.createElement('img');
+      t.src = src; t.loading='lazy'; t.decoding='async'; t.alt = `第 ${i+1} 頁`; if(i===0) t.className='active';
+      t.onclick = ()=>goSlide(i);
+      strip.appendChild(t);
+    });
+  }
+  function goSlide(n){
+    curSlide = (n + SLIDE_LIST.length) % SLIDE_LIST.length;
+    document.getElementById('slide-current').src = SLIDE_LIST[curSlide];
+    document.getElementById('slide-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+    document.querySelectorAll('#slide-strip img').forEach((t,i)=>t.classList.toggle('active',i===curSlide));
+    const fs = document.getElementById('slide-fs');
+    if(fs && fs.classList.contains('show')){
+      document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+      document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+    }
+  }
+  function slideNav(dir){ goSlide(curSlide + dir); }
+  function openSlideFullscreen(){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlide];
+    document.getElementById('slide-fs-counter').textContent = `${curSlide+1} / ${SLIDE_LIST.length}`;
+    document.getElementById('slide-fs').classList.add('show');
+    document.body.classList.add('slides-fullscreen');
+  }
+  function closeSlideFullscreen(){
+    document.getElementById('slide-fs').classList.remove('show');
+    document.body.classList.remove('slides-fullscreen');
+  }
+  document.addEventListener('keydown',e=>{
+    if(document.getElementById('slide-fs').classList.contains('show')){
+      if(e.key==='ArrowRight') slideNav(1);
+      else if(e.key==='ArrowLeft') slideNav(-1);
+      else if(e.key==='Escape') closeSlideFullscreen();
+    }
+  });
+
+  /* 資料偏誤實驗室 */
+  function labPick(kind){
+    const r = document.getElementById('labResult');
+    if(kind==='bad'){
+      r.className='lab-result show bad';
+      r.innerHTML='🟠 你只給小元看橘色的貓…<br>結果小元把<b class="b">橘色的柴犬</b>也叫成「貓」！😱 因為牠以為「<b class="b">橘色＝貓</b>」。這就是<b class="b">資料偏誤</b>——餵的資料不公平，AI 就學歪了。再試一次選多元資料看看！';
+    } else {
+      r.className='lab-result show good';
+      r.innerHTML='🎉 你給小元看了<b class="g">各種顏色、品種、姿勢</b>的貓和狗！<br>小元學會抓真正的特徵（耳朵、臉型、叫聲），不管什麼顏色都分得出貓和狗。✅ <b class="g">多元、公平的資料</b>，才能訓練出公正可靠的 AI！';
+    }
+    r.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  /* 形成性評量 */
+  const passedStages = new Set();
+  function answer(btn, correct){
+    const q = btn.closest('.quiz-q');
+    if(q.dataset.done) return;
+    const opts = q.querySelectorAll('.quiz-opt');
+    const fb = q.querySelector('.quiz-fb');
+    if(correct===1){
+      q.dataset.done='1'; btn.classList.add('correct');
+      fb.className='quiz-fb show ok'; fb.textContent = ['🎉 太棒了，答對囉！','✨ 正確！你抓到重點了','🌟 你是個好訓練師！'][Math.floor(Math.random()*3)];
+      checkStage(q.closest('.quiz'));
+    } else {
+      btn.classList.add('wrong');
+      fb.className='quiz-fb show no'; fb.textContent='再想一想～回頭看看上面的概念，你可以的！';
+    }
+  }
+  function checkStage(quiz){
+    const qs = quiz.querySelectorAll('.quiz-q');
+    if([...qs].every(q=>q.dataset.done)){
+      passedStages.add(quiz.dataset.stage);
+      const n = passedStages.size;
+      document.getElementById('progText').textContent = (n>=4?`${n}/5 🏅`:`${n}/5`);
+      document.getElementById('progFill').style.width = (n/5*100)+'%';
+    }
+  }
+
+  function setMode(m){
+    const t = m==='teacher';
+    document.body.classList.toggle('teacher-mode',t);
+    document.getElementById('mb-teacher').classList.toggle('active',t);
+    document.getElementById('mb-student').classList.toggle('active',!t);
+  }
+  function askTeacher(){
+    if(document.body.classList.contains('teacher-mode')){ setMode('student'); return; }
+    const p = prompt('請輸入教師密碼：');
+    if(p==='it2026') setMode('teacher');
+    else if(p!==null) alert('密碼不對喔～');
+  }
+
+  let lotPool=[];
+  function refillLotPool(){const mn=+document.getElementById('lot-min').value||1,mx=+document.getElementById('lot-max').value||30;if(mn>mx)return false;lotPool=[];for(let i=mn;i<=mx;i++)lotPool.push(i);return true;}
+  function doLottery(){
+    const uniq=document.getElementById('lot-unique').checked;
+    const mn=+document.getElementById('lot-min').value||1,mx=+document.getElementById('lot-max').value||30;
+    if(mn>mx){alert('最小號必須 ≤ 最大號！');return;}
+    if(uniq&&!lotPool.length)refillLotPool();
+    const out=document.getElementById('lot-out');
+    const t=setInterval(()=>{out.textContent=(Math.floor(Math.random()*(mx-mn+1))+mn)+' 號';},60);
+    setTimeout(()=>{clearInterval(t);let num;if(uniq){if(!lotPool.length)refillLotPool();num=lotPool.splice(Math.floor(Math.random()*lotPool.length),1)[0];}else{num=Math.floor(Math.random()*(mx-mn+1))+mn;}out.textContent='🌟 '+num+' 號 🌟';},1400);
+  }
+  function resetLottery(){refillLotPool();document.getElementById('lot-out').textContent='等待抽號...';}
+  function togglePanel(name){document.getElementById('panel-'+name).classList.toggle('show');}
+
+  let tSec=0,tLeft=0,tRunning=false,tInt=null;
+  function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+  function timerPreset(s){tSec=s;tLeft=s;tRunning=false;clearInterval(tInt);document.getElementById('timer-disp').textContent=fmt(tLeft);document.getElementById('timerToggleBtn').textContent='▶ 開始';}
+  function timerToggle(){
+    if(tLeft<=0&&!tSec){tSec=180;tLeft=180;}
+    tRunning=!tRunning;
+    document.getElementById('timerToggleBtn').textContent=tRunning?'⏸ 暫停':'▶ 開始';
+    if(tRunning){tInt=setInterval(()=>{if(tLeft<=0){clearInterval(tInt);tRunning=false;document.getElementById('timer-disp').textContent='⏰ 時間到';document.getElementById('timerToggleBtn').textContent='▶ 開始';return;}tLeft--;document.getElementById('timer-disp').textContent=fmt(tLeft);},1000);}
+    else clearInterval(tInt);
+  }
+  function timerReset(){clearInterval(tInt);tRunning=false;tLeft=tSec;document.getElementById('timer-disp').textContent=fmt(tLeft||0);document.getElementById('timerToggleBtn').textContent='▶ 開始';}
+
+  function toggleFullscreen(){ if(!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); }
+
+  let drawActive=false,penColor='#f472b6',penSize=4,drawCanvas,drawCtx,isDrawing=false,dLastX,dLastY;
+  function initDraw(){
+    drawCanvas=document.getElementById('drawCanvas');drawCtx=drawCanvas.getContext('2d');
+    drawCanvas.width=innerWidth;drawCanvas.height=innerHeight;
+    drawCanvas.addEventListener('mousedown',e=>{if(!drawActive)return;isDrawing=true;dLastX=e.clientX;dLastY=e.clientY;});
+    drawCanvas.addEventListener('mousemove',e=>{if(!drawActive||!isDrawing)return;drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(e.clientX,e.clientY);drawCtx.stroke();dLastX=e.clientX;dLastY=e.clientY;});
+    drawCanvas.addEventListener('mouseup',()=>isDrawing=false);
+    drawCanvas.addEventListener('touchstart',e=>{if(!drawActive)return;e.preventDefault();const t=e.touches[0];isDrawing=true;dLastX=t.clientX;dLastY=t.clientY;},{passive:false});
+    drawCanvas.addEventListener('touchmove',e=>{if(!drawActive||!isDrawing)return;e.preventDefault();const t=e.touches[0];drawCtx.strokeStyle=penColor;drawCtx.lineWidth=penSize;drawCtx.lineCap='round';drawCtx.beginPath();drawCtx.moveTo(dLastX,dLastY);drawCtx.lineTo(t.clientX,t.clientY);drawCtx.stroke();dLastX=t.clientX;dLastY=t.clientY;},{passive:false});
+    drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+    addEventListener('resize',()=>{drawCanvas.width=innerWidth;drawCanvas.height=innerHeight;});
+  }
+  function toggleDraw(){drawActive=!drawActive;drawCanvas.classList.toggle('active',drawActive);document.getElementById('drawToolbar').classList.toggle('show',drawActive);document.getElementById('drawToggleBtn').style.background=drawActive?'var(--c4)':'';}
+  function setPenColor(c,el){penColor=c;document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));el.classList.add('active');}
+  function clearDrawing(){if(drawCtx)drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height);}
+
+  function jump(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});}
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    try{ initSlidePlayer(); }catch(e){console.error('slide',e);}
+    try{ initDraw(); }catch(e){console.error('draw',e);}
+  });
+</script>
+</body>
+</html>
