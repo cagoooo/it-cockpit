@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>端午 AI 創作家｜四年級資訊科技教學駕駛艙</title>
+<!-- Favicon -->
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!-- Open Graph / LINE / FB -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/dragonboat-ai-music/">
+<meta property="og:title" content="端午 AI 創作家｜四年級資訊科技">
+<meta property="og:description" content="用免費 Gemini 生圖做端午音樂專輯封面，再用 MusicFX 提示詞生成器創作端午歌曲。內含圖像咒語組合器、封面預覽器、音樂提示詞生成器三大互動。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/dragonboat-ai-music/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/dragonboat-ai-music/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff5ec; --surface:#fffaf2; --panel:#ffffff;
+  --c1:#e84a3f;   /* 朱紅 龍舟/緞帶 */
+  --c2:#f4a91e;   /* 鵝黃/金黃 */
+  --c3:#2faa6e;   /* 粽葉/艾草 綠 */
+  --c4:#3d9bd6;   /* 江水藍 */
+  --c5:#9a5bc4;   /* 紫 */
+  --text:#46301f; --dim:#9a7b66;
+  --line:#f0dcc7;
+  --shadow:0 4px 16px rgba(180,90,40,.14);
+  --shadow-lg:0 8px 26px rgba(180,90,40,.18);
+}
+*{box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+body{margin:0;font-family:'Noto Sans TC',sans-serif;line-height:1.7;
+  background:var(--bg);color:var(--text);
+  background-image:radial-gradient(circle at 12% 18%,rgba(244,169,30,.10),transparent 22%),
+    radial-gradient(circle at 88% 12%,rgba(47,170,110,.10),transparent 22%),
+    radial-gradient(circle at 80% 82%,rgba(61,155,214,.10),transparent 24%),
+    radial-gradient(circle at 16% 86%,rgba(232,74,63,.08),transparent 22%);}
+h1,h2,h3,h4{font-family:'Baloo 2','Noto Sans TC',sans-serif;margin:0}
+a{color:var(--c1)}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:120;
+  background:rgba(255,250,242,.92);backdrop-filter:blur(8px);
+  border-bottom:3px solid var(--c2);box-shadow:0 2px 12px rgba(180,90,40,.10)}
+.header-inner{max-width:1400px;margin:0 auto;padding:10px 24px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;
+  border:2px solid var(--c3);background:#fff;color:var(--c3);text-decoration:none;
+  font-weight:800;font-size:.85rem;border-radius:24px;transition:.18s;white-space:nowrap;
+  box-shadow:0 3px 0 rgba(47,170,110,.25)}
+.home-btn:hover{background:var(--c3);color:#fff;transform:translateY(-2px)}
+.header-title{font-size:1.45rem;font-weight:800;color:var(--c1);display:flex;align-items:center;gap:8px}
+.header-sub{font-size:.95rem;color:var(--dim);margin-top:2px}
+.grade-chip{background:var(--c2);color:#fff;font-weight:800;font-size:.85rem;
+  padding:5px 14px;border-radius:24px;white-space:nowrap}
+.header-meta{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.progress-wrap{min-width:160px}
+.progress-label{font-size:.8rem;color:var(--dim);margin-bottom:3px}
+.progress-bar{height:12px;background:#fbe7d2;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .4s;border-radius:8px}
+.mode-btn{border:2px solid var(--c5);background:#fff;color:var(--c5);font-weight:700;
+  padding:6px 14px;border-radius:24px;cursor:pointer;font-size:.85rem;font-family:inherit}
+.mode-btn.on{background:var(--c5);color:#fff}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#fff 0%,#fff7ee 100%);border:3px solid var(--c2);
+  border-radius:24px;padding:30px 28px;margin:24px 0;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.hero::after{content:"🐉";position:absolute;right:-6px;bottom:-14px;font-size:8rem;opacity:.10;transform:rotate(-8deg)}
+.hero h2{font-size:1.9rem;color:var(--c1);margin-bottom:8px}
+.hero p{font-size:1.05rem;color:var(--text);max-width:760px}
+.hero .tag-row{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.htag{background:#fff;border:2px solid var(--line);border-radius:20px;padding:5px 14px;font-size:.9rem;font-weight:700}
+.htag.r{border-color:var(--c1);color:var(--c1)} .htag.y{border-color:var(--c2);color:#c4820e}
+.htag.g{border-color:var(--c3);color:var(--c3)} .htag.b{border-color:var(--c4);color:var(--c4)}
+
+/* Objectives */
+.obj-grid{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+.obj-chip{flex:1;min-width:200px;background:#fff;border-radius:18px;padding:16px 18px;
+  border:2px solid var(--line);box-shadow:var(--shadow);font-size:1rem}
+.obj-chip .ico{font-size:1.8rem;display:block;margin-bottom:6px}
+.obj-chip b{color:var(--c1)}
+
+/* Stage pills */
+.stage-pills{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0;position:sticky;top:70px;z-index:90;
+  background:rgba(255,245,236,.85);backdrop-filter:blur(4px);padding:8px 0;border-radius:14px}
+.stage-pill{background:#fff;border:2px solid var(--line);border-radius:24px;padding:9px 18px;
+  font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;color:var(--text);transition:.18s}
+.stage-pill:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.stage-pill.s1{border-color:var(--c2)} .stage-pill.s2{border-color:var(--c1)}
+.stage-pill.s3{border-color:var(--c3)} .stage-pill.s4{border-color:var(--c4)}
+.stage-pill.s5{border-color:var(--c5)}
+
+/* Stage sections */
+.level-section{background:var(--surface);border-radius:24px;padding:26px;margin:24px 0;
+  border:2px solid var(--line);box-shadow:var(--shadow);scroll-margin-top:140px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.stage-badge{font-family:'Baloo 2',sans-serif;font-weight:800;color:#fff;
+  padding:7px 16px;border-radius:14px;font-size:1rem;letter-spacing:.04em;white-space:nowrap}
+.s1 .stage-badge,.badge-y{background:var(--c2)}
+.s2 .stage-badge,.badge-r{background:var(--c1)}
+.s3 .stage-badge,.badge-g{background:var(--c3)}
+.s4 .stage-badge,.badge-b{background:var(--c4)}
+.section-title{font-size:1.5rem;font-weight:800}
+.section-sub{font-size:1rem;color:var(--dim);margin-top:2px}
+
+.steps-card{background:#fff;border-radius:18px;padding:20px;border:2px solid var(--line);margin-bottom:18px}
+.steps-card h4{font-size:1.1rem;color:var(--c1);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.steps-list{list-style:none;padding:0;margin:0;counter-reset:s}
+.steps-list li{position:relative;padding:10px 10px 10px 48px;font-size:1.02rem;border-bottom:1px dashed var(--line)}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{counter-increment:s;content:counter(s);position:absolute;left:8px;top:9px;
+  width:32px;height:32px;background:var(--c2);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem}
+.s2 .steps-list li::before{background:var(--c1)} .s3 .steps-list li::before{background:var(--c3)}
+.s4 .steps-list li::before{background:var(--c4)}
+.tip-box{background:#fff8ec;border-left:5px solid var(--c2);border-radius:0 12px 12px 0;
+  padding:13px 16px;font-size:.96rem;margin:14px 0}
+.tip-box.green{background:#eefaf2;border-color:var(--c3)}
+.tip-box.red{background:#fdeeee;border-color:var(--c1)}
+.tip-box.blue{background:#ecf6fc;border-color:var(--c4)}
+.tip-box b{color:var(--c1)}
+
+.ig-fig{margin:16px 0;border-radius:16px;overflow:hidden;border:2px solid var(--line);box-shadow:var(--shadow);background:#fff}
+.ig-fig img{width:100%;display:block}
+.ig-fig figcaption{font-size:.85rem;color:var(--dim);padding:8px 14px;background:#fff8ec;text-align:center}
+/* Interactive panel */
+.cv-section{background:#fff;border-radius:18px;padding:22px;border:2px solid var(--c2);margin:18px 0;box-shadow:var(--shadow)}
+.cv-section.r{border-color:var(--c1)} .cv-section.g{border-color:var(--c3)} .cv-section.b{border-color:var(--c4)}
+.cv-title{font-size:1.18rem;font-weight:800;color:var(--c1);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.cv-hint{font-size:.92rem;color:var(--dim);margin-bottom:16px}
+.builder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:16px}
+.builder-field label{display:block;font-weight:700;font-size:.92rem;margin-bottom:5px}
+.builder-field label .em{font-size:1.1rem;margin-right:4px}
+select,.txt-in{width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:12px;
+  font-family:inherit;font-size:1rem;background:#fffdfa;color:var(--text);cursor:pointer}
+select:focus,.txt-in:focus{outline:none;border-color:var(--c1)}
+.txt-in{cursor:text}
+.gen-out{background:#fff8ec;border:2px dashed var(--c2);border-radius:14px;padding:16px;
+  font-size:1.05rem;line-height:1.8;min-height:64px;margin:6px 0 14px;color:var(--text)}
+.gen-out .ph{color:var(--dim)}
+.gen-out .hl{background:#ffe9b8;border-radius:6px;padding:1px 6px;font-weight:700}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:none;border-radius:24px;padding:11px 22px;font-family:inherit;font-weight:800;
+  font-size:1rem;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--c1);color:#fff;box-shadow:0 4px 0 #b53227}
+.btn-primary:active{transform:translateY(2px);box-shadow:0 1px 0 #b53227}
+.btn-2{background:var(--c2);color:#fff;box-shadow:0 4px 0 #c4820e}
+.btn-3{background:var(--c3);color:#fff;box-shadow:0 4px 0 #1f7d4f}
+.btn-4{background:var(--c4);color:#fff;box-shadow:0 4px 0 #2a78ad}
+.btn-ghost{background:#fff;border:2px solid var(--line);color:var(--text)}
+.copied-flash{color:var(--c3);font-weight:800;font-size:.9rem;opacity:0;transition:.2s;align-self:center}
+.copied-flash.show{opacity:1}
+
+/* cover preview canvas */
+.cover-wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.cover-canvas-box{flex:0 0 auto}
+#coverCanvas{border-radius:12px;box-shadow:var(--shadow-lg);background:#fff;width:300px;height:300px;display:block}
+.cover-controls{flex:1;min-width:240px}
+
+/* music chips */
+.music-elem-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+
+/* Quiz */
+.quiz-section{margin-top:18px}
+.quiz-q{background:#fff;border-radius:16px;padding:18px;border:2px solid var(--line);margin-bottom:14px}
+.quiz-q .q{font-size:1.05rem;font-weight:700;margin-bottom:12px}
+.quiz-opts{display:grid;gap:9px}
+.quiz-opt{text-align:left;background:#fffdfa;border:2px solid var(--line);border-radius:12px;
+  padding:11px 16px;font-family:inherit;font-size:1rem;cursor:pointer;transition:.12s;color:var(--text)}
+.quiz-opt:hover{border-color:var(--c2);background:#fff8ec}
+.quiz-opt.correct{background:#eafaf0;border-color:var(--c3);color:var(--c3);font-weight:700}
+.quiz-opt.wrong{background:#fdeeee;border-color:var(--c1);color:var(--c1)}
+.quiz-fb{margin-top:10px;font-size:.96rem;padding:10px 14px;border-radius:10px;display:none}
+.quiz-fb.show{display:block}
+.quiz-fb.ok{background:#eafaf0;color:#1f7d4f}
+.quiz-fb.no{background:#fdeeee;color:#b53227}
+
+/* teacher note */
+.teacher-note{display:none;background:#f4ecff;border:2px dashed var(--c5);border-radius:14px;
+  padding:14px 18px;margin-top:14px;font-size:.96rem}
+.teacher-note b{color:var(--c5)}
+body.teacher-on .teacher-note{display:block}
+.teacher-only{display:none}
+body.teacher-on .teacher-only{display:block}
+
+/* project task */
+.project-task{background:linear-gradient(135deg,#fff 0%,#eefaf2 100%);border:3px solid var(--c3);
+  border-radius:24px;padding:26px;margin:24px 0;box-shadow:var(--shadow)}
+.project-task h3{font-size:1.4rem;color:var(--c3);margin-bottom:12px}
+.task-steps{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.task-step{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:16px;border:2px solid var(--line)}
+.task-step .n{display:inline-block;width:30px;height:30px;background:var(--c3);color:#fff;border-radius:50%;
+  text-align:center;line-height:30px;font-weight:800;margin-bottom:8px}
+
+/* NLM resources */
+.nb-section{background:var(--surface);border:2px solid var(--c4);border-radius:24px;padding:26px;margin:24px 0;box-shadow:var(--shadow)}
+.nb-section h3{font-size:1.4rem;color:var(--c4);margin-bottom:6px}
+.nb-cards{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0}
+.nb-card{flex:1;min-width:220px;background:#fff;border-radius:16px;padding:16px;border:2px solid var(--line);text-decoration:none;color:var(--text);transition:.16s}
+.nb-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--c4)}
+.nb-card h4{font-size:1.02rem;color:var(--c4);margin-bottom:5px}
+.nb-card p{font-size:.9rem;color:var(--dim)}
+.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:16px 0;font-size:.92rem}
+.flow .node{background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 14px;font-weight:700}
+.flow .arrow{color:var(--c2);font-weight:800;font-size:1.2rem}
+.faq-item{background:#fff;border-radius:14px;border:2px solid var(--line);margin-bottom:10px;overflow:hidden}
+.faq-q{padding:14px 18px;font-weight:700;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q:hover{background:#fff8ec}
+.faq-a{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:.96rem;color:var(--text)}
+.faq-a.open{max-height:400px;padding:0 18px 16px}
+
+/* slide player */
+.slide-player{background:#fff;border:2px solid var(--c2);border-radius:20px;padding:18px;margin:18px 0;box-shadow:var(--shadow)}
+.slide-main{position:relative;border-radius:14px;overflow:hidden;background:#fdf3e3}
+.slide-main img{width:100%;display:block;aspect-ratio:16/9;object-fit:contain;background:#fff}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:64px;
+  background:rgba(232,74,63,.85);color:#fff;border:none;font-size:1.8rem;font-weight:800;cursor:pointer;border-radius:10px}
+.slide-nav-btn.prev{left:10px} .slide-nav-btn.next{right:10px}
+.slide-nav-btn:hover{background:var(--c1)}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#fff;border:none;
+  padding:8px 14px;font-size:.92rem;cursor:pointer;border-radius:20px;font-weight:700;display:flex;align-items:center;gap:6px}
+.slide-counter{position:absolute;left:12px;bottom:12px;background:rgba(70,48,31,.8);color:#fff;
+  padding:4px 12px;border-radius:14px;font-size:.85rem;font-weight:700}
+.slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 4px;scroll-behavior:smooth}
+.strip-thumb{flex:0 0 auto;width:108px;aspect-ratio:16/9;border-radius:8px;overflow:hidden;
+  border:3px solid transparent;cursor:pointer;background:#fdf3e3}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb.active{border-color:var(--c1)}
+#slide-fs{position:fixed;inset:0;background:rgba(40,25,15,.96);z-index:9999;display:none;
+  align-items:center;justify-content:center}
+#slide-fs.show{display:flex}
+#slide-fs img{max-width:94vw;max-height:90vh;border-radius:8px}
+.fs-close{position:absolute;top:16px;right:18px;width:48px;height:48px;border-radius:50%;
+  background:var(--c1);color:#fff;border:none;font-size:1.4rem;cursor:pointer;z-index:2}
+.fs-nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:80px;
+  background:rgba(232,74,63,.5);border:2px solid var(--c2);color:#fff;font-size:2rem;font-weight:900;
+  cursor:pointer;z-index:2;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.fs-nav.prev{left:20px} .fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--c1)}
+.fs-counter{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#fff;
+  background:rgba(0,0,0,.4);padding:5px 16px;border-radius:14px;font-weight:700}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar,body.slides-fullscreen .stage-pills{display:none!important}
+
+/* lecture CTA */
+.lecture-cta{display:block;margin:18px 0;padding:18px 22px;background:var(--c1);color:#fff;
+  border:3px solid var(--c2);border-radius:18px;text-decoration:none;transition:.18s;box-shadow:0 5px 0 #b53227}
+.lecture-cta:hover{transform:translateY(-2px)}
+.lecture-cta .tag{display:inline-block;background:#fff;color:var(--c1);font-weight:800;font-size:.78rem;padding:2px 10px;border-radius:12px;margin-bottom:8px}
+.lecture-cta .t{display:block;font-size:1.3rem;font-weight:800;font-family:'Baloo 2',sans-serif;color:#fff}
+.lecture-cta .s{display:block;font-size:.88rem;opacity:.95;margin-top:3px}
+
+/* video */
+.nlm-video-section{margin:24px 0}
+.nlm-video-section h3{font-size:1.4rem;color:var(--c1);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.video-wrap{background:#fff;border:3px solid var(--c1);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.video-ratio{position:relative;padding-top:56.25%;width:100%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{background:#fff8ec;border-top:2px solid var(--c2);padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nlm-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c1);color:#fff;font-size:.82rem;font-weight:700;padding:5px 12px;border-radius:14px}
+.video-hint{font-size:.92rem;color:var(--dim)}
+.video-no-id{padding:46px 20px;text-align:center;font-size:1rem;color:var(--dim);border:2px dashed var(--line);margin:0}
+
+/* footer */
+.site-footer{text-align:center;padding:30px 20px;color:var(--dim);font-size:.92rem;border-top:2px solid var(--line);margin-top:30px}
+.site-footer a{color:var(--c1);font-weight:700;text-decoration:none}
+.site-footer p{margin:4px 0}
+
+/* floating tools */
+.float-tools{position:fixed;right:18px;bottom:18px;z-index:400;display:flex;flex-direction:column;gap:10px}
+.float-btn{width:54px;height:54px;border-radius:50%;border:none;font-size:1.5rem;cursor:pointer;
+  box-shadow:var(--shadow-lg);transition:.15s;color:#fff}
+.float-btn:hover{transform:scale(1.08)}
+.float-btn.lot{background:var(--c2)} .float-btn.tim{background:var(--c4)}
+.float-btn.pen{background:var(--c1)} .float-btn.top{background:var(--c5)}
+.tool-panel{position:fixed;right:84px;bottom:18px;z-index:401;background:#fff;border:2px solid var(--c2);
+  border-radius:18px;padding:18px;width:280px;box-shadow:var(--shadow-lg);display:none}
+.tool-panel.show{display:block}
+.tool-panel h4{font-size:1.05rem;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.tool-panel .close{cursor:pointer;color:var(--dim);font-weight:800}
+.lottery-result{margin-top:12px;text-align:center;font-size:2rem;font-weight:800;color:var(--c1);
+  font-family:'Baloo 2',sans-serif;min-height:48px;background:#fff8ec;border-radius:12px;padding:10px}
+.timer-display{text-align:center;font-size:2.6rem;font-weight:800;font-family:'Baloo 2',sans-serif;color:var(--c4);margin:8px 0}
+.timer-presets{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.timer-presets button{border:2px solid var(--c4);background:#fff;color:var(--c4);border-radius:14px;padding:5px 12px;cursor:pointer;font-family:inherit;font-weight:700}
+
+/* draw */
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:18px;bottom:18px;z-index:300;background:#fff;border:2px solid var(--c1);
+  border-radius:16px;padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-lg)}
+.draw-toolbar.show{display:flex}
+.color-dot{width:28px;height:28px;border:2px solid #00000022;border-radius:50%;cursor:pointer;padding:0;transition:.15s}
+.color-dot.active{transform:scale(1.22);box-shadow:0 0 0 3px #00000018}
+.draw-clear{background:#fff;border:2px solid var(--c1);color:var(--c1);border-radius:12px;padding:5px 12px;font-family:inherit;font-weight:700;cursor:pointer}
+
+@media (max-width:720px){
+  .header-title{font-size:1.15rem}
+  .hero h2{font-size:1.5rem}
+  #coverCanvas{width:240px;height:240px}
+  .header-meta{width:100%;margin-left:0}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div>
+      <div class="header-title">🐉 端午 AI 創作家</div>
+      <div class="header-sub">用 Gemini 生圖做專輯封面，再用 AI 創作端午歌曲</div>
+    </div>
+    <span class="grade-chip">四年級｜AI 創作</span>
+    <div class="header-meta">
+      <div class="progress-wrap">
+        <div class="progress-label">闖關進度 <span id="prog-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+      <button class="mode-btn" id="modeBtn" onclick="toggleTeacher()">👩‍🏫 教師模式</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>🥢 從一張圖，到一首歌！</h2>
+    <p>這堂課我們要當「端午 AI 創作家」：先用<b>免費的 Gemini</b> 寫魔法咒語生成圖片，做出一張有龍舟、粽子、香包、艾草的<b>音樂專輯封面</b>；完成封面後，再進階用 <b>MusicFX 音樂提示詞生成器</b>，創作一首屬於你的端午節主題曲！</p>
+    <div class="tag-row">
+      <span class="htag r">🖼️ 建立圖像</span>
+      <span class="htag y">💿 專輯封面</span>
+      <span class="htag g">🎵 創作音樂</span>
+      <span class="htag b">🧧 端午文化</span>
+    </div>
+    <a class="lecture-cta" href="lecture-slides.html" title="老師上課投影用：14 張端午節慶風投影片">
+      <span class="tag">老師上課投影用 ⮕</span>
+      <span class="t">🎬 進入演講簡報模式</span>
+      <span class="s">14 張端午節慶風投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線可用</span>
+    </a>
+  </section>
+
+  <!-- Objectives -->
+  <div class="obj-grid">
+    <div class="obj-chip"><span class="ico">🪄</span><b>學會寫咒語</b>：用主體＋場景＋風格＋顏色＋光線，寫出好提示詞。</div>
+    <div class="obj-chip"><span class="ico">💿</span><b>設計封面</b>：做出 1:1 正方形端午專輯封面，加上中文標題。</div>
+    <div class="obj-chip"><span class="ico">🎶</span><b>生成音樂</b>：用 6 大元素組合音樂提示詞，創作端午歌曲。</div>
+    <div class="obj-chip"><span class="ico">🛡️</span><b>安全素養</b>：認識 AI 版權、SynthID、雄黃酒不能喝。</div>
+  </div>
+
+  <!-- Stage nav -->
+  <nav class="stage-pills">
+    <a class="stage-pill s1" href="#sec1">① 端午小百科</a>
+    <a class="stage-pill s2" href="#sec2">② 建立圖像</a>
+    <a class="stage-pill s3" href="#sec3">③ 專輯封面</a>
+    <a class="stage-pill s4" href="#sec4">④ 創作音樂</a>
+    <a class="stage-pill s5" href="#sec5">⑤ 安全素養</a>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section class="level-section s1" id="sec1">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 1</span>
+      <div><div class="section-title">🧧 端午小百科 × AI 是什麼？</div>
+      <div class="section-sub">先認識端午節，再認識我們的 AI 好幫手</div></div>
+    </div>
+    <div class="steps-card">
+      <h4>📖 端午節的故事與習俗</h4>
+      <ul class="steps-list">
+        <li><b>由來：</b>戰國時代愛國詩人<b>屈原</b>跳進汨羅江，村民划船找他、把米飯用竹葉包起來丟進江裡餵魚蝦——這就是<b>划龍舟</b>和<b>吃粽子</b>的由來。</li>
+        <li><b>習俗活動：</b>划龍舟（敲鑼打鼓加油）、立蛋（靠重心和摩擦力）、掛艾草菖蒲（驅蚊淨化空氣）、配香包（天然中藥草防蚊）。</li>
+        <li><b>應景食物：</b>粽子！有北部粽 vs 南部粽、鹹粽 vs 甜粽，口味五花八門。</li>
+      </ul>
+    </div>
+    <div class="steps-card">
+      <h4>🤖 AI 是什麼？「提示詞」又是什麼？</h4>
+      <ul class="steps-list">
+        <li><b>AI 生成圖片：</b>電腦裡住了一位「會魔法的超強畫家」，你打字它就把想像變成圖片。</li>
+        <li><b>提示詞（prompt）＝魔法咒語：</b>你給 AI 的指令，越清楚畫得越像你要的。</li>
+        <li><b>AI 生成音樂：</b>用文字描述風格、心情、樂器，AI 就把旋律節奏「寫」出來。</li>
+      </ul>
+      <div class="tip-box green">🐉 <b>記住：</b>AI 就像聰明但偶爾迷糊的小幫手，<b>你才是小導演</b>！指令給得越清楚，作品就越棒。</div>
+    </div>
+    <div class="quiz-section" data-quiz="1"></div>
+    <div class="teacher-note"><b>教師提示：</b>本關建立「端午文化」與「AI 即工具、人是主導者」的概念。可先讓學生分享自己過端午的經驗（吃什麼粽、有沒有看過划龍舟），再帶入屈原故事。強調「勝不驕敗不餒」的龍舟精神。</div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="level-section s2" id="sec2">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 2</span>
+      <div><div class="section-title">🖼️ 建立圖像：用 Gemini 畫端午</div>
+      <div class="section-sub">學會「好咒語五要素」，畫出心中的端午畫面</div></div>
+    </div>
+    <div class="steps-card">
+      <h4>🪄 操作步驟</h4>
+      <ul class="steps-list">
+        <li>打開瀏覽器進入 <b>gemini.google.com</b>，用 Google 帳號登入（國小由老師帳號統一操作）。</li>
+        <li>寫提示詞像「當電影小導演」：不要只說「畫端午節」，要說清楚「畫一張可愛卡通圖，一個小男孩穿紅衣服在吃粽子，背景是天氣很好的公園」。</li>
+        <li>想修改不用重來，直接像聊天說「請把背景換成晚上」「多加一隻小狗」。</li>
+        <li>找到圖片旁的「下載」按鈕（向下箭頭），點一下存到電腦。</li>
+      </ul>
+      <div class="tip-box">🌟 <b>好咒語五要素：</b>① 主體（主角是誰）② 場景（在哪裡）③ 風格（卡通/水彩/照片）④ 顏色 ⑤ 光線。</div>
+    </div>
+
+    <figure class="ig-fig"><img src="assets/ig_stage2.jpg" loading="lazy" alt="用 Gemini 生成圖片資訊圖表">
+      <figcaption>🎨 資訊圖表：用 Gemini 生成圖片（由 NotebookLM AI 生成）</figcaption></figure>
+
+    <!-- INTERACTIVE: image prompt builder -->
+    <div class="cv-section r">
+      <div class="cv-title">🪄 互動：圖像咒語組合器</div>
+      <div class="cv-hint">選一選下面的選項，下面就會自動幫你組好一句 Gemini 圖片咒語，按「複製咒語」就能貼到 Gemini！</div>
+      <div class="builder-grid">
+        <div class="builder-field"><label><span class="em">🙂</span>主體（主角）</label>
+          <select id="img-subject" onchange="buildImgPrompt()">
+            <option>一個穿紅衣服的可愛小朋友</option>
+            <option>一隻友善的卡通小龍</option>
+            <option>一家人開心地在一起</option>
+            <option>一隻戴墨鏡的橘貓</option>
+            <option>一群努力划船的龍舟選手</option>
+            <option>一位Q版的古代詩人屈原</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">🌅</span>場景（在哪裡）</label>
+          <select id="img-scene" onchange="buildImgPrompt()">
+            <option>在熱鬧的江面上划龍舟</option>
+            <option>在木頭桌子旁包粽子</option>
+            <option>在公園的草地上立蛋</option>
+            <option>在掛著艾草的家門口</option>
+            <option>佩戴著漂亮的香包微笑</option>
+            <option>在五彩繽紛的慶典遊行裡</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">🎨</span>風格</label>
+          <select id="img-style" onchange="buildImgPrompt()">
+            <option>可愛卡通動畫風</option>
+            <option>柔和水彩畫風</option>
+            <option>3D立體剪紙風</option>
+            <option>溫暖的繪本插畫風</option>
+            <option>像真實照片一樣</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">🌈</span>顏色</label>
+          <select id="img-color" onchange="buildImgPrompt()">
+            <option>喜氣的紅色與金色</option>
+            <option>清新的綠色與藍色</option>
+            <option>繽紛的糖果色</option>
+            <option>溫暖的橘黃色</option>
+            <option>粉嫩可愛色系</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">💡</span>光線</label>
+          <select id="img-light" onchange="buildImgPrompt()">
+            <option>溫暖的陽光</option>
+            <option>閃閃發亮的燈光</option>
+            <option>清晨柔和的光</option>
+            <option>戲劇化的光線</option>
+            <option>黃昏的夕陽光</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">✏️</span>自由補充（可不填）</label>
+          <input class="txt-in" id="img-extra" placeholder="例如：旁邊有一隻小狗" oninput="buildImgPrompt()"></div>
+      </div>
+      <div class="gen-out" id="img-out"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="copyText('img-out-raw','img-flash')">📋 複製咒語</button>
+        <button class="btn btn-ghost" onclick="randomImg()">🎲 幫我隨機組一個</button>
+        <span class="copied-flash" id="img-flash">✓ 已複製！貼到 Gemini 吧</span>
+      </div>
+      <input type="hidden" id="img-out-raw">
+    </div>
+    <div class="quiz-section" data-quiz="2"></div>
+    <div class="teacher-note"><b>教師提示：</b>用組合器示範「細節越多畫得越好」。可請學生先用組合器組一句，再自己加形容詞延伸。提醒：不可輸入真實歌手名或有版權卡通人物（皮卡丘→「黃色電氣小老鼠」）。</div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="level-section s3" id="sec3">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 3</span>
+      <div><div class="section-title">💿 專輯封面設計師</div>
+      <div class="section-sub">把圖片變成正方形專輯封面，加上中文標題！</div></div>
+    </div>
+    <div class="steps-card">
+      <h4>🎯 操作步驟</h4>
+      <ul class="steps-list">
+        <li>請 Gemini 畫 <b>1:1 正方形</b>的圖：咒語加上「請畫一張 1:1 正方形的圖片」。</li>
+        <li>加中文專輯名稱，兩種方法：① 讓 AI 寫——咒語最後加「請在圖片裡寫上中文『端午快樂』」；② 自己加——把圖下載後上傳 Canva 打上字。</li>
+        <li>構圖留白：若要自己加字，先告訴 AI「畫面上方留一些空白」，標題才不會擋住龍舟或粽子。</li>
+      </ul>
+      <div class="tip-box green">💡 <b>好封面是歌的「臉」：</b>要吸睛、能傳達歌的心情（快樂的歌用明亮活潑畫面），還要留白放標題。</div>
+    </div>
+
+    <figure class="ig-fig"><img src="assets/ig_stage3.jpg" loading="lazy" alt="製作端午專輯封面資訊圖表">
+      <figcaption>💿 資訊圖表：製作端午節 AI 專輯封面（由 NotebookLM AI 生成）</figcaption></figure>
+
+    <!-- INTERACTIVE: cover preview -->
+    <div class="cv-section g">
+      <div class="cv-title">💿 互動：專輯封面預覽器</div>
+      <div class="cv-hint">選背景、加元素、打上專輯名稱，右邊立刻看到你的端午專輯封面長什麼樣子！</div>
+      <div class="cover-wrap">
+        <div class="cover-canvas-box"><canvas id="coverCanvas" width="600" height="600"></canvas></div>
+        <div class="cover-controls">
+          <div class="builder-field" style="margin-bottom:12px"><label><span class="em">🎨</span>封面底色</label>
+            <select id="cov-bg" onchange="drawCover()">
+              <option value="festRed">喜氣朱紅</option>
+              <option value="jade">粽葉綠</option>
+              <option value="river">江水藍</option>
+              <option value="amber">慶典金黃</option>
+              <option value="candy">糖果粉</option>
+            </select></div>
+          <div class="builder-field" style="margin-bottom:12px"><label><span class="em">🐲</span>端午元素（可複選）</label>
+            <div class="music-elem-row" id="cov-elems"></div></div>
+          <div class="builder-field" style="margin-bottom:12px"><label><span class="em">✍️</span>專輯名稱（中文）</label>
+            <input class="txt-in" id="cov-title" maxlength="10" value="端午快樂" oninput="drawCover()"></div>
+          <div class="builder-field" style="margin-bottom:12px"><label><span class="em">📐</span>標題位置（留白處）</label>
+            <select id="cov-pos" onchange="drawCover()">
+              <option value="top">上方</option>
+              <option value="bottom">下方</option>
+              <option value="center">中間</option>
+            </select></div>
+          <div class="btn-row">
+            <button class="btn btn-3" onclick="downloadCover()">⬇️ 下載封面圖</button>
+            <button class="btn btn-ghost" onclick="copyText('cov-prompt-raw','cov-flash')">📋 複製封面咒語</button>
+            <span class="copied-flash" id="cov-flash">✓ 已複製！</span>
+          </div>
+          <input type="hidden" id="cov-prompt-raw">
+        </div>
+      </div>
+      <div class="tip-box">🖼️ 這是「預覽小幫手」，幫你想像封面的樣子。真正漂亮的封面，記得用上面的咒語請 Gemini 幫你畫喔！</div>
+    </div>
+    <div class="quiz-section" data-quiz="3"></div>
+    <div class="teacher-note"><b>教師提示：</b>強調「留白」設計概念——標題要放在乾淨的地方。可讓學生先用預覽器決定構圖，再去 Gemini 生成正式封面。延伸：用 Canva 加文字是「20% 人工修改」，能讓作品更像自己的。</div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="level-section s4" id="sec4">
+    <div class="section-header">
+      <span class="stage-badge">STAGE 4</span>
+      <div><div class="section-title">🎵 創作音樂：端午主題曲</div>
+      <div class="section-sub">用 6 大元素組合「強大音樂咒語」，馬上上手！</div></div>
+    </div>
+    <div class="steps-card">
+      <h4>🎼 操作步驟（MusicFX）</h4>
+      <ul class="steps-list">
+        <li>網址列輸入 <b>labs.google/fx</b>，登入 Google 帳號，選「MusicFX」。</li>
+        <li>把下面組好的音樂咒語貼進去（咒語要包含：曲風＋情緒＋樂器＋節奏＋主題＋人聲）。</li>
+        <li>點「Generate（產生）」，等一下下，AI 一次給你兩首，播放挑最滿意的。</li>
+        <li>按「下載（Download）」存成 MP3（可選 30/50/70 秒）。</li>
+      </ul>
+      <div class="tip-box blue">🎤 <b>免費版小提醒：</b>MusicFX 主要做「純樂器伴奏」，暫時不會唱中文歌詞。沒關係——<b>讓 AI 當樂團，你和同學當主唱</b>，配著節奏唱出自己寫的端午歌詞，更酷！</div>
+    </div>
+
+    <figure class="ig-fig"><img src="assets/ig_stage4.jpg" loading="lazy" alt="端午音樂創作六大魔法資訊圖表">
+      <figcaption>🎶 資訊圖表：端午音樂創作六大魔法元素（由 NotebookLM AI 生成）</figcaption></figure>
+
+    <!-- INTERACTIVE: music prompt generator -->
+    <div class="cv-section b">
+      <div class="cv-title">🎶 互動：端午音樂提示詞生成器</div>
+      <div class="cv-hint">選一選 6 大魔法元素，下面自動組成一句強大的音樂咒語，按「複製咒語」貼到 MusicFX 就能生成端午歌！</div>
+      <div class="builder-grid">
+        <div class="builder-field"><label><span class="em">🎸</span>曲風 Genre</label>
+          <select id="mus-genre" onchange="buildMusicPrompt()">
+            <option data-en="Traditional Chinese music">傳統中國風</option>
+            <option data-en="modern pop">現代流行樂</option>
+            <option data-en="cinematic orchestral">影視史詩配樂</option>
+            <option data-en="electronic dance music">電子舞曲</option>
+            <option data-en="lo-fi hip hop">低傳真嘻哈</option>
+            <option data-en="indie rock">獨立搖滾</option>
+            <option data-en="R&B">節奏藍調</option>
+            <option data-en="an energetic march">熱血進行曲</option>
+            <option data-en="jazz fusion">爵士融合</option>
+            <option data-en="ambient music">環境氛圍</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">😊</span>情緒 Mood</label>
+          <select id="mus-mood" onchange="buildMusicPrompt()">
+            <option data-en="energetic and uplifting">熱血激昂</option>
+            <option data-en="joyful and festive">歡樂熱鬧</option>
+            <option data-en="tense and suspenseful">緊張刺激</option>
+            <option data-en="solemn and majestic">莊嚴神聖</option>
+            <option data-en="nostalgic and melancholic">懷舊思念</option>
+            <option data-en="warm and intimate">溫馨感人</option>
+            <option data-en="relaxed and chill">輕鬆悠閒</option>
+            <option data-en="dreamy and ethereal">夢幻空靈</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">🥁</span>樂器 Instruments</label>
+          <select id="mus-inst" onchange="buildMusicPrompt()">
+            <option data-en="powerful traditional drums">傳統大鼓</option>
+            <option data-en="gongs and cymbals">銅鑼與鈸</option>
+            <option data-en="Chinese bamboo flute">中國竹笛</option>
+            <option data-en="erhu">二胡</option>
+            <option data-en="guzheng">古箏</option>
+            <option data-en="acoustic guitar">木吉他</option>
+            <option data-en="warm piano">溫暖鋼琴</option>
+            <option data-en="synthesizer">電子合成器</option>
+            <option data-en="a pop drum kit">流行爵士鼓</option>
+            <option data-en="a string orchestra">磅礡弦樂團</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">⏱️</span>節奏 Tempo</label>
+          <select id="mus-tempo" onchange="buildMusicPrompt()">
+            <option data-en="a very fast sprinting tempo (140+ BPM)">極快板衝刺</option>
+            <option data-en="a fast, lively tempo (120 BPM)">快板活力</option>
+            <option data-en="a medium steady tempo (90-100 BPM)">中板穩健</option>
+            <option data-en="a slow, lyrical tempo (70 BPM)">慢板抒情</option>
+            <option data-en="a heavy driving beat">強烈重節拍</option>
+            <option data-en="a bright syncopated rhythm">輕快切分音</option>
+            <option data-en="a gentle waltz">輕柔華爾滋</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">🐉</span>端午主題 Theme</label>
+          <select id="mus-theme" onchange="buildMusicPrompt()">
+            <option data-en="an intense dragon boat race">激昂龍舟競渡</option>
+            <option data-en="a warm family making zongzi together">溫馨家人包粽子</option>
+            <option data-en="missing the poet Qu Yuan by the river">江畔思念屈原</option>
+            <option data-en="a lively town festival parade">熱鬧小鎮慶典</option>
+            <option data-en="joyful egg-standing at noon">歡樂午時立蛋</option>
+            <option data-en="playful kids wearing fragrant sachets">佩戴香包童趣</option>
+            <option data-en="a midsummer river breeze">仲夏河畔微風</option>
+          </select></div>
+        <div class="builder-field"><label><span class="em">🎤</span>人聲 Vocals</label>
+          <select id="mus-vocal" onchange="buildMusicPrompt()">
+            <option data-en="Instrumental only, no vocals">無人聲純音樂（推薦）</option>
+            <option data-en="a children's choir">兒童合唱團</option>
+            <option data-en="a clear male tenor">清亮男高音</option>
+            <option data-en="a breathy female soprano">空靈女高音</option>
+            <option data-en="a commanding male baritone">渾厚男低音</option>
+            <option data-en="a massive gospel choir">磅礡福音合唱</option>
+            <option data-en="a pop male-female duet">流行男女對唱</option>
+          </select></div>
+      </div>
+      <div style="font-weight:700;margin:4px 0 4px;color:var(--c4)">🇹🇼 中文版（給你看懂）</div>
+      <div class="gen-out" id="mus-out-zh"></div>
+      <div style="font-weight:700;margin:4px 0 4px;color:var(--c4)">🌎 英文版（貼這個 AI 最聽得懂！）</div>
+      <div class="gen-out" id="mus-out-en"></div>
+      <div class="btn-row">
+        <button class="btn btn-4" onclick="copyText('mus-en-raw','mus-flash-en')">📋 複製英文咒語（推薦）</button>
+        <button class="btn btn-ghost" onclick="copyText('mus-zh-raw','mus-flash-zh')">📋 複製中文咒語</button>
+        <button class="btn btn-ghost" onclick="randomMusic()">🎲 隨機驚喜組合</button>
+        <span class="copied-flash" id="mus-flash-en">✓ 已複製！貼到 MusicFX</span>
+        <span class="copied-flash" id="mus-flash-zh">✓ 已複製！</span>
+      </div>
+      <input type="hidden" id="mus-en-raw"><input type="hidden" id="mus-zh-raw">
+    </div>
+    <div class="quiz-section" data-quiz="4"></div>
+    <div class="teacher-note"><b>教師提示：</b>音樂提示詞建議用「英文版」貼給 MusicFX（labs.google/fx 對英文最準）。可帶「龍舟應援團」活動：用組合器做加油配樂，全班配節奏喊「一、二、一、二」。提醒人聲選「無人聲純音樂」。</div>
+  </section>
+
+  <!-- STAGE 5 素養 -->
+  <section class="level-section s1" id="sec5">
+    <div class="section-header">
+      <span class="stage-badge badge-r">素養專區</span>
+      <div><div class="section-title">🛡️ AI 安全、版權與端午衛教</div>
+      <div class="section-sub">當個聰明又誠實的小創作家</div></div>
+    </div>
+    <div class="steps-card">
+      <h4>🔐 AI 使用安全與版權</h4>
+      <ul class="steps-list">
+        <li><b>作品可以分享，但別說「100% 是我的版權」。</b>Google 不會搶走你的作品，可以自由使用。</li>
+        <li><b>SynthID 隱形浮水印：</b>AI 會在圖片和音樂裡藏一個看不到、聽不到的記號，告訴大家「這是 AI 變的魔術」。</li>
+        <li><b>不可以叫 AI 模仿真實歌手的聲音，也不能畫有版權的卡通人物或商標</b>（米老鼠、Nike）。AI 的安全保鑣會拒絕。</li>
+        <li><b>誠實的小創作者：</b>分享時驕傲地說「這是我當小導演，指揮 AI 幫我做的！」</li>
+      </ul>
+    </div>
+    <div class="steps-card">
+      <h4>🍶 端午衛教：雄黃酒「絕對不能喝」！</h4>
+      <ul class="steps-list">
+        <li>古人因為農曆五月濕熱多病（毒月），相信喝雄黃酒能避邪——但那是<b>舊時代的觀念</b>。</li>
+        <li>雄黃的成分是<b>硫化砷</b>，加熱氧化會變成<b>砒霜（劇毒）</b>！喝了會砷中毒，傷神經和內臟。</li>
+        <li>真正健康的端午防疫：<b>戴天然中藥草香包、掛艾草菖蒲、保持環境清潔多運動</b>。</li>
+      </ul>
+      <div class="tip-box red">⚠️ <b>白蛇傳是神話故事</b>，現實中<b>雄黃酒不能喝</b>！衛福部也提醒大家別喝。</div>
+    </div>
+    <div class="quiz-section" data-quiz="5"></div>
+    <div class="teacher-note"><b>教師提示：</b>雄黃酒結合自然與健康教育，務必澄清神話與科學的區別。版權部分可延伸討論「為什麼 AI 不能模仿真人聲音」，連結尊重原創的數位公民素養。</div>
+  </section>
+
+  <!-- Project task -->
+  <section class="project-task">
+    <h3>🎒 今日實作任務：我的端午音樂專輯</h3>
+    <p>把三個階段串起來，完成一份屬於你的端午作品！</p>
+    <div class="task-steps">
+      <div class="task-step"><span class="n">1</span><b>畫封面</b><br>用「圖像咒語組合器」生成端午圖，請 Gemini 畫 1:1 正方形封面。</div>
+      <div class="task-step"><span class="n">2</span><b>加標題</b><br>用「封面預覽器」決定構圖，加上你的專輯名稱（例：端午快樂）。</div>
+      <div class="task-step"><span class="n">3</span><b>做主題曲</b><br>用「音樂提示詞生成器」貼到 MusicFX，生成一首端午歌曲。</div>
+      <div class="task-step"><span class="n">4</span><b>發表</b><br>把封面＋音樂分享給同學，說說你當「小導演」下了什麼咒語。</div>
+    </div>
+  </section>
+
+  <!-- NLM resources -->
+  <section class="nb-section">
+    <h3>📚 NotebookLM 資源站</h3>
+    <p style="color:var(--dim)">這個駕駛艙的教材，是由 <b>NotebookLM AI 深度研究</b>整理、<b>Claude Code</b> 製作而成。</p>
+    <div class="nb-cards">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/1eec328f-a92a-427e-8232-208b8a64a33c" target="_blank" rel="noopener">
+        <h4>🔬 研究本</h4><p>深度搜尋 45 個來源，端午文化＋Gemini＋MusicFX 知識庫。</p></a>
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/c78e02c3-3081-44a1-ab0b-a5608720a1b3" target="_blank" rel="noopener">
+        <h4>🎯 精簡本（簡報）</h4><p>萃取精華＋主講者，生成本課簡報、影片、資訊圖表。</p></a>
+      <a class="nb-card" href="https://labs.google/fx/tools/music-fx" target="_blank" rel="noopener">
+        <h4>🎵 MusicFX 工具</h4><p>Google 免費 AI 音樂工具，把你的端午咒語變成歌！</p></a>
+    </div>
+    <div class="flow">
+      <span class="node">🌐 深度搜尋</span><span class="arrow">→</span>
+      <span class="node">📝 萃取精華</span><span class="arrow">→</span>
+      <span class="node">🎨 NLM 生成簡報/影片</span><span class="arrow">→</span>
+      <span class="node">🤖 Claude 做駕駛艙</span><span class="arrow">→</span>
+      <span class="node">🚀 上線</span>
+    </div>
+    <h3 style="font-size:1.2rem;margin-top:18px">❓ 常見問題 FAQ</h3>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">生成的圖片不像我要的怎麼辦？ <span>＋</span></div>
+      <div class="faq-a">別灰心！AI 是聰明但偶爾迷糊的小畫家，修改你的咒語、給它更多細節（「三角形的綠色大肉粽，放木桌上，旁邊有冒熱氣的茶，很好吃」），或直接叫它把不要的東西拿掉。</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">AI 音樂可以加中文歌詞嗎？ <span>＋</span></div>
+      <div class="faq-a">免費版的 AI 音樂暫時不會唱中文，主要做純樂器伴奏。這正是你當主唱的好機會——請 AI 當樂團，你和同學唱自己寫的端午中文歌詞！</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">為什麼同樣的咒語，每次結果都不一樣？ <span>＋</span></div>
+      <div class="faq-a">因為 AI 不是影印機，它有充滿創意的大腦，每次都重新想像。所以每一次都會送你獨一無二的驚喜！</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">做出來的作品是我的嗎？可以分享嗎？ <span>＋</span></div>
+      <div class="faq-a">可以分享！但別說「100% 是我的版權」。AI 會藏看不到的 SynthID 隱形浮水印，做個誠實的小創作者，說「這是我當小導演指揮 AI 做的」。</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">免費版突然做不出來了怎麼辦？ <span>＋</span></div>
+      <div class="faq-a">AI 也會累！每日配額用完要等明天。若是咒語被拒絕（打了歌手名或版權卡通），把大明星換成形容詞描述（皮卡丘→黃色電氣小老鼠）就行。</div></div>
+  </section>
+
+  <!-- Slide player -->
+  <section>
+    <h3 style="font-size:1.4rem;color:var(--c2);margin:24px 0 4px">🖥️ 授課簡報</h3>
+    <div class="slide-player" id="slide-player">
+      <div class="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="" alt="授課簡報">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 1</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section class="nlm-video-section">
+    <h3>▶️ 學生自學影片</h3>
+    <div class="video-wrap" id="video-wrap"></div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <p>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a> ｜ 桃園市龍潭區石門國民小學</p>
+  <p>本教材由 NotebookLM AI 深度研究生成，Claude Code 製作 ｜ © 2026 IT COCKPIT</p>
+</footer>
+
+<!-- Fullscreen overlay -->
+<div id="slide-fs">
+  <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="fs-counter" id="slide-fs-counter">1 / 1</div>
+</div>
+
+<!-- Floating tools -->
+<div class="float-tools">
+  <button class="float-btn top" onclick="backToTop()" title="回到頂端">⬆️</button>
+  <button class="float-btn pen" onclick="toggleDraw()" id="drawToggleBtn" title="畫筆標註">✏️</button>
+  <button class="float-btn tim" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn lot" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+</div>
+
+<div class="tool-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+  <div style="display:flex;gap:6px;align-items:center;font-size:.9rem;flex-wrap:wrap;margin-bottom:8px">
+    <span>範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:54px;padding:5px;border:2px solid var(--c2);border-radius:8px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:54px;padding:5px;border:2px solid var(--c2);border-radius:8px">
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div class="btn-row"><button class="btn btn-2" style="flex:1;padding:9px" onclick="doLottery()">🎰 抽一個</button>
+    <button class="btn btn-ghost" style="padding:9px" onclick="resetLottery()">↻</button></div>
+  <div class="lottery-result" id="lot-out">等待抽號…</div>
+</div>
+
+<div class="tool-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+  <div class="timer-display" id="tim-display">00:00</div>
+  <div class="timer-presets">
+    <button onclick="setTimer(60)">1 分</button><button onclick="setTimer(180)">3 分</button>
+    <button onclick="setTimer(300)">5 分</button><button onclick="setTimer(600)">10 分</button>
+  </div>
+  <div class="btn-row"><button class="btn btn-4" style="flex:1;padding:9px" onclick="toggleTimer()" id="tim-btn">▶ 開始</button>
+    <button class="btn btn-ghost" style="padding:9px" onclick="resetTimer()">↻</button></div>
+</div>
+
+<!-- Draw -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.9rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#e84a3f" onclick="setPenColor('#e84a3f',this)"></button>
+  <button class="color-dot" style="background:#f4a91e" onclick="setPenColor('#f4a91e',this)"></button>
+  <button class="color-dot" style="background:#2faa6e" onclick="setPenColor('#2faa6e',this)"></button>
+  <button class="color-dot" style="background:#3d9bd6" onclick="setPenColor('#3d9bd6',this)"></button>
+  <button class="color-dot" style="background:#46301f" onclick="setPenColor('#46301f',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+/* ===== slide & video config (filled at deploy) ===== */
+var SLIDE_COUNT = 13;           /* updated after slides ready */
+var SLIDE_LIST = [];
+var YOUTUBE_VIDEO_ID = '';      /* updated after upload */
+(function(){ for(var i=1;i<=SLIDE_COUNT;i++){ SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.jpg'); } })();
+
+/* ===== safe init ===== */
+function safeInit(name,fn){ try{ fn(); }catch(e){ console.error('[init error] '+name+':',e); } }
+
+/* ===== teacher mode ===== */
+function toggleTeacher(){
+  var on=document.body.classList.toggle('teacher-on');
+  var btn=document.getElementById('modeBtn');
+  if(on){ if(prompt('請輸入教師密碼')!=='it2026'){ document.body.classList.remove('teacher-on'); return; }
+    btn.classList.add('on'); btn.textContent='👩‍🏫 教師模式 ✓'; }
+  else { btn.classList.remove('on'); btn.textContent='👩‍🏫 教師模式'; }
+}
+
+/* ===== image prompt builder ===== */
+function buildImgPrompt(){
+  var subj=val('img-subject'),scene=val('img-scene'),style=val('img-style'),
+      color=val('img-color'),light=val('img-light'),extra=val('img-extra').trim();
+  var raw='請畫一張'+style+'的正方形(1:1)圖片：'+subj+scene+'，畫面以'+color+'為主，搭配'+light+'。'
+    +(extra?('還要有'+extra+'。'):'')+'請在畫面上方留一些空白，方便加上專輯名稱。';
+  document.getElementById('img-out-raw').value=raw;
+  document.getElementById('img-out').innerHTML='請畫一張<span class="hl">'+style+'</span>的正方形(1:1)圖片：<span class="hl">'
+    +subj+'</span><span class="hl">'+scene+'</span>，畫面以<span class="hl">'+color+'</span>為主，搭配<span class="hl">'+light+'</span>。'
+    +(extra?('還要有<span class="hl">'+extra+'</span>。'):'')+'請在畫面上方留一些空白，方便加上專輯名稱。';
+}
+function randomImg(){ ['img-subject','img-scene','img-style','img-color','img-light'].forEach(randSel); buildImgPrompt(); }
+
+/* ===== cover preview ===== */
+var COV_BG={festRed:['#e84a3f','#ffd9b0'],jade:['#2faa6e','#e9f8ef'],river:['#3d9bd6','#e6f3fb'],
+  amber:['#f4a91e','#fff2d4'],candy:['#ff8fb6','#fff0f5']};
+var COV_EMOJI=['🐉','🛶','🥢','🍃','🧧','🥚','🪷','🥁'];
+var covSel={'🛶':true,'🥢':true,'🍃':true};
+function initCover(){
+  var box=document.getElementById('cov-elems');
+  COV_EMOJI.forEach(function(e){
+    var b=document.createElement('button');
+    b.textContent=e; b.className='btn btn-ghost'; b.style.padding='6px 10px'; b.style.fontSize='1.2rem';
+    if(covSel[e]) b.style.borderColor='var(--c3)';
+    b.onclick=function(){ covSel[e]=!covSel[e]; b.style.borderColor=covSel[e]?'var(--c3)':'var(--line)'; drawCover(); };
+    box.appendChild(b);
+  });
+  drawCover();
+}
+function drawCover(){
+  var cv=document.getElementById('coverCanvas'); if(!cv) return;
+  var ctx=cv.getContext('2d'),W=cv.width,bg=COV_BG[val('cov-bg')]||COV_BG.festRed;
+  var g=ctx.createLinearGradient(0,0,W,W); g.addColorStop(0,bg[0]); g.addColorStop(1,bg[1]);
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,W);
+  ctx.strokeStyle='rgba(255,255,255,.7)'; ctx.lineWidth=14; ctx.strokeRect(24,24,W-48,W-48);
+  var els=COV_EMOJI.filter(function(e){return covSel[e];});
+  var pos=val('cov-pos');
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  var ey=pos==='top'?W*0.58:(pos==='bottom'?W*0.42:W*0.5);
+  if(els.length){
+    var n=els.length, fs=n<=3?150:(n<=5?120:96), gap=fs*1.05, startX=W/2-(n-1)*gap/2;
+    ctx.font=fs+'px serif';
+    els.forEach(function(e,i){ ctx.fillText(e,startX+i*gap,ey); });
+  }
+  var title=val('cov-title').trim()||'端午快樂';
+  var ty=pos==='top'?W*0.16:(pos==='bottom'?W*0.86:W*0.5);
+  ctx.font='800 '+(W*0.13)+'px "Baloo 2","Noto Sans TC",sans-serif';
+  ctx.fillStyle='rgba(0,0,0,.28)'; ctx.fillText(title,W/2+4,ty+4);
+  ctx.fillStyle='#fff'; ctx.fillText(title,W/2,ty);
+  var raw='請畫一張正方形(1:1)的音樂專輯封面，主題是端午節，'
+    +'裡面有'+els.map(emojiName).filter(Boolean).join('、')+'，'
+    +'底色是'+covBgName()+'，畫面'+(pos==='top'?'下方':(pos==='bottom'?'上方':'四周'))+'保留主要元素，'
+    +'在'+(pos==='top'?'上方':(pos==='bottom'?'下方':'中間'))+'留白處寫上中文「'+title+'」，可愛繽紛、適合小朋友。';
+  document.getElementById('cov-prompt-raw').value=raw;
+}
+function emojiName(e){ return {'🐉':'一條龍','🛶':'龍舟','🥢':'粽子','🍃':'艾草','🧧':'香包','🥚':'立蛋','🪷':'蓮花','🥁':'大鼓'}[e]||''; }
+function covBgName(){ return {festRed:'喜氣朱紅',jade:'粽葉綠',river:'江水藍',amber:'慶典金黃',candy:'糖果粉'}[val('cov-bg')]||'紅色'; }
+function downloadCover(){
+  var cv=document.getElementById('coverCanvas');
+  var a=document.createElement('a'); a.download='端午專輯封面.png'; a.href=cv.toDataURL('image/png'); a.click();
+}
+
+/* ===== music prompt generator ===== */
+function buildMusicPrompt(){
+  var gZh=val('mus-genre'),mZh=val('mus-mood'),iZh=val('mus-inst'),tZh=val('mus-tempo'),thZh=val('mus-theme'),vZh=val('mus-vocal');
+  var gEn=enVal('mus-genre'),mEn=enVal('mus-mood'),iEn=enVal('mus-inst'),tEn=enVal('mus-tempo'),thEn=enVal('mus-theme'),vEn=enVal('mus-vocal');
+  var zh='一首'+gZh+'的音樂，充滿'+mZh+'的氛圍，主要樂器是'+iZh+'，'+tZh+'，描寫'+thZh+'，演唱方式是'+vZh.replace('（推薦）','')+'。';
+  var en='A '+gEn+' song with '+mEn+' mood, featuring '+iEn+', at '+tEn+', about '+thEn+'. '+vEn+'.';
+  document.getElementById('mus-zh-raw').value=zh;
+  document.getElementById('mus-en-raw').value=en;
+  document.getElementById('mus-out-zh').innerHTML='一首<span class="hl">'+gZh+'</span>的音樂，充滿<span class="hl">'+mZh
+    +'</span>的氛圍，主要樂器是<span class="hl">'+iZh+'</span>，<span class="hl">'+tZh+'</span>，描寫<span class="hl">'+thZh
+    +'</span>，演唱方式是<span class="hl">'+vZh.replace('（推薦）','')+'</span>。';
+  document.getElementById('mus-out-en').textContent=en;
+}
+function randomMusic(){ ['mus-genre','mus-mood','mus-inst','mus-tempo','mus-theme','mus-vocal'].forEach(randSel); buildMusicPrompt(); }
+
+/* ===== helpers ===== */
+function val(id){ var el=document.getElementById(id); return el?el.value:''; }
+function enVal(id){ var el=document.getElementById(id); if(!el) return ''; var o=el.options[el.selectedIndex]; return o.getAttribute('data-en')||o.text; }
+function randSel(id){ var el=document.getElementById(id); if(el&&el.options) el.selectedIndex=Math.floor(Math.random()*el.options.length); }
+function copyText(rawId,flashId){
+  var t=document.getElementById(rawId).value, f=document.getElementById(flashId);
+  function done(){ if(f){ f.classList.add('show'); setTimeout(function(){f.classList.remove('show');},1800);} }
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,function(){fallbackCopy(t);done();}); }
+  else { fallbackCopy(t); done(); }
+}
+function fallbackCopy(t){ var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+function toggleFaq(el){ var a=el.nextElementSibling; a.classList.toggle('open');
+  el.querySelector('span').textContent=a.classList.contains('open')?'－':'＋'; }
+function backToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ===== quizzes ===== */
+var QUIZ={
+ 1:[{q:'端午節「划龍舟」和「吃粽子」的習俗，和哪一位人物的故事有關？',o:['屈原','孔子','關公','岳飛'],a:0,e:'是愛國詩人屈原！村民划船找他、包粽子餵魚蝦，演變成今天的習俗。'},
+    {q:'下面哪一句最能形容 AI 和我們的關係？',o:['AI 會自己決定一切，我們只要等','AI 是聰明的小幫手，我們才是下指令的小導演','AI 永遠不會出錯','AI 只能畫圖不能做音樂'],a:1,e:'答對！你才是小導演，指令越清楚作品越棒。'}],
+ 2:[{q:'好的圖片「魔法咒語」應該包含哪五個要素？',o:['主體、場景、風格、顏色、光線','價格、重量、長度、速度、溫度','姓名、座號、班級、學校、電話','只要一個字就好'],a:0,e:'就是主體＋場景＋風格＋顏色＋光線，五個都寫齊畫得最像！'},
+    {q:'如果 AI 畫出來不像你要的，最好的做法是？',o:['生氣關掉，覺得 AI 很笨','修改咒語、給更多細節再試一次','一直按同一個鍵','改用別人的作品'],a:1,e:'要有耐心和 AI 溝通，修改咒語再試，多試幾次有驚喜！'}],
+ 3:[{q:'音樂專輯封面通常做成什麼形狀？',o:['長長的直式','正方形 1:1','三角形','圓形'],a:1,e:'專輯封面通常是正方形(1:1)，記得在咒語加「請畫 1:1 正方形」。'},
+    {q:'想自己在封面加上中文標題，咒語要先請 AI 做什麼？',o:['把整張畫滿東西','在畫面留一些空白','把圖片變黑白','把圖片變很小'],a:1,e:'要留白！標題放在乾淨的地方才不會擋住龍舟和粽子。'}],
+ 4:[{q:'寫音樂咒語時，下面哪一組是正確的「音樂魔法元素」？',o:['曲風、情緒、樂器、節奏','身高、體重、年齡、生日','紅、橙、黃、綠','加、減、乘、除'],a:0,e:'曲風＋情緒＋樂器＋節奏（再加主題和人聲）就是強大的音樂咒語！'},
+    {q:'免費版 MusicFX 暫時不會唱中文歌詞，我們可以怎麼做？',o:['放棄不做音樂','讓 AI 當樂團伴奏，我們自己當主唱','一直等它唱出來','把咒語寫成一篇長故事'],a:1,e:'讓 AI 當樂團、你和同學當主唱，配著節奏唱端午歌詞最酷！'}],
+ 5:[{q:'關於 AI 作品的版權，下面哪一句是對的？',o:['作品 100% 完全是我的版權','可以分享，但別說 100% 是我的版權','作品都是 Google 的，我不能用','做完一定要付錢'],a:1,e:'可以自由使用和分享，但 AI 作品藏有 SynthID 浮水印，要當誠實的小創作者。'},
+    {q:'關於端午節的「雄黃酒」，正確觀念是？',o:['多喝對身體好','雄黃酒不能喝，會砷中毒','喝了可以變成蛇','是端午節必喝的飲料'],a:1,e:'雄黃成分是硫化砷，氧化會變砒霜！絕對不能喝。白蛇傳只是神話故事。'}]
+};
+function renderQuiz(){
+  document.querySelectorAll('.quiz-section').forEach(function(box){
+    var qs=QUIZ[box.getAttribute('data-quiz')]; if(!qs) return;
+    qs.forEach(function(item,qi){
+      var card=document.createElement('div'); card.className='quiz-q';
+      var h='<div class="q">📝 '+item.q+'</div><div class="quiz-opts">';
+      item.o.forEach(function(opt,oi){ h+='<button class="quiz-opt">'+opt+'</button>'; });
+      h+='</div><div class="quiz-fb"></div>';
+      card.innerHTML=h;
+      var fb=card.querySelector('.quiz-fb');
+      card.querySelectorAll('.quiz-opt').forEach(function(btn,oi){
+        btn.onclick=function(){
+          if(card.dataset.done) return;
+          card.dataset.done='1';
+          var opts=card.querySelectorAll('.quiz-opt');
+          opts[item.a].classList.add('correct');
+          if(oi===item.a){ fb.className='quiz-fb show ok'; fb.textContent='🎉 '+rand(['太棒了！','答對囉！','你真厲害！','完全正確！'])+' '+item.e; bumpProgress(); }
+          else { btn.classList.add('wrong'); fb.className='quiz-fb show no'; fb.textContent='💡 正確答案已標出囉～ '+item.e; bumpProgress(); }
+        };
+      });
+      box.appendChild(card);
+    });
+  });
+}
+function rand(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+/* ===== progress ===== */
+var totalQuiz=10, answered=0;
+function bumpProgress(){ answered++; var pct=Math.min(100,Math.round(answered/totalQuiz*100));
+  document.getElementById('progress-fill').style.width=pct+'%'; document.getElementById('prog-pct').textContent=pct+'%'; }
+
+/* ===== slide player ===== */
+function initSlidePlayer(){
+  if(!SLIDE_LIST.length){ document.getElementById('slide-player').innerHTML='<div class="video-no-id">🖼️ 授課簡報生成中，完成後將在此顯示。</div>'; return; }
+  var strip=document.getElementById('slide-strip'); strip.innerHTML='';
+  SLIDE_LIST.forEach(function(src,i){
+    var d=document.createElement('div'); d.className='strip-thumb'+(i===0?' active':'');
+    d.innerHTML='<img src="'+src+'" loading="lazy" alt="第'+(i+1)+'頁">';
+    d.onclick=function(){ goSlide(i); }; strip.appendChild(d);
+  });
+  goSlide(0);
+}
+var curSlide=0;
+function goSlide(n){
+  if(!SLIDE_LIST.length) return;
+  if(n<0)n=0; if(n>=SLIDE_LIST.length)n=SLIDE_LIST.length-1; curSlide=n;
+  document.getElementById('slide-current').src=SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent=(n+1)+' / '+SLIDE_LIST.length;
+  var thumbs=document.querySelectorAll('.strip-thumb');
+  thumbs.forEach(function(t,i){ t.classList.toggle('active',i===n); });
+  var active=thumbs[n], strip=document.getElementById('slide-strip');
+  if(active&&strip){ var left=active.offsetLeft-(strip.clientWidth-active.offsetWidth)/2; strip.scrollTo({left:Math.max(0,left),behavior:'smooth'}); }
+  var fs=document.getElementById('slide-fs');
+  if(fs&&fs.classList.contains('show')){ document.getElementById('slide-fs-img').src=SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent=(n+1)+' / '+SLIDE_LIST.length; }
+}
+function slideNav(d){ goSlide(curSlide+d); }
+function openSlideFullscreen(){ if(!SLIDE_LIST.length) return;
+  document.getElementById('slide-fs-img').src=SLIDE_LIST[curSlide];
+  document.getElementById('slide-fs-counter').textContent=(curSlide+1)+' / '+SLIDE_LIST.length;
+  document.getElementById('slide-fs').classList.add('show'); document.body.classList.add('slides-fullscreen'); }
+function closeSlideFullscreen(){ document.getElementById('slide-fs').classList.remove('show'); document.body.classList.remove('slides-fullscreen'); }
+document.addEventListener('keydown',function(e){
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key==='ArrowRight')slideNav(1); else if(e.key==='ArrowLeft')slideNav(-1); else if(e.key==='Escape')closeSlideFullscreen();
+  }
+});
+
+/* ===== video ===== */
+function initVideo(){
+  var w=document.getElementById('video-wrap');
+  if(YOUTUBE_VIDEO_ID){
+    w.innerHTML='<div class="video-ratio"><iframe src="https://www.youtube.com/embed/'+YOUTUBE_VIDEO_ID
+      +'?rel=0&modestbranding=1" title="端午 AI 創作家 NotebookLM 教學影片" frameborder="0" '
+      +'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
+      +'<div class="video-meta"><span class="nlm-badge">🤖 NotebookLM AI 生成</span>'
+      +'<span class="video-hint">💡 建議戴耳機觀看，可搭配上方簡報複習</span>'
+      +'<a href="https://www.youtube.com/watch?v='+YOUTUBE_VIDEO_ID+'" target="_blank" rel="noopener" style="margin-left:auto;color:var(--c1);font-weight:700;text-decoration:none">↗ 在 YouTube 開啟</a></div>';
+  } else {
+    w.innerHTML='<div class="video-no-id">🎬 自學影片由 NotebookLM AI 自動生成中，完成後將在此嵌入。</div>';
+  }
+}
+
+/* ===== lottery ===== */
+var lotPool=[];
+function refillLotPool(){ var mn=parseInt(val('lot-min'))||1,mx=parseInt(val('lot-max'))||30; if(mn>mx)return false;
+  lotPool=[]; for(var i=mn;i<=mx;i++)lotPool.push(i); return true; }
+function doLottery(){ var uniq=document.getElementById('lot-unique').checked,mn=parseInt(val('lot-min'))||1,mx=parseInt(val('lot-max'))||30;
+  if(mn>mx){alert('最小號必須 ≤ 最大號！');return;}
+  if(uniq&&lotPool.length===0)refillLotPool();
+  var out=document.getElementById('lot-out'),t=setInterval(function(){ out.textContent=(Math.floor(Math.random()*(mx-mn+1))+mn)+' 號'; },60);
+  setTimeout(function(){ clearInterval(t); var num;
+    if(uniq){ if(lotPool.length===0)refillLotPool(); num=lotPool.splice(Math.floor(Math.random()*lotPool.length),1)[0]; }
+    else num=Math.floor(Math.random()*(mx-mn+1))+mn;
+    out.textContent='🌟 '+num+' 號 🌟'; },1400); }
+function resetLottery(){ refillLotPool(); document.getElementById('lot-out').textContent='等待抽號…'; }
+
+/* ===== timer ===== */
+var timSec=0,timLeft=0,timRun=false,timInt=null;
+function setTimer(s){ timSec=s; timLeft=s; timRun=false; clearInterval(timInt); updTimer(); document.getElementById('tim-btn').textContent='▶ 開始'; }
+function updTimer(){ var m=Math.floor(timLeft/60),s=timLeft%60; document.getElementById('tim-display').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
+function toggleTimer(){ if(timLeft<=0)return; timRun=!timRun;
+  var btn=document.getElementById('tim-btn');
+  if(timRun){ btn.textContent='⏸ 暫停'; timInt=setInterval(function(){ timLeft--; updTimer();
+    if(timLeft<=0){ clearInterval(timInt); timRun=false; btn.textContent='▶ 開始'; document.getElementById('tim-display').textContent='⏰ 時間到！'; } },1000); }
+  else { btn.textContent='▶ 開始'; clearInterval(timInt); } }
+function resetTimer(){ setTimer(timSec); }
+function togglePanel(id){ var p=document.getElementById('panel-'+id); var open=p.classList.contains('show');
+  document.querySelectorAll('.tool-panel').forEach(function(x){x.classList.remove('show');}); if(!open)p.classList.add('show'); }
+
+/* ===== draw ===== */
+var drawActive=false,penColor='#e84a3f',penSize=4,drawCanvas,drawCtx,isDrawing=false,dLastX,dLastY;
+function initDraw(){
+  drawCanvas=document.getElementById('drawCanvas'); drawCtx=drawCanvas.getContext('2d');
+  drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight;
+  drawCanvas.addEventListener('mousedown',function(e){ if(!drawActive)return; isDrawing=true; dLastX=e.clientX; dLastY=e.clientY; });
+  drawCanvas.addEventListener('mousemove',function(e){ if(!drawActive||!isDrawing)return; line(e.clientX,e.clientY); });
+  drawCanvas.addEventListener('mouseup',function(){ isDrawing=false; });
+  drawCanvas.addEventListener('touchstart',function(e){ if(!drawActive)return; e.preventDefault(); var t=e.touches[0]; isDrawing=true; dLastX=t.clientX; dLastY=t.clientY; },{passive:false});
+  drawCanvas.addEventListener('touchmove',function(e){ if(!drawActive||!isDrawing)return; e.preventDefault(); var t=e.touches[0]; line(t.clientX,t.clientY); },{passive:false});
+  drawCanvas.addEventListener('touchend',function(){ isDrawing=false; });
+  window.addEventListener('resize',function(){ drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight; });
+}
+function line(x,y){ drawCtx.strokeStyle=penColor; drawCtx.lineWidth=penSize; drawCtx.lineCap='round';
+  drawCtx.beginPath(); drawCtx.moveTo(dLastX,dLastY); drawCtx.lineTo(x,y); drawCtx.stroke(); dLastX=x; dLastY=y; }
+function toggleDraw(){ drawActive=!drawActive; drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').style.background=drawActive?'var(--c3)':''; }
+function setPenColor(c,el){ penColor=c; document.querySelectorAll('.draw-toolbar .color-dot').forEach(function(d){d.classList.remove('active');}); el.classList.add('active'); }
+function clearDrawing(){ if(drawCtx)drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+
+/* ===== boot ===== */
+document.addEventListener('DOMContentLoaded',function(){
+  safeInit('buildImgPrompt',buildImgPrompt);
+  safeInit('initCover',initCover);
+  safeInit('buildMusicPrompt',buildMusicPrompt);
+  safeInit('renderQuiz',renderQuiz);
+  safeInit('initSlidePlayer',initSlidePlayer);
+  safeInit('initVideo',initVideo);
+  safeInit('initDraw',initDraw);
+});
+</script>
+</body>
+</html>

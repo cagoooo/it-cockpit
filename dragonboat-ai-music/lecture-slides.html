@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>端午 AI 創作家｜四年級資訊科技演講簡報</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff5ec;--surface:#fffaf2;--panel:#ffffff;
+  --c1:#e84a3f;--c2:#f4a91e;--c3:#2faa6e;--c4:#3d9bd6;--c5:#9a5bc4;
+  --text:#46301f;--dim:#9a7b66;--line:#f0dcc7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 10% 14%,rgba(244,169,30,.10),transparent 24%),
+   radial-gradient(circle at 90% 12%,rgba(47,170,110,.10),transparent 24%),
+   radial-gradient(circle at 85% 84%,rgba(61,155,214,.10),transparent 26%),
+   radial-gradient(circle at 14% 88%,rgba(232,74,63,.09),transparent 24%)}
+.deck{position:relative;width:100vw;height:100vh;z-index:1}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;
+  align-items:center;padding:5vh 7vw;text-align:center;opacity:0;transition:opacity .4s}
+.slide.active{display:flex;opacity:1}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:10px;
+  background:repeating-linear-gradient(90deg,var(--c1) 0 40px,var(--c2) 40px 80px,var(--c3) 80px 120px,var(--c4) 120px 160px)}
+h1{font-family:'Baloo 2',sans-serif;font-size:5vw;color:var(--c1);line-height:1.15;margin-bottom:2vh}
+h2{font-family:'Baloo 2',sans-serif;font-size:3.4vw;color:var(--c1);margin-bottom:2.4vh}
+.lead{font-size:2vw;color:var(--text);max-width:80%;line-height:1.6}
+.big{font-size:2.6vw;font-weight:700;line-height:1.6}
+.sub{font-size:1.5vw;color:var(--dim);margin-top:1.5vh}
+.kicker{display:inline-block;background:var(--c2);color:#fff;font-weight:800;font-size:1.3vw;
+  padding:.5vh 2vw;border-radius:30px;margin-bottom:2.5vh;letter-spacing:.05em}
+.kicker.r{background:var(--c1)}.kicker.g{background:var(--c3)}.kicker.b{background:var(--c4)}.kicker.p{background:var(--c5)}
+.cards{display:flex;gap:2vw;flex-wrap:wrap;justify-content:center;margin-top:3vh;max-width:92%}
+.card{background:#fff;border:3px solid var(--line);border-radius:24px;padding:2.6vh 2vw;
+  min-width:15vw;max-width:24vw;box-shadow:0 8px 22px rgba(180,90,40,.14)}
+.card .ico{font-size:3.4vw;display:block;margin-bottom:1vh}
+.card .h{font-size:1.7vw;font-weight:800;color:var(--c1);margin-bottom:.6vh}
+.card .p{font-size:1.25vw;color:var(--text);line-height:1.5}
+.card.y{border-color:var(--c2)}.card.r{border-color:var(--c1)}.card.g{border-color:var(--c3)}.card.b{border-color:var(--c4)}.card.p{border-color:var(--c5)}
+.flow{display:flex;align-items:center;gap:1.4vw;flex-wrap:wrap;justify-content:center;margin-top:3vh}
+.flow .node{background:#fff;border:3px solid var(--c2);border-radius:20px;padding:1.8vh 2vw;font-size:1.6vw;font-weight:800}
+.flow .node.r{border-color:var(--c1);color:var(--c1)}.flow .node.g{border-color:var(--c3);color:var(--c3)}.flow .node.b{border-color:var(--c4);color:var(--c4)}
+.flow .ar{font-size:2.4vw;color:var(--c2);font-weight:900}
+.biglist{text-align:left;font-size:1.9vw;line-height:2;max-width:80%}
+.biglist li{margin:.8vh 0;list-style:none;padding-left:3vw;position:relative}
+.biglist li::before{content:'✦';position:absolute;left:0;color:var(--c2)}
+.numlist{text-align:left;font-size:1.8vw;max-width:78%;line-height:1.7}
+.numlist .it{display:flex;gap:1.6vw;align-items:flex-start;margin:1.3vh 0}
+.numlist .n{flex:0 0 auto;width:3.4vw;height:3.4vw;background:var(--c1);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.7vw;font-family:'Baloo 2'}
+.numlist .n.y{background:var(--c2)}.numlist .n.g{background:var(--c3)}.numlist .n.b{background:var(--c4)}.numlist .n.p{background:var(--c5)}
+.prompt-box{background:#fff8ec;border:3px dashed var(--c2);border-radius:20px;padding:2.4vh 2.6vw;
+  font-size:1.8vw;max-width:82%;margin-top:2vh;line-height:1.6}
+.prompt-box .hl{background:#ffe3a8;border-radius:8px;padding:0 .6vw;font-weight:700}
+.warn{background:#fdeeee;border:3px solid var(--c1);border-radius:20px;padding:2.2vh 2.6vw;font-size:1.7vw;max-width:80%;margin-top:2vh}
+.emph{color:var(--c1);font-weight:800}
+.deco{position:absolute;font-size:7vw;opacity:.16;z-index:0;pointer-events:none}
+@keyframes fl{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-2vh) rotate(6deg)}}
+.deco.f{animation:fl 5s ease-in-out infinite}
+.deco.tl{top:8%;left:5%}.deco.tr{top:10%;right:6%}.deco.bl{bottom:8%;left:7%}.deco.br{bottom:9%;right:6%}
+
+/* speaker */
+.speaker{position:absolute;bottom:3vh;left:3vw;display:flex;align-items:flex-end;gap:1vw;z-index:6;max-width:54%}
+.speaker .avatar{width:5vw;height:5vw;min-width:62px;min-height:62px;background:var(--c2);border:4px solid #fff;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.4vw;box-shadow:0 6px 16px rgba(0,0,0,.16)}
+.speaker .bubble{background:#fff;border:3px solid var(--c1);border-radius:18px 18px 18px 4px;
+  padding:1.2vh 1.5vw;font-size:1.3vw;font-weight:600;box-shadow:0 6px 16px rgba(0,0,0,.12);position:relative}
+.speaker .bubble::before{content:'';position:absolute;left:-1.1vw;bottom:1.4vh;border-style:solid;
+  border-width:.8vw 1.2vw .8vw 0;border-color:transparent var(--c1) transparent transparent}
+
+/* chrome */
+.progress{position:fixed;left:0;bottom:0;height:8px;width:100%;background:#fbe7d2;z-index:20}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width .35s}
+.hint{position:fixed;bottom:14px;right:18px;font-size:.8rem;color:var(--dim);background:rgba(255,255,255,.7);
+  padding:5px 12px;border-radius:14px;z-index:20}
+.pagenum{position:fixed;top:18px;right:22px;font-size:1.1vw;font-weight:800;color:var(--dim);z-index:20}
+.overview{position:fixed;inset:0;background:rgba(70,48,31,.96);z-index:50;display:none;padding:4vh 4vw;overflow:auto}
+.overview.show{display:block}
+.overview h3{color:#fff;font-size:2vw;margin-bottom:2vh;font-family:'Baloo 2'}
+#ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.ov-card{background:#fff;border-radius:14px;padding:14px;cursor:pointer;border:3px solid transparent;transition:.15s}
+.ov-card:hover{border-color:var(--c2);transform:translateY(-3px)}
+.ov-card .nn{font-family:'Baloo 2';font-weight:800;color:var(--c1);font-size:1.1rem}
+.ov-card .tt{font-weight:700;margin:3px 0}
+.ov-card .dd{font-size:.85rem;color:var(--dim)}
+@media (max-width:760px){
+  h1{font-size:8vw}h2{font-size:6vw}.lead,.big{font-size:4.4vw}.kicker{font-size:3vw}
+  .card .h{font-size:3.6vw}.card .p{font-size:2.8vw}.card .ico{font-size:8vw}
+  .biglist,.numlist,.prompt-box,.warn{font-size:4vw}.numlist .n{width:8vw;height:8vw;font-size:4vw}
+  .flow .node{font-size:3.6vw}.speaker .bubble{font-size:2.8vw}.pagenum{font-size:3vw}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 封面 -->
+  <section class="slide active">
+    <span class="deco f tl">🐉</span><span class="deco f tr">🥢</span><span class="deco f bl">🛶</span><span class="deco f br">🎵</span>
+    <span class="kicker">四年級 · 資訊科技 · AI 創作</span>
+    <h1>🐉 端午 AI 創作家</h1>
+    <div class="big">從一張圖，到一首歌</div>
+    <div class="sub">用免費 Gemini 生圖做專輯封面 × 用 MusicFX 創作端午歌曲</div>
+    <div class="sub" style="margin-top:3vh">主講：阿凱老師 ｜ 桃園市龍潭區石門國民小學 ｜ 約 40 分鐘</div>
+    <div class="speaker"><div class="avatar">😄</div><div class="bubble">嗨！我是阿凱老師，今天我們一起當「端午 AI 創作家」！</div></div>
+  </section>
+
+  <!-- 2 HOOK -->
+  <section class="slide">
+    <span class="kicker y">開場暖身</span>
+    <h2>🧧 說到端午節，你會想到什麼？</h2>
+    <div class="cards">
+      <div class="card r"><span class="ico">🛶</span><div class="h">划龍舟</div><div class="p">敲鑼打鼓，全隊一起加油！</div></div>
+      <div class="card g"><span class="ico">🥢</span><div class="h">吃粽子</div><div class="p">鹹的、甜的，你愛哪一種？</div></div>
+      <div class="card y"><span class="ico">🥚</span><div class="h">立蛋</div><div class="p">中午把蛋立起來討好運</div></div>
+      <div class="card b"><span class="ico">🍃</span><div class="h">掛艾草</div><div class="p">門口掛艾草菖蒲驅蚊蟲</div></div>
+    </div>
+    <div class="sub" style="margin-top:3vh">今天我們要用 AI，把這些端午的美好，變成一張封面和一首歌！</div>
+    <div class="speaker"><div class="avatar">🤔</div><div class="bubble">先問問同學：你家過端午都做什麼呢？</div></div>
+  </section>
+
+  <!-- 3 WHAT -->
+  <section class="slide">
+    <span class="kicker r">這堂課要做什麼</span>
+    <h2>🎨 我們要當「AI 的小導演」</h2>
+    <div class="lead">AI 就像一位<span class="emph">會魔法的超強畫家</span>和一個<span class="emph">超級樂團</span>。<br>只要我們把心裡的畫面和音樂，用文字「<span class="emph">魔法咒語</span>」說清楚，<br>它就能幫我們變出來！</div>
+    <div class="flow">
+      <span class="node r">🖼️ 建立圖像</span><span class="ar">→</span>
+      <span class="node y">💿 專輯封面</span><span class="ar">→</span>
+      <span class="node g">🎵 創作音樂</span>
+    </div>
+    <div class="speaker"><div class="avatar">🎬</div><div class="bubble">記住：AI 是工具，你才是下指令的小導演！</div></div>
+  </section>
+
+  <!-- 4 WHY -->
+  <section class="slide">
+    <span class="kicker g">為什麼要學</span>
+    <h2>🌟 學會「寫咒語」，創意無限大</h2>
+    <div class="cards">
+      <div class="card r"><span class="ico">🗣️</span><div class="h">會表達</div><div class="p">把腦中的想像，說成清楚的文字</div></div>
+      <div class="card y"><span class="ico">🧠</span><div class="h">懂工具</div><div class="p">認識 AI 怎麼幫我們創作</div></div>
+      <div class="card g"><span class="ico">🧧</span><div class="h">愛文化</div><div class="p">用新科技傳承端午的美好</div></div>
+    </div>
+    <div class="speaker"><div class="avatar">💡</div><div class="bubble">寫咒語的能力，未來做什麼都用得到喔！</div></div>
+  </section>
+
+  <!-- 5 核心① 建立圖像 -->
+  <section class="slide">
+    <span class="kicker r">核心一 · 建立圖像</span>
+    <h2>🪄 好咒語的「五要素」</h2>
+    <ul class="biglist">
+      <li><span class="emph">主體</span>：主角是誰？（一個穿紅衣的小朋友）</li>
+      <li><span class="emph">場景</span>：在哪裡？（在江上划龍舟）</li>
+      <li><span class="emph">風格</span>：什麼畫風？（可愛卡通動畫）</li>
+      <li><span class="emph">顏色</span>：主要顏色？（喜氣的紅與金）</li>
+      <li><span class="emph">光線</span>：光怎麼照？（溫暖的陽光）</li>
+    </ul>
+    <div class="sub" style="margin-top:2vh">細節給得越多，AI 畫得越像你要的！</div>
+    <div class="speaker"><div class="avatar">🖼️</div><div class="bubble">不要只說「畫端午節」，要把五要素都說清楚！</div></div>
+  </section>
+
+  <!-- 6 核心② 專輯封面 -->
+  <section class="slide">
+    <span class="kicker y">核心二 · 專輯封面</span>
+    <h2>💿 封面是一首歌的「臉」</h2>
+    <div class="numlist">
+      <div class="it"><span class="n y">1</span><div>請 Gemini 畫 <span class="emph">1:1 正方形</span>的圖，放入龍舟、粽子、香包、艾草。</div></div>
+      <div class="it"><span class="n y">2</span><div>加中文專輯名稱：<span class="emph">讓 AI 寫</span>，或下載後用 Canva 自己加。</div></div>
+      <div class="it"><span class="n y">3</span><div>記得請 AI <span class="emph">留白</span>，標題才不會擋住圖案。</div></div>
+    </div>
+    <div class="speaker"><div class="avatar">💿</div><div class="bubble">好封面要吸睛，還要傳達歌的心情喔！</div></div>
+  </section>
+
+  <!-- 7 操作流程 -->
+  <section class="slide">
+    <span class="kicker b">操作流程</span>
+    <h2>📋 三步驟，完成你的作品</h2>
+    <div class="flow">
+      <span class="node r">① 寫咒語生圖</span><span class="ar">→</span>
+      <span class="node y">② 加標題做封面</span><span class="ar">→</span>
+      <span class="node g">③ 配上 AI 音樂</span>
+    </div>
+    <div class="cards" style="margin-top:3vh">
+      <div class="card r"><span class="ico">🌐</span><div class="h">gemini.google.com</div><div class="p">寫咒語、生圖、修改、下載</div></div>
+      <div class="card g"><span class="ico">🎵</span><div class="h">labs.google/fx</div><div class="p">MusicFX 生成端午歌曲</div></div>
+    </div>
+    <div class="speaker"><div class="avatar">📋</div><div class="bubble">一步一步來，你也能做出完整作品！</div></div>
+  </section>
+
+  <!-- 8 應用情境 -->
+  <section class="slide">
+    <span class="kicker p">應用情境</span>
+    <h2>🎒 學會了，可以做這些！</h2>
+    <div class="cards">
+      <div class="card r"><span class="ico">📖</span><div class="h">AI 繪本</div><div class="p">把屈原的故事畫成插畫繪本</div></div>
+      <div class="card g"><span class="ico">📣</span><div class="h">龍舟應援曲</div><div class="p">做加油配樂，全班喊口號</div></div>
+      <div class="card b"><span class="ico">🧧</span><div class="h">未來香包</div><div class="p">設計有魔法功能的科技香包</div></div>
+    </div>
+    <div class="speaker"><div class="avatar">🎒</div><div class="bubble">這些都是課本上學不到的好玩任務！</div></div>
+  </section>
+
+  <!-- 9 音樂提示詞六大元素 -->
+  <section class="slide">
+    <span class="kicker g">創作音樂</span>
+    <h2>🎶 音樂咒語的「六大魔法元素」</h2>
+    <div class="cards">
+      <div class="card r"><span class="ico">🎸</span><div class="h">曲風</div><div class="p">傳統中國風 / 流行</div></div>
+      <div class="card y"><span class="ico">😊</span><div class="h">情緒</div><div class="p">熱血 / 歡樂 / 思念</div></div>
+      <div class="card g"><span class="ico">🥁</span><div class="h">樂器</div><div class="p">大鼓 / 鑼 / 竹笛</div></div>
+      <div class="card b"><span class="ico">⏱️</span><div class="h">節奏</div><div class="p">快板 / 慢板</div></div>
+      <div class="card p"><span class="ico">🐉</span><div class="h">主題</div><div class="p">龍舟競渡 / 包粽子</div></div>
+      <div class="card r"><span class="ico">🎤</span><div class="h">人聲</div><div class="p">純音樂 / 兒童合唱</div></div>
+    </div>
+    <div class="prompt-box" style="font-size:1.5vw">範例：「一首<span class="hl">傳統中國風</span>、<span class="hl">熱血激昂</span>的音樂，主要樂器是<span class="hl">大鼓和竹笛</span>，<span class="hl">快板</span>，描寫<span class="hl">激昂龍舟競渡</span>，<span class="hl">純音樂</span>。」</div>
+    <div class="speaker"><div class="avatar">🎶</div><div class="bubble">把六個元素串起來，就是一句強大咒語！</div></div>
+  </section>
+
+  <!-- 10 工具比較/免費版 -->
+  <section class="slide">
+    <span class="kicker b">小提醒</span>
+    <h2>🆓 免費版的小規則</h2>
+    <ul class="biglist">
+      <li>每天有<span class="emph">使用次數限制</span>，用完要等明天。</li>
+      <li>音樂大約 <span class="emph">30～70 秒</span>，主要是<span class="emph">純樂器伴奏</span>。</li>
+      <li>免費版<span class="emph">暫時不唱中文歌詞</span> → 讓 AI 當樂團，<span class="emph">我們自己當主唱</span>！</li>
+      <li>同樣的咒語，<span class="emph">每次結果都不一樣</span>，每次都是新驚喜。</li>
+    </ul>
+    <div class="speaker"><div class="avatar">🆓</div><div class="bubble">免費版就很好玩了，限制也是創意的開始！</div></div>
+  </section>
+
+  <!-- 11 安全版權 -->
+  <section class="slide">
+    <span class="kicker r">安全素養</span>
+    <h2>🛡️ 當個聰明又誠實的小創作家</h2>
+    <ul class="biglist">
+      <li>作品可以分享，但別說「<span class="emph">100% 是我的版權</span>」。</li>
+      <li>AI 會藏看不到的 <span class="emph">SynthID 隱形浮水印</span>，標示這是 AI 做的。</li>
+      <li><span class="emph">不可以</span>叫 AI 模仿真實歌手，或畫有版權的卡通人物。</li>
+      <li>皮卡丘 → 改用「<span class="emph">黃色的電氣小老鼠</span>」這種形容詞。</li>
+    </ul>
+    <div class="speaker"><div class="avatar">🛡️</div><div class="bubble">驕傲地說：這是我當小導演，指揮 AI 做的！</div></div>
+  </section>
+
+  <!-- 12 衛教 雄黃酒 -->
+  <section class="slide">
+    <span class="kicker r">端午衛教</span>
+    <h2>🍶 雄黃酒「絕對不能喝」！</h2>
+    <div class="warn">⚠️ 雄黃的成分是 <span class="emph">硫化砷</span>，加熱氧化會變成 <span class="emph">砒霜（劇毒）</span>！<br>喝了會<span class="emph">砷中毒</span>，傷神經和內臟。<span class="emph">白蛇傳只是神話故事</span>。</div>
+    <div class="big" style="margin-top:2.5vh;font-size:1.8vw">✅ 真正健康的端午防疫：戴<span class="emph">天然香包</span>、掛<span class="emph">艾草菖蒲</span>、保持環境清潔多運動。</div>
+    <div class="speaker"><div class="avatar">🍶</div><div class="bubble">區分神話和科學，這也是重要的素養喔！</div></div>
+  </section>
+
+  <!-- 13 五個叮嚀 -->
+  <section class="slide">
+    <span class="kicker p">5 個叮嚀</span>
+    <h2>📌 給端午 AI 創作家的話</h2>
+    <div class="numlist">
+      <div class="it"><span class="n r">1</span><div>咒語要寫<span class="emph">細節</span>，主體場景風格顏色光線都說清楚。</div></div>
+      <div class="it"><span class="n y">2</span><div>做不好<span class="emph">別放棄</span>，修改咒語再試一次。</div></div>
+      <div class="it"><span class="n g">3</span><div>音樂咒語<span class="emph">用英文版</span>貼給 MusicFX 最準。</div></div>
+      <div class="it"><span class="n b">4</span><div>當<span class="emph">誠實</span>的小創作家，分享時說是 AI 幫忙做的。</div></div>
+      <div class="it"><span class="n p">5</span><div>玩得<span class="emph">開心</span>最重要，創意沒有標準答案！</div></div>
+    </div>
+    <div class="speaker"><div class="avatar">📌</div><div class="bubble">這五點記起來，你就是高手了！</div></div>
+  </section>
+
+  <!-- 14 結語 -->
+  <section class="slide">
+    <span class="deco f tl">🎉</span><span class="deco f tr">🐉</span><span class="deco f bl">🎵</span><span class="deco f br">🧧</span>
+    <span class="kicker g">結語 · Q&amp;A</span>
+    <h1 style="font-size:4vw">🎉 你也是端午 AI 創作家！</h1>
+    <div class="big">回去打開駕駛艙，做出你的端午專輯吧！</div>
+    <div class="prompt-box" style="font-size:1.5vw;border-style:solid;border-color:var(--c3)">
+      🚀 互動駕駛艙：<span class="emph">cagoooo.github.io/it-cockpit/dragonboat-ai-music/</span></div>
+    <div class="sub" style="margin-top:2.5vh">阿凱老師 ｜ 桃園市龍潭區石門國民小學 ｜ 謝謝大家！</div>
+    <div class="speaker"><div class="avatar">🎉</div><div class="bubble">你學會了嗎？做出來記得給我看！💪</div></div>
+  </section>
+
+</div>
+
+<div class="pagenum" id="pagenum">1 / 14</div>
+<div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="hint">← → 換頁 · M 章節 · F 全螢幕 · S 主講 · Esc 返回</div>
+<div class="overview" id="overview"><h3>▶ 章節導覽（點縮圖跳頁）</h3><div id="ov-grid"></div></div>
+
+<script>
+var SLIDES=[
+ {t:'封面',d:'端午 AI 創作家'},{t:'開場暖身',d:'說到端午你想到什麼'},{t:'這堂課做什麼',d:'當 AI 的小導演'},
+ {t:'為什麼學',d:'寫咒語創意無限'},{t:'核心一 建立圖像',d:'好咒語五要素'},{t:'核心二 專輯封面',d:'封面是歌的臉'},
+ {t:'操作流程',d:'三步驟完成作品'},{t:'應用情境',d:'學會能做這些'},{t:'創作音樂',d:'六大魔法元素'},
+ {t:'免費版規則',d:'每天有次數限制'},{t:'安全素養',d:'誠實的小創作家'},{t:'端午衛教',d:'雄黃酒不能喝'},
+ {t:'5 個叮嚀',d:'給創作家的話'},{t:'結語 Q&A',d:'你也是創作家'}
+];
+var cur=0,N=SLIDES.length,slides=document.querySelectorAll('.slide');
+function goSlide(i){ if(i<0)i=0; if(i>=N)i=N-1; slides[cur].classList.remove('active'); cur=i;
+  slides[cur].classList.add('active');
+  document.getElementById('pagenum').textContent=(cur+1)+' / '+N;
+  document.getElementById('progress-fill').style.width=((cur+1)/N*100)+'%';
+  history.replaceState(null,'','#s'+(cur+1)); }
+function next(){ if(cur<N-1)goSlide(cur+1); }
+function prev(){ if(cur>0)goSlide(cur-1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){ if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(function(){}); else document.exitFullscreen(); }
+function toggleSpeaker(){ document.querySelectorAll('.speaker').forEach(function(s){ s.style.display=(s.style.display==='none')?'':'none'; }); }
+
+document.addEventListener('keydown',function(e){
+  var ov=document.getElementById('overview');
+  if(ov.classList.contains('show')){ if(['Escape','m','M'].includes(e.key)){ ov.classList.remove('show'); e.preventDefault(); } return; }
+  var k=e.key;
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(k)){ next(); e.preventDefault(); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ prev(); e.preventDefault(); }
+  else if(k==='Home'){ goSlide(0); e.preventDefault(); }
+  else if(k==='End'){ goSlide(N-1); e.preventDefault(); }
+  else if(['m','M'].includes(k)){ toggleOverview(); e.preventDefault(); }
+  else if(['f','F'].includes(k)){ toggleFullscreen(); e.preventDefault(); }
+  else if(['s','S'].includes(k)){ toggleSpeaker(); e.preventDefault(); }
+  else if(k==='Escape'){ if(document.fullscreenElement){ document.exitFullscreen(); } else { window.location.href='index.html'; } e.preventDefault(); }
+  else if(/^[1-9]$/.test(k)){ var t=parseInt(k)-1; if(t<N){ goSlide(t); e.preventDefault(); } }
+});
+document.addEventListener('click',function(e){
+  if(e.target.closest('.speaker,.overview,.hint,.progress,.pagenum,a,button')) return;
+  if(e.clientX>window.innerWidth/2)next(); else prev();
+});
+var tsx=0;
+document.addEventListener('touchstart',function(e){ tsx=e.touches[0].clientX; },{passive:true});
+document.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-tsx; if(Math.abs(dx)>60){ if(dx<0)next(); else prev(); } },{passive:true});
+
+(function(){ var g=document.getElementById('ov-grid');
+  SLIDES.forEach(function(s,i){ var c=document.createElement('div'); c.className='ov-card';
+    c.innerHTML='<div class="nn">'+(i+1)+'</div><div class="tt">'+s.t+'</div><div class="dd">'+s.d+'</div>';
+    c.onclick=function(){ goSlide(i); toggleOverview(); }; g.appendChild(c); }); })();
+
+var m=location.hash.match(/^#s(\d+)$/); if(m){ var i=parseInt(m[1])-1; if(i>=0&&i<N)goSlide(i); } else goSlide(0);
+</script>
+</body>
+</html>
