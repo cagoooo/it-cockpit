@@ -863,6 +863,7 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     <button class="float-btn" onclick="toggleToolPanel('timer')" title="計時器">⏱️</button>
     <button class="float-btn" onclick="toggleToolPanel('lottery')" title="隨機抽號">🎲</button>
     <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+    <button class="float-btn" onclick="goTop()" title="回到最上面">⤴️</button>
   </div>
 
   <!-- 抽籤彈窗 -->
@@ -1087,6 +1088,9 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     document.getElementById('slide-fs').classList.remove('show');
     document.body.classList.remove('slides-fullscreen');
   }
+
+  // ============ 回頂部 ============
+  function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
 
   // ============ 自學影片 YouTube 初始化 ============
   function initVideo(){
