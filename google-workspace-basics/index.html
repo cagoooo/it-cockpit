@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google 電子郵件與雲端硬碟應用｜四年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/google-workspace-basics/">
+<meta property="og:title" content="Google 電子郵件與雲端硬碟應用｜四年級資訊科技">
+<meta property="og:description" content="專為國小四年級設計的教學駕駛艙。透過 retro-win98 視窗風格與互動模擬器，學習 Gmail 收發信、寫信禮儀、雲端硬碟檔案管理與權限分享。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/google-workspace-basics/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/google-workspace-basics/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════
+   Retro Windows 98 風格設計系統
+   ════════════════════════════════════════════════════════════ */
+html { font-size: 18px; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --desktop: #2a8b8b;        /* Win98 桌面藍綠 */
+  --desktop-pattern: #1f6b6b;
+  --window: #c3c7cb;         /* 視窗灰 */
+  --window-inset: #d4d0c8;
+  --title-start: #000080;    /* 視窗標題列藍漸層起點 */
+  --title-end: #1084d0;      /* 視窗標題列藍漸層終點 */
+  --title-inactive: #808080; /* 未啟用視窗標題列灰 */
+  --light: #ffffff;          /* 3D 凸起 上左 */
+  --dim: #808080;            /* 3D 凸起 下右 */
+  --dark: #000000;           /* 更深陰影 */
+  --text: #000000;
+  --text-white: #ffffff;
+  --link: #0a3a8a;
+  --yellow: #ffd700;
+  --red-x: #c00000;
+  --green-ok: #008000;
+  --accent-purple: #aa55ff;
+  --accent-orange: #ff8c00;
+}
+body{
+  font-family:'Microsoft JhengHei','MS Sans Serif','Tahoma','Noto Sans TC',sans-serif;
+  background:var(--desktop);
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--desktop-pattern) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--desktop-pattern) 1px, transparent 1px);
+  background-size:40px 40px;
+  color:var(--text);
+  line-height:1.7;
+  min-height:100vh;
+  padding-bottom:60px;
+}
+
+/* ═══ 3D 邊框工具類 ═══ */
+.bevel-out{
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.bevel-in{
+  border:2px solid;
+  border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark), inset -1px -1px 0 var(--light);
+}
+
+/* ═══ Taskbar (頂部 Header 仿 Win98 工作列) ═══ */
+.taskbar{
+  position:sticky;top:0;z-index:100;
+  background:var(--window);
+  border-bottom:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 0 1px 0 var(--light), inset 0 -1px 0 var(--dim), 0 2px 4px rgba(0,0,0,.3);
+  padding:4px 8px;
+}
+.taskbar-inner{
+  max-width:1400px;margin:0 auto;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.start-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--window);color:var(--text);text-decoration:none;
+  padding:4px 10px;font-weight:700;font-size:.95rem;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  cursor:pointer;font-family:inherit;
+  transition:none;
+}
+.start-btn:active,.start-btn.pressed{
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+  box-shadow:inset 1px 1px 0 var(--dim);
+  padding:5px 9px 3px 11px;
+}
+.start-btn .logo{
+  display:inline-block;width:18px;height:18px;
+  background:linear-gradient(135deg,#ff0000 0% 50%, #00b400 50% 100%),
+             linear-gradient(45deg, #0064ff 0% 50%, #ffe000 50% 100%);
+  background-size:50% 50%;background-position:0 0, 0 100%, 100% 0, 100% 100%;
+  background-repeat:no-repeat;
+  position:relative;
+}
+.start-btn .logo::before{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(135deg, #ff5050 0 50%, transparent 50%) 0 0/50% 50% no-repeat,
+    linear-gradient(135deg, #50ff50 0 50%, transparent 50%) 100% 0/50% 50% no-repeat,
+    linear-gradient(135deg, #5050ff 0 50%, transparent 50%) 0 100%/50% 50% no-repeat,
+    linear-gradient(135deg, #ffff50 0 50%, transparent 50%) 100 100%/50% 50% no-repeat;
+}
+.taskbar-divider{
+  width:2px;height:24px;
+  background:linear-gradient(to right, var(--dim), var(--light));
+  margin:0 4px;
+}
+.taskbar-title{
+  font-weight:700;font-size:1rem;
+  display:flex;align-items:center;gap:6px;
+}
+.taskbar-title .icon{font-size:1.2rem}
+.taskbar-spacer{flex:1}
+.system-tray{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:3px 10px;font-size:.85rem;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  background:var(--window);
+  min-width:90px;justify-content:center;
+}
+.tray-clock{font-family:'VT323',monospace;font-size:1rem;font-weight:700}
+
+/* ═══ Container ═══ */
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* ═══ Desktop Icon Style (桌面圖示) ═══ */
+.desktop-icons{
+  display:flex;flex-wrap:wrap;gap:20px;
+  padding:20px 0;
+  justify-content:center;
+}
+.desktop-icon{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;text-decoration:none;
+  width:90px;padding:6px;
+  transition:none;
+}
+.desktop-icon:hover{background:rgba(0,0,128,.4)}
+.desktop-icon .ico-img{
+  width:48px;height:48px;
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;
+}
+.desktop-icon .label{
+  color:var(--text-white);font-size:.85rem;text-align:center;
+  text-shadow:1px 1px 0 #000;font-weight:700;line-height:1.2;
+}
+
+/* ═══ Window (核心元件 — 每個關卡都是一個視窗) ═══ */
+.window{
+  background:var(--window);
+  border:2px solid;
+  border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 2px 2px 6px rgba(0,0,0,.4);
+  margin-bottom:28px;
+}
+.window-title{
+  background:linear-gradient(to right, var(--title-start), var(--title-end));
+  color:var(--text-white);
+  padding:4px 6px;
+  display:flex;align-items:center;gap:8px;
+  font-weight:700;font-size:.95rem;
+}
+.window-title.alt-purple{
+  background:linear-gradient(to right, #4a0080, #aa55ff);
+}
+.window-title.alt-green{
+  background:linear-gradient(to right, #006000, #50c450);
+}
+.window-title.alt-orange{
+  background:linear-gradient(to right, #b04000, #ff9040);
+}
+.window-title .ico{font-size:1.1rem}
+.window-title .name{flex:1}
+.window-title .controls{display:flex;gap:2px}
+.window-title .controls button{
+  width:22px;height:20px;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  cursor:pointer;font-family:inherit;font-weight:900;font-size:.7rem;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.window-title .controls button:active{
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+}
+.window-body{
+  padding:20px 24px;
+}
+.window-body.menu-bar{
+  padding:4px 8px;
+  border-bottom:1px solid var(--dim);
+  font-size:.85rem;
+  display:flex;gap:14px;
+}
+.window-body.menu-bar span{
+  cursor:default;padding:2px 6px;
+}
+.window-body.menu-bar span:hover{background:var(--title-start);color:#fff}
+.window-body.menu-bar span u{text-decoration:underline}
+
+/* ═══ Hero (頂部主視窗) ═══ */
+.hero-window .window-body{padding:32px 28px;text-align:center}
+.hero-title{
+  font-size:2rem;font-weight:900;color:var(--text);
+  margin-bottom:8px;letter-spacing:1px;
+}
+.hero-title .em{color:var(--link)}
+.hero-sub{
+  font-size:1.1rem;color:var(--text);
+  margin-bottom:18px;
+}
+.hero-meta{
+  display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:18px;
+}
+.hero-meta .chip{
+  padding:6px 14px;font-size:.95rem;font-weight:700;
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.hero-meta .chip.blue{background:var(--title-start);color:var(--text-white)}
+.hero-meta .chip.yellow{background:var(--yellow);color:#000;border-color:#fff #000 #000 #fff}
+
+/* ═══ Mode Switch ═══ */
+.mode-bar{
+  display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px;align-items:center;
+}
+.mode-btn{
+  font-family:inherit;font-size:.85rem;font-weight:700;
+  padding:5px 12px;background:var(--window);color:var(--text);cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.mode-btn.active{
+  border-color:var(--dark) var(--light) var(--light) var(--dark);
+  background:var(--title-end);color:#fff;
+}
+.teacher-only{display:none}
+body.teacher-mode .teacher-only{display:block}
+
+/* ═══ Learning Objectives ═══ */
+.objectives{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin:14px 0;
+}
+.obj-chip{
+  padding:8px 16px;font-size:1rem;font-weight:700;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.obj-chip .ico{font-size:1.1rem}
+
+/* ═══ Stage Pills (關卡導覽) ═══ */
+.stage-pills{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin:18px 0 28px;
+}
+.stage-pill{
+  padding:8px 18px;font-size:.95rem;font-weight:700;
+  background:var(--window);color:var(--text);text-decoration:none;cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  font-family:inherit;display:inline-flex;align-items:center;gap:6px;
+}
+.stage-pill:hover{background:var(--title-end);color:#fff}
+.stage-pill .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;background:var(--title-start);color:#fff;
+  font-weight:900;font-size:.85rem;
+}
+
+/* ═══ Stage Section ═══ */
+.stage-section{margin-bottom:32px}
+.stage-header{
+  display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap;
+}
+.stage-badge{
+  padding:6px 14px;font-weight:900;font-size:.95rem;
+  background:var(--title-start);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.stage-badge.purple{background:#5a0090}
+.stage-badge.green{background:#006000}
+.stage-badge.orange{background:#b04000}
+.stage-title{
+  font-size:1.4rem;font-weight:900;color:#fff;
+  text-shadow:2px 2px 0 var(--dark);
+}
+.stage-sub{
+  font-size:1rem;color:#fff;
+  text-shadow:1px 1px 0 var(--dark);
+  margin-left:auto;
+}
+
+/* ═══ Infographic Card (NLM 生成的關卡資訊圖) ═══ */
+.info-card{
+  margin-bottom:14px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  padding:8px;
+}
+.info-card img{
+  display:block;width:100%;height:auto;cursor:zoom-in;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  background:#fff;
+}
+.info-card.zoomed{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  margin:0;padding:20px;
+}
+.info-card.zoomed img{
+  max-width:96vw;max-height:90vh;width:auto;height:auto;cursor:zoom-out;
+}
+
+/* ═══ Step Card ═══ */
+.steps-card{margin-bottom:14px}
+.steps-card h4{
+  font-size:1.05rem;font-weight:900;color:var(--link);
+  margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.steps-list{list-style:none;padding:0}
+.steps-list li{
+  display:flex;gap:12px;padding:10px 12px;font-size:1rem;line-height:1.7;
+  background:var(--window-inset);margin-bottom:6px;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.step-num{
+  flex-shrink:0;min-width:34px;height:34px;
+  background:var(--title-start);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.95rem;
+}
+.steps-list li b{color:var(--link)}
+
+/* ═══ Tip Box ═══ */
+.tip-box{
+  font-size:.95rem;padding:14px 18px;margin:14px 0;
+  background:#fffacd;
+  border:2px solid;border-color:#000 var(--dim) var(--dim) #000;
+  box-shadow:inset 1px 1px 0 var(--light);
+  display:flex;gap:10px;align-items:flex-start;
+}
+.tip-box.warn{background:#ffe4e1}
+.tip-box.info{background:#e0f0ff}
+.tip-box .ico{font-size:1.4rem;flex-shrink:0}
+
+/* ═══ Canvas Section (互動區) ═══ */
+.canvas-section{
+  margin:18px 0;padding:18px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.canvas-section h4{
+  font-size:1.05rem;font-weight:900;color:var(--link);
+  margin-bottom:8px;
+}
+.canvas-section .canvas-help{
+  font-size:.95rem;margin-bottom:12px;color:#444;
+}
+
+.canvas-controls{
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center;
+}
+.ctrl-btn{
+  font-family:inherit;font-size:.95rem;font-weight:700;
+  padding:6px 14px;background:var(--window);color:var(--text);cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  display:inline-flex;align-items:center;gap:5px;
+}
+.ctrl-btn:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.ctrl-btn.primary{background:var(--title-end);color:#fff;font-weight:900}
+.ctrl-status{
+  font-size:.95rem;font-weight:700;color:var(--text);margin-left:auto;
+  padding:4px 10px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+}
+
+/* ═══ Quiz ═══ */
+.quiz-card{margin:14px 0;padding:16px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.quiz-q{font-size:1.05rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+.quiz-q .qmark{
+  display:inline-block;width:24px;height:24px;
+  background:var(--title-start);color:#fff;font-weight:900;
+  text-align:center;line-height:24px;margin-right:6px;
+}
+.quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media (max-width:600px){.quiz-opts{grid-template-columns:1fr}}
+.quiz-opt{
+  font-family:inherit;font-size:.95rem;
+  padding:10px 14px;background:var(--window);color:var(--text);
+  cursor:pointer;text-align:left;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.quiz-opt:hover{background:var(--window-inset)}
+.quiz-opt:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.quiz-opt.correct{background:#90ee90;border-color:#fff #006000 #006000 #fff}
+.quiz-opt.wrong{background:#ffb6b6;border-color:#fff #c00 #c00 #fff}
+.quiz-feedback{
+  margin-top:10px;padding:10px 14px;font-size:.95rem;font-weight:700;
+  display:none;
+}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:#d4ffd4;color:#006000;
+  border:2px solid;border-color:#fff #006000 #006000 #fff}
+.quiz-feedback.no{background:#ffd4d4;color:#a00;
+  border:2px solid;border-color:#fff #a00 #a00 #fff}
+
+/* ═══ Teacher Note ═══ */
+.teacher-note{
+  margin:14px 0;padding:14px 16px;
+  background:#fff4d6;
+  border:2px solid;border-color:#fff #cc8c00 #cc8c00 #fff;
+}
+.teacher-note h5{font-size:1rem;color:#8a5a00;margin-bottom:6px}
+.teacher-note p{font-size:.95rem;color:#444}
+
+/* ═══ Project Task ═══ */
+.project-task .window-body{padding:20px 24px}
+.task-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:10px}
+.task-card{padding:14px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.task-card h5{font-size:1.05rem;color:var(--link);margin-bottom:6px;display:flex;gap:6px;align-items:center}
+.task-card p{font-size:.95rem;line-height:1.6}
+
+/* ═══ NotebookLM Section ═══ */
+.nb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:14px 0}
+.nb-card{
+  display:block;padding:14px;text-decoration:none;
+  background:#fff;color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.nb-card:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.nb-card h4{font-size:1rem;color:var(--link);margin-bottom:6px;display:flex;gap:6px;align-items:center}
+.nb-card p{font-size:.9rem;color:#444;line-height:1.5}
+.nb-card .tag{
+  display:inline-block;margin-top:8px;font-size:.75rem;font-weight:700;
+  padding:2px 8px;background:var(--title-start);color:#fff;
+}
+
+.flow-box{margin:14px 0;padding:16px;background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.flow-box h4{font-size:1rem;color:var(--link);margin-bottom:8px}
+.flow-steps{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:.95rem}
+.flow-step{padding:6px 12px;background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  font-weight:700;}
+.flow-arrow{font-weight:900;color:var(--link)}
+
+/* ═══ FAQ ═══ */
+.faq-list{margin:14px 0}
+.faq-item{margin-bottom:8px;background:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);}
+.faq-q{
+  padding:12px 16px;cursor:pointer;font-weight:700;font-size:1rem;color:var(--text);
+  display:flex;gap:10px;align-items:center;background:var(--window);
+  user-select:none;
+}
+.faq-q:hover{background:var(--window-inset)}
+.faq-q .q-mark{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;background:var(--title-start);color:#fff;
+  font-weight:900;flex-shrink:0;
+}
+.faq-q .toggle{margin-left:auto;font-family:'VT323',monospace;font-size:1.3rem;color:var(--link)}
+.faq-a{padding:14px 16px 14px 52px;display:none;font-size:.95rem;line-height:1.7;color:var(--text)}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q{background:var(--window-inset)}
+
+/* ═══ Slide Player ═══ */
+.slide-player .window-body{padding:14px 16px}
+.slide-main{
+  position:relative;background:#000;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  margin-bottom:10px;
+}
+.slide-main img{display:block;width:100%;height:auto}
+.slide-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:60px;
+  background:rgba(0,0,128,.7);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  font-size:1.5rem;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:inherit;
+}
+.slide-nav-btn:hover{background:rgba(0,0,128,1)}
+.slide-nav-btn.prev{left:8px}
+.slide-nav-btn.next{right:8px}
+.slide-fs-btn{
+  position:absolute;top:10px;right:10px;z-index:5;
+  padding:6px 12px;font-size:.9rem;font-weight:700;
+  background:var(--window);color:var(--text);cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light);
+  font-family:inherit;
+  display:flex;align-items:center;gap:4px;
+}
+.slide-counter{
+  position:absolute;bottom:10px;left:10px;
+  padding:4px 10px;font-size:.85rem;font-weight:700;
+  background:rgba(0,0,0,.7);color:#fff;
+  font-family:'VT323',monospace;
+}
+.slide-strip{
+  display:flex;gap:6px;overflow-x:auto;padding:6px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.strip-thumb{
+  flex-shrink:0;width:96px;height:54px;cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.strip-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.strip-thumb.active{
+  border-color:var(--yellow) var(--yellow) var(--yellow) var(--yellow);
+  box-shadow:0 0 0 2px var(--title-start);
+}
+
+#slide-fs{
+  position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;
+  display:none;align-items:center;justify-content:center;
+}
+#slide-fs.show{display:flex}
+#slide-fs-img{max-width:96vw;max-height:90vh;display:block}
+.fs-close{
+  position:absolute;top:20px;right:20px;
+  width:48px;height:48px;
+  background:var(--red-x);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  cursor:pointer;font-size:1.4rem;font-weight:900;
+  font-family:inherit;
+}
+.fs-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:80px;
+  background:rgba(0,0,128,.8);color:#fff;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  cursor:pointer;font-size:2rem;font-weight:900;
+  font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+.fs-nav.prev{left:20px}
+.fs-nav.next{right:20px}
+.fs-counter{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  padding:8px 16px;font-size:1rem;font-weight:700;
+  background:rgba(0,0,128,.9);color:#fff;
+  border:2px solid var(--light);
+  font-family:'VT323',monospace;
+}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .taskbar,
+body.slides-fullscreen .float-tools,
+body.slides-fullscreen .draw-toolbar{display:none !important}
+
+/* ═══ Video Section ═══ */
+.video-section{margin:28px 0}
+.video-wrap{
+  background:#000;
+  border:2px solid;border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:2px 2px 6px rgba(0,0,0,.4);
+}
+.video-ratio{position:relative;padding-top:56.25%;width:100%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{
+  background:var(--window);padding:8px 14px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.9rem;
+  border-top:2px solid var(--dim);
+}
+.nlm-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--title-start);color:#fff;font-weight:700;padding:3px 10px;font-size:.8rem;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.video-hint{color:#444;flex:1}
+.video-link{color:var(--link);text-decoration:none;font-weight:700}
+.video-no-id{
+  padding:40px 20px;text-align:center;background:var(--window-inset);
+  font-size:.95rem;color:#666;
+  border:2px dashed var(--dim);margin:8px;
+}
+
+/* ═══ Float Tools ═══ */
+.float-tools{
+  position:fixed;right:20px;bottom:20px;z-index:400;
+  display:flex;flex-direction:column;gap:8px;
+}
+.float-btn{
+  width:50px;height:50px;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 2px 2px 4px rgba(0,0,0,.4);
+  cursor:pointer;font-size:1.3rem;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;
+}
+.float-btn:active{border-color:var(--dark) var(--light) var(--light) var(--dark)}
+.float-btn.active{background:var(--title-end);color:#fff}
+.float-btn.yellow{background:var(--yellow)}
+.float-btn.green{background:#90ee90}
+.float-btn.pink{background:#ffb6e0}
+
+.tool-panel{
+  position:fixed;right:80px;bottom:20px;z-index:400;
+  width:300px;background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 4px 4px 8px rgba(0,0,0,.4);
+  display:none;
+}
+.tool-panel.open{display:block}
+.tool-panel-title{
+  background:linear-gradient(to right, var(--title-start), var(--title-end));
+  color:#fff;padding:4px 8px;
+  display:flex;align-items:center;gap:6px;font-weight:700;font-size:.9rem;
+}
+.tool-panel-title .close{
+  margin-left:auto;width:20px;height:18px;background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  cursor:pointer;font-family:inherit;font-weight:900;font-size:.7rem;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.tool-panel-body{padding:14px}
+.tool-panel-body input[type=number]{
+  width:55px;padding:4px 6px;font-family:inherit;font-size:.9rem;
+  background:#fff;color:#000;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+.tool-panel-body label{font-size:.85rem;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.tool-panel-body .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:.85rem}
+.lot-result{
+  margin-top:10px;padding:14px;font-size:1.4rem;font-weight:900;text-align:center;
+  background:#000;color:var(--yellow);
+  font-family:'VT323',monospace;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  min-height:60px;display:flex;align-items:center;justify-content:center;
+}
+
+.timer-display{
+  font-family:'VT323',monospace;
+  font-size:3rem;font-weight:900;color:var(--yellow);
+  background:#000;text-align:center;padding:14px;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  margin-bottom:10px;
+}
+
+/* ═══ Drawing Canvas ═══ */
+#drawCanvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:250;pointer-events:none;background:transparent;
+}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{
+  position:fixed;left:20px;bottom:20px;z-index:300;
+  background:var(--window);padding:8px 12px;
+  border:2px solid;border-color:var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), 4px 4px 8px rgba(0,0,0,.4);
+  display:none;gap:6px;align-items:center;
+}
+.draw-toolbar.show{display:flex}
+.color-dot{
+  width:26px;height:26px;cursor:pointer;padding:0;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+.color-dot.active{
+  border-color:var(--yellow);box-shadow:0 0 6px var(--yellow);
+}
+.draw-clear{
+  font-family:inherit;font-size:.85rem;font-weight:700;
+  padding:4px 10px;background:var(--red-x);color:#fff;cursor:pointer;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+}
+
+/* ═══ Lecture CTA（演講簡報模式入口 - Win98 3D 凸起風）═══ */
+.lecture-cta{display:block;margin:18px 0;padding:14px 20px;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 4px 4px 0 var(--dark);
+  text-decoration:none;font-family:inherit;transition:none}
+.lecture-cta:active{border-color:var(--dark) var(--light) var(--light) var(--dark);
+  box-shadow:inset 1px 1px 0 var(--dim), 2px 2px 0 var(--dark)}
+.lecture-cta .cta-tag{display:inline-block;background:var(--title-start);color:#fff;
+  font-size:.78rem;padding:2px 10px;margin-bottom:8px;font-weight:700;
+  border:1px solid var(--dark);font-family:'VT323',monospace;letter-spacing:.05em}
+.lecture-cta .cta-title{display:block;font-size:1.25rem;font-weight:900;margin-bottom:4px;color:var(--link)}
+.lecture-cta .cta-sub{display:block;font-size:.85rem;color:#444;line-height:1.5}
+
+/* ═══ Simulators (模擬器專用) ═══ */
+.simulator-window {
+  max-width: 600px;
+  margin: 10px auto;
+  background: var(--window);
+  border: 2px solid;
+  border-color: var(--light) var(--dim) var(--dim) var(--light);
+  box-shadow: inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.sim-title {
+  background: linear-gradient(to right, #808080, #c0c0c0);
+  color: #fff;
+  padding: 4px 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+}
+.sim-body {
+  padding: 12px;
+  background: #fff;
+  font-size: 0.9rem;
+}
+.sim-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.sim-field label {
+  width: 70px;
+  font-weight: 700;
+}
+.sim-input {
+  flex: 1;
+  padding: 4px 6px;
+  border: 2px solid;
+  border-color: var(--dim) var(--light) var(--light) var(--dim);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.sim-textarea {
+  width: 100%;
+  height: 120px;
+  padding: 6px;
+  border: 2px solid;
+  border-color: var(--dim) var(--light) var(--light) var(--dim);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: none;
+}
+.sim-attachments {
+  margin-top: 8px;
+  padding: 6px;
+  background: var(--window-inset);
+  border: 1px dashed var(--dim);
+  min-height: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.attachment-pill {
+  background: var(--window);
+  border: 1px solid var(--dim);
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.attachment-pill span.remove {
+  cursor: pointer;
+  color: var(--red-x);
+  font-weight: 900;
+}
+.sim-alert {
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: 2px solid;
+  font-weight: 700;
+  display: none;
+}
+.sim-alert.success {
+  background: #d4ffd4;
+  border-color: var(--green-ok);
+  color: var(--green-ok);
+}
+.sim-alert.error {
+  background: #ffd4d4;
+  border-color: var(--red-x);
+  color: var(--red-x);
+}
+
+/* Drive Sim */
+.drive-app {
+  display: flex;
+  border: 2px solid var(--dim);
+  height: 320px;
+}
+.drive-sidebar {
+  width: 130px;
+  background: var(--window-inset);
+  border-right: 2px solid var(--dim);
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.drive-side-btn {
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.drive-side-btn.active {
+  background: var(--title-start);
+  color: #fff;
+}
+.drive-content-area {
+  flex: 1;
+  background: #fff;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.drive-toolbar-top {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+  border-bottom: 1px solid var(--window-inset);
+  padding-bottom: 8px;
+}
+.drive-files-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  flex: 1;
+  align-content: flex-start;
+}
+.drive-file-item {
+  width: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 4px;
+}
+.drive-file-item.selected {
+  background: rgba(0,0,128,0.15);
+  outline: 1px dashed var(--title-start);
+}
+.drive-file-icon {
+  font-size: 1.8rem;
+}
+.drive-file-name {
+  font-size: 0.75rem;
+  word-break: break-all;
+  line-height: 1.2;
+  margin-top: 4px;
+}
+.drive-share-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  background: var(--window);
+  border: 2px solid;
+  border-color: var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.5);
+  z-index: 10;
+  display: none;
+}
+.drive-share-dialog.open { display: block; }
+.space-usage {
+  margin-top: auto;
+  font-size: 0.75rem;
+}
+.space-bar {
+  height: 10px;
+  background: #ddd;
+  border: 1px solid var(--dim);
+  margin-top: 4px;
+  position: relative;
+}
+.space-bar-fill {
+  height: 100%;
+  background: var(--title-end);
+  width: 0%;
+}
+
+/* ═══ Footer ═══ */
+.site-footer{
+  margin-top:40px;padding:20px;text-align:center;
+  background:rgba(0,0,0,.3);color:#fff;font-size:.9rem;
+}
+.site-footer a{color:var(--yellow);text-decoration:none;font-weight:700}
+.site-footer .heart{color:#ff6b6b}
+
+/* ═══ Responsive ═══ */
+@media (max-width:720px){
+  html{font-size:16px}
+  .container{padding:16px}
+  .hero-title{font-size:1.5rem}
+  .stage-title{font-size:1.2rem}
+  .desktop-icons{gap:12px}
+  .taskbar-title{font-size:.9rem}
+  .system-tray{display:none}
+}
+</style>
+<script>
+  // ─────────────────────────────────────────────────────────────
+  // Akai 排行榜流量歸因 beacon (cagoooo/Akai · toolId 82 stage="google-workspace-basics")
+  // 進站時送一次像素 beacon 給 Akai Cloud Function 累計 totalClicks
+  // ─────────────────────────────────────────────────────────────
+  (function () {
+    try {
+      var TOOL_ID = 82;
+      var STAGE_ID = 'google-workspace-basics';
+      var SENT_KEY = 'akai_beacon_' + TOOL_ID + '_' + STAGE_ID + '_sent';
+      if (sessionStorage.getItem(SENT_KEY)) return;
+      var SID_KEY = 'akai_beacon_sid';
+      var sid = sessionStorage.getItem(SID_KEY);
+      if (!sid) {
+        sid = 'cockpit-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+        sessionStorage.setItem(SENT_KEY, sid);
+      }
+      var device = window.innerWidth < 768 ? 'mobile' : (window.innerWidth < 1024 ? 'tablet' : 'desktop');
+      var url = 'https://asia-east1-akai-e693f.cloudfunctions.net/beaconToolClick'
+        + '?toolId=' + TOOL_ID
+        + '&stageId=' + STAGE_ID
+        + '&referrer=' + encodeURIComponent(document.referrer || '')
+        + '&device=' + device
+        + '&sessionId=' + encodeURIComponent(sid);
+      new Image().src = url;
+      sessionStorage.setItem(SENT_KEY, '1');
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<header class="taskbar">
+  <div class="taskbar-inner">
+    <a href="../index.html" class="start-btn" title="回到 IT COCKPIT 主頁">
+      <div class="logo"></div>
+      <span>← IT COCKPIT</span>
+    </a>
+    <div class="taskbar-divider"></div>
+    <div class="taskbar-title">
+      <span class="icon">🖥️</span>
+      <span>四年級：Google 電子郵件與雲端硬碟應用</span>
+    </div>
+    <div class="taskbar-spacer"></div>
+    <div class="mode-bar">
+      <button class="mode-btn active" id="btn-mode-student" onclick="setMode('student')">学生模式</button>
+      <button class="mode-btn" id="btn-mode-teacher" onclick="setMode('teacher')">教師模式</button>
+    </div>
+    <div class="taskbar-divider"></div>
+    <div class="system-tray">
+      <span class="tray-icon">🔊</span>
+      <span class="tray-clock" id="live-clock">12:00</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Desktop Icons -->
+  <div class="desktop-icons">
+    <a class="desktop-icon" onclick="scrollToId('sec1')">
+      <div class="ico-img">✉️</div>
+      <div class="label">Stage 1<br>Gmail 收發信</div>
+    </a>
+    <a class="desktop-icon" onclick="scrollToId('sec2')">
+      <div class="ico-img">📎</div>
+      <div class="label">Stage 2<br>信件禮儀與附檔</div>
+    </a>
+    <a class="desktop-icon" onclick="scrollToId('sec3')">
+      <div class="ico-img">📁</div>
+      <div class="label">Stage 3<br>雲端硬碟管理</div>
+    </a>
+    <a class="desktop-icon" onclick="scrollToId('sec4')">
+      <div class="ico-img">🔒</div>
+      <div class="label">Stage 4<br>共用與權限</div>
+    </a>
+    <a class="desktop-icon" onclick="scrollToId('video-section')">
+      <div class="ico-img">🎬</div>
+      <div class="label">自學影片</div>
+    </a>
+    <a class="desktop-icon" onclick="scrollToId('slides-section')">
+      <div class="ico-img">📊</div>
+      <div class="label">授課簡報</div>
+    </a>
+  </div>
+
+  <!-- Hero Window -->
+  <div class="window hero-window">
+    <div class="window-title">
+      <span class="ico">🌐</span>
+      <span class="name">系統主儀表板 - Welcome.exe</span>
+      <div class="controls">
+        <button onclick="alert('歡迎來到本課程！')">?</button>
+      </div>
+    </div>
+    <div class="window-body">
+      <h1 class="hero-title">Google <span class="em">電子郵件</span>與<span class="em">雲端硬碟</span>應用</h1>
+      <p class="hero-sub">專為國小四年級學生打造的資訊科技互動教學駕駛艙</p>
+      <div class="hero-meta">
+        <span class="chip blue">📚 適用年級：四年級</span>
+        <span class="chip yellow">💡 課程長度：80-120 分鐘</span>
+        <span class="chip">🤖 AI 輔助教學設計</span>
+      </div>
+
+      <!-- 進入演講簡報模式 CTA 入口 -->
+      <a href="lecture-slides.html" class="lecture-cta" title="演講當天用：14張 Windows 98 風格投影片，全螢幕投影模式">
+        <span class="cta-tag">教師投影專用 ⮕</span>
+        <span class="cta-title">🎬 進入演講簡報模式</span>
+        <span class="cta-sub">14張 Win98 視窗化投影片 · 全螢幕投影 · 鍵盤翻頁 · 支援離線下載</span>
+      </a>
+
+      <div class="objectives">
+        <div class="obj-chip"><span class="ico">📨</span> 掌握 Gmail 收發信與附件功能</div>
+        <div class="obj-chip"><span class="ico">🤵</span> 學會健康的網路電子郵件寫作禮儀</div>
+        <div class="obj-chip"><span class="ico">📁</span> 理解雲端硬碟資料夾建立與檔案管理</div>
+        <div class="obj-chip"><span class="ico">🔑</span> 學會正確設定共用對象與權限鎖</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 1 -->
+  <div id="sec1" class="window stage-section">
+    <div class="window-title alt-purple">
+      <span class="ico">✉️</span>
+      <span class="name">Stage 1: Gmail 寄信與收信 (Gmail Basics)</span>
+    </div>
+    <div class="window-body">
+      <div class="stage-header">
+        <span class="stage-badge">STAGE 1</span>
+        <span class="stage-title" style="color:var(--text); text-shadow:none;">Gmail 寄信與收信基礎</span>
+      </div>
+      
+      <div class="steps-card">
+        <h4><span class="ico">📖</span> 學習步驟與操作流程</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">01</div>
+            <div><b>開啟 Gmail 信箱</b>：登入學校帳號，點選右上角九宮格，開啟 Gmail 郵件應用程式。</div>
+          </li>
+          <li>
+            <div class="step-num">02</div>
+            <div><b>點擊「撰寫」信件</b>：在左上角點選帶有鉛筆圖示的「撰寫」，會彈出新信件視窗。</div>
+          </li>
+          <li>
+            <div class="step-num">03</div>
+            <div><b>輸入「收件者」</b>：在「收件者」輸入對方的完整 Email，例如老師的信箱 `teacher@smes.tyc.edu.tw`，字元必須百分百正確。</div>
+          </li>
+          <li>
+            <div class="step-num">04</div>
+            <div><b>寫入「主旨」</b>：簡短扼要寫下信件的主題，例如：`四年甲班1號張小明-自然課作業`。</div>
+          </li>
+          <li>
+            <div class="step-num">05</div>
+            <div><b>寫好內文並傳送</b>：開頭要有禮貌的稱呼，中間交代事情，結尾寫上自己名字，最後按下「傳送」！</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Simulator -->
+      <div class="canvas-section">
+        <h4><span class="ico">🎮</span> Gmail 寄信互動模擬器</h4>
+        <div class="canvas-help">請嘗試寫一封信交作業給老師。收件者請輸入：`teacher@smes.tyc.edu.tw`，主旨與內文請遵守禮貌規則喔！</div>
+        
+        <div class="simulator-window">
+          <div class="sim-title">
+            <span>📧 新郵件 - Gmail 98</span>
+            <span>✕</span>
+          </div>
+          <div class="sim-body">
+            <div class="sim-field">
+              <label>收件者:</label>
+              <input type="text" id="sim1-to" class="sim-input" placeholder="例如: teacher@smes.tyc.edu.tw">
+            </div>
+            <div class="sim-field">
+              <label>主旨:</label>
+              <input type="text" id="sim1-sub" class="sim-input" placeholder="不能空著喔！例如：四年甲班1號王小明-作業">
+            </div>
+            <div style="margin-bottom: 8px;">
+              <textarea id="sim1-body" class="sim-textarea" placeholder="在此輸入信件內容...&#13;&#10;提示：開頭要有禮貌稱呼（如：老師您好），結尾要寫自己的名字。"></textarea>
+            </div>
+            <div style="text-align: right;">
+              <button class="ctrl-btn primary" onclick="validateSim1()">🚀 傳送</button>
+            </div>
+            <div id="sim1-alert" class="sim-alert"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-section">
+        <h4><span class="ico">📝</span> 形成性評量</h4>
+        
+        <div class="quiz-card" id="q1-1">
+          <div class="quiz-q"><span class="qmark">1</span> 寄信給老師交作業時，下列哪一個信件「主旨」最合適？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q1-1', 0, false)">A. (留空白不寫)</button>
+            <button class="quiz-opt" onclick="checkQuiz('q1-1', 1, false)">B. 老師，我要交功課</button>
+            <button class="quiz-opt" onclick="checkQuiz('q1-1', 2, true)">C. 四年甲班1號張小明-自然課作業</button>
+            <button class="quiz-opt" onclick="checkQuiz('q1-1', 3, false)">D. 嗨！</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="q1-2">
+          <div class="quiz-q"><span class="qmark">2</span> 在電子郵件中，「收件者」欄位應該填寫什麼，信件才能寄給對方？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q1-2', 0, false)">A. 同學的名字（如：小明）</button>
+            <button class="quiz-opt" onclick="checkQuiz('q1-2', 1, true)">B. 對方的電子郵件地址 (Email)</button>
+            <button class="quiz-opt" onclick="checkQuiz('q1-2', 2, false)">C. 學校的地址</button>
+            <button class="quiz-opt" onclick="checkQuiz('q1-2', 3, false)">D. 自己的 Email 帳號</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </div>
+
+      <div class="teacher-note teacher-only">
+        <h5>👨‍🏫 教師導學提示</h5>
+        <p>此階段重點在於讓學童理解「收件者」必須為精準的Email格式，並養成填寫「主旨」的習慣。可引導學生對比傳統信封上的「收件人地址」與「信件名稱」。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 2 -->
+  <div id="sec2" class="window stage-section">
+    <div class="window-title alt-green">
+      <span class="ico">📎</span>
+      <span class="name">Stage 2: 網路信件禮儀與附檔 (Email Etiquette & Attachments)</span>
+    </div>
+    <div class="window-body">
+      <div class="stage-header">
+        <span class="stage-badge green">STAGE 2</span>
+        <span class="stage-title" style="color:var(--text); text-shadow:none;">信件禮儀與附件夾帶</span>
+      </div>
+
+      <div class="steps-card">
+        <h4><span class="ico">📖</span> 學習步驟與操作流程</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">01</div>
+            <div><b>點擊「夾帶檔案」</b>：在 Gmail 撰寫視窗下方，點選像是「迴紋針」的圖示來準備上傳檔案。</div>
+          </li>
+          <li>
+            <div class="step-num">02</div>
+            <div><b>選擇正確的檔案</b>：在電腦資料夾中，選取你要傳的檔案（如：作業圖片.jpg），點選「開啟」。</div>
+          </li>
+          <li>
+            <div class="step-num">03</div>
+            <div><b>注意檔案大小與安全</b>：附件大小不能超過 25MB，且絕對不要隨便夾帶或開啟不明的 `.exe` 程式檔。</div>
+          </li>
+          <li>
+            <div class="step-num">04</div>
+            <div><b>遵守網路禮儀</b>：不要使用刺眼的多色字體，傳送時間應在白天，切勿在深夜洗版或騷擾他人。</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Simulator -->
+      <div class="canvas-section">
+        <h4><span class="ico">🎮</span> 信件附件與禮儀模擬器</h4>
+        <div class="canvas-help">請寫一封信，並從下方「電腦資料夾」中點選**正確且安全**的作業檔案夾帶寄出。</div>
+        
+        <div class="simulator-window">
+          <div class="sim-title">
+            <span>📧 寫信與夾帶附件 - Gmail 98</span>
+            <span>✕</span>
+          </div>
+          <div class="sim-body">
+            <div class="sim-field">
+              <label>收件者:</label>
+              <input type="text" id="sim2-to" class="sim-input" value="teacher@smes.tyc.edu.tw" readonly>
+            </div>
+            <div class="sim-field">
+              <label>主旨:</label>
+              <input type="text" id="sim2-sub" class="sim-input" placeholder="請輸入主旨，例如：四年級交功課">
+            </div>
+            <div>
+              <textarea id="sim2-body" class="sim-textarea" placeholder="輸入有禮貌的內文（需含稱呼與簽名）..."></textarea>
+            </div>
+            
+            <div style="margin-top: 10px; font-weight: bold;">📎 電腦資料夾 (請點擊檔案以夾帶)：</div>
+            <div style="display: flex; gap: 10px; margin: 8px 0; flex-wrap: wrap;">
+              <button class="ctrl-btn" onclick="attachFile('自然作業_王小明.jpg', 'image')">🖼️ 自然作業_王小明.jpg (2MB)</button>
+              <button class="ctrl-btn" onclick="attachFile('好玩遊戲安裝包.exe', 'exe')">⚠️ 好玩遊戲安裝包.exe (15MB)</button>
+              <button class="ctrl-btn" onclick="attachFile('搞笑影片.mp4', 'video')">🎬 搞笑影片.mp4 (80MB - 太大)</button>
+            </div>
+
+            <div class="sim-attachments" id="sim2-attachments-area">
+              無附加檔案
+            </div>
+
+            <div style="text-align: right; margin-top: 10px;">
+              <button class="ctrl-btn primary" onclick="validateSim2()">🚀 檢查並傳送</button>
+            </div>
+            <div id="sim2-alert" class="sim-alert"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-section">
+        <h4><span class="ico">📝</span> 形成性評量</h4>
+        
+        <div class="quiz-card" id="q2-1">
+          <div class="quiz-q"><span class="qmark">1</span> 如果你要寄信給老師交作業，卻「忘記」夾帶檔案（附件），會發生什麼事？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q2-1', 0, false)">A. 電腦會自動幫我把作業上傳</button>
+            <button class="quiz-opt" onclick="checkQuiz('q2-1', 1, true)">B. 老師只會收到一封沒有檔案的空信</button>
+            <button class="quiz-opt" onclick="checkQuiz('q2-1', 2, false)">C. 信件會被退回寄不出</button>
+            <button class="quiz-opt" onclick="checkQuiz('q2-1', 3, false)">D. 老師會自己去我的電腦找作業</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="q2-2">
+          <div class="quiz-q"><span class="qmark">2</span> 下列哪一個是正確的「網路電子郵件禮儀」？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q2-2', 0, false)">A. 可以在半夜十二點連續寄信催促老師改作業</button>
+            <button class="quiz-opt" onclick="checkQuiz('q2-2', 1, false)">B. 為了引起注意，把內文字體改得五顏六色</button>
+            <button class="quiz-opt" onclick="checkQuiz('q2-2', 2, true)">C. 開頭有稱呼、結尾有署名，用字精簡且避免火星文</button>
+            <button class="quiz-opt" onclick="checkQuiz('q2-2', 3, false)">D. 收到垃圾信件時，大量轉寄給所有認識的人</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </div>
+
+      <div class="teacher-note teacher-only">
+        <h5>👨‍🏫 教師導學提示</h5>
+        <p>說明附件大小限制（25MB）及安全性（避開可執行檔.exe）。引導學生討論什麼是友善的文字表達與適合的發送時間，建立良善的線上人際互動觀念。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 3 -->
+  <div id="sec3" class="window stage-section">
+    <div class="window-title alt-orange">
+      <span class="ico">📁</span>
+      <span class="name">Stage 3: Google 雲端硬碟檔案管理 (Drive Basics)</span>
+    </div>
+    <div class="window-body">
+      <div class="stage-header">
+        <span class="stage-badge orange">STAGE 3</span>
+        <span class="stage-title" style="color:var(--text); text-shadow:none;">雲端硬碟檔案管理</span>
+      </div>
+
+      <div class="steps-card">
+        <h4><span class="ico">📖</span> 學習步驟與操作流程</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">01</div>
+            <div><b>認識雲端硬碟</b>：這是一個存放在網路上的「數位大背包」，只要有網路，在任何電腦登入都可以開啟檔案。</div>
+          </li>
+          <li>
+            <div class="step-num">02</div>
+            <div><b>新增資料夾</b>：點選「新增」>「新資料夾」，輸入名字來分類存放（如：資訊課、美勞課）。</div>
+          </li>
+          <li>
+            <div class="step-num">03</div>
+            <div><b>檔案上傳</b>：點選「新增」>「檔案上傳」，將電腦中的作業或相片存入雲端硬碟中。</div>
+          </li>
+          <li>
+            <div class="step-num">04</div>
+            <div><b>垃圾桶與空間管理</b>：不需要的檔案要移到垃圾桶，並**點擊「清空垃圾桶」**才能真正釋放 15GB 空間。</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Simulator -->
+      <div class="canvas-section">
+        <h4><span class="ico">🎮</span> Google 雲端硬碟模擬器</h4>
+        <div class="canvas-help">請嘗試建立一個資料夾「資訊作業」，上傳「作業.png」釋放硬碟空間！別忘了清空垃圾桶！</div>
+        
+        <div class="simulator-window" style="max-width: 650px;">
+          <div class="sim-title">
+            <span>☁️ 我的雲端硬碟 - Drive 98</span>
+            <span>✕</span>
+          </div>
+          <div class="drive-app">
+            <div class="drive-sidebar">
+              <button class="drive-side-btn active" id="btn-drive-main" onclick="switchDriveTab('main')">📁 我的雲端</button>
+              <button class="drive-side-btn" id="btn-drive-trash" onclick="switchDriveTab('trash')">🗑️ 垃圾桶</button>
+              <div class="space-usage">
+                <div>空間使用率:</div>
+                <div id="space-text">0.0 GB / 15 GB</div>
+                <div class="space-bar">
+                  <div class="space-bar-fill" id="space-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="drive-content-area">
+              <div class="drive-toolbar-top">
+                <button class="ctrl-btn" onclick="driveNewFolder()">📂 新增資料夾</button>
+                <button class="ctrl-btn" onclick="driveUploadFile()">📤 上傳檔案</button>
+                <button class="ctrl-btn" id="btn-drive-delete" onclick="driveDeleteSelected()" disabled>❌ 刪除</button>
+                <button class="ctrl-btn" id="btn-drive-share" onclick="driveOpenShare()" disabled>🔗 共用</button>
+                <button class="ctrl-btn" id="btn-drive-empty-trash" onclick="driveEmptyTrash()" style="display:none; background:var(--red-x); color:#fff;">🗑️ 清空垃圾桶</button>
+              </div>
+              <div class="drive-files-grid" id="drive-files-container">
+                <!-- 動態檔案 -->
+              </div>
+            </div>
+          </div>
+          <div id="sim3-alert" class="sim-alert"></div>
+          
+          <!-- Share Dialog -->
+          <div class="drive-share-dialog" id="drive-share-dialog">
+            <div class="sim-title">
+              <span>🔗 共享設定</span>
+              <span style="cursor:pointer" onclick="driveCloseShare()">✕</span>
+            </div>
+            <div class="sim-body" style="background:var(--window)">
+              <div style="font-size:0.8rem; margin-bottom:8px; font-weight:bold;" id="share-target-name">共用檔案: XXX</div>
+              <div class="sim-field">
+                <label style="width:60px">Email:</label>
+                <input type="text" id="share-email" class="sim-input" placeholder="例如: classmate@smes.tyc.edu.tw" style="font-size:0.8rem;">
+              </div>
+              <div class="sim-field">
+                <label style="width:60px">權限:</label>
+                <select id="share-role" class="sim-input" style="font-size:0.8rem; height:28px; padding:2px;">
+                  <option value="viewer">檢視者 (只能看)</option>
+                  <option value="editor">編輯者 (一起改)</option>
+                </select>
+              </div>
+              <div style="margin-bottom:10px;">
+                <label style="font-size:0.75rem; cursor:pointer; display:flex; align-items:center; gap:4px;">
+                  <input type="checkbox" id="share-prevent-download"> 限制檢視者下載、列印和複製
+                </label>
+              </div>
+              <div style="text-align:right; gap:6px; display:flex; justify-content:flex-end;">
+                <button class="ctrl-btn" onclick="driveCloseShare()">取消</button>
+                <button class="ctrl-btn primary" onclick="driveConfirmShare()">確認共用</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-section">
+        <h4><span class="ico">📝</span> 形成性評量</h4>
+        
+        <div class="quiz-card" id="q3-1">
+          <div class="quiz-q"><span class="qmark">1</span> 學校給我們的教育版雲端硬碟，一般的儲存空間限制是多少？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q3-1', 0, false)">A. 無限空間，可以隨便放</button>
+            <button class="quiz-opt" onclick="checkQuiz('q3-1', 1, true)">B. 限額 15GB</button>
+            <button class="quiz-opt" onclick="checkQuiz('q3-1', 2, false)">C. 限額 100GB</button>
+            <button class="quiz-opt" onclick="checkQuiz('q3-1', 3, false)">D. 只有 1GB</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="q3-2">
+          <div class="quiz-q"><span class="qmark">2</span> 為了讓雲端硬碟的儲存空間真的被釋放出來，將檔案移到「垃圾桶」之後，還必須做什麼？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q3-2', 0, false)">A. 重新啟動電腦</button>
+            <button class="quiz-opt" onclick="checkQuiz('q3-2', 1, true)">B. 點選「清空垃圾桶」</button>
+            <button class="quiz-opt" onclick="checkQuiz('q3-2', 2, false)">C. 把它分享給別人</button>
+            <button class="quiz-opt" onclick="checkQuiz('q3-2', 3, false)">D. 什麼都不用做，它會自動不見</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </div>
+
+      <div class="teacher-note teacher-only">
+        <h5>👨‍🏫 教師導學提示</h5>
+        <p>讓學童實際操作「新增資料夾」與「上傳檔案」以養成良好分類習慣。特別強調「清空垃圾桶」才能空出空間，以及教育版帳號限放教學用途檔案的原則。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 4 -->
+  <div id="sec4" class="window stage-section">
+    <div class="window-title alt-purple">
+      <span class="ico">🔒</span>
+      <span class="name">Stage 4: 雲端檔案分享與權限管理 (Drive Sharing)</span>
+    </div>
+    <div class="window-body">
+      <div class="stage-header">
+        <span class="stage-badge">STAGE 4</span>
+        <span class="stage-title" style="color:var(--text); text-shadow:none;">共用設定與安全防護</span>
+      </div>
+
+      <div class="steps-card">
+        <h4><span class="ico">📖</span> 學習步驟與操作流程</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">01</div>
+            <div><b>開啟共用設定</b>：在檔案或資料夾上按一下滑鼠右鍵，或選取後點點上方的「共用」圖示。</div>
+          </li>
+          <li>
+            <div class="step-num">02</div>
+            <div><b>輸入共用帳號</b>：輸入組員或老師的 Email 帳號來指定共用的人。</div>
+          </li>
+          <li>
+            <div class="step-num">03</div>
+            <div><b>選擇合適權限</b>：需要大家「一起寫」就選「編輯者」；「只想給對方看」就選「檢視者」。</div>
+          </li>
+          <li>
+            <div class="step-num">04</div>
+            <div><b>保護檔案防拷貝</b>：如果是你辛苦做的作品，可以在共用設定的進階設定中，取消勾選「允許檢視者下載、列印和複製」。</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Simulator -->
+      <div class="canvas-section">
+        <h4><span class="ico">🎮</span> 雲端硬碟權限分類大考驗</h4>
+        <div class="canvas-help">請拖曳以下的「情境卡片」至正確的「權限分類箱」中，以完成安全設定！</div>
+        
+        <div class="simulator-window" style="background:#fff; padding:18px;">
+          <div style="display:flex; justify-content:space-around; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+            <!-- Dropzones -->
+            <div id="zone-viewer" class="bevel-in" style="width:240px; min-height:100px; background:var(--window-inset); padding:8px; text-align:center;" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'viewer')">
+              <h5 style="color:var(--title-start)">👁️ 僅供檢視 (檢視者)</h5>
+              <div style="font-size:0.75rem; color:#666; margin-bottom:8px;">(只希望對方觀看，不可修改)</div>
+              <div class="zone-content" style="display:flex; flex-direction:column; gap:4px;"></div>
+            </div>
+            
+            <div id="zone-editor" class="bevel-in" style="width:240px; min-height:100px; background:var(--window-inset); padding:8px; text-align:center;" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'editor')">
+              <h5 style="color:var(--green-ok)">✏️ 共同合作 (編輯者)</h5>
+              <div style="font-size:0.75rem; color:#666; margin-bottom:8px;">(希望與組員共同修改、打字)</div>
+              <div class="zone-content" style="display:flex; flex-direction:column; gap:4px;"></div>
+            </div>
+          </div>
+          
+          <div style="font-weight:bold; margin-bottom:8px;">👇 請拖曳以下情境卡片到上方箱子：</div>
+          <div id="drag-items" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; min-height:60px;">
+            <div id="drag-item1" class="ctrl-btn" draggable="true" ondragstart="handleDragStart(event)" data-correct="viewer" style="cursor:move;">📖 將我的畫畫作品分享給全班「欣賞」</div>
+            <div id="drag-item2" class="ctrl-btn" draggable="true" ondragstart="handleDragStart(event)" data-correct="editor" style="cursor:move;">🌱 和組員「一起撰寫」自然科植物紀錄</div>
+            <div id="drag-item3" class="ctrl-btn" draggable="true" ondragstart="handleDragStart(event)" data-correct="editor" style="cursor:move;">🎮 與好朋友「共同編輯」分組遊戲企劃</div>
+            <div id="drag-item4" class="ctrl-btn" draggable="true" ondragstart="handleDragStart(event)" data-correct="viewer" style="cursor:move;">📝 將寫好的作文「呈送給老師批改」</div>
+          </div>
+          
+          <div style="text-align:right; margin-top:12px;">
+            <button class="ctrl-btn" onclick="resetDragGame()">↻ 重置</button>
+            <button class="ctrl-btn primary" onclick="validateDragGame()">✅ 檢查結果</button>
+          </div>
+          <div id="sim4-alert" class="sim-alert"></div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-section">
+        <h4><span class="ico">📝</span> 形成性評量</h4>
+        
+        <div class="quiz-card" id="q4-1">
+          <div class="quiz-q"><span class="qmark">1</span> 如果你想把一份檔案分享給組員，讓大家「一起修改」完成報告，你應該給他什麼權限？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q4-1', 0, false)">A. 檢視者</button>
+            <button class="quiz-opt" onclick="checkQuiz('q4-1', 1, true)">B. 編輯者</button>
+            <button class="quiz-opt" onclick="checkQuiz('q4-1', 2, false)">C. 限制</button>
+            <button class="quiz-opt" onclick="checkQuiz('q4-1', 3, false)">D. 擁有者</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-card" id="q4-2">
+          <div class="quiz-q"><span class="qmark">2</span> 下列哪一個方法最適合用來防止別人偷偷下載或複製你的雲端共用檔案？</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="checkQuiz('q4-2', 0, false)">A. 在檔名寫上「請勿下載」</button>
+            <button class="quiz-opt" onclick="checkQuiz('q4-2', 1, true)">B. 在共用設定的進階設定中，取消勾選「允許檢視者下載、列印和複製」</button>
+            <button class="quiz-opt" onclick="checkQuiz('q4-2', 2, false)">C. 把檔案藏在很多層資料夾裡</button>
+            <button class="quiz-opt" onclick="checkQuiz('q4-2', 3, false)">D. 把檔案設定為編輯者權限</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </div>
+
+      <div class="teacher-note teacher-only">
+        <h5>👨‍🏫 教師導學提示</h5>
+        <p>此階段探討「共用權限」的安全防線。請導引學童理解不同共用權限的風險，特別注意避免給予非必要的人「編輯者」權限，並學會禁止下載/複製的防護方法。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Section -->
+  <div id="video-section" class="window video-section">
+    <div class="window-title alt-green">
+      <span class="ico">🎬</span>
+      <span class="name">自學影片 - PlayVideo.exe</span>
+    </div>
+    <div class="window-body">
+      <div class="video-wrap">
+        <div id="video-placeholder" class="video-no-id">
+          🎬 自學影片由 NotebookLM AI 自動生成中...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slides Section -->
+  <div id="slides-section" class="window slide-player">
+    <div class="window-title alt-purple">
+      <span class="ico">📊</span>
+      <span class="name">授課簡報 - SlideViewer.exe</span>
+    </div>
+    <div class="window-body">
+      <div class="slide-main" id="slide-main-view" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="" alt="請稍候，正在載入簡報...">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">0 / 0</div>
+      </div>
+      <div class="slide-strip" id="slide-strip">
+        <!-- 縮圖動態產生 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Overlay -->
+  <div id="slide-fs" oncontextmenu="return false;">
+    <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+    <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+    <img id="slide-fs-img" src="" alt="">
+    <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+    <div class="fs-counter" id="slide-fs-counter">0 / 0</div>
+  </div>
+
+  <!-- NotebookLM & FAQ Section -->
+  <div class="window">
+    <div class="window-title">
+      <span class="ico">📁</span>
+      <span class="name">NotebookLM 學習資源站 & 常見問題</span>
+    </div>
+    <div class="window-body">
+      <div class="nb-grid">
+        <a class="nb-card" href="https://notebooklm.google.com/" target="_blank">
+          <h4>🤖 NotebookLM 研究筆記本</h4>
+          <p>本課程的研究基礎，收集了來自 Gmail 及雲端硬碟的官方說明與教學資料。</p>
+          <span class="tag">AI 研究來源</span>
+        </a>
+        <a class="nb-card" href="https://notebooklm.google.com/" target="_blank">
+          <h4>📊 簡報精簡筆記本</h4>
+          <p>專為生成本站授課簡報與說明影片建立的精簡筆記本，確保角色特徵清晰。</p>
+          <span class="tag">簡報與影片來源</span>
+        </a>
+        <a class="nb-card" href="https://www.ypes.ntpc.edu.tw/var/file/0/1000/img/211372675.pdf" target="_blank">
+          <h4>📚 國小 Classroom 操作指引</h4>
+          <p>參考自新北市永平國小的學生版 Classroom 登入與操作說明。</p>
+          <span class="tag">參考 PDF</span>
+        </a>
+      </div>
+
+      <div class="flow-box">
+        <h4>🔗 課程網頁生成流程</h4>
+        <div class="flow-steps">
+          <div class="flow-step">1. 網路深度研究 (Research)</div>
+          <span class="flow-arrow">➔</span>
+          <div class="flow-step">2. 萃取精華整合文字</div>
+          <span class="flow-arrow">➔</span>
+          <div class="flow-step">3. 建立精簡版 Notebook</div>
+          <span class="flow-arrow">➔</span>
+          <div class="flow-step">4. 匯入「主講者.pdf」</div>
+          <span class="flow-arrow">➔</span>
+          <div class="flow-step">5. 批次生成簡報/影片/圖表</div>
+          <span class="flow-arrow">➔</span>
+          <div class="flow-step">6. Claude 實作網頁與部署</div>
+        </div>
+      </div>
+
+      <h4 style="margin:20px 0 10px; color:var(--link);">💬 常見問題 FAQ</h4>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="q-mark">Q1</span>
+            <span>為什麼我的雲端硬碟突然不能上傳檔案，Gmail 也寄不出去了？</span>
+            <span class="toggle">+</span>
+          </div>
+          <div class="faq-a">
+            這是因為你的數位大背包（儲存空間）塞太滿啦！學校發給你的教育帳號，現在的容量限制是 15GB。如果空間超過 15GB，你就會無法上傳新檔案、無法建立新的 Google 文件或簡報，連 Gmail 都會沒辦法收發信件。<br>
+            <strong>👉 解決方法：</strong> 請趕快到雲端硬碟或 Gmail 刪除不需要的舊檔案與信件，而且一定要到「垃圾桶」點選「清空垃圾桶」，空間才會真正釋放出來喔。
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="q-mark">Q2</span>
+            <span>登入 Gmail 時，畫面顯示「502 暫時性錯誤」或「沒有連線」，該怎麼辦？</span>
+            <span class="toggle">+</span>
+          </div>
+          <div class="faq-a">
+            遇到這些錯誤畫面別緊張，你的信件都很安全！<br>
+            * 看到「沒有連線」：這代表你的設備沒有連上網路。請先檢查家裡的 Wi-Fi 是不是斷線了，試著把網路關掉重開，或重新啟動電腦和手機。<br>
+            * 看到「暫時性錯誤 (502)」：這表示 Gmail 系統暫時在打瞌睡，通常這個錯誤很快就會自己修好。你只要耐心等幾分鐘，然後重新整理網頁或重新登入，就可以恢復正常了。
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="q-mark">Q3</span>
+            <span>我想把雲端硬碟的作業分享給同學參考，但怕他們不小心改掉或下載，怎麼辦？</span>
+            <span class="toggle">+</span>
+          </div>
+          <div class="faq-a">
+            身為檔案的主人，你可以為檔案裝上「魔法鎖」！<br>
+            * 不讓別人改內容：分享檔案時，記得把同學的權限設定為「僅供檢視」，這樣他們就只能看，不能動手修改。<br>
+            * 不讓別人下載或複製：如果你想保護得更徹底，可以點開共用設定右上角的「齒輪（設定）」圖示，在裡面找到設定，取消勾選「允許檢視者和加註者下載、列印和複製」。這樣同學就只能在畫面上欣賞你的心血結晶囉！
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="q-mark">Q4</span>
+            <span>老師給了 Google 雲端教室 (Classroom) 的課程代碼，但我輸入後卻進不去，為什麼？</span>
+            <span class="toggle">+</span>
+          </div>
+          <div class="faq-a">
+            進不去虛擬教室，通常是這兩個原因造成的：<br>
+            1. 拿錯鑰匙（用錯帳號）：請先檢查你是不是不小心用了自己平常玩遊戲的「個人 Google 帳號」。加入學校老師的課程，通常必須使用「學校發給你的專用帳號」才能成功登入。<br>
+            2. 密碼抄錯（代碼無效）：請仔費檢查老師給的課程代碼，代碼一定是 6 到 8 個英文字母 and 數字組成，而且絕對不能有空格或特殊符號。確認沒打錯字再試一次！
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="q-mark">Q5</span>
+            <span>在 Classroom 交作業時，按了「繳交」卻出現「無法附加檔案」的錯誤，該怎麼辦？</span>
+            <span class="toggle">+</span>
+          </div>
+          <div class="faq-a">
+            如果作業檔案卡住傳不出去，可以試著用這個小技巧：<br>
+            1. 先把原本寫好的作業內容複製下來，貼到一個「新的空白檔案」裡並存檔。<br>
+            2. 回到雲端教室的作業區，把原本發生錯誤的那個舊附件點擊「移除（X）」。<br>
+            3. 重新把剛才做好的「新檔案」附加放上去，最後再按一次「繳交（上交）」，老師就能順利收到你的作業了！
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Float Tools -->
+<div class="float-tools">
+  <button class="float-btn yellow" onclick="togglePanel('lottery')" title="隨機抽籤">🎲</button>
+  <button class="float-btn green" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+</div>
+
+<!-- Lottery Panel -->
+<div class="tool-panel" id="panel-lottery">
+  <div class="tool-panel-title">
+    <span>🎲 隨機抽號</span>
+    <button class="close" onclick="togglePanel('lottery')">✕</button>
+  </div>
+  <div class="tool-panel-body">
+    <div class="row">
+      <span>號碼範圍</span>
+      <input type="number" id="lot-min" value="1" min="1">
+      <span>～</span>
+      <input type="number" id="lot-max" value="30" min="1">
+      <span>號</span>
+      <label style="margin-left:auto;">
+        <input type="checkbox" id="lot-unique" checked> 不重複
+      </label>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="ctrl-btn primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+      <button class="ctrl-btn" onclick="resetLottery()" style="background:var(--window-inset);">↻</button>
+    </div>
+    <div class="lot-result" id="lot-out">等待抽號...</div>
+  </div>
+</div>
+
+<!-- Timer Panel -->
+<div class="tool-panel" id="panel-timer">
+  <div class="tool-panel-title">
+    <span>⏱️ 計時器</span>
+    <button class="close" onclick="togglePanel('timer')">✕</button>
+  </div>
+  <div class="tool-panel-body">
+    <div class="timer-display" id="timer-display">05:00</div>
+    <div class="row" style="justify-content:center;">
+      <button class="ctrl-btn" onclick="adjustTimer(60)">+1 分</button>
+      <button class="ctrl-btn" onclick="adjustTimer(-60)">-1 分</button>
+      <button class="ctrl-btn" onclick="adjustTimer(10)">+10 秒</button>
+      <button class="ctrl-btn" onclick="adjustTimer(-10)">-10 秒</button>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="ctrl-btn primary" id="btn-timer-start" onclick="toggleTimer()" style="flex:1">▶ 開始</button>
+      <button class="ctrl-btn" onclick="resetTimer()" style="background:var(--window-inset);">↻ 重置</button>
+    </div>
+  </div>
+</div>
+
+<!-- Drawing Canvas -->
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️ 畫筆色:</span>
+  <button class="color-dot active" style="background:#ff4081" onclick="setPenColor('#ff4081',this)"></button>
+  <button class="color-dot" style="background:#ffd740" onclick="setPenColor('#ffd740',this)"></button>
+  <button class="color-dot" style="background:#00e5ff" onclick="setPenColor('#00e5ff',this)"></button>
+  <button class="color-dot" style="background:#69ff47" onclick="setPenColor('#69ff47',this)"></button>
+  <button class="color-dot" style="background:#000000" onclick="setPenColor('#000000',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <p>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a> | © 2026 桃園市龍潭區石門國民小學</p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// 全局狀態與初始化
+// ─────────────────────────────────────────────────────────────
+let YOUTUBE_VIDEO_ID = "wbug4-fkQpE"; // 稍後填入
+const SLIDE_LIST = []; // 簡報圖片清單，例如 assets/slide_01.jpg
+let currentSlideIdx = 0;
+
+function safeInit(name, fn){
+  try {
+    fn();
+  } catch(e) {
+    console.error('[init error] ' + name + ':', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  safeInit('initClock', initClock);
+  safeInit('initSlidePlayer', initSlidePlayer);
+  safeInit('initVideo', initVideo);
+  safeInit('initDraw', initDraw);
+  safeInit('initSimulators', initSimulators);
+});
+
+// ─────────────────────────────────────────────────────────────
+// 系統時鐘
+// ─────────────────────────────────────────────────────────────
+function initClock() {
+  const clockEl = document.getElementById('live-clock');
+  function update() {
+    const d = new Date();
+    let h = d.getHours().toString().padStart(2, '0');
+    let m = d.getMinutes().toString().padStart(2, '0');
+    clockEl.textContent = `${h}:${m}`;
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// ─────────────────────────────────────────────────────────────
+// 導覽滾動
+// ─────────────────────────────────────────────────────────────
+function scrollToId(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 教師/學生模式切換
+// ─────────────────────────────────────────────────────────────
+function setMode(mode) {
+  if (mode === 'teacher') {
+    const pw = prompt('請輸入教師模式密碼:');
+    if (pw === 'it2026') {
+      document.body.classList.add('teacher-mode');
+      document.getElementById('btn-mode-teacher').classList.add('active');
+      document.getElementById('btn-mode-student').classList.remove('active');
+    } else {
+      alert('密碼錯誤！');
+    }
+  } else {
+    document.body.classList.remove('teacher-mode');
+    document.getElementById('btn-mode-student').classList.add('active');
+    document.getElementById('btn-mode-teacher').classList.remove('active');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// FAQ Toggle
+// ─────────────────────────────────────────────────────────────
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+  const toggle = el.querySelector('.toggle');
+  toggle.textContent = item.classList.contains('open') ? '-' : '+';
+}
+
+// ─────────────────────────────────────────────────────────────
+// 授課簡報播放器
+// ─────────────────────────────────────────────────────────────
+function initSlidePlayer() {
+  const numSlides = 12; // 預設 12 頁
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_LIST.length = 0;
+  
+  for (let i = 1; i <= numSlides; i++) {
+    const filename = `assets/slide_${i.toString().padStart(2, '0')}.jpg`;
+    SLIDE_LIST.push(filename);
+    
+    const thumb = document.createElement('div');
+    thumb.className = 'strip-thumb';
+    if (i === 1) thumb.classList.add('active');
+    thumb.onclick = () => goSlide(i - 1);
+    
+    const img = document.createElement('img');
+    img.src = filename;
+    img.alt = `Slide ${i}`;
+    
+    thumb.appendChild(img);
+    strip.appendChild(thumb);
+  }
+  
+  goSlide(0);
+}
+
+function goSlide(n) {
+  if (n < 0 || n >= SLIDE_LIST.length) return;
+  currentSlideIdx = n;
+  
+  // 更新主畫面
+  document.getElementById('slide-current').src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = `${n + 1} / ${SLIDE_LIST.length}`;
+  
+  // 更新縮圖高亮
+  const thumbs = document.querySelectorAll('.strip-thumb');
+  thumbs.forEach((t, i) => {
+    t.classList.toggle('active', i === n);
+  });
+  
+  // 捲動縮圖列容器
+  const activeThumb = thumbs[n];
+  const strip = document.getElementById('slide-strip');
+  if (activeThumb && strip) {
+    const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+  }
+
+  // 同步更新全螢幕大圖
+  const fs = document.getElementById('slide-fs');
+  if (fs && fs.classList.contains('show')) {
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = `${n + 1} / ${SLIDE_LIST.length}`;
+  }
+}
+
+function slideNav(dir) {
+  goSlide(currentSlideIdx + dir);
+}
+
+function openSlideFullscreen() {
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[currentSlideIdx];
+  document.getElementById('slide-fs-counter').textContent = `${currentSlideIdx + 1} / ${SLIDE_LIST.length}`;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+
+function closeSlideFullscreen() {
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+
+// 鍵盤與全螢幕導覽
+document.addEventListener('keydown', e => {
+  const fs = document.getElementById('slide-fs');
+  if (fs && fs.classList.contains('show')) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      slideNav(1);
+    } else if (e.key === 'ArrowLeft') {
+      slideNav(-1);
+    } else if (e.key === 'Escape') {
+      closeSlideFullscreen();
+      e.preventDefault();
+    }
+  }
+});
+
+// ─────────────────────────────────────────────────────────────
+// 自學影片
+// ─────────────────────────────────────────────────────────────
+function initVideo() {
+  const wrap = document.querySelector('.video-wrap');
+  if (YOUTUBE_VIDEO_ID && YOUTUBE_VIDEO_ID !== "") {
+    wrap.innerHTML = `
+      <div class="video-ratio">
+        <iframe
+          src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?rel=0&modestbranding=1"
+          title="Google 電子郵件與雲端硬碟應用教學影片"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 建議用耳機觀看，可搭配下方簡報一起複習</span>
+        <a href="https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}"
+           target="_blank" rel="noopener"
+           style="margin-left:auto; color:var(--link); font-size:0.85rem; text-decoration:none; font-weight:bold;">
+          ↗ 在 YouTube 開啟
+        </a>
+      </div>
+    `;
+  } else {
+    wrap.innerHTML = `
+      <div class="video-ratio" style="background:#000; display:flex; align-items:center; justify-content:center;">
+        <video src="assets/video_overview.mp4" controls style="width:100%; height:100%; object-fit:contain;"></video>
+      </div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 本地離線播放模式，建議戴上耳機觀看</span>
+      </div>
+    `;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 形成性評量答題邏輯
+// ─────────────────────────────────────────────────────────────
+function checkQuiz(qId, optIdx, isCorrect) {
+  const card = document.getElementById(qId);
+  const opts = card.querySelectorAll('.quiz-opt');
+  const feedback = card.querySelector('.quiz-feedback');
+  
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (i === optIdx) {
+      o.classList.add(isCorrect ? 'correct' : 'wrong');
+    }
+  });
+
+  feedback.className = 'quiz-feedback ' + (isCorrect ? 'show ok' : 'show no');
+  if (isCorrect) {
+    const encourage = ["🎉 太棒了！答對囉！", "✨ 答對了！你真厲害！", "🌟 恭喜你，完全正確！"];
+    feedback.textContent = encourage[Math.floor(Math.random() * encourage.length)];
+  } else {
+    let explanation = "";
+    if (qId === 'q1-1') explanation = "正確答案是 C。寄信給老師要寫清楚「班級、座號、姓名與信件內容（如自然課作業）」，否則老師不知道是誰寄的。";
+    else if (qId === 'q1-2') explanation = "正確答案是 B。收件者必須填寫對方的電子郵件地址 (Email) 信件才能成功寄達。";
+    else if (qId === 'q2-1') explanation = "正確答案是 B。如果忘記點選「夾帶檔案」圖示上傳作業，老師就只會收到一封沒有檔案的空信。";
+    else if (qId === 'q2-2') explanation = "正確答案是 C。寫信開頭要有稱呼，結尾要有自己署名，用字精簡且避開火星文。";
+    else if (qId === 'q3-1') explanation = "正確答案是 B。學校給我們的教育帳號有 15GB 的空間容量限制。";
+    else if (qId === 'q3-2') explanation = "正確答案是 B。垃圾桶裡的檔案仍然佔用空間，一定要點選「清空垃圾桶」空間才會釋放。";
+    else if (qId === 'q4-1') explanation = "正確答案是 B。想和組員「一起修改」檔案必須給予「編輯者」權限。";
+    else if (qId === 'q4-2') explanation = "正確答案是 B。在共用設定的進階設定中，取消允許下載、列印和複製，是最安全的做法。";
+    
+    feedback.innerHTML = `❌ 答錯囉！正確答案是 ${qId.endsWith('1') ? 'B' : 'B'}。<br>${explanation}`;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 互動模擬器邏輯
+// ─────────────────────────────────────────────────────────────
+let sim2AttachedFile = null;
+let sim2FileType = null;
+
+function initSimulators() {
+  resetDragGame();
+  renderDriveFiles();
+}
+
+// Stage 1 Gmail 寄信驗證
+function validateSim1() {
+  const to = document.getElementById('sim1-to').value.trim();
+  const sub = document.getElementById('sim1-sub').value.trim();
+  const body = document.getElementById('sim1-body').value.trim();
+  const alertEl = document.getElementById('sim1-alert');
+  
+  alertEl.style.display = 'block';
+  alertEl.className = 'sim-alert';
+  
+  if (!to.includes('@') || !to.endsWith('.edu.tw')) {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：收件者必須是有效的學校 Email 地址（例如結尾是 .edu.tw）。';
+    return;
+  }
+  if (sub === "") {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：信件「主旨」不能空著！不然收件人不知道這是什麼信。';
+    return;
+  }
+  if (body.length < 10) {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：信件內容太短啦，請寫出有禮貌的問候與詳細內容。';
+    return;
+  }
+  if (!body.includes('老師') && !body.includes('您好')) {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：信件開頭好像少了解答的稱呼，比如「老師您好」，這樣不夠有禮貌喔！';
+    return;
+  }
+  
+  alertEl.classList.add('success');
+  alertEl.textContent = '🎉 成功！信件格式正確，成功寄信給老師囉！';
+}
+
+// Stage 2 Gmail 附件模擬器
+function attachFile(name, type) {
+  sim2AttachedFile = name;
+  sim2FileType = type;
+  const area = document.getElementById('sim2-attachments-area');
+  
+  let icon = '📄';
+  if (type === 'image') icon = '🖼️';
+  if (type === 'exe') icon = '⚠️';
+  if (type === 'video') icon = '🎬';
+  
+  area.innerHTML = `
+    <div class="attachment-pill">
+      <span>${icon} ${name}</span>
+      <span class="remove" onclick="removeAttachedFile()">✕</span>
+    </div>
+  `;
+}
+
+function removeAttachedFile() {
+  sim2AttachedFile = null;
+  sim2FileType = null;
+  document.getElementById('sim2-attachments-area').textContent = '無附加檔案';
+}
+
+function validateSim2() {
+  const sub = document.getElementById('sim2-sub').value.trim();
+  const body = document.getElementById('sim2-body').value.trim();
+  const alertEl = document.getElementById('sim2-alert');
+  
+  alertEl.style.display = 'block';
+  alertEl.className = 'sim-alert';
+  
+  if (sub === "") {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：信件「主旨」不能為空！';
+    return;
+  }
+  if (!body.includes('老師') && !body.includes('您好')) {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：信件內文少了解答的稱呼（如：老師您好）！';
+    return;
+  }
+  if (!sim2AttachedFile) {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：你忘記夾帶作業檔案了！老師會收到一封空信。';
+    return;
+  }
+  if (sim2FileType === 'exe') {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 警告：好玩遊戲安裝包.exe 是可執行檔，在電子郵件中極度危險！可能含有病毒，請勿寄送！';
+    return;
+  }
+  if (sim2FileType === 'video') {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 錯誤：搞笑影片.mp4 檔案容量太大了 (80MB)，超過了 Gmail 25MB 的限制！請改放在雲端硬碟分享連結。';
+    return;
+  }
+  
+  alertEl.classList.add('success');
+  alertEl.textContent = `🎉 成功！你正確夾帶了「${sim2AttachedFile}」，且信件內容很有禮貌，順利交出作業！`;
+}
+
+// Stage 3 & 4 Google 雲端硬碟模擬器狀態
+let driveFiles = [
+  { id: 1, name: '暑假生活照片.jpg', type: 'file', size: 1.5, inTrash: false, shared: false, sharedEmail: '', role: 'viewer', preventDownload: false },
+  { id: 2, name: '舊電腦遊戲.zip', type: 'file', size: 4.8, inTrash: false, shared: false, sharedEmail: '', role: 'viewer', preventDownload: false }
+];
+let currentDriveTab = 'main'; // 'main' or 'trash'
+let selectedFileId = null;
+
+function renderDriveFiles() {
+  const container = document.getElementById('drive-files-container');
+  container.innerHTML = '';
+  
+  const filesToRender = driveFiles.filter(f => currentDriveTab === 'trash' ? f.inTrash : !f.inTrash);
+  
+  if (filesToRender.length === 0) {
+    container.innerHTML = `<div style="width:100%; text-align:center; color:var(--dim); font-size:0.85rem; padding-top:40px;">此資料夾為空</div>`;
+  }
+  
+  filesToRender.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'drive-file-item';
+    if (selectedFileId === f.id) item.classList.add('selected');
+    
+    item.onclick = (e) => {
+      e.stopPropagation();
+      selectDriveFile(f.id);
+    };
+    
+    let icon = '📄';
+    if (f.type === 'folder') icon = '📁';
+    else if (f.name.endsWith('.jpg') || f.name.endsWith('.png')) icon = '🖼️';
+    
+    // 如果有分享，加上分享徽章
+    let shareBadge = '';
+    if (f.shared) {
+      shareBadge = `<span style="font-size:0.7rem; color:var(--title-start)">🔗</span>`;
+    }
+    
+    item.innerHTML = `
+      <div class="drive-file-icon">${icon}</div>
+      <div class="drive-file-name">${f.name} ${shareBadge}</div>
+    `;
+    container.appendChild(item);
+  });
+  
+  updateSpaceUsage();
+  
+  // 更新按鈕狀態
+  const isSelected = selectedFileId !== null;
+  document.getElementById('btn-drive-delete').disabled = !isSelected;
+  document.getElementById('btn-drive-share').disabled = !isSelected || currentDriveTab === 'trash';
+}
+
+function selectDriveFile(id) {
+  selectedFileId = selectedFileId === id ? null : id;
+  renderDriveFiles();
+}
+
+function switchDriveTab(tab) {
+  currentDriveTab = tab;
+  selectedFileId = null;
+  document.getElementById('btn-drive-main').classList.toggle('active', tab === 'main');
+  document.getElementById('btn-drive-trash').classList.toggle('active', tab === 'trash');
+  
+  if (tab === 'trash') {
+    document.getElementById('btn-drive-empty-trash').style.display = 'block';
+  } else {
+    document.getElementById('btn-drive-empty-trash').style.display = 'none';
+  }
+  renderDriveFiles();
+}
+
+function updateSpaceUsage() {
+  const activeFiles = driveFiles.filter(f => !f.inTrash);
+  let totalSize = activeFiles.reduce((acc, f) => acc + f.size, 0);
+  // 保留小數一位
+  totalSize = Math.round(totalSize * 10) / 10;
+  
+  document.getElementById('space-text').textContent = `${totalSize} GB / 15 GB`;
+  const pct = Math.min(100, (totalSize / 15) * 100);
+  const bar = document.getElementById('space-bar-fill');
+  bar.style.width = `${pct}%`;
+  if (pct > 90) {
+    bar.style.backgroundColor = 'var(--red-x)';
+  } else {
+    bar.style.backgroundColor = 'var(--title-end)';
+  }
+}
+
+function driveNewFolder() {
+  if (currentDriveTab === 'trash') return;
+  const name = prompt('請輸入新建資料夾名稱:', '新建資料夾');
+  if (name && name.trim() !== '') {
+    const id = Date.now();
+    driveFiles.push({
+      id, name: name.trim(), type: 'folder', size: 0, inTrash: false, shared: false, sharedEmail: '', role: 'viewer', preventDownload: false
+    });
+    renderDriveFiles();
+    
+    // Check win condition for Stage 3
+    checkStage3Win();
+  }
+}
+
+function driveUploadFile() {
+  if (currentDriveTab === 'trash') return;
+  const name = prompt('請輸入要模擬上傳的檔名:', '作業.png');
+  if (name && name.trim() !== '') {
+    const id = Date.now();
+    driveFiles.push({
+      id, name: name.trim(), type: 'file', size: 1.2, inTrash: false, shared: false, sharedEmail: '', role: 'viewer', preventDownload: false
+    });
+    renderDriveFiles();
+    
+    checkStage3Win();
+  }
+}
+
+function driveDeleteSelected() {
+  if (selectedFileId === null) return;
+  const file = driveFiles.find(f => f.id === selectedFileId);
+  if (!file) return;
+  
+  if (currentDriveTab === 'main') {
+    file.inTrash = true;
+    selectedFileId = null;
+    document.getElementById('sim3-alert').style.display = 'block';
+    document.getElementById('sim3-alert').className = 'sim-alert info';
+    document.getElementById('sim3-alert').textContent = `ℹ️ 檔案「${file.name}」已被移至垃圾桶，請至垃圾桶「清空垃圾桶」以完全釋放空間。`;
+  } else {
+    driveFiles = driveFiles.filter(f => f.id !== selectedFileId);
+    selectedFileId = null;
+  }
+  renderDriveFiles();
+}
+
+function driveEmptyTrash() {
+  const trashFiles = driveFiles.filter(f => f.inTrash);
+  if (trashFiles.length === 0) {
+    alert('垃圾桶本來就是空的！');
+    return;
+  }
+  driveFiles = driveFiles.filter(f => !f.inTrash);
+  selectedFileId = null;
+  renderDriveFiles();
+  
+  document.getElementById('sim3-alert').style.display = 'block';
+  document.getElementById('sim3-alert').className = 'sim-alert success';
+  document.getElementById('sim3-alert').textContent = '🎉 成功！你成功清空了垃圾桶，數位背包空間完全釋放！';
+}
+
+function checkStage3Win() {
+  const hasFolder = driveFiles.some(f => f.type === 'folder' && f.name.includes('資訊') && !f.inTrash);
+  const hasFile = driveFiles.some(f => f.type === 'file' && f.name.includes('作業') && !f.inTrash);
+  if (hasFolder && hasFile) {
+    document.getElementById('sim3-alert').style.display = 'block';
+    document.getElementById('sim3-alert').className = 'sim-alert success';
+    document.getElementById('sim3-alert').textContent = '🎉 太棒了！你建立了「資訊」相關資料夾，並成功上傳了「作業」檔案！接下來可以對檔案按「共用」按鈕進行 Stage 4 分享設定！';
+  }
+}
+
+// Stage 4 共用功能
+function driveOpenShare() {
+  if (selectedFileId === null) return;
+  const file = driveFiles.find(f => f.id === selectedFileId);
+  if (!file) return;
+  
+  document.getElementById('share-target-name').textContent = `共用檔案: ${file.name}`;
+  document.getElementById('share-email').value = file.sharedEmail;
+  document.getElementById('share-role').value = file.role;
+  document.getElementById('share-prevent-download').checked = file.preventDownload;
+  
+  document.getElementById('drive-share-dialog').classList.add('open');
+}
+
+function driveCloseShare() {
+  document.getElementById('drive-share-dialog').classList.remove('open');
+}
+
+function driveConfirmShare() {
+  if (selectedFileId === null) return;
+  const file = driveFiles.find(f => f.id === selectedFileId);
+  if (!file) return;
+  
+  const email = document.getElementById('share-email').value.trim();
+  const role = document.getElementById('share-role').value;
+  const prevent = document.getElementById('share-prevent-download').checked;
+  
+  if (email === "") {
+    alert('共用對象 Email 不能為空！');
+    return;
+  }
+  if (!email.includes('@') || !email.endsWith('.edu.tw')) {
+    alert('請輸入正確的學校 Email 格式（例如 classmate@smes.tyc.edu.tw）。');
+    return;
+  }
+  
+  file.shared = true;
+  file.sharedEmail = email;
+  file.role = role;
+  file.preventDownload = prevent;
+  
+  driveCloseShare();
+  renderDriveFiles();
+  
+  document.getElementById('sim3-alert').style.display = 'block';
+  document.getElementById('sim3-alert').className = 'sim-alert success';
+  
+  let roleText = role === 'editor' ? '共同合作 (編輯者)' : '僅供檢視 (檢視者)';
+  let preventText = prevent ? '且已啟用保護，禁止下載、列印與複製！' : '，但未限制其下載或複製。';
+  
+  document.getElementById('sim3-alert').textContent = `🎉 成功！「${file.name}」已成功與 ${email} 共用，權限為：${roleText}${preventText}`;
+}
+
+// Stage 4 Drag and Drop Game
+let draggedItem = null;
+
+function handleDragStart(e) {
+  draggedItem = e.target;
+  e.dataTransfer.setData('text/plain', e.target.id);
+}
+
+function allowDrop(e) {
+  e.preventDefault();
+}
+
+function handleDrop(e, targetZone) {
+  e.preventDefault();
+  const id = e.dataTransfer.getData('text/plain');
+  const el = document.getElementById(id);
+  if (el) {
+    const zoneContent = document.getElementById(`zone-${targetZone}`).querySelector('.zone-content');
+    zoneContent.appendChild(el);
+    el.setAttribute('data-placed-in', targetZone);
+  }
+}
+
+function resetDragGame() {
+  const container = document.getElementById('drag-items');
+  const items = ['drag-item1', 'drag-item2', 'drag-item3', 'drag-item4'];
+  items.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      container.appendChild(el);
+      el.removeAttribute('data-placed-in');
+    }
+  });
+  
+  const alertEl = document.getElementById('sim4-alert');
+  alertEl.style.display = 'none';
+}
+
+function validateDragGame() {
+  const items = ['drag-item1', 'drag-item2', 'drag-item3', 'drag-item4'];
+  const alertEl = document.getElementById('sim4-alert');
+  alertEl.style.display = 'block';
+  alertEl.className = 'sim-alert';
+  
+  let correctCount = 0;
+  let missing = false;
+  
+  items.forEach(id => {
+    const el = document.getElementById(id);
+    const placed = el.getAttribute('data-placed-in');
+    const correct = el.getAttribute('data-correct');
+    
+    if (!placed) {
+      missing = true;
+    } else if (placed === correct) {
+      correctCount++;
+    }
+  });
+  
+  if (missing) {
+    alertEl.classList.add('error');
+    alertEl.textContent = '❌ 請將所有情境卡片都拖曳到分類箱中再檢查！';
+    return;
+  }
+  
+  if (correctCount === 4) {
+    alertEl.classList.add('success');
+    alertEl.textContent = '🎉 太棒了！所有的共用情境都分類正確！你已經掌握如何安全管理雲端硬碟權限了！';
+  } else {
+    alertEl.classList.add('error');
+    alertEl.textContent = `❌ 答對了 ${correctCount} 個，還有一些地方分錯囉，請再想想看！`;
+  }
+}
+
+
+// ─────────────────────────────────────────────────────────────
+// 隨機抽號工具
+// ─────────────────────────────────────────────────────────────
+let lotPool = [];
+function refillLotPool() {
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if (min > max) return false;
+  lotPool = [];
+  for (let i = min; i <= max; i++) {
+    lotPool.push(i);
+  }
+  return true;
+}
+
+function doLottery() {
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  
+  if (min > max) {
+    alert('最小號碼必須小於或等於最大號碼！');
+    return;
+  }
+  
+  const out = document.getElementById('lot-out');
+  out.style.fontSize = '1.4rem';
+  
+  // 滾動動畫
+  let counter = 0;
+  const timer = setInterval(() => {
+    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    out.textContent = `${randomNum} 號`;
+    counter++;
+  }, 60);
+  
+  setTimeout(() => {
+    clearInterval(timer);
+    let selectedNum;
+    if (unique) {
+      if (lotPool.length === 0) {
+        refillLotPool();
+      }
+      const idx = Math.floor(Math.random() * lotPool.length);
+      selectedNum = lotPool.splice(idx, 1)[0];
+    } else {
+      selectedNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    out.style.fontSize = '2rem';
+    out.textContent = `🌟 ${selectedNum} 號 🌟`;
+  }, 1000);
+}
+
+function resetLottery() {
+  refillLotPool();
+  document.getElementById('lot-out').textContent = '等待抽號...';
+}
+
+// ─────────────────────────────────────────────────────────────
+// 計時器工具
+// ─────────────────────────────────────────────────────────────
+let timerSeconds = 300; // 預設 5 分鐘
+let timerInterval = null;
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+  const s = (timerSeconds % 60).toString().padStart(2, '0');
+  document.getElementById('timer-display').textContent = `${m}:${s}`;
+}
+
+function adjustTimer(amount) {
+  timerSeconds = Math.max(0, timerSeconds + amount);
+  updateTimerDisplay();
+}
+
+function toggleTimer() {
+  const btn = document.getElementById('btn-timer-start');
+  if (timerInterval) {
+    // 暫停
+    clearInterval(timerInterval);
+    timerInterval = null;
+    btn.textContent = '▶ 開始';
+    btn.classList.remove('primary');
+  } else {
+    // 開始
+    if (timerSeconds <= 0) return;
+    btn.textContent = '⏸ 暫停';
+    btn.classList.add('primary');
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) {
+        timerSeconds--;
+        updateTimerDisplay();
+      } else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.textContent = '▶ 開始';
+        btn.classList.remove('primary');
+        alert('⏰ 時間到！');
+      }
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  timerSeconds = 300;
+  updateTimerDisplay();
+  const btn = document.getElementById('btn-timer-start');
+  btn.textContent = '▶ 開始';
+  btn.classList.remove('primary');
+}
+
+function togglePanel(id) {
+  const panel = document.getElementById(`panel-${id}`);
+  panel.classList.toggle('open');
+}
+
+// ─────────────────────────────────────────────────────────────
+// 畫筆標註功能
+// ─────────────────────────────────────────────────────────────
+let drawActive = false, penColor = '#ff4081', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+
+function initDraw() {
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  
+  // 雙倍解析度以求清晰
+  drawCanvas.width = window.innerWidth * 2;
+  drawCanvas.height = window.innerHeight * 2;
+  drawCanvas.style.width = window.innerWidth + 'px';
+  drawCanvas.style.height = window.innerHeight + 'px';
+  drawCtx.scale(2, 2);
+  
+  drawCanvas.addEventListener('mousedown', e => {
+    if (!drawActive) return;
+    isDrawing = true;
+    dLastX = e.clientX;
+    dLastY = e.clientY;
+  });
+  
+  drawCanvas.addEventListener('mousemove', e => {
+    if (!drawActive || !isDrawing) return;
+    drawCtx.strokeStyle = penColor;
+    drawCtx.lineWidth = penSize;
+    drawCtx.lineCap = 'round';
+    drawCtx.beginPath();
+    drawCtx.moveTo(dLastX, dLastY);
+    drawCtx.lineTo(e.clientX, e.clientY);
+    drawCtx.stroke();
+    dLastX = e.clientX;
+    dLastY = e.clientY;
+  });
+  
+  drawCanvas.addEventListener('mouseup', () => isDrawing = false);
+  drawCanvas.addEventListener('mouseleave', () => isDrawing = false);
+  
+  // 觸控支援
+  drawCanvas.addEventListener('touchstart', e => {
+    if (!drawActive) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    const rect = drawCanvas.getBoundingClientRect();
+    isDrawing = true;
+    dLastX = t.clientX - rect.left;
+    dLastY = t.clientY - rect.top;
+  }, { passive: false });
+  
+  drawCanvas.addEventListener('touchmove', e => {
+    if (!drawActive || !isDrawing) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    const rect = drawCanvas.getBoundingClientRect();
+    const tx = t.clientX - rect.left;
+    const ty = t.clientY - rect.top;
+    
+    drawCtx.strokeStyle = penColor;
+    drawCtx.lineWidth = penSize;
+    drawCtx.lineCap = 'round';
+    drawCtx.beginPath();
+    drawCtx.moveTo(dLastX, dLastY);
+    drawCtx.lineTo(tx, ty);
+    drawCtx.stroke();
+    dLastX = tx;
+    dLastY = ty;
+  }, { passive: false });
+  
+  drawCanvas.addEventListener('touchend', () => isDrawing = false);
+  
+  window.addEventListener('resize', () => {
+    // 調整大小並重新繪製
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = drawCanvas.width;
+    tempCanvas.height = drawCanvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(drawCanvas, 0, 0);
+    
+    drawCanvas.width = window.innerWidth * 2;
+    drawCanvas.height = window.innerHeight * 2;
+    drawCanvas.style.width = window.innerWidth + 'px';
+    drawCanvas.style.height = window.innerHeight + 'px';
+    drawCtx.scale(2, 2);
+    
+    drawCtx.drawImage(tempCanvas, 0, 0, tempCanvas.width / 2, tempCanvas.height / 2);
+  });
+}
+
+function toggleDraw() {
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c4)' : '';
+}
+
+function setPenColor(c, el) {
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function clearDrawing() {
+  if (drawCtx) {
+    drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+  }
+}
+
+function toggleZoom(el) {
+  el.classList.toggle('zoomed');
+}
+</script>
+</body>
+</html>

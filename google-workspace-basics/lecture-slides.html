@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Google 電子郵件與雲端硬碟應用｜四年級資訊科技 · 演講簡報模式</title>
+<meta name="description" content="阿凱老師 × 桃園市石門國小｜Google 電子郵件與雲端硬碟應用 14 張 Retro Win98 風投影片。四大關卡：Gmail收發、寫信禮儀、雲端硬碟管理、共用權限。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+:root{
+  --desktop:#2a8b8b;
+  --desktop-pattern:#1f6b6b;
+  --window:#c3c7cb;
+  --window-inset:#d4d0c8;
+  --title-start:#000080;
+  --title-end:#1084d0;
+  --title-inactive:#808080;
+  --light:#ffffff;
+  --dim:#808080;
+  --dark:#000000;
+  --text:#000000;
+  --text-white:#ffffff;
+  --link:#0a3a8a;
+  --yellow:#ffd700;
+  --red-x:#c00000;
+  --green-ok:#008000;
+  --accent-purple:#5a0090;
+  --accent-orange:#b04000;
+  --bsod:#0000aa;
+}
+body{
+  font-family:'Microsoft JhengHei','MS Sans Serif','Tahoma','Noto Sans TC',sans-serif;
+  background:var(--desktop);
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--desktop-pattern) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--desktop-pattern) 1px, transparent 1px);
+  background-size:40px 40px;
+  color:var(--text);
+  line-height:1.6;
+  user-select:none;
+}
+
+/* ===== Slide Container ===== */
+.deck{position:fixed;inset:0;overflow:hidden;padding:50px 24px 14px}
+.slide{
+  position:absolute;
+  top:50px;left:24px;right:24px;bottom:14px;
+  display:none;flex-direction:column;
+  opacity:0;transition:opacity .3s;
+}
+.slide.active{display:flex;opacity:1}
+
+/* Each slide IS a Win98 window */
+.slide{
+  background:var(--window);
+  border:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 4px 4px 12px rgba(0,0,0,.5);
+  overflow:hidden;
+}
+.win-titlebar{
+  flex-shrink:0;
+  background:linear-gradient(to right, var(--title-start), var(--title-end));
+  color:var(--text-white);
+  padding:5px 8px;
+  display:flex;align-items:center;gap:8px;
+  font-weight:700;font-size:1rem;
+  font-family:inherit;
+}
+.win-titlebar.alt-purple{background:linear-gradient(to right, #4a0080, #aa55ff)}
+.win-titlebar.alt-green{background:linear-gradient(to right, #006000, #50c450)}
+.win-titlebar.alt-orange{background:linear-gradient(to right, #b04000, #ff9040)}
+.win-titlebar.alt-red{background:linear-gradient(to right, #800000, #d04040)}
+.win-titlebar .ico{font-size:1.2rem}
+.win-titlebar .name{flex:1}
+.win-titlebar .controls{display:flex;gap:3px}
+.win-titlebar .controls .btn{
+  width:24px;height:22px;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  font-family:inherit;font-weight:900;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.win-menubar{
+  flex-shrink:0;
+  padding:4px 10px;background:var(--window);
+  border-bottom:1px solid var(--dim);
+  font-size:.9rem;display:flex;gap:14px;
+}
+.win-menubar span u{text-decoration:underline}
+.win-content{
+  flex:1;padding:32px 44px;overflow:auto;
+  display:flex;flex-direction:column;position:relative;
+}
+.win-statusbar{
+  flex-shrink:0;
+  background:var(--window);
+  border-top:1px solid var(--dim);
+  padding:3px 10px;font-size:.8rem;
+  display:flex;justify-content:space-between;
+  color:#444;
+}
+.win-statusbar .sb-section{
+  padding:1px 8px;
+  border:1px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+}
+
+/* ===== Top Taskbar (fixed) ===== */
+.taskbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:var(--window);
+  border-bottom:2px solid;
+  border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 0 1px 0 var(--light), inset 0 -1px 0 var(--dim), 0 2px 6px rgba(0,0,0,.4);
+  padding:4px 10px;height:42px;
+  display:flex;align-items:center;gap:10px;
+}
+.start-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--window);color:var(--text);text-decoration:none;
+  padding:4px 12px;font-weight:700;font-size:1rem;font-family:inherit;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+  cursor:pointer;
+}
+.start-btn .logo{
+  display:inline-block;width:18px;height:18px;
+  background:
+    linear-gradient(135deg,#ff5050 0 50%,transparent 50%) 0 0/50% 50% no-repeat,
+    linear-gradient(135deg,#50ff50 0 50%,transparent 50%) 100% 0/50% 50% no-repeat,
+    linear-gradient(135deg,#5050ff 0 50%,transparent 50%) 0 100%/50% 50% no-repeat,
+    linear-gradient(135deg,#ffff50 0 50%,transparent 50%) 100 100%/50% 50% no-repeat;
+}
+.tb-divider{width:2px;height:24px;background:linear-gradient(to right,var(--dim),var(--light));margin:0 4px}
+.tb-app{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:3px 12px;font-size:.9rem;font-weight:700;
+  background:var(--window);
+  border:2px solid;border-color:var(--dark) var(--light) var(--light) var(--dark);
+  box-shadow:inset 1px 1px 0 var(--dim);
+  color:var(--text);max-width:380px;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.tb-spacer{flex:1}
+.tb-tray{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:3px 10px;font-size:.8rem;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  background:var(--window);
+}
+.tb-clock{font-family:'VT323',monospace;font-size:1rem;font-weight:700}
+
+/* ===== Typography ===== */
+.title-xl{font-weight:900;font-size:clamp(2.6rem,5vw,4.5rem);line-height:1.1;color:var(--link)}
+.title-lg{font-weight:900;font-size:clamp(2rem,4vw,3.4rem);line-height:1.15;color:var(--link)}
+.title-md{font-weight:900;font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.2;color:var(--text)}
+.eyebrow{font-size:1rem;letter-spacing:.05em;color:var(--link);font-weight:700;
+  margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.eyebrow::after{content:'';flex:1;height:2px;
+  background:linear-gradient(to right,var(--link),transparent);max-width:240px}
+.lead{font-size:clamp(1.05rem,1.4vw,1.25rem);line-height:1.75;color:var(--text);max-width:1100px}
+.lead b{color:var(--link);font-weight:900}
+.accent-red{color:var(--red-x);font-weight:900}
+.accent-blue{color:var(--link);font-weight:900}
+.accent-green{color:var(--green-ok);font-weight:900}
+.accent-purple{color:var(--accent-purple);font-weight:900}
+.kbd{display:inline-block;padding:2px 8px;
+  background:var(--window);color:var(--text);font-family:'Microsoft JhengHei',monospace;
+  font-size:.85em;font-weight:700;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light);}
+
+/* ===== Slide top tag & num ===== */
+.slide-title-tag{
+  position:absolute;top:14px;left:24px;
+  font-family:'VT323',monospace;font-size:1rem;
+  letter-spacing:.1em;color:var(--link);
+  padding:2px 10px;background:#fff;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  z-index:5;
+}
+.slide-num{
+  position:absolute;bottom:38px;right:24px;
+  font-family:'VT323',monospace;font-size:1.2rem;color:var(--dim);
+  z-index:5;
+}
+
+/* ===== Speaker ===== */
+.speaker{position:absolute;bottom:46px;left:24px;
+  display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:55%}
+.speaker .avatar{
+  width:60px;height:60px;flex-shrink:0;
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 2px 2px 4px rgba(0,0,0,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;
+}
+.speaker .bubble{
+  background:#ffffe1;
+  border:1px solid var(--dark);
+  padding:9px 14px;font-size:.95rem;font-weight:600;
+  position:relative;max-width:520px;line-height:1.5;
+  box-shadow:2px 2px 0 var(--dim);
+}
+.speaker .bubble::before{
+  content:'';position:absolute;left:-9px;bottom:16px;
+  border-style:solid;border-width:7px 10px 7px 0;
+  border-color:transparent var(--dark) transparent transparent;
+}
+.speaker .bubble::after{
+  content:'';position:absolute;left:-7px;bottom:17px;
+  border-style:solid;border-width:6px 9px 6px 0;
+  border-color:transparent #ffffe1 transparent transparent;
+}
+
+/* ===== Progress ===== */
+.progress{position:fixed;bottom:0;left:0;right:0;height:5px;
+  background:var(--dark);z-index:99}
+.progress-fill{height:100%;background:linear-gradient(to right,var(--title-start),var(--title-end));transition:width .4s;
+  box-shadow:0 0 6px var(--title-end)}
+
+/* ===== Hint ===== */
+.hint{position:fixed;top:8px;right:24px;z-index:99;
+  font-family:'VT323',monospace;font-size:.9rem;color:var(--text);
+  background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  padding:3px 10px;pointer-events:none;opacity:.9}
+
+/* ===== Overview ===== */
+.overview{position:fixed;inset:0;background:var(--desktop);
+  display:none;padding:48px 32px;overflow-y:auto;z-index:200;flex-direction:column}
+.overview.show{display:flex}
+.overview h3{font-size:1.4rem;color:#fff;margin-bottom:18px;
+  text-shadow:2px 2px 0 var(--dark);font-weight:900}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.ov-card{background:var(--window);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 3px 3px 6px rgba(0,0,0,.3);
+  padding:14px 16px;cursor:pointer;position:relative}
+.ov-card:hover{background:var(--title-end);color:#fff}
+.ov-card:hover .t,.ov-card:hover .num,.ov-card:hover .s{color:#fff}
+.ov-card .num{position:absolute;top:6px;right:10px;
+  font-family:'VT323',monospace;font-size:1.1rem;color:var(--link)}
+.ov-card .t{font-weight:900;font-size:1.05rem;color:var(--text);margin-bottom:4px}
+.ov-card .s{font-size:.85rem;color:#555;line-height:1.4}
+
+/* ===== Win98 inner elements ===== */
+.bevel-out{border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim)}
+.bevel-in{border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark)}
+
+.info-box{
+  background:var(--window-inset);padding:14px 18px;margin:10px 0;
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  font-size:1rem;line-height:1.7;
+}
+.info-box.tip{background:#fffacd}
+.info-box.warn{background:#ffe4e1;border-left:4px solid var(--red-x)}
+.info-box.bsod{background:var(--bsod);color:#fff;font-family:'VT323',monospace;
+  font-size:1.4rem;text-align:center;padding:20px 16px;border:none}
+.info-box.bsod b{color:var(--yellow)}
+
+.steps-list{list-style:none;padding:0;margin:14px 0}
+.steps-list li{display:flex;gap:14px;align-items:flex-start;
+  font-size:1.05rem;line-height:1.7;margin-bottom:8px;padding:10px 14px;
+  background:var(--window-inset);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);}
+.steps-list li .step-num{
+  flex-shrink:0;min-width:32px;height:32px;
+  background:var(--title-start);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.95rem;
+}
+.steps-list li b{color:var(--link)}
+
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px;align-items:stretch}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+
+.stage-card{background:var(--window-inset);padding:18px 20px;
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim), 3px 3px 0 var(--c,var(--title-start));
+  position:relative;}
+.stage-card .badge{
+  display:inline-block;background:var(--c,var(--title-start));color:#fff;
+  font-weight:900;font-size:.85rem;padding:3px 12px;margin-bottom:10px;
+  border:1px solid var(--dark);
+}
+.stage-card h4{font-size:1.15rem;color:var(--text);margin-bottom:8px;font-weight:900}
+.stage-card p{font-size:.95rem;line-height:1.6;color:var(--text)}
+
+.cmp-table{width:100%;border-collapse:collapse;
+  background:var(--window-inset);margin-top:14px;font-size:1rem}
+.cmp-table th{background:var(--title-start);color:#fff;
+  padding:10px 14px;text-align:left;font-size:.9rem;border:1px solid var(--dark)}
+.cmp-table td{padding:10px 14px;border:1px solid var(--dim);font-weight:600}
+.cmp-table tr:nth-child(2n) td{background:var(--window)}
+.cmp-table .ok{color:var(--green-ok);font-weight:900}
+.cmp-table .no{color:var(--red-x);font-weight:900}
+
+.cover .win-content{align-items:center;justify-content:center;text-align:center}
+.cover-title{
+  font-weight:900;font-size:clamp(3rem,6vw,5.5rem);
+  color:var(--link);line-height:1;margin-bottom:14px;
+  text-shadow:3px 3px 0 var(--yellow);
+}
+.cover-sub{font-size:clamp(1.2rem,2vw,1.6rem);color:var(--text);margin-bottom:32px;font-weight:700}
+.cover-meta{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;
+  font-size:.95rem;color:var(--text);font-weight:700}
+.cover-meta b{color:var(--link)}
+.cover-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 32px}
+.cover-chips .chip{
+  display:inline-block;padding:5px 14px;font-weight:700;font-size:.9rem;
+  background:var(--window);color:var(--text);
+  border:2px solid;border-color:var(--light) var(--dark) var(--dark) var(--light);
+  box-shadow:inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+}
+.cover-chips .chip.blue{background:var(--title-start);color:#fff}
+.cover-chips .chip.yellow{background:var(--yellow);color:#000;border-color:#fff #806000 #806000 #fff}
+
+.hook-quote{font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.5;
+  color:var(--text);font-weight:700;max-width:1100px}
+.hook-quote .em{color:var(--red-x);font-weight:900}
+
+.closing .win-content{align-items:center;justify-content:center;text-align:center}
+.closing h2{font-size:clamp(2.4rem,4.5vw,4rem);line-height:1.2;
+  color:var(--link);margin-bottom:24px;font-weight:900;
+  text-shadow:3px 3px 0 var(--yellow);}
+.closing h2 .em{color:var(--red-x)}
+.closing .signoff{font-size:1.15rem;color:var(--text);margin-bottom:24px;font-weight:700}
+.closing .url-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.closing .url-box{background:#fff;color:var(--text);
+  border:2px solid;border-color:var(--dim) var(--light) var(--light) var(--dim);
+  box-shadow:inset 1px 1px 0 var(--dark);
+  padding:12px 18px;font-family:'VT323',monospace;font-size:1rem;}
+
+/* Animations */
+@keyframes winOpen{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.slide.active{animation:winOpen .35s ease-out}
+
+@keyframes blink{50%{opacity:0}}
+.blink{animation:blink 1s infinite}
+
+@keyframes pop{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.slide.active .pop-in{animation:pop .45s cubic-bezier(.34,1.56,.64,1) backwards}
+.slide.active .pop-in.d1{animation-delay:.15s}
+.slide.active .pop-in.d2{animation-delay:.3s}
+.slide.active .pop-in.d3{animation-delay:.45s}
+.slide.active .pop-in.d4{animation-delay:.6s}
+.slide.active .pop-in.d5{animation-delay:.75s}
+
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.slide.active .slide-up{animation:slideUp .5s ease-out backwards}
+.slide.active .slide-up.d1{animation-delay:.2s}
+.slide.active .slide-up.d2{animation-delay:.4s}
+
+/* Responsive */
+@media (max-width:1100px){
+  .deck{padding:46px 12px 14px}
+  .slide{top:46px;left:12px;right:12px}
+  .win-content{padding:24px 22px}
+  .three-col,.two-col,.four-col{grid-template-columns:1fr 1fr}
+  .speaker{max-width:80%}
+  .taskbar{height:38px}
+}
+@media print{
+  .progress,.hint,.taskbar{display:none}
+  .slide{position:relative;display:flex !important;opacity:1 !important;page-break-after:always;height:100vh;top:0;left:0;right:0;bottom:0}
+}
+</style>
+</head>
+<body>
+
+<!-- Top fixed Win98 taskbar -->
+<div class="taskbar">
+  <a href="index.html" class="start-btn"><span class="logo"></span>開始</a>
+  <span class="tb-divider"></span>
+  <span class="tb-app" id="tb-current">📧 Google 電子郵件與雲端硬碟 - 簡報模式</span>
+  <span class="tb-spacer"></span>
+  <span class="tb-tray">
+    <span style="font-size:1.1rem">🔊</span>
+    <span style="font-size:1.1rem">🌐</span>
+    <span class="tb-clock" id="tb-clock">00:00</span>
+  </span>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══════ SLIDE 1 — COVER ═══════ -->
+<section class="slide cover active" id="s1">
+  <div class="win-titlebar">
+    <span class="ico">✉️</span>
+    <span class="name">歡迎 - Google 應用大探索 v1.0</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" style="background:var(--red-x);color:#fff" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">01 / 14 · COVER</span>
+    <div class="cover-chips">
+      <span class="chip blue">四年級資訊科技</span>
+      <span class="chip">Google 基礎篇</span>
+      <span class="chip yellow">RETRO WIN98</span>
+    </div>
+    <h1 class="cover-title">Google 電子郵件與雲端硬碟</h1>
+    <p class="cover-sub">解鎖 Gmail 與雲端空間 · 變成<span class="accent-blue">數位整理小達人</span>！</p>
+    <div class="cover-meta">
+      <span>講師 <b>阿凱老師</b> 桃園市石門國小</span>
+      <span>2026.06</span>
+      <span>時長 約 80 分鐘</span>
+    </div>
+  </div>
+  <div class="win-statusbar"><span class="sb-section">就緒</span><span class="sb-section">14 張投影片</span></div>
+</section>
+
+<!-- ═══════ SLIDE 2 — HOOK ═══════ -->
+<section class="slide" id="s2">
+  <div class="win-titlebar">
+    <span class="ico">📨</span>
+    <span class="name">My Documents\\數位生活的煩惱.bmp</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">02 / 14 · OPENING</span>
+    <p class="eyebrow pop-in">⏰ 你遇過這些狀況嗎？</p>
+    <p class="hook-quote pop-in d1" style="margin-top:18px">
+      想要傳作業照片給老師，<br>
+      卻<span class="em">寄出了一封沒有檔案的空信</span>？<br>
+      或是雲端硬碟滿了，<br>
+      <b style="color:var(--link)">信箱突然收不到任何信？</b>
+    </p>
+    <p class="lead slide-up d2" style="margin-top:24px">
+      這些不是電腦壞掉，而是我們還沒學會正確的操作手勢。<br>
+      今天阿凱老師將帶領大家，一次學會：<br>
+      <b class="accent-blue">「Gmail 收發寄信、信件禮儀、雲端硬碟管理、共用與安全設定」</b>！
+    </p>
+  </div>
+  <div class="speaker">
+    <div class="avatar">😄</div>
+    <div class="bubble">嗨小朋友們好！我是阿凱老師。學會這兩大工具，你就能自己交作業，也能安全地和同學在網路上合作喔！</div>
+  </div>
+  <span class="slide-num">02 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">2 / 14</span><span class="sb-section">CAPS</span></div>
+</section>
+
+<!-- ═══════ SLIDE 3 — WHAT ARE GMAIL & DRIVE ═══════ -->
+<section class="slide" id="s3">
+  <div class="win-titlebar">
+    <span class="ico">🌐</span>
+    <span class="name">什麼是Gmail與雲端硬碟.txt - 記事本</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">03 / 14 · OVERVIEW</span>
+    <p class="eyebrow slide-up">核心概念</p>
+    <h2 class="title-lg slide-up d1">雲端世界裡的<br><span class="accent-red">「超級快遞」</span>與<span class="accent-red">「數位大背包」</span></h2>
+    <div class="two-col">
+      <div class="info-box slide-up d2">
+        <b>📧 Gmail 電子郵件</b><br>
+        就像是一個<b>全天候的快遞員</b>，只要你知道對方的門牌號碼 (Email)，不管距離多遠，都能在幾秒鐘內把信件和檔案送達！
+      </div>
+      <div class="info-box tip slide-up d2">
+        <b>☁️ Google 雲端硬碟</b><br>
+        就像是你隨身攜帶的<b>數位大背包</b>。你把作業、相片放進去，不論用哪一台電腦，只要登入帳號，就能立刻打開包包拿出來！
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💡</div>
+    <div class="bubble">記住喔！這兩個寶貝共用同一個「背包空間」，所以要把空間管好，才不會兩個都打不開喔！</div>
+  </div>
+  <span class="slide-num">03 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">3 / 14</span><span class="sb-section">基本概念</span></div>
+</section>
+
+<!-- ═══════ SLIDE 4 — ROADMAP ═══════ -->
+<section class="slide" id="s4">
+  <div class="win-titlebar alt-purple">
+    <span class="ico">🎯</span>
+    <span class="name">四大關卡總覽 - 課程地圖.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">04 / 14 · ROADMAP</span>
+    <p class="eyebrow slide-up">課程地圖</p>
+    <h2 class="title-md slide-up d1">挑戰四大關卡，<br>成為<span class="accent-blue">數位世界的小勇士</span>！</h2>
+    <div class="four-col">
+      <div class="stage-card pop-in d1" style="--c:var(--title-start)">
+        <span class="badge">第 1 關</span>
+        <h4>✉️ Gmail 寄信與收信</h4>
+        <p>學會正確輸入收件人、主旨與內容，把信成功寄出去。</p>
+      </div>
+      <div class="stage-card pop-in d2" style="--c:var(--green-ok)">
+        <span class="badge" style="background:var(--green-ok)">第 2 關</span>
+        <h4>📎 網路禮儀與附件</h4>
+        <p>學會夾帶作業檔案，並注意文字禮貌與安全防護。</p>
+      </div>
+      <div class="stage-card pop-in d3" style="--c:var(--accent-purple)">
+        <span class="badge" style="background:var(--accent-purple)">第 3 關</span>
+        <h4>📁 雲端硬碟管理</h4>
+        <p>建立資料夾做檔案分類，並清空垃圾桶省空間。</p>
+      </div>
+      <div class="stage-card pop-in d4" style="--c:var(--accent-orange)">
+        <span class="badge" style="background:var(--accent-orange)">第 4 關</span>
+        <h4>🔒 共用與權限防鎖</h4>
+        <p>指定「編輯」或「檢視」，並學會鎖定檔案不被下載。</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🛡️</div>
+    <div class="bubble">這四關非常實用，學完你就能在網路上與人安全互動，也是高年級做專題報告的基礎喔！</div>
+  </div>
+  <span class="slide-num">04 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">4 / 14</span><span class="sb-section">挑戰地圖</span></div>
+</section>
+
+<!-- ═══════ SLIDE 5 — STAGE 1: GMAIL BASICS ═══════ -->
+<section class="slide" id="s5">
+  <div class="win-titlebar">
+    <span class="ico">✉️</span>
+    <span class="name">關卡 1 - Gmail 寄信與收信基礎.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">05 / 14 · STAGE 1</span>
+    <p class="eyebrow slide-up">第 1 關 · Gmail 寄信與收信</p>
+    <h2 class="title-md slide-up d1">寄信有三個關鍵要素，<br>就像寫實體信一樣<span class="accent-blue">缺一不可</span>！</h2>
+    <ol class="steps-list slide-up d2">
+      <li><span class="step-num">1</span><div><b>收件者</b> 👤 ＝ 對方的 Email 地址。必須非常精準，連一個點、一個英文單字都不能錯。</div></li>
+      <li><span class="step-num">2</span><div><b>主旨</b> 🏷️ ＝ 信件的名字。例如：`四年甲班10號王小明_自然課作業`，讓對方一眼看懂這是什麼信。</div></li>
+      <li><span class="step-num">3</span><div><b>內容</b> ✍️ ＝ 你要說的話。寫好之後，別忘了點擊左下角的藍色<b>「傳送」</b>按鈕。</div></li>
+    </ol>
+    <div class="info-box tip slide-up d2">
+      💡 <b>如何查自己的信箱？</b> 登入後點擊右上角你的頭像，下面那串英文字母與數字就是你的 Email 地址喔（通常是以學校帳號為主）。
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">👨‍🏫</div>
+    <div class="bubble">很多學生第一次寄信，常常把要說的話塞進「主旨」欄位裡，這是不對的喔，主旨是標題，內容才是寫長文的地方。</div>
+  </div>
+  <span class="slide-num">05 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">5 / 14</span><span class="sb-section">Gmail 基礎</span></div>
+</section>
+
+<!-- ═══════ SLIDE 6 — EMAIL ETIQUETTE ═══════ -->
+<section class="slide" id="s6">
+  <div class="win-titlebar alt-green">
+    <span class="ico">🤵</span>
+    <span class="name">寫信的優雅姿態 - 信件禮儀.txt</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">06 / 14 · ETIQUETTE</span>
+    <p class="eyebrow slide-up">第 2 關 · 網路信件禮儀</p>
+    <h2 class="title-md slide-up d1">在網路上打字，也要像面對面一樣<br><span class="accent-green">有禮貌、體貼他人</span>。</h2>
+    <div class="two-col">
+      <div class="info-box slide-up d2">
+        <b>✅ 良好的寫信禮儀：</b>
+        <ul style="margin-top:8px;padding-left:22px">
+          <li><b>開頭稱呼</b>：例如「親愛的老師您好：」</li>
+          <li><b>簡單說明</b>：清楚說明這封信的目的</li>
+          <li><b>結尾署名</b>：寫上「學生 王小明 敬上」</li>
+          <li><b>文字得體</b>：使用黑或深藍字體，不亂打注音或火星文</li>
+        </ul>
+      </div>
+      <div class="info-box warn slide-up d2">
+        <b>❌ 請避免的粗魯行為：</b>
+        <ul style="margin-top:8px;padding-left:22px">
+          <li><b>深夜轟炸</b>：在晚上十點後寄信，或連續狂寄催促</li>
+          <li><b>刺眼顏色</b>：把內文字體改成大紅色、綠色五彩斑斕</li>
+          <li><b>語氣命令</b>：寫「快點幫我改作業！」</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">💌</div>
+    <div class="bubble">信件就像你的「第二張臉」，寫信有禮貌，收信的老師或同學也會更樂意幫助你。</div>
+  </div>
+  <span class="slide-num">06 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">6 / 14</span><span class="sb-section">信件禮儀</span></div>
+</section>
+
+<!-- ═══════ SLIDE 7 — ATTACHMENTS ═══════ -->
+<section class="slide" id="s7">
+  <div class="win-titlebar">
+    <span class="ico">📎</span>
+    <span class="name">關卡 2 - 迴紋針與附件傳送.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">07 / 14 · ATTACHMENT</span>
+    <p class="eyebrow slide-up">第 2 關 · 夾帶附件</p>
+    <h2 class="title-lg slide-up d1">認識<span class="accent-blue">「迴紋針」</span>圖示，<br>把檔案牢牢別在信件上。</h2>
+    <div class="two-col">
+      <div class="info-box slide-up d2">
+        <b>📂 如何夾帶檔案？</b>
+        <ol style="margin-top:8px;padding-left:22px">
+          <li>點選撰寫視窗下方的 <b>「迴紋針 (夾帶檔案)」</b></li>
+          <li>在跳出的資料夾中選擇你要傳的檔案</li>
+          <li>點選「開啟」，等待信件下方跑完進度條</li>
+          <li>看到藍色檔名出現在最下方，就別好啦 ✓</li>
+        </ol>
+      </div>
+      <div class="info-box warn slide-up d2">
+        <b>⚠️ 兩大安全防護鐵律：</b>
+        <ul style="margin-top:8px;padding-left:22px">
+          <li><b>容量限制 25MB</b>：大於 25MB 的影片或大檔案，Gmail 會自動轉換為雲端硬碟連結。</li>
+          <li><b>危險防線</b>：絕對不可傳送或點開不明的 <b class="accent-red">.exe 程式檔</b>，那通常是電腦病毒！</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">📎</div>
+    <div class="bubble">很多同學按了傳送，卻沒注意到「進度條還沒跑完」就把網頁關掉，結果作業就沒有跟著寄出去囉。</div>
+  </div>
+  <span class="slide-num">07 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">7 / 14</span><span class="sb-section">附件上傳</span></div>
+</section>
+
+<!-- ═══════ SLIDE 8 — STAGE 3: DRIVE INTRO ═══════ -->
+<section class="slide" id="s8">
+  <div class="win-titlebar alt-orange">
+    <span class="ico">📁</span>
+    <span class="name">關卡 3 - 雲端硬碟的基本修練.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">08 / 14 · STAGE 3</span>
+    <p class="eyebrow slide-up">第 3 關 · 雲端硬碟管理</p>
+    <h2 class="title-md slide-up d1">雲端硬碟三好處：<br><span class="accent-orange">不占空間、隨時拿取、不易弄丟</span></h2>
+    <div class="two-col">
+      <div class="info-box slide-up d2">
+        <b>🎒 數位大背包的魔法：</b>
+        <ul style="margin-top:8px;padding-left:22px">
+          <li>只要有網路，你在<b>任何一台電腦</b>上登入 Google 帳號，都能找到存在這裡的檔案。</li>
+          <li>電腦硬碟壞掉、隨身碟不見也沒關係，雲端資料會被妥善備份。</li>
+        </ul>
+      </div>
+      <div class="info-box tip slide-up d2">
+        <b>📂 建立資料夾分類：</b>
+        <ul style="margin-top:8px;padding-left:22px">
+          <li>隨意亂丟檔案，就像把考卷揉成一團丟進書包。</li>
+          <li>請點選 <b>「新增」</b> ➔ <b>「新資料夾」</b>，建立如「資訊課作業」、「美勞作品」等資料夾，讓背包井然有序。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🎒</div>
+    <div class="bubble">建議養成好習慣：一邊上傳檔案，一邊把它拖曳進正確的資料夾。這樣找資料會省下非常多時間！</div>
+  </div>
+  <span class="slide-num">08 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">08 / 14</span><span class="sb-section">雲端基礎</span></div>
+</section>
+
+<!-- ═══════ SLIDE 9 — DRIVE STORAGE ═══════ -->
+<section class="slide" id="s9">
+  <div class="win-titlebar alt-orange">
+    <span class="ico">♻️</span>
+    <span class="name">空間危機警告 - 釋放背包容量.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">09 / 14 · STORAGE</span>
+    <p class="eyebrow slide-up">第 3 關 · 空間管理</p>
+    <h2 class="title-md slide-up d1">數位背包也有裝滿的一天！<br>認識 <span class="accent-red">15GB 的空間防護線</span>。</h2>
+    <div class="two-col">
+      <div class="info-box warn slide-up d2">
+        <b>🚨 空間裝滿的後果：</b><br>
+        一旦你的 Google 雲端儲存空間超過 15GB，你將<b>無法建立任何 Google 文件/簡報</b>，也無法上傳新作業，更嚴重的是，你的 <b>Gmail 信箱會拒收所有來信</b>！
+      </div>
+      <div class="info-box tip slide-up d2">
+        <b>🗑️ 釋放空間的正確姿勢：</b><br>
+        當你把檔案選取後按下「刪除」，它只是被移到<b>「垃圾桶」</b>，仍然占用空間！<br>
+        必須主動點擊垃圾桶 ➔ 選擇 <b>「清空垃圾桶」</b>，空間才會被真正吐出來喔！
+      </div>
+    </div>
+    <div class="info-box bsod slide-up d2" style="margin-top:14px">
+      ⚠️ <b>安全警告</b>：學校的 Google 帳號是給同學做功課用的，<b>禁止用來備份個人遊戲、動漫或與學習無關的超大影片</b>，否則會被系統自動警告喔！
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🗑️</div>
+    <div class="bubble">這就像家裡的垃圾袋。把垃圾丟進垃圾桶，如果不把垃圾袋提到外面丟掉，家裡還是會塞滿垃圾的！</div>
+  </div>
+  <span class="slide-num">09 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">09 / 14</span><span class="sb-section">空間清理</span></div>
+</section>
+
+<!-- ═══════ SLIDE 10 — STAGE 4: SHARING ═══════ -->
+<section class="slide" id="s10">
+  <div class="win-titlebar alt-purple">
+    <span class="ico">🔒</span>
+    <span class="name">關卡 4 - 檔案共用與權限魔法鎖.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">10 / 14 · STAGE 4</span>
+    <p class="eyebrow slide-up">第 4 關 · 檔案共用</p>
+    <h2 class="title-md slide-up d1">不用印出來，直接在網路傳送檔案！<br>學會正確開啟<span class="accent-purple">「共用權限」</span>。</h2>
+    <ol class="steps-list slide-up d2">
+      <li><span class="step-num">1</span><div><b>選取共用對象</b>：右鍵點選檔案 ➔ 選擇「共用」，輸入對方的 Email 帳號。</div></li>
+      <li><span class="step-num">2</span><div><b>分工權限角色</b>：根據需求設定為「編輯者」或「檢視者」。</div></li>
+      <li><span class="step-num">3</span><div><b>安全防護鎖</b>：不希望檢視者偷偷下載或複製？點擊共用右上角的齒輪，取消勾選「允許檢視者下載、列印與複製」。</div></li>
+    </ol>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🤝</div>
+    <div class="bubble">共用功能好比把考卷借給同學。有的人你只希望他看（檢視），有的人你要跟他一起寫（編輯），角色千萬要分對。</div>
+  </div>
+  <span class="slide-num">10 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">10 / 14</span><span class="sb-section">共用設定</span></div>
+</section>
+
+<!-- ═══════ SLIDE 11 — ROLES COMPARISON ═══════ -->
+<section class="slide" id="s11">
+  <div class="win-titlebar alt-purple">
+    <span class="ico">⚖️</span>
+    <span class="name">權限角色大比拼 - Roles.txt</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">11 / 14 · ROLES</span>
+    <p class="eyebrow slide-up">權限管理對比</p>
+    <h2 class="title-md slide-up d1">「編輯者」 vs 「檢視者」<br>權限大不同，搞錯會洩漏隱私喔！</h2>
+    
+    <table class="cmp-table slide-up d1">
+      <thead>
+        <tr>
+          <th>動作功能</th>
+          <th>👁️ 檢視者 (Viewer)</th>
+          <th>✏️ 編輯者 (Editor)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>看見檔案內容</td>
+          <td class="ok">✓ 可以</td>
+          <td class="ok">✓ 可以</td>
+        </tr>
+        <tr>
+          <td>動手修改、打字</td>
+          <td class="no">✗ 不可以</td>
+          <td class="ok">✓ 可以</td>
+        </tr>
+        <tr>
+          <td>刪除檔案</td>
+          <td class="no">✗ 不可以</td>
+          <td class="no">✗ 不可以 (僅限擁有者)</td>
+        </tr>
+        <tr>
+          <td>修改共用權限設定</td>
+          <td class="no">✗ 不可以</td>
+          <td class="ok">✓ 可以 (預設開啟)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="info-box tip slide-up d2" style="margin-top:14px">
+      💡 <b>最佳實踐：</b> 和組員做分組簡報，給「編輯者」權限；寫完作業傳給老師改，只要給「檢視者」或「加註者」即可，以防不小心被改壞。
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">⚖️</div>
+    <div class="bubble">如果不小心把檔案設成了「任何人都可以編輯」，那全世界的人都能改你的作品喔！要特別小心。</div>
+  </div>
+  <span class="slide-num">11 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">11 / 14</span><span class="sb-section">權限對照</span></div>
+</section>
+
+<!-- ═══════ SLIDE 12 — CLASSROOM LOGIN ═══════ -->
+<section class="slide" id="s12">
+  <div class="win-titlebar">
+    <span class="ico">🏫</span>
+    <span class="name">Google Classroom 登入障礙排除 - FAQ.doc</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">12 / 14 · CLASSROOM</span>
+    <p class="eyebrow slide-up">常見疑難排解</p>
+    <h2 class="title-md slide-up d1">進不去老師的雲端教室？<br>教你 <span class="accent-red">2 個排除秘訣</span>！</h2>
+    <div class="two-col">
+      <div class="info-box slide-up d2">
+        <b>🔑 秘訣 1：檢查帳號</b><br>
+        很多同學因為瀏覽器自動登入了爸爸、媽媽的「個人 Google 帳號 (結尾為 @gmail.com)」，所以無法加入學校的 Classroom。<br>
+        <strong>請確認改用學校發的專用帳號登入！</strong>
+      </div>
+      <div class="info-box tip slide-up d2">
+        <b>🔢 秘訣 2：代碼格式</b><br>
+        老師給的「課程代碼」通常是 6 到 8 個英文與數字組成。請仔細核對有沒有打錯字，或者是多打了空白鍵。
+      </div>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🗝️</div>
+    <div class="bubble">遇到問題先不要慌，絕大多數都是因為「用錯個人帳號」造成的，切換回學校帳號就沒問題了！</div>
+  </div>
+  <span class="slide-num">12 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">12 / 14</span><span class="sb-section">登入故障</span></div>
+</section>
+
+<!-- ═══════ SLIDE 13 — SUBMIT JOB TROUBLE ═══════ -->
+<section class="slide" id="s13">
+  <div class="win-titlebar alt-red">
+    <span class="ico">🔥</span>
+    <span class="name">Classroom 作業上傳失敗救援 - Fixit.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">13 / 14 · TROUBLESHOOTING</span>
+    <p class="eyebrow slide-up">交作業救援</p>
+    <h2 class="title-md slide-up d1">Classroom 交作業卡住？<br>試試這個<span class="accent-red">「複製救援法」</span>。</h2>
+    <div class="info-box warn slide-up d1">
+      <b>❓ 症狀：點擊「繳交」卻彈出「無法附加檔案，請重試」的紅色訊息。</b>
+    </div>
+    <ol class="steps-list slide-up d2">
+      <li><span class="step-num">1</span><div>把寫好的作業內容複製下來，開一個「新的空白檔案」貼上並重新存檔。</div></li>
+      <li><span class="step-num">2</span><div>回到 Classroom 該項作業，把原本一直報錯的「舊附件檔案」按「✕」移除。</div></li>
+      <li><span class="step-num">3</span><div>重新夾帶上傳剛才存的「新檔案」，再點一次「繳交」即可成功。</div></li>
+    </ol>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🩹</div>
+    <div class="bubble">這招叫做「置換大法」，因為原本的檔案可能在雲端暫存中損壞了，用新檔案覆蓋通常能瞬間解決！</div>
+  </div>
+  <span class="slide-num">13 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">13 / 14</span><span class="sb-section">交件排除</span></div>
+</section>
+
+<!-- ═══════ SLIDE 14 — WRAP-UP ═══════ -->
+<section class="slide closing" id="s14">
+  <div class="win-titlebar">
+    <span class="ico">🏆</span>
+    <span class="name">挑戰成功 - 結業儀式.exe</span>
+    <div class="controls"><button class="btn">_</button><button class="btn">□</button><button class="btn" style="background:var(--red-x);color:#fff" onclick="window.location.href='index.html'">✕</button></div>
+  </div>
+  <div class="win-content">
+    <span class="slide-title-tag">14 / 14 · CONGRATS</span>
+    <h2 class="closing-title title-lg slide-up">🎉 恭喜你！通關成功！</h2>
+    <p class="signoff slide-up d1">你已經掌握了 Gmail 與雲端硬碟的數位小達人神技。</p>
+    
+    <div class="info-box tip slide-up d2" style="max-width:700px; margin:0 auto 20px;">
+      <b>🌟 今日回家挑戰：</b><br>
+      嘗試寄一封電子郵件給老師或爸爸媽媽，寫信詢問他們平常都是怎麼用雲端硬碟分類檔案的！
+    </div>
+
+    <div class="url-row slide-up d2">
+      <a href="index.html" class="url-box" style="text-decoration:none; color:var(--link); font-weight:bold;">🔙 回到教學駕駛艙首頁</a>
+    </div>
+  </div>
+  <div class="speaker">
+    <div class="avatar">🥳</div>
+    <div class="bubble">今天的資訊課圓滿完成，大家可以開始執行「正確關機步驟」，關機好就可以收拾書包準備下課囉！</div>
+  </div>
+  <span class="slide-num">14 / 14</span>
+  <div class="win-statusbar"><span class="sb-section">14 / 14</span><span class="sb-section">結束課程</span></div>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+
+<!-- Keyboard Help Hint -->
+<div class="hint">按 <b>[空白鍵]</b> 或 <b>[→]</b> 下一頁 | <b>[←]</b> 上一頁 | <b>[Esc]</b> 退回首頁</div>
+
+<!-- Overview Overlay -->
+<div class="overview" id="overview-zone">
+  <h3>📊 投影片大綱檢視 (雙擊投影片切換)</h3>
+  <div class="overview-grid" id="overview-grid">
+    <!-- Generated dynamically -->
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// 投影片狀態與切換邏輯
+// ─────────────────────────────────────────────────────────────
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentIdx = 0;
+
+function safeInit(name, fn){
+  try { fn(); } catch(e) { console.error('[slide error] ' + name + ':', e); }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  safeInit('initClock', initClock);
+  safeInit('initOverview', initOverview);
+  safeInit('showSlide', () => showSlide(0));
+});
+
+// 時鐘
+function initClock() {
+  const clockEl = document.getElementById('tb-clock');
+  function update() {
+    const d = new Date();
+    let h = d.getHours().toString().padStart(2, '0');
+    let m = d.getMinutes().toString().padStart(2, '0');
+    clockEl.textContent = `${h}:${m}`;
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// 顯示投影片
+function showSlide(idx) {
+  if (idx < 0 || idx >= totalSlides) return;
+  
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === idx);
+  });
+  
+  currentIdx = idx;
+  
+  // 更新狀態列與標題
+  const currentSlide = slides[idx];
+  const name = currentSlide.querySelector('.win-titlebar .name').textContent;
+  document.getElementById('tb-current').textContent = `📧 ${name}`;
+  
+  // 進度條
+  const pct = ((idx + 1) / totalSlides) * 100;
+  document.getElementById('progress-fill').style.width = `${pct}%`;
+  
+  // 關閉大綱
+  document.getElementById('overview-zone').classList.remove('show');
+}
+
+// 導航鍵
+function nextSlide() {
+  if (currentIdx < totalSlides - 1) {
+    showSlide(currentIdx + 1);
+  }
+}
+
+function prevSlide() {
+  if (currentIdx > 0) {
+    showSlide(currentIdx - 1);
+  }
+}
+
+// 鍵盤監聽 (Esc 雙擊退回 index.html)
+let escPressedOnce = false;
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    prevSlide();
+  } else if (e.key === 'Home') {
+    showSlide(0);
+  } else if (e.key === 'End') {
+    showSlide(totalSlides - 1);
+  } else if (e.key === 'Escape') {
+    const overview = document.getElementById('overview-zone');
+    if (overview.classList.contains('show')) {
+      overview.classList.remove('show');
+    } else {
+      // 兩段式退回
+      window.location.href = 'index.html';
+    }
+    e.preventDefault();
+  }
+});
+
+// 大綱檢視
+function initOverview() {
+  const grid = document.getElementById('overview-grid');
+  grid.innerHTML = '';
+  
+  slides.forEach((slide, i) => {
+    const titleTag = slide.querySelector('.slide-title-tag').textContent;
+    const name = slide.querySelector('.win-titlebar .name').textContent;
+    const card = document.createElement('div');
+    card.className = 'ov-card';
+    card.onclick = () => showSlide(i);
+    
+    card.innerHTML = `
+      <div class="num">${i+1}</div>
+      <div class="t">${titleTag.split(' · ')[1] || 'Slide'}</div>
+      <div class="s">${name}</div>
+    `;
+    grid.appendChild(card);
+  });
+  
+  // 雙擊 slide 進入大綱
+  document.querySelectorAll('.win-content').forEach(content => {
+    content.addEventListener('dblclick', () => {
+      document.getElementById('overview-zone').classList.toggle('show');
+    });
+  });
+}
+</script>
+</body>
+</html>
