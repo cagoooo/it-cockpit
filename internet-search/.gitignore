@@ -1,0 +1,5 @@
+# 忽略大型媒體檔案，防止 Git 體積過大
+assets/*.mp4
+assets/*.pdf
+*.mp4
+*.pdf

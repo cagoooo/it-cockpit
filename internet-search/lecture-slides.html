@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>網路搜查特攻隊：認識網際網路與搜尋高手｜演講簡報</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=Space+Mono:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #fef9f0;
+      --paper: #fef9f0;
+      --paper-2: #fff8ee;
+      --paper-3: #ffffff;
+      --ink: #2c2c2c;
+      --c1: #ff6b6b; /* 漫畫紅 */
+      --c2: #ffa94d; /* 漫畫橘 */
+      --c3: #51cf66; /* 漫畫綠 */
+      --c4: #339af0; /* 漫畫藍 */
+      --c5: #cc5de8; /* 漫畫紫 */
+      --text: #2c2c2c;
+      --dim: #868686;
+      --border: 3px solid var(--text);
+      --shadow-riso: 6px 6px 0 var(--text);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Comic border layout */
+    .deck {
+      position: relative;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .slide {
+      position: absolute;
+      width: 90%; height: 85%;
+      background: var(--paper-3);
+      border: var(--border);
+      box-shadow: var(--shadow-riso);
+      padding: 48px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      transform: rotate(-0.3deg);
+    }
+    .slide.active {
+      display: flex;
+    }
+    
+    /* Comic border top visual decorator */
+    .slide::after {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0; height: 10px;
+      background: repeating-linear-gradient(45deg, var(--c1) 0, var(--c1) 15px, var(--c2) 15px, var(--c2) 30px);
+      border-bottom: 2px solid var(--text);
+    }
+
+    /* Title & Content Typo */
+    .slide-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .slide-badge {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem; background: var(--c1); color: #fff;
+      padding: 6px 12px; border: 2px solid var(--text);
+      box-shadow: 3px 3px 0 var(--text);
+    }
+    .slide-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.2rem; font-weight: 900;
+      margin: 0; color: var(--text);
+    }
+    
+    .slide-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    /* Layout Patterns */
+    .grid-2 {
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 36px; width: 100%; height: 100%; align-items: center;
+    }
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; width: 100%; height: 100%; align-items: center;
+    }
+
+    /* Cards in Slides */
+    .slide-card {
+      background: var(--paper-2);
+      border: var(--border);
+      padding: 24px;
+      box-shadow: 4px 4px 0 var(--text);
+      position: relative;
+    }
+    .slide-card.accent {
+      background: #fff0db;
+    }
+    .slide-card h3 {
+      margin: 0 0 12px; font-size: 1.3rem; font-family: 'Noto Serif TC', serif; font-weight: 900;
+    }
+    .slide-card p {
+      margin: 0; font-size: 1.05rem; line-height: 1.6;
+    }
+    
+    .big-num {
+      font-size: 4rem; font-weight: 900; color: var(--c1);
+      line-height: 1; margin-bottom: 12px; font-family: 'Space Mono', monospace;
+    }
+    
+    .quote-box {
+      font-size: 1.4rem; font-weight: 700; line-height: 1.6;
+      border-left: 6px solid var(--c1); padding-left: 20px;
+      margin: 24px 0; font-style: italic; color: #444;
+    }
+
+    /* Speaker Notes Bubble */
+    .speaker {
+      position: absolute; bottom: 20px; left: 32px;
+      display: flex; align-items: flex-end; gap: 14px;
+      z-index: 100; max-width: 55%;
+    }
+    .speaker .avatar {
+      width: 56px; height: 56px; background: var(--c2);
+      border: var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; box-shadow: 3px 3px 0 var(--text);
+      flex-shrink: 0;
+    }
+    .speaker .bubble {
+      background: var(--paper-2); border: 2px solid var(--text);
+      padding: 8px 14px; font-size: 0.95rem; font-weight: 700;
+      position: relative; box-shadow: 3px 3px 0 var(--text);
+      color: #333; line-height: 1.5;
+    }
+    .speaker .bubble::before {
+      content: ''; position: absolute; left: -10px; bottom: 14px;
+      border-style: solid; border-width: 6px 10px 6px 0;
+      border-color: transparent var(--text) transparent transparent;
+    }
+    .speaker .bubble::after {
+      content: ''; position: absolute; left: -7px; bottom: 14px;
+      border-style: solid; border-width: 6px 10px 6px 0;
+      border-color: transparent var(--paper-2) transparent transparent;
+    }
+
+    /* Slide Progress Bar */
+    .progress {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 8px;
+      background: #ddd; z-index: 1000;
+    }
+    .progress-fill {
+      height: 100%; background: var(--c3); width: 7.14%;
+      transition: width 0.2s;
+    }
+
+    /* Slide Hint Bar */
+    .hint {
+      position: fixed; bottom: 12px; right: 24px;
+      font-size: 0.8rem; font-weight: 700; color: var(--dim);
+      z-index: 1000; font-family: 'Space Mono', monospace;
+    }
+
+    /* Overview Modal (M Key) */
+    .overview {
+      position: fixed; inset: 0; background: rgba(254, 249, 240, 0.95);
+      z-index: 2000; display: none; padding: 48px;
+      overflow-y: auto;
+    }
+    .overview.show { display: block; }
+    .overview h3 {
+      font-family: 'Noto Serif TC', serif; font-size: 2rem; margin: 0 0 24px;
+      text-align: center; border-bottom: var(--border); padding-bottom: 12px;
+    }
+    .ov-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .ov-item {
+      background: #fff; border: 2px solid var(--text);
+      padding: 14px; cursor: pointer; transition: .15s;
+      box-shadow: var(--shadow-riso);
+    }
+    .ov-item:hover { transform: translateY(-2px); border-color: var(--c1); }
+    .ov-item.active { background: #ffebeb; border-color: var(--c1); }
+    .ov-num { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--c1); font-weight: 700; margin-bottom: 4px; }
+    .ov-title { font-size: 0.95rem; font-weight: 900; margin-bottom: 4px; }
+    .ov-desc { font-size: 0.8rem; color: var(--dim); line-height: 1.4; }
+
+    /* Cover Slide Specifics */
+    .cover-title {
+      font-family: 'Noto Serif TC', serif; font-size: 3.2rem; font-weight: 900;
+      line-height: 1.2; margin: 0 0 16px; color: var(--text);
+      text-shadow: 4px 4px 0 var(--c2);
+    }
+    .cover-sub {
+      font-size: 1.4rem; font-weight: 700; color: var(--dim); margin-bottom: 32px;
+    }
+    .cover-footer {
+      display: flex; gap: 24px; font-size: 1rem; font-weight: 700;
+      border-top: 2.5px dashed var(--text); padding-top: 24px;
+    }
+
+    /* Highlight badge style */
+    .highlight {
+      background: var(--c2); padding: 2px 8px; border: 1.5px solid var(--text);
+      box-shadow: 2px 2px 0 var(--text); display: inline-block; font-weight: 900;
+    }
+
+    @media (max-width: 720px) {
+      .slide { padding: 24px; height: 90%; }
+      .slide-title { font-size: 1.6rem; }
+      .speaker { display: none !important; }
+      .cover-title { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck" id="deck">
+    
+    <!-- Slide 1: 封面 -->
+    <section class="slide active" id="s1">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 01 / 14</span>
+        <span style="font-family:'Space Mono', monospace; font-weight: 700; font-size: 0.9rem;">IT COCKPIT LECTURE</span>
+      </div>
+      <div class="slide-body" style="justify-content: flex-start; align-items: flex-start; flex-direction: column;">
+        <h2 class="cover-title">🕵️ 網路搜查特攻隊：<br>認識網際網路與搜尋高手</h2>
+        <div class="cover-sub">三年級資訊科技 · 帶領孩子踏入奇妙網路探險的第一步</div>
+        <div class="cover-footer">
+          <span>👨‍🏫 主講者：阿凱老師</span>
+          <span>🏫 桃園市龍潭區石門國民小學</span>
+          <span>⏱️ 時間：40 分鐘</span>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">各位同學好！今天我們要化身為「網路搜查特攻隊」，一起探索奇妙的網路世界，看看怎麼找寶藏！</div>
+      </div>
+    </section>
+
+    <!-- Slide 2: 開場暖身 (HOOK) -->
+    <section class="slide" id="s2">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 02 / 14</span>
+        <span class="slide-title">如果世界上沒有網路？</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div>
+            <div class="quote-box">
+              「如果沒有網路，生活會變成什麼樣子呢？」
+            </div>
+            <p style="font-size: 1.15rem; font-weight: 700;">想像一下：<br>
+              ❌ 不能看 YouTube 上的卡通或黏土影片<br>
+              ❌ 爸爸媽媽沒辦法用 LINE 和外婆傳訊息聊天<br>
+              ❌ 自然課的作業沒辦法用電腦查昆蟲的照片了
+            </p>
+          </div>
+          <div class="slide-card accent">
+            <h3>💡 網路大奇蹟</h3>
+            <p>網際網路是人類歷史上最強大的連線發明，它把全世界的電腦通通連在一起，讓世界變成一個無距離的地球村！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">大家想一想，平常我們看影片、傳貼圖，都是因為有網路喔！如果沒有它，生活是不是會變得很不一樣？</div>
+      </div>
+    </section>
+
+    <!-- Slide 3: 網際網路是什麼 (WHAT) -->
+    <section class="slide" id="s3">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 03 / 14</span>
+        <span class="slide-title">網際網路：無形的大網子</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="slide-card">
+            <div class="big-num">01</div>
+            <h3>🌐 隱形的大漁網</h3>
+            <p>網際網路就像是一張<strong>看不見也摸不著的超級大網子</strong>。它用實體的網路線或無線的電波，把全世界各地的電腦、手機和平板通通連起來！</p>
+          </div>
+          <div class="slide-card accent">
+            <div class="big-num">02</div>
+            <h3>🚀 資料在旅行</h3>
+            <p>當我們上網看貓咪影片，這部影片的資料包（封包）就會像信件一樣，沿著這張大網子飛越千山萬水，送到你的螢幕上！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">網際網路就是把全世界電腦連在一起的大網子。有了這張網，資料才能像直升機一樣飛來飛去。</div>
+      </div>
+    </section>
+
+    <!-- Slide 4: 為什麼要學搜尋 (WHY) -->
+    <section class="slide" id="s4">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 04 / 14</span>
+        <span class="slide-title">為什麼要成為搜尋高手？</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="slide-card">
+            <h3>📦 資訊大爆炸</h3>
+            <p>全世界有數百萬個網站，如果我們只是在網路大海裡亂逛，就像在大森林裡迷路，根本找不到需要的東西。</p>
+          </div>
+          <div class="slide-card accent">
+            <h3>🔍 搜尋引擎幫忙</h3>
+            <p>「搜尋引擎」如 Google 搜尋，就是我們的超級百寶箱！它把網路上的資料通通分類整理好，等我們去拿。</p>
+          </div>
+          <div class="slide-card">
+            <h3>🔑 密碼找寶藏</h3>
+            <p>只要學會輸入精準的「通關密語（關鍵字）」，百寶箱就會在 1 秒內，把最正確的寶物呈現給我們！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">網路上的資料太多了。我們必須學會用正確的密碼發問，才能讓 Google 快速幫我們找出想要的答案。</div>
+      </div>
+    </section>
+
+    <!-- Slide 5: 瀏覽器與網址的秘密 -->
+    <section class="slide" id="s5">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 05 / 14</span>
+        <span class="slide-title">上網魔法船與網站地址</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="slide-card">
+            <h3>🚢 瀏覽器：上網的魔法船</h3>
+            <p>想要在網路海洋航行，必須坐上這艘船。我們最常用的是 <span class="highlight">Google Chrome</span>（紅黃綠藍圓球）。快速點滑鼠左鍵兩下就能開船！</p>
+          </div>
+          <div class="slide-card accent">
+            <h3>🚪 網址：網站的專屬門牌</h3>
+            <p>去朋友家要地址，去網站也要地址，這就是「網址」。必須精確輸入在瀏覽器最上方的<strong>網址列</strong>，打錯一個點或斜線就到不了囉！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">我們最常用的瀏覽器是 Google Chrome，它是帶我們出發的船。而網址就是地址，必須打得非常精確。</div>
+      </div>
+    </section>
+
+    <!-- Slide 6: 關鍵字—搜尋密語 -->
+    <section class="slide" id="s6">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 06 / 14</span>
+        <span class="slide-title">關鍵字：尋寶的通關密語</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div>
+            <p style="font-size: 1.2rem; font-weight: 700; margin: 0 0 16px;">當我們不知道網址，卻想找資料時：</p>
+            <p style="font-size: 1.1rem; line-height: 1.7;">
+              我們要對搜尋引擎輸入<span class="highlight">關鍵字</span>。關鍵字的特點是：<br>
+              <strong>「簡單、精準、不需要完整的句子」</strong>。<br><br>
+              ❌ 錯誤示範：「我想查查桃園市龍潭區石門國小的電話號碼是多少啊」<br>
+              ✅ 聰明示範：<span class="highlight">「石門國小 電話」</span>
+            </p>
+          </div>
+          <div class="slide-card accent">
+            <h3>💡 搜尋黃金法則</h3>
+            <p>把句子簡化成 1 到 2 個最重要的名詞，詞與詞中間<strong>空一格</strong>。空一格代表 AND 概念，會告訴搜尋引擎兩樣都要包含，最精準！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">請大家記住搜尋的通關密語：越精簡越好！兩個詞中間空一格，Google 會找得最快。</div>
+      </div>
+    </section>
+
+    <!-- Slide 7: 搜尋三步操作流程 -->
+    <section class="slide" id="s7">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 07 / 14</span>
+        <span class="slide-title">搜尋的三步操作流程</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="slide-card">
+            <div class="big-num">Step 1</div>
+            <h3>🚢 打開 Chrome</h3>
+            <p>用滑鼠雙擊桌面上的 Chrome 圖示，打開瀏覽器魔法船視窗。</p>
+          </div>
+          <div class="slide-card accent">
+            <div class="big-num">Step 2</div>
+            <h3>🚪 前往搜尋站</h3>
+            <p>在網址列輸入 <code>www.google.com</code>，按下鍵盤上的 <strong>Enter</strong> 鍵進入搜尋首頁。</p>
+          </div>
+          <div class="slide-card">
+            <div class="big-num">Step 3</div>
+            <h3>🔑 輸入密語</h3>
+            <p>點擊搜尋框，輸入精簡關鍵字（如「獵豹 速度」），按下 <strong>Enter</strong> 或點擊放大鏡！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">我們一起來複習：先開 Chrome，再進 Google 網站，最後輸入關鍵字按 Enter。這就是搜尋的三部曲。</div>
+      </div>
+    </section>
+
+    <!-- Slide 8: 實務應用情境 -->
+    <section class="slide" id="s8">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 08 / 14</span>
+        <span class="slide-title">我們的網路尋寶日常</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="slide-card">
+            <h3>🎨 卡通與娛樂</h3>
+            <p>「寶可夢 圖片」、「角落生物 桌布」<br>輸入密語，馬上找到喜愛的角色插圖，還能存下來欣賞。</p>
+          </div>
+          <div class="slide-card accent">
+            <h3>📚 作業小幫手</h3>
+            <p>「獨角仙 食物」、「蝴蝶 一生」<br>自然課要寫昆蟲觀察紀錄時，關鍵字能幫你秒查生活習性與資料。</p>
+          </div>
+          <div class="slide-card">
+            <h3>🗺️ 旅遊與探險</h3>
+            <p>「桃園市 景點」、「石門水庫 介紹」<br>放假想和爸爸媽媽出去玩，先查查好玩的地方和美食。</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">在生活中，不論是寫自然作業、還是找可愛圖片，學會下關鍵字都能讓我們省下很多時間喔！</div>
+      </div>
+    </section>
+
+    <!-- Slide 9: 實證 / 關鍵數據 -->
+    <section class="slide" id="s9">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 09 / 14</span>
+        <span class="slide-title">研究調查：小學生的搜尋障礙</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div>
+            <div class="quote-box">
+              「為什麼很多小朋友在網路上找不到需要的東西？」
+            </div>
+            <p style="font-size: 1.1rem; line-height: 1.7;">
+              研究指出，有將近 <span class="highlight">80% 的中年級學童</span>，在遇到搜尋任務時，會直接在搜尋框中打入<strong>一整句長長的問句</strong>。<br><br>
+              這會導致搜尋引擎抓出太多不相關的雜訊，反而讓學生迷失方向。這也是為什麼我們必須刻意練習<strong>「簡化詞彙」</strong>的原因！
+            </p>
+          </div>
+          <div class="slide-card accent" style="text-align: center;">
+            <div style="font-size: 5.5rem; font-weight: 900; color: var(--c1); font-family: 'Space Mono', monospace; line-height: 1;">80%</div>
+            <h3 style="margin-top: 10px;">的學童搜尋字數過長</h3>
+            <p>學會「斷句」與「抓重點」，是從資訊新手變身搜尋高手的第一關！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">有八成的小朋友搜尋時字打太多了！今天學完後，我們大家都要當那二成只打重點的搜尋高手喔！</div>
+      </div>
+    </section>
+
+    <!-- Slide 10: 關鍵字組合 (AND / OR) -->
+    <section class="slide" id="s10">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 10 / 14</span>
+        <span class="slide-title">進階密語組合 (AND/OR)</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="slide-card">
+            <h3>🤝 AND 的合作魔法（空一格）</h3>
+            <div class="highlight" style="font-family:'Space Mono', monospace; margin-bottom: 12px;">成語 學習單</div>
+            <p>中間空一格代表<strong>兩樣都要有</strong>。Google 會幫你把同時含有「成語」跟「學習單」的最棒網頁找出來。</p>
+          </div>
+          <div class="slide-card accent">
+            <h3>🎭 OR 的選擇魔法（大寫 OR）</h3>
+            <div class="highlight" style="font-family:'Space Mono', monospace; margin-bottom: 12px;">貓 OR 狗</div>
+            <p>中間加一個英文大寫 <strong>OR</strong> 代表<strong>有其中一個就行</strong>。不論是貓還是狗的圖片，它都會通通幫你找出來！</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">空格代表 AND（都要有），大寫 OR 代表其中一個有就行。這兩招是工程師也在用的搜尋祕技！</div>
+      </div>
+    </section>
+
+    <!-- Slide 11: 安全守護盾 -->
+    <section class="slide" id="s11">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 11 / 14</span>
+        <span class="slide-title">開啟個人安全防護罩</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="slide-card" style="border-color: var(--c1);">
+            <h3 style="color: var(--c1);">🚨 三不守則（防範危險）</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6;">
+              <strong>1. 不給個資：</strong>絕對不對網友說真實姓名、電話、地址和學校。<br>
+              <strong>2. 不單獨見面：</strong>絕對不答應和網路上認識的人私下出門見面。<br>
+              <strong>3. 不亂點連結：</strong>中獎廣告、奇怪影片連結絕對不點，防範中毒。
+            </p>
+          </div>
+          <div class="slide-card accent" style="border-color: var(--c3);">
+            <h3 style="color: var(--c3);">🛡️ 一要原則（尋求支援）</h3>
+            <p><strong>遇到奇怪的事，一定要馬上報告！</strong><br>
+              網路上如果有人讓你覺得不舒服、害怕，或者被要求給照片，不要隱瞞，請立刻跟老師、爸爸或媽媽說！
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">網路安全防護罩很重要：不給個資、不單獨見網友、不亂點連結。有奇怪的事一定要馬上跟大人說！</div>
+      </div>
+    </section>
+
+    <!-- Slide 12: 網路禮儀規範 -->
+    <section class="slide" id="s12">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 12 / 14</span>
+        <span class="slide-title">當個有禮貌的網路好公民</span>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="slide-card">
+            <h3>❤️ 將心比心</h3>
+            <p>在網路上說話要像在教室一樣有禮貌。不開難聽的玩笑、不謾罵或取笑同學，互相尊重。</p>
+          </div>
+          <div class="slide-card accent">
+            <h3>✍️ 打字清晰</h3>
+            <p>發訊息打字要乾淨正確，不用火星文或過多注音文，以免對方看不懂造成誤會。</p>
+          </div>
+          <div class="slide-card">
+            <h3>⏰ 注意時間</h3>
+            <p>不在深夜大家都睡覺的時候一直傳貼圖或訊息，打擾別人是非常不禮貌的行為。</p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">在網路上打字聊天，也要像在班上一樣遵守禮貌。將心比心、打字清楚，才是一個受歡迎的特攻隊員。</div>
+      </div>
+    </section>
+
+    <!-- Slide 13: 給搜查隊的 5 個叮嚀 -->
+    <section class="slide" id="s13">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 13 / 14</span>
+        <span class="slide-title">特攻隊員的 5 個叮嚀</span>
+      </div>
+      <div class="slide-body">
+        <p style="font-size: 1.2rem; font-weight: 700; text-align: center; width: 100%; margin: 0 0 10px;">記住上網尋寶的五個好習慣：</p>
+        <div class="grid-2" style="font-size: 1.1rem; line-height: 1.6; gap: 20px;">
+          <div class="slide-card">
+            <p>
+              1. <strong>細心輸入：</strong>仔細看網址，不打錯英文字母。<br>
+              2. <strong>精簡密語：</strong>抓出 1-2 個關鍵字搜尋，字不打多。<br>
+              3. <strong>保密隱私：</strong>真實姓名、學校電話絕對不給陌生人。
+            </p>
+          </div>
+          <div class="slide-card accent">
+            <p>
+              4. <strong>安全尋求：</strong>遇到奇怪視窗或可怕的事情立刻找大人。<br>
+              5. <strong>友善禮貌：</strong>在網路上不罵人、不半夜發訊息吵人。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">這五個叮嚀就是我們特攻隊的守則！大家回去上網時，都要時時刻刻記在心裡喔！</div>
+      </div>
+    </section>
+
+    <!-- Slide 14: Q&A / 結語 -->
+    <section class="slide" id="s14">
+      <div class="slide-header">
+        <span class="slide-badge">STAGE 14 / 14</span>
+        <span class="slide-title">尋寶結束，冒險開始！</span>
+      </div>
+      <div class="slide-body" style="flex-direction: column; justify-content: center; gap: 24px;">
+        <div class="stamp">SUCCESS!</div>
+        <h3 style="font-size: 1.6rem; margin: 0; font-family:'Noto Serif TC', serif; font-weight: 900; text-align: center;">
+          恭喜你通過訓練！準備開始你的網路大冒險！
+        </h3>
+        <p style="font-size: 1.1rem; text-align: center; color: var(--dim); font-weight: 700; margin: 0;">
+          有任何問題都可以舉手發問，或者跟旁邊的隊友討論喔！
+        </p>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">今天的訓練就到這邊，祝大家都能成為安全又聰明的搜尋高手！謝謝大家！</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Slide Navigation Overlay elements -->
+  <div class="progress">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+  
+  <div class="hint">
+    ← → 鍵換頁 · M 鍵章節 · F 鍵全螢幕 · S 鍵隱藏提詞 · Esc 鍵退出
+  </div>
+
+  <!-- Overview Modal -->
+  <div class="overview" id="overview">
+    <h3>📖 簡報章節導覽</h3>
+    <div class="ov-grid" id="ov-grid">
+      <!-- Dynamic list -->
+    </div>
+  </div>
+
+  <script>
+    const SLIDES_DATA = [
+      { id: 1, title: "封面", desc: "網路搜查特攻隊開場" },
+      { id: 2, title: "開場暖身 (HOOK)", desc: "如果沒有網路的生活？" },
+      { id: 3, title: "網際網路是什麼 (WHAT)", desc: "無形的大漁網與資料旅行" },
+      { id: 4, title: "為什麼要學搜尋", desc: "資訊森林與百寶箱" },
+      { id: 5, title: "瀏覽器與網址的秘密", desc: "魔法船與網站地址" },
+      { id: 6, title: "關鍵字—搜尋密語", desc: "簡單精準的搜尋密語" },
+      { id: 7, title: "搜尋三步操作流程", desc: "Chrome➔Google➔密語輸入" },
+      { id: 8, title: "我們的網路尋寶日常", desc: "卡通、作業、旅遊搜尋實例" },
+      { id: 9, title: "研究調查：搜尋障礙", desc: "80%學童搜尋句字過長" },
+      { id: 10, title: "關鍵字組合 (AND/OR)", desc: "空格 AND 與大寫 OR 魔法" },
+      { id: 11, title: "安全守護盾", desc: "網路安全三不一要守則" },
+      { id: 12, title: "當個有禮貌的好公民", desc: "將心比心、打字清晰與時間禮儀" },
+      { id: 13, title: "特攻隊員的 5 個叮嚀", desc: "上網尋寶的五個好習慣" },
+      { id: 14, title: "尋寶結束，冒險開始！", desc: "結語、Q&A與頒發證書" }
+    ];
+
+    let curIdx = 0;
+    const totalSlides = SLIDES_DATA.length;
+
+    function goSlide(idx) {
+      if (idx < 0) idx = 0;
+      if (idx >= totalSlides) idx = totalSlides - 1;
+      
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === idx);
+      });
+      
+      curIdx = idx;
+      
+      // Update progress bar
+      const fill = document.getElementById('progress-fill');
+      fill.style.width = ((idx + 1) / totalSlides * 100) + '%';
+      
+      // Update URL hash
+      history.replaceState(null, '', '#s' + (idx + 1));
+      
+      // Update overview list active item
+      const ovItems = document.querySelectorAll('.ov-item');
+      ovItems.forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+      });
+    }
+
+    function next() {
+      if (curIdx < totalSlides - 1) goSlide(curIdx + 1);
+    }
+    
+    function prev() {
+      if (curIdx > 0) goSlide(curIdx - 1);
+    }
+
+    function toggleOverview() {
+      const ov = document.getElementById('overview');
+      ov.classList.toggle('show');
+    }
+    
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    function toggleSpeaker() {
+      const speakers = document.querySelectorAll('.speaker');
+      speakers.forEach(s => {
+        s.style.display = (s.style.display === 'none') ? '' : 'none';
+      });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+      const ov = document.getElementById('overview');
+      if (ov.classList.contains('show')) {
+        if (['Escape', 'm', 'M'].includes(e.key)) {
+          ov.classList.remove('show');
+          e.preventDefault();
+        }
+        return;
+      }
+      
+      const k = e.key;
+      if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(k)) {
+        next(); e.preventDefault();
+      } else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(k)) {
+        prev(); e.preventDefault();
+      } else if (k === 'Home') {
+        goSlide(0); e.preventDefault();
+      } else if (k === 'End') {
+        goSlide(totalSlides - 1); e.preventDefault();
+      } else if (['m', 'M'].includes(k)) {
+        toggleOverview(); e.preventDefault();
+      } else if (['f', 'F'].includes(k)) {
+        toggleFullscreen(); e.preventDefault();
+      } else if (['s', 'S'].includes(k)) {
+        toggleSpeaker(); e.preventDefault();
+      } else if (k === 'Escape') {
+        // Esc 鍵兩段式切換 (重要雷點！)
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          // 不在全螢幕，直接跳回駕駛艙 index.html
+          window.location.href = 'index.html';
+        }
+        e.preventDefault();
+      }
+    });
+
+    // Mouse click navigation (left side = prev, right side = next)
+    document.addEventListener('click', e => {
+      // Don't click trigger if user clicks on button, link, speaker bubble or overview modal
+      if (e.target.closest('.speaker, .overview, .hint, .progress, a, button')) return;
+      if (e.clientX > window.innerWidth / 2) {
+        next();
+      } else {
+        prev();
+      }
+    });
+
+    // Mobile Swipe support
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    document.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 60) {
+        if (dx < 0) next(); else prev();
+      }
+    }, { passive: true });
+
+    // Render Overview Modal content
+    function initOverview() {
+      const grid = document.getElementById('ov-grid');
+      grid.innerHTML = '';
+      SLIDES_DATA.forEach((s, idx) => {
+        const item = document.createElement('div');
+        item.className = `ov-item ${idx === 0 ? 'active' : ''}`;
+        item.innerHTML = `
+          <div class="ov-num">SLIDE ${String(s.id).padStart(2, '0')}</div>
+          <div class="ov-title">${s.title}</div>
+          <div class="ov-desc">${s.desc}</div>
+        `;
+        item.onclick = () => {
+          goSlide(idx);
+          toggleOverview();
+        };
+        grid.appendChild(item);
+      });
+    }
+
+    // Init check hash
+    function initHash() {
+      const m = location.hash.match(/^#s(\d+)$/);
+      if (m) {
+        const idx = parseInt(m[1]) - 1;
+        if (idx >= 0 && idx < totalSlides) {
+          goSlide(idx);
+        }
+      }
+    }
+
+    // Safe DOM Init
+    document.addEventListener('DOMContentLoaded', () => {
+      initOverview();
+      initHash();
+    });
+  </script>
+</body>
+</html>

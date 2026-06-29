@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>網路搜查特攻隊：認識網際網路與搜尋高手｜三年級資訊科技教學駕駛艙</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/internet-search/">
+  <meta property="og:title" content="網路搜查特攻隊：認識網際網路與搜尋高手｜三年級資訊科技">
+  <meta property="og:description" content="認識無形的網際網路，學會使用瀏覽器與網址，掌握通關密語（關鍵字）搜尋，並開啟上網安全防護罩！">
+  <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/internet-search/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:site_name" content="IT COCKPIT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/internet-search/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #fef9f0;
+      --surface: #fff8ee;
+      --panel: #ffffff;
+      --c1: #ff6b6b;
+      --c2: #ffa94d;
+      --c3: #51cf66;
+      --c4: #339af0;
+      --c5: #cc5de8;
+      --text: #2c2c2c;
+      --dim: #868686;
+      --border: 2.5px solid var(--text);
+      --shadow-px: 5px 5px 0 var(--text);
+      --shadow-px-small: 3px 3px 0 var(--text);
+    }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* ===== Header ===== */
+    .site-header {
+      position: sticky; top: 0;
+      background: var(--surface);
+      border-bottom: var(--border);
+      z-index: 100;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.05);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1400px; margin: 0 auto; padding: 12px 24px;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .home-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border: var(--border); background: var(--panel); color: var(--text);
+      font-weight: 900; font-size: .85rem; letter-spacing: 1px;
+      transition: .15s; white-space: nowrap;
+      box-shadow: var(--shadow-px-small);
+    }
+    .home-btn:hover {
+      background: var(--c2);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--text);
+    }
+    .home-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 2px 2px 0 var(--text);
+    }
+    .header-info { display: flex; align-items: center; gap: 12px; }
+    .header-title { font-size: 1.2rem; font-weight: 900; margin: 0; }
+    .grade-badge {
+      background: var(--c1); color: #fff;
+      font-size: .8rem; font-weight: 700;
+      padding: 4px 10px; border: var(--border);
+      box-shadow: var(--shadow-px-small);
+    }
+
+    /* ===== Progress Bar ===== */
+    .progress-container {
+      display: flex; align-items: center; gap: 12px;
+      flex: 1; min-width: 280px; justify-content: flex-end;
+    }
+    .progress-bar-wrap {
+      width: 100%; max-width: 300px; height: 16px;
+      background: #eee; border: var(--border);
+      position: relative;
+    }
+    .progress-bar-fill {
+      height: 100%; background: var(--c3);
+      width: 0%; transition: width 0.3s;
+    }
+    .progress-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem; font-weight: 700;
+    }
+
+    /* ===== Mode Bar ===== */
+    .mode-bar {
+      background: var(--surface);
+      border-bottom: var(--border);
+      padding: 8px 24px;
+      display: flex; justify-content: flex-end; gap: 12px;
+      font-size: 0.9rem; font-weight: 700;
+    }
+    .mode-btn {
+      padding: 4px 12px; border: var(--border);
+      background: var(--panel); cursor: pointer;
+      box-shadow: var(--shadow-px-small); transition: .15s;
+    }
+    .mode-btn.active {
+      background: var(--c4); color: #fff;
+    }
+    .mode-btn:hover { transform: translateY(-1px); }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      background: var(--surface);
+      border: var(--border);
+      box-shadow: var(--shadow-px);
+      padding: 36px; margin-bottom: 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero-title { font-size: 1.8rem; font-weight: 900; margin: 0 0 12px; }
+    .hero-desc { font-size: 1rem; color: #444; margin: 0 0 24px; max-width: 800px; }
+    
+    .lecture-meta {
+      display: flex; gap: 18px; flex-wrap: wrap;
+      border-top: 1.5px dashed var(--text);
+      padding-top: 18px; margin-bottom: 18px;
+    }
+    .lecture-meta dl { margin: 0; display: flex; gap: 8px; font-size: 0.9rem; }
+    .lecture-meta dt { font-weight: 900; color: var(--dim); }
+    .lecture-meta dd { margin: 0; font-weight: 700; }
+    
+    .lecture-cta {
+      display: block; margin-top: 20px; padding: 18px 22px;
+      background: var(--c2); color: var(--text);
+      border: var(--border); box-shadow: var(--shadow-px);
+      transition: .2s; cursor: pointer;
+    }
+    .lecture-cta:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--text); }
+    .lecture-cta:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--text); }
+    .lecture-cta .cta-tag {
+      display: inline-block; font-family: 'Space Mono', monospace; font-size: .7rem;
+      letter-spacing: .15em; background: var(--panel); color: var(--text);
+      padding: 2px 8px; margin-bottom: 8px; border: 1.5px solid var(--text);
+    }
+    .lecture-cta .cta-title {
+      display: block; font-size: 1.3rem; font-weight: 900; margin-bottom: 4px;
+    }
+    .lecture-cta .cta-sub { display: block; font-size: .85rem; opacity: .9; }
+
+    /* ===== Learning Goals ===== */
+    .goals-container {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px;
+    }
+    .goal-chip {
+      background: var(--panel); border: var(--border);
+      padding: 8px 16px; font-weight: 700; font-size: 0.95rem;
+      box-shadow: var(--shadow-px-small); display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ===== Stage Pills (Navigation) ===== */
+    .stage-pills {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px;
+      border-bottom: var(--border); padding-bottom: 16px;
+    }
+    .stage-pill {
+      padding: 10px 20px; border: var(--border);
+      background: var(--panel); font-weight: 900; font-size: 0.95rem;
+      cursor: pointer; box-shadow: var(--shadow-px-small); transition: .15s;
+    }
+    .stage-pill:hover { transform: translateY(-2px); }
+    .stage-pill.active {
+      background: var(--c1); color: #fff;
+    }
+
+    /* ===== Level Sections ===== */
+    .level-section {
+      background: var(--panel);
+      border: var(--border);
+      box-shadow: var(--shadow-px);
+      padding: 32px; margin-bottom: 48px;
+      display: none;
+    }
+    .level-section.active { display: block; }
+    
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .stage-badge {
+      font-family: 'Press Start 2P', monospace;
+      background: var(--c5); color: #fff;
+      font-size: 0.55rem; padding: 6px 12px;
+      border: var(--border); box-shadow: var(--shadow-px-small);
+    }
+    .section-title {
+      font-size: 1.4rem; font-weight: 900; margin: 0;
+    }
+
+    /* ===== Steps Card ===== */
+    .steps-card {
+      background: var(--surface);
+      border: var(--border);
+      padding: 24px; margin-bottom: 32px;
+      position: relative;
+    }
+    .steps-card h4 { margin: 0 0 16px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+    .steps-list { list-style: none; padding: 0; margin: 0; }
+    .steps-list li {
+      font-size: 1rem; margin-bottom: 16px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--c1); color: #fff; border: 2px solid var(--text);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.9rem; flex-shrink: 0;
+    }
+    .step-desc { padding-top: 2px; }
+
+    /* ===== Canvas Section ===== */
+    .canvas-card {
+      border: var(--border); background: #fff;
+      padding: 20px; margin-bottom: 32px;
+      box-shadow: var(--shadow-px);
+    }
+    .canvas-title {
+      font-size: 1.05rem; font-weight: 900; margin: 0 0 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .canvas-container {
+      position: relative; width: 100%; max-width: 800px;
+      margin: 0 auto; aspect-ratio: 16/9;
+      background: #fafafa; border: var(--border);
+      overflow: hidden;
+    }
+    .canvas-container canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    .canvas-hint {
+      text-align: center; font-size: 0.85rem; color: var(--dim);
+      margin-top: 10px; font-weight: 700;
+    }
+
+    /* ===== Quiz Section ===== */
+    .quiz-card {
+      border: var(--border); background: var(--surface);
+      padding: 24px; margin-bottom: 32px;
+    }
+    .quiz-title { font-size: 1.05rem; font-weight: 900; margin: 0 0 20px; display: flex; align-items: center; gap: 8px; }
+    .quiz-item { margin-bottom: 24px; }
+    .quiz-q { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; }
+    .quiz-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .quiz-opt {
+      padding: 12px 18px; border: var(--border);
+      background: var(--panel); font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; transition: .15s; text-align: left;
+      box-shadow: var(--shadow-px-small);
+    }
+    .quiz-opt:hover { background: #fef0db; transform: translateY(-1px); }
+    .quiz-opt.correct { background: var(--c3) !important; color: #fff; }
+    .quiz-opt.wrong { background: var(--c1) !important; color: #fff; }
+    .quiz-feedback {
+      margin-top: 12px; font-weight: 700; font-size: 0.95rem;
+      display: none; padding: 8px 14px; border: 1.5px solid var(--text);
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct-bg { background: #d4f8d4; }
+    .quiz-feedback.wrong-bg { background: #ffdada; }
+
+    /* ===== Teacher Only Note ===== */
+    .teacher-note {
+      display: none; background: #e8f5e9; border: 2px solid #2e7d32;
+      padding: 20px; margin-top: 24px; box-shadow: var(--shadow-px-small);
+    }
+    .teacher-note.show { display: block; }
+    .teacher-note h5 { margin: 0 0 10px; color: #2e7d32; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+
+    /* ===== NLM Video Section ===== */
+    .nlm-video-section {
+      max-width: 1400px; margin: 0 auto 48px; padding: 0 24px;
+    }
+    .nlm-video-section h3 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem; color: var(--c5);
+      margin-bottom: 16px; letter-spacing: .05em;
+    }
+    .video-wrap {
+      background: var(--panel); border: var(--border);
+      box-shadow: var(--shadow-px); position: relative; overflow: hidden;
+    }
+    .video-ratio {
+      position: relative; padding-top: 56.25%; width: 100%;
+    }
+    .video-ratio iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+    }
+    .video-meta {
+      background: var(--surface); border-top: var(--border);
+      padding: 12px 18px; display: flex; align-items: center;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .video-meta .nlm-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--c5); color: #fff;
+      font-size: 0.75rem; font-weight: 700;
+      padding: 4px 10px; white-space: nowrap; border: 1.5px solid var(--text);
+    }
+    .video-meta .video-hint {
+      font-size: 0.9rem; color: var(--dim); font-weight: 700;
+    }
+    .video-no-id {
+      padding: 48px 20px; text-align: center;
+      font-size: 0.95rem; color: var(--dim); font-weight: 700;
+      border-bottom: var(--border);
+    }
+
+    /* ===== Slide Player ===== */
+    .slide-player-section {
+      max-width: 1400px; margin: 0 auto 48px; padding: 0 24px;
+    }
+    .slide-player-section h3 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem; color: var(--c4);
+      margin-bottom: 16px; letter-spacing: .05em;
+    }
+    .slide-player {
+      border: var(--border); background: #000;
+      box-shadow: var(--shadow-px); position: relative;
+    }
+    .slide-player-main {
+      position: relative; aspect-ratio: 16/9; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .slide-player-main img {
+      width: 100%; height: 100%; object-fit: contain;
+    }
+    .slide-nav-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px; background: rgba(255,255,255,0.8);
+      border: var(--border); font-size: 1.5rem; font-weight: 900;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: .15s; z-index: 10;
+    }
+    .slide-nav-btn:hover { background: var(--c4); color: #fff; }
+    .slide-nav-btn.prev { left: 16px; }
+    .slide-nav-btn.next { right: 16px; }
+    
+    .slide-fs-btn {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--c4); color: #fff; border: var(--border);
+      padding: 8px 14px; font-size: .9rem; cursor: pointer;
+      font-weight: 700; box-shadow: var(--shadow-px-small);
+      z-index: 10; display: flex; align-items: center; gap: 6px;
+      transition: .15s;
+    }
+    .slide-fs-btn:hover { transform: translateY(-2px); }
+    
+    .slide-counter {
+      position: absolute; bottom: 12px; left: 12px;
+      background: rgba(0,0,0,0.7); color: #fff;
+      padding: 4px 10px; font-family: 'Space Mono', monospace;
+      font-size: 0.85rem; z-index: 10; border-radius: 4px;
+    }
+    
+    .slide-strip {
+      display: flex; gap: 8px; padding: 12px;
+      background: var(--surface); border-top: var(--border);
+      overflow-x: auto; scrollbar-width: thin;
+    }
+    .strip-thumb {
+      width: 120px; aspect-ratio: 16/9; flex-shrink: 0;
+      border: 1.5px solid var(--text); cursor: pointer;
+      opacity: 0.6; transition: .15s; overflow: hidden;
+    }
+    .strip-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .strip-thumb:hover, .strip-thumb.active { opacity: 1; }
+    .strip-thumb.active { border: 3px solid var(--c4); }
+
+    /* Fullscreen Slide Overlay */
+    #slide-fs {
+      position: fixed; inset: 0; background: #000;
+      z-index: 9999; display: none; align-items: center; justify-content: center;
+    }
+    #slide-fs.show { display: flex; }
+    #slide-fs img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    
+    .fs-close {
+      position: absolute; top: 20px; right: 20px;
+      width: 48px; height: 48px; background: rgba(0,0,0,0.5);
+      border: 2px solid #fff; color: #fff; font-size: 1.5rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; z-index: 10000;
+    }
+    .fs-close:hover { background: #fff; color: #000; }
+    
+    #slide-fs .fs-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 56px; height: 80px; background: rgba(0,0,0,0.6);
+      border: 2px solid var(--c4); color: var(--c4);
+      font-size: 2rem; font-weight: 900; cursor: pointer; z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #slide-fs .fs-nav.prev { left: 20px; }
+    #slide-fs .fs-nav.next { right: 20px; }
+    #slide-fs .fs-nav:hover { background: var(--c4); color: #fff; box-shadow: 0 0 16px var(--c4); }
+    #slide-fs .fs-nav:active { transform: translateY(-50%) scale(.95); }
+    
+    .fs-counter {
+      position: absolute; bottom: 20px; left: 20px;
+      background: rgba(0,0,0,0.7); color: #fff;
+      padding: 6px 14px; font-family: 'Space Mono', monospace;
+      font-size: 0.95rem; border-radius: 4px; border: 1.5px solid #555;
+    }
+
+    body.slides-fullscreen { overflow: hidden; }
+    body.slides-fullscreen .site-header,
+    body.slides-fullscreen .float-tools,
+    body.slides-fullscreen .draw-toolbar { display: none !important; }
+
+    /* ===== Resources & FAQ ===== */
+    .nb-section {
+      background: var(--panel); border: var(--border);
+      box-shadow: var(--shadow-px); padding: 32px;
+      margin-bottom: 48px;
+    }
+    .nb-section h3 { font-size: 1.3rem; font-weight: 900; margin: 0 0 24px; }
+    
+    .nb-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px; margin-bottom: 32px;
+    }
+    .nb-card {
+      border: var(--border); padding: 20px;
+      background: var(--surface); box-shadow: var(--shadow-px-small);
+      transition: .15s;
+    }
+    .nb-card:hover { transform: translateY(-2px); }
+    .nb-card h4 { margin: 0 0 10px; font-size: 1rem; color: var(--c1); }
+    .nb-card p { margin: 0 0 16px; font-size: 0.9rem; color: var(--dim); }
+    
+    .faq-title { font-size: 1.1rem; font-weight: 900; margin: 32px 0 16px; border-bottom: 1.5px dashed var(--text); padding-bottom: 8px; }
+    .faq-list { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: var(--border); background: var(--panel); padding: 18px; box-shadow: var(--shadow-px-small); }
+    .faq-q { font-weight: 900; color: var(--c1); margin-bottom: 8px; font-size: 1rem; }
+    .faq-a { font-size: 0.95rem; margin: 0; color: #444; }
+
+    /* ===== Float Tools ===== */
+    .float-tools {
+      position: fixed; right: 20px; bottom: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+      z-index: 400;
+    }
+    .float-btn {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: var(--border); background: var(--panel);
+      font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: var(--shadow-px-small); transition: .15s;
+    }
+    .float-btn:hover { transform: scale(1.1); }
+    .float-btn:active { transform: scale(0.9); }
+    .float-btn.blue { background: var(--c4); color: #fff; }
+    .float-btn.yellow { background: var(--c2); }
+    .float-btn.pink { background: var(--c1); color: #fff; }
+    
+    .tool-panel {
+      position: fixed; right: 88px; bottom: 20px;
+      width: 320px; background: var(--panel);
+      border: var(--border); box-shadow: var(--shadow-px);
+      padding: 16px; display: none; z-index: 400;
+    }
+    .tool-panel.show { display: block; }
+    .tool-panel h4 { margin: 0 0 14px; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; }
+    .tool-panel .close { cursor: pointer; color: var(--c1); }
+    
+    .lottery-result {
+      margin-top: 14px; padding: 16px;
+      border: 2px dashed var(--text); background: var(--surface);
+      text-align: center; font-size: 1.4rem; font-weight: 900;
+      color: var(--c1);
+    }
+    .btn-primary {
+      padding: 8px 16px; border: var(--border);
+      background: var(--c2); font-weight: 900; font-size: 0.95rem;
+      cursor: pointer; box-shadow: var(--shadow-px-small); transition: .1s;
+    }
+    .btn-primary:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--text); }
+
+    /* ===== Canvas Drawing ===== */
+    #drawCanvas {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      z-index: 250; pointer-events: none; background: transparent;
+    }
+    #drawCanvas.active { pointer-events: all; cursor: crosshair; }
+    
+    .draw-toolbar {
+      position: fixed; left: 20px; bottom: 20px; z-index: 300;
+      background: var(--panel); border: var(--border); padding: 10px 14px;
+      display: none; gap: 8px; align-items: center; box-shadow: var(--shadow-px);
+    }
+    .draw-toolbar.show { display: flex; }
+    .draw-toolbar .color-dot {
+      width: 26px; height: 26px; border: 2px solid #000;
+      border-radius: 50%; cursor: pointer; padding: 0; transition: .2s;
+    }
+    .draw-toolbar .color-dot.active { transform: scale(1.2); box-shadow: 0 0 8px currentColor; }
+    .draw-toolbar .draw-clear {
+      background: transparent; border: var(--border); color: var(--c1);
+      padding: 4px 12px; font-weight: 900; cursor: pointer; font-size: .85rem;
+      box-shadow: var(--shadow-px-small);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      border-top: var(--border); background: var(--surface);
+      padding: 32px 24px; text-align: center; font-size: 0.9rem;
+      font-weight: 700; margin-top: 64px;
+    }
+    .footer a { color: var(--c1); text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      .header-inner { padding: 8px 16px; }
+      .container { padding: 16px; }
+      .hero, .level-section, .nb-section { padding: 20px; }
+      .steps-card, .quiz-card { padding: 16px; }
+      #slide-fs .fs-nav { width: 46px; height: 64px; font-size: 1.6rem; }
+      #slide-fs .fs-nav.prev { left: 8px; }
+      #slide-fs .fs-nav.next { right: 8px; }
+      #slide-fs .fs-close { width: 40px; height: 40px; top: 12px; right: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+      <div class="header-info">
+        <h1 class="header-title">網路搜查特攻隊</h1>
+        <span class="grade-badge">三年級 資訊科技</span>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="header-progress"></div>
+        </div>
+        <span class="progress-text" id="progress-percent">STAGE 1 / 4</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mode Bar -->
+  <div class="mode-bar">
+    <span>切換身分：</span>
+    <button class="mode-btn active" id="btn-student" onclick="setRole('student')">學生端</button>
+    <button class="mode-btn" id="btn-teacher" onclick="setRole('teacher')">教師端</button>
+  </div>
+
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2 class="hero-title">🔍 網路搜查特攻隊：認識網際網路與搜尋高手</h2>
+      <p class="hero-desc">歡迎來到網路探險隊！今天我們要坐上魔法船（瀏覽器），沿著無形的大網子（網際網路）前往各個網站（門牌網址），並學會輸入通關密語（關鍵字）來尋找網路寶藏。最重要的是，要開啟我們的防護罩，做個安全又有禮貌的網路好公民！</p>
+      
+      <div class="lecture-meta">
+        <dl><dt>課程主題</dt><dd>網際網路基本概念、瀏覽器與網址、關鍵字搜尋技巧、網路安全與禮儀</dd></dl>
+        <dl><dt>建議時數</dt><dd>40 分鐘</dd></dl>
+        <dl><dt>難易度</dt><dd>★★★☆☆ (適合中年級入門)</dd></dl>
+      </div>
+
+      <!-- 進入演講簡報模式 CTA 入口 -->
+      <a href="lecture-slides.html" class="lecture-cta" title="教師上課投影專用簡報">
+        <span class="cta-tag">教師投影上課 ⮕</span>
+        <span class="cta-title">🎬 進入演講簡報模式</span>
+        <span class="cta-sub">14 張美式漫畫風全螢幕投影片 · 支援鍵盤翻頁 · 主講者提詞 · 純離線運行</span>
+      </a>
+    </section>
+
+    <!-- Learning Goal Chips -->
+    <div class="goals-container">
+      <div class="goal-chip">🌐 認識網際網路無形大網</div>
+      <div class="goal-chip">🚢 學會操作瀏覽器魔法船</div>
+      <div class="goal-chip">🚪 理解網址與輸入技巧</div>
+      <div class="goal-chip">🔑 掌握關鍵字 AND/OR 搜尋</div>
+      <div class="goal-chip">🛡️ 開啟安全上網防護罩</div>
+    </div>
+
+    <!-- Stage Pills -->
+    <nav class="stage-pills" id="stage-nav">
+      <button class="stage-pill active" onclick="goStage(0)">關卡 1：網路大世界</button>
+      <button class="stage-pill" onclick="goStage(1)">關卡 2：網址直達車</button>
+      <button class="stage-pill" onclick="goStage(2)">關卡 3：搜尋密碼戰</button>
+      <button class="stage-pill" onclick="goStage(3)">關卡 4：安全守護盾</button>
+    </nav>
+
+    <!-- ================= STAGE 1 ================= -->
+    <section class="level-section active" id="sec-stage1">
+      <div class="section-header">
+        <span class="stage-badge">STAGE 1</span>
+        <h3 class="section-title">網路大世界：認識網際網路與瀏覽器</h3>
+      </div>
+
+      <div class="steps-card">
+        <h4>📢 知識補給站</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-desc"><strong>網際網路（無形大網）：</strong>像是一張看不見的巨大漁網，把全世界的電腦通通連在一起。有了它，你的資料就能在不同的電腦間飛過來飛過去！</div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-desc"><strong>瀏覽器（魔法船）：</strong>如果網路世界是大海洋，瀏覽器（如 Google Chrome 圓球）就是你的冒險魔法船，要點開它才能開始遨遊。</div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-desc"><strong>打開魔法船：</strong>在電腦桌面找到 Chrome 圖示，用滑鼠快速按左鍵兩下（雙擊），魔法船就啟航囉！</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Canvas 1: 網路連線模擬 -->
+      <div class="canvas-card">
+        <h4 class="canvas-title">🎮 互動體驗：網路連線傳送器</h4>
+        <div class="canvas-container">
+          <canvas id="cv-stage1"></canvas>
+        </div>
+        <div class="canvas-hint">提示：點選畫面中的地點，發送封包，看看你的資料是怎麼在網路世界旅行的！</div>
+      </div>
+
+      <!-- Quiz 1 -->
+      <div class="quiz-card">
+        <h4 class="quiz-title">📝 關卡挑戰</h4>
+        <div class="quiz-item">
+          <p class="quiz-q">1. 網際網路（Internet）最像日常生活中的哪一樣東西？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(0, 0, this)">A. 一本厚厚的國語字典</button>
+            <button class="quiz-opt" onclick="checkQuiz(0, 1, this)">B. 一張把所有人都連起來的無形大網</button>
+            <button class="quiz-opt" onclick="checkQuiz(0, 2, this)">C. 一台只能打遊戲的遊戲機</button>
+            <button class="quiz-opt" onclick="checkQuiz(0, 3, this)">D. 一個裝滿書本的書包</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-0"></div>
+        </div>
+        <div class="quiz-item">
+          <p class="quiz-q">2. 想要在網路上看網頁，我們必須在電腦桌面上打開哪一個工具（上網的魔法船）？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(1, 0, this)">A. 資源回收桶</button>
+            <button class="quiz-opt" onclick="checkQuiz(1, 1, this)">B. 小畫家軟體</button>
+            <button class="quiz-opt" onclick="checkQuiz(1, 2, this)">C. 網頁瀏覽器（如 Google Chrome）</button>
+            <button class="quiz-opt" onclick="checkQuiz(1, 3, this)">D. 我的電腦資料夾</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-1"></div>
+        </div>
+      </div>
+
+      <!-- Teacher Only 1 -->
+      <div class="teacher-note" id="t-note-1">
+        <h5>👨‍🏫 教師教學指引 (STAGE 1)</h5>
+        <p>1. <strong>引導重點</strong>：利用實體教室裡拉網路線或傳球的比喻，加深學生對「連線」的具體感受。</p>
+        <p>2. <strong>操作提醒</strong>：學生剛接觸滑鼠時容易對「快速點擊兩下（雙擊）」感到困難，請多示範手指的點擊節奏。</p>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 2 ================= -->
+    <section class="level-section" id="sec-stage2">
+      <div class="section-header">
+        <span class="stage-badge">STAGE 2</span>
+        <h3 class="section-title">網址直達車：理解網站的專屬門牌</h3>
+      </div>
+
+      <div class="steps-card">
+        <h4>📢 知識補給站</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-desc"><strong>網站的門牌（網址）：</strong>就像你家有地址地址一樣，網站也有地址，叫做「網址」（URL）。例如 Google 搜尋首頁網址就是 <code>https://www.google.com</code>。</div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-desc"><strong>網址列：</strong>在瀏覽器最上方的長條空白框框，我們必須把網址精確地打在裡面。</div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-desc"><strong>按下 Enter 出發：</strong>英文字母、點（.）跟斜線（/）都要打對，按下鍵盤上的 Enter 鍵，就能直達網站！</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Canvas 2: 網址拼拼樂 -->
+      <div class="canvas-card">
+        <h4 class="canvas-title">🎮 互動體驗：網址拼拼樂</h4>
+        <div class="canvas-container">
+          <canvas id="cv-stage2"></canvas>
+        </div>
+        <div class="canvas-hint">提示：用滑鼠或手指依序點選下方的方塊，拼出正確的 Google 搜尋網址！</div>
+      </div>
+
+      <!-- Quiz 2 -->
+      <div class="quiz-card">
+        <h4 class="quiz-title">📝 關卡挑戰</h4>
+        <div class="quiz-item">
+          <p class="quiz-q">1. 如果我們要去某個特定的網站，最快、最不迷路的方法是什麼？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(2, 0, this)">A. 在螢幕上亂點圖示</button>
+            <button class="quiz-opt" onclick="checkQuiz(2, 1, this)">B. 在瀏覽器最上方的網址列輸入正確的「網址」後按 Enter</button>
+            <button class="quiz-opt" onclick="checkQuiz(2, 2, this)">C. 關閉電腦重新開機</button>
+            <button class="quiz-opt" onclick="checkQuiz(2, 3, this)">D. 寫信問郵差叔叔</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-2"></div>
+        </div>
+        <div class="quiz-item">
+          <p class="quiz-q">2. 小虎輸入網址後發現畫面顯示「網頁找不到」，可能是因為什麼？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(3, 0, this)">A. 鍵盤的英文字母打錯了，或者少打了「點（.）」</button>
+            <button class="quiz-opt" onclick="checkQuiz(3, 1, this)">B. 電腦的螢幕太髒了</button>
+            <button class="quiz-opt" onclick="checkQuiz(3, 2, this)">C. 小虎沒有拿筆在螢幕上寫字</button>
+            <button class="quiz-opt" onclick="checkQuiz(3, 3, this)">D. 電腦沒有裝小畫家</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-3"></div>
+        </div>
+      </div>
+
+      <!-- Teacher Only 2 -->
+      <div class="teacher-note" id="t-note-2">
+        <h5>👨‍🏫 教師教學指引 (STAGE 2)</h5>
+        <p>1. <strong>引導重點</strong>：強調「英文半形字元」的重要性，國小三年級學童常混淆全形/半形或打錯標點符號。</p>
+        <p>2. <strong>除錯技巧</strong>：多注意學生是否將「點（.）」打成「逗號（,）」或「中文字號」。</p>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 3 ================= -->
+    <section class="level-section" id="sec-stage3">
+      <div class="section-header">
+        <span class="stage-badge">STAGE 3</span>
+        <h3 class="section-title">搜尋密碼戰：學會用關鍵字下通關密語</h3>
+      </div>
+
+      <div class="steps-card">
+        <h4>📢 知識補給站</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-desc"><strong>搜尋引擎（百寶箱）：</strong>當我們不知道網址時，可以到 Google 搜尋引擎發問，它會幫我們找寶藏。</div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-desc"><strong>關鍵字（通關密語）：</strong>輸入搜尋框的字要「簡單、精準」，不要輸入一長串句子。例如：搜尋「獵豹 速度」而不是「我想問一下獵豹跑步到底有多快啊」。</div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-desc"><strong>多詞搜尋（AND）：</strong>在兩個詞中間「空一格」代表要同時符合。例如搜尋「成語 學習單」，搜尋引擎就會找出跟成語有關的學習單。</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Canvas 3: 關鍵字小偵探 -->
+      <div class="canvas-card">
+        <h4 class="canvas-title">🎮 互動體驗：關鍵字小偵探</h4>
+        <div class="canvas-container">
+          <canvas id="cv-stage3"></canvas>
+        </div>
+        <div class="canvas-hint">任務目標：找出「石門國小」的「聯絡電話」。點選最合適的 2 個密語，放進搜尋框內吧！</div>
+      </div>
+
+      <!-- Quiz 3 -->
+      <div class="quiz-card">
+        <h4 class="quiz-title">📝 關卡挑戰</h4>
+        <div class="quiz-item">
+          <p class="quiz-q">1. 如果你想知道「獨角仙吃什麼」，哪一個關鍵字組合最棒最精準？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(4, 0, this)">A. 請問大家知道獨角仙平常最喜歡吃些什麼食物嗎</button>
+            <button class="quiz-opt" onclick="checkQuiz(4, 1, this)">B. 獨角仙 食物</button>
+            <button class="quiz-opt" onclick="checkQuiz(4, 2, this)">C. 昆蟲</button>
+            <button class="quiz-opt" onclick="checkQuiz(4, 3, this)">D. 吃東西</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-4"></div>
+        </div>
+        <div class="quiz-item">
+          <p class="quiz-q">2. 搜尋時，在「成語」和「學習單」兩個詞中間空一格（成語 學習單），代表什麼意思？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(5, 0, this)">A. 代表我打錯字了，字跟字不能空開</button>
+            <button class="quiz-opt" onclick="checkQuiz(5, 1, this)">B. 告訴 Google 要同時找出包含「成語」和「學習單」的資料</button>
+            <button class="quiz-opt" onclick="checkQuiz(5, 2, this)">C. 這樣可以讓字體變大</button>
+            <button class="quiz-opt" onclick="checkQuiz(5, 3, this)">D. 會讓電腦強制關機</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-5"></div>
+        </div>
+      </div>
+
+      <!-- Teacher Only 3 -->
+      <div class="teacher-note" id="t-note-3">
+        <h5>👨‍🏫 教師教學指引 (STAGE 3)</h5>
+        <p>1. <strong>引導重點</strong>：讓學生練習口頭縮短問題。先拋出一長串提問，請學生搶答如果問 Google 要簡化成哪兩個詞。</p>
+        <p>2. <strong>實作練習</strong>：可以現場給任務，例如找「貓熊 體重」，教導學生只看前三個搜尋結果並從中提取答案。</p>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 4 ================= -->
+    <section class="level-section" id="sec-stage4">
+      <div class="section-header">
+        <span class="stage-badge">STAGE 4</span>
+        <h3 class="section-title">安全守護盾：做個安全又有禮貌的網路好公民</h3>
+      </div>
+
+      <div class="steps-card">
+        <h4>📢 知識補給站</h4>
+        <ul class="steps-list">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-desc"><strong>防護罩（網路安全）：</strong>絕對不在網路上隨便告訴陌生人你的真實姓名、電話、地址或就讀的學校。遇到奇怪的中獎廣告或連結，絕對不點擊。</div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-desc"><strong>安全一要：</strong>在網路上遇到任何讓你覺得害怕、奇怪或不舒服的事，要立刻報告家長或老師。</div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-desc"><strong>網路禮儀：</strong>在網路上說話要像在學校一樣有禮貌。不隨便罵人、取笑別人，發送訊息要打字清晰，不要用注音文或亂發脾氣。</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Canvas 4: 安全防禦戰 -->
+      <div class="canvas-card">
+        <h4 class="canvas-title">🎮 互動體驗：網路安全防禦戰</h4>
+        <div class="canvas-container">
+          <canvas id="cv-stage4"></canvas>
+        </div>
+        <div class="canvas-hint">提示：將飄落下來的情境卡片分類。安全/禮貌的拖到「安全盾牌」，危險/粗魯的拖到「垃圾桶」！</div>
+      </div>
+
+      <!-- Quiz 4 -->
+      <div class="quiz-card">
+        <h4 class="quiz-title">📝 關卡挑戰</h4>
+        <div class="quiz-item">
+          <p class="quiz-q">1. 如果在網路上玩遊戲時，有網友說要送你免費的高級寶物，問你的電話和讀哪間小學，你該怎麼做？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(6, 0, this)">A. 馬上告訴他，這樣就能拿到寶物</button>
+            <button class="quiz-opt" onclick="checkQuiz(6, 1, this)">B. 拒絕告訴他，並立刻把這件事報告老師或爸爸媽媽</button>
+            <button class="quiz-opt" onclick="checkQuiz(6, 2, this)">C. 隨便亂編一個好朋友的電話給他</button>
+            <button class="quiz-opt" onclick="checkQuiz(6, 3, this)">D. 答應跟他單獨約在公園見面拿寶物</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-6"></div>
+        </div>
+        <div class="quiz-item">
+          <p class="quiz-q">2. 關於在網路上和別人聊天的禮儀，哪一項是正確的？</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="checkQuiz(7, 0, this)">A. 因為看不到人，所以我可以隨便用難聽的話笑同學</button>
+            <button class="quiz-opt" onclick="checkQuiz(7, 1, this)">B. 儘量打出清晰正確的字，不用奇怪的注音文，並且不隨意辱罵他人</button>
+            <button class="quiz-opt" onclick="checkQuiz(7, 2, this)">C. 可以在半夜兩點一直傳貼圖給老師</button>
+            <button class="quiz-opt" onclick="checkQuiz(7, 3, this)">D. 把同學出糗的照片上傳到公開網站讓大家看</button>
+          </div>
+          <div class="quiz-feedback" id="q-feed-7"></div>
+        </div>
+      </div>
+
+      <!-- Teacher Only 4 -->
+      <div class="teacher-note" id="t-note-4">
+        <h5>👨‍🏫 教師教學指引 (STAGE 4)</h5>
+        <p>1. <strong>引導重點</strong>：利用社會新聞事件或教育部資訊安全宣導，強調網友的「匿名性」，切勿透露真實個資或單獨赴約。</p>
+        <p>2. <strong>網路禮儀</strong>：說明網路發言也是會留下紀錄的，建立健康的網路交友觀念與資訊倫理。</p>
+      </div>
+    </section>
+
+    <!-- ================= 授課簡報播放器 ================= -->
+    <section class="slide-player-section">
+      <h3>▶ CLASSROOM LECTURE SLIDES</h3>
+      <div class="slide-player" id="slide-player-container">
+        <div class="slide-player-main" ondblclick="openSlideFullscreen()">
+          <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+          <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
+          <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
+          <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕投影">⛶ 全螢幕</button>
+          <div class="slide-counter" id="slide-counter-display">1 / 1</div>
+        </div>
+        <!-- 縮圖列 -->
+        <div class="slide-strip" id="slide-strip">
+          <!-- JS 動態生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 全螢幕簡報 Overlay -->
+    <div id="slide-fs">
+      <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+      <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+      <img id="slide-fs-img" src="" alt="">
+      <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+      <div class="fs-counter" id="slide-fs-counter">1 / 1</div>
+    </div>
+
+    <!-- ================= 學生自學影片 ================= -->
+    <section class="nlm-video-section">
+      <h3>▶ SELF-STUDY VIDEO</h3>
+      <div class="video-wrap">
+        <!-- 影片載入區，YouTube ID 稍後填入 -->
+        <div id="video-container">
+          <div class="video-no-id">
+            🎬 自學影片由 NotebookLM AI 自動生成中，完成上傳後將在此嵌入。<br>
+            <span style="font-size:0.85rem; color:var(--dim)">（字幕轉錄與 YouTube 部署進行中，請稍候...）</span>
+          </div>
+        </div>
+        <div class="video-meta">
+          <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+          <span class="video-hint">💡 建議用耳機觀看，影片包含繁體中文與英文 CC 字幕，可與上方簡報一起學習喔！</span>
+          <a href="#" id="yt-external-link" target="_blank" rel="noopener" style="margin-left:auto; color:var(--c5); font-size:0.85rem; text-decoration:none; font-weight:700; display:none;">
+            ↗ 在 YouTube 開啟
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NotebookLM 資源站 ================= -->
+    <section class="nb-section">
+      <h3>📚 NotebookLM AI 資源學習站</h3>
+      
+      <div class="nb-cards">
+        <div class="nb-card">
+          <h4>📓 教學筆記本</h4>
+          <p>本單元的所有教材內容皆由 AI 探究本與精簡本整合分析而成。</p>
+          <a href="#" id="link-slim-nb" target="_blank" style="color:var(--c4);font-weight:700;font-size:0.85rem;">↗ 前往 NotebookLM 來源本</a>
+        </div>
+        <div class="nb-card">
+          <h4>🗺️ AI 串接流程</h4>
+          <p>網路深度搜尋 ➔ AI 精華萃取 ➔ 人物插畫 pdf 嵌入 ➔ 簡報/影片/圖表生成 ➔ GitHubPages 自動部署。</p>
+        </div>
+        <div class="nb-card">
+          <h4>🎨 漫畫風格設計</h4>
+          <p>採用符合三年級認知的 comic-soft 漫畫排版，將複雜概念轉換為直覺互動元件。</p>
+        </div>
+      </div>
+
+      <!-- FAQ 區塊 -->
+      <h4 class="faq-title">❓ 常見問題 FAQ</h4>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Q1：老師，我輸入網址按 Enter 之後，為什麼畫面顯示「網頁找不到（404）」？</div>
+          <div class="faq-a">A：這代表你的網址可能打錯字囉！請仔細檢查看看有沒有少打了字母，或是把網址的點（.）打成逗號（,）了？把字改對後再按一次 Enter 試試看！</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q2：搜尋時輸入的字越多，是不是就能找得越精準？</div>
+          <div class="faq-a">A：不是喔！搜尋引擎喜歡簡單的詞。如果你打了一整句話，它反而會搞混。最棒的做法是挑出 1 到 2 個最重要的字（例如「石門國小 電話」），中間用空白空一格，這樣搜尋引擎最容易幫你找到正確答案！</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q3：如果在網路上玩遊戲時，有人問我的名字和電話，說要送我免費的寶物，我可以告訴他嗎？</div>
+          <div class="faq-a">A：絕對不可以喔！這是一個網路陷阱。壞人常常會用送禮物或寶物當藉口，騙取你的個人隱私資料。如果遇到了，要立刻拒絕，並馬上報告老師或爸爸媽媽！</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q4：我在網路上看到「你中了一百萬！請按這裡領取」的視窗，我可以點點看嗎？</div>
+          <div class="faq-a">A：千萬不要點！這通常是假的「廣告病毒詐騙」，點了之後可能會害你的電腦或平板中毒生病，或者秘密被偷走。直接按視窗右上角的「✕」關掉它就對了！</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q5：跟同學在網路上聊天時，可以使用注音文（如：ㄋ好）或用不好聽的話開玩笑嗎？</div>
+          <div class="faq-a">A：不建議喔！注音文常常會讓人看得很吃力，容易造成誤會；在網路上開不好聽的玩笑或罵人，更是不禮貌且會觸犯法律的行為。在網路上打字要互相尊重，大家才會喜歡跟你聊天！</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 浮動工具面板 -->
+  <div class="float-tools">
+    <button class="float-btn yellow" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+    <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  </div>
+
+  <!-- 抽籤器面板 -->
+  <div class="tool-panel" id="panel-lottery">
+    <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+    <div style="display:flex; gap:8px; align-items:center; margin-bottom:10px; font-size:.85rem; color:var(--dim); flex-wrap:wrap">
+      <span>號碼範圍</span>
+      <input type="number" id="lot-min" value="1" min="1" style="width:55px; padding:4px 6px; border:2px solid var(--text);">
+      <span>～</span>
+      <input type="number" id="lot-max" value="30" min="1" style="width:55px; padding:4px 6px; border:2px solid var(--text);">
+      <span>號</span>
+      <label style="display:flex; align-items:center; gap:4px; margin-left:auto; cursor:pointer">
+        <input type="checkbox" id="lot-unique" checked>不重複
+      </label>
+    </div>
+    <div style="display:flex; gap:6px">
+      <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+      <button class="btn-primary" onclick="resetLottery()" style="background:var(--c1); color:#fff">↻</button>
+    </div>
+    <div class="lottery-result" id="lot-out">等待抽號...</div>
+  </div>
+
+  <!-- 畫筆畫布與工具列 -->
+  <canvas id="drawCanvas"></canvas>
+  <div class="draw-toolbar" id="drawToolbar">
+    <span style="font-size:1.1rem; margin-right:4px;">🖊️</span>
+    <button class="color-dot active" style="background:#ff6b6b; color:#ff6b6b" onclick="setPenColor('#ff6b6b',this)"></button>
+    <button class="color-dot" style="background:#ffa94d; color:#ffa94d" onclick="setPenColor('#ffa94d',this)"></button>
+    <button class="color-dot" style="background:#51cf66; color:#51cf66" onclick="setPenColor('#51cf66',this)"></button>
+    <button class="color-dot" style="background:#339af0; color:#339af0" onclick="setPenColor('#339af0',this)"></button>
+    <button class="color-dot" style="background:#2c2c2c; color:#2c2c2c" onclick="setPenColor('#2c2c2c',this)"></button>
+    <button class="draw-clear" onclick="clearDrawing()">清除</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a></p>
+    <p>© 2026 IT COCKPIT · 桃園市龍潭區石門國民小學</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // YouTube Video ID and Slides config (Placeholder)
+    let YOUTUBE_VIDEO_ID = "malT_snHGiI"; // Will be replaced by code script
+    let SLIME_NOTEBOOK_URL = "https://notebooklm.google.com/notebook/f178fc1d-1860-4ce4-884a-693aecafeeb5";
+    let SLIDE_LIST = []; // Will be populated dynamically based on downloaded slides count
+    
+    // Core state
+    let curStageIdx = 0;
+    let userRole = 'student';
+    const totalStages = 4;
+    
+    // Init functions safe execution
+    function safeInit(name, fn){
+      try { fn(); }
+      catch(e) { console.error('[init error] ' + name + ':', e); }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      safeInit('initRole', () => setRole('student'));
+      safeInit('initSlides', initSlidePlayer);
+      safeInit('initVideo', initVideo);
+      safeInit('initDraw', initDraw);
+      safeInit('initStage1Canvas', initStage1Canvas);
+      safeInit('initStage2Canvas', initStage2Canvas);
+      safeInit('initStage3Canvas', initStage3Canvas);
+      safeInit('initStage4Canvas', initStage4Canvas);
+      updateHeaderProgress();
+    });
+
+    // --- Role Selector ---
+    function setRole(role) {
+      userRole = role;
+      document.getElementById('btn-student').classList.toggle('active', role === 'student');
+      document.getElementById('btn-teacher').classList.toggle('active', role === 'teacher');
+      
+      const notes = document.querySelectorAll('.teacher-note');
+      notes.forEach(note => {
+        note.classList.toggle('show', role === 'teacher');
+      });
+    }
+
+    // --- Navigation ---
+    function goStage(idx) {
+      if(idx < 0 || idx >= totalStages) return;
+      curStageIdx = idx;
+      
+      // Update nav pills
+      const pills = document.querySelectorAll('.stage-pill');
+      pills.forEach((p, i) => {
+        p.classList.toggle('active', i === idx);
+      });
+      
+      // Show section
+      const sections = document.querySelectorAll('.level-section');
+      sections.forEach((sec, i) => {
+        sec.classList.toggle('active', i === idx);
+      });
+      
+      updateHeaderProgress();
+      window.scrollTo({ top: document.getElementById('stage-nav').offsetTop - 90, behavior: 'smooth' });
+    }
+    
+    function updateHeaderProgress() {
+      const fill = document.getElementById('header-progress');
+      const text = document.getElementById('progress-percent');
+      const pct = ((curStageIdx + 1) / totalStages) * 100;
+      fill.style.width = pct + '%';
+      text.textContent = `STAGE ${curStageIdx + 1} / ${totalStages}`;
+    }
+
+    // --- Quiz Logic ---
+    const QUIZ_ANSWERS = [1, 2, 1, 0, 1, 1, 1, 1]; // Correct option index (0=A, 1=B, 2=C, 3=D)
+    const QUIZ_FEEDBACKS = [
+      { correct: "🎉 太棒了！網際網路就像無形的大網子，把大家連在一起！", wrong: "😢 答錯囉！網際網路是把全世界電腦連在一起的大網子，不是書包或字典喔。" },
+      { correct: "✨ 答對囉！瀏覽器（Chrome）就是我們的魔法冒險船！", wrong: "😢 答錯囉！我們要點開「網頁瀏覽器」才能上網去航行喔。" },
+      { correct: "🌟 你真厲害！輸入正確網址是直達網站最快的方法！", wrong: "😢 答錯囉！知道網址時直接在最上方「網址列」輸入並按 Enter 即可直達。" },
+      { correct: "🎉 答對囉！字母、點（.）、斜線等符號打錯或少打，魔法船就會迷路喔！", wrong: "😢 答錯囉！打錯網址字母或符號是連不上的最常見原因喔。" },
+      { correct: "✨ 太棒了！「獨角仙 食物」非常精準又簡短，是最佳通關密語！", wrong: "😢 答錯囉！太長的句子會讓搜尋引擎混淆，簡短的關鍵字組合才是最好的。" },
+      { correct: "🌟 答對囉！空格代表同時符合（AND概念），幫你找成語的學習單！", wrong: "😢 答錯囉！字與字之間空一格是告訴 Google 這兩個詞都要包含的意思。" },
+      { correct: "🎉 答對囉！絕對不能洩漏名字、電話等隱私，並且要馬上告訴大人！", wrong: "😢 答錯囉！壞人會用禮物騙你，隱私資料絕對不能給，一定要立刻報告師長！" },
+      { correct: "✨ 答對囉！打字要乾淨有禮貌，不隨便罵人，也不可以半夜吵人！", wrong: "😢 答錯囉！網路聊天要互相尊重，不罵人、不半夜傳訊息打擾才是好公民。" }
+    ];
+
+    function checkQuiz(qIdx, optIdx, btn) {
+      const parent = btn.parentElement;
+      const opts = parent.querySelectorAll('.quiz-opt');
+      
+      // Lock buttons
+      opts.forEach(opt => opt.disabled = true);
+      
+      const isCorrect = optIdx === QUIZ_ANSWERS[qIdx];
+      const feed = document.getElementById(`q-feed-${qIdx}`);
+      
+      if(isCorrect) {
+        btn.classList.add('correct');
+        feed.textContent = QUIZ_FEEDBACKS[qIdx].correct;
+        feed.className = "quiz-feedback show correct-bg";
+      } else {
+        btn.classList.add('wrong');
+        opts[QUIZ_ANSWERS[qIdx]].classList.add('correct');
+        feed.textContent = QUIZ_FEEDBACKS[qIdx].wrong;
+        feed.className = "quiz-feedback show wrong-bg";
+      }
+    }
+
+    // --- Video embed ---
+    function initVideo() {
+      const container = document.getElementById('video-container');
+      const extLink = document.getElementById('yt-external-link');
+      if (YOUTUBE_VIDEO_ID) {
+        container.innerHTML = `
+          <div class="video-ratio">
+            <iframe
+              src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?rel=0&modestbranding=1"
+              title="網路搜查特攻隊教學影片"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+        `;
+        extLink.href = `https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`;
+        extLink.style.display = 'inline-flex';
+      }
+      
+      const nbLink = document.getElementById('link-slim-nb');
+      if (nbLink) nbLink.href = SLIME_NOTEBOOK_URL;
+    }
+
+    // --- Slide Player ---
+    let curSlideIdx = 0;
+    function initSlidePlayer() {
+      // Setup SLIDE_LIST if empty
+      if(SLIDE_LIST.length === 0) {
+        // Fallback or dynamic setup, standard deck length is 15 pages
+        for(let i=1; i<=15; i++) {
+          SLIDE_LIST.push(`assets/slide_${String(i).padStart(2, '0')}.jpg`);
+        }
+      }
+      
+      const strip = document.getElementById('slide-strip');
+      strip.innerHTML = '';
+      
+      SLIDE_LIST.forEach((src, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = `strip-thumb ${idx === 0 ? 'active' : ''}`;
+        thumb.innerHTML = `<img src="${src}" alt="Slide ${idx+1}">`;
+        thumb.onclick = () => goSlide(idx);
+        strip.appendChild(thumb);
+      });
+      
+      goSlide(0);
+    }
+    
+    function goSlide(n) {
+      if(n < 0 || n >= SLIDE_LIST.length) return;
+      curSlideIdx = n;
+      
+      document.getElementById('slide-current').src = SLIDE_LIST[n];
+      document.getElementById('slide-counter-display').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+      
+      // Update strip active
+      const thumbs = document.querySelectorAll('.strip-thumb');
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('active', i === n);
+      });
+      
+      // Center thumbnail scroll
+      const strip = document.getElementById('slide-strip');
+      const activeThumb = thumbs[n];
+      if(activeThumb && strip) {
+        const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+        strip.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+      }
+
+      // Sync fullscreen image
+      const fs = document.getElementById('slide-fs');
+      if(fs && fs.classList.contains('show')) {
+        document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+        document.getElementById('slide-fs-counter').textContent = `${n+1} / ${SLIDE_LIST.length}`;
+      }
+    }
+    
+    function slideNav(dir) {
+      goSlide(curSlideIdx + dir);
+    }
+    
+    function openSlideFullscreen() {
+      document.getElementById('slide-fs-img').src = SLIDE_LIST[curSlideIdx];
+      document.getElementById('slide-fs-counter').textContent = `${curSlideIdx+1} / ${SLIDE_LIST.length}`;
+      document.getElementById('slide-fs').classList.add('show');
+      document.body.classList.add('slides-fullscreen');
+    }
+    
+    function closeSlideFullscreen() {
+      document.getElementById('slide-fs').classList.remove('show');
+      document.body.classList.remove('slides-fullscreen');
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      const fs = document.getElementById('slide-fs');
+      if(fs && fs.classList.contains('show')) {
+        if(e.key === 'ArrowRight' || e.key === ' ') { slideNav(1); e.preventDefault(); }
+        else if(e.key === 'ArrowLeft') { slideNav(-1); e.preventDefault(); }
+        else if(e.key === 'Escape') { closeSlideFullscreen(); e.preventDefault(); }
+      }
+    });
+
+    // --- Float Tools: Lottery ---
+    let lotPool = [];
+    function refillLotPool(){
+      const min = parseInt(document.getElementById('lot-min').value) || 1;
+      const max = parseInt(document.getElementById('lot-max').value) || 30;
+      if(min > max) return false;
+      lotPool = [];
+      for(let i=min; i<=max; i++) lotPool.push(i);
+      return true;
+    }
+    
+    function togglePanel(type) {
+      const panel = document.getElementById(`panel-${type}`);
+      const isShow = panel.classList.toggle('show');
+      
+      // Close other panels if open
+      if(isShow) {
+        document.querySelectorAll('.tool-panel').forEach(p => {
+          if(p.id !== `panel-${type}`) p.classList.remove('show');
+        });
+      }
+    }
+    
+    function doLottery() {
+      const unique = document.getElementById('lot-unique').checked;
+      const min = parseInt(document.getElementById('lot-min').value) || 1;
+      const max = parseInt(document.getElementById('lot-max').value) || 30;
+      if(min > max){ alert('最小號碼必須小於或等於最大號碼！'); return; }
+      
+      if(unique && lotPool.length === 0) refillLotPool();
+      
+      const out = document.getElementById('lot-out');
+      // Animation
+      const timer = setInterval(() => {
+        const n = Math.floor(Math.random()*(max-min+1)) + min;
+        out.textContent = n + ' 號';
+      }, 60);
+      
+      setTimeout(() => {
+        clearInterval(timer);
+        let num;
+        if(unique) {
+          if(lotPool.length === 0) refillLotPool();
+          const idx = Math.floor(Math.random() * lotPool.length);
+          num = lotPool.splice(idx, 1)[0];
+        } else {
+          num = Math.floor(Math.random()*(max-min+1)) + min;
+        }
+        out.textContent = '🌟 ' + num + ' 號 🌟';
+      }, 1200);
+    }
+    
+    function resetLottery() {
+      refillLotPool();
+      document.getElementById('lot-out').textContent = '等待抽號...';
+    }
+
+    // --- Float Tools: Drawing Tool ---
+    let drawActive = false, penColor = '#ff6b6b', penSize = 4;
+    let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+    
+    function initDraw() {
+      drawCanvas = document.getElementById('drawCanvas');
+      drawCtx = drawCanvas.getContext('2d');
+      resizeCanvas();
+      
+      drawCanvas.addEventListener('mousedown', e => {
+        if(!drawActive) return;
+        isDrawing = true;
+        const coords = getCanvasCoords(e);
+        dLastX = coords.x; dLastY = coords.y;
+      });
+      
+      drawCanvas.addEventListener('mousemove', e => {
+        if(!drawActive || !isDrawing) return;
+        const coords = getCanvasCoords(e);
+        drawCtx.strokeStyle = penColor;
+        drawCtx.lineWidth = penSize;
+        drawCtx.lineCap = 'round';
+        drawCtx.beginPath();
+        drawCtx.moveTo(dLastX, dLastY);
+        drawCtx.lineTo(coords.x, coords.y);
+        drawCtx.stroke();
+        dLastX = coords.x; dLastY = coords.y;
+      });
+      
+      drawCanvas.addEventListener('mouseup', () => isDrawing = false);
+      drawCanvas.addEventListener('mouseleave', () => isDrawing = false);
+      
+      // Touch support
+      drawCanvas.addEventListener('touchstart', e => {
+        if(!drawActive) return;
+        e.preventDefault();
+        const t = e.touches[0];
+        isDrawing = true;
+        const coords = getCanvasCoords(t);
+        dLastX = coords.x; dLastY = coords.y;
+      }, { passive: false });
+      
+      drawCanvas.addEventListener('touchmove', e => {
+        if(!drawActive || !isDrawing) return;
+        e.preventDefault();
+        const t = e.touches[0];
+        const coords = getCanvasCoords(t);
+        drawCtx.strokeStyle = penColor;
+        drawCtx.lineWidth = penSize;
+        drawCtx.lineCap = 'round';
+        drawCtx.beginPath();
+        drawCtx.moveTo(dLastX, dLastY);
+        drawCtx.lineTo(coords.x, coords.y);
+        drawCtx.stroke();
+        dLastX = coords.x; dLastY = coords.y;
+      }, { passive: false });
+      
+      drawCanvas.addEventListener('touchend', () => isDrawing = false);
+      
+      window.addEventListener('resize', resizeCanvas);
+    }
+    
+    function resizeCanvas() {
+      if(!drawCanvas) return;
+      // Double the resolution for retina screens, matching client size
+      drawCanvas.width = window.innerWidth * 2;
+      drawCanvas.height = window.innerHeight * 2;
+      drawCanvas.style.width = window.innerWidth + 'px';
+      drawCanvas.style.height = window.innerHeight + 'px';
+      if(drawCtx) drawCtx.scale(2, 2);
+    }
+    
+    // Convert client screen coordinates to canvas space (considering scale(2,2))
+    function getCanvasCoords(e) {
+      const rect = drawCanvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+    
+    function toggleDraw() {
+      drawActive = !drawActive;
+      drawCanvas.classList.toggle('active', drawActive);
+      document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+      document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c3)' : '';
+    }
+    
+    function setPenColor(c, el) {
+      penColor = c;
+      document.querySelectorAll('.draw-toolbar .color-dot').forEach(d => d.classList.remove('active'));
+      el.classList.add('active');
+    }
+    
+    function clearDrawing() {
+      if(drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+    }
+
+    // ==========================================
+    // --- Canvas Interactive: Stage 1 Connect ---
+    // ==========================================
+    let cv1, ctx1;
+    let cv1Nodes = [
+      { id: 'me', name: '我的電腦', x: 100, y: 150, r: 40, col: '#ff6b6b', icon: '💻' },
+      { id: 'router', name: '網路路由器', x: 400, y: 220, r: 35, col: '#868686', icon: '📡' },
+      { id: 'grandma', name: '外婆家', x: 700, y: 100, r: 40, col: '#ffa94d', icon: '🏡' },
+      { id: 'school', name: '學校電腦', x: 700, y: 340, r: 40, col: '#51cf66', icon: '🏫' },
+      { id: 'yt', name: 'YouTube伺服器', x: 550, y: 320, r: 40, col: '#339af0', icon: '🎬' }
+    ];
+    let cv1Lines = [
+      { from: 'me', to: 'router' },
+      { from: 'router', to: 'grandma' },
+      { from: 'router', to: 'school' },
+      { from: 'router', to: 'yt' }
+    ];
+    let cv1Packets = [];
+    let cv1Message = "點選右邊任一地點（如外婆家），然後點「傳送」發送資料！";
+
+    function initStage1Canvas() {
+      cv1 = document.getElementById('cv-stage1');
+      ctx1 = cv1.getContext('2d');
+      setupCanvasResolution(cv1);
+      
+      cv1.addEventListener('mousedown', clickStage1);
+      cv1.addEventListener('touchstart', e => { e.preventDefault(); clickStage1(e.touches[0]); }, { passive: false });
+      
+      setInterval(updateStage1, 1000/60);
+    }
+
+    function setupCanvasResolution(cv) {
+      const rect = cv.parentElement.getBoundingClientRect();
+      cv.width = 800 * 2;
+      cv.height = 450 * 2;
+      cv.style.width = '100%';
+      cv.style.height = '100%';
+      cv.getContext('2d').scale(2, 2);
+    }
+
+    function clickStage1(e) {
+      const rect = cv1.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (800 / rect.width);
+      const clickY = (e.clientY - rect.top) * (450 / rect.height);
+      
+      // Check hit node
+      for (let n of cv1Nodes) {
+        if (Math.hypot(clickX - n.x, clickY - n.y) < n.r) {
+          if (n.id !== 'me' && n.id !== 'router') {
+            sendStage1Packet(n);
+          }
+          break;
+        }
+      }
+    }
+
+    function sendStage1Packet(target) {
+      if (cv1Packets.length > 0) return; // Prevent multiple packets at once
+      
+      cv1Message = `正在發送封包到 【${target.name}】...`;
+      
+      // Create packet: me -> router -> target
+      const p1 = {
+        fromX: 100, fromY: 150, toX: 400, toY: 220,
+        progress: 0, speed: 0.03, stage: 1, target: target
+      };
+      cv1Packets.push(p1);
+    }
+
+    function updateStage1() {
+      ctx1.clearRect(0, 0, 800, 450);
+      
+      // Draw lines
+      ctx1.strokeStyle = '#e0d8cb';
+      ctx1.lineWidth = 4;
+      for (let l of cv1Lines) {
+        const fromNode = cv1Nodes.find(n => n.id === l.from);
+        const toNode = cv1Nodes.find(n => n.id === l.to);
+        ctx1.beginPath();
+        ctx1.moveTo(fromNode.x, fromNode.y);
+        ctx1.lineTo(toNode.x, toNode.y);
+        ctx1.stroke();
+      }
+      
+      // Draw nodes
+      for (let n of cv1Nodes) {
+        ctx1.fillStyle = n.col;
+        ctx1.beginPath();
+        ctx1.arc(n.x, n.y, n.r, 0, Math.PI*2);
+        ctx1.fill();
+        ctx1.strokeStyle = '#2c2c2c';
+        ctx1.lineWidth = 3;
+        ctx1.stroke();
+        
+        // Draw icon
+        ctx1.font = '24px sans-serif';
+        ctx1.textAlign = 'center';
+        ctx1.textBaseline = 'middle';
+        ctx1.fillText(n.icon, n.x, n.y);
+        
+        // Draw text label
+        ctx1.fillStyle = '#2c2c2c';
+        ctx1.font = 'bold 14px sans-serif';
+        ctx1.fillText(n.name, n.x, n.y + n.r + 20);
+      }
+      
+      // Draw packet
+      if (cv1Packets.length > 0) {
+        let p = cv1Packets[0];
+        p.progress += p.speed;
+        
+        const currX = p.fromX + (p.toX - p.fromX) * p.progress;
+        const currY = p.fromY + (p.toY - p.fromY) * p.progress;
+        
+        // Draw letter icon
+        ctx1.font = '24px sans-serif';
+        ctx1.fillText('✉️', currX, currY);
+        
+        if (p.progress >= 1) {
+          if (p.stage === 1) {
+            // Arrived router, now head to target
+            p.stage = 2;
+            p.fromX = 400; p.fromY = 220;
+            p.toX = p.target.x; p.toY = p.target.y;
+            p.progress = 0;
+          } else {
+            // Arrived target
+            cv1Packets.pop();
+            cv1Message = `🎉 成功抵達！【${p.target.name}】已收到你的資料包！`;
+            setTimeout(() => {
+              cv1Message = "點選右邊任一地點（如外婆家），傳送資料體驗連線！";
+            }, 3000);
+          }
+        }
+      }
+      
+      // Draw message box
+      ctx1.fillStyle = 'rgba(255,248,238,0.9)';
+      ctx1.fillRect(20, 20, 760, 48);
+      ctx1.strokeStyle = '#2c2c2c';
+      ctx1.lineWidth = 2.5;
+      ctx1.strokeRect(20, 20, 760, 48);
+      
+      ctx1.fillStyle = '#2c2c2c';
+      ctx1.font = 'bold 15px sans-serif';
+      ctx1.textAlign = 'center';
+      ctx1.fillText(cv1Message, 400, 44);
+    }
+
+    // ==========================================
+    // --- Canvas Interactive: Stage 2 URL Drag ---
+    // ==========================================
+    let cv2, ctx2;
+    let cv2Blocks = [
+      { id: 1, text: 'https://', w: 100, h: 44, x: 80, y: 320, correctIdx: 0, currentIdx: -1 },
+      { id: 2, text: 'www.', w: 80, h: 44, x: 260, y: 320, correctIdx: 1, currentIdx: -1 },
+      { id: 3, text: 'google', w: 110, h: 44, x: 440, y: 320, correctIdx: 2, currentIdx: -1 },
+      { id: 4, text: '.com', w: 80, h: 44, x: 620, y: 320, correctIdx: 3, currentIdx: -1 }
+    ];
+    let cv2Slots = [
+      { x: 160, y: 160, w: 100, h: 44, block: null },
+      { x: 270, y: 160, w: 80, h: 44, block: null },
+      { x: 360, y: 160, w: 110, h: 44, block: null },
+      { x: 480, y: 160, w: 80, h: 44, block: null }
+    ];
+    let activeBlock = null;
+    let dragOffsetX = 0, dragOffsetY = 0;
+    let cv2Success = false;
+
+    function initStage2Canvas() {
+      cv2 = document.getElementById('cv-stage2');
+      ctx2 = cv2.getContext('2d');
+      setupCanvasResolution(cv2);
+      
+      cv2.addEventListener('mousedown', downStage2);
+      cv2.addEventListener('mousemove', moveStage2);
+      cv2.addEventListener('mouseup', upStage2);
+      
+      cv2.addEventListener('touchstart', e => { e.preventDefault(); downStage2(e.touches[0]); }, { passive: false });
+      cv2.addEventListener('touchmove', e => { e.preventDefault(); moveStage2(e.touches[0]); }, { passive: false });
+      cv2.addEventListener('touchend', e => { e.preventDefault(); upStage2(e.changedTouches[0]); }, { passive: false });
+      
+      setInterval(updateStage2, 1000/60);
+    }
+
+    function downStage2(e) {
+      if (cv2Success) return;
+      const rect = cv2.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (800 / rect.width);
+      const clickY = (e.clientY - rect.top) * (450 / rect.height);
+      
+      for (let b of cv2Blocks) {
+        if (clickX >= b.x && clickX <= b.x + b.w && clickY >= b.y && clickY <= b.y + b.h) {
+          activeBlock = b;
+          dragOffsetX = clickX - b.x;
+          dragOffsetY = clickY - b.y;
+          
+          // Remove from slot if already in one
+          if (b.currentIdx !== -1) {
+            cv2Slots[b.currentIdx].block = null;
+            b.currentIdx = -1;
+          }
+          break;
+        }
+      }
+    }
+
+    // Convert mouse / touch coordinates to relative coordinates inside canvas
+    function getStage2RelativeCoords(e) {
+      const rect = cv2.getBoundingClientRect();
+      return {
+        x: (e.clientX - rect.left) * (800 / rect.width),
+        y: (e.clientY - rect.top) * (450 / rect.height)
+      };
+    }
+
+    function moveStage2(e) {
+      if (!activeBlock) return;
+      const coords = getStage2RelativeCoords(e);
+      activeBlock.x = coords.x - dragOffsetX;
+      activeBlock.y = coords.y - dragOffsetY;
+    }
+
+    function upStage2(e) {
+      if (!activeBlock) return;
+      
+      // Check collision with slots
+      const blockMidX = activeBlock.x + activeBlock.w / 2;
+      const blockMidY = activeBlock.y + activeBlock.h / 2;
+      
+      let placed = false;
+      for (let i = 0; i < cv2Slots.length; i++) {
+        let s = cv2Slots[i];
+        // If slot is empty and box intersects
+        if (s.block === null && 
+            blockMidX >= s.x && blockMidX <= s.x + s.w && 
+            blockMidY >= s.y && blockMidY <= s.y + s.h) {
+          s.block = activeBlock;
+          activeBlock.currentIdx = i;
+          activeBlock.x = s.x;
+          activeBlock.y = s.y;
+          placed = true;
+          break;
+        }
+      }
+      
+      if (!placed) {
+        // Return to bottom
+        resetBlockPos(activeBlock);
+      }
+      
+      activeBlock = null;
+      checkStage2Win();
+    }
+
+    function resetBlockPos(b) {
+      const defaults = [
+        { x: 80, y: 320 },
+        { x: 260, y: 320 },
+        { x: 440, y: 320 },
+        { x: 620, y: 320 }
+      ];
+      b.x = defaults[b.id - 1].x;
+      b.y = defaults[b.id - 1].y;
+      b.currentIdx = -1;
+    }
+
+    function checkStage2Win() {
+      let correctCount = 0;
+      for (let s of cv2Slots) {
+        if (s.block && s.block.correctIdx === cv2Slots.indexOf(s)) {
+          correctCount++;
+        }
+      }
+      if (correctCount === 4) {
+        cv2Success = true;
+      }
+    }
+
+    function resetStage2() {
+      cv2Success = false;
+      for (let s of cv2Slots) s.block = null;
+      for (let b of cv2Blocks) resetBlockPos(b);
+    }
+
+    function updateStage2() {
+      ctx2.clearRect(0, 0, 800, 450);
+      
+      // Draw simulation browser UI
+      ctx2.fillStyle = '#eee';
+      ctx2.fillRect(50, 100, 700, 150);
+      ctx2.strokeStyle = '#2c2c2c';
+      ctx2.lineWidth = 3;
+      ctx2.strokeRect(50, 100, 700, 150);
+      
+      // Browser address bar background
+      ctx2.fillStyle = '#fff';
+      ctx2.fillRect(150, 150, 420, 60);
+      ctx2.strokeRect(150, 150, 420, 60);
+      
+      // Address bar text label
+      ctx2.fillStyle = '#2c2c2c';
+      ctx2.font = 'bold 14px sans-serif';
+      ctx2.fillText('網址列:', 100, 185);
+      
+      // Draw slots
+      ctx2.strokeStyle = 'rgba(0,0,0,0.1)';
+      ctx2.fillStyle = '#fafafa';
+      for (let s of cv2Slots) {
+        ctx2.fillRect(s.x, s.y, s.w, s.h);
+        ctx2.strokeRect(s.x, s.y, s.w, s.h);
+      }
+      
+      // Draw blocks
+      for (let b of cv2Blocks) {
+        if (b === activeBlock) continue; // Draw active on top
+        drawBlock(b);
+      }
+      if (activeBlock) {
+        drawBlock(activeBlock);
+      }
+      
+      // Draw instruction
+      ctx2.fillStyle = '#2c2c2c';
+      ctx2.font = 'bold 15px sans-serif';
+      ctx2.textAlign = 'center';
+      if (cv2Success) {
+        ctx2.fillStyle = 'var(--c3)';
+        ctx2.fillText('🎉 網址正確！魔法船成功直達 Google 搜尋首頁！', 400, 60);
+      } else {
+        ctx2.fillText('請拖曳下方積木到最上面的網址列中，拼出 Google 搜尋首頁網址！', 400, 60);
+      }
+    }
+    
+    function drawBlock(b) {
+      ctx2.fillStyle = cv2Success ? 'var(--c3)' : 'var(--c2)';
+      ctx2.fillRect(b.x, b.y, b.w, b.h);
+      ctx2.strokeStyle = '#2c2c2c';
+      ctx2.lineWidth = 2.5;
+      ctx2.strokeRect(b.x, b.y, b.w, b.h);
+      
+      ctx2.fillStyle = '#2c2c2c';
+      ctx2.font = 'bold 15px sans-serif';
+      ctx2.textAlign = 'center';
+      ctx2.textBaseline = 'middle';
+      ctx2.fillText(b.text, b.x + b.w / 2, b.y + b.h / 2);
+    }
+
+    // ==========================================
+    // --- Canvas Interactive: Stage 3 Keywords ---
+    // ==========================================
+    let cv3, ctx3;
+    let cv3Keywords = [
+      { text: '怎麼打', selected: false, valid: false, x: 120, y: 240, r: 46, col: '#ff8a8a' },
+      { text: '石門國小', selected: false, valid: true, x: 280, y: 220, r: 52, col: '#ffa94d' },
+      { text: '在哪裡', selected: false, valid: false, x: 440, y: 240, r: 46, col: '#cc5de8' },
+      { text: '電話', selected: false, valid: true, x: 580, y: 200, r: 52, col: '#ff6b6b' },
+      { text: '打電話給', selected: false, valid: false, x: 220, y: 350, r: 48, col: '#a8d8c8' },
+      { text: '聯絡', selected: false, valid: false, x: 500, y: 340, r: 48, col: '#339af0' }
+    ];
+    let cv3SearchText = "等待輸入...";
+    let cv3Result = "";
+    let cv3Success = false;
+
+    function initStage3Canvas() {
+      cv3 = document.getElementById('cv-stage3');
+      ctx3 = cv3.getContext('2d');
+      setupCanvasResolution(cv3);
+      
+      cv3.addEventListener('mousedown', clickStage3);
+      cv3.addEventListener('touchstart', e => { e.preventDefault(); clickStage3(e.touches[0]); }, { passive: false });
+      
+      setInterval(updateStage3, 1000/60);
+    }
+
+    function clickStage3(e) {
+      if (cv3Success) return;
+      const rect = cv3.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (800 / rect.width);
+      const clickY = (e.clientY - rect.top) * (450 / rect.height);
+      
+      // If click search button
+      if (clickX >= 550 && clickX <= 630 && clickY >= 100 && clickY <= 144) {
+        runStage3Search();
+        return;
+      }
+      
+      for (let k of cv3Keywords) {
+        if (Math.hypot(clickX - k.x, clickY - k.y) < k.r) {
+          k.selected = !k.selected;
+          updateStage3SearchText();
+          break;
+        }
+      }
+    }
+
+    function updateStage3SearchText() {
+      const selected = cv3Keywords.filter(k => k.selected).map(k => k.text);
+      if (selected.length === 0) {
+        cv3SearchText = "等待輸入...";
+      } else {
+        cv3SearchText = selected.join(" ");
+      }
+    }
+
+    function runStage3Search() {
+      const selected = cv3Keywords.filter(k => k.selected);
+      const valids = selected.filter(k => k.valid);
+      const invalids = selected.filter(k => !k.valid);
+      
+      if (valids.length === 2 && invalids.length === 0) {
+        cv3Success = true;
+        cv3Result = "🔍 搜尋成功！石門國小電話：03-4711718";
+      } else {
+        cv3Result = "❌ 搜尋不到！請精簡詞彙，只選出最重要的 2 個詞。";
+        setTimeout(() => {
+          if (!cv3Success) cv3Result = "";
+        }, 3000);
+      }
+    }
+
+    function resetStage3() {
+      cv3Success = false;
+      cv3Result = "";
+      for (let k of cv3Keywords) k.selected = false;
+      updateStage3SearchText();
+    }
+
+    function updateStage3() {
+      ctx3.clearRect(0, 0, 800, 450);
+      
+      // Draw Google Search Bar simulation
+      ctx3.fillStyle = '#fff';
+      ctx3.fillRect(150, 100, 390, 44);
+      ctx3.strokeStyle = '#2c2c2c';
+      ctx3.lineWidth = 2.5;
+      ctx3.strokeRect(150, 100, 390, 44);
+      
+      // Search Button
+      ctx3.fillStyle = 'var(--c2)';
+      ctx3.fillRect(550, 100, 80, 44);
+      ctx3.strokeRect(550, 100, 80, 44);
+      
+      ctx3.fillStyle = '#2c2c2c';
+      ctx3.font = 'bold 15px sans-serif';
+      ctx3.textAlign = 'center';
+      ctx3.textBaseline = 'middle';
+      ctx3.fillText('搜尋', 590, 122);
+      
+      // Search Box text
+      ctx3.fillStyle = (cv3SearchText === "等待輸入...") ? '#868686' : '#2c2c2c';
+      ctx3.font = (cv3SearchText === "等待輸入...") ? 'italic 15px sans-serif' : 'bold 16px sans-serif';
+      ctx3.textAlign = 'left';
+      ctx3.fillText(cv3SearchText, 170, 122);
+      
+      // Draw word bubbles
+      for (let k of cv3Keywords) {
+        ctx3.fillStyle = k.selected ? 'var(--c3)' : k.col;
+        ctx3.beginPath();
+        ctx3.arc(k.x, k.y, k.r, 0, Math.PI*2);
+        ctx3.fill();
+        ctx3.strokeStyle = '#2c2c2c';
+        ctx3.lineWidth = 2.5;
+        ctx3.stroke();
+        
+        ctx3.fillStyle = k.selected ? '#fff' : '#2c2c2c';
+        ctx3.font = 'bold 15px sans-serif';
+        ctx3.textAlign = 'center';
+        ctx3.fillText(k.text, k.x, k.y);
+      }
+      
+      // Draw result
+      ctx3.fillStyle = '#2c2c2c';
+      ctx3.font = 'bold 16px sans-serif';
+      ctx3.textAlign = 'center';
+      if (cv3Result) {
+        ctx3.fillStyle = cv3Success ? 'var(--c3)' : 'var(--c1)';
+        ctx3.fillText(cv3Result, 400, 70);
+      } else {
+        ctx3.fillText('任務：尋找「石門國小」的「聯絡電話」。請點選 2 個密語，放進搜尋框內搜尋！', 400, 70);
+      }
+    }
+
+    // ==========================================
+    // --- Canvas Interactive: Stage 4 Safety ---
+    // ==========================================
+    let cv4, ctx4;
+    let cv4Cards = [
+      { text: "陌生人問我電話姓名，我直接告訴他", safe: false, color: '#ff8a8a', width: 240, height: 48, x: 280, y: 120 },
+      { text: "看到恭喜中大獎廣告，我不去點擊", safe: true, color: '#a8d8c8', width: 240, height: 48, x: 280, y: 190 },
+      { text: "要下載新遊戲時，先問過爸爸媽媽", safe: true, color: '#a8d8c8', width: 240, height: 48, x: 280, y: 260 },
+      { text: "在網路上罵同學是又肥又胖的豬", safe: false, color: '#ff8a8a', width: 240, height: 48, x: 280, y: 330 }
+    ];
+    let cv4Active = null;
+    let cv4DragX = 0, cv4DragY = 0;
+    let cv4Success = false;
+
+    function initStage4Canvas() {
+      cv4 = document.getElementById('cv-stage4');
+      ctx4 = cv4.getContext('2d');
+      setupCanvasResolution(cv4);
+      
+      cv4.addEventListener('mousedown', downStage4);
+      cv4.addEventListener('mousemove', moveStage4);
+      cv4.addEventListener('mouseup', upStage4);
+      
+      cv4.addEventListener('touchstart', e => { e.preventDefault(); downStage4(e.touches[0]); }, { passive: false });
+      cv4.addEventListener('touchmove', e => { e.preventDefault(); moveStage4(e.touches[0]); }, { passive: false });
+      cv4.addEventListener('touchend', e => { e.preventDefault(); upStage4(e.changedTouches[0]); }, { passive: false });
+      
+      setInterval(updateStage4, 1000/60);
+    }
+
+    function downStage4(e) {
+      if (cv4Success) return;
+      const rect = cv4.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (800 / rect.width);
+      const clickY = (e.clientY - rect.top) * (450 / rect.height);
+      
+      for (let c of cv4Cards) {
+        // If not categorized yet
+        if (c.x > 150 && c.x < 450) {
+          if (clickX >= c.x && clickX <= c.x + c.width && clickY >= c.y && clickY <= c.y + c.height) {
+            cv4Active = c;
+            cv4DragX = clickX - c.x;
+            cv4DragY = clickY - c.y;
+            break;
+          }
+        }
+      }
+    }
+
+    function getStage4RelativeCoords(e) {
+      const rect = cv4.getBoundingClientRect();
+      return {
+        x: (e.clientX - rect.left) * (800 / rect.width),
+        y: (e.clientY - rect.top) * (450 / rect.height)
+      };
+    }
+
+    function moveStage4(e) {
+      if (!cv4Active) return;
+      const coords = getStage4RelativeCoords(e);
+      cv4Active.x = coords.x - cv4DragX;
+      cv4Active.y = coords.y - cv4DragY;
+    }
+
+    function upStage4(e) {
+      if (!cv4Active) return;
+      
+      const midX = cv4Active.x + cv4Active.width / 2;
+      
+      let correct = false;
+      if (midX < 200 && cv4Active.safe) {
+        // Safe Shield (correct)
+        cv4Active.x = 10;
+        cv4Active.y = 120 + cv4Cards.filter(c => c.x === 10).length * 60;
+        correct = true;
+      } else if (midX > 600 && !cv4Active.safe) {
+        // Trash Can (correct)
+        cv4Active.x = 550;
+        cv4Active.y = 120 + cv4Cards.filter(c => c.x === 550).length * 60;
+        correct = true;
+      }
+      
+      if (!correct) {
+        // Return to defaults
+        const defaults = [120, 190, 260, 330];
+        cv4Active.x = 280;
+        cv4Active.y = defaults[cv4Cards.indexOf(cv4Active)];
+      }
+      
+      cv4Active = null;
+      checkStage4Win();
+    }
+
+    function checkStage4Win() {
+      const categorized = cv4Cards.filter(c => c.x === 10 || c.x === 550);
+      if (categorized.length === 4) {
+        cv4Success = true;
+      }
+    }
+
+    function resetStage4() {
+      cv4Success = false;
+      const defaults = [120, 190, 260, 330];
+      cv4Cards.forEach((c, idx) => {
+        c.x = 280;
+        c.y = defaults[idx];
+      });
+    }
+
+    function updateStage4() {
+      ctx4.clearRect(0, 0, 800, 450);
+      
+      // Draw Safe Shield Box (Left)
+      ctx4.fillStyle = 'rgba(81,207,102,0.1)';
+      ctx4.fillRect(10, 100, 240, 320);
+      ctx4.strokeStyle = 'var(--c3)';
+      ctx4.lineWidth = 3;
+      ctx4.strokeRect(10, 100, 240, 320);
+      
+      ctx4.fillStyle = 'var(--c3)';
+      ctx4.font = 'bold 16px sans-serif';
+      ctx4.textAlign = 'center';
+      ctx4.fillText('🛡️ 安全守護盾', 130, 130);
+      ctx4.font = 'bold 12px sans-serif';
+      ctx4.fillText('（拖入安全或有禮貌的行為）', 130, 154);
+      
+      // Draw Trash Can Box (Right)
+      ctx4.fillStyle = 'rgba(255,107,107,0.1)';
+      ctx4.fillRect(550, 100, 240, 320);
+      ctx4.strokeStyle = 'var(--c1)';
+      ctx4.strokeRect(550, 100, 240, 320);
+      
+      ctx4.fillStyle = 'var(--c1)';
+      ctx4.font = 'bold 16px sans-serif';
+      ctx4.fillText('🗑️ 垃圾桶', 670, 130);
+      ctx4.font = 'bold 12px sans-serif';
+      ctx4.fillText('（拖入危險或不禮貌的行為）', 670, 154);
+      
+      // Draw cards
+      for (let c of cv4Cards) {
+        if (c === cv4Active) continue;
+        drawSafetyCard(c);
+      }
+      if (cv4Active) {
+        drawSafetyCard(cv4Active);
+      }
+      
+      // Instruction
+      ctx4.fillStyle = '#2c2c2c';
+      ctx4.font = 'bold 15px sans-serif';
+      ctx4.textAlign = 'center';
+      if (cv4Success) {
+        ctx4.fillStyle = 'var(--c3)';
+        ctx4.fillText('🎉 防禦成功！你已經是安全上網與網路禮儀小公民了！', 400, 60);
+      } else {
+        ctx4.fillText('請將中間的情境卡片，分類拖入安全盾牌或危險垃圾桶中！', 400, 60);
+      }
+    }
+    
+    function drawSafetyCard(c) {
+      // If categorized, make smaller
+      const isCategorized = (c.x === 10 || c.x === 550);
+      const w = isCategorized ? 220 : c.width;
+      const h = isCategorized ? 40 : c.height;
+      const x = isCategorized ? c.x + 10 : c.x;
+      
+      ctx4.fillStyle = c.color;
+      ctx4.fillRect(x, c.y, w, h);
+      ctx4.strokeStyle = '#2c2c2c';
+      ctx4.lineWidth = 2;
+      ctx4.strokeRect(x, c.y, w, h);
+      
+      ctx4.fillStyle = '#2c2c2c';
+      ctx4.font = isCategorized ? 'bold 11px sans-serif' : 'bold 12px sans-serif';
+      ctx4.textAlign = 'center';
+      ctx4.textBaseline = 'middle';
+      ctx4.fillText(c.text, x + w / 2, c.y + h / 2);
+    }
+  </script>
+
+</body>
+</html>
