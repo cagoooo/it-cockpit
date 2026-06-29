@@ -1,0 +1,827 @@
+1
+00:00:00,000 --> 00:00:04,000
+Hey, young AI creators and directors in front of the screen,
+
+2
+00:00:04,000 --> 00:00:06,440
+are you ready for the big show?
+
+3
+00:00:06,440 --> 00:00:08,720
+Today, we're going to make a big scene.
+
+4
+00:00:08,720 --> 00:00:11,320
+That's right, we're going to use the coolest AI technology
+
+5
+00:00:11,320 --> 00:00:13,199
+to combine traditional Dragon Boat Festival
+
+6
+00:00:13,199 --> 00:00:16,800
+to create master-class super-crazy works.
+
+7
+00:00:16,800 --> 00:00:18,519
+Start your creative brain.
+
+8
+00:00:18,519 --> 00:00:22,760
+Our journey of Dragon Boat AI Creators is now starting.
+
+9
+00:00:22,760 --> 00:00:24,920
+This is our tour map for today.
+
+10
+00:00:24,920 --> 00:00:26,640
+We'll take a look at it soon.
+
+11
+00:00:26,640 --> 00:00:30,199
+First, we'll teach you how to become an AI creator.
+
+12
+00:00:30,199 --> 00:00:32,799
+Then, we'll learn about the magic spell of video images.
+
+13
+00:00:32,799 --> 00:00:35,280
+We'll design the cover of Dragon Boat's music album.
+
+14
+00:00:35,280 --> 00:00:37,640
+We'll sing the magic spell of music.
+
+15
+00:00:37,640 --> 00:00:42,479
+Lastly, we'll learn about the rules of traditional customs and creators.
+
+16
+00:00:42,479 --> 00:00:45,679
+First, become an AI creator.
+
+17
+00:00:45,679 --> 00:00:48,719
+Your magic journey begins now.
+
+18
+00:00:48,719 --> 00:00:51,399
+To be honest, if you want to lead a powerful AI,
+
+19
+00:00:51,399 --> 00:00:53,280
+you don't need a magic wand.
+
+20
+00:00:53,280 --> 00:00:54,640
+What you need is a magic spell
+
+21
+00:00:54,640 --> 00:00:56,600
+called a prompt word.
+
+22
+00:00:56,600 --> 00:00:58,600
+You can take AI as your exclusive film crew
+
+23
+00:00:58,600 --> 00:01:00,600
+or a god or spirit.
+
+24
+00:01:00,600 --> 00:01:02,600
+As long as you follow the instructions we give you
+
+25
+00:01:02,600 --> 00:01:04,599
+like we do when we chat,
+
+26
+00:01:04,599 --> 00:01:06,599
+the sky-high images and music in your mind
+
+27
+00:01:06,599 --> 00:01:08,599
+can be changed instantly.
+
+28
+00:01:08,599 --> 00:01:10,599
+It's amazing, isn't it?
+
+29
+00:01:10,599 --> 00:01:14,599
+Second, use Gemini to summon the magic spell of video images.
+
+30
+00:01:14,599 --> 00:01:16,599
+Let's open Google Gemini for free.
+
+31
+00:01:16,599 --> 00:01:18,599
+Do you know?
+
+32
+00:01:18,599 --> 00:01:20,599
+The power of the spell
+
+33
+00:01:20,599 --> 00:01:22,599
+completely determines the power of magic.
+
+34
+00:01:22,599 --> 00:01:24,599
+Imagine, if you only give a very weak spell,
+
+35
+00:01:24,599 --> 00:01:26,599
+you can only get the power of magic.
+
+36
+00:01:26,599 --> 00:01:28,599
+Like drawing a dance.
+
+37
+00:01:28,599 --> 00:01:30,599
+AI may only give you a boring seed.
+
+38
+00:01:30,599 --> 00:01:32,599
+But if you explain the details clearly,
+
+39
+00:01:32,599 --> 00:01:34,599
+like drawing a cute cartoon,
+
+40
+00:01:34,599 --> 00:01:36,599
+a little boy wearing a red dress eating seeds in the park,
+
+41
+00:01:36,599 --> 00:01:38,599
+wow, the whole picture comes to life instantly.
+
+42
+00:01:38,599 --> 00:01:40,599
+And even if AI draws it wrong,
+
+43
+00:01:40,599 --> 00:01:42,599
+don't be nervous.
+
+44
+00:01:42,599 --> 00:01:44,599
+Just like chatting with a classmate,
+
+45
+00:01:44,599 --> 00:01:46,599
+tell him,
+
+46
+00:01:46,599 --> 00:01:48,599
+please change the background to night.
+
+47
+00:01:48,599 --> 00:01:50,599
+He will immediately help you change it.
+
+48
+00:01:50,599 --> 00:01:52,599
+100% precise control of the picture.
+
+49
+00:01:52,599 --> 00:01:54,599
+Your magic must be collected
+
+50
+00:01:54,599 --> 00:01:56,599
+to these five key gems.
+
+51
+00:01:56,599 --> 00:01:58,599
+First, the subject,
+
+52
+00:01:58,599 --> 00:02:00,599
+that is, who the protagonist is.
+
+53
+00:02:00,599 --> 00:02:02,599
+Second, where the scene takes place.
+
+54
+00:02:02,599 --> 00:02:04,599
+Third, the style.
+
+55
+00:02:04,599 --> 00:02:06,599
+Is it cartoon, watercolor,
+
+56
+00:02:06,599 --> 00:02:08,599
+or real photos?
+
+57
+00:02:08,599 --> 00:02:10,599
+Finally, don't forget to add color and light.
+
+58
+00:02:10,599 --> 00:02:12,599
+Put these five elements together,
+
+59
+00:02:12,599 --> 00:02:14,599
+AI can fully understand what you're thinking.
+
+60
+00:02:14,599 --> 00:02:16,599
+Draw a great picture.
+
+61
+00:02:16,599 --> 00:02:18,599
+The third chapter,
+
+62
+00:02:18,599 --> 00:02:20,599
+the cover of a dance music album,
+
+63
+00:02:20,599 --> 00:02:22,599
+that is, the face of the song.
+
+64
+00:02:22,599 --> 00:02:24,599
+Now that you've got the image spell,
+
+65
+00:02:24,599 --> 00:02:26,599
+let's make a square cover of the album.
+
+66
+00:02:26,599 --> 00:02:28,599
+This is the cover of the song
+
+67
+00:02:28,599 --> 00:02:30,599
+that you're going to create later.
+
+68
+00:02:30,599 --> 00:02:32,599
+Please order Gemini
+
+69
+00:02:32,599 --> 00:02:34,599
+to put these four Danwu magic treasures in.
+
+70
+00:02:34,599 --> 00:02:36,599
+Hot dragon porridge,
+
+71
+00:02:36,599 --> 00:02:38,599
+delicious seeds,
+
+72
+00:02:38,599 --> 00:02:40,599
+perfumed sachets,
+
+73
+00:02:40,599 --> 00:02:42,599
+and blood-soaked grass.
+
+74
+00:02:42,599 --> 00:02:44,599
+Let me tell you a secret trick.
+
+75
+00:02:44,599 --> 00:02:46,599
+Remember to leave blank in the spell
+
+76
+00:02:46,599 --> 00:02:48,599
+and on the top of the picture.
+
+77
+00:02:48,599 --> 00:02:50,599
+Why?
+
+78
+00:02:50,599 --> 00:02:52,599
+Because if you draw too much,
+
+79
+00:02:52,599 --> 00:02:54,599
+the text on the cover will be squeezed together
+
+80
+00:02:54,599 --> 00:02:56,599
+to block your hard-drawn picture.
+
+81
+00:02:56,599 --> 00:02:58,599
+After the cover is done,
+
+82
+00:02:58,599 --> 00:03:00,599
+of course you need to add a big Chinese title.
+
+83
+00:03:00,599 --> 00:03:02,599
+You can directly ask AI
+
+84
+00:03:02,599 --> 00:03:04,599
+to write in Chinese on the picture
+
+85
+00:03:04,599 --> 00:03:06,599
+Danwu Happy.
+
+86
+00:03:06,599 --> 00:03:08,599
+Or you can download this picture
+
+87
+00:03:08,599 --> 00:03:10,599
+to Canva
+
+88
+00:03:10,599 --> 00:03:12,599
+and choose the coolest font
+
+89
+00:03:12,599 --> 00:03:14,599
+to line up.
+
+90
+00:03:14,599 --> 00:03:16,599
+Enjoy your creativity.
+
+91
+00:03:16,599 --> 00:03:18,599
+The fourth chapter, the spell of music magic.
+
+92
+00:03:18,599 --> 00:03:20,599
+Prepare to direct your exclusive AI band.
+
+93
+00:03:20,599 --> 00:03:22,599
+The cover is done.
+
+94
+00:03:22,599 --> 00:03:24,599
+Now let's go to Google Music FX
+
+95
+00:03:24,599 --> 00:03:26,599
+to make music.
+
+96
+00:03:26,599 --> 00:03:28,599
+The formula of music magic is different from the picture.
+
+97
+00:03:28,599 --> 00:03:30,599
+Don't tell the AI band
+
+98
+00:03:30,599 --> 00:03:32,599
+a long story.
+
+99
+00:03:32,599 --> 00:03:34,599
+You need to give a clear key word.
+
+100
+00:03:34,599 --> 00:03:36,599
+For example, what is the style of the song?
+
+101
+00:03:36,599 --> 00:03:38,599
+Are you happy or nervous?
+
+102
+00:03:38,599 --> 00:03:40,599
+Which instruments are used?
+
+103
+00:03:40,599 --> 00:03:42,599
+Is the tempo fast or slow?
+
+104
+00:03:42,599 --> 00:03:44,599
+And the theme of the song.
+
+105
+00:03:44,599 --> 00:03:46,599
+Just put these materials in.
+
+106
+00:03:46,599 --> 00:03:48,599
+Let me show you a super powerful demonstration formula.
+
+107
+00:03:48,599 --> 00:03:50,599
+A happy,
+
+108
+00:03:50,599 --> 00:03:52,599
+fast-paced pop music
+
+109
+00:03:52,599 --> 00:03:54,599
+with a great drum sound
+
+110
+00:03:54,599 --> 00:03:56,599
+sounds like a lively
+
+111
+00:03:56,599 --> 00:03:58,599
+Hualongzhou competition.
+
+112
+00:03:58,599 --> 00:04:00,599
+As long as you input this,
+
+113
+00:04:00,599 --> 00:04:02,599
+Music FX will turn out two great
+
+114
+00:04:02,599 --> 00:04:04,599
+pure music accompaniment for you.
+
+115
+00:04:04,599 --> 00:04:06,599
+Why is it pure accompaniment?
+
+116
+00:04:06,599 --> 00:04:08,599
+Because the current AI is not very good at Chinese.
+
+117
+00:04:08,599 --> 00:04:10,599
+So the part of the soul life
+
+118
+00:04:10,599 --> 00:04:12,599
+will be taught to you and your classmates
+
+119
+00:04:12,599 --> 00:04:14,599
+to sing Danwu songs loudly.
+
+120
+00:04:14,599 --> 00:04:16,600
+The fifth chapter,
+
+121
+00:04:16,600 --> 00:04:18,600
+the spell of magic.
+
+122
+00:04:18,600 --> 00:04:20,600
+This is the legend of the spell of magic.
+
+123
+00:04:20,600 --> 00:04:22,600
+As a great creator,
+
+124
+00:04:22,600 --> 00:04:24,600
+of course you need to know the origin of the festival.
+
+125
+00:04:24,600 --> 00:04:26,600
+In the era of the war,
+
+126
+00:04:26,600 --> 00:04:28,600
+there was a poet who loved the country
+
+127
+00:04:28,600 --> 00:04:30,600
+called Qu Yuan.
+
+128
+00:04:30,600 --> 00:04:32,600
+After he jumped into the Moluo River,
+
+129
+00:04:32,600 --> 00:04:34,600
+the villagers were so anxious
+
+130
+00:04:34,600 --> 00:04:36,600
+that they swam to save him.
+
+131
+00:04:36,600 --> 00:04:38,600
+In order not to let the fish and shrimp in the water
+
+132
+00:04:38,600 --> 00:04:40,600
+eat Qu Yuan,
+
+133
+00:04:40,600 --> 00:04:42,600
+everyone threw the leaves of the rice
+
+134
+00:04:42,600 --> 00:04:44,600
+into the river to feed the fish.
+
+135
+00:04:44,600 --> 00:04:46,600
+This touching story later evolved into
+
+136
+00:04:46,600 --> 00:04:48,600
+the tradition of eating zongzi in Hualongzhou.
+
+137
+00:04:48,600 --> 00:04:50,600
+In fact,
+
+138
+00:04:50,600 --> 00:04:52,600
+the story of Danwu Festival
+
+139
+00:04:52,600 --> 00:04:54,600
+is not only a legend,
+
+140
+00:04:54,600 --> 00:04:56,600
+but also a very cool scientific knowledge.
+
+141
+00:04:56,600 --> 00:04:58,600
+Like the chestnut egg that everyone loves to play,
+
+142
+00:04:58,600 --> 00:05:00,600
+it is actually challenging gravity and friction.
+
+143
+00:05:00,600 --> 00:05:02,600
+The grass hanging at the door
+
+144
+00:05:02,600 --> 00:05:04,600
+can purify the air,
+
+145
+00:05:04,600 --> 00:05:06,600
+and the beautiful sachets hanging on our bodies
+
+146
+00:05:06,600 --> 00:05:08,600
+are filled with natural medicinal herbs.
+
+147
+00:05:08,600 --> 00:05:10,600
+This is basically the most natural
+
+148
+00:05:10,600 --> 00:05:12,600
+anti-fragrance night of the ancients, okay?
+
+149
+00:05:12,600 --> 00:05:14,600
+But there is a super alarm here.
+
+150
+00:05:14,600 --> 00:05:16,600
+You may have heard
+
+151
+00:05:16,600 --> 00:05:18,600
+the story of Xionghuang wine
+
+152
+00:05:18,600 --> 00:05:20,600
+but in real life,
+
+153
+00:05:20,600 --> 00:05:22,600
+this must not be drunk.
+
+154
+00:05:22,600 --> 00:05:24,600
+After Xionghuang is heated,
+
+155
+00:05:24,600 --> 00:05:26,600
+it will become a poisonous skin wound.
+
+156
+00:05:26,600 --> 00:05:28,600
+This will kill you.
+
+157
+00:05:28,600 --> 00:05:30,600
+If you want to be healthy,
+
+158
+00:05:30,600 --> 00:05:32,600
+take a good bag and go out more often.
+
+159
+00:05:32,600 --> 00:05:34,600
+Okay, back to our identity as AI creators.
+
+160
+00:05:34,600 --> 00:05:36,600
+We have a very important rule to follow.
+
+161
+00:05:36,600 --> 00:05:38,600
+When AI produces super cool works for you,
+
+162
+00:05:38,600 --> 00:05:40,600
+the system will actually
+
+163
+00:05:40,600 --> 00:05:42,600
+secretly cover an invisible digital float
+
+164
+00:05:42,600 --> 00:05:44,600
+called Synth HD.
+
+165
+00:05:44,600 --> 00:05:46,600
+What does this mean? This means that we cannot
+
+166
+00:05:46,600 --> 00:05:48,600
+lie to people and say that
+
+167
+00:05:48,600 --> 00:05:50,600
+this is 100% my own work.
+
+168
+00:05:50,600 --> 00:05:52,600
+We must be honest and bold and say
+
+169
+00:05:52,600 --> 00:05:54,600
+that this is the work
+
+170
+00:05:54,600 --> 00:05:56,600
+that AI and I have done together.
+
+171
+00:05:56,600 --> 00:05:58,600
+Another super important rule
+
+172
+00:05:58,600 --> 00:06:00,600
+is to respect copyright.
+
+173
+00:06:00,600 --> 00:06:02,600
+We cannot directly call AI
+
+174
+00:06:02,600 --> 00:06:04,600
+to draw a cartoon character with copyright.
+
+175
+00:06:04,600 --> 00:06:06,600
+But if you really want to
+
+176
+00:06:06,600 --> 00:06:08,600
+have a Pikachu-like character on the screen,
+
+177
+00:06:08,600 --> 00:06:10,600
+you can be creative
+
+178
+00:06:10,600 --> 00:06:12,600
+and change the spell to
+
+179
+00:06:12,600 --> 00:06:14,600
+a little mouse with a yellow light.
+
+180
+00:06:14,600 --> 00:06:16,600
+In other words, AI will give you
+
+181
+00:06:16,600 --> 00:06:18,600
+a big surprise.
+
+182
+00:06:18,600 --> 00:06:20,600
+If your magic is temporarily lost,
+
+183
+00:06:20,600 --> 00:06:22,600
+don't be angry.
+
+184
+00:06:22,600 --> 00:06:24,600
+Look at these 5 ways to get rid of it.
+
+185
+00:06:24,600 --> 00:06:26,600
+First, write the spell longer and more detailed.
+
+186
+00:06:26,600 --> 00:06:28,600
+Second, use an adjective to replace
+
+187
+00:06:28,600 --> 00:06:30,600
+the name of the copyrighted character.
+
+188
+00:06:30,600 --> 00:06:32,600
+Third, make music with instruments and rhythm.
+
+189
+00:06:32,600 --> 00:06:34,600
+Don't write a story.
+
+190
+00:06:34,600 --> 00:06:36,600
+Fourth, AI can't sing Chinese.
+
+191
+00:06:36,600 --> 00:06:38,600
+You can sing as the lead singer.
+
+192
+00:06:38,600 --> 00:06:40,600
+Fifth, if you fail for the first time,
+
+193
+00:06:40,600 --> 00:06:42,600
+don't give up.
+
+194
+00:06:42,600 --> 00:06:44,600
+Fix the spell and try again.
+
+195
+00:06:44,600 --> 00:06:46,600
+Okay, future AI masters.
+
+196
+00:06:46,600 --> 00:06:48,600
+You have tools in your mind,
+
+197
+00:06:48,600 --> 00:06:50,600
+knowledge in your brain,
+
+198
+00:06:50,600 --> 00:06:52,600
+and the most powerful magic spell in your mouth.
+
+199
+00:06:52,600 --> 00:06:54,600
+From drawing to making music,
+
+200
+00:06:54,600 --> 00:06:56,600
+from traditional customs to copyright,
+
+201
+00:06:56,600 --> 00:06:58,600
+you have learned them all.
+
+202
+00:06:58,600 --> 00:07:00,600
+So, since you have all of these,
+
+203
+00:07:00,600 --> 00:07:02,600
+what kind of unique
+
+204
+00:07:02,600 --> 00:07:04,600
+Duan Wu Jie practice are you going to create today?
+
+205
+00:07:04,600 --> 00:07:06,600
+Open your computer
+
+206
+00:07:06,600 --> 00:07:08,600
+and start creating your masterpieces.
+
+207
+00:07:08,600 --> 00:07:10,600
+See you next time.

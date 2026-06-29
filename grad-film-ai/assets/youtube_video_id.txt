@@ -1,0 +1,7 @@
+{
+  "video_id": "beqMQevayx4",
+  "watch_url": "https://www.youtube.com/watch?v=beqMQevayx4",
+  "embed_url": "https://www.youtube.com/embed/beqMQevayx4",
+  "title": "畢業紀念影片 AI 一條龍｜六年級資訊科技 - NotebookLM 教學影片",
+  "privacy": "public"
+}

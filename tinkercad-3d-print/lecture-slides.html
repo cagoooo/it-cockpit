@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Tinkercad 3D列印創意空間｜教師授課簡報</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&family=VT323&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ============ circuit-glow 風格簡報 ============ */
+    html { font-size: 18px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a1f1a; --surface: #0e2a22; --panel: #143832; --pcb-line: #1a4f42;
+      --c1: #4cd964; --c2: #ffb300; --c3: #ff3d3d; --c4: #ffe000; --c5: #42a5f5;
+      --text: #e0f0e8; --dim: #5a7d70; --solder: #c0c8d0;
+    }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg); color: var(--text);
+      overflow: hidden; height: 100vh; width: 100vw;
+      user-select: none;
+    }
+    
+    /* PCB 走線背景 */
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+      background-image:
+        linear-gradient(0deg, transparent 95%, var(--pcb-line) 95%, var(--pcb-line) 96%, transparent 96%),
+        linear-gradient(90deg, transparent 95%, var(--pcb-line) 95%, var(--pcb-line) 96%, transparent 96%),
+        radial-gradient(circle at 50% 50%, var(--c2) 0 1.5px, transparent 1.5px);
+      background-size: 160px 160px, 160px 160px, 320px 320px;
+      opacity: 0.3;
+    }
+
+    /* 投影片容器 */
+    .deck {
+      width: 100%; height: 100%; position: relative;
+    }
+    .slide {
+      position: absolute; inset: 0; display: none;
+      flex-direction: column; justify-content: center; align-items: center;
+      padding: 60px 80px; text-align: center;
+    }
+    .slide.active {
+      display: flex;
+    }
+
+    /* 訊號流動裝飾條 */
+    .slide::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, transparent, var(--c1), transparent);
+      box-shadow: 0 0 10px var(--c1);
+    }
+
+    /* 標題與內文 */
+    .slide-title {
+      font-size: 3rem; font-weight: 900; color: var(--c1); margin-bottom: 24px;
+      text-shadow: 0 0 16px rgba(76,217,100,.4), 3px 3px 0 var(--c3);
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .slide-sub {
+      font-size: 1.5rem; color: var(--c2); margin-bottom: 32px;
+      font-family: 'Orbitron', sans-serif; letter-spacing: 0.1em;
+    }
+    .slide-content {
+      font-size: 1.2rem; max-width: 1000px; line-height: 1.8;
+      background: var(--surface); border: 2.5px solid var(--c1);
+      padding: 40px; box-shadow: 8px 8px 0 #000;
+      position: relative;
+    }
+    .slide-content::before {
+      content: ''; position: absolute; top: -7px; left: -7px; width: 14px; height: 14px;
+      background: var(--c2); border-radius: 50%; box-shadow: 0 0 8px var(--c2);
+    }
+    .slide-content::after {
+      content: ''; position: absolute; bottom: -7px; right: -7px; width: 14px; height: 14px;
+      background: var(--c2); border-radius: 50%; box-shadow: 0 0 8px var(--c2);
+    }
+
+    /* 進度條 */
+    .progress {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 8px; background: rgba(0,0,0,.5); z-index: 10;
+    }
+    .progress-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, var(--c1), var(--c4));
+      box-shadow: 0 0 8px var(--c1); transition: width 0.3s;
+    }
+
+    /* 控制提示與狀態 */
+    .hint {
+      position: fixed; bottom: 16px; right: 20px; font-size: 0.8rem; color: var(--dim);
+      font-family: 'JetBrains Mono', monospace; z-index: 10;
+    }
+    
+    /* 講師對話泡泡 */
+    .speaker {
+      position: absolute; bottom: 30px; left: 40px; display: flex; align-items: flex-end; gap: 14px; z-index: 20; max-width: 45%;
+      transition: opacity 0.3s;
+    }
+    .speaker .avatar {
+      width: 60px; height: 60px; background: var(--c2); border: 3px solid #000; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 2rem;
+      box-shadow: 3px 3px 0 #000;
+    }
+    .speaker .bubble {
+      background: var(--panel); border: 2.5px solid var(--c1); padding: 12px 18px; font-size: 0.9rem;
+      font-weight: 500; color: var(--text); position: relative; box-shadow: 3px 3px 0 #000; text-align: left;
+      line-height: 1.5;
+    }
+    .speaker .bubble::before {
+      content: ''; position: absolute; left: -12px; bottom: 18px;
+      border-style: solid; border-width: 8px 12px 8px 0; border-color: transparent var(--c1) transparent transparent;
+    }
+    .speaker .bubble::after {
+      content: ''; position: absolute; left: -9px; bottom: 18px;
+      border-style: solid; border-width: 8px 12px 8px 0; border-color: transparent var(--panel) transparent transparent;
+    }
+
+    /* 章節總覽 (M鍵) */
+    .overview {
+      position: fixed; inset: 0; background: rgba(10,31,26,0.96); z-index: 900;
+      display: none; flex-direction: column; padding: 40px; overflow-y: auto;
+    }
+    .overview.show { display: flex; }
+    .overview h3 {
+      font-family: 'Orbitron', sans-serif; color: var(--c2); text-align: center; margin-bottom: 30px;
+      font-size: 1.6rem; letter-spacing: 0.2em; text-shadow: 0 0 10px rgba(255,179,0,.4);
+    }
+    .ov-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto;
+    }
+    .ov-card {
+      background: var(--surface); border: 2px solid var(--pcb-line); padding: 18px; cursor: pointer;
+      box-shadow: 4px 4px 0 #000; transition: 0.15s; text-align: left;
+    }
+    .ov-card:hover {
+      border-color: var(--c1); box-shadow: 4px 4px 0 var(--c1); transform: translateY(-2px);
+    }
+    .ov-card.active {
+      border-color: var(--c2); box-shadow: 4px 4px 0 var(--c2);
+    }
+    .ov-num {
+      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 0.8rem; color: var(--c3); margin-bottom: 6px;
+    }
+    .ov-title {
+      font-weight: 700; font-size: 0.95rem; color: var(--text);
+    }
+
+    /* 內文排版元件 */
+    .slide-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 1000px; text-align: left;
+    }
+    .slide-card {
+      background: var(--panel); border: 2px solid var(--pcb-line); padding: 24px; box-shadow: 5px 5px 0 #000;
+      display: flex; flex-direction: column; gap: 8px; position: relative;
+    }
+    .slide-card h4 { color: var(--c2); font-size: 1.15rem; margin-bottom: 8px; }
+    .slide-card p { font-size: 1rem; color: var(--text); line-height: 1.6; }
+    
+    /* 大數字/大符號 */
+    .big-num {
+      font-family: 'VT323', monospace; font-size: 4rem; color: var(--c4); text-shadow: 0 0 10px var(--c4);
+      line-height: 1; margin-bottom: 10px;
+    }
+
+    /* 5 個核心叮嚀卡片 */
+    .tips-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; width: 100%; max-width: 1200px; text-align: left;
+    }
+    .tip-card {
+      background: var(--panel); border: 2px solid var(--pcb-line); padding: 14px; box-shadow: 3px 3px 0 #000;
+    }
+    .tip-card .num { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--c3); margin-bottom: 6px; font-weight: 900; }
+    .tip-card h4 { font-size: 0.95rem; color: var(--c1); margin-bottom: 4px; }
+    .tip-card p { font-size: 0.8rem; color: var(--dim); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+  <div class="deck" id="deck">
+
+    <!-- 01 封面 -->
+    <section class="slide active" id="s1">
+      <h2 class="slide-title">Tinkercad 3D列印創意空間</h2>
+      <p class="slide-sub">3D MODELING & PRINTING FOR 5TH GRADE</p>
+      <div class="slide-content">
+        <p style="font-size: 1.3rem; font-weight: 700; color: var(--c1)">國小五年級的 3D 創客數位實作課</p>
+        <p style="margin-top: 14px; color: var(--dim)">主講人：阿凱老師（石門國小） | 時長：40-60 分鐘</p>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">各位老師大家好，我是阿凱老師。今天我們來探討如何帶領五年級學生利用 Tinkercad 來做一場結合 3D 建模與 3D 列印的創客實作體驗。</div>
+      </div>
+    </section>
+
+    <!-- 02 開場暖身 (HOOK) -->
+    <section class="slide" id="s2">
+      <h2 class="slide-title">如果你可以印出自己的玩具...</h2>
+      <p class="slide-sub">HOOK: IGNITING THE MAKER PASSION</p>
+      <div class="slide-grid">
+        <div class="slide-card">
+          <div class="big-num">🚀</div>
+          <h4>想像的超能力</h4>
+          <p>把心裡想的、腦袋畫出的東西，直接實體化拿在手上，對孩子來說是不可思議的魔法。</p>
+        </div>
+        <div class="slide-card">
+          <div class="big-num">💡</div>
+          <h4>動手做的成就感</h4>
+          <p>孩子從單純的「消費者」（買玩具）轉變成「生產者」（設計玩具），這就是創客的核心。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">一開始，我們要用「印出玩具」這個點子來抓住學生的注意力，帶領他們體會 3D 列印能把想像變成現實的巨大魅力。</div>
+      </div>
+    </section>
+
+    <!-- 03 主題是什麼 (WHAT) -->
+    <section class="slide" id="s3">
+      <h2 class="slide-title">什麼是 Tinkercad？</h2>
+      <p class="slide-sub">WHAT IS TINKERCAD</p>
+      <div class="slide-content" style="text-align: left">
+        <p style="margin-bottom: 12px"><strong>Tinkercad 是最適合中小學生的 3D 建模軟體：</strong></p>
+        <ul style="list-style: inside; display:flex; flex-direction:column; gap:10px; margin-left: 20px">
+          <li><strong>完全免費：</strong> 由知名 3D 設計軟體大廠 Autodesk 開發。</li>
+          <li><strong>免安裝：</strong> 只要開啟網頁瀏覽器即可使用，最適合 ChromeBook 教室。</li>
+          <li><strong>堆積木式操作：</strong> 用實體與孔洞進行相加與相減，直覺又容易上手。</li>
+        </ul>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">Tinkercad 的門檻極低，非常適合五年級學生。它沒有複雜的指令，就像是在電腦裡堆樂高積木一樣。</div>
+      </div>
+    </section>
+
+    <!-- 04 為什麼有效 (WHY) -->
+    <section class="slide" id="s4">
+      <h2 class="slide-title">為什麼這堂課很有用？</h2>
+      <p class="slide-sub">WHY THIS MATTERS: COGNITIVE ADVANTAGES</p>
+      <div class="slide-grid">
+        <div class="slide-card">
+          <div class="big-num">🧠</div>
+          <h4>空間幾何思維</h4>
+          <p>學生在虛擬 3D 空間操縱形狀、旋轉視角，能有效強化大腦的「三維空間心理旋轉」能力。</p>
+        </div>
+        <div class="slide-card">
+          <div class="big-num">⚙️</div>
+          <h4>理解物理現實</h4>
+          <p>把虛擬的檔案用 3D 列印機印出來，讓孩子學會考量重力（支撐）、精度與尺寸單位的限制。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">在皮亞傑的發展理論中，五年級正是具體運思到抽象形式思考的黃金過渡期，這堂課能完美啟迪他們的空間感知。</div>
+      </div>
+    </section>
+
+    <!-- 05 核心機制 ① 3D空間坐標 -->
+    <section class="slide" id="s5">
+      <h2 class="slide-title">核心機制 1：3D 空間與視角</h2>
+      <p class="slide-sub">AXIS & NAVIGATION: X, Y, Z</p>
+      <div class="slide-grid">
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c3)">X / Y</div>
+          <h4>平面移動</h4>
+          <p>紅色 X 軸表示左右移動，綠色 Y 軸表示前後移動，與傳統 2D 平面座標一致。</p>
+        </div>
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c5)">Z 軸</div>
+          <h4>垂直上升/下降</h4>
+          <p>藍色 Z 軸代表垂直上下移動。透過拖曳幾何物件上方的「小黑三角」可使物件離地升空。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">引導學生認識除了 X/Y 軸之外的 Z 軸，並且學會用滑鼠右鍵旋轉視野。視野沒有調整好，就很容易把物件移錯位置。</div>
+      </div>
+    </section>
+
+    <!-- 06 核心機制 ② 幾何形狀組合 -->
+    <section class="slide" id="s6">
+      <h2 class="slide-title">核心機制 2：實體與孔洞大合體</h2>
+      <p class="slide-sub">SOLID & HOLE: THE COMBINATION MAGIC</p>
+      <div class="slide-grid">
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c1)">🧱</div>
+          <h4>實體 (Solid) 加材料</h4>
+          <p>代表真實存在的幾何積木，將它們重疊並點選「群組 (Group)」即可結合成複雜的實體物件。</p>
+        </div>
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c3)">🕳️</div>
+          <h4>孔洞 (Hole) 挖除</h4>
+          <p>孔洞就像隱形的雕刻刀，與實體重疊後按「群組」，即可把孔洞佔據的空間挖空。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">相加（實體與實體組合）與相減（實體與孔洞組合）是 Tinkercad 最基本的建模概念。對齊工具也是精準挖孔的關鍵。</div>
+      </div>
+    </section>
+
+    <!-- 07 操作流程 -->
+    <section class="slide" id="s7">
+      <h2 class="slide-title">創客專案四大流程</h2>
+      <p class="slide-sub">THE 4-STEP MAKER WORKFLOW</p>
+      <div class="slide-content" style="text-align: left">
+        <ol style="list-style: inside; display:flex; flex-direction:column; gap:12px">
+          <li><strong>1. 電腦建模 (3D Design)：</strong> 在 Tinkercad 中將基本幾何形狀組合出個人設計。</li>
+          <li><strong>2. 匯出 STL (Export)：</strong> 點選 Export 匯出 3D 列印機通用的 STL 格式檔案。</li>
+          <li><strong>3. 切片處理 (Slicing)：</strong> 使用 Slicer 將 STL 檔切分成數百個列印圖層並設定參數。</li>
+          <li><strong>4. 實體列印 (Printing)：</strong> 匯入 3D 列印機，加熱擠出材料，由下而上疊印成型。</li>
+        </ol>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">孩子通常只關注前面的電腦建模，我們要帶領他們理解，後續的匯出、切片與實體列印，才是讓數位創意成真的關鍵管道。</div>
+      </div>
+    </section>
+
+    <!-- 08 應用情境 -->
+    <section class="slide" id="s8">
+      <h2 class="slide-title">課堂實作情境：鑰匙圈與名牌</h2>
+      <p class="slide-sub">CLASSROOM PROJECTS: PRACTICAL OBJECTS</p>
+      <div class="slide-grid">
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c2)">📛</div>
+          <h4>英文名字名牌</h4>
+          <p>底座高 3mm，文字高 5mm。練習拖曳文字、精確調整長寬尺寸、等比例縮放文字。</p>
+        </div>
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c5)">🔑</div>
+          <h4>實用鑰匙圈</h4>
+          <p>必須在名牌邊角挖出直徑 5mm 的鑰匙圈孔，練習實體與圓柱孔洞的群組挖孔流程。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">讓學生設計一個能夠帶回家的名字名牌，實用性能大幅增加孩子的學習動力，也會促使他們在對齊和尺寸上更加用心。</div>
+      </div>
+    </section>
+
+    <!-- 09 實證 / 跨領域 -->
+    <section class="slide" id="s9">
+      <h2 class="slide-title">教學效果實證研究</h2>
+      <p class="slide-sub">RESEARCH & DATA TELEMETRY</p>
+      <div class="slide-grid">
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c1)">88%</div>
+          <h4>學習滿意度</h4>
+          <p>學生對於能「親手設計並列印作品」表現出極高的熱情與專注度，課堂秩序良好。</p>
+        </div>
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c2)">+14%</div>
+          <h4>空間幾何測驗</h4>
+          <p>經歷 3D 建模教學的學生，在平面與三維幾何投影、空間心理旋轉的前後測中具有顯著進步。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">實證數據顯示這套教學確實有助於學童的幾何學習。另外，實物反饋的修正（例如印壞了重改）是最好的主動學習機會。</div>
+      </div>
+    </section>
+
+    <!-- 10 平台比較 -->
+    <section class="slide" id="s10">
+      <h2 class="slide-title">中小學 3D 設計學習路徑</h2>
+      <p class="slide-sub">CAD SOFTWARE ROADMAP FOR STUDENTS</p>
+      <div class="slide-content" style="text-align: left">
+        <table style="width:100%; border-collapse:collapse; color:var(--text)">
+          <tr style="border-bottom: 2px solid var(--c1)">
+            <th style="padding:10px; text-align:left">平台名稱</th>
+            <th style="padding:10px; text-align:left">適合學段</th>
+            <th style="padding:10px; text-align:left">操作難度</th>
+            <th style="padding:10px; text-align:left">主要特徵</th>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--pcb-line)">
+            <td style="padding:10px; color:var(--c1)"><strong>Tinkercad</strong></td>
+            <td style="padding:10px">國小三~六年級</td>
+            <td style="padding:10px; color:var(--c1)">●○○ (易)</td>
+            <td style="padding:10px">免下載、堆積木相加相減、免費無商用</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--pcb-line)">
+            <td style="padding:10px; color:var(--c5)">Autodesk Fusion</td>
+            <td style="padding:10px">國中/高中以上</td>
+            <td style="padding:10px; color:var(--c5)">●●○ (中)</td>
+            <td style="padding:10px">參數式草圖、工程建模、可商用</td>
+          </tr>
+          <tr>
+            <td style="padding:10px; color:var(--c3)">Blender</td>
+            <td style="padding:10px">高中/大學以上</td>
+            <td style="padding:10px; color:var(--c3)">●●● (難)</td>
+            <td style="padding:10px">網格黏土雕刻、3D動畫與渲染、開源</td>
+          </tr>
+        </table>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">我們在國小以 Tinkercad 作為入門起點，建立正確的 3D 坐標感，後續升上國中再學習 Fusion 360 等專業工程繪圖工具。</div>
+      </div>
+    </section>
+
+    <!-- 11 班級經營 -->
+    <section class="slide" id="s11">
+      <h2 class="slide-title">資訊課的 3D 列印班級經營</h2>
+      <p class="slide-sub">CLASSROOM MANAGEMENT & TROUBLESHOOTING</p>
+      <div class="slide-grid">
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c3)">❌</div>
+          <h4>列印排程瓶頸</h4>
+          <p>一台 3D 印表機印一個名牌需要 15 分鐘，整班 30 人印不完！</p>
+        </div>
+        <div class="slide-card">
+          <div class="big-num" style="color:var(--c1)">✅</div>
+          <h4>教師排程策略</h4>
+          <p>小班制代表制、切片軟體集體排版排隊、課後列印發放、或利用層高與填充率加速列印。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">上課時間寶貴，我們通常在課堂上專注於「建模設計」與「切片模擬驗證」，實體列印則由老師在課後或中午排程，隔天發給學生。</div>
+      </div>
+    </section>
+
+    <!-- 12 素養對應 -->
+    <section class="slide" id="s12">
+      <h2 class="slide-title">十二年國教科技素養對應</h2>
+      <p class="slide-sub">CURRICULUM LITERACY ALIGNMENT</p>
+      <div class="slide-content" style="text-align: left">
+        <p style="margin-bottom: 12px"><strong>本課程對應國小資訊科技的核心素養指標：</strong></p>
+        <ul style="list-style: inside; display:flex; flex-direction:column; gap:10px; margin-left: 20px">
+          <li><strong>科-E-A2：</strong> 具備規劃與執行簡單創客設計專案的能力（從概念到 3D 列印）。</li>
+          <li><strong>科-E-A3：</strong> 運用 3D 建模工具進行簡單的幾何問題解決與視角除錯。</li>
+          <li><strong>科-E-B1：</strong> 學習使用數位繪圖軟體傳達個人生活想法，發揮創客創意。</li>
+        </ul>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">這不僅僅是玩 3D 軟體，它在十二年國教中，屬於典型的「設計與製作」面向，帶領學生體驗完整的產品設計流程。</div>
+      </div>
+    </section>
+
+    <!-- 13 5 個叮嚀 -->
+    <section class="slide" id="s13">
+      <h2 class="slide-title">3D 建模與列印的 5 個叮嚀</h2>
+      <p class="slide-sub">5 CRITICAL TIPS FOR MAKER CLASSROOMS</p>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="num">01</div>
+          <h4>物件必貼地</h4>
+          <p>按鍵盤的 D 鍵，將模型吸附回工作平面，防範物件飄在半空列印失敗。</p>
+        </div>
+        <div class="tip-card">
+          <div class="num">02</div>
+          <h4>孔洞別忘群組</h4>
+          <p>孔洞畫好一定要選取實體並群組化，否則列印出來會是實心沒有洞。</p>
+        </div>
+        <div class="tip-card">
+          <div class="num">03</div>
+          <h4>懸空加支撐</h4>
+          <p>超過 45 度角的突出結構（如 T 的兩端），切片時一定要開啟支撐架。</p>
+        </div>
+        <div class="tip-card">
+          <div class="num">04</div>
+          <h4>控制列印時間</h4>
+          <p>層高 0.2mm、填充 15% 最省時間，縮小名牌厚度可大幅縮短排隊等待。</p>
+        </div>
+        <div class="tip-card">
+          <div class="num">05</div>
+          <h4>享受除錯過程</h4>
+          <p>「印出米粉」也是學習，帶領學生尋找失敗的 root cause 並重新設計。</p>
+        </div>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">這五個叮嚀是我們在課堂上最容易遇到的雷。尤其是物件沒有按 D 貼地，導致列印出來底層全垮，是孩子最常犯的錯。</div>
+      </div>
+    </section>
+
+    <!-- 14 結語 + Q&A -->
+    <section class="slide" id="s14">
+      <h2 class="slide-title">讓創意實體化！</h2>
+      <p class="slide-sub">CONCLUSION & QA</p>
+      <div class="slide-content">
+        <p style="font-size:1.4rem; font-weight: 900; color: var(--c2); margin-bottom: 14px">點燃每個孩子的創客魂</p>
+        <p style="font-size: 1.1rem; margin-bottom: 20px">互動教學駕駛艙已部署於：<br><span style="color:var(--c1)">cagoooo.github.io/it-cockpit/tinkercad-3d-print/</span></p>
+        <p style="color: var(--dim)">桃園市龍潭區石門國民小學 資訊科技教學研討會</p>
+      </div>
+      <div class="speaker">
+        <div class="avatar">👨‍🏫</div>
+        <div class="bubble">今天我的分享就到這裡，歡迎各位老師提問交流。完整的駕駛艙也已經上線，歡迎大家掃碼帶回班上教學使用，謝謝！</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 進度條 -->
+  <div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+
+  <!-- 提示 -->
+  <div class="hint">← → 換頁 · M 章節 · F 全螢幕 · S 隱藏提詞 · Esc 退回駕駛艙</div>
+
+  <!-- 章節總覽 (M 鍵) -->
+  <div class="overview" id="overview">
+    <h3>▶ 簡報章節導覽</h3>
+    <div class="ov-grid" id="ov-grid">
+      <!-- 由 JS 動態渲染 -->
+    </div>
+  </div>
+
+  <script>
+    const SLIDES_DATA = [
+      {n: 1, t: "Tinkercad 3D列印創意空間", s: "封面：五年級資訊科技"},
+      {n: 2, t: "想像的超能力", s: "開場暖身：創客成就感與動機"},
+      {n: 3, t: "什麼是 Tinkercad？", s: "認識平台：免費免安裝瀏覽器建模"},
+      {n: 4, t: "為什麼這堂課很有用？", s: "教學優勢：幾何感知與物理現實"},
+      {n: 5, t: "核心機制 1：3D 空間與視角", s: "X/Y/Z軸向與視角控制"},
+      {n: 6, t: "核心機制 2：實體與孔洞大合體", s: "相加與相減的布林運算"},
+      {n: 7, t: "創客專案四大流程", s: "建模、匯出STL、切片、列印"},
+      {n: 8, t: "課堂實作情境：鑰匙圈與名牌", s: "高動機鑰匙圈實作"},
+      {n: 9, t: "教學效果實證研究", s: "前後測數據分析"},
+      {n: 10, t: "中小學 3D 設計學習路徑", s: "Tinkercad ⮕ Fusion ⮕ Blender"},
+      {n: 11, t: "資訊課的 3D 列印班級經營", s: "列印排程與除錯策略"},
+      {n: 12, t: "十二年國教科技素養對應", s: "對應十二年國教核心指標"},
+      {n: 13, t: "3D 建模與列印的 5 個叮嚀", s: "物件貼地、支撐、填充等避坑"},
+      {n: 14, t: "讓創意實體化！", s: "結語與 Q&A 研討時間"}
+    ];
+
+    let currentIdx = 0;
+    const N = SLIDES_DATA.length;
+
+    function goSlide(idx) {
+      if(idx < 0) idx = 0;
+      if(idx >= N) idx = N - 1;
+      
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      
+      currentIdx = idx;
+      
+      // 更新進度條
+      document.getElementById('progress-fill').style.width = ((idx + 1) / N * 100) + '%';
+      
+      // 網址 hash
+      history.replaceState(null, '', '#s' + (idx + 1));
+      
+      // 更新 Overview 高亮
+      document.querySelectorAll('.ov-card').forEach((card, i) => {
+        card.classList.toggle('active', i === idx);
+      });
+    }
+
+    function next() { if(currentIdx < N - 1) goSlide(currentIdx + 1); }
+    function prev() { if(currentIdx > 0) goSlide(currentIdx - 1); }
+    
+    function toggleOverview() {
+      const ov = document.getElementById('overview');
+      ov.classList.toggle('show');
+    }
+    
+    function toggleFullscreen() {
+      if(!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(()=>{});
+      } else {
+        document.exitFullscreen();
+      }
+    }
+    
+    function toggleSpeaker() {
+      document.querySelectorAll('.speaker').forEach(s => {
+        s.style.opacity = (s.style.opacity === '0') ? '1' : '0';
+      });
+    }
+
+    // 初始化 Overview 網格
+    function initOverview() {
+      const grid = document.getElementById('ov-grid');
+      grid.innerHTML = '';
+      SLIDES_DATA.forEach((slide, i) => {
+        const card = document.createElement('div');
+        card.className = 'ov-card';
+        card.innerHTML = `
+          <div class="ov-num">SLIDE ${String(slide.n).padStart(2, '0')}</div>
+          <div class="ov-title">${slide.t}</div>
+          <div style="font-size:0.75rem; color:var(--dim); margin-top:4px">${slide.s}</div>
+        `;
+        card.addEventListener('click', () => {
+          goSlide(i);
+          toggleOverview();
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    // 鍵盤導覽
+    document.addEventListener('keydown', e => {
+      if(document.getElementById('overview').classList.contains('show')) {
+        if(['Escape', 'm', 'M'].includes(e.key)) {
+          document.getElementById('overview').classList.remove('show');
+          e.preventDefault();
+        }
+        return;
+      }
+      
+      const k = e.key;
+      if(['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(k)) {
+        next(); e.preventDefault();
+      } else if(['ArrowLeft', 'ArrowUp', 'PageUp'].includes(k)) {
+        prev(); e.preventDefault();
+      } else if(k === 'Home') {
+        goSlide(0); e.preventDefault();
+      } else if(k === 'End') {
+        goSlide(N - 1); e.preventDefault();
+      } else if(['m', 'M'].includes(k)) {
+        toggleOverview(); e.preventDefault();
+      } else if(['f', 'F'].includes(k)) {
+        toggleFullscreen(); e.preventDefault();
+      } else if(['s', 'S'].includes(k)) {
+        toggleSpeaker(); e.preventDefault();
+      } else if(k === 'Escape') {
+        // ⚠️ 兩段式 Esc：先退全螢幕，再退回駕駛艙 index.html
+        if(document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          window.location.href = 'index.html';
+        }
+        e.preventDefault();
+      }
+    });
+
+    // 點擊螢幕半邊換頁
+    document.addEventListener('click', e => {
+      if(e.target.closest('.speaker, .overview, .hint, .progress, a, button')) return;
+      if(e.clientX > window.innerWidth / 2) next(); else prev();
+    });
+
+    // 手機滑動
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    }, {passive: true});
+    
+    document.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if(Math.abs(dx) > 60) {
+        if(dx < 0) next(); else prev();
+      }
+    }, {passive: true});
+
+    // 初始化
+    initOverview();
+    
+    // Hash 書籤加載
+    const m = location.hash.match(/^#s(\d+)$/);
+    if(m) {
+      const i = parseInt(m[1]) - 1;
+      if(i >= 0 && i < N) goSlide(i);
+    } else {
+      goSlide(0);
+    }
+  </script>
+</body>
+</html>
