@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 公平性與偏誤：做一個負責任的訓練師｜6 年級資訊科技教學駕駛艙</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/ai-fairness/">
+  <meta property="og:title" content="AI 公平性與偏誤：做一個負責任的訓練師｜6 年級資訊科技">
+  <meta property="og:description" content="AI 時代每位孩子與教師必備的素養學習艙。">
+  <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/ai-fairness/og-image.png">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:site_name" content="IT COCKPIT">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 18px; }
+    body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; line-height: 1.7; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    
+    /* Theme CSS */
+    
+        :root {
+          --paper: #f6efe3; --paper-2: #fff8ec; --paper-3: #ecdfc4;
+          --c1: #2a5fb4; --c2: #ec5a4a; --c3: #f4b942; --c4: #5a8d3a;
+          --c5: #9a4ec9; --text: #2d2418; --dim: #7a6a4f;
+        }
+        body { font-family: 'Noto Serif TC', 'Noto Sans TC', serif; background: var(--paper); color: var(--text); }
+        .level-section { border: 3px solid var(--c1); box-shadow: 6px 6px 0 var(--c2); border-radius: 0; background: var(--paper-2); }
+        .btn-primary { background: var(--paper-2); color: var(--c1); border: 2px solid var(--c1); box-shadow: 3px 3px 0 var(--c2); padding: 8px 16px; font-weight: 700; cursor: pointer; }
+        .btn-primary:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--c2); }
+        
+    
+    .site-header { position: sticky; top: 0; background: var(--panel); color: var(--text); padding: 12px 24px; z-index: 500; border-bottom: 2px solid var(--c1); }
+    .header-inner { display: flex; align-items: center; gap: 15px; max-width:1400px; margin:0 auto; }
+    .home-btn { color: var(--c2); text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 6px 12px; border: 2px solid var(--c2); }
+    .home-btn:hover { background: var(--c2); color: #000; }
+    
+    .level-section { margin-bottom: 30px; padding: 24px; }
+    .stage-badge { background: var(--c3); color: white; padding: 4px 10px; font-weight: 700; font-size: 0.75rem; display: inline-block; margin-bottom: 10px; }
+    
+    /* Slide Player styles */
+    .slide-player { margin: 20px 0; border: 3px solid var(--c1); background: var(--surface); position: relative; }
+    .slide-player-main { position: relative; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .slide-player-main img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 1.5rem; cursor: pointer; }
+    .slide-nav-btn.prev { left: 10px; }
+    .slide-nav-btn.next { right: 10px; }
+    .slide-fs-btn { position: absolute; top: 10px; right: 10px; background: var(--c1); color: #000; border: none; padding: 6px 12px; font-weight: 700; cursor: pointer; }
+    .slide-counter { position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; font-size: 0.8rem; }
+    
+    .slide-strip { display: flex; gap: 8px; padding: 10px; overflow-x: auto; background: var(--panel); }
+    .strip-thumb { width: 80px; aspect-ratio: 16/9; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.6; }
+    .strip-thumb.active { border-color: var(--c2); opacity: 1; }
+    
+    #slide-fs { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; display: none; align-items: center; justify-content: center; }
+    #slide-fs.show { display: flex; }
+    .fs-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; }
+    .fs-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 56px; height: 80px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 2rem; cursor: pointer; }
+    .fs-nav.prev { left: 20px; }
+    .fs-nav.next { right: 20px; }
+    
+    /* Quiz elements */
+    .quiz-box { margin-top: 15px; border-top: 1px dashed var(--dim); padding-top: 15px; }
+    .quiz-q { font-weight: 700; margin-bottom: 10px; }
+    .quiz-opt { display: block; width: 100%; text-align: left; background: var(--panel); border: 1.5px solid var(--dim); padding: 8px 12px; margin-bottom: 6px; color: inherit; cursor: pointer; }
+    .quiz-opt:hover { border-color: var(--c1); }
+    .quiz-feedback { display: none; margin-top: 10px; padding: 8px 12px; background: var(--surface); border-left: 4px solid var(--c4); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="home-btn">← IT COCKPIT</a>
+      <span style="font-weight:900; font-size:1.1rem;">AI 公平性與偏誤：做一個負責任的訓練師</span>
+      <span style="background:var(--c4); color:#000; padding:2px 8px; font-size:0.8rem; font-weight:700;">6 年級</span>
+    </div>
+  </header>
+
+  <main class="container">
+<div class="yt-overview" style="margin:2rem 0;">
+  <h2 style="text-align:center;margin-bottom:1rem;">影片概覽</h2>
+  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.35);">
+    <iframe src="https://www.youtube.com/embed/ccXpoUZ9aj4?cc_load_policy=1&cc_lang_pref=zh-Hant&hl=zh-TW"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;"
+      frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+      allowfullscreen loading="lazy" title="AI 公平性與偏誤：做一個負責任的訓練師｜國小六年級 AI 素養課｜阿凱老師"></iframe>
+  </div>
+  <p style="text-align:center;margin-top:.5rem;font-size:.85rem;opacity:.7;">
+    開啟 CC 可看繁體中文字幕 ｜
+    <a href="https://www.youtube.com/watch?v=ccXpoUZ9aj4" target="_blank" rel="noopener" style="color:inherit;">在 YouTube 開啟</a>
+  </p>
+</div>
+
+    <!-- Objectives -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎯 本單元學習目標</h3>
+      <ul style="padding-left:20px; margin-bottom:0;">
+        <li>理解 AI 模型如何透過學習資料來認識世界。</li><li>辨識 AI 偏見（Bias）及其產生的成因。</li><li>分析文化、風格與年齡差異如何影響 AI 判斷。</li><li>了解負責任的 AI 訓練對社會公平的重要性。</li>
+      </ul>
+    </section>
+
+    <!-- Main Stages (1 to 4) -->
+    
+    <section class="level-section" id="sec1">
+      <span class="stage-badge">STAGE 1: STAGE 1：AI 是如何學習的？</span>
+      <h3 style="margin-top:0;">STAGE 1：AI 是如何學習的？</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 觀察 AI 的塗鴉遊戲</strong>
+          <div style="font-size:0.95rem; color:var(--text);">嘗試玩 Google 的 Quick Draw，看看當你畫出不同於常見樣式的圖案時，AI 是否能準確猜中。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 認識 AI 的學習過程</strong>
+          <div style="font-size:0.95rem; color:var(--text);">AI 就像剛出生的嬰兒，它只能根據你提供給它的資料來認識世界，資料長什麼樣子，它就認為世界長什麼樣子。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 定義偏見與盲點</strong>
+          <div style="font-size:0.95rem; color:var(--text);">當我們提供的訓練資料太少或過於單一，導致 AI 無法辨識出其他正確的答案，這就形成了 AI 的偏見與盲點。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-0">
+        <div class="quiz-q">❓ 思考挑戰：為什麼 AI 有時候會畫不出「平頂公寓」或「饅頭」呢？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(0, 0, 1, this)">因為電腦沒電了</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 1, 1, this)">因為它沒看過這些東西，只看過三角形屋頂的房子或吐司</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 2, 1, this)">因為人工智慧故意不想理你</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 3, 1, this)">因為畫畫的人技術太差</button>
+        <div class="quiz-feedback" id="feedback-0">AI 的知識來自於我們給它的訓練資料，如果它從未見過這些事物，它就無法認識它們。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec2">
+      <span class="stage-badge">STAGE 2: STAGE 2：揪出隱藏的偏見嫌疑犯</span>
+      <h3 style="margin-top:0;">STAGE 2：揪出隱藏的偏見嫌疑犯</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 文化偏見的陷阱</strong>
+          <div style="font-size:0.95rem; color:var(--text);">同樣是麵包，有人畫吐司、有人畫饅頭，如果 AI 只看過吐司，它就會否定饅頭的存在。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 風格偏見的挑戰</strong>
+          <div style="font-size:0.95rem; color:var(--text);">有些畫風簡單，有些畫風寫實。如果 AI 只學習過卡通畫風，就無法理解藝術大師的寫實作品。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 年齡偏見的差異</strong>
+          <div style="font-size:0.95rem; color:var(--text);">長輩與孩子對「電話」的樣貌記憶不同，AI 若只用成人的資料訓練，將無法理解孩子心中的概念。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-1">
+        <div class="quiz-q">❓ 思考挑戰：如果在調查 AI 的偏見時，我們發現了「年齡偏見」，這代表什麼意思？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(1, 0, 1, this)">AI 覺得自己太年輕了</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 1, 1, this)">AI 的訓練資料主要由特定年齡層提供，導致它學不到其他年齡層的觀點</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 2, 1, this)">AI 不會畫畫</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 3, 1, this)">AI 需要升級硬體</button>
+        <div class="quiz-feedback" id="feedback-1">偏見通常來自於資料的單一性，年齡偏見就是指資料缺乏不同世代的觀點。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec3">
+      <span class="stage-badge">STAGE 3: STAGE 3：偏見對生活的影響</span>
+      <h3 style="margin-top:0;">STAGE 3：偏見對生活的影響</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 人臉辨識的失靈</strong>
+          <div style="font-size:0.95rem; color:var(--text);">思考如果辨識系統只訓練了特定膚色，將導致其他膚色的人無法通過安全門鎖的嚴重後果。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 語音助理的聽力問題</strong>
+          <div style="font-size:0.95rem; color:var(--text);">當 AI 只聽過標準口音，遇到不同腔調或口音的使用者時，可能會因為無法理解而產生溝通障礙。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 反思公平的重要性</strong>
+          <div style="font-size:0.95rem; color:var(--text);">AI 的錯誤不只是好笑而已，它可能會直接影響到人們的使用權利與日常生活安全。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-2">
+        <div class="quiz-q">❓ 思考挑戰：如果人臉辨識系統因為訓練資料不足而發生「偏見」，可能會導致什麼結果？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(2, 0, 2, this)">系統會變得更漂亮</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 1, 2, this)">系統運作速度會變快</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 2, 2, this)">特定膚色的人無法通過臉部辨識門禁</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 3, 2, this)">系統會自動幫你換背景</button>
+        <div class="quiz-feedback" id="feedback-2">當 AI 缺乏多樣性的訓練，就會產生識別錯誤，這在生活安全應用中是非常嚴重的問題。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec4">
+      <span class="stage-badge">STAGE 4: STAGE 4：成為負責任的訓練師</span>
+      <h3 style="margin-top:0;">STAGE 4：成為負責任的訓練師</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 擴充資料多樣性</strong>
+          <div style="font-size:0.95rem; color:var(--text);">為了讓 AI 更聰明，我們需要提供包含各種文化、風格與年齡的多元訓練資料。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 檢查資料的代表性</strong>
+          <div style="font-size:0.95rem; color:var(--text);">在訓練 AI 前，檢查資料庫是否能代表真實世界的全貌，避免特定族群被排除在外。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 成為負責任的訓練師</strong>
+          <div style="font-size:0.95rem; color:var(--text);">隨時保持懷疑與偵探精神，為 AI 挑選適合且多元的學習教材，共同創造公平的 AI 環境。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-3">
+        <div class="quiz-q">❓ 思考挑戰：要當一個「負責任的訓練師」，我們最應該做什麼？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(3, 0, 2, this)">只挑選自己喜歡的資料給 AI 看</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 1, 2, this)">只使用外國人的資料</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 2, 2, this)">提供多樣化、具有代表性的資料給 AI 學習</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 3, 2, this)">只要資料夠多，不管什麼資料都塞給 AI</button>
+        <div class="quiz-feedback" id="feedback-3">多元且具有代表性的資料，才能確保 AI 對世界有正確且公平的認知。</div>
+      </div>
+    </section>
+    
+    <!-- Interactive Canvas Simulation -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🕹️ 實作體驗區</h3>
+      
+        <div class="interactive-box" style="padding:20px; text-align:center;">
+          <h4 style="font-family:'Noto Serif TC';">⚖️ AI 偏誤實驗天平</h4>
+          <p style="color:var(--dim); font-size:0.9rem;">輸入失衡的訓練資料，將導致 AI 的判定結果偏心！</p>
+          <div style="display:flex; justify-content:center; gap:20px; margin: 20px 0;">
+            <div style="border:2px solid var(--c1); padding:10px; background:var(--paper-3);">
+              👨 男生資料數量<br><span id="male-cnt" style="font-size:1.8rem; font-weight:900; color:var(--c1);">10</span> 份
+            </div>
+            <div style="border:2px solid var(--c1); padding:10px; background:var(--paper-3);">
+              👩 女生資料數量<br><span id="female-cnt" style="font-size:1.8rem; font-weight:900; color:var(--c2);">10</span> 份
+            </div>
+          </div>
+          <div style="display:flex; justify-content:center; gap:10px;">
+            <button class="btn-primary" onclick="addFairData('male')">➕ 增加男生資料</button>
+            <button class="btn-primary" onclick="addFairData('female')">➕ 增加女生資料</button>
+          </div>
+          <div id="fair-status" style="margin-top:15px; font-weight:700; color:var(--c4);">⚖️ 天平平衡中。預測準確度：男生 90% / 女生 90%</div>
+        </div>
+        
+    </section>
+
+    <!-- Lecture Slides Player -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎬 課堂授課投影片</h3>
+      <div class="slide-player">
+        <div class="slide-player-main">
+          <img id="slide-current" src="assets/slide_01.jpg" alt="簡報大圖">
+          <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
+          <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
+          <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+          <div class="slide-counter" id="slide-counter">1 / 15</div>
+        </div>
+        <div class="slide-strip" id="slide-strip">
+          <img class="strip-thumb active" src="assets/slide_01.jpg" onclick="goSlide(0)" alt="縮圖"><img class="strip-thumb " src="assets/slide_02.jpg" onclick="goSlide(1)" alt="縮圖"><img class="strip-thumb " src="assets/slide_03.jpg" onclick="goSlide(2)" alt="縮圖"><img class="strip-thumb " src="assets/slide_04.jpg" onclick="goSlide(3)" alt="縮圖"><img class="strip-thumb " src="assets/slide_05.jpg" onclick="goSlide(4)" alt="縮圖"><img class="strip-thumb " src="assets/slide_06.jpg" onclick="goSlide(5)" alt="縮圖"><img class="strip-thumb " src="assets/slide_07.jpg" onclick="goSlide(6)" alt="縮圖"><img class="strip-thumb " src="assets/slide_08.jpg" onclick="goSlide(7)" alt="縮圖"><img class="strip-thumb " src="assets/slide_09.jpg" onclick="goSlide(8)" alt="縮圖"><img class="strip-thumb " src="assets/slide_10.jpg" onclick="goSlide(9)" alt="縮圖"><img class="strip-thumb " src="assets/slide_11.jpg" onclick="goSlide(10)" alt="縮圖"><img class="strip-thumb " src="assets/slide_12.jpg" onclick="goSlide(11)" alt="縮圖"><img class="strip-thumb " src="assets/slide_13.jpg" onclick="goSlide(12)" alt="縮圖"><img class="strip-thumb " src="assets/slide_14.jpg" onclick="goSlide(13)" alt="縮圖"><img class="strip-thumb " src="assets/slide_15.jpg" onclick="goSlide(14)" alt="縮圖">
+        </div>
+      </div>
+    </section>
+
+    <!-- Self-Study Video Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c3);">📺 自學影音概覽</h3>
+      <div style="position:relative; padding-top:56.25%; width:100%; border:3px solid var(--c3); margin-bottom:12px;">
+        <iframe
+          src="https://www.youtube.com/embed/Jnex6rbY-qE?rel=0&modestbranding=1"
+          style="position:absolute; inset:0; width:100%; height:100%; border:none;"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div style="font-size:0.9rem; color:var(--dim);">💡 建議配戴耳機觀看，可配合上方投影片隨時複習。</div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">💬 常見問題 FAQ</h3>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 如果 AI 犯錯了，是因為它很笨嗎？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">不是的！AI 本身不具備思考能力，它的錯誤通常是因為我們給它的訓練資料不夠完整或有偏差。</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 為什麼我們說 AI 像是「剛出生的嬰兒」？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">因為 AI 的大腦是透過學習資料來成長的，它所知的一切都來自於我們輸入的內容，這就像嬰兒透過觀察周遭來學習一樣。</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 我可以怎麼避免 AI 的偏見？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">作為訓練師，我們必須確保使用的資料來源要足夠多元，嘗試納入不同背景、風格與條件的資訊，避免只專注於同一種數據。</div>
+        </details>
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- Fullscreen Slide Overlay -->
+  <div id="slide-fs">
+    <button class="fs-close" onclick="closeSlideFullscreen()">✕</button>
+    <button class="fs-nav prev" onclick="slideNav(-1)">‹</button>
+    <img id="slide-fs-img" src="assets/slide_01.jpg" alt="全螢幕簡報">
+    <button class="fs-nav next" onclick="slideNav(1)">›</button>
+  </div>
+
+  <script>
+    // 簡報 JS
+    const SLIDES = ['assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'];
+    let currentIdx = 0;
+    
+    function goSlide(n) {
+      if (n < 0 || n >= SLIDES.length) return;
+      currentIdx = n;
+      document.getElementById('slide-current').src = SLIDES[n];
+      document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDES.length}`;
+      
+      const thumbs = document.querySelectorAll('.strip-thumb');
+      thumbs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === n);
+      });
+      
+      const fs = document.getElementById('slide-fs');
+      if (fs && fs.classList.contains('show')) {
+        document.getElementById('slide-fs-img').src = SLIDES[n];
+      }
+    }
+    
+    function slideNav(dir) {
+      goSlide(currentIdx + dir);
+    }
+    
+    function openSlideFullscreen() {
+      const fs = document.getElementById('slide-fs');
+      fs.classList.add('show');
+      document.getElementById('slide-fs-img').src = SLIDES[currentIdx];
+      document.body.classList.add('slides-fullscreen');
+    }
+    
+    function closeSlideFullscreen() {
+      document.getElementById('slide-fs').classList.remove('show');
+      document.body.classList.remove('slides-fullscreen');
+    }
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') slideNav(-1);
+      if (e.key === 'ArrowRight') slideNav(1);
+      if (e.key === 'Escape') closeSlideFullscreen();
+    });
+
+    // 評量 JS
+    function checkAnswer(quizIdx, optIdx, answerIdx, btn) {
+      const quizBox = document.getElementById(`quiz-${quizIdx}`);
+      const opts = quizBox.querySelectorAll('.quiz-opt');
+      opts.forEach(opt => opt.disabled = true);
+      
+      if (optIdx === answerIdx) {
+        btn.style.background = 'var(--c4)';
+        btn.style.color = '#000';
+      } else {
+        btn.style.background = 'var(--c3)';
+        btn.style.color = '#fff';
+        opts[answerIdx].style.background = 'var(--c4)';
+        opts[answerIdx].style.color = '#000';
+      }
+      
+      document.getElementById(`feedback-${quizIdx}`).style.display = 'block';
+    }
+
+    // Canvas 互動特定 JS
+    
+        let male = 10, female = 10;
+        function addFairData(type) {
+          if (type === 'male') male += 10;
+          else female += 10;
+          document.getElementById('male-cnt').textContent = male;
+          document.getElementById('female-cnt').textContent = female;
+          
+          const status = document.getElementById('fair-status');
+          if (male > female * 2) {
+            status.textContent = '⚠️ 資料嚴重偏誤！天平向男生傾斜。預測準確度：男生 98% / 女生 50%（偏心了！）';
+            status.style.color = 'var(--c2)';
+          } else if (female > male * 2) {
+            status.textContent = '⚠️ 資料嚴重偏誤！天平向女生傾斜。預測準確度：男生 50% / 女生 98%（偏心了！）';
+            status.style.color = 'var(--c2)';
+          } else {
+            status.textContent = '⚖️ 天平平衡中。預測準確度：男生 90% / 女生 90% (公平判定)';
+            status.style.color = 'var(--c4)';
+          }
+        }
+        
+  </script>
+</body>
+</html>

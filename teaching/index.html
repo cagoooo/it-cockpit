@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 素養教學引導：把 AI 帶進教室的實踐指南｜教師研習資訊科技教學駕駛艙</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/teaching/">
+  <meta property="og:title" content="AI 素養教學引導：把 AI 帶進教室的實踐指南｜教師研習資訊科技">
+  <meta property="og:description" content="AI 時代每位孩子與教師必備的素養學習艙。">
+  <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/teaching/og-image.png">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:site_name" content="IT COCKPIT">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 18px; }
+    body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; line-height: 1.7; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    
+    /* Theme CSS */
+    
+        :root {
+          --desktop: #2a8b8b; --window: #c3c7cb; --window-inset: #d4d0c8;
+          --title-start: #000080; --title-end: #1084d0;
+          --light: #ffffff; --dim: #808080; --dark: #000000;
+          --c1: #000080; --c2: #1084d0; --c3: #ff0000; --c4: #00e5ff;
+          --text: #000000;
+        }
+        body { font-family: 'Tahoma', 'Noto Sans TC', sans-serif; background: var(--desktop); color: var(--text); }
+        .level-section {
+          border: 2px solid; border-color: var(--light) var(--dark) var(--dark) var(--light);
+          box-shadow: inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+          background: var(--window); border-radius: 0; padding: 12px;
+        }
+        .btn-primary {
+          border: 2px solid; border-color: var(--light) var(--dark) var(--dark) var(--light);
+          box-shadow: inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dim);
+          background: var(--window); color: #000; font-weight: 700; padding: 6px 14px; cursor: pointer;
+        }
+        .btn-primary:active {
+          border-color: var(--dim) var(--light) var(--light) var(--dim);
+          box-shadow: inset 1px 1px 0 var(--dark), inset -1px -1px 0 var(--light);
+        }
+        
+    
+    .site-header { position: sticky; top: 0; background: var(--panel); color: var(--text); padding: 12px 24px; z-index: 500; border-bottom: 2px solid var(--c1); }
+    .header-inner { display: flex; align-items: center; gap: 15px; max-width:1400px; margin:0 auto; }
+    .home-btn { color: var(--c2); text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 6px 12px; border: 2px solid var(--c2); }
+    .home-btn:hover { background: var(--c2); color: #000; }
+    
+    .level-section { margin-bottom: 30px; padding: 24px; }
+    .stage-badge { background: var(--c3); color: white; padding: 4px 10px; font-weight: 700; font-size: 0.75rem; display: inline-block; margin-bottom: 10px; }
+    
+    /* Slide Player styles */
+    .slide-player { margin: 20px 0; border: 3px solid var(--c1); background: var(--surface); position: relative; }
+    .slide-player-main { position: relative; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .slide-player-main img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 1.5rem; cursor: pointer; }
+    .slide-nav-btn.prev { left: 10px; }
+    .slide-nav-btn.next { right: 10px; }
+    .slide-fs-btn { position: absolute; top: 10px; right: 10px; background: var(--c1); color: #000; border: none; padding: 6px 12px; font-weight: 700; cursor: pointer; }
+    .slide-counter { position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; font-size: 0.8rem; }
+    
+    .slide-strip { display: flex; gap: 8px; padding: 10px; overflow-x: auto; background: var(--panel); }
+    .strip-thumb { width: 80px; aspect-ratio: 16/9; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.6; }
+    .strip-thumb.active { border-color: var(--c2); opacity: 1; }
+    
+    #slide-fs { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; display: none; align-items: center; justify-content: center; }
+    #slide-fs.show { display: flex; }
+    .fs-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; }
+    .fs-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 56px; height: 80px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 2rem; cursor: pointer; }
+    .fs-nav.prev { left: 20px; }
+    .fs-nav.next { right: 20px; }
+    
+    /* Quiz elements */
+    .quiz-box { margin-top: 15px; border-top: 1px dashed var(--dim); padding-top: 15px; }
+    .quiz-q { font-weight: 700; margin-bottom: 10px; }
+    .quiz-opt { display: block; width: 100%; text-align: left; background: var(--panel); border: 1.5px solid var(--dim); padding: 8px 12px; margin-bottom: 6px; color: inherit; cursor: pointer; }
+    .quiz-opt:hover { border-color: var(--c1); }
+    .quiz-feedback { display: none; margin-top: 10px; padding: 8px 12px; background: var(--surface); border-left: 4px solid var(--c4); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="home-btn">← IT COCKPIT</a>
+      <span style="font-weight:900; font-size:1.1rem;">AI 素養教學引導：把 AI 帶進教室的實踐指南</span>
+      <span style="background:var(--c4); color:#000; padding:2px 8px; font-size:0.8rem; font-weight:700;">教師研習</span>
+    </div>
+  </header>
+
+  <main class="container">
+<div class="yt-overview" style="margin:2rem 0;">
+  <h2 style="text-align:center;margin-bottom:1rem;">影片概覽</h2>
+  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.35);">
+    <iframe src="https://www.youtube.com/embed/X-Xvr660vrk?cc_load_policy=1&cc_lang_pref=zh-Hant&hl=zh-TW"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;"
+      frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+      allowfullscreen loading="lazy" title="把 AI 帶進教室：教師 AI 素養研習完整指南｜阿凱老師"></iframe>
+  </div>
+  <p style="text-align:center;margin-top:.5rem;font-size:.85rem;opacity:.7;">
+    開啟 CC 可看繁體中文字幕 ｜
+    <a href="https://www.youtube.com/watch?v=X-Xvr660vrk" target="_blank" rel="noopener" style="color:inherit;">在 YouTube 開啟</a>
+  </p>
+</div>
+
+    <!-- Objectives -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎯 本單元學習目標</h3>
+      <ul style="padding-left:20px; margin-bottom:0;">
+        <li>理解AI與日常生活的緊密連結</li><li>掌握AI運作的五大核心概念</li><li>培養批判性思維與AI倫理素養</li><li>學習將複雜科技概念轉化為具體教學活動</li>
+      </ul>
+    </section>
+
+    <!-- Main Stages (1 to 4) -->
+    
+    <section class="level-section" id="sec1">
+      <span class="stage-badge">STAGE 1: STAGE 1：AI 認知啟蒙</span>
+      <h3 style="margin-top:0;">STAGE 1：AI 認知啟蒙</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 觀察生活中的AI</strong>
+          <div style="font-size:0.95rem; color:var(--text);">觀察身邊的科技，例如刷臉解鎖或影片推薦，了解AI就在我們身邊。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 建立正確心態</strong>
+          <div style="font-size:0.95rem; color:var(--text);">AI素養的核心是培養批判性思考，而非成為軟體工程師。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 連結課綱精神</strong>
+          <div style="font-size:0.95rem; color:var(--text);">認識運算思維與資訊倫理，成為負責任的數位公民。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-0">
+        <div class="quiz-q">❓ 思考挑戰：推動國小AI素養教育的主要目的是什麼？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(0, 0, 2, this)">訓練學生寫程式碼</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 1, 2, this)">讓每個學生都成為軟體工程師</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 2, 2, this)">培養學生的批判性思維與數位公民素養</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 3, 2, this)">讓學生學會製作AI機器人</button>
+        <div class="quiz-feedback" id="feedback-0">AI素養的重點在於理解AI如何運作並能判斷其資訊，而非著重在程式開發技能。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec2">
+      <span class="stage-badge">STAGE 2: STAGE 2：解析 AI 五大概念</span>
+      <h3 style="margin-top:0;">STAGE 2：解析 AI 五大概念</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 認識五大概念</strong>
+          <div style="font-size:0.95rem; color:var(--text);">了解AI的五個能力：感知、表示與推理、學習、自然互動、社會影響。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 具體例子對照</strong>
+          <div style="font-size:0.95rem; color:var(--text);">利用機器狗或自動駕駛汽車等例子，將抽象概念具體化。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 五堂課設計法</strong>
+          <div style="font-size:0.95rem; color:var(--text);">參考MIT教材架構，從認識名詞到體驗演算法，分階段引導學習。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-1">
+        <div class="quiz-q">❓ 思考挑戰：根據 AI4K12 框架，AI 的五大核心概念不包含下列哪一項？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(1, 0, 2, this)">感知</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 1, 2, this)">機器學習</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 2, 2, this)">繪畫創作</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 3, 2, this)">社會影響</button>
+        <div class="quiz-feedback" id="feedback-1">AI五大核心概念為：感知、表示與推理、學習、自然互動、社會影響，並不包含繪畫創作。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec3">
+      <span class="stage-badge">STAGE 3: STAGE 3：機器學習的秘密</span>
+      <h3 style="margin-top:0;">STAGE 3：機器學習的秘密</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 理解機器學習</strong>
+          <div style="font-size:0.95rem; color:var(--text);">將機器學習想像成海綿，資料餵得越多，AI就會變得越聰明。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 定義演算法</strong>
+          <div style="font-size:0.95rem; color:var(--text);">演算法就像做菜食譜，將輸入經過步驟處理後，輸出最終結果。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 動手實作體驗</strong>
+          <div style="font-size:0.95rem; color:var(--text);">透過『你畫我猜』等互動遊戲，體驗電腦如何學習人類的圖畫。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-2">
+        <div class="quiz-q">❓ 思考挑戰：為什麼我們說 AI 就像一塊『超級海綿』？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(2, 0, 1, this)">因為它摸起來很軟</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 1, 1, this)">因為它吸收的資料越多就會變得越聰明</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 2, 1, this)">因為它需要水才能運作</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 3, 1, this)">因為它會吸收電腦的記憶體</button>
+        <div class="quiz-feedback" id="feedback-2">這是一個比喻，意指機器學習是透過大量的資料訓練，從中累積經驗來提升準確度。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec4">
+      <span class="stage-badge">STAGE 4: STAGE 4：AI 倫理與社會影響</span>
+      <h3 style="margin-top:0;">STAGE 4：AI 倫理與社會影響</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 探索AI的極限</strong>
+          <div style="font-size:0.95rem; color:var(--text);">思考AI並非完美，它也有可能出錯或無法處理複雜情況。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 討論偏見問題</strong>
+          <div style="font-size:0.95rem; color:var(--text);">AI的學習資料來自人類，因此可能繼承人類的偏見，討論公平與倫理。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 成為負責任的使用者</strong>
+          <div style="font-size:0.95rem; color:var(--text);">學習如何判斷AI提供的資訊，並在生活中負責任地使用AI。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-3">
+        <div class="quiz-q">❓ 思考挑戰：關於 AI 的倫理與公平性，下列敘述何者正確？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(3, 0, 1, this)">AI 永遠是客觀公正的</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 1, 1, this)">AI 的偏見通常來自於學習資料</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 2, 1, this)">AI 不會有任何錯誤</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 3, 1, this)">我們不需要關心 AI 的社會影響</button>
+        <div class="quiz-feedback" id="feedback-3">AI學習的是人類提供的資料，若資料中存在偏見，AI的判斷結果也可能受到影響。</div>
+      </div>
+    </section>
+    
+    <!-- Interactive Canvas Simulation -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🕹️ 實作體驗區</h3>
+      
+        <div class="interactive-box" style="padding:15px; text-align:center; border:2px solid; border-color:var(--dim) var(--light) var(--light) var(--dim); background:var(--window-inset);">
+          <div style="background:var(--c1); color:white; padding:4px; font-weight:700; text-align:left; font-size:0.85rem; margin-bottom:10px;">💾 AI_教學步驟_指南.exe</div>
+          <p style="font-size:0.85rem; margin-bottom:8px;">點選以下按鈕，探索把 AI 素養融入教室的黃金法則：</p>
+          <div style="display:flex; justify-content:center; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+            <button class="btn-primary" onclick="showTeachTip(1)">1. 精選來源</button>
+            <button class="btn-primary" onclick="showTeachTip(2)">2. 學生實作</button>
+            <button class="btn-primary" onclick="showTeachTip(3)">3. 偏誤導正</button>
+          </div>
+          <div id="teach-tip-desc" style="border: 2px solid; border-color:var(--dim) var(--light) var(--light) var(--dim); padding:10px; background:#fff; min-height:60px; text-align:left; font-size:0.9rem;">請點選步驟按鈕查看策略。</div>
+        </div>
+        
+    </section>
+
+    <!-- Lecture Slides Player -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎬 課堂授課投影片</h3>
+      <div class="slide-player">
+        <div class="slide-player-main">
+          <img id="slide-current" src="assets/slide_01.jpg" alt="簡報大圖">
+          <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
+          <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
+          <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+          <div class="slide-counter" id="slide-counter">1 / 9</div>
+        </div>
+        <div class="slide-strip" id="slide-strip">
+          <img class="strip-thumb active" src="assets/slide_01.jpg" onclick="goSlide(0)" alt="縮圖"><img class="strip-thumb " src="assets/slide_02.jpg" onclick="goSlide(1)" alt="縮圖"><img class="strip-thumb " src="assets/slide_03.jpg" onclick="goSlide(2)" alt="縮圖"><img class="strip-thumb " src="assets/slide_04.jpg" onclick="goSlide(3)" alt="縮圖"><img class="strip-thumb " src="assets/slide_05.jpg" onclick="goSlide(4)" alt="縮圖"><img class="strip-thumb " src="assets/slide_06.jpg" onclick="goSlide(5)" alt="縮圖"><img class="strip-thumb " src="assets/slide_07.jpg" onclick="goSlide(6)" alt="縮圖"><img class="strip-thumb " src="assets/slide_08.jpg" onclick="goSlide(7)" alt="縮圖"><img class="strip-thumb " src="assets/slide_09.jpg" onclick="goSlide(8)" alt="縮圖">
+        </div>
+      </div>
+    </section>
+
+    <!-- Self-Study Video Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c3);">📺 自學影音概覽</h3>
+      <div style="position:relative; padding-top:56.25%; width:100%; border:3px solid var(--c3); margin-bottom:12px;">
+        <iframe
+          src="https://www.youtube.com/embed/Jnex6rbY-qE?rel=0&modestbranding=1"
+          style="position:absolute; inset:0; width:100%; height:100%; border:none;"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div style="font-size:0.9rem; color:var(--dim);">💡 建議配戴耳機觀看，可配合上方投影片隨時複習。</div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">💬 常見問題 FAQ</h3>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 我不會寫程式，可以教 AI 嗎？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">當然可以！國小階段的 AI 教學重點在於培養學生的觀察、判斷與倫理思維，而非程式編碼能力。</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 演算法對於國小生來說會不會太難？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">不會的，只要使用生活中的例子（如洗手步驟或做菜食譜）來解釋，學生就能輕鬆理解輸入、處理與輸出的邏輯。</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 為什麼要討論 AI 的偏見？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">因為 AI 學習的是人類的數據，我們需要帶領學生發現這些不完美，才能培養他們對科技的批判性思維。</div>
+        </details>
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- Fullscreen Slide Overlay -->
+  <div id="slide-fs">
+    <button class="fs-close" onclick="closeSlideFullscreen()">✕</button>
+    <button class="fs-nav prev" onclick="slideNav(-1)">‹</button>
+    <img id="slide-fs-img" src="assets/slide_01.jpg" alt="全螢幕簡報">
+    <button class="fs-nav next" onclick="slideNav(1)">›</button>
+  </div>
+
+  <script>
+    // 簡報 JS
+    const SLIDES = ['assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg'];
+    let currentIdx = 0;
+    
+    function goSlide(n) {
+      if (n < 0 || n >= SLIDES.length) return;
+      currentIdx = n;
+      document.getElementById('slide-current').src = SLIDES[n];
+      document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDES.length}`;
+      
+      const thumbs = document.querySelectorAll('.strip-thumb');
+      thumbs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === n);
+      });
+      
+      const fs = document.getElementById('slide-fs');
+      if (fs && fs.classList.contains('show')) {
+        document.getElementById('slide-fs-img').src = SLIDES[n];
+      }
+    }
+    
+    function slideNav(dir) {
+      goSlide(currentIdx + dir);
+    }
+    
+    function openSlideFullscreen() {
+      const fs = document.getElementById('slide-fs');
+      fs.classList.add('show');
+      document.getElementById('slide-fs-img').src = SLIDES[currentIdx];
+      document.body.classList.add('slides-fullscreen');
+    }
+    
+    function closeSlideFullscreen() {
+      document.getElementById('slide-fs').classList.remove('show');
+      document.body.classList.remove('slides-fullscreen');
+    }
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') slideNav(-1);
+      if (e.key === 'ArrowRight') slideNav(1);
+      if (e.key === 'Escape') closeSlideFullscreen();
+    });
+
+    // 評量 JS
+    function checkAnswer(quizIdx, optIdx, answerIdx, btn) {
+      const quizBox = document.getElementById(`quiz-${quizIdx}`);
+      const opts = quizBox.querySelectorAll('.quiz-opt');
+      opts.forEach(opt => opt.disabled = true);
+      
+      if (optIdx === answerIdx) {
+        btn.style.background = 'var(--c4)';
+        btn.style.color = '#000';
+      } else {
+        btn.style.background = 'var(--c3)';
+        btn.style.color = '#fff';
+        opts[answerIdx].style.background = 'var(--c4)';
+        opts[answerIdx].style.color = '#000';
+      }
+      
+      document.getElementById(`feedback-${quizIdx}`).style.display = 'block';
+    }
+
+    // Canvas 互動特定 JS
+    
+        function showTeachTip(n) {
+          const desc = document.getElementById('teach-tip-desc');
+          if (n === 1) {
+            desc.textContent = '🌟 策略一【精選來源】：在 NotebookLM 中，優先只放入 2 到 3 個核心精華來源，這能最大程度確保主講者角色不被雜訊稀釋。';
+          } else if (n === 2) {
+            desc.textContent = '🌟 策略二【學生實作】：結合互動式 Canvas 配對與模擬，讓孩子親手「訓練」與「調整」，體驗 AI 背後的真實原理。';
+          } else if (n === 3) {
+            desc.textContent = '🌟 策略三【偏誤導正】：在評量與 FAQ 中引導學生反思演算法與資料偏誤的道德問題，做一個負責任的數位公民。';
+          }
+        }
+        
+  </script>
+</body>
+</html>

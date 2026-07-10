@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 公平性與偏誤：做一個負責任的訓練師｜課堂演講投影簡報</title>
+  <style>
+    body, html { margin:0; padding:0; background:#000; overflow:hidden; width:100%; height:100%; }
+    section { width:100%; height:100%; }
+    .nav-btn { position:fixed; bottom:20px; font-size:2rem; color:white; background:rgba(0,0,0,0.5); border:none; padding:10px 20px; cursor:pointer; z-index:100; }
+    .nav-btn.prev { left:20px; }
+    .nav-btn.next { right:20px; }
+    .counter { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); color:white; font-size:1.2rem; background:rgba(0,0,0,0.5); padding:6px 16px; z-index:100; }
+  </style>
+</head>
+<body>
+  
+      <section style="display:none;" id="lslide-1">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_01.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-2">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_02.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-3">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_03.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-4">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_04.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-5">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_05.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-6">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_06.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-7">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_07.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-8">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_08.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-9">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_09.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-10">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_10.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-11">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_11.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-12">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_12.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-13">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_13.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-14">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_14.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+      <section style="display:none;" id="lslide-15">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+          <img src="assets/slide_15.jpg" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+      </section>
+      
+  <button class="nav-btn prev" onclick="navigate(-1)">‹</button>
+  <button class="nav-btn next" onclick="navigate(1)">›</button>
+  <div class="counter" id="lcounter">1 / 15</div>
+
+  <script>
+    let current = 1;
+    const total = 15;
+    
+    function show(n) {
+      if(n < 1 || n > total) return;
+      document.getElementById(`lslide-${current}`).style.display = 'none';
+      current = n;
+      document.getElementById(`lslide-${current}`).style.display = 'block';
+      document.getElementById('lcounter').textContent = `${current} / ${total}`;
+    }
+    
+    function navigate(dir) {
+      show(current + dir);
+    }
+    
+    document.addEventListener('keydown', e => {
+      if(e.key === 'ArrowLeft' || e.key === 'PageUp') navigate(-1);
+      if(e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') navigate(1);
+    });
+    
+    show(1);
+  </script>
+</body>
+</html>

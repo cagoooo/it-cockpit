@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>演算法挑戰：電腦如何解決問題？｜5 年級資訊科技教學駕駛艙</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/algorithm/">
+  <meta property="og:title" content="演算法挑戰：電腦如何解決問題？｜5 年級資訊科技">
+  <meta property="og:description" content="AI 時代每位孩子與教師必備的素養學習艙。">
+  <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/algorithm/og-image.png">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:site_name" content="IT COCKPIT">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 18px; }
+    body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; line-height: 1.7; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    
+    /* Theme CSS */
+    
+        :root {
+          --bg: #0a1f1a; --surface: #123028; --panel: #1a443a;
+          --c1: #4cd964; --c2: #ffb300; --c3: #ff3d3d; --c4: #00e5ff;
+          --c5: #b388ff; --text: #e0f8f0; --dim: #5c8c80;
+        }
+        body { font-family: 'JetBrains Mono', 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); }
+        .level-section { border: 2px solid var(--c1); box-shadow: 0 0 12px var(--c1); border-radius: 8px; background: var(--surface); }
+        .btn-primary { background: transparent; color: var(--c1); border: 2px solid var(--c1); padding: 8px 18px; font-weight: 700; cursor: pointer; border-radius: 4px; box-shadow: 0 0 8px var(--c1); }
+        .btn-primary:hover { background: var(--c1); color: var(--bg); box-shadow: 0 0 16px var(--c1); }
+        
+    
+    .site-header { position: sticky; top: 0; background: var(--panel); color: var(--text); padding: 12px 24px; z-index: 500; border-bottom: 2px solid var(--c1); }
+    .header-inner { display: flex; align-items: center; gap: 15px; max-width:1400px; margin:0 auto; }
+    .home-btn { color: var(--c2); text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 6px 12px; border: 2px solid var(--c2); }
+    .home-btn:hover { background: var(--c2); color: #000; }
+    
+    .level-section { margin-bottom: 30px; padding: 24px; }
+    .stage-badge { background: var(--c3); color: white; padding: 4px 10px; font-weight: 700; font-size: 0.75rem; display: inline-block; margin-bottom: 10px; }
+    
+    /* Slide Player styles */
+    .slide-player { margin: 20px 0; border: 3px solid var(--c1); background: var(--surface); position: relative; }
+    .slide-player-main { position: relative; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .slide-player-main img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 1.5rem; cursor: pointer; }
+    .slide-nav-btn.prev { left: 10px; }
+    .slide-nav-btn.next { right: 10px; }
+    .slide-fs-btn { position: absolute; top: 10px; right: 10px; background: var(--c1); color: #000; border: none; padding: 6px 12px; font-weight: 700; cursor: pointer; }
+    .slide-counter { position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; font-size: 0.8rem; }
+    
+    .slide-strip { display: flex; gap: 8px; padding: 10px; overflow-x: auto; background: var(--panel); }
+    .strip-thumb { width: 80px; aspect-ratio: 16/9; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.6; }
+    .strip-thumb.active { border-color: var(--c2); opacity: 1; }
+    
+    #slide-fs { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; display: none; align-items: center; justify-content: center; }
+    #slide-fs.show { display: flex; }
+    .fs-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; }
+    .fs-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 56px; height: 80px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 2rem; cursor: pointer; }
+    .fs-nav.prev { left: 20px; }
+    .fs-nav.next { right: 20px; }
+    
+    /* Quiz elements */
+    .quiz-box { margin-top: 15px; border-top: 1px dashed var(--dim); padding-top: 15px; }
+    .quiz-q { font-weight: 700; margin-bottom: 10px; }
+    .quiz-opt { display: block; width: 100%; text-align: left; background: var(--panel); border: 1.5px solid var(--dim); padding: 8px 12px; margin-bottom: 6px; color: inherit; cursor: pointer; }
+    .quiz-opt:hover { border-color: var(--c1); }
+    .quiz-feedback { display: none; margin-top: 10px; padding: 8px 12px; background: var(--surface); border-left: 4px solid var(--c4); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="home-btn">← IT COCKPIT</a>
+      <span style="font-weight:900; font-size:1.1rem;">演算法挑戰：電腦如何解決問題？</span>
+      <span style="background:var(--c4); color:#000; padding:2px 8px; font-size:0.8rem; font-weight:700;">5 年級</span>
+    </div>
+  </header>
+
+  <main class="container">
+<div class="yt-overview" style="margin:2rem 0;">
+  <h2 style="text-align:center;margin-bottom:1rem;">影片概覽</h2>
+  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.35);">
+    <iframe src="https://www.youtube.com/embed/dAnwwPyY9b0?cc_load_policy=1&cc_lang_pref=zh-Hant&hl=zh-TW"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;"
+      frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+      allowfullscreen loading="lazy" title="演算法挑戰：電腦如何解決問題？｜國小五年級 AI 素養課｜阿凱老師"></iframe>
+  </div>
+  <p style="text-align:center;margin-top:.5rem;font-size:.85rem;opacity:.7;">
+    開啟 CC 可看繁體中文字幕 ｜
+    <a href="https://www.youtube.com/watch?v=dAnwwPyY9b0" target="_blank" rel="noopener" style="color:inherit;">在 YouTube 開啟</a>
+  </p>
+</div>
+
+    <!-- Objectives -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎯 本單元學習目標</h3>
+      <ul style="padding-left:20px; margin-bottom:0;">
+        <li>理解演算法就是按照正確順序解決問題的步驟</li><li>掌握演算法的神奇公式：輸入、處理與輸出</li><li>認識電腦處理指令時的死板特性及其重要性</li><li>學會如何透過拆解步驟與除錯來優化演算法</li>
+      </ul>
+    </section>
+
+    <!-- Main Stages (1 to 4) -->
+    
+    <section class="level-section" id="sec1">
+      <span class="stage-badge">STAGE 1: STAGE 1：什麼是演算法？</span>
+      <h3 style="margin-top:0;">STAGE 1：什麼是演算法？</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 觀察日常生活</strong>
+          <div style="font-size:0.95rem; color:var(--text);">回想一下早上刷牙或準備上學的動作，其實每個小細節都是按照順序完成的。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 定義演算法</strong>
+          <div style="font-size:0.95rem; color:var(--text);">演算法就像食譜，只要依照正確的順序執行步驟，就能達成目標。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 連結遊戲規則</strong>
+          <div style="font-size:0.95rem; color:var(--text);">想想玩紙牌遊戲時的規則，這與演算法的概念是一模一樣的喔！</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-0">
+        <div class="quiz-q">❓ 思考挑戰：下列哪一個選項最能描述「演算法」的概念？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(0, 0, 2, this)">一種超級高科技的火星用語</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 1, 2, this)">隨心所欲地操作電腦</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 2, 2, this)">按照正確順序完成事情的步驟</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 3, 2, this)">電腦自動生成的密碼</button>
+        <div class="quiz-feedback" id="feedback-0">演算法其實就是解決問題的方法，只要按照正確的順序來執行，就是在運用演算法喔！</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec2">
+      <span class="stage-badge">STAGE 2: STAGE 2：演算法的神奇公式</span>
+      <h3 style="margin-top:0;">STAGE 2：演算法的神奇公式</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 認識神奇藍圖</strong>
+          <div style="font-size:0.95rem; color:var(--text);">記住這個公式：輸入 (Input)、處理 (Process)、輸出 (Output)，任何問題都能用這三個步驟解決。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 生活中的應用</strong>
+          <div style="font-size:0.95rem; color:var(--text);">嘗試將烤蛋糕或種花拆解成輸入、處理、輸出三個步驟。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 公式練習</strong>
+          <div style="font-size:0.95rem; color:var(--text);">試著找一件生活小事，畫出這三個步驟的流程圖。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-1">
+        <div class="quiz-q">❓ 思考挑戰：演算法的「神奇公式」包含哪三個部分？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(1, 0, 1, this)">開始、中間、結束</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 1, 1, this)">輸入、處理、輸出</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 2, 1, this)">指令、運行、當機</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 3, 1, this)">準備、計算、玩耍</button>
+        <div class="quiz-feedback" id="feedback-1">沒錯！輸入資料、進行處理，最後得到輸出結果，這是演算法通用的邏輯公式。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec3">
+      <span class="stage-badge">STAGE 3: STAGE 3：電腦為何如此死板？</span>
+      <h3 style="margin-top:0;">STAGE 3：電腦為何如此死板？</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 認識死板電腦</strong>
+          <div style="font-size:0.95rem; color:var(--text);">電腦沒有常識，也不會猜測你的言外之意，它只會聽從指令。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 精確指令訓練</strong>
+          <div style="font-size:0.95rem; color:var(--text);">嘗試寫出一個讓老師機器人走出教室的指令，要求必須具體到每一個轉彎和步伐。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 使用輔助工具</strong>
+          <div style="font-size:0.95rem; color:var(--text);">如果寫文字太抽象，可以用箭頭或圖示來代表方向與動作。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-2">
+        <div class="quiz-q">❓ 思考挑戰：為什麼我們說電腦是非常「死板」的？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(2, 0, 2, this)">因為電腦運算速度太慢</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 1, 2, this)">因為電腦只有在特定時間才聽話</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 2, 2, this)">因為電腦聽不懂言外之意，只會依照字面指令執行</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 3, 2, this)">因為電腦不喜歡變通</button>
+        <div class="quiz-feedback" id="feedback-2">電腦不像人類擁有常識，如果指令寫得模糊，它就無法判斷正確的方向，這就是電腦死板的原因。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec4">
+      <span class="stage-badge">STAGE 4: STAGE 4：抓蟲大師的除錯修煉</span>
+      <h3 style="margin-top:0;">STAGE 4：抓蟲大師的除錯修煉</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 識別問題來源</strong>
+          <div style="font-size:0.95rem; color:var(--text);">當電腦執行結果不如預期（如撞牆），這表示你的指令過於模糊。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 練習除錯 (Debugging)</strong>
+          <div style="font-size:0.95rem; color:var(--text);">檢查指令中的每一小步，將大動作拆解成電腦聽得懂的微小指令。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 優化與修改</strong>
+          <div style="font-size:0.95rem; color:var(--text);">修改指令後再次測試，直到電腦能完美執行任務，這就是除錯的藝術。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-3">
+        <div class="quiz-q">❓ 思考挑戰：當你的程式讓電腦撞牆了，這時該怎麼做？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(3, 0, 2, this)">重新開機就好</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 1, 2, this)">這是電腦的錯，不需要處理</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 2, 2, this)">進行「除錯」，檢查並修改模糊的指令</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 3, 2, this)">放棄寫程式</button>
+        <div class="quiz-feedback" id="feedback-3">當程式出錯時，我們稱之為「Bug」，將錯誤找出來並修正的過程就叫「除錯（Debugging）」。</div>
+      </div>
+    </section>
+    
+    <!-- Interactive Canvas Simulation -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🕹️ 實作體驗區</h3>
+      
+        <div class="interactive-box" style="padding:20px; text-align:center;">
+          <h4>📊 演算法：氣泡排序法步驟模擬</h4>
+          <p style="color:var(--dim); font-size:0.9rem;">藉由兩兩比較、把較大的數字往右交換來完成排序！</p>
+          <div style="display:flex; justify-content:center; gap:10px; margin: 20px 0; font-family:monospace;">
+            <div class="bubble-num" style="width:40px;height:40px;line-height:40px;border:2px solid var(--c2);color:var(--c2);font-weight:900;font-size:1.2rem;">8</div>
+            <div class="bubble-num" style="width:40px;height:40px;line-height:40px;border:2px solid var(--c2);color:var(--c2);font-weight:900;font-size:1.2rem;">3</div>
+            <div class="bubble-num" style="width:40px;height:40px;line-height:40px;border:2px solid var(--c2);color:var(--c2);font-weight:900;font-size:1.2rem;">5</div>
+            <div class="bubble-num" style="width:40px;height:40px;line-height:40px;border:2px solid var(--c2);color:var(--c2);font-weight:900;font-size:1.2rem;">1</div>
+          </div>
+          <button class="btn-primary" onclick="nextSortStep()">👉 下一步比較</button>
+          <div id="sort-desc" style="margin-top:12px; color:var(--c4);">目前數值：[8, 3, 5, 1]，準備排序。</div>
+        </div>
+        
+    </section>
+
+    <!-- Lecture Slides Player -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎬 課堂授課投影片</h3>
+      <div class="slide-player">
+        <div class="slide-player-main">
+          <img id="slide-current" src="assets/slide_01.jpg" alt="簡報大圖">
+          <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
+          <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
+          <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+          <div class="slide-counter" id="slide-counter">1 / 9</div>
+        </div>
+        <div class="slide-strip" id="slide-strip">
+          <img class="strip-thumb active" src="assets/slide_01.jpg" onclick="goSlide(0)" alt="縮圖"><img class="strip-thumb " src="assets/slide_02.jpg" onclick="goSlide(1)" alt="縮圖"><img class="strip-thumb " src="assets/slide_03.jpg" onclick="goSlide(2)" alt="縮圖"><img class="strip-thumb " src="assets/slide_04.jpg" onclick="goSlide(3)" alt="縮圖"><img class="strip-thumb " src="assets/slide_05.jpg" onclick="goSlide(4)" alt="縮圖"><img class="strip-thumb " src="assets/slide_06.jpg" onclick="goSlide(5)" alt="縮圖"><img class="strip-thumb " src="assets/slide_07.jpg" onclick="goSlide(6)" alt="縮圖"><img class="strip-thumb " src="assets/slide_08.jpg" onclick="goSlide(7)" alt="縮圖"><img class="strip-thumb " src="assets/slide_09.jpg" onclick="goSlide(8)" alt="縮圖">
+        </div>
+      </div>
+    </section>
+
+    <!-- Self-Study Video Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c3);">📺 自學影音概覽</h3>
+      <div style="position:relative; padding-top:56.25%; width:100%; border:3px solid var(--c3); margin-bottom:12px;">
+        <iframe
+          src="https://www.youtube.com/embed/Jnex6rbY-qE?rel=0&modestbranding=1"
+          style="position:absolute; inset:0; width:100%; height:100%; border:none;"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div style="font-size:0.9rem; color:var(--dim);">💡 建議配戴耳機觀看，可配合上方投影片隨時複習。</div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">💬 常見問題 FAQ</h3>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 演算法是不是只有工程師才會用到？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">不是喔！其實你每天刷牙、準備上學、玩遊戲，都在使用演算法，它只是解決問題的步驟而已。</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 為什麼電腦不能自己猜我想做什麼？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">因為電腦沒有像人類一樣的邏輯與常識，它只能嚴格執行你給予的精確指令，所以說話要很具體才行。</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 什麼是除錯（Debugging）？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">除錯就是當指令出錯時，找出哪一個步驟不夠精確，並進行修改，讓結果變正常的過程。</div>
+        </details>
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- Fullscreen Slide Overlay -->
+  <div id="slide-fs">
+    <button class="fs-close" onclick="closeSlideFullscreen()">✕</button>
+    <button class="fs-nav prev" onclick="slideNav(-1)">‹</button>
+    <img id="slide-fs-img" src="assets/slide_01.jpg" alt="全螢幕簡報">
+    <button class="fs-nav next" onclick="slideNav(1)">›</button>
+  </div>
+
+  <script>
+    // 簡報 JS
+    const SLIDES = ['assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg'];
+    let currentIdx = 0;
+    
+    function goSlide(n) {
+      if (n < 0 || n >= SLIDES.length) return;
+      currentIdx = n;
+      document.getElementById('slide-current').src = SLIDES[n];
+      document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDES.length}`;
+      
+      const thumbs = document.querySelectorAll('.strip-thumb');
+      thumbs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === n);
+      });
+      
+      const fs = document.getElementById('slide-fs');
+      if (fs && fs.classList.contains('show')) {
+        document.getElementById('slide-fs-img').src = SLIDES[n];
+      }
+    }
+    
+    function slideNav(dir) {
+      goSlide(currentIdx + dir);
+    }
+    
+    function openSlideFullscreen() {
+      const fs = document.getElementById('slide-fs');
+      fs.classList.add('show');
+      document.getElementById('slide-fs-img').src = SLIDES[currentIdx];
+      document.body.classList.add('slides-fullscreen');
+    }
+    
+    function closeSlideFullscreen() {
+      document.getElementById('slide-fs').classList.remove('show');
+      document.body.classList.remove('slides-fullscreen');
+    }
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') slideNav(-1);
+      if (e.key === 'ArrowRight') slideNav(1);
+      if (e.key === 'Escape') closeSlideFullscreen();
+    });
+
+    // 評量 JS
+    function checkAnswer(quizIdx, optIdx, answerIdx, btn) {
+      const quizBox = document.getElementById(`quiz-${quizIdx}`);
+      const opts = quizBox.querySelectorAll('.quiz-opt');
+      opts.forEach(opt => opt.disabled = true);
+      
+      if (optIdx === answerIdx) {
+        btn.style.background = 'var(--c4)';
+        btn.style.color = '#000';
+      } else {
+        btn.style.background = 'var(--c3)';
+        btn.style.color = '#fff';
+        opts[answerIdx].style.background = 'var(--c4)';
+        opts[answerIdx].style.color = '#000';
+      }
+      
+      document.getElementById(`feedback-${quizIdx}`).style.display = 'block';
+    }
+
+    // Canvas 互動特定 JS
+    
+        let sortStep = 0;
+        const nums = [document.querySelectorAll('.bubble-num')];
+        function nextSortStep() {
+          const els = document.querySelectorAll('.bubble-num');
+          if (sortStep === 0) {
+            els[0].style.borderColor = 'var(--c3)'; els[1].style.borderColor = 'var(--c3)';
+            document.getElementById('sort-desc').textContent = '比較 8 與 3，發現 8 > 3，進行交換！';
+            sortStep = 1;
+          } else if (sortStep === 1) {
+            els[0].textContent = '3'; els[1].textContent = '8';
+            els[0].style.borderColor = 'var(--c1)'; els[1].style.borderColor = 'var(--c1)';
+            document.getElementById('sort-desc').textContent = '交換完成，現在數值為 [3, 8, 5, 1]！';
+            sortStep = 2;
+          } else if (sortStep === 2) {
+            els[1].style.borderColor = 'var(--c3)'; els[2].style.borderColor = 'var(--c3)';
+            document.getElementById('sort-desc').textContent = '比較 8 與 5，發現 8 > 5，進行交換！';
+            sortStep = 3;
+          } else if (sortStep === 3) {
+            els[1].textContent = '5'; els[2].textContent = '8';
+            els[1].style.borderColor = 'var(--c1)'; els[2].style.borderColor = 'var(--c1)';
+            document.getElementById('sort-desc').textContent = '交換完成，現在數值為 [3, 5, 8, 1]！';
+            sortStep = 0; // 重置
+          }
+        }
+        
+  </script>
+</body>
+</html>

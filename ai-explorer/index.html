@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 探索家：生活中的智慧科技｜3 年級資訊科技教學駕駛艙</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/ai-explorer/">
+  <meta property="og:title" content="AI 探索家：生活中的智慧科技｜3 年級資訊科技">
+  <meta property="og:description" content="AI 時代每位孩子與教師必備的素養學習艙。">
+  <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/ai-explorer/og-image.png">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:site_name" content="IT COCKPIT">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 18px; }
+    body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; line-height: 1.7; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    
+    /* Theme CSS */
+    
+        :root {
+          --bg: #fef3f8; --surface: #fff0f6; --panel: #ffffff;
+          --c1: #ff85b3; --c2: #ffd54f; --c3: #6cb4ff; --c4: #7be495;
+          --c5: #b388ff; --text: #2a2244; --dim: #8878aa;
+        }
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .level-section { border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); border: 2px solid var(--surface); }
+        .btn-primary { border-radius: 30px; background: var(--c1); color: white; border: none; padding: 10px 24px; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        
+    
+    .site-header { position: sticky; top: 0; background: var(--panel); color: var(--text); padding: 12px 24px; z-index: 500; border-bottom: 2px solid var(--c1); }
+    .header-inner { display: flex; align-items: center; gap: 15px; max-width:1400px; margin:0 auto; }
+    .home-btn { color: var(--c2); text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 6px 12px; border: 2px solid var(--c2); }
+    .home-btn:hover { background: var(--c2); color: #000; }
+    
+    .level-section { margin-bottom: 30px; padding: 24px; }
+    .stage-badge { background: var(--c3); color: white; padding: 4px 10px; font-weight: 700; font-size: 0.75rem; display: inline-block; margin-bottom: 10px; }
+    
+    /* Slide Player styles */
+    .slide-player { margin: 20px 0; border: 3px solid var(--c1); background: var(--surface); position: relative; }
+    .slide-player-main { position: relative; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .slide-player-main img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 1.5rem; cursor: pointer; }
+    .slide-nav-btn.prev { left: 10px; }
+    .slide-nav-btn.next { right: 10px; }
+    .slide-fs-btn { position: absolute; top: 10px; right: 10px; background: var(--c1); color: #000; border: none; padding: 6px 12px; font-weight: 700; cursor: pointer; }
+    .slide-counter { position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; font-size: 0.8rem; }
+    
+    .slide-strip { display: flex; gap: 8px; padding: 10px; overflow-x: auto; background: var(--panel); }
+    .strip-thumb { width: 80px; aspect-ratio: 16/9; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.6; }
+    .strip-thumb.active { border-color: var(--c2); opacity: 1; }
+    
+    #slide-fs { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; display: none; align-items: center; justify-content: center; }
+    #slide-fs.show { display: flex; }
+    .fs-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; }
+    .fs-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 56px; height: 80px; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 2rem; cursor: pointer; }
+    .fs-nav.prev { left: 20px; }
+    .fs-nav.next { right: 20px; }
+    
+    /* Quiz elements */
+    .quiz-box { margin-top: 15px; border-top: 1px dashed var(--dim); padding-top: 15px; }
+    .quiz-q { font-weight: 700; margin-bottom: 10px; }
+    .quiz-opt { display: block; width: 100%; text-align: left; background: var(--panel); border: 1.5px solid var(--dim); padding: 8px 12px; margin-bottom: 6px; color: inherit; cursor: pointer; }
+    .quiz-opt:hover { border-color: var(--c1); }
+    .quiz-feedback { display: none; margin-top: 10px; padding: 8px 12px; background: var(--surface); border-left: 4px solid var(--c4); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="home-btn">← IT COCKPIT</a>
+      <span style="font-weight:900; font-size:1.1rem;">AI 探索家：生活中的智慧科技</span>
+      <span style="background:var(--c4); color:#000; padding:2px 8px; font-size:0.8rem; font-weight:700;">3 年級</span>
+    </div>
+  </header>
+
+  <main class="container">
+<div class="yt-overview" style="margin:2rem 0;">
+  <h2 style="text-align:center;margin-bottom:1rem;">影片概覽</h2>
+  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.35);">
+    <iframe src="https://www.youtube.com/embed/ArBTUQZ59jc?cc_load_policy=1&cc_lang_pref=zh-Hant&hl=zh-TW"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;"
+      frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+      allowfullscreen loading="lazy" title="AI 探索家：生活中的智慧科技｜國小三年級 AI 素養課｜阿凱老師"></iframe>
+  </div>
+  <p style="text-align:center;margin-top:.5rem;font-size:.85rem;opacity:.7;">
+    開啟 CC 可看繁體中文字幕 ｜
+    <a href="https://www.youtube.com/watch?v=ArBTUQZ59jc" target="_blank" rel="noopener" style="color:inherit;">在 YouTube 開啟</a>
+  </p>
+</div>
+
+    <!-- Objectives -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎯 本單元學習目標</h3>
+      <ul style="padding-left:20px; margin-bottom:0;">
+        <li>認識人工智慧的基本定義與含義</li><li>辨識生活周遭運用 AI 技術的智慧科技</li><li>了解 AI 的五大核心能力：感知、推理、學習、互動與社會影響</li><li>學會判斷 AI 真假與辨別聰明機器的技巧</li>
+      </ul>
+    </section>
+
+    <!-- Main Stages (1 to 4) -->
+    
+    <section class="level-section" id="sec1">
+      <span class="stage-badge">STAGE 1: STAGE 1：認識 AI 偵探與基本定義</span>
+      <h3 style="margin-top:0;">STAGE 1：認識 AI 偵探與基本定義</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 化身偵探</strong>
+          <div style="font-size:0.95rem; color:var(--text);">開啟偵探雷達，掃描房間裡可能隱藏智慧科技的物品。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 拆解 AI 字義</strong>
+          <div style="font-size:0.95rem; color:var(--text);">學習將人工智慧分為「人工（人類做的）」與「智慧（思考能力）」來理解。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 理解智慧原理</strong>
+          <div style="font-size:0.95rem; color:var(--text);">了解電腦如何透過工程師寫的程式，模仿人類思考與解決問題。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-0">
+        <div class="quiz-q">❓ 思考挑戰：「人工智慧」這個詞中的「人工」是指什麼？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(0, 0, 2, this)">是大自然生長出來的</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 1, 2, this)">是機器人自己變出來的</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 2, 2, this)">是人類親手設計發明出來的</button>
+        <button class="quiz-opt" onclick="checkAnswer(0, 3, 2, this)">是指人工製造的西瓜</button>
+        <div class="quiz-feedback" id="feedback-0">答對了！「人工」是指不是天然的，而是人類運用科技與程式親手創造出來的產物。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec2">
+      <span class="stage-badge">STAGE 2: STAGE 2：AI 偵探的五大裝備箱</span>
+      <h3 style="margin-top:0;">STAGE 2：AI 偵探的五大裝備箱</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 感知與推理</strong>
+          <div style="font-size:0.95rem; color:var(--text);">觀察機器如何利用感測器蒐集資料，並像人類大腦一樣快速運算。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 學習與互動</strong>
+          <div style="font-size:0.95rem; color:var(--text);">體驗機器如何透過經驗累積變聰明，並與使用者進行良好的互動。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 社會影響力</strong>
+          <div style="font-size:0.95rem; color:var(--text);">思考若 AI 變得普及，我們的日常生活習慣會發生什麼改變？</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-1">
+        <div class="quiz-q">❓ 思考挑戰：下列哪一項不是 AI 的核心能力之一？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(1, 0, 1, this)">感測環境</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 1, 1, this)">只會固定背誦課文</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 2, 1, this)">能夠學習與變聰明</button>
+        <button class="quiz-opt" onclick="checkAnswer(1, 3, 1, this)">與人類互動</button>
+        <div class="quiz-feedback" id="feedback-1">沒錯！真正的 AI 會思考、學習並感知周遭，而不是只會盲目地背誦或執行寫好的固定指令。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec3">
+      <span class="stage-badge">STAGE 3: STAGE 3：拆穿假 AI 的偵探技巧</span>
+      <h3 style="margin-top:0;">STAGE 3：拆穿假 AI 的偵探技巧</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 提出關鍵問題</strong>
+          <div style="font-size:0.95rem; color:var(--text);">學習針對機器提出五個核心檢測問題，以辨別其智慧程度。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 判斷思考來源</strong>
+          <div style="font-size:0.95rem; color:var(--text);">分析機器是真的在思考，還是只是照著人類寫好的劇本演出。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 運用偵探檢查表</strong>
+          <div style="font-size:0.95rem; color:var(--text);">隨時準備好偵探檢查清單，隨時隨地揪出假 AI。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-2">
+        <div class="quiz-q">❓ 思考挑戰：如何判斷一台機器是否為真正的 AI？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(2, 0, 1, this)">看它外表有沒有裝飾</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 1, 1, this)">看它是否能像人一樣觀察環境、學習並做出聰明的決定</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 2, 1, this)">看它的價格貴不貴</button>
+        <button class="quiz-opt" onclick="checkAnswer(2, 3, 1, this)">看它會不會發光</button>
+        <div class="quiz-feedback" id="feedback-2">聰明！真正的 AI 重點在於它是否能感知、思考、推理與互動，而不僅僅是外表看起來很新潮。</div>
+      </div>
+    </section>
+    <section class="level-section" id="sec4">
+      <span class="stage-badge">STAGE 4: STAGE 4：生活中的 AI 偵探挑戰</span>
+      <h3 style="margin-top:0;">STAGE 4：生活中的 AI 偵探挑戰</h3>
+      
+      <!-- Steps -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin: 15px 0;">
+        
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 1. 比較數位地圖</strong>
+          <div style="font-size:0.95rem; color:var(--text);">分析數位地圖為何比傳統紙本地圖聰明，找出其中的 AI 技術。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 2. 對比計算機運作</strong>
+          <div style="font-size:0.95rem; color:var(--text);">判斷計算機是否具有學習與感知能力，區分一般機器與 AI。</div>
+        </div>
+        <div style="border-left: 3px solid var(--c1); padding-left: 12px;">
+          <strong style="color:var(--c1);">步驟 3. 綜合運用與分享</strong>
+          <div style="font-size:0.95rem; color:var(--text);">總結學習成果，將這套 AI 偵探技巧運用在其他家電上。</div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-box" id="quiz-3">
+        <div class="quiz-q">❓ 思考挑戰：為什麼手機裡的「數位地圖」通常被認為有 AI 技術？</div>
+        
+        <button class="quiz-opt" onclick="checkAnswer(3, 0, 2, this)">因為它需要電池才能使用</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 1, 2, this)">因為它會隨著時間變舊</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 2, 2, this)">因為它能感知路況並主動推薦路徑</button>
+        <button class="quiz-opt" onclick="checkAnswer(3, 3, 2, this)">因為它顯示的是地圖不是遊戲</button>
+        <div class="quiz-feedback" id="feedback-3">正確！數位地圖能感知目前的交通狀況（感知），並主動幫你規劃最快路線（推理），這就是 AI 的展現。</div>
+      </div>
+    </section>
+    
+    <!-- Interactive Canvas Simulation -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🕹️ 實作體驗區</h3>
+      
+        <div class="interactive-box" style="padding: 20px; text-align: center;">
+          <h4 style="margin-top:0;">🔍 生活科技配對遊戲</h4>
+          <p style="color:var(--dim); font-size:0.9rem; margin-bottom:12px;">請點擊左邊場景與右邊背後的 AI 技術進行連線配對！</p>
+          <div style="display:flex; justify-content:space-around; gap:12px; margin-bottom:15px;">
+            <div id="left-scenes" style="display:flex; flex-direction:column; gap:8px;">
+              <button class="btn-primary" style="background:#e0f0ff; color:#1b2438; border:1px solid #ccc; font-size:0.9rem;" onclick="clickMatch('left', 0, this)">📱 手機人臉解鎖</button>
+              <button class="btn-primary" style="background:#e0f0ff; color:#1b2438; border:1px solid #ccc; font-size:0.9rem;" onclick="clickMatch('left', 1, this)">📺 推薦想看的影片</button>
+              <button class="btn-primary" style="background:#e0f0ff; color:#1b2438; border:1px solid #ccc; font-size:0.9rem;" onclick="clickMatch('left', 2, this)">🗣️ 說話自動翻中文</button>
+            </div>
+            <div id="right-techs" style="display:flex; flex-direction:column; gap:8px;">
+              <button class="btn-primary" style="background:#e0f0ff; color:#1b2438; border:1px solid #ccc; font-size:0.9rem;" onclick="clickMatch('right', 1, this)">📊 推薦系統</button>
+              <button class="btn-primary" style="background:#e0f0ff; color:#1b2438; border:1px solid #ccc; font-size:0.9rem;" onclick="clickMatch('right', 2, this)">🎙️ 語音辨識技術</button>
+              <button class="btn-primary" style="background:#e0f0ff; color:#1b2438; border:1px solid #ccc; font-size:0.9rem;" onclick="clickMatch('right', 0, this)">👁️ 臉部特徵辨識</button>
+            </div>
+          </div>
+          <div id="match-status" style="font-weight:700; color:var(--c1);">請點選場景開始連線...</div>
+        </div>
+        
+    </section>
+
+    <!-- Lecture Slides Player -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">🎬 課堂授課投影片</h3>
+      <div class="slide-player">
+        <div class="slide-player-main">
+          <img id="slide-current" src="assets/slide_01.jpg" alt="簡報大圖">
+          <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
+          <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
+          <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
+          <div class="slide-counter" id="slide-counter">1 / 12</div>
+        </div>
+        <div class="slide-strip" id="slide-strip">
+          <img class="strip-thumb active" src="assets/slide_01.jpg" onclick="goSlide(0)" alt="縮圖"><img class="strip-thumb " src="assets/slide_02.jpg" onclick="goSlide(1)" alt="縮圖"><img class="strip-thumb " src="assets/slide_03.jpg" onclick="goSlide(2)" alt="縮圖"><img class="strip-thumb " src="assets/slide_04.jpg" onclick="goSlide(3)" alt="縮圖"><img class="strip-thumb " src="assets/slide_05.jpg" onclick="goSlide(4)" alt="縮圖"><img class="strip-thumb " src="assets/slide_06.jpg" onclick="goSlide(5)" alt="縮圖"><img class="strip-thumb " src="assets/slide_07.jpg" onclick="goSlide(6)" alt="縮圖"><img class="strip-thumb " src="assets/slide_08.jpg" onclick="goSlide(7)" alt="縮圖"><img class="strip-thumb " src="assets/slide_09.jpg" onclick="goSlide(8)" alt="縮圖"><img class="strip-thumb " src="assets/slide_10.jpg" onclick="goSlide(9)" alt="縮圖"><img class="strip-thumb " src="assets/slide_11.jpg" onclick="goSlide(10)" alt="縮圖"><img class="strip-thumb " src="assets/slide_12.jpg" onclick="goSlide(11)" alt="縮圖">
+        </div>
+      </div>
+    </section>
+
+    <!-- Self-Study Video Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c3);">📺 自學影音概覽</h3>
+      <div style="position:relative; padding-top:56.25%; width:100%; border:3px solid var(--c3); margin-bottom:12px;">
+        <iframe
+          src="https://www.youtube.com/embed/Jnex6rbY-qE?rel=0&modestbranding=1"
+          style="position:absolute; inset:0; width:100%; height:100%; border:none;"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div style="font-size:0.9rem; color:var(--dim);">💡 建議配戴耳機觀看，可配合上方投影片隨時複習。</div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="level-section">
+      <h3 style="margin-top:0; color:var(--c2);">💬 常見問題 FAQ</h3>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 所有的機器人都是 AI 嗎？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">不一定喔！有些機器人只能按照寫好的死板程式重複做一樣動作，那不叫 AI。只有具備思考、學習和感知能力的機器，才屬於 AI 領域。</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 如果 AI 可以自己學習，那它會不會變得比人類還聰明？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">AI 的學習是基於人類給予的數據和程式。雖然它運算速度很快，但它缺乏人類的情感、創意和道德判斷，我們是它的使用者與創造者喔！</div>
+        </details>
+        
+        <details style="background:var(--panel); padding:10px; border:1px solid var(--dim);">
+          <summary style="font-weight:700; cursor:pointer;">❓ 我在家裡要怎麼分辨哪些家電是 AI？</summary>
+          <div style="margin-top:8px; font-size:0.95rem; padding-left:10px; border-left:2px solid var(--c1);">你可以拿出偵探清單，問問它：「你會根據環境改變行為嗎？」例如，會自動偵測髒污並決定打掃時間的掃地機器人，通常就具備了一定的 AI 能力。</div>
+        </details>
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- Fullscreen Slide Overlay -->
+  <div id="slide-fs">
+    <button class="fs-close" onclick="closeSlideFullscreen()">✕</button>
+    <button class="fs-nav prev" onclick="slideNav(-1)">‹</button>
+    <img id="slide-fs-img" src="assets/slide_01.jpg" alt="全螢幕簡報">
+    <button class="fs-nav next" onclick="slideNav(1)">›</button>
+  </div>
+
+  <script>
+    // 簡報 JS
+    const SLIDES = ['assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg'];
+    let currentIdx = 0;
+    
+    function goSlide(n) {
+      if (n < 0 || n >= SLIDES.length) return;
+      currentIdx = n;
+      document.getElementById('slide-current').src = SLIDES[n];
+      document.getElementById('slide-counter').textContent = `${n+1} / ${SLIDES.length}`;
+      
+      const thumbs = document.querySelectorAll('.strip-thumb');
+      thumbs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === n);
+      });
+      
+      const fs = document.getElementById('slide-fs');
+      if (fs && fs.classList.contains('show')) {
+        document.getElementById('slide-fs-img').src = SLIDES[n];
+      }
+    }
+    
+    function slideNav(dir) {
+      goSlide(currentIdx + dir);
+    }
+    
+    function openSlideFullscreen() {
+      const fs = document.getElementById('slide-fs');
+      fs.classList.add('show');
+      document.getElementById('slide-fs-img').src = SLIDES[currentIdx];
+      document.body.classList.add('slides-fullscreen');
+    }
+    
+    function closeSlideFullscreen() {
+      document.getElementById('slide-fs').classList.remove('show');
+      document.body.classList.remove('slides-fullscreen');
+    }
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') slideNav(-1);
+      if (e.key === 'ArrowRight') slideNav(1);
+      if (e.key === 'Escape') closeSlideFullscreen();
+    });
+
+    // 評量 JS
+    function checkAnswer(quizIdx, optIdx, answerIdx, btn) {
+      const quizBox = document.getElementById(`quiz-${quizIdx}`);
+      const opts = quizBox.querySelectorAll('.quiz-opt');
+      opts.forEach(opt => opt.disabled = true);
+      
+      if (optIdx === answerIdx) {
+        btn.style.background = 'var(--c4)';
+        btn.style.color = '#000';
+      } else {
+        btn.style.background = 'var(--c3)';
+        btn.style.color = '#fff';
+        opts[answerIdx].style.background = 'var(--c4)';
+        opts[answerIdx].style.color = '#000';
+      }
+      
+      document.getElementById(`feedback-${quizIdx}`).style.display = 'block';
+    }
+
+    // Canvas 互動特定 JS
+    
+        let selectedLeft = null, selectedRight = null;
+        let leftEl = null, rightEl = null;
+        function clickMatch(side, val, el) {
+          if (side === 'left') {
+            if (leftEl) leftEl.style.background = '#e0f0ff';
+            selectedLeft = val; leftEl = el;
+            el.style.background = '#ffd54f';
+          } else {
+            if (rightEl) rightEl.style.background = '#e0f0ff';
+            selectedRight = val; rightEl = el;
+            el.style.background = '#ffd54f';
+          }
+          if (selectedLeft !== null && selectedRight !== null) {
+            if (selectedLeft === selectedRight) {
+              document.getElementById('match-status').textContent = '🎉 答對了！太厲害了！';
+              leftEl.style.background = '#7be495'; rightEl.style.background = '#7be495';
+              leftEl.disabled = true; rightEl.disabled = true;
+            } else {
+              document.getElementById('match-status').textContent = '❌ 不太對喔，再試試看！';
+              setTimeout(() => {
+                leftEl.style.background = '#e0f0ff'; rightEl.style.background = '#e0f0ff';
+              }, 800);
+            }
+            selectedLeft = null; selectedRight = null;
+            leftEl = null; rightEl = null;
+          }
+        }
+        
+  </script>
+</body>
+</html>
