@@ -1,0 +1,25 @@
+{
+  "name": "石門智繪客｜創造力資優資訊科技課程",
+  "short_name": "石門智繪客",
+  "description": "桃園市龍潭區石門國民小學創造力資優 AI 素養與資訊科技教學駕駛艙",
+  "lang": "zh-TW",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f2e8",
+  "theme_color": "#15383c",
+  "icons": [
+    {
+      "src": "assets/gifted-favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/gifted-favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

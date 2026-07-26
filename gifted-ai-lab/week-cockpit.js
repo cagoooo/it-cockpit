@@ -1,28 +1,131 @@
 (function(){
   const week=Number(document.body.dataset.week);
   const data=(window.GIFTED_WEEKS||[]).find(item=>item.week===week);
+  const extra=(window.GIFTED_ENRICHMENT||{})[week];
   const app=document.querySelector('#app');
-  if(!data){app.innerHTML='<p class="loading">找不到本週課程資料。</p>';return;}
+  if(!data||!extra){app.innerHTML='<p class="loading">找不到本週課程資料。</p>';return;}
+
   const esc=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const ww=String(data.week).padStart(2,'0');
-  const index=window.GIFTED_WEEKS.findIndex(item=>item.week===week);
-  const prev=window.GIFTED_WEEKS[index-1],next=window.GIFTED_WEEKS[index+1];
+  const allWeeks=window.GIFTED_WEEKS||[];
+  const currentIndex=allWeeks.findIndex(item=>item.week===week);
+  const prev=allWeeks[currentIndex-1],next=allWeeks[currentIndex+1];
   const localHref=href=>href.startsWith('../')?'../'+href:href;
-  const flowGuide=['先收集學生原本的想法，不急著公布答案。','用具體例子操作，要求學生邊做邊說理由。','完成第一個可見產出，卡住時只給一個提示。','用一句話或畫面確認第一節理解。','把概念轉成可操作任務，先完成第一版。','加入反例、限制或錯誤輸入進行測試。','根據證據修改，保留前後版本。','依週次與版本命名存檔，說出今天的關鍵發現。'];
+  const flowGuide=['喚起原有想法並留下第一版。','用具體例子建立可以操作的概念。','要求學生完成第一個可見產出。','用一句話或作品確認第一節理解。','把概念轉成可測試的第一版。','加入反例、邊界或錯誤輸入。','根據證據修改並保留版本。','完成命名、反思與下次銜接。'];
+  const rubric=[
+    ['概念理解','能完成基本分類或步驟','能用自己的話解釋並比較','能用反例檢查並修正概念'],
+    ['證據推理','提出個人想法','用資料、測試或觀察支持','能說明證據限制與替代解釋'],
+    ['創作歷程','完成一個版本','保留版本並說明修改','比較不同方案後做有理由的選擇'],
+    ['AI 責任','知道不能輸入個資','能查證並標示 AI 協助','能說明人的決策、限制與責任']
+  ];
+
   document.title=`W${ww} ${data.title}｜石門智繪客`;
-  app.innerHTML=`<header class="topbar"><div class="shell topbar-inner"><a class="brand" href="../index.html"><span class="brand-mark">W${ww}</span><span>石門智繪客｜週次專用駕駛艙</span></a><nav class="topnav">${prev?`<a class="nav-btn" href="../week-${String(prev.week).padStart(2,'0')}/" title="上一週">←</a>`:''}<a class="nav-btn wide" href="../index.html">總覽</a>${next?`<a class="nav-btn" href="../week-${String(next.week).padStart(2,'0')}/" title="下一週">→</a>`:''}</nav></div></header>
-  <main class="shell"><section class="hero"><div><div class="code">WEEK ${ww} · ${esc(data.date)} · 90 MIN</div><h1>${esc(data.title)}</h1><p>${esc(data.goal)}</p></div><div class="output"><span>本週可見產出</span>${esc(data.output)}</div></section>
-  <div class="actions"><a class="action primary" href="lecture-slides.html">開啟本週投影簡報</a><a class="action notebook" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener">開啟本週 NotebookLM</a><a class="action" href="teacher-pack.pdf?v=20260726-utf8">下載本週直式詳案</a><button class="action" onclick="window.print()">列印本週</button></div>
-  <nav class="tabs" role="tablist"><button class="tab active" data-view="teacher">教師流程</button><button class="tab" data-view="student">學生任務</button><button class="tab" data-view="media">NotebookLM 教材</button></nav>
-  <section id="teacher" class="view active"><div class="summary"><div class="summary-cell"><b>核心概念</b>${esc(data.concept)}</div><div class="summary-cell"><b>課前準備</b>${esc(data.materials)}</div><div class="summary-cell"><b>授課設定</b>一對一教學｜連續兩節｜一般教室</div></div><section class="section"><h2>90 分鐘逐段流程</h2><div class="timeline">${data.timeline.map((row,i)=>`<div class="time-row"><div class="time">${esc(row[0])}</div><div class="time-main"><b>${esc(row[1])}</b><span>${esc(flowGuide[i])}</span></div><div class="time-tip">${esc(row[2])}</div></div>`).join('')}</div></section><section class="section"><h2>教師追問</h2><div class="questions">${data.questions.map(q=>`<div class="question">「${esc(q)}」</div>`).join('')}</div></section><section class="section"><h2>本週教學資源</h2><div class="resources">${data.links.filter(x=>x[1]&&!x[1].includes('notebooklm.google.com')).map(x=>`<a class="resource" href="${esc(localHref(x[1]))}"><b>${esc(x[0])} →</b><span>開啟相關互動教材</span></a>`).join('')}<a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener"><b>本週 NotebookLM →</b><span>只收錄本週詳案與相關教材</span></a><a class="resource" href="source.md"><b>NotebookLM 來源檔 →</b><span>本週研究焦點與完整授課內容</span></a></div></section><section class="section"><h2>課後銜接備忘</h2><textarea class="teacher-note" placeholder="學生今天最有力的推理、卡住的地方、下次要延續的線索…"></textarea></section></section>
-  <section id="student" class="view"><div class="student-box"><h2>本週任務</h2><ol>${data.student.map(item=>`<li>${esc(item)}</li>`).join('')}</ol></div><section class="section"><h2>完成前自我檢查</h2><div class="self-check"><div class="check">我有保留第一版與修改版。</div><div class="check">我能說出選擇的理由。</div><div class="check">我有用測試或資料支持結論。</div><div class="check">使用 AI 時，我有查證並保護個資。</div></div></section><section class="section"><h2>今天要帶走的一句話</h2><textarea class="teacher-note student-reflection" placeholder="我原本以為……，現在我發現……"></textarea></section></section>
-  <section id="media" class="view"><div class="media-grid"><video class="week-video" controls preload="metadata" poster="../assets/gifted-lab-cover.png"><source src="video.mp4" type="video/mp4"></video><div><div class="status-box"><b>本週 NotebookLM 短影片</b><span class="video-status">生成中；完成後會自動放入此處。</span></div><div class="resources" style="grid-template-columns:1fr;margin-top:10px"><a class="resource" href="slides.pdf"><b>NotebookLM 本週簡報 →</b><span>專屬本週的 8 至 12 頁教材</span></a><a class="resource" href="lecture-slides.html"><b>互動投影簡報 →</b><span>課堂全螢幕與觸控操作版本</span></a><a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener"><b>進入本週 NotebookLM →</b><span>繼續備課、提問與產出教材</span></a></div></div></div></section></main>
-  <footer class="shell week-footer"><span>桃園市龍潭區石門國民小學 · W${ww} 資訊科技課程</span><span>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&amp;nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a></span></footer>
-  <aside class="tool-dock"><div class="tools"><div class="tool-head"><span>課堂工具</span><button class="nav-btn close-tools">×</button></div><div class="timer-display">10:00</div><div class="timer-controls"><button data-min="5">5 分</button><button data-min="10">10 分</button><button data-min="15">15 分</button><button class="start-timer">開始</button></div><button class="action pick-challenge" style="width:100%;margin-top:10px">抽進階挑戰</button><p class="challenge">完成基本任務後，再抽一張挑戰卡。</p><button class="action draw-toggle" style="width:100%">開啟白板</button><div class="draw-wrap"><div class="draw-tools"><input type="color" value="#15383c" aria-label="畫筆顏色"><button class="clear-draw">清除</button></div><canvas class="draw-canvas"></canvas></div></div><button class="tool-toggle" aria-label="開啟課堂工具">⏱</button></aside>`;
-  document.querySelector('.tabs').addEventListener('click',event=>{const tab=event.target.closest('[data-view]');if(!tab)return;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===tab));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===tab.dataset.view));});
-  const note=document.querySelector('.teacher-note');const reflection=document.querySelector('.student-reflection');note.value=localStorage.getItem(`gifted-week-${ww}-note`)||'';reflection.value=localStorage.getItem(`gifted-week-${ww}-reflection`)||'';note.addEventListener('input',()=>localStorage.setItem(`gifted-week-${ww}-note`,note.value));reflection.addEventListener('input',()=>localStorage.setItem(`gifted-week-${ww}-reflection`,reflection.value));
-  const tools=document.querySelector('.tools');document.querySelector('.tool-toggle').onclick=()=>tools.classList.toggle('open');document.querySelector('.close-tools').onclick=()=>tools.classList.remove('open');let seconds=600,timer=null;const display=document.querySelector('.timer-display');const show=()=>{display.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`};document.querySelectorAll('[data-min]').forEach(button=>button.onclick=()=>{clearInterval(timer);timer=null;seconds=Number(button.dataset.min)*60;show();document.querySelector('.start-timer').textContent='開始'});document.querySelector('.start-timer').onclick=event=>{if(timer){clearInterval(timer);timer=null;event.target.textContent='開始';return}event.target.textContent='暫停';timer=setInterval(()=>{seconds=Math.max(0,seconds-1);show();if(!seconds){clearInterval(timer);timer=null;display.textContent='時間到';event.target.textContent='開始'}},1000)};
-  const challenges=['找一個會讓目前規則失敗的反例。','提出兩種完全不同的解法並比較。','刪掉一項資料，看看結論是否改變。','把解釋改成一年級學生也聽得懂。','請 AI 反對你的想法，再逐點查證。','讓別人在沒有提示下操作你的作品。'];document.querySelector('.pick-challenge').onclick=()=>document.querySelector('.challenge').textContent=challenges[Math.floor(Math.random()*challenges.length)];
-  const drawWrap=document.querySelector('.draw-wrap'),canvas=document.querySelector('.draw-canvas'),ctx=canvas.getContext('2d'),color=document.querySelector('.draw-tools input');let drawing=false;const resize=()=>{const rect=canvas.getBoundingClientRect();canvas.width=Math.max(1,Math.round(rect.width*devicePixelRatio));canvas.height=Math.max(1,Math.round(rect.height*devicePixelRatio));ctx.scale(devicePixelRatio,devicePixelRatio);ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=3};document.querySelector('.draw-toggle').onclick=()=>{drawWrap.classList.toggle('open');if(drawWrap.classList.contains('open'))resize()};const point=event=>{const rect=canvas.getBoundingClientRect(),touch=event.touches?.[0]||event;return{x:touch.clientX-rect.left,y:touch.clientY-rect.top}};const start=event=>{drawing=true;const p=point(event);ctx.beginPath();ctx.moveTo(p.x,p.y);event.preventDefault()};const move=event=>{if(!drawing)return;const p=point(event);ctx.strokeStyle=color.value;ctx.lineTo(p.x,p.y);ctx.stroke();event.preventDefault()};['pointerdown','touchstart'].forEach(name=>canvas.addEventListener(name,start,{passive:false}));['pointermove','touchmove'].forEach(name=>canvas.addEventListener(name,move,{passive:false}));['pointerup','pointerleave','touchend'].forEach(name=>canvas.addEventListener(name,()=>drawing=false));document.querySelector('.clear-draw').onclick=()=>ctx.clearRect(0,0,canvas.width,canvas.height);
-  fetch('video.mp4',{method:'HEAD'}).then(response=>{if(response.ok)document.querySelector('.video-status').textContent='影片已完成，可直接播放。'}).catch(()=>{});
+  app.innerHTML=`
+  <header class="topbar"><div class="shell topbar-inner"><a class="brand" href="../index.html"><img class="brand-icon" src="../assets/gifted-favicon-192.png" alt=""><span><b>石門智繪客</b><small>第 ${week} 週專用駕駛艙</small></span></a><nav class="topnav">${prev?`<a class="nav-btn" href="../week-${String(prev.week).padStart(2,'0')}/" title="上一週" aria-label="上一週">←</a>`:''}<a class="nav-btn wide" href="../index.html">年度總覽</a>${next?`<a class="nav-btn" href="../week-${String(next.week).padStart(2,'0')}/" title="下一週" aria-label="下一週">→</a>`:''}</nav></div></header>
+  <main class="shell">
+    <section class="hero"><div><div class="code">WEEK ${ww} · ${esc(data.date)} · 90 MIN</div><h1>${esc(data.title)}</h1><p>${esc(data.goal)}</p><div class="driving"><span>本週驅動問題</span><strong>${esc(extra.drivingQuestion)}</strong></div></div><div class="output"><span>本週可見產出</span>${esc(data.output)}<small id="pathProgress">探究進度 0 / 4</small></div></section>
+    <div class="actions"><a class="action primary" href="lecture-slides.html">開啟 12 張課堂簡報</a><a class="action notebook" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer">開啟本週 NotebookLM</a><a class="action" href="teacher-pack.pdf?v=20260727-rich">下載直式詳案</a><button class="action" id="printWeek">列印本週</button></div>
+    <nav class="tabs" role="tablist" aria-label="課程內容"><button class="tab active" data-view="teacher">教師流程</button><button class="tab" data-view="explore">探究關卡</button><button class="tab" data-view="student">學生工作室</button><button class="tab" data-view="assessment">形成評量</button><button class="tab" data-view="media">NotebookLM</button></nav>
+
+    <section id="teacher" class="view active">
+      <div class="summary"><div class="summary-cell"><b>核心概念</b>${esc(data.concept)}</div><div class="summary-cell"><b>課前準備</b>${esc(data.materials)}</div><div class="summary-cell"><b>授課設定</b>一對一資優教學｜連續兩節｜證據導向</div></div>
+      <section class="section"><div class="section-head"><span>TEACHING FLOW</span><h2>90 分鐘逐段流程</h2></div><div class="timeline">${data.timeline.map((row,i)=>`<div class="time-row"><div class="time">${esc(row[0])}</div><div class="time-main"><b>${esc(row[1])}</b><span>${esc(flowGuide[i])}</span></div><div class="time-tip">${esc(row[2])}</div></div>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>DIAGNOSTIC MOVES</span><h2>一對一即時診斷</h2></div><div class="diagnostic-grid"><div><b>學生快速作答時</b><p>不要立刻進下一題，追問：「${esc(data.questions[0])}」</p></div><div><b>學生卡住時</b><p>只給第一階提示：回到「${esc(extra.path[0][0])}」，先說出看見的事實。</p></div><div><b>學生完成基本任務時</b><p>用迷思句「${esc(extra.misconception[0])}」進行反例壓力測試。</p></div></div></section>
+      <section class="section"><div class="section-head"><span>QUESTIONS</span><h2>教師追問句</h2></div><div class="questions">${data.questions.map(q=>`<div class="question">「${esc(q)}」</div>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>RESOURCES</span><h2>本週教學資源</h2></div><div class="resources">${data.links.filter(x=>x[1]&&!x[1].includes('notebooklm.google.com')).map(x=>`<a class="resource" href="${esc(localHref(x[1]))}"><b>${esc(x[0])} →</b><span>相關互動教材與延伸實作</span></a>`).join('')}<a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer"><b>本週 NotebookLM →</b><span>本週研究、提問與素材產生</span></a><a class="resource" href="enrichment.md"><b>進階探究來源檔 →</b><span>迷思、評量、FAQ 與研究提問</span></a></div></section>
+      <section class="section"><div class="section-head"><span>AFTER CLASS</span><h2>課後銜接備忘</h2></div><textarea class="teacher-note" placeholder="學生今天最有力的推理、卡住的地方、下次要延續的線索…"></textarea></section>
+    </section>
+
+    <section id="explore" class="view">
+      <section class="section path-intro"><div class="section-head"><span>INQUIRY PATH</span><h2>四段探究路徑</h2></div><p>每一關都要留下可見證據。完成不等於做完步驟，而是能說明「我怎麼知道」。</p></section>
+      <div class="path-grid">${extra.path.map((item,i)=>`<article class="path-stage" data-stage="${i}"><label><input class="stage-check" type="checkbox" data-stage="${i}"><span class="stage-no">0${i+1}</span><span><b>${esc(item[0])}</b><strong>${esc(item[1])}</strong><small>證據：${esc(item[2])}</small></span></label></article>`).join('')}</div>
+      <section class="section"><div class="section-head"><span>SUCCESS CRITERIA</span><h2>本週成功條件</h2></div><div class="criteria">${extra.success.map((item,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span>${esc(item)}</div>`).join('')}</div></section>
+    </section>
+
+    <section id="student" class="view">
+      <section class="student-box"><div class="section-head"><span>MY MISSION</span><h2>本週任務</h2></div><ol>${data.student.map(item=>`<li>${esc(item)}</li>`).join('')}</ol></section>
+      <section class="section"><div class="section-head"><span>CONCEPT LAB</span><h2>三張核心概念卡</h2></div><div class="concept-grid">${extra.concepts.map(item=>`<article><b>${esc(item[0])}</b><p>${esc(item[1])}</p></article>`).join('')}</div></section>
+      <section class="section misconception"><div class="section-head"><span>MISCONCEPTION LAB</span><h2>迷思偵探</h2></div><blockquote>「${esc(extra.misconception[0])}」</blockquote><div class="myth-grid"><div><b>概念澄清</b><p>${esc(extra.misconception[1])}</p></div><div><b>動手驗證</b><p>${esc(extra.misconception[2])}</p></div></div></section>
+      <section class="section"><div class="section-head"><span>SELF CHECK</span><h2>完成前自我檢查</h2></div><div class="self-check"><div class="check">我有保留第一版與修改版。</div><div class="check">我能說出選擇的理由。</div><div class="check">我有用測試或資料支持結論。</div><div class="check">使用 AI 時，我有查證並保護個資。</div></div></section>
+      <section class="section"><div class="section-head"><span>REFLECTION</span><h2>今天要帶走的一句話</h2></div><textarea class="teacher-note student-reflection" placeholder="我原本以為……，現在我發現……，我的證據是……"></textarea></section>
+    </section>
+
+    <section id="assessment" class="view">
+      <section class="section"><div class="section-head"><span>CHECK FOR UNDERSTANDING</span><h2>三題形成評量</h2></div><div class="quiz-list">${extra.quiz.map((item,qi)=>`<article class="quiz-item" data-quiz="${qi}"><h3>${qi+1}. ${esc(item[0])}</h3><div class="quiz-options">${item[1].map((option,oi)=>`<button data-choice="${oi}">${String.fromCharCode(65+oi)}. ${esc(option)}</button>`).join('')}</div><p class="quiz-feedback" aria-live="polite"></p></article>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>RUBRIC</span><h2>證據導向學習量規</h2></div><div class="rubric-wrap"><table class="rubric"><thead><tr><th>面向</th><th>起步</th><th>達成</th><th>深化</th></tr></thead><tbody>${rubric.map(row=>`<tr>${row.map(cell=>`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>
+      <section class="section"><div class="section-head"><span>FAQ</span><h2>學生常見問題</h2></div><div class="faq-list">${extra.faq.map(item=>`<details><summary>${esc(item[0])}</summary><p>${esc(item[1])}</p></details>`).join('')}</div></section>
+    </section>
+
+    <section id="media" class="view">
+      <section class="media-grid"><video class="week-video" controls preload="metadata" poster="../assets/gifted-lab-cover.png"><source src="video.mp4" type="video/mp4"></video><div><div class="status-box"><b>本週 NotebookLM 短影片</b><span class="video-status">正在確認影片狀態…</span></div><div class="resources media-links"><a class="resource" href="slides.pdf"><b>NotebookLM 本週簡報 →</b><span>本週專屬概念與任務教材</span></a><a class="resource" href="lecture-slides.html"><b>12 張互動投影簡報 →</b><span>全螢幕、總覽、鍵盤與觸控操作</span></a><a class="resource" href="notebook-faq.md"><b>NotebookLM FAQ 紀錄 →</b><span>由本週全部來源交叉整理的三個追問</span></a><a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer"><b>進入本週 NotebookLM →</b><span>繼續研究、查詢與產出教材</span></a></div></div></section>
+      <section class="section"><div class="section-head"><span>NOTEBOOK PROMPTS</span><h2>五個專屬研究提問</h2></div><div class="prompt-list">${extra.prompts.map((prompt,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span><p>${esc(prompt)}</p><button class="copy-prompt" data-prompt="${esc(prompt)}">複製</button></div>`).join('')}</div></section>
+      <section class="section notebook-workflow"><div class="section-head"><span>WORKFLOW</span><h2>NotebookLM 使用節奏</h2></div><div class="workflow"><div><b>課前</b><p>用來源摘要與 FAQ 預測學生迷思。</p></div><div><b>課中</b><p>只查反例與提示，不讓 AI 代替學生作答。</p></div><div><b>課後</b><p>依作品證據整理回饋與下次銜接。</p></div></div></section>
+    </section>
+  </main>
+  <footer class="shell week-footer"><span>桃園市龍潭區石門國民小學 · W${ww} 資訊科技課程</span><span>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&amp;nsn=16#a5" target="_blank" rel="noopener noreferrer">阿凱老師</a></span></footer>
+  <canvas id="drawCanvas" class="page-draw" aria-hidden="true"></canvas>
+  <div class="draw-toolbar" aria-label="畫筆工具"><button class="draw-color active" data-color="#15383c" style="--swatch:#15383c" aria-label="深綠色"></button><button class="draw-color" data-color="#de5c46" style="--swatch:#de5c46" aria-label="紅色"></button><button class="draw-color" data-color="#f1bd45" style="--swatch:#f1bd45" aria-label="黃色"></button><button class="draw-color" data-color="#168277" style="--swatch:#168277" aria-label="綠色"></button><button class="draw-color" data-color="#3575a7" style="--swatch:#3575a7" aria-label="藍色"></button><button id="clearDraw">清除</button><button id="closeDraw">完成</button></div>
+  <aside class="tool-dock"><div class="tools"><div class="tool-head"><span>課堂工具</span><button class="nav-btn close-tools" aria-label="關閉工具">×</button></div><div class="timer-display">10:00</div><div class="timer-controls"><button data-min="5">5 分</button><button data-min="10">10 分</button><button data-min="15">15 分</button><button class="start-timer">開始</button></div><button class="action pick-challenge">抽進階挑戰</button><p class="challenge">完成基本任務後，再抽一張挑戰卡。</p><button class="action draw-toggle">開啟全頁畫筆</button></div><button class="tool-toggle" aria-label="開啟課堂工具" title="課堂工具">＋</button></aside>`;
+
+  const showView=view=>{
+    document.querySelectorAll('.tab').forEach(tab=>tab.classList.toggle('active',tab.dataset.view===view));
+    document.querySelectorAll('.view').forEach(section=>section.classList.toggle('active',section.id===view));
+    history.replaceState(null,'',`#${view}`);
+  };
+  document.querySelector('.tabs').addEventListener('click',event=>{const tab=event.target.closest('[data-view]');if(tab)showView(tab.dataset.view);});
+  const initialView=location.hash.slice(1);if(['teacher','explore','student','assessment','media'].includes(initialView))showView(initialView);
+  document.querySelector('#printWeek').onclick=()=>window.print();
+
+  const note=document.querySelector('.teacher-note');
+  const reflection=document.querySelector('.student-reflection');
+  note.value=localStorage.getItem(`gifted-week-${ww}-note`)||'';
+  reflection.value=localStorage.getItem(`gifted-week-${ww}-reflection`)||'';
+  note.addEventListener('input',()=>localStorage.setItem(`gifted-week-${ww}-note`,note.value));
+  reflection.addEventListener('input',()=>localStorage.setItem(`gifted-week-${ww}-reflection`,reflection.value));
+
+  const progressKey=`gifted-week-${ww}-path`;
+  let stageState=JSON.parse(localStorage.getItem(progressKey)||'[false,false,false,false]');
+  const updateProgress=()=>{
+    document.querySelectorAll('.stage-check').forEach(input=>{input.checked=Boolean(stageState[Number(input.dataset.stage)]);input.closest('.path-stage').classList.toggle('done',input.checked);});
+    document.querySelector('#pathProgress').textContent=`探究進度 ${stageState.filter(Boolean).length} / 4`;
+    localStorage.setItem(progressKey,JSON.stringify(stageState));
+  };
+  document.querySelectorAll('.stage-check').forEach(input=>input.addEventListener('change',()=>{stageState[Number(input.dataset.stage)]=input.checked;updateProgress();}));
+  updateProgress();
+
+  document.querySelectorAll('.quiz-item').forEach((item,qi)=>item.addEventListener('click',event=>{
+    const button=event.target.closest('[data-choice]');if(!button)return;
+    const answer=extra.quiz[qi][2],choice=Number(button.dataset.choice),feedback=item.querySelector('.quiz-feedback');
+    item.querySelectorAll('button').forEach(option=>{option.disabled=true;const value=Number(option.dataset.choice);option.classList.toggle('correct',value===answer);option.classList.toggle('wrong',value===choice&&choice!==answer);});
+    feedback.textContent=(choice===answer?'答對了。':'再檢查一次。')+' '+extra.quiz[qi][3];feedback.classList.add('show');
+  }));
+
+  document.querySelectorAll('.copy-prompt').forEach(button=>button.onclick=async()=>{
+    try{await navigator.clipboard.writeText(button.dataset.prompt);button.textContent='已複製';setTimeout(()=>button.textContent='複製',1200);}catch{button.textContent='請長按文字複製';}
+  });
+
+  const tools=document.querySelector('.tools');
+  document.querySelector('.tool-toggle').onclick=()=>tools.classList.toggle('open');
+  document.querySelector('.close-tools').onclick=()=>tools.classList.remove('open');
+  let seconds=600,timer=null;const display=document.querySelector('.timer-display');
+  const showTime=()=>{display.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;};
+  document.querySelectorAll('[data-min]').forEach(button=>button.onclick=()=>{clearInterval(timer);timer=null;seconds=Number(button.dataset.min)*60;showTime();document.querySelector('.start-timer').textContent='開始';});
+  document.querySelector('.start-timer').onclick=event=>{if(timer){clearInterval(timer);timer=null;event.target.textContent='開始';return;}event.target.textContent='暫停';timer=setInterval(()=>{seconds=Math.max(0,seconds-1);showTime();if(!seconds){clearInterval(timer);timer=null;display.textContent='時間到';event.target.textContent='開始';}},1000);};
+  const challenges=[...extra.success.map(item=>'把「'+item+'」提升到更高標準。'),'找一個會讓目前規則失敗的反例。','提出兩種完全不同的解法並比較證據。','請 AI 反對你的想法，再逐點查證。','讓別人在沒有提示下操作你的作品。'];
+  document.querySelector('.pick-challenge').onclick=()=>document.querySelector('.challenge').textContent=challenges[Math.floor(Math.random()*challenges.length)];
+
+  const canvas=document.querySelector('#drawCanvas'),ctx=canvas.getContext('2d'),drawToolbar=document.querySelector('.draw-toolbar');let drawing=false,drawColor='#15383c';
+  const resizeCanvas=()=>{const ratio=devicePixelRatio||1;canvas.width=Math.round(innerWidth*ratio);canvas.height=Math.round(innerHeight*ratio);canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(ratio,0,0,ratio,0,0);ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=4;};
+  resizeCanvas();addEventListener('resize',resizeCanvas);
+  const point=event=>({x:event.clientX,y:event.clientY});
+  canvas.addEventListener('pointerdown',event=>{drawing=true;canvas.setPointerCapture(event.pointerId);const p=point(event);ctx.beginPath();ctx.moveTo(p.x,p.y);event.preventDefault();},{passive:false});
+  canvas.addEventListener('pointermove',event=>{if(!drawing)return;const p=point(event);ctx.strokeStyle=drawColor;ctx.lineTo(p.x,p.y);ctx.stroke();event.preventDefault();},{passive:false});
+  canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);
+  const setDrawMode=enabled=>{canvas.classList.toggle('active',enabled);drawToolbar.classList.toggle('show',enabled);document.body.classList.toggle('drawing',enabled);};
+  document.querySelector('.draw-toggle').onclick=()=>{tools.classList.remove('open');setDrawMode(true);};
+  document.querySelector('#closeDraw').onclick=()=>setDrawMode(false);
+  document.querySelector('#clearDraw').onclick=()=>ctx.clearRect(0,0,innerWidth,innerHeight);
+  document.querySelectorAll('.draw-color').forEach(button=>button.onclick=()=>{drawColor=button.dataset.color;document.querySelectorAll('.draw-color').forEach(item=>item.classList.toggle('active',item===button));});
+
+  fetch('video.mp4',{method:'HEAD'}).then(response=>{document.querySelector('.video-status').textContent=response.ok?'影片已完成，可直接播放。':'影片目前無法載入。';}).catch(()=>document.querySelector('.video-status').textContent='影片目前無法載入。');
 })();

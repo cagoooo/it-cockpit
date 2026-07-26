@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>石門智繪客｜資優班資訊科技課程</title>
-<meta name="description" content="黃凱揚老師規劃的三年級創造能力資優資訊科技課程：10 次雙節課、20 節完整授課流程、學生任務與 NotebookLM 教材。">
+<meta name="description" content="黃凱揚老師規劃的創造力資優資訊科技課程：10 次雙節課、10 本獨立 NotebookLM、探究關卡、形成評量、學生任務、簡報與影片。">
+<meta name="author" content="黃凱揚老師｜桃園市龍潭區石門國民小學">
 <meta name="theme-color" content="#173b3f">
+<link rel="canonical" href="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/">
+<link rel="icon" href="assets/gifted-favicon.ico" sizes="any">
+<link rel="icon" href="assets/gifted-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/gifted-apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="石門智繪客">
 <meta property="og:title" content="石門智繪客｜資優班資訊科技課程">
-<meta property="og:description" content="10 次雙節課，從 AI 判讀、資料與演算法到原型製作與成果發表。">
-<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/assets/gifted-lab-cover.png">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:description" content="10 週獨立教學駕駛艙，從 AI 判讀、資料與演算法到創意原型、測試與成果發表。">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/assets/gifted-og.jpg">
+<meta property="og:image:secure_url" content="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/assets/gifted-og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="石門智繪客創造力資優 AI 資訊科技教學駕駛艙">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="石門智繪客｜資優班資訊科技課程">
+<meta name="twitter:description" content="10 週獨立教學駕駛艙，探究問題、證據推理、創意原型與負責任 AI。">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/assets/gifted-og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -26,6 +43,7 @@
   .topbar { position:sticky; top:0; z-index:20; background:#f7f4ecef; backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
   .topbar-inner { min-height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
   .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight:900; }
+  .brand img { width:40px; height:40px; object-fit:contain; }
   .brand-mark { width:38px; height:38px; display:grid; place-items:center; color:#fff; background:var(--ink); border-radius:6px; font-family:'JetBrains Mono',monospace; }
   .top-actions { display:flex; gap:8px; }
   .icon-btn,.action,.week-btn,.mode-btn,.timer-btn { border:1px solid var(--line); background:var(--white); color:var(--ink); cursor:pointer; }
@@ -137,10 +155,10 @@
 <body>
 <header class="topbar">
   <div class="shell topbar-inner">
-    <a class="brand" href="../index.html" aria-label="回到教學駕駛艙"><span class="brand-mark">AI</span><span>石門智繪客｜資優班專區</span></a>
+    <a class="brand" href="../index.html" aria-label="回到教學駕駛艙"><img src="assets/gifted-favicon-192.png" alt=""><span>石門智繪客｜資優班專區</span></a>
     <div class="top-actions">
       <a class="icon-btn" href="lecture-slides.html" title="開啟投影簡報" aria-label="開啟投影簡報">▣</a>
-      <a class="icon-btn" href="https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff" target="_blank" rel="noopener" title="開啟 NotebookLM" aria-label="開啟 NotebookLM">N</a>
+      <a class="icon-btn" href="https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff" target="_blank" rel="noopener noreferrer" title="開啟 NotebookLM" aria-label="開啟 NotebookLM">N</a>
       <button class="icon-btn" onclick="window.print()" title="列印本週詳案" aria-label="列印本週詳案">⎙</button>
     </div>
   </div>
@@ -166,7 +184,7 @@
     <div class="toolbar-actions">
       <a id="weekCockpitLink" class="action primary" href="week-03/">進入本週專用駕駛艙</a>
       <a id="slideLink" class="action" href="week-03/lecture-slides.html">本週投影簡報</a>
-      <a class="action accent" href="https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff" target="_blank" rel="noopener">開啟 NotebookLM</a>
+      <a class="action accent" href="https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff" target="_blank" rel="noopener noreferrer">開啟 NotebookLM</a>
       <a class="action" href="materials/teacher-guide.pdf?v=20260726-utf8">下載教師詳案</a>
       <a class="action" href="materials/student-workbook.pdf?v=20260726-utf8">下載學生手冊</a>
     </div>
@@ -195,7 +213,7 @@
   <button id="toolToggle" class="tool-toggle" title="課堂工具" aria-label="開啟課堂工具">⏱</button>
 </aside>
 
-<footer><div class="shell footer-inner"><span>桃園市龍潭區石門國民小學 · 資訊科技課程</span><span>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&amp;nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a></span></div></footer>
+<footer><div class="shell footer-inner"><span>桃園市龍潭區石門國民小學 · 資訊科技課程</span><span>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&amp;nsn=16#a5" target="_blank" rel="noopener noreferrer">阿凱老師</a></span></div></footer>
 
 <script>
 const NOTEBOOK_URL='https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff';
@@ -224,12 +242,12 @@ function renderTeacher(){
  <div class="summary-grid"><div class="summary-cell"><b>學習目標</b>${esc(current.goal)}</div><div class="summary-cell"><b>核心概念</b>${esc(current.concept)}</div><div class="summary-cell"><b>課前準備</b>${esc(current.materials)}</div></div>
  <section class="panel"><h3>90 分鐘逐段流程</h3><div class="timeline">${current.timeline.map((t,i)=>`<div class="timeline-row"><div class="timeline-time">${t[0]}</div><div class="timeline-main"><strong>${esc(t[1])}</strong><span>${esc(FLOW_GUIDE[i])}</span></div><div class="timeline-note">${esc(t[2])}</div></div>`).join('')}</div></section>
  <section class="panel"><h3>教師追問句</h3><div class="questions">${current.questions.map(q=>`<p class="question">「${esc(q)}」</p>`).join('')}</div></section>
- <section class="panel"><h3>本週教學資源</h3><div class="links"><a class="resource" href="week-${String(current.week).padStart(2,'0')}/"><b>本週專用教學駕駛艙 →</b><span>獨立詳案、NotebookLM、簡報與影片</span></a>${current.links.map(x=>`<a class="resource" href="${x[1]}" ${x[1].startsWith('http')?'target="_blank" rel="noopener"':''}><b>${esc(x[0])} →</b><span>開啟互動教材或延伸來源</span></a>`).join('')}<a class="resource" href="week-${String(current.week).padStart(2,'0')}/lecture-slides.html"><b>本週投影簡報 →</b><span>全螢幕、鍵盤與觸控切換</span></a></div></section>
+  <section class="panel"><h3>本週教學資源</h3><div class="links"><a class="resource" href="week-${String(current.week).padStart(2,'0')}/"><b>本週專用教學駕駛艙 →</b><span>獨立詳案、NotebookLM、簡報與影片</span></a>${current.links.map(x=>`<a class="resource" href="${x[1]}" ${x[1].startsWith('http')?'target="_blank" rel="noopener noreferrer"':''}><b>${esc(x[0])} →</b><span>開啟互動教材或延伸來源</span></a>`).join('')}<a class="resource" href="week-${String(current.week).padStart(2,'0')}/lecture-slides.html"><b>本週投影簡報 →</b><span>全螢幕、鍵盤與觸控切換</span></a></div></section>
  <section class="panel"><h3>課後快速紀錄</h3><textarea class="teacher-note" data-note="${current.week}" placeholder="學生今天最有力的推理、卡住的地方、下次要延續的線索…"></textarea></section>`;
  const note=teacherView.querySelector('.teacher-note'); note.value=localStorage.getItem(`gifted-note-${current.week}`)||''; note.addEventListener('input',()=>localStorage.setItem(`gifted-note-${current.week}`,note.value));
 }
 function renderStudent(){studentView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">我的第 ${current.week} 週任務</div><h2>${esc(current.title)}</h2><p class="lesson-date">完成基本任務後，可以抽取進階挑戰。</p></div><div class="lesson-output">我要完成<br>${esc(current.output)}</div></header><section class="panel student-task"><h3>任務步驟</h3><ol>${current.student.map(s=>`<li>${esc(s)}</li>`).join('')}</ol></section><section class="panel"><h3>完成前自我檢查</h3><div class="questions"><p class="question">我有保留第一版與修改版。</p><p class="question">我能說出做這個選擇的理由。</p><p class="question">我有用測試或資料支持結論。</p><p class="question">使用 AI 時，我有查證並保護個資。</p></div></section>`;}
-function renderAnnual(){annualView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">YEAR PLAN · 10 INDEPENDENT COCKPITS</div><h2>年度總覽與十個週次專用駕駛艙</h2><p class="lesson-date">年度頁負責串連學習歷程；每一週都有自己的 NotebookLM、詳案、簡報與影片。</p></div><div class="lesson-output">年度建議專題<br>磁力玩具智慧解說與安全提醒原型</div></header><section class="panel"><div class="annual-flow">${LESSONS.map(l=>`<a class="annual-step" href="week-${String(l.week).padStart(2,'0')}/"><b>W${String(l.week).padStart(2,'0')}</b>${esc(l.title)}</a>`).join('')}</div></section><section class="panel"><h3>NotebookLM 年度教材</h3><div class="media-grid"><video class="course-video" controls preload="metadata" poster="assets/gifted-lab-cover.png"><source src="materials/notebooklm-course-video.mp4" type="video/mp4">您的瀏覽器無法播放此影片。</video><div class="media-links"><a class="resource" href="materials/NotebookLM-年度課程簡報.pdf"><b>下載 NotebookLM 年度簡報 →</b><span>15 頁繁體中文課程總覽</span></a><a class="resource" href="materials/teacher-guide.pdf?v=20260726-utf8"><b>下載直式教師詳案 →</b><span>10 次雙節課完整流程</span></a><a class="resource" href="materials/student-workbook.pdf?v=20260726-utf8"><b>下載直式學生手冊 →</b><span>可列印的年度學習歷程</span></a><a class="resource" href="${NOTEBOOK_URL}" target="_blank" rel="noopener"><b>開啟年度 NotebookLM →</b><span>保留十週總覽與年度專題脈絡</span></a></div></div></section><section class="panel"><h3>跨域銜接原則</h3><p>藝術課與專題研究／科展課程由各領域老師自行設計；資訊科技課只接收其產出的視覺、科學探究或磁力玩具成果，再協助學生完成資料整理、流程、互動、AI 使用規範、數位原型、測試與發表，不代替另外兩位老師的課程。</p></section>`;}
+function renderAnnual(){annualView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">YEAR PLAN · 10 INDEPENDENT COCKPITS</div><h2>年度總覽與十個週次專用駕駛艙</h2><p class="lesson-date">年度頁負責串連學習歷程；每一週都有自己的 NotebookLM、詳案、簡報與影片。</p></div><div class="lesson-output">年度建議專題<br>磁力玩具智慧解說與安全提醒原型</div></header><section class="panel"><div class="annual-flow">${LESSONS.map(l=>`<a class="annual-step" href="week-${String(l.week).padStart(2,'0')}/"><b>W${String(l.week).padStart(2,'0')}</b>${esc(l.title)}</a>`).join('')}</div></section><section class="panel"><h3>NotebookLM 年度教材</h3><div class="media-grid"><video class="course-video" controls preload="metadata" poster="assets/gifted-lab-cover.png"><source src="materials/notebooklm-course-video.mp4" type="video/mp4">您的瀏覽器無法播放此影片。</video><div class="media-links"><a class="resource" href="materials/NotebookLM-年度課程簡報.pdf"><b>下載 NotebookLM 年度簡報 →</b><span>15 頁繁體中文課程總覽</span></a><a class="resource" href="materials/teacher-guide.pdf?v=20260726-utf8"><b>下載直式教師詳案 →</b><span>10 次雙節課完整流程</span></a><a class="resource" href="materials/student-workbook.pdf?v=20260726-utf8"><b>下載直式學生手冊 →</b><span>可列印的年度學習歷程</span></a><a class="resource" href="${NOTEBOOK_URL}" target="_blank" rel="noopener noreferrer"><b>開啟年度 NotebookLM →</b><span>保留十週總覽與年度專題脈絡</span></a></div></div></section><section class="panel"><h3>跨域銜接原則</h3><p>藝術課與專題研究／科展課程由各領域老師自行設計；資訊科技課只接收其產出的視覺、科學探究或磁力玩具成果，再協助學生完成資料整理、流程、互動、AI 使用規範、數位原型、測試與發表，不代替另外兩位老師的課程。</p></section>`;}
 function selectWeek(w){current=LESSONS.find(l=>l.week===Number(w))||LESSONS[0];const code=String(current.week).padStart(2,'0');location.hash=`week-${code}`;slideLink.href=`week-${code}/lecture-slides.html`;weekCockpitLink.href=`week-${code}/`;renderNav();renderTeacher();renderStudent();}
 function setMode(mode){document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));teacherView.classList.toggle('active',mode==='teacher');studentView.classList.toggle('active',mode==='student');annualView.classList.toggle('active',mode==='annual');}
 

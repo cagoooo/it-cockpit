@@ -1,21 +1,54 @@
 (function(){
-  const week=Number(document.body.dataset.week),data=(window.GIFTED_WEEKS||[]).find(item=>item.week===week),stage=document.querySelector('#stage');let index=0;
-  if(!data){stage.innerHTML='<div style="color:white">找不到本週簡報資料</div>';return;}
+  const week=Number(document.body.dataset.week);
+  const data=(window.GIFTED_WEEKS||[]).find(item=>item.week===week);
+  const extra=(window.GIFTED_ENRICHMENT||{})[week];
+  const stage=document.querySelector('#stage');
+  if(!data||!extra){stage.innerHTML='<div style="color:white">找不到本週簡報資料</div>';return;}
+
   const ww=String(week).padStart(2,'0');
-  const concepts=[['核心概念',data.concept],['今天要證明',data.goal],['完成作品',data.output]];
-  const hook=data.questions[0]||'你怎麼知道？有什麼證據？';
-  const checkpoint=data.questions[1]||'什麼證據會讓你改變想法？';
-  const exit=data.questions[2]||'下一次你會先改善哪一件事？';
+  const esc=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const speaker=text=>`<aside class="speaker"><b>阿凱老師</b>${esc(text)}</aside>`;
+  const pathCards=extra.path.map((item,i)=>`<div class="map-card"><span>0${i+1}</span><b>${esc(item[0])}</b><small>${esc(item[2])}</small></div>`).join('');
+  const conceptCards=extra.concepts.map(item=>`<div class="card"><b>${esc(item[0])}</b><p>${esc(item[1])}</p></div>`).join('');
+  const quiz=extra.quiz[0];
   const slides=[
-    `<section class="slide cover" data-page="01 / 06"><div class="cover-copy"><div class="code">WEEK ${ww} · ${data.date} · 90 MIN</div><h1>${data.title}</h1><p class="lead">${data.goal}</p><span class="tag">黃凱揚老師｜石門國小資優班</span></div><img src="../assets/gifted-lab-cover.png" alt="資訊科技專題學習情境"></section>`,
-    `<section class="slide content" data-page="02 / 06"><div><div class="rule"></div><h2>今天先想這一題</h2></div><div class="prompt"><div class="prompt-mark">?</div><q>${hook}</q></div></section>`,
-    `<section class="slide content" data-page="03 / 06"><div><div class="rule"></div><h2>今天的三個重點</h2></div><div class="cards">${concepts.map(item=>`<div class="card"><b>${item[0]}</b><p>${item[1]}</p></div>`).join('')}</div></section>`,
-    `<section class="slide content" data-page="04 / 06"><div><div class="rule"></div><h2>第一節｜理解與小實驗</h2></div><div class="task-grid"><div class="task"><h3>動手前先說理由</h3><ol><li>${data.student[0]}</li><li>把第一個想法留下來</li><li>遇到反例再修正</li></ol></div><div class="task"><h3>45 分鐘檢查點</h3><p class="lead">${checkpoint}</p></div></div></section>`,
-    `<section class="slide content" data-page="05 / 06"><div><div class="rule"></div><h2>第二節｜製作、測試、留下版本</h2></div><div class="task-grid"><div class="task"><h3>本週任務</h3><ol>${data.student.slice(1).map(item=>`<li>${item}</li>`).join('')}<li>保留第一版與修改版</li></ol></div><div class="task"><h3>本週可見產出</h3><p class="lead">${data.output}</p></div></div></section>`,
-    `<section class="slide content" data-page="06 / 06"><div><div class="rule"></div><h2>離開教室前</h2></div><div class="exit"><div class="exit-no">01</div><div><p>${exit}</p><span class="lead">把作品、測試與反思存入本週學習歷程。</span></div></div></section>`
+    {title:'課程開場',html:`<section class="slide cover"><div class="cover-copy"><div class="code">WEEK ${ww} · ${esc(data.date)} · 90 MIN</div><h1>${esc(data.title)}</h1><p class="lead">${esc(data.goal)}</p><span class="tag">黃凱揚老師｜桃園市龍潭區石門國民小學</span></div><img src="../assets/gifted-lab-cover.png" alt="資訊科技專題學習情境">${speaker('今天不只要完成任務，更要留下能支持想法的證據。')}</section>`},
+    {title:'驅動問題',html:`<section class="slide content"><div><div class="rule"></div><h2>今天要破解的問題</h2></div><div class="prompt"><div class="prompt-mark">?</div><q>${esc(extra.drivingQuestion)}</q></div>${speaker('先聽學生原本怎麼想，這一頁不要急著公布答案。')}</section>`},
+    {title:'探究地圖',html:`<section class="slide content"><div><div class="rule"></div><h2>四段探究地圖</h2></div><div class="map-grid">${pathCards}</div>${speaker('每一關都要問：我們留下了什麼可見證據？')}</section>`},
+    {title:'核心概念',html:`<section class="slide content"><div><div class="rule"></div><h2>三個核心概念</h2></div><div class="cards">${conceptCards}</div>${speaker('不要只讀定義，請學生各找一個例子或反例。')}</section>`},
+    {title:'迷思偵探',html:`<section class="slide content myth-slide"><div><div class="rule"></div><h2>迷思偵探</h2></div><blockquote>「${esc(extra.misconception[0])}」</blockquote><div class="myth-pair"><div><b>先不要相信</b><p>${esc(extra.misconception[1])}</p></div><div><b>動手驗證</b><p>${esc(extra.misconception[2])}</p></div></div>${speaker('請學生先站在支持這句話的一方，再用測試決定是否改變。')}</section>`},
+    {title:extra.path[0][0],html:`<section class="slide content"><div><div class="rule"></div><h2>第一關｜${esc(extra.path[0][0])}</h2></div><div class="task-grid"><div class="task"><h3>探究任務</h3><p class="lead">${esc(extra.path[0][1])}</p></div><div class="task evidence"><h3>要留下的證據</h3><p>${esc(extra.path[0][2])}</p></div></div>${speaker('只提供第一階提示，讓學生自己說出觀察到的事實。')}</section>`},
+    {title:'概念檢查',html:`<section class="slide content"><div><div class="rule"></div><h2>概念檢查</h2></div><div class="slide-quiz"><h3>${esc(quiz[0])}</h3>${quiz[1].map((option,i)=>`<div><span>${String.fromCharCode(65+i)}</span>${esc(option)}</div>`).join('')}</div>${speaker('先請學生選擇並說理由，再按下一頁延續探究，不要只問答案。')}</section>`},
+    {title:extra.path[1][0],html:`<section class="slide content"><div><div class="rule"></div><h2>第二關｜${esc(extra.path[1][0])}</h2></div><div class="mission-line"><span>任務</span><strong>${esc(extra.path[1][1])}</strong></div><div class="mission-line evidence"><span>證據</span><strong>${esc(extra.path[1][2])}</strong></div>${speaker('把學生第一版留在旁邊，讓修正前後可以被比較。')}</section>`},
+    {title:extra.path[2][0],html:`<section class="slide content"><div><div class="rule"></div><h2>第三關｜${esc(extra.path[2][0])}</h2></div><div class="mission-line"><span>任務</span><strong>${esc(extra.path[2][1])}</strong></div><div class="mission-line evidence"><span>證據</span><strong>${esc(extra.path[2][2])}</strong></div>${speaker('這一關刻意加入反例、限制或錯誤輸入，觀察想法能不能撐住。')}</section>`},
+    {title:extra.path[3][0],html:`<section class="slide content"><div><div class="rule"></div><h2>第四關｜${esc(extra.path[3][0])}</h2></div><div class="mission-line"><span>任務</span><strong>${esc(extra.path[3][1])}</strong></div><div class="mission-line evidence"><span>證據</span><strong>${esc(extra.path[3][2])}</strong></div>${speaker('最後不是把作品收起來，而是說出證據、限制與下一步。')}</section>`},
+    {title:'成功條件',html:`<section class="slide content"><div><div class="rule"></div><h2>完成前的四項檢查</h2></div><div class="success-grid">${extra.success.map((item,i)=>`<div><span>0${i+1}</span><b>${esc(item)}</b></div>`).join('')}</div>${speaker('讓學生選一項最有把握、一項還要補證據的條件。')}</section>`},
+    {title:'離堂反思',html:`<section class="slide content"><div><div class="rule"></div><h2>離開教室前</h2></div><div class="exit"><div class="exit-no">01</div><div><p>${esc(data.questions[2]||'今天哪一項證據最有力？')}</p><span class="lead">我原本以為＿＿；現在我發現＿＿；我的證據是＿＿。</span></div></div>${speaker('請把作品、測試、版本與一句反思一起存入本週學習歷程。')}</section>`}
   ];
-  const render=()=>{stage.innerHTML=slides.map((slide,i)=>slide.replace('class="slide',`class="slide ${i===index?'active ':''}`)).join('');document.querySelector('#counter').textContent=`${index+1} / ${slides.length}`;document.querySelector('#progress').style.width=`${(index+1)/slides.length*100}%`};
-  const move=delta=>{index=Math.max(0,Math.min(slides.length-1,index+delta));render()};
-  document.querySelector('#prev').onclick=()=>move(-1);document.querySelector('#next').onclick=()=>move(1);document.querySelector('#full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
-  addEventListener('keydown',event=>{if(['ArrowRight','PageDown',' '].includes(event.key)){event.preventDefault();move(1)}if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();move(-1)}if(event.key.toLowerCase()==='f')document.querySelector('#full').click();if(event.key==='Escape'&&!document.fullscreenElement)location.href='index.html'});let startX=0;stage.addEventListener('touchstart',event=>startX=event.changedTouches[0].clientX,{passive:true});stage.addEventListener('touchend',event=>{const diff=event.changedTouches[0].clientX-startX;if(Math.abs(diff)>50)move(diff<0?1:-1)},{passive:true});render();
+
+  let index=Math.max(0,Math.min(slides.length-1,Number((location.hash.match(/slide-(\d+)/)||[])[1]||1)-1));
+  let overviewOpen=false,speakerHidden=false;
+  const overview=document.querySelector('#overview');
+  const renderOverview=()=>{overview.innerHTML=`<div class="overview-head"><div><b>W${ww} 章節總覽</b><span>點選任一頁直接跳轉</span></div><button id="closeOverview" aria-label="關閉總覽">×</button></div><div class="overview-grid">${slides.map((slide,i)=>`<button data-jump="${i}" class="${i===index?'active':''}"><span>${String(i+1).padStart(2,'0')}</span><b>${esc(slide.title)}</b><small>${i===0?data.title:(i===slides.length-1?'證據、限制與下一步':extra.path[Math.min(3,Math.max(0,i-5))]?.[0]||'核心概念')}</small></button>`).join('')}</div>`;overview.querySelector('#closeOverview').onclick=closeOverview;overview.querySelectorAll('[data-jump]').forEach(button=>button.onclick=()=>{index=Number(button.dataset.jump);closeOverview();render();});};
+  const openOverview=()=>{overviewOpen=true;overview.classList.add('show');overview.setAttribute('aria-hidden','false');renderOverview();};
+  function closeOverview(){overviewOpen=false;overview.classList.remove('show');overview.setAttribute('aria-hidden','true');}
+  const render=()=>{stage.innerHTML=slides.map((slide,i)=>slide.html.replace('class="slide',`class="slide ${i===index?'active ':''}`).replace('<section class="slide ',`<section data-page="${String(i+1).padStart(2,'0')} / ${slides.length}" class="slide `)).join('');document.querySelector('#counter').textContent=`${index+1} / ${slides.length}`;document.querySelector('#progress').style.width=`${(index+1)/slides.length*100}%`;document.body.classList.toggle('speaker-hidden',speakerHidden);history.replaceState(null,'',`#slide-${index+1}`);if(overviewOpen)renderOverview();};
+  const move=delta=>{index=Math.max(0,Math.min(slides.length-1,index+delta));render();};
+  document.querySelector('#prev').onclick=()=>move(-1);document.querySelector('#next').onclick=()=>move(1);document.querySelector('#overviewButton').onclick=()=>overviewOpen?closeOverview():openOverview();
+  document.querySelector('#full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+  addEventListener('keydown',event=>{
+    const key=event.key;
+    if(overviewOpen&&key==='Escape'){closeOverview();event.preventDefault();return;}
+    if(['ArrowRight','PageDown',' '].includes(key)){event.preventDefault();move(1);}
+    else if(['ArrowLeft','PageUp'].includes(key)){event.preventDefault();move(-1);}
+    else if(key==='Home'){index=0;render();event.preventDefault();}
+    else if(key==='End'){index=slides.length-1;render();event.preventDefault();}
+    else if(key.toLowerCase()==='m'){overviewOpen?closeOverview():openOverview();event.preventDefault();}
+    else if(key.toLowerCase()==='f'){document.querySelector('#full').click();event.preventDefault();}
+    else if(key.toLowerCase()==='s'){speakerHidden=!speakerHidden;render();event.preventDefault();}
+    else if(/^[1-9]$/.test(key)){index=Math.min(slides.length-1,Number(key)-1);render();event.preventDefault();}
+    else if(key==='Escape'){if(document.fullscreenElement){document.exitFullscreen();}else{location.href='index.html';}event.preventDefault();}
+  });
+  let startX=0;stage.addEventListener('touchstart',event=>startX=event.changedTouches[0].clientX,{passive:true});stage.addEventListener('touchend',event=>{const diff=event.changedTouches[0].clientX-startX;if(Math.abs(diff)>50)move(diff<0?1:-1);},{passive:true});
+  render();
 })();
