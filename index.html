@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>IT COCKPIT｜國小資訊科技教學駕駛艙</title>
-<meta name="description" content="國小資訊科技教學駕駛艙 — 三、四、五、六年級・20 大互動教學艙，從電腦入門、英文打字、Scratch 程式設計，到 AI 創作、媒體識讀與機器人，一站翻轉資訊課堂。NotebookLM × Claude Code 打造。">
+<meta name="description" content="國小資訊科技教學駕駛艙 — 資優班專區與三、四、五、六年級多元互動教學艙，從電腦入門、Scratch 程式設計，到 AI 創作、媒體識讀與專題實作。">
 <meta name="theme-color" content="#f1ebdc">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/">
 <meta property="og:title" content="IT COCKPIT｜國小資訊科技教學駕駛艙">
-<meta property="og:description" content="三、四、五、六年級・20 大互動教學艙，從電腦入門、程式設計，到 AI 創作、媒體識讀與機器人，一站翻轉資訊課堂。NotebookLM × Claude Code 打造。">
+<meta property="og:description" content="資優班專區與三、四、五、六年級多元互動教學艙，從資訊基礎到 AI 創意專題。">
 <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="IT COCKPIT">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="IT COCKPIT｜國小資訊科技教學駕駛艙">
-<meta name="twitter:description" content="三、四、五、六年級・20 大互動教學艙，從電腦入門、程式設計，到 AI 創作與媒體識讀。">
+<meta name="twitter:description" content="資優班專區與三、四、五、六年級多元互動教學艙。">
 <meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -213,6 +213,10 @@
 <div id="root"></div>
 <script>
   const MODULES = [
+    // 創造能力資賦優異校本方案
+    { id: "gifted-ai-lab", grade: -1, category: "資優班專區", color: "#178277",
+      title: "石門智繪客：AI 創意解題", short: "GFT",
+      desc: "黃凱揚老師 10 次雙節資訊科技課程。從 AI 判讀、資料與偏見、演算法、Scratch、提示工程與 AI 倫理，到原型測試與成果發表。逐週詳案 × 學生任務 × NotebookLM × 投影簡報。" },
     // 三年級
     { id: "computer-friend", grade: 3, category: "電腦入門", color: "#ff7a3d",
       title: "嗨！電腦新朋友", short: "PC",
@@ -383,6 +387,9 @@
 
   */
   const GRADES = [
+    { grade: -1, label: "資優班專區", short: "GIFT", color: "#178277",
+      track: "AI 創意解題", caption: "10 次雙節課 · 20 節 · NotebookLM 教材",
+      markerPos: { top: "18%", left: "50%" } },
     { grade: 3, label: "三年級", short: "G3", color: "#e8861f",
       track: "資訊基礎", caption: "電腦入門 · 英文打字 · 遊戲學習",
       markerPos: { top: "24%", left: "18%" } },
@@ -452,9 +459,9 @@
           document.createTextNode("FLIGHT PLAN · 2026 學年課表"),
         ]),
         el("h1", { class: "title", html: '歡迎登艙，<br><span class="title-row">準備<em>起飛</em>。<span class="title-tag">2026 SPRING</span></span>' }),
-        el("p", { class: "lead", html: `國小資訊科技教學駕駛艙 — 三、四、五、六年級，共 <strong>${MODULES.length} 個互動教學艙</strong>。從電腦入門、英文打字、Scratch 程式設計，到 AI 創作、媒體識讀與麥昆機器人，一站翻轉資訊課堂。` }),
+        el("p", { class: "lead", html: `國小資訊科技教學駕駛艙 — 資優班專區與三、四、五、六年級，共 <strong>${MODULES.length} 個互動教學艙</strong>。從電腦入門、Scratch 程式設計，到 AI 創作、媒體識讀與專題實作。` }),
         el("div", { class: "ctas" }, [
-          el("a", { class: "cta", href: "#g3" }, [
+          el("a", { class: "cta", href: "#g-1" }, [
             document.createTextNode("開始飛行"),
             el("span", { class: "cta-arrow", text: "→" }),
           ]),
@@ -532,7 +539,7 @@
     return el("section", { id: `g${g.grade}`, class: "section" }, [
       el("div", { class: "section-head" }, [
         el("div", { class: "section-badge", style: { borderColor: g.color, background: g.color + "14" } }, [
-          el("span", { class: "section-badge-num", style: { color: g.color }, text: `0${g.grade}` }),
+          el("span", { class: "section-badge-num", style: { color: g.color }, text: g.grade < 0 ? "SP" : `0${g.grade}` }),
           el("span", { class: "section-badge-label", text: g.label }),
         ]),
         el("h2", { class: "section-title", text: g.track }),
@@ -571,7 +578,7 @@
             ]),
           ]),
           el("div", { class: "footer-note", html: '<span class="cred-blink" style="display:inline-block; margin-right:8px"></span>持續更新中 · TAOYUAN · TW' }),
-          el("div", { class: "footer-author", html: 'Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/?account=ipad" target="_blank" rel="noopener">阿凱老師</a>' }),
+          el("div", { class: "footer-author", html: 'Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&amp;nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a>' }),
         ]),
         el("div", { class: "footer-cred" }, [
           el("span", { class: "footer-cred-label", text: "POWERED BY" }),

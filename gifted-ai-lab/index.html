@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>石門智繪客｜資優班資訊科技課程</title>
+<meta name="description" content="黃凱揚老師規劃的三年級創造能力資優資訊科技課程：10 次雙節課、20 節完整授課流程、學生任務與 NotebookLM 教材。">
+<meta name="theme-color" content="#173b3f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="石門智繪客｜資優班資訊科技課程">
+<meta property="og:description" content="10 次雙節課，從 AI 判讀、資料與演算法到原型製作與成果發表。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/assets/gifted-lab-cover.png">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#173b3f; --paper:#f7f4ec; --white:#fffdf8; --coral:#df5b45; --teal:#178277; --yellow:#f0bd45; --blue:#316fa3; --line:#173b3f26; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; color:var(--ink); background:var(--paper); font-family:'Noto Sans TC',system-ui,sans-serif; line-height:1.65; }
+  button,a,input,textarea { font:inherit; }
+  button,a { -webkit-tap-highlight-color:transparent; }
+  a { color:inherit; }
+  .shell { width:min(1220px,calc(100% - 40px)); margin:auto; }
+  .topbar { position:sticky; top:0; z-index:20; background:#f7f4ecef; backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
+  .topbar-inner { min-height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight:900; }
+  .brand-mark { width:38px; height:38px; display:grid; place-items:center; color:#fff; background:var(--ink); border-radius:6px; font-family:'JetBrains Mono',monospace; }
+  .top-actions { display:flex; gap:8px; }
+  .icon-btn,.action,.week-btn,.mode-btn,.timer-btn { border:1px solid var(--line); background:var(--white); color:var(--ink); cursor:pointer; }
+  .icon-btn { width:42px; height:42px; border-radius:6px; display:grid; place-items:center; text-decoration:none; font-weight:900; }
+  .icon-btn:hover,.action:hover,.timer-btn:hover { border-color:var(--ink); }
+  .intro { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); gap:36px; padding:36px 0 28px; align-items:center; }
+  .kicker { margin:0 0 12px; color:var(--coral); font:700 12px/1.3 'JetBrains Mono',monospace; letter-spacing:0; }
+  h1 { font-size:clamp(40px,6vw,76px); line-height:1.02; margin:0 0 18px; letter-spacing:0; }
+  .intro-copy { font-size:17px; max-width:660px; margin:0 0 22px; }
+  .facts { display:flex; flex-wrap:wrap; gap:8px; }
+  .fact { border-left:4px solid var(--yellow); background:var(--white); padding:9px 12px; font-weight:700; font-size:14px; }
+  .cover { width:100%; aspect-ratio:16/10; object-fit:cover; border:1px solid var(--line); border-radius:6px; box-shadow:12px 12px 0 #173b3f12; }
+  .toolbar { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .mode-switch { display:flex; gap:4px; padding:4px; background:#e8e4d9; border-radius:7px; }
+  .mode-btn { padding:9px 14px; border:0; background:transparent; border-radius:5px; font-weight:800; }
+  .mode-btn.active { background:var(--white); box-shadow:0 1px 4px #173b3f20; }
+  .toolbar-actions { display:flex; gap:8px; flex-wrap:wrap; }
+  .action { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:8px 14px; border-radius:6px; text-decoration:none; font-weight:800; }
+  .action.primary { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .action.accent { background:var(--yellow); border-color:#c8951f; }
+  .course-layout { display:grid; grid-template-columns:230px minmax(0,1fr); gap:28px; padding:28px 0 56px; align-items:start; }
+  .week-nav { position:sticky; top:88px; display:grid; gap:6px; }
+  .week-btn { width:100%; min-height:56px; padding:8px 10px; border-radius:6px; display:grid; grid-template-columns:45px 1fr; gap:10px; align-items:center; text-align:left; }
+  .week-btn:hover { border-color:var(--teal); }
+  .week-btn.active { color:#fff; background:var(--teal); border-color:var(--teal); }
+  .week-no { font:700 13px/1 'JetBrains Mono',monospace; }
+  .week-label { font-size:13px; line-height:1.35; font-weight:800; }
+  .lesson-head { display:grid; grid-template-columns:1fr auto; gap:18px; align-items:start; padding-bottom:22px; border-bottom:3px solid var(--ink); }
+  .lesson-code { color:var(--coral); font:700 12px/1.4 'JetBrains Mono',monospace; }
+  h2 { margin:5px 0 8px; font-size:clamp(28px,4vw,44px); line-height:1.18; letter-spacing:0; }
+  .lesson-date { margin:0; color:#456165; font-weight:700; }
+  .lesson-output { max-width:300px; background:var(--yellow); padding:14px 16px; border-radius:6px; font-weight:800; }
+  .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin:20px 0; background:var(--line); border:1px solid var(--line); }
+  .summary-cell { background:var(--white); padding:16px; }
+  .summary-cell b { display:block; color:var(--teal); margin-bottom:5px; font-size:13px; }
+  .panel { padding:22px 0; border-bottom:1px solid var(--line); }
+  .panel h3 { margin:0 0 14px; font-size:21px; }
+  .timeline { display:grid; gap:8px; }
+  .timeline-row { display:grid; grid-template-columns:84px 1fr 180px; gap:16px; align-items:start; padding:14px 0; border-top:1px solid var(--line); }
+  .timeline-time { font:700 13px/1.4 'JetBrains Mono',monospace; color:var(--coral); }
+  .timeline-main strong { display:block; margin-bottom:3px; }
+  .timeline-main span,.timeline-note { color:#456165; font-size:14px; }
+  .timeline-note { background:#e8f3f0; padding:8px 10px; border-radius:4px; }
+  .questions { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .question { margin:0; padding:13px 14px; background:var(--white); border-left:4px solid var(--blue); font-weight:700; }
+  .links { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; }
+  .resource { display:block; min-height:92px; padding:14px; text-decoration:none; background:var(--white); border:1px solid var(--line); border-radius:6px; }
+  .resource:hover { border-color:var(--coral); }
+  .resource b { display:block; margin-bottom:5px; }
+  .resource span { color:#456165; font-size:13px; }
+  .student-task { background:#fff6d9; border:1px solid #d3a73b; padding:18px; border-radius:6px; }
+  .student-task ol { margin:8px 0 0; padding-left:24px; }
+  .teacher-note { width:100%; min-height:130px; padding:13px; resize:vertical; border:1px solid var(--line); border-radius:6px; background:var(--white); color:var(--ink); }
+  .tool-dock { position:fixed; right:18px; bottom:18px; z-index:30; display:grid; gap:8px; justify-items:end; }
+  .tool-box { display:none; width:min(340px,calc(100vw - 36px)); padding:16px; background:var(--white); border:1px solid var(--line); border-radius:7px; box-shadow:0 16px 40px #173b3f2e; }
+  .tool-box.open { display:block; }
+  .tool-title { display:flex; justify-content:space-between; gap:12px; align-items:center; font-weight:900; }
+  .timer-display { font:700 48px/1.1 'JetBrains Mono',monospace; text-align:center; margin:14px 0; }
+  .timer-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+  .timer-btn { min-height:38px; border-radius:5px; font-weight:800; }
+  .challenge { margin:12px 0 0; padding:12px; min-height:74px; background:#e8f3f0; border-radius:5px; }
+  .tool-toggle { width:52px; height:52px; border:0; border-radius:50%; background:var(--coral); color:#fff; font-size:22px; font-weight:900; box-shadow:0 8px 20px #173b3f32; cursor:pointer; }
+  .annual { display:none; }
+  .annual.active,.lesson-view.active,.student-view.active { display:block; }
+  .lesson-view,.student-view { display:none; }
+  .annual-flow { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .annual-step { padding:14px 10px; background:var(--white); border-top:5px solid var(--teal); }
+  .annual-step b { display:block; font:700 12px/1.4 'JetBrains Mono',monospace; color:var(--coral); }
+  .media-grid { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr); gap:18px; align-items:start; }
+  .course-video { display:block; width:100%; aspect-ratio:16/9; background:var(--ink); border-radius:6px; }
+  .media-links { display:grid; gap:10px; }
+  footer { border-top:1px solid var(--line); padding:28px 0 40px; }
+  .footer-inner { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:13px; }
+  .footer-inner a { color:var(--coral); font-weight:800; }
+  @media (max-width:900px) {
+    .intro { grid-template-columns:1fr; }
+    .cover { max-height:420px; }
+    .course-layout { grid-template-columns:1fr; }
+    .week-nav { position:static; display:flex; overflow-x:auto; padding-bottom:7px; scroll-snap-type:x proximity; }
+    .week-btn { flex:0 0 165px; scroll-snap-align:start; }
+    .annual-flow { grid-template-columns:repeat(2,1fr); }
+    .media-grid { grid-template-columns:1fr; }
+  }
+  @media (max-width:640px) {
+    .shell { width:min(100% - 24px,1220px); }
+    .brand span:last-child { display:none; }
+    .intro { padding-top:24px; gap:22px; }
+    h1 { font-size:42px; }
+    .toolbar { align-items:stretch; flex-direction:column; }
+    .mode-switch { width:100%; overflow-x:auto; }
+    .mode-btn { flex:1 0 auto; }
+    .toolbar-actions { display:grid; grid-template-columns:1fr 1fr; }
+    .lesson-head { grid-template-columns:1fr; }
+    .lesson-output { max-width:none; }
+    .summary-grid { grid-template-columns:1fr; }
+    .timeline-row { grid-template-columns:64px 1fr; gap:10px; }
+    .timeline-note { grid-column:2; }
+    .questions { grid-template-columns:1fr; }
+    .annual-flow { grid-template-columns:1fr; }
+  }
+  @media print {
+    .topbar,.toolbar,.week-nav,.tool-dock,footer { display:none!important; }
+    .shell { width:100%; }
+    .course-layout { display:block; padding:0; }
+    .panel { break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="../index.html" aria-label="回到教學駕駛艙"><span class="brand-mark">AI</span><span>石門智繪客｜資優班專區</span></a>
+    <div class="top-actions">
+      <a class="icon-btn" href="lecture-slides.html" title="開啟投影簡報" aria-label="開啟投影簡報">▣</a>
+      <a class="icon-btn" href="https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff" target="_blank" rel="noopener" title="開啟 NotebookLM" aria-label="開啟 NotebookLM">N</a>
+      <button class="icon-btn" onclick="window.print()" title="列印本週詳案" aria-label="列印本週詳案">⎙</button>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="intro">
+    <div>
+      <p class="kicker">115 學年度 · 黃凱揚老師 · 20 節</p>
+      <h1>石門智繪客</h1>
+      <p class="intro-copy">以一位三年級創造能力資優學生為核心，從生活中的 AI 出發，逐步完成資料思考、Scratch 互動、負責任使用 AI、原型測試與成果發表。</p>
+      <div class="facts"><span class="fact">10 次雙節課</span><span class="fact">每 3 週一次</span><span class="fact">每次 90 分鐘</span><span class="fact">一學年一件完整作品</span></div>
+    </div>
+    <img class="cover" src="assets/gifted-lab-cover.png" alt="老師與學生運用資料卡、Scratch 與實體原型進行資訊科技專題">
+  </section>
+
+  <section class="toolbar" aria-label="課程檢視工具">
+    <div class="mode-switch" role="tablist">
+      <button class="mode-btn active" data-mode="teacher">教師流程</button>
+      <button class="mode-btn" data-mode="student">學生任務</button>
+      <button class="mode-btn" data-mode="annual">年度全貌</button>
+    </div>
+    <div class="toolbar-actions">
+      <a id="slideLink" class="action primary" href="lecture-slides.html?week=03">本週投影簡報</a>
+      <a class="action accent" href="https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff" target="_blank" rel="noopener">開啟 NotebookLM</a>
+      <a class="action" href="materials/teacher-guide.pdf">下載教師詳案</a>
+      <a class="action" href="materials/student-workbook.pdf">下載學生手冊</a>
+    </div>
+  </section>
+
+  <div class="course-layout">
+    <nav id="weekNav" class="week-nav" aria-label="選擇授課週次"></nav>
+    <div>
+      <section id="teacherView" class="lesson-view active"></section>
+      <section id="studentView" class="student-view"></section>
+      <section id="annualView" class="annual"></section>
+    </div>
+  </div>
+</main>
+
+<aside class="tool-dock" aria-label="課堂工具">
+  <div id="toolBox" class="tool-box">
+    <div class="tool-title"><span>課堂計時與挑戰卡</span><button class="icon-btn" id="closeTools" aria-label="關閉工具">×</button></div>
+    <div id="timerDisplay" class="timer-display">10:00</div>
+    <div class="timer-row">
+      <button class="timer-btn" data-minutes="5">5 分</button><button class="timer-btn" data-minutes="10">10 分</button><button class="timer-btn" data-minutes="15">15 分</button><button class="timer-btn" id="timerStart">開始</button>
+    </div>
+    <button class="action" id="challengePick" style="width:100%;margin-top:10px">抽一張進階挑戰</button>
+    <p id="challengeText" class="challenge">完成基本任務後，再抽一張挑戰卡。</p>
+  </div>
+  <button id="toolToggle" class="tool-toggle" title="課堂工具" aria-label="開啟課堂工具">⏱</button>
+</aside>
+
+<footer><div class="shell footer-inner"><span>桃園市龍潭區石門國民小學 · 資訊科技課程</span><span>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&amp;nsn=16#a5" target="_blank" rel="noopener">阿凱老師</a></span></div></footer>
+
+<script>
+const NOTEBOOK_URL='https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff';
+const LESSONS=[
+{week:3,date:'115.9.23',title:'AI 是什麼：生活中的智慧工具',goal:'能用自己的話說明 AI，並以五大概念判斷生活工具是否含有 AI。',output:'AI／非 AI 判斷卡＋理由錄音',materials:'生活工具圖片、分類卡、平板或電腦、便利貼',concept:'AI 不只是聊天機器人；它會感知、表徵與推理、學習、自然互動，並影響社會。',student:['觀察地圖導航、YouTube 推薦、自動門與掃地機器人的差異。','把 10 張生活工具卡分成 AI、非 AI、還不確定。','選一張最難判斷的卡，以「我認為…因為…證據是…」說明。'],questions:['它只是自動執行，還是會根據資料改變判斷？','如果沒有網路或資料，它還能做一樣的事嗎？','你需要什麼證據才願意改變分類？'],timeline:[['0–10','神祕工具快問快答','只追問理由，不急著公布答案'],['10–25','用生活例子建立 AI 初步定義','把學生原話寫在白板上'],['25–40','五大概念配對','每配一張都要說證據'],['40–45','第一節出口票','一句話回答「AI 和一般程式哪裡不同」'],['45–60','AI／非 AI／不確定分類挑戰','允許移動卡片並保留修改痕跡'],['60–78','反例攻防：自動門、計時器、推薦系統','教師刻意提出相反證據'],['78–88','錄製 30 秒判斷說明','包含結論、理由、證據'],['88–90','保存與預告','命名 W03_AI判斷'] ],links:[['生活中的 AI 大發現','../ai-explorer/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:6,date:'115.10.14',title:'資料集與機器如何學習',goal:'理解資料集、學習與預測的關係，能畫出「資料→找規律→預測」流程。',output:'機器學習三步驟流程圖',materials:'Quick, Draw!、圖卡兩組、流程箭頭、學習單',concept:'人會用經驗歸納，機器則從大量例子中尋找規律；資料品質會影響預測。',student:['先用少量圖卡猜分類規則，再增加資料觀察答案是否改變。','體驗 Quick, Draw!，記錄電腦猜對與猜錯的情形。','畫出資料集、演算法與預測的流程圖。'],questions:['資料變多就一定會更準嗎？','哪些例子可能讓機器誤會？','機器是真的懂圖，還是找到某些線索？'],timeline:[['0–8','人類猜規則暖身','只給 3 張圖卡'],['8–22','增加資料並修正規則','比較第一次與第二次猜法'],['22–40','Quick, Draw! 實驗','每輪記錄猜測與線索'],['40–45','口頭整理三步驟','學生自己排流程卡'],['45–58','人怎麼學、機器怎麼學比較','用相同例子對照'],['58–75','製作學習流程圖','必須寫入資料品質'],['75–86','用流程圖解釋一個新案例','教師追問錯誤來源'],['86–90','存檔與自評','標示最不確定的一步'] ],links:[['機器怎麼學會的？','../machine-learning/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:9,date:'115.11.4',title:'資料偏見與石門生活資料採集',goal:'辨認文化、風格與年齡偏見，設計兼具代表性、必要性與隱私安全的資料表。',output:'石門生活資料採集表 v1',materials:'偏見案例圖、空白資料表、校園情境照片、色筆',concept:'資料不完整或不均衡，AI 的判斷就可能對某些人不公平；蒐集資料也要保護個資。',student:['比較不同人畫的房子、麵包與電話，找出樣式差異。','選擇石門校園或鱻魚特色學園的一個主題。','設計要蒐集的欄位，刪除不必要的姓名、臉部或聯絡資訊。'],questions:['誰的經驗沒有出現在這份資料裡？','這個欄位真的需要嗎？不用會不會也能完成任務？','怎樣才算有代表性，而不是只蒐集很多？'],timeline:[['0–12','偏見圖片找不同','先描述差異，不貼標籤'],['12–28','三種偏見分類','文化、風格、年齡'],['28–42','公平資料集修補','補上缺少的例子'],['42–45','第一節一句話總結','資料像鏡子，但鏡子可能缺角'],['45–58','選定石門生活採集主題','限非敏感資料'],['58–73','設計欄位與採集規則','每欄寫用途'],['73–84','隱私刪減測試','能不用個資就不用'],['84–90','資料表 v1 審查','用代表性／必要性／安全性檢核'] ],links:[['AI 的偏見與公平','../ai-fairness/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:12,date:'115.11.25',title:'資料整理與演算法三元素',goal:'能整理一小份資料，並以輸入、處理、輸出描述一個解題流程。',output:'資料表 v2＋IPO 演算法單',materials:'前次資料表、試算表、流程卡、校園問題卡',concept:'演算法是可依序執行的解題步驟；輸入、處理、輸出能幫助我們看清楚系統。',student:['檢查資料中的空白、重複、寫法不一致。','把生活流程拆成輸入、處理、輸出。','為專題問題畫出第一版 IPO 流程。'],questions:['同一個答案有兩種寫法，機器會當成一樣嗎？','這一步能不能再說得更明確？','輸出結果要讓誰使用？'],timeline:[['0–10','混亂資料偵錯','找空白、重複、格式不一'],['10–28','整理資料實作','統一欄位與命名'],['28–42','比較整理前後','說明哪個改動最重要'],['42–45','存成資料表 v2','保留 v1 不覆蓋'],['45–58','生活流程拆 IPO','早餐或借書流程'],['58–72','專題流程初稿','一張便利貼一個步驟'],['72–84','請老師扮演電腦照做','遇到模糊處立即停下'],['84–90','修正並編號','輸入／處理／輸出上色'] ],links:[['演算法大挑戰','../algorithm/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:15,date:'115.12.16',title:'精準指令與除錯思維',goal:'寫出明確、可執行、可驗證的指令，完成預測、測試、找錯、修正與再測試。',output:'人類機器人指令 v2＋除錯紀錄',materials:'方格地圖、角色棋、指令卡、除錯紀錄表',concept:'好指令不是寫得長，而是執行者能照做且結果可檢查；錯誤是修正模型的證據。',student:['寫指令讓老師扮演機器人走到目標。','先預測路徑，再逐步執行並標記出錯點。','只改一個地方後重測，保留前後版本。'],questions:['你假設機器人知道了什麼？','怎樣證明這次真的修好了？','如果起點改變，這套指令還能用嗎？'],timeline:[['0–12','模糊指令陷阱','老師嚴格照字面執行'],['12–25','建立精準指令規則','方向、距離、順序、停止條件'],['25–40','第一輪路徑挑戰','先預測再執行'],['40–45','圈出第一個錯誤','不一次改很多處'],['45–60','除錯循環示範','預測→測試→找錯→修正→重測'],['60–76','加入障礙與條件','設計 if 規則'],['76–86','交換角色驗證','學生當測試者'],['86–90','保存 v1/v2','寫下改動理由'] ],links:[['演算法大挑戰','../algorithm/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:18,date:'116.3.10',title:'Scratch 互動與分類器概念',goal:'完成一個可操作的 Scratch 分類互動，並比較規則式分類器與從資料學習的分類器。',output:'Scratch 分類器 v1＋6 筆測試表',materials:'Scratch、分類圖卡、規則表、測試紀錄',concept:'Scratch 可用條件積木實作人寫的分類規則；真正的機器學習分類器則從標記資料找規律。',student:['選回收、AI／非 AI 或校園問題作分類主題。','用如果／否則與變數完成互動。','設計一般、邊界與錯誤輸入共 6 筆測試。','進階：用非個資物件圖片體驗無程式碼訓練，與規則式結果比較。'],questions:['你的規則遇到什麼例子會失敗？','是誰決定正確答案的標籤？','規則式與學習式分類，各自適合什麼情況？'],timeline:[['0–10','分類快問快答','刻意加入邊界案例'],['10–22','規則表先行','先寫規則再開 Scratch'],['22–43','Scratch 基本互動','輸入、條件、回饋'],['43–45','儲存第一版','命名 W18_classifier_v1'],['45–62','增加角色、提示與重試','介面要看得懂'],['62–76','六筆測試','一般／邊界／錯誤各二'],['76–85','比較規則式與學習式','可選無程式碼物件分類器'],['85–90','列出下一版修正','只選最重要兩項'] ],links:[['Scratch 動畫魔法師','../scratch-animation/index.html'],['機器怎麼學會的？','../machine-learning/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:21,date:'116.3.31',title:'提示工程與 AI 創意發想',goal:'運用角色、目標、格式、限制、例子與檢查條件改寫提示詞，並保留人的選擇與判斷。',output:'提示詞 v1–v3＋AI 回覆比較表',materials:'安全的生成式 AI、提示詞框架卡、比較表',concept:'提示詞是和 AI 協作的設計規格；人先提出方向，AI 協助擴充，最後由人查證與決定。',student:['先不用 AI 寫出 5 個自己的點子。','用六元素提示詞請 AI 擴充、分類或換角度。','比較三版回答，圈出可用、需查證與不採用內容。'],questions:['哪個點子原本就是你的？AI 改變了什麼？','輸出格式怎樣影響結果？','AI 說得很有自信，就代表是真的嗎？'],timeline:[['0–10','同題不同提示比較','觀察輸出差異'],['10–24','拆解提示六元素','角色／目標／格式／限制／例子／檢查'],['24–40','人腦先行五點子','暫時不開 AI'],['40–45','選一個發展方向','說出選擇標準'],['45–60','提示詞 v1 與 v2','一次只改一項'],['60–73','提示詞 v3 加檢查條件','要求列出不確定處'],['73–84','回覆紅黃綠標記','採用／查證／不用'],['84–90','寫協作聲明','清楚記錄 AI 協助內容'] ],links:[['Gemini 引導式學習','../gemini-guided-learning/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:24,date:'116.4.21',title:'AI 倫理與專題定題',goal:'理解引用、查證、隱私與公平責任，完成具體、可測試的專題計畫。',output:'AI 使用規範＋一頁專題計畫',materials:'倫理情境卡、查核表、專題計畫單、前期作品',concept:'能做不等於可以做；負責任的 AI 專題必須說明資料來源、保護個資、查證內容並檢查公平性。',student:['處理四種倫理情境：抄貼、錯誤資訊、個資、偏見。','從藝術或自然課成果挑選可延伸的真實問題。','寫出目標使用者、使用情境、預期成果、需要資料與成功標準。'],questions:['這份內容是誰創作的？我們要怎麼說明？','不蒐集這項個資，專題還能完成嗎？','怎樣才算真的解決問題，而不只是看起來很漂亮？'],timeline:[['0–12','倫理情境站隊','可以／不可以／看條件'],['12–28','四項責任檢核','引用、查證、隱私、公平'],['28–40','為自己的課程訂 AI 規範','用能實際做到的句子'],['40–45','簽署規範','教師也共同遵守'],['45–58','回顧歷程找真實問題','串接藝術或磁力玩具成果'],['58–73','專題一頁計畫','對象／情境／結果／資料'],['73–84','可測試性壓力測試','至少寫三個成功條件'],['84–90','30 秒專題提案','錄音並保存'] ],links:[['數位安全小公民','../digital-safety/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:27,date:'116.5.12',title:'原型設計與作品製作',goal:'把想法轉為流程、介面或腳本，完成一個可操作的最小可行原型。',output:'流程圖＋介面草圖＋MVP v1',materials:'Scratch／Canva／簡報／表單、紙張、便利貼、測試清單',concept:'原型的目的不是一次做到完美，而是用最小成本驗證核心想法是否可理解、可操作。',student:['用故事板畫出使用者從開始到完成的過程。','只選一個最重要功能製作 MVP。','每完成一段就測一次，記錄 AI 與人的分工。'],questions:['如果只能留一個功能，哪一個最能解決問題？','使用者第一眼要知道什麼？','這個功能要用什麼證據證明有效？'],timeline:[['0–10','看兩個原型找核心功能','區分必要與想要'],['10–24','畫使用者流程','開始、操作、回饋、完成'],['24–40','介面或場景草圖','每個畫面只放必要資訊'],['40–45','決定 MVP 範圍','寫下今天不做什麼'],['45–68','製作衝刺一','教師每 10 分鐘檢查一次'],['68–78','第一次可操作測試','不用口頭提示學生操作'],['78–86','修正最關鍵問題','保留前後截圖'],['86–90','版本封存','命名 MVP_v1'] ],links:[['Scratch 動畫魔法師','../scratch-animation/index.html'],['Canva AI 魔法創作','../canva-ai/index.html'],['年度 NotebookLM',NOTEBOOK_URL]]},
+{week:30,date:'116.6.2',title:'測試精緻化與成果發表',goal:'依真實測試證據改良作品，並清楚說明問題、資料、演算法、AI 協作、創意與倫理。',output:'MVP v2＋3–5 分鐘成果發表＋完整歷程檔',materials:'原型、測試回饋表、發表簡報、評量規準、錄影設備',concept:'好作品來自可觀察的測試與修正；發表不只展示成果，也要說明選擇、限制與下一步。',student:['請老師或同學在不提示下試用，記錄卡住的地方。','依理解度、易用性、問題契合、偏見與錯誤修正。','完成 3–5 分鐘發表並回答追問。'],questions:['你根據哪一筆測試證據做了這個修改？','目前作品最大的限制是什麼？','下一次你會先改善哪一件事？為什麼？'],timeline:[['0–10','確認測試任務與成功標準','不教測試者怎麼操作'],['10–25','真實試用與觀察','只記錄，不辯解'],['25–38','整理回饋優先順序','影響大且可修正者優先'],['38–45','決定三項修改','每項對應一筆證據'],['45–62','完成 MVP v2','保留前後版本'],['62–74','整理 3–5 分鐘簡報','問題／資料／演算法／AI／倫理'],['74–84','正式發表與追問','錄影留存'],['84–90','自評與下一步','完成年度反思'] ],links:[['年度 NotebookLM',NOTEBOOK_URL],['投影簡報','lecture-slides.html?week=30']]}
+];
+
+const $=s=>document.querySelector(s);
+const weekNav=$('#weekNav'),teacherView=$('#teacherView'),studentView=$('#studentView'),annualView=$('#annualView'),slideLink=$('#slideLink');
+let current=LESSONS[0];
+const esc=s=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const FLOW_GUIDE=['教師先出示情境並記錄學生的第一個想法，不先公布答案。','用具體例子操作，請學生邊做邊說出判斷理由。','讓學生完成本段作品；卡住時只提供一個提示或反例。','用一句話、卡片或畫面確認第一節理解，再決定是否補教。','把概念轉成可操作任務，先完成能運作的第一版。','加入反例、限制或錯誤輸入，觀察作品在哪裡失敗。','根據測試證據修改，保留修改前後版本與原因。','依「週次_作品名_版本」命名存檔，口頭說出今天的關鍵發現。'];
+
+function renderNav(){weekNav.innerHTML=LESSONS.map(l=>`<button class="week-btn ${l.week===current.week?'active':''}" data-week="${l.week}"><span class="week-no">W${String(l.week).padStart(2,'0')}</span><span class="week-label">${esc(l.title)}</span></button>`).join('');}
+function renderTeacher(){
+ teacherView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">WEEK ${String(current.week).padStart(2,'0')} · ${current.date} · 90 MIN</div><h2>${esc(current.title)}</h2><p class="lesson-date">兩節連排｜一般教室｜授課教師：黃凱揚老師</p></div><div class="lesson-output">本次可見產出<br>${esc(current.output)}</div></header>
+ <div class="summary-grid"><div class="summary-cell"><b>學習目標</b>${esc(current.goal)}</div><div class="summary-cell"><b>核心概念</b>${esc(current.concept)}</div><div class="summary-cell"><b>課前準備</b>${esc(current.materials)}</div></div>
+ <section class="panel"><h3>90 分鐘逐段流程</h3><div class="timeline">${current.timeline.map((t,i)=>`<div class="timeline-row"><div class="timeline-time">${t[0]}</div><div class="timeline-main"><strong>${esc(t[1])}</strong><span>${esc(FLOW_GUIDE[i])}</span></div><div class="timeline-note">${esc(t[2])}</div></div>`).join('')}</div></section>
+ <section class="panel"><h3>教師追問句</h3><div class="questions">${current.questions.map(q=>`<p class="question">「${esc(q)}」</p>`).join('')}</div></section>
+ <section class="panel"><h3>本週教學資源</h3><div class="links">${current.links.map(x=>`<a class="resource" href="${x[1]}" ${x[1].startsWith('http')?'target="_blank" rel="noopener"':''}><b>${esc(x[0])} →</b><span>開啟互動教材或延伸來源</span></a>`).join('')}<a class="resource" href="lecture-slides.html?week=${String(current.week).padStart(2,'0')}"><b>本週投影簡報 →</b><span>全螢幕、鍵盤與觸控切換</span></a></div></section>
+ <section class="panel"><h3>課後快速紀錄</h3><textarea class="teacher-note" data-note="${current.week}" placeholder="學生今天最有力的推理、卡住的地方、下次要延續的線索…"></textarea></section>`;
+ const note=teacherView.querySelector('.teacher-note'); note.value=localStorage.getItem(`gifted-note-${current.week}`)||''; note.addEventListener('input',()=>localStorage.setItem(`gifted-note-${current.week}`,note.value));
+}
+function renderStudent(){studentView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">我的第 ${current.week} 週任務</div><h2>${esc(current.title)}</h2><p class="lesson-date">完成基本任務後，可以抽取進階挑戰。</p></div><div class="lesson-output">我要完成<br>${esc(current.output)}</div></header><section class="panel student-task"><h3>任務步驟</h3><ol>${current.student.map(s=>`<li>${esc(s)}</li>`).join('')}</ol></section><section class="panel"><h3>完成前自我檢查</h3><div class="questions"><p class="question">我有保留第一版與修改版。</p><p class="question">我能說出做這個選擇的理由。</p><p class="question">我有用測試或資料支持結論。</p><p class="question">使用 AI 時，我有查證並保護個資。</p></div></section>`;}
+function renderAnnual(){annualView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">YEAR PLAN · 10 SESSIONS</div><h2>從觀察到負責任的創意原型</h2><p class="lesson-date">每次留下可見產出，最後串成一份完整學習歷程。</p></div><div class="lesson-output">年度建議專題<br>磁力玩具智慧解說與安全提醒原型</div></header><section class="panel"><div class="annual-flow">${LESSONS.map(l=>`<button class="annual-step" data-jump="${l.week}"><b>W${String(l.week).padStart(2,'0')}</b>${esc(l.title)}</button>`).join('')}</div></section><section class="panel"><h3>NotebookLM 年度教材</h3><div class="media-grid"><video class="course-video" controls preload="metadata" poster="assets/gifted-lab-cover.png"><source src="materials/notebooklm-course-video.mp4" type="video/mp4">您的瀏覽器無法播放此影片。</video><div class="media-links"><a class="resource" href="materials/NotebookLM-年度課程簡報.pdf"><b>下載 NotebookLM 年度簡報 →</b><span>15 頁繁體中文課程總覽</span></a><a class="resource" href="materials/teacher-guide.pdf"><b>下載直式教師詳案 →</b><span>10 次雙節課完整流程</span></a><a class="resource" href="materials/student-workbook.pdf"><b>下載直式學生手冊 →</b><span>可列印的年度學習歷程</span></a><a class="resource" href="${NOTEBOOK_URL}" target="_blank" rel="noopener"><b>開啟專屬 NotebookLM →</b><span>以兩份課程來源繼續查詢與產出</span></a></div></div></section><section class="panel"><h3>跨域銜接原則</h3><p>藝術課與專題研究／科展課程由各領域老師自行設計；資訊科技課只接收其產出的視覺、科學探究或磁力玩具成果，再協助學生完成資料整理、流程、互動、AI 使用規範、數位原型、測試與發表，不代替另外兩位老師的課程。</p></section>`;}
+function selectWeek(w){current=LESSONS.find(l=>l.week===Number(w))||LESSONS[0]; location.hash=`week-${String(current.week).padStart(2,'0')}`; slideLink.href=`lecture-slides.html?week=${String(current.week).padStart(2,'0')}`; renderNav();renderTeacher();renderStudent();}
+function setMode(mode){document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));teacherView.classList.toggle('active',mode==='teacher');studentView.classList.toggle('active',mode==='student');annualView.classList.toggle('active',mode==='annual');}
+
+weekNav.addEventListener('click',e=>{const b=e.target.closest('[data-week]');if(b)selectWeek(b.dataset.week);});
+document.querySelector('.mode-switch').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(b)setMode(b.dataset.mode);});
+annualView.addEventListener('click',e=>{const b=e.target.closest('[data-jump]');if(b){selectWeek(b.dataset.jump);setMode('teacher');scrollTo({top:document.querySelector('.toolbar').offsetTop-70,behavior:'smooth'});}});
+
+const toolBox=$('#toolBox'),timerDisplay=$('#timerDisplay');let seconds=600,timer=null;
+function showTime(){const m=Math.floor(seconds/60),s=seconds%60;timerDisplay.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
+$('#toolToggle').onclick=()=>toolBox.classList.toggle('open');$('#closeTools').onclick=()=>toolBox.classList.remove('open');
+document.querySelectorAll('[data-minutes]').forEach(b=>b.onclick=()=>{clearInterval(timer);timer=null;seconds=Number(b.dataset.minutes)*60;showTime();$('#timerStart').textContent='開始';});
+$('#timerStart').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('#timerStart').textContent='開始';return;}$('#timerStart').textContent='暫停';timer=setInterval(()=>{seconds=Math.max(0,seconds-1);showTime();if(!seconds){clearInterval(timer);timer=null;$('#timerStart').textContent='開始';timerDisplay.textContent='時間到';}},1000);};
+const challenges=['找一個會讓目前規則失敗的反例。','把你的解法改成低年級學生也看得懂。','提出兩種完全不同的解法，列出各自優缺點。','刪掉一項資料，看看結論是否仍成立。','請 AI 反對你的想法，再逐點檢查它說得對不對。','不用說話，讓測試者自己操作你的作品。'];
+$('#challengePick').onclick=()=>{$('#challengeText').textContent=challenges[Math.floor(Math.random()*challenges.length)];};
+renderAnnual();const hashWeek=(location.hash.match(/week-(\d+)/)||[])[1];selectWeek(hashWeek||3);setMode('teacher');showTime();
+</script>
+</body>
+</html>
