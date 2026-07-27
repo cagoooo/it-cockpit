@@ -1,0 +1,44 @@
+{
+  "slug": "week-09",
+  "week": 9,
+  "title": "W09 資料偏見與石門生活資料採集｜石門智繪客資優班",
+  "video": "week-09/video.mp4",
+  "description": "資料偏見與石門生活資料採集｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 9 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/05af6960-d89f-41e9-b64d-4c853487d643\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n辨認資料代表性、偏見與隱私風險，練習建立安全又多元的校園資料。\n\n本週可見產出\n石門生活資料採集表與安全審查\n\n影片章節\n00:00 AI 為什麼認不得熟悉事物\n00:23 資料偏見與學習盲點\n00:49 資料會放大哪些人的經驗\n01:05 石門校園 AI 訓練師任務\n01:33 個資與照片的隱私界線\n01:45 補齊多元資料與反思\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+  "chapters": [
+    [
+      "00:00",
+      "AI 為什麼認不得熟悉事物"
+    ],
+    [
+      "00:23",
+      "資料偏見與學習盲點"
+    ],
+    [
+      "00:49",
+      "資料會放大哪些人的經驗"
+    ],
+    [
+      "01:05",
+      "石門校園 AI 訓練師任務"
+    ],
+    [
+      "01:33",
+      "個資與照片的隱私界線"
+    ],
+    [
+      "01:45",
+      "補齊多元資料與反思"
+    ]
+  ],
+  "tags": [
+    "石門智繪客",
+    "資優教育",
+    "AI素養",
+    "資訊科技",
+    "NotebookLM",
+    "石門國小",
+    "黃凱揚老師"
+  ],
+  "privacy": "public",
+  "caption": "youtube/week-09/zh-TW.srt"
+}

@@ -1,0 +1,67 @@
+{
+  "slug": "annual",
+  "title": "石門智繪客｜創造力資優 AI 素養資訊科技課程總覽（10 週完整導覽）",
+  "video": "materials/notebooklm-course-video.mp4",
+  "description": "石門智繪客｜創造力資優 AI 素養資訊科技課程總覽\n\n這是一套為創造力資優學生設計的 10 週資訊科技課程，從辨認 AI、資料與偏見、演算法與除錯，一路進入提示工程、AI 倫理、原型製作、真實測試與成果發表。每次課程採兩節連排，強調「你先思考，AI 協助，最後由你決定」。\n\n完整教學駕駛艙\n年度總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n年度互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/lecture-slides.html\n年度教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/materials/teacher-guide.pdf\n學生學習手冊：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/materials/student-workbook.pdf\n\n10 個週次專用駕駛艙\nW03 AI 是什麼？生活中的智慧工具\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-03/\n\nW06 資料集與機器如何學習\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-06/\n\nW09 資料偏見與石門生活資料採集\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/\n\nW12 資料整理與演算法三元素\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-12/\n\nW15 精準指令與除錯思維\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/\n\nW18 Scratch 互動與分類器概念\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-18/\n\nW21 提示工程與 AI 創意發想\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-21/\n\nW24 AI 倫理與專題定題\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-24/\n\nW27 原型設計與作品製作\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-27/\n\nW30 測試精緻化與成果發表\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/\n\n影片章節\n00:00 課程總覽與發明家任務\n00:38 W03 辨認真正的 AI\n01:34 W06 資料集與機器學習\n02:07 W09 資料偏見與隱私\n02:50 W12 IPO 演算法\n03:52 W15 精準指令與除錯\n04:22 W18 Scratch 分類器\n04:52 W21 提示工程與人機協作\n06:27 W24 AI 倫理守則\n06:57 W27 專題聚焦與原型設計\n08:23 W30 真實測試與成果發表\n09:27 反思與下一個發明起點\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #創造力 #資訊科技 #NotebookLM",
+  "chapters": [
+    [
+      "00:00",
+      "課程總覽與發明家任務"
+    ],
+    [
+      "00:38",
+      "W03 辨認真正的 AI"
+    ],
+    [
+      "01:34",
+      "W06 資料集與機器學習"
+    ],
+    [
+      "02:07",
+      "W09 資料偏見與隱私"
+    ],
+    [
+      "02:50",
+      "W12 IPO 演算法"
+    ],
+    [
+      "03:52",
+      "W15 精準指令與除錯"
+    ],
+    [
+      "04:22",
+      "W18 Scratch 分類器"
+    ],
+    [
+      "04:52",
+      "W21 提示工程與人機協作"
+    ],
+    [
+      "06:27",
+      "W24 AI 倫理守則"
+    ],
+    [
+      "06:57",
+      "W27 專題聚焦與原型設計"
+    ],
+    [
+      "08:23",
+      "W30 真實測試與成果發表"
+    ],
+    [
+      "09:27",
+      "反思與下一個發明起點"
+    ]
+  ],
+  "tags": [
+    "石門智繪客",
+    "資優教育",
+    "AI素養",
+    "資訊科技",
+    "NotebookLM",
+    "石門國小",
+    "黃凱揚老師"
+  ],
+  "privacy": "public",
+  "caption": "youtube/annual/zh-TW.srt"
+}

@@ -1,0 +1,546 @@
+[
+  {
+    "slug": "annual",
+    "title": "石門智繪客｜創造力資優 AI 素養資訊科技課程總覽（10 週完整導覽）",
+    "video": "materials/notebooklm-course-video.mp4",
+    "description": "石門智繪客｜創造力資優 AI 素養資訊科技課程總覽\n\n這是一套為創造力資優學生設計的 10 週資訊科技課程，從辨認 AI、資料與偏見、演算法與除錯，一路進入提示工程、AI 倫理、原型製作、真實測試與成果發表。每次課程採兩節連排，強調「你先思考，AI 協助，最後由你決定」。\n\n完整教學駕駛艙\n年度總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n年度互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/lecture-slides.html\n年度教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/materials/teacher-guide.pdf\n學生學習手冊：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/materials/student-workbook.pdf\n\n10 個週次專用駕駛艙\nW03 AI 是什麼？生活中的智慧工具\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-03/\n\nW06 資料集與機器如何學習\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-06/\n\nW09 資料偏見與石門生活資料採集\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/\n\nW12 資料整理與演算法三元素\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-12/\n\nW15 精準指令與除錯思維\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/\n\nW18 Scratch 互動與分類器概念\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-18/\n\nW21 提示工程與 AI 創意發想\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-21/\n\nW24 AI 倫理與專題定題\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-24/\n\nW27 原型設計與作品製作\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-27/\n\nW30 測試精緻化與成果發表\nhttps://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/\n\n影片章節\n00:00 課程總覽與發明家任務\n00:38 W03 辨認真正的 AI\n01:34 W06 資料集與機器學習\n02:07 W09 資料偏見與隱私\n02:50 W12 IPO 演算法\n03:52 W15 精準指令與除錯\n04:22 W18 Scratch 分類器\n04:52 W21 提示工程與人機協作\n06:27 W24 AI 倫理守則\n06:57 W27 專題聚焦與原型設計\n08:23 W30 真實測試與成果發表\n09:27 反思與下一個發明起點\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #創造力 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "課程總覽與發明家任務"
+      ],
+      [
+        "00:38",
+        "W03 辨認真正的 AI"
+      ],
+      [
+        "01:34",
+        "W06 資料集與機器學習"
+      ],
+      [
+        "02:07",
+        "W09 資料偏見與隱私"
+      ],
+      [
+        "02:50",
+        "W12 IPO 演算法"
+      ],
+      [
+        "03:52",
+        "W15 精準指令與除錯"
+      ],
+      [
+        "04:22",
+        "W18 Scratch 分類器"
+      ],
+      [
+        "04:52",
+        "W21 提示工程與人機協作"
+      ],
+      [
+        "06:27",
+        "W24 AI 倫理守則"
+      ],
+      [
+        "06:57",
+        "W27 專題聚焦與原型設計"
+      ],
+      [
+        "08:23",
+        "W30 真實測試與成果發表"
+      ],
+      [
+        "09:27",
+        "反思與下一個發明起點"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/annual/zh-TW.srt",
+    "video_id": "s31n4a7nA-s",
+    "watch_url": "https://www.youtube.com/watch?v=s31n4a7nA-s",
+    "caption_id": "AUieDaYSn1VrNrD9Gpbd7yDQqcXotcbW91MYM5DtyCgFAz9z7Rpu6rz23TuKimsjyyw"
+  },
+  {
+    "slug": "week-03",
+    "week": 3,
+    "title": "W03 AI 是什麼？生活中的智慧工具｜石門智繪客資優班",
+    "video": "week-03/video.mp4",
+    "description": "AI 是什麼？生活中的智慧工具｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 3 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-03/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-03/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-03/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/af9a9772-21cb-4614-add1-9d3861308c64\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n以感知、推理、學習、互動與社會影響辨認真正的 AI，並用證據說明判斷。\n\n本週可見產出\nAI／非 AI 判斷卡與理由說明\n\n影片章節\n00:00 生活中的智慧工具謎題\n00:30 會自動運作就等於 AI 嗎\n00:44 AI 的五項重要能力\n00:54 辨認只照固定規則的假 AI\n01:07 本週任務與討論問題\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "生活中的智慧工具謎題"
+      ],
+      [
+        "00:30",
+        "會自動運作就等於 AI 嗎"
+      ],
+      [
+        "00:44",
+        "AI 的五項重要能力"
+      ],
+      [
+        "00:54",
+        "辨認只照固定規則的假 AI"
+      ],
+      [
+        "01:07",
+        "本週任務與討論問題"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-03/zh-TW.srt",
+    "video_id": "WOPg6Dq_gcc",
+    "watch_url": "https://www.youtube.com/watch?v=WOPg6Dq_gcc",
+    "caption_id": "AUieDab1nW7PNZBrVA3hGALq4dvzKKDIDnLEofdEgyfDGUh0YC6HxnVFO7mC56d5Eos"
+  },
+  {
+    "slug": "week-06",
+    "week": 6,
+    "title": "W06 資料集與機器如何學習｜石門智繪客資優班",
+    "video": "week-06/video.mp4",
+    "description": "資料集與機器如何學習｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 6 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-06/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-06/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-06/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/07ad6f8c-468f-4ff5-87fb-b3d32c44bd82\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n理解資料、標籤、學習與預測之間的關係，並檢查錯誤標籤如何影響結果。\n\n本週可見產出\n機器學習三步驟流程圖與微型資料集\n\n影片章節\n00:00 機器如何從例子學習\n00:30 資料是機器學習的食物\n00:42 錯誤標籤會造成什麼結果\n01:04 人類的資料責任\n01:17 建立微型資料集任務\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "機器如何從例子學習"
+      ],
+      [
+        "00:30",
+        "資料是機器學習的食物"
+      ],
+      [
+        "00:42",
+        "錯誤標籤會造成什麼結果"
+      ],
+      [
+        "01:04",
+        "人類的資料責任"
+      ],
+      [
+        "01:17",
+        "建立微型資料集任務"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-06/zh-TW.srt",
+    "video_id": "SJqBRHB2U7E",
+    "watch_url": "https://www.youtube.com/watch?v=SJqBRHB2U7E",
+    "caption_id": "AUieDaZCi7Pu8snAxvPkABX6w6rTckSahNxc_iEXmi6R1IvpXWO3yJ4rZwt3pAMfeH8"
+  },
+  {
+    "slug": "week-09",
+    "week": 9,
+    "title": "W09 資料偏見與石門生活資料採集｜石門智繪客資優班",
+    "video": "week-09/video.mp4",
+    "description": "資料偏見與石門生活資料採集｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 9 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-09/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/05af6960-d89f-41e9-b64d-4c853487d643\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n辨認資料代表性、偏見與隱私風險，練習建立安全又多元的校園資料。\n\n本週可見產出\n石門生活資料採集表與安全審查\n\n影片章節\n00:00 AI 為什麼認不得熟悉事物\n00:23 資料偏見與學習盲點\n00:49 資料會放大哪些人的經驗\n01:05 石門校園 AI 訓練師任務\n01:33 個資與照片的隱私界線\n01:45 補齊多元資料與反思\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "AI 為什麼認不得熟悉事物"
+      ],
+      [
+        "00:23",
+        "資料偏見與學習盲點"
+      ],
+      [
+        "00:49",
+        "資料會放大哪些人的經驗"
+      ],
+      [
+        "01:05",
+        "石門校園 AI 訓練師任務"
+      ],
+      [
+        "01:33",
+        "個資與照片的隱私界線"
+      ],
+      [
+        "01:45",
+        "補齊多元資料與反思"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-09/zh-TW.srt",
+    "video_id": "-2KO7W7Kpfc",
+    "watch_url": "https://www.youtube.com/watch?v=-2KO7W7Kpfc",
+    "caption_id": "AUieDaYxi41cu_Q8UDTzHIVDTWMxr8RGmLakh0Py0dmpnOkTZ7WaKI-_Nb-tQNwvalE"
+  },
+  {
+    "slug": "week-12",
+    "week": 12,
+    "title": "W12 資料整理與演算法三元素｜石門智繪客資優班",
+    "video": "week-12/video.mp4",
+    "description": "資料整理與演算法三元素｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 12 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-12/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-12/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-12/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/a18fd57a-16b5-4c38-838a-578fbc065281\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n用輸入、處理、輸出描述解題流程，並把模糊任務拆成電腦可以執行的明確規則。\n\n本週可見產出\n資料表 v2 與 IPO 演算法單\n\n影片章節\n00:00 從混亂廚房看資料整理\n00:30 演算法的核心結構\n00:47 輸入必須具體明確\n00:58 電腦不會自行猜測指令\n01:22 人類負責查證與判斷\n01:43 IPO 動手挑戰\n02:11 極端輸入與討論問題\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "從混亂廚房看資料整理"
+      ],
+      [
+        "00:30",
+        "演算法的核心結構"
+      ],
+      [
+        "00:47",
+        "輸入必須具體明確"
+      ],
+      [
+        "00:58",
+        "電腦不會自行猜測指令"
+      ],
+      [
+        "01:22",
+        "人類負責查證與判斷"
+      ],
+      [
+        "01:43",
+        "IPO 動手挑戰"
+      ],
+      [
+        "02:11",
+        "極端輸入與討論問題"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-12/zh-TW.srt",
+    "video_id": "a-TCMCHIlL0",
+    "watch_url": "https://www.youtube.com/watch?v=a-TCMCHIlL0",
+    "caption_id": "AUieDabDotHrfL0vAWSGLnB8Vuls288xGliiTZVDLd3FOO82XI0z4VZcGuwU49vFXxY"
+  },
+  {
+    "slug": "week-15",
+    "week": 15,
+    "title": "W15 精準指令與除錯思維｜石門智繪客資優班",
+    "video": "week-15/video.mp4",
+    "description": "精準指令與除錯思維｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 15 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/df5767e0-3333-4312-8b65-5220c4c06415\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n練習明確、可執行、可驗證的指令，完成預測、測試、找錯、修正與再測試。\n\n本週可見產出\n人類機器人指令 v2 與除錯紀錄\n\n影片章節\n00:00 模糊指令會發生什麼事\n00:30 輸入、處理與輸出\n00:40 把指令寫得精準\n00:57 除錯循環登場\n01:30 人類與 AI 的合作規則\n01:45 人類機器人挑戰\n02:10 一次修正一個錯誤\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "模糊指令會發生什麼事"
+      ],
+      [
+        "00:30",
+        "輸入、處理與輸出"
+      ],
+      [
+        "00:40",
+        "把指令寫得精準"
+      ],
+      [
+        "00:57",
+        "除錯循環登場"
+      ],
+      [
+        "01:30",
+        "人類與 AI 的合作規則"
+      ],
+      [
+        "01:45",
+        "人類機器人挑戰"
+      ],
+      [
+        "02:10",
+        "一次修正一個錯誤"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-15/zh-TW.srt",
+    "video_id": "BJHbpwusTtI",
+    "watch_url": "https://www.youtube.com/watch?v=BJHbpwusTtI",
+    "caption_id": "AUieDaa5z0UWEUIN-o14VYM3Jx0h2xPoXuOqAf8qNP-xFg4K3ioWckwiwwbasZYjxnU"
+  },
+  {
+    "slug": "week-18",
+    "week": 18,
+    "title": "W18 Scratch 互動與分類器概念｜石門智繪客資優班",
+    "video": "week-18/video.mp4",
+    "description": "Scratch 互動與分類器概念｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 18 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-18/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-18/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-18/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/df21f06b-942a-4c98-afda-750f09234a27\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n用 Scratch 條件積木建立規則式分類器，測試一般案例、邊界案例與不確定輸入。\n\n本週可見產出\nScratch 分類器 v1 與測試表\n\n影片章節\n00:00 分類器與回收邊界案例\n00:30 用 Scratch 寫分類規則\n00:40 不確定時不要亂猜\n00:50 規則式與學習式分類\n01:08 本週任務與討論\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "分類器與回收邊界案例"
+      ],
+      [
+        "00:30",
+        "用 Scratch 寫分類規則"
+      ],
+      [
+        "00:40",
+        "不確定時不要亂猜"
+      ],
+      [
+        "00:50",
+        "規則式與學習式分類"
+      ],
+      [
+        "01:08",
+        "本週任務與討論"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-18/zh-TW.srt",
+    "video_id": "4S1Z1YQ5iA8",
+    "watch_url": "https://www.youtube.com/watch?v=4S1Z1YQ5iA8",
+    "caption_id": "AUieDabpJ8fclk5K7zYyNMqNPaJzVI5sWaWnCm9tm33t8C0XKpYdKYnAv2pKM7j-Rm4"
+  },
+  {
+    "slug": "week-21",
+    "week": 21,
+    "title": "W21 提示工程與 AI 創意發想｜石門智繪客資優班",
+    "video": "week-21/video.mp4",
+    "description": "提示工程與 AI 創意發想｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 21 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-21/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-21/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-21/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/cea8c93f-0119-42f2-b503-85c07e560fb3\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n運用角色、目標、背景、格式、限制與檢查條件改善提示詞，保留人的原創與判斷。\n\n本週可見產出\n提示詞 v1-v3 與 AI 回覆比較表\n\n影片章節\n00:00 先思考再請 AI 擴充\n00:30 如何和 AI 神隊友溝通\n00:43 提示詞六大元素\n01:01 採用、修改或捨棄 AI 點子\n01:15 個資與 AI 幻覺安全守則\n01:30 人類才是最後決策者\n01:40 本週任務與離開小卡\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "先思考再請 AI 擴充"
+      ],
+      [
+        "00:30",
+        "如何和 AI 神隊友溝通"
+      ],
+      [
+        "00:43",
+        "提示詞六大元素"
+      ],
+      [
+        "01:01",
+        "採用、修改或捨棄 AI 點子"
+      ],
+      [
+        "01:15",
+        "個資與 AI 幻覺安全守則"
+      ],
+      [
+        "01:30",
+        "人類才是最後決策者"
+      ],
+      [
+        "01:40",
+        "本週任務與離開小卡"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-21/zh-TW.srt",
+    "video_id": "OniiQ4-mNVk",
+    "watch_url": "https://www.youtube.com/watch?v=OniiQ4-mNVk",
+    "caption_id": "AUieDaZbXrcfOOXwGBgrUzOXS_Ny2hrM1gxxTbKNBNlxSmwgihcNxvkqgucBY7R8gMQ"
+  },
+  {
+    "slug": "week-24",
+    "week": 24,
+    "title": "W24 AI 倫理與專題定題｜石門智繪客資優班",
+    "video": "week-24/video.mp4",
+    "description": "AI 倫理與專題定題｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 24 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-24/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-24/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-24/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/264d39dd-3c59-4c79-bcd8-6ef390b63e4f\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n以真實、隱私、公平與責任檢驗 AI 使用，完成具體、可測試且安全的專題定題。\n\n本週可見產出\nAI 使用規範與一頁專題計畫\n\n影片章節\n00:00 AI 不能取代人的方向盤\n00:30 隱私界線與危險提問\n00:47 使用 AI 的責任歸屬\n00:59 人類把關的黃金準則\n01:13 專題定題公式\n01:27 題目必須通過的四項測試\n01:41 假資料由誰負責\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "AI 不能取代人的方向盤"
+      ],
+      [
+        "00:30",
+        "隱私界線與危險提問"
+      ],
+      [
+        "00:47",
+        "使用 AI 的責任歸屬"
+      ],
+      [
+        "00:59",
+        "人類把關的黃金準則"
+      ],
+      [
+        "01:13",
+        "專題定題公式"
+      ],
+      [
+        "01:27",
+        "題目必須通過的四項測試"
+      ],
+      [
+        "01:41",
+        "假資料由誰負責"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-24/zh-TW.srt",
+    "video_id": "9u-Bb-uo2Rk",
+    "watch_url": "https://www.youtube.com/watch?v=9u-Bb-uo2Rk",
+    "caption_id": "AUieDaY1H6LTap145Q1iHK46LTtTk37yEQP5rZNcMMU_Iplux58vZB0i26E-VpnSDpQ"
+  },
+  {
+    "slug": "week-27",
+    "week": 27,
+    "title": "W27 原型設計與作品製作｜石門智繪客資優班",
+    "video": "week-27/video.mp4",
+    "description": "原型設計與作品製作｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 27 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-27/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-27/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-27/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/458e7cf0-447c-4669-b540-4249f4358850\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n把點子縮小成可操作、可測試的最小可行原型，並以使用者證據規劃下一版。\n\n本週可見產出\n流程圖、介面草圖與 MVP v1\n\n影片章節\n00:00 把大點子變成真實作品\n00:12 最小可行原型 MVP\n00:29 從核心功能開始測試\n00:44 人類與 AI 的設計分工\n01:06 製作與測試任務\n01:20 只能保留一個功能時怎麼選\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "把大點子變成真實作品"
+      ],
+      [
+        "00:12",
+        "最小可行原型 MVP"
+      ],
+      [
+        "00:29",
+        "從核心功能開始測試"
+      ],
+      [
+        "00:44",
+        "人類與 AI 的設計分工"
+      ],
+      [
+        "01:06",
+        "製作與測試任務"
+      ],
+      [
+        "01:20",
+        "只能保留一個功能時怎麼選"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-27/zh-TW.srt",
+    "video_id": "FLOn33InTeM",
+    "watch_url": "https://www.youtube.com/watch?v=FLOn33InTeM",
+    "caption_id": "AUieDabbs1GLnJ5jyw9EqfuGsS1HK94qe36XPXcGEBQLMyDcuZ9P-Afdtvuh7ScTKNU"
+  },
+  {
+    "slug": "week-30",
+    "week": 30,
+    "title": "W30 測試精緻化與成果發表｜石門智繪客資優班",
+    "video": "week-30/video.mp4",
+    "description": "測試精緻化與成果發表｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 30 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/d5710175-62dd-4634-a867-df3e0342d0b6\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n用真實試用證據排列修改優先順序，完成 MVP v2、成果發表與下一步反思。\n\n本週可見產出\nMVP v2、成果發表與完整歷程檔\n\n影片章節\n00:00 不要提示測試者怎麼操作\n00:30 排列回饋與修改優先順序\n00:43 AI 只能協助不能代替決定\n01:05 90 分鐘測試與修改任務\n01:19 準備最終成果發表\n01:33 如果重來一次會改變什麼\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+    "chapters": [
+      [
+        "00:00",
+        "不要提示測試者怎麼操作"
+      ],
+      [
+        "00:30",
+        "排列回饋與修改優先順序"
+      ],
+      [
+        "00:43",
+        "AI 只能協助不能代替決定"
+      ],
+      [
+        "01:05",
+        "90 分鐘測試與修改任務"
+      ],
+      [
+        "01:19",
+        "準備最終成果發表"
+      ],
+      [
+        "01:33",
+        "如果重來一次會改變什麼"
+      ]
+    ],
+    "tags": [
+      "石門智繪客",
+      "資優教育",
+      "AI素養",
+      "資訊科技",
+      "NotebookLM",
+      "石門國小",
+      "黃凱揚老師"
+    ],
+    "privacy": "public",
+    "caption": "youtube/week-30/zh-TW.srt",
+    "video_id": "mH47IXZ-6sA",
+    "watch_url": "https://www.youtube.com/watch?v=mH47IXZ-6sA",
+    "caption_id": "AUieDaZrS_L9lUX5uZixwFnWQC_lgJ_EgWoScWfQbTs7OPBGFcgDiez__3ygcek_fpM"
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "slug": "week-15",
+  "week": 15,
+  "title": "W15 精準指令與除錯思維｜石門智繪客資優班",
+  "video": "week-15/video.mp4",
+  "description": "精準指令與除錯思維｜石門智繪客創造力資優資訊科技課程\n\n本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 15 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。\n\n本週教學資源\n教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/\n12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/lecture-slides.html\n直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-15/teacher-pack.pdf\n本週 NotebookLM：https://notebooklm.google.com/notebook/df5767e0-3333-4312-8b65-5220c4c06415\n年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/\n\n學習重點\n練習明確、可執行、可驗證的指令，完成預測、測試、找錯、修正與再測試。\n\n本週可見產出\n人類機器人指令 v2 與除錯紀錄\n\n影片章節\n00:00 模糊指令會發生什麼事\n00:30 輸入、處理與輸出\n00:40 把指令寫得精準\n00:57 除錯循環登場\n01:30 人類與 AI 的合作規則\n01:45 人類機器人挑戰\n02:10 一次修正一個錯誤\n\n字幕\n本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。\n\n課程設計與內容審訂：黃凱揚老師\n學校：桃園市龍潭區石門國民小學\n影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。\n\n#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM",
+  "chapters": [
+    [
+      "00:00",
+      "模糊指令會發生什麼事"
+    ],
+    [
+      "00:30",
+      "輸入、處理與輸出"
+    ],
+    [
+      "00:40",
+      "把指令寫得精準"
+    ],
+    [
+      "00:57",
+      "除錯循環登場"
+    ],
+    [
+      "01:30",
+      "人類與 AI 的合作規則"
+    ],
+    [
+      "01:45",
+      "人類機器人挑戰"
+    ],
+    [
+      "02:10",
+      "一次修正一個錯誤"
+    ]
+  ],
+  "tags": [
+    "石門智繪客",
+    "資優教育",
+    "AI素養",
+    "資訊科技",
+    "NotebookLM",
+    "石門國小",
+    "黃凱揚老師"
+  ],
+  "privacy": "public",
+  "caption": "youtube/week-15/zh-TW.srt"
+}

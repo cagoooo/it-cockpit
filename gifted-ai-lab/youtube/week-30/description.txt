@@ -1,0 +1,33 @@
+測試精緻化與成果發表｜石門智繪客創造力資優資訊科技課程
+
+本影片是桃園市龍潭區石門國民小學「石門智繪客」創造力資優資訊科技課程第 30 週的課前概念導覽。課程採兩節連排，影片只負責建立共同概念，完整探究、實作、形成評量與反思請進入本週教學駕駛艙。
+
+本週教學資源
+教學駕駛艙：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/
+12 張互動簡報：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/lecture-slides.html
+直式教師詳案：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/week-30/teacher-pack.pdf
+本週 NotebookLM：https://notebooklm.google.com/notebook/d5710175-62dd-4634-a867-df3e0342d0b6
+年度課程總覽：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/
+
+學習重點
+用真實試用證據排列修改優先順序，完成 MVP v2、成果發表與下一步反思。
+
+本週可見產出
+MVP v2、成果發表與完整歷程檔
+
+影片章節
+00:00 不要提示測試者怎麼操作
+00:30 排列回饋與修改優先順序
+00:43 AI 只能協助不能代替決定
+01:05 90 分鐘測試與修改任務
+01:19 準備最終成果發表
+01:33 如果重來一次會改變什麼
+
+字幕
+本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。
+
+課程設計與內容審訂：黃凱揚老師
+學校：桃園市龍潭區石門國民小學
+影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。
+
+#石門智繪客 #資優教育 #AI素養 #資訊科技 #NotebookLM
