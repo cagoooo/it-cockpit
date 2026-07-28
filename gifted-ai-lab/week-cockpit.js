@@ -57,7 +57,7 @@
     </section>
 
     <section id="media" class="view">
-      <section class="media-grid"><video class="week-video" controls preload="metadata" poster="../assets/gifted-lab-cover.png"><source src="video.mp4" type="video/mp4"></video><div><div class="status-box"><b>本週 NotebookLM 短影片</b><span class="video-status">正在確認影片狀態…</span></div><div class="resources media-links"><a class="resource" href="slides.pdf"><b>NotebookLM 本週簡報 →</b><span>本週專屬概念與任務教材</span></a><a class="resource" href="lecture-slides.html"><b>12 張互動投影簡報 →</b><span>全螢幕、總覽、鍵盤與觸控操作</span></a><a class="resource" href="notebook-faq.md"><b>NotebookLM FAQ 紀錄 →</b><span>由本週全部來源交叉整理的三個追問</span></a><a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer"><b>進入本週 NotebookLM →</b><span>繼續研究、查詢與產出教材</span></a></div></div></section>
+      <section class="media-grid"><video class="week-video" controls preload="metadata" poster="../assets/gifted-lab-cover.png"><source src="video.mp4" type="video/mp4"></video><div><div class="status-box"><b>本週 NotebookLM 短影片</b><span class="video-status">正在確認影片狀態…</span></div><div class="resources media-links"><a class="resource" href="slides.pdf"><b>NotebookLM 本週簡報 →</b><span>本週專屬概念與任務教材</span></a><a class="resource" href="lecture-slides.html"><b>12 張互動投影簡報 →</b><span>全螢幕、總覽、鍵盤與觸控操作</span></a><a class="resource" href="notebook-faq.md"><b>NotebookLM FAQ 紀錄 →</b><span>由本週全部來源交叉整理的三個追問</span></a><a class="resource" href="video-captions.srt"><b>短影片字幕檔 →</b><span>動態字幕同步文字，可供播放器與剪輯使用</span></a><a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer"><b>進入本週 NotebookLM →</b><span>繼續研究、查詢與產出教材</span></a></div></div></section>
       <section class="section"><div class="section-head"><span>NOTEBOOK PROMPTS</span><h2>五個專屬研究提問</h2></div><div class="prompt-list">${extra.prompts.map((prompt,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span><p>${esc(prompt)}</p><button class="copy-prompt" data-prompt="${esc(prompt)}">複製</button></div>`).join('')}</div></section>
       <section class="section notebook-workflow"><div class="section-head"><span>WORKFLOW</span><h2>NotebookLM 使用節奏</h2></div><div class="workflow"><div><b>課前</b><p>用來源摘要與 FAQ 預測學生迷思。</p></div><div><b>課中</b><p>只查反例與提示，不讓 AI 代替學生作答。</p></div><div><b>課後</b><p>依作品證據整理回饋與下次銜接。</p></div></div></section>
     </section>
@@ -127,5 +127,5 @@
   document.querySelector('#clearDraw').onclick=()=>ctx.clearRect(0,0,innerWidth,innerHeight);
   document.querySelectorAll('.draw-color').forEach(button=>button.onclick=()=>{drawColor=button.dataset.color;document.querySelectorAll('.draw-color').forEach(item=>item.classList.toggle('active',item===button));});
 
-  fetch('video.mp4',{method:'HEAD'}).then(response=>{document.querySelector('.video-status').textContent=response.ok?'影片已完成，可直接播放。':'影片目前無法載入。';}).catch(()=>document.querySelector('.video-status').textContent='影片目前無法載入。');
+  fetch('video.mp4',{method:'HEAD'}).then(response=>{document.querySelector('.video-status').textContent=response.ok?'影片已完成，含動態繁體中文字幕。':'影片目前無法載入。';}).catch(()=>document.querySelector('.video-status').textContent='影片目前無法載入。');
 })();

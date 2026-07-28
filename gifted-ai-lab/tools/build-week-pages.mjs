@@ -11,7 +11,7 @@ vm.runInNewContext(source, sandbox);
 const weeks = sandbox.window.GIFTED_WEEKS;
 const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
-const depthAssetVersion = '20260728-captions-v1';
+const depthAssetVersion = '20260728-captions-v2';
 
 const meta = ({ title, description, url, assetPrefix }) => `
 <meta name="description" content="${description}">
@@ -61,7 +61,7 @@ ${commonHead}
 <link rel="stylesheet" href="../week-learning-depth.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../classroom-integrations.css">
 </head>
-<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../youtube-data.js"></script><script src="../week-cockpit.js"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js"></script></body>
+<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../youtube-data.js"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js"></script></body>
 </html>
 `;
 

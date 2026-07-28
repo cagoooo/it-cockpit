@@ -42,7 +42,7 @@ for (const htmlPath of walk(labDir, '.html')) {
 
 const weeks = ['03', '06', '09', '12', '15', '18', '21', '24', '27', '30'];
 for (const code of weeks) {
-  for (const file of ['index.html', 'lecture-slides.html', 'classroom-pack.html', 'student-task.html', 'teacher-pack.pdf', 'video.mp4']) {
+  for (const file of ['index.html', 'lecture-slides.html', 'classroom-pack.html', 'student-task.html', 'teacher-pack.pdf', 'video.mp4', 'video-captions.srt']) {
     record(fs.existsSync(path.join(labDir, `week-${code}`, file)), 'week core', `week-${code}/${file}`);
   }
   record(fs.existsSync(path.join(labDir, 'youtube', `week-${code}`, 'transcript.json')), 'transcript', `week-${code}`);
