@@ -57,8 +57,9 @@ for (const item of weeks) {
 ${commonHead}
 <link rel="stylesheet" href="../week-cockpit.css">
 <link rel="stylesheet" href="../week-cockpit-rich.css">
+<link rel="stylesheet" href="../classroom-integrations.css">
 </head>
-<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-cockpit.js"></script></body>
+<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../youtube-data.js"></script><script src="../week-cockpit.js"></script><script src="../classroom-integrations.js"></script></body>
 </html>
 `;
 

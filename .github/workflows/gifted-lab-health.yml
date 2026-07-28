@@ -1,0 +1,22 @@
+name: Gifted Lab Health Check
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'gifted-ai-lab/**'
+      - 'sw.js'
+      - '.github/workflows/gifted-lab-health.yml'
+  pull_request:
+    paths:
+      - 'gifted-ai-lab/**'
+      - 'sw.js'
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check internal links, offline assets and published media
+        run: node gifted-ai-lab/tools/check-gifted-links.mjs

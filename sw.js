@@ -1,12 +1,15 @@
 // IT Cockpit Service Worker
 // 策略：HTML network-first（永遠拿最新）、靜態資源 cache-first（offline 友善）
 // 新版本部署時 bump CACHE_VERSION，舊快取會被自動清掉
-const CACHE_VERSION = '2026-07-27-gifted-sidebar-v5';
+const CACHE_VERSION = '2026-07-28-gifted-stability-v6';
 const HTML_CACHE = `it-cockpit-html-${CACHE_VERSION}`;
 const ASSET_CACHE = `it-cockpit-asset-${CACHE_VERSION}`;
+const GIFTED_CORE_CACHE = `it-cockpit-gifted-core-${CACHE_VERSION}`;
+const GIFTED_MANIFEST = './gifted-ai-lab/offline-manifest.json';
 
-self.addEventListener('install', () => {
+self.addEventListener('install', (event) => {
   self.skipWaiting();
+  event.waitUntil(cacheGiftedCore());
 });
 
 self.addEventListener('activate', (e) => {
@@ -23,6 +26,7 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('message', (e) => {
   if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
+  if (e.data && e.data.type === 'CACHE_GIFTED_CORE') e.waitUntil(cacheGiftedCore());
 });
 
 self.addEventListener('fetch', (e) => {
@@ -34,6 +38,10 @@ self.addEventListener('fetch', (e) => {
   if (url.origin !== self.location.origin) return;
 
   const accept = req.headers.get('accept') || '';
+  if (url.pathname.endsWith('.mp4')) {
+    e.respondWith(fetch(req).catch(() => new Response('', { status: 503, statusText: 'Video unavailable offline' })));
+    return;
+  }
   const isHtml = req.mode === 'navigate' ||
     accept.includes('text/html') ||
     url.pathname.endsWith('.html') ||
@@ -57,7 +65,29 @@ async function networkFirst(req, cacheName) {
   } catch {
     const cached = await caches.match(req);
     if (cached) return cached;
-    return caches.match('./index.html') || Response.error();
+    const requestUrl = new URL(req.url);
+    if (requestUrl.pathname.includes('/gifted-ai-lab/')) {
+      return (await caches.match(new URL('./gifted-ai-lab/offline.html', self.registration.scope).href)) || Response.error();
+    }
+    return (await caches.match(new URL('./index.html', self.registration.scope).href)) || Response.error();
+  }
+}
+
+async function cacheGiftedCore() {
+  try {
+    const manifestUrl = new URL(GIFTED_MANIFEST, self.registration.scope);
+    const response = await fetch(manifestUrl, { cache: 'no-store' });
+    if (!response.ok) return;
+    const responseCopy = response.clone();
+    const manifest = await response.json();
+    const cache = await caches.open(GIFTED_CORE_CACHE);
+    await Promise.allSettled(manifest.assets.map((asset) => {
+      const url = new URL(asset, self.registration.scope).href;
+      return cache.add(new Request(url, { cache: 'reload' }));
+    }));
+    await cache.put(manifestUrl.href, responseCopy);
+  } catch {
+    // Existing caches remain available when an update cannot be downloaded.
   }
 }
 
