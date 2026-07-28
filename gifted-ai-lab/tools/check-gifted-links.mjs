@@ -46,6 +46,16 @@ for (const code of weeks) {
     record(fs.existsSync(path.join(labDir, `week-${code}`, file)), 'week core', `week-${code}/${file}`);
   }
   record(fs.existsSync(path.join(labDir, 'youtube', `week-${code}`, 'transcript.json')), 'transcript', `week-${code}`);
+  for (const file of ['depth-source.md', 'depth-infographic.png', 'depth-slides.pdf', 'depth-video.mp4', 'depth-video-transcript.txt']) {
+    const target = path.join(labDir, `week-${code}`, file);
+    record(fs.existsSync(target) && fs.statSync(target).size > 0, 'depth resource', `week-${code}/${file}`);
+  }
+}
+
+const depthArtifacts = JSON.parse(fs.readFileSync(path.join(labDir, 'notebook-depth-artifacts.json'), 'utf8'));
+record(depthArtifacts.length === weeks.length, 'NotebookLM depth count', String(depthArtifacts.length));
+for (const item of depthArtifacts) {
+  record(Boolean(item.source_id && item.infographic_id && item.slides_id && item.video_delivery), 'NotebookLM depth metadata', `week-${String(item.week).padStart(2, '0')}`);
 }
 
 const verification = JSON.parse(fs.readFileSync(path.join(labDir, 'youtube', 'verification.json'), 'utf8'));

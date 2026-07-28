@@ -90,6 +90,7 @@ for (const item of weeks) {
 const offlineAssets = [
   './', './index.html', './gifted-ai-lab/', './gifted-ai-lab/index.html', './gifted-ai-lab/offline.html',
   './gifted-ai-lab/week-data.js', './gifted-ai-lab/week-enrichment.js', './gifted-ai-lab/week-cockpit.js',
+  './gifted-ai-lab/week-depth-data.js', './gifted-ai-lab/week-learning-depth.js', './gifted-ai-lab/week-learning-depth.css',
   './gifted-ai-lab/week-cockpit.css', './gifted-ai-lab/week-cockpit-rich.css',
   './gifted-ai-lab/week-slides.js', './gifted-ai-lab/week-slides.css', './gifted-ai-lab/week-slides-rich.css',
   './gifted-ai-lab/classroom-integrations.js', './gifted-ai-lab/classroom-integrations.css',
@@ -102,7 +103,7 @@ const offlineAssets = [
 for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
   const base = `./gifted-ai-lab/week-${code}/`;
-  offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
+  offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}depth-source.md`, `${base}depth-video-transcript.txt`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
 }
-fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-28-stability-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-28-depth-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
 console.log(`Built ${weeks.length} classroom packs, ${weeks.length} task sheets, YouTube data and offline manifest.`);
