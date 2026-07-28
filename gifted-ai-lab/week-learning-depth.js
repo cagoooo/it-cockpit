@@ -72,7 +72,8 @@
           <a class="depth-infographic" href="depth-infographic.png" target="_blank" rel="noopener noreferrer"><img src="depth-infographic.png" alt="W${ww} 資優探究資訊圖"><span>開啟高解析度資訊圖</span></a>
           <div class="resources depth-resource-list">
             <a class="resource" href="depth-slides.pdf" target="_blank"><b>資優探究深化簡報 →</b><span>認知衝突、反例、小實驗與三層任務</span></a>
-            <a class="resource" href="depth-video.mp4" target="_blank"><b>研究者挑戰短片 →</b><span>NotebookLM 內容深化，繁體中文穩定版有聲短片</span></a>
+            <a class="resource" href="depth-video.mp4" target="_blank"><b>研究者挑戰短片 →</b><span>逐句淡入、同步高亮的動態繁體中文字幕</span></a>
+            <a class="resource" href="depth-video-captions.srt" target="_blank"><b>標準字幕檔 →</b><span>可供播放器載入、剪輯與無障礙使用</span></a>
             <a class="resource" href="depth-video-transcript.txt" target="_blank"><b>短片逐字稿 →</b><span>可供備課、無聲閱讀與無障礙使用</span></a>
             <a class="resource" href="depth-source.md"><b>NotebookLM 深化來源 →</b><span>診斷提示、挑戰路徑與完成證據</span></a>
             <a class="resource" href="${esc((window.GIFTED_WEEKS || []).find((item) => item.week === week)?.notebookUrl || '#')}" target="_blank" rel="noopener noreferrer"><b>回到本週 NotebookLM →</b><span>繼續查詢、比較與產生新教材</span></a>

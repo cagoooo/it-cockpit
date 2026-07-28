@@ -1,12 +1,166 @@
 [
-  {"week":3,"source_id":"dfbdf10d-c189-4936-99eb-cf297a5c1489","infographic_id":"1d6a3c0a-5962-40eb-9bd5-591d2c0595b4","slides_id":"f6f4d4c3-eab7-4bf3-9230-5a58beb47fb2","notebooklm_video_jobs":["17c1883f-9e12-42f1-a569-836dbbfb39ed","25515ddd-fbda-4007-b597-554cee396e3a","14f72fcb-1d8d-48d9-802a-ad4b388bc557"],"video_delivery":"NotebookLM 來源與資訊圖表重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":6,"source_id":"f5f3967e-1ef4-4260-9b02-7f4fb63629bd","infographic_id":"dacea75f-2ac3-4dd5-9e79-46dade4705db","slides_id":"bb3ea25d-ae68-452b-acc6-656dc6476581","notebooklm_video_id":"8354a22d-e6c6-4c84-8a68-7f9b2e748a90","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":9,"source_id":"e0f1cf2f-9c14-4cd9-903b-51538a05ca4d","infographic_id":"8f68d609-2c28-4887-ab09-51c83b5e7f8c","slides_id":"87fc300c-5ba3-4d1d-ad29-a2be40c27088","notebooklm_video_id":"1713c689-cdff-4720-a60c-e49cc962fea1","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":12,"source_id":"8bec6d1e-4216-4dc7-b920-4c456a1f1973","infographic_id":"a1eef21d-3c55-469b-a98a-8bb8c7a71173","slides_id":"09359208-fadf-4543-be30-3d7c901154a2","notebooklm_video_id":"76711ce1-c47b-4ccd-9095-c8eff293bf1b","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":15,"source_id":"99f709c3-aad9-4f52-8538-e555cf0fccfb","infographic_id":"ba5973c2-7312-4152-8d0e-7fb2b4b8f6d4","slides_id":"2cc1dc3e-c795-4009-b840-257738abcf2e","notebooklm_video_id":"d5809f9f-0bcf-4389-9051-1290ba6b3364","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":18,"source_id":"6bae309e-82b0-4780-8efe-98a034252e93","infographic_id":"3621896d-83c6-42f3-8aff-1c9899302a5a","slides_id":"a8ef8ed6-df58-4840-bc07-f36a894e4d07","notebooklm_video_id":"5596a035-1701-42e2-8f20-5138e60972bc","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":21,"source_id":"860259c2-84fe-434d-8e59-558296743bc6","infographic_id":"7267c33e-7f2f-40d2-adb0-fa2ffeb283d6","slides_id":"59d18bf9-8d07-4e8f-b76e-05024d629e23","notebooklm_video_id":"26650f17-a340-4c25-92c5-451d2efd1a50","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":24,"source_id":"0b683f08-169c-419c-8f39-5cfcadb9d915","infographic_id":"9a45bff2-2f28-47dd-a8ee-286497f949ce","slides_id":"8f280169-caa8-4607-b981-591dea05d316","notebooklm_video_id":"f93609e5-2bda-4c78-9b31-4029de10b44f","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":27,"source_id":"d131ffe9-8da1-4183-a99d-6cfdf9e804b8","infographic_id":"3fe7a897-0f4c-45b6-b59a-c11de5273714","slides_id":"c8221b1a-e244-4970-844b-7e7323c2ae02","notebooklm_video_id":"72bd03ba-8f9d-4fbd-b483-ceaab4efa074","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]},
-  {"week":30,"source_id":"085711b2-38e8-440a-acec-c1e66d53afd9","infographic_id":"ab33da34-d01b-4f25-9ab6-137a17029856","slides_id":"eb565124-102f-4bfd-b287-eaf14434a818","notebooklm_video_id":"3e77d8cb-7009-48bc-a434-799d7a3f5fb1","video_delivery":"NotebookLM 內容重製繁中穩定版","files":["depth-source.md","depth-infographic.png","depth-slides.pdf","depth-video.mp4","depth-video-transcript.txt"]}
+  {
+    "week": 3,
+    "source_id": "dfbdf10d-c189-4936-99eb-cf297a5c1489",
+    "infographic_id": "1d6a3c0a-5962-40eb-9bd5-591d2c0595b4",
+    "slides_id": "f6f4d4c3-eab7-4bf3-9230-5a58beb47fb2",
+    "notebooklm_video_jobs": [
+      "17c1883f-9e12-42f1-a569-836dbbfb39ed",
+      "25515ddd-fbda-4007-b597-554cee396e3a",
+      "14f72fcb-1d8d-48d9-802a-ad4b388bc557"
+    ],
+    "video_delivery": "NotebookLM 來源與資訊圖表重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 6,
+    "source_id": "f5f3967e-1ef4-4260-9b02-7f4fb63629bd",
+    "infographic_id": "dacea75f-2ac3-4dd5-9e79-46dade4705db",
+    "slides_id": "bb3ea25d-ae68-452b-acc6-656dc6476581",
+    "notebooklm_video_id": "8354a22d-e6c6-4c84-8a68-7f9b2e748a90",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 9,
+    "source_id": "e0f1cf2f-9c14-4cd9-903b-51538a05ca4d",
+    "infographic_id": "8f68d609-2c28-4887-ab09-51c83b5e7f8c",
+    "slides_id": "87fc300c-5ba3-4d1d-ad29-a2be40c27088",
+    "notebooklm_video_id": "1713c689-cdff-4720-a60c-e49cc962fea1",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 12,
+    "source_id": "8bec6d1e-4216-4dc7-b920-4c456a1f1973",
+    "infographic_id": "a1eef21d-3c55-469b-a98a-8bb8c7a71173",
+    "slides_id": "09359208-fadf-4543-be30-3d7c901154a2",
+    "notebooklm_video_id": "76711ce1-c47b-4ccd-9095-c8eff293bf1b",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 15,
+    "source_id": "99f709c3-aad9-4f52-8538-e555cf0fccfb",
+    "infographic_id": "ba5973c2-7312-4152-8d0e-7fb2b4b8f6d4",
+    "slides_id": "2cc1dc3e-c795-4009-b840-257738abcf2e",
+    "notebooklm_video_id": "d5809f9f-0bcf-4389-9051-1290ba6b3364",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 18,
+    "source_id": "6bae309e-82b0-4780-8efe-98a034252e93",
+    "infographic_id": "3621896d-83c6-42f3-8aff-1c9899302a5a",
+    "slides_id": "a8ef8ed6-df58-4840-bc07-f36a894e4d07",
+    "notebooklm_video_id": "5596a035-1701-42e2-8f20-5138e60972bc",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 21,
+    "source_id": "860259c2-84fe-434d-8e59-558296743bc6",
+    "infographic_id": "7267c33e-7f2f-40d2-adb0-fa2ffeb283d6",
+    "slides_id": "59d18bf9-8d07-4e8f-b76e-05024d629e23",
+    "notebooklm_video_id": "26650f17-a340-4c25-92c5-451d2efd1a50",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 24,
+    "source_id": "0b683f08-169c-419c-8f39-5cfcadb9d915",
+    "infographic_id": "9a45bff2-2f28-47dd-a8ee-286497f949ce",
+    "slides_id": "8f280169-caa8-4607-b981-591dea05d316",
+    "notebooklm_video_id": "f93609e5-2bda-4c78-9b31-4029de10b44f",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 27,
+    "source_id": "d131ffe9-8da1-4183-a99d-6cfdf9e804b8",
+    "infographic_id": "3fe7a897-0f4c-45b6-b59a-c11de5273714",
+    "slides_id": "c8221b1a-e244-4970-844b-7e7323c2ae02",
+    "notebooklm_video_id": "72bd03ba-8f9d-4fbd-b483-ceaab4efa074",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  },
+  {
+    "week": 30,
+    "source_id": "085711b2-38e8-440a-acec-c1e66d53afd9",
+    "infographic_id": "ab33da34-d01b-4f25-9ab6-137a17029856",
+    "slides_id": "eb565124-102f-4bfd-b287-eaf14434a818",
+    "notebooklm_video_id": "3e77d8cb-7009-48bc-a434-799d7a3f5fb1",
+    "video_delivery": "NotebookLM 內容重製繁中穩定版",
+    "files": [
+      "depth-source.md",
+      "depth-infographic.png",
+      "depth-slides.pdf",
+      "depth-video.mp4",
+      "depth-video-captions.srt",
+      "depth-video-transcript.txt"
+    ]
+  }
 ]

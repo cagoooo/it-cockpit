@@ -46,7 +46,7 @@ for (const code of weeks) {
     record(fs.existsSync(path.join(labDir, `week-${code}`, file)), 'week core', `week-${code}/${file}`);
   }
   record(fs.existsSync(path.join(labDir, 'youtube', `week-${code}`, 'transcript.json')), 'transcript', `week-${code}`);
-  for (const file of ['depth-source.md', 'depth-infographic.png', 'depth-slides.pdf', 'depth-video.mp4', 'depth-video-transcript.txt']) {
+  for (const file of ['depth-source.md', 'depth-infographic.png', 'depth-slides.pdf', 'depth-video.mp4', 'depth-video-captions.srt', 'depth-video-transcript.txt']) {
     const target = path.join(labDir, `week-${code}`, file);
     record(fs.existsSync(target) && fs.statSync(target).size > 0, 'depth resource', `week-${code}/${file}`);
   }
