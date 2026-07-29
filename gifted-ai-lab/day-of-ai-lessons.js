@@ -9,6 +9,7 @@
   const main = document.querySelector('main');
   if (!tabs || !main) return;
 
+  document.querySelector('.actions')?.insertAdjacentHTML('beforeend', `<a class="action" href="../resource-library.html?week=${week}">教材連結庫</a>`);
   tabs.insertAdjacentHTML('beforeend', '<button class="tab" data-view="day-ai">生活探究</button>');
   main.insertAdjacentHTML('beforeend', `
     <section id="day-ai" class="view day-ai-view">
@@ -23,7 +24,7 @@
       <section class="section"><div class="section-head"><span>跟著做</span><h2>四步完成探究</h2></div><div class="day-ai-steps">${lesson.steps.map((step, index) => `<label><input type="checkbox" data-day-step="${index}"><span><b>${index + 1}</b>${esc(step)}</span></label>`).join('')}</div><p class="day-ai-progress" aria-live="polite">完成 0 / 4</p></section>
       <section class="section"><div class="section-head"><span>不用寫長篇文章</span><h2>用三句話記下發現</h2></div><div class="day-ai-notes">${lesson.prompts.map((prompt, index) => `<label><span>${esc(prompt)}</span><textarea data-day-note="${index}" rows="2" placeholder="用自己的話寫，不用擔心一次寫對。"></textarea></label>`).join('')}</div><p class="day-ai-save" aria-live="polite">內容只保存在這台裝置</p></section>
       <section class="day-ai-grid"><article class="section"><div class="section-head"><span>老師可以這樣問</span><h2>幫學生再想一步</h2></div><ul>${lesson.teacherQuestions.map((item) => `<li>${esc(item)}</li>`).join('')}</ul></article><article class="section"><div class="section-head"><span>難詞小幫手</span><h2>先懂意思再記名字</h2></div><dl>${lesson.words.map((item) => `<div><dt>${esc(item[0])}</dt><dd>${esc(item[1])}</dd></div>`).join('')}</dl></article></section>
-      <section class="section"><div class="section-head"><span>教師備課來源</span><h2>原教材與延伸工具</h2></div><div class="day-ai-links">${notebookUrl ? `<a href="${esc(notebookUrl)}" target="_blank" rel="noopener noreferrer">本週 NotebookLM：上課小幫手＋生活挑戰題<span>↗</span></a>` : ''}${lesson.links.map((item) => `<a href="${esc(item[1])}" target="_blank" rel="noopener noreferrer">${esc(item[0])}<span>↗</span></a>`).join('')}<a href="../source-credits.html">教材來源與使用方式<span>→</span></a></div></section>
+      <section class="section"><div class="section-head"><span>教師備課來源</span><h2>原教材與延伸工具</h2></div><div class="day-ai-links">${notebookUrl ? `<a href="${esc(notebookUrl)}" target="_blank" rel="noopener noreferrer">本週 NotebookLM：上課小幫手＋生活挑戰題<span>↗</span></a>` : ''}${lesson.links.map((item) => `<a href="${esc(item[1])}" target="_blank" rel="noopener noreferrer">${esc(item[0])}<span>↗</span></a>`).join('')}<a href="../resource-library.html?week=${week}">本週全部網站、影片與檔案<span>→</span></a><a href="../source-credits.html">教材來源與使用方式<span>→</span></a></div></section>
     </section>
   `);
   const dayView = document.querySelector('#day-ai');
