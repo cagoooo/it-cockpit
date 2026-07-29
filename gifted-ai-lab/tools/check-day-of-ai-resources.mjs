@@ -27,7 +27,8 @@ async function check(item) {
       });
       await response.body?.cancel();
     }
-    return { id: item.id, status: response.status, ok: response.ok, final: new URL(response.url).hostname };
+    const browserOnly = item.allowedStatuses?.includes(response.status) || false;
+    return { id: item.id, status: response.status, ok: response.ok || browserOnly, final: new URL(response.url).hostname, note: browserOnly ? 'browser-only' : '' };
   } catch (error) {
     return { id: item.id, status: 'ERR', ok: false, final: error.name === 'AbortError' ? 'timeout' : error.message };
   } finally {

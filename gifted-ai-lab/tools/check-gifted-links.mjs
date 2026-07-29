@@ -56,8 +56,18 @@ record(dayArtifacts.length === 5 && dayArtifacts.every((item) => item.source_id 
 const resourceSandbox = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(labDir, 'day-of-ai-resource-data.js'), 'utf8'), resourceSandbox);
 const resources = resourceSandbox.window.DAY_OF_AI_RESOURCES || [];
-const requiredResourceIds = ['course-folder', 'teacher-guide', 'quiz', 'vocabulary', 'aibo-video', 'waymo-video', 'quickdraw-intro', 'quickdraw-play', 'quickdraw-data', 'drawing-template', 'lesson-1-slides', 'lesson-2-slides', 'lesson-3-slides', 'lesson-4-slides', 'lesson-5-slides', 'lesson-1-sheet', 'lesson-23-sheet', 'lesson-45-sheet', 'algorithm-extension', 'terms'];
-record(resources.length === 20 && requiredResourceIds.every((id) => resources.some((item) => item.id === id)), 'Day of AI resource library', '20 source links');
+const requiredResourceIds = [
+  'course-folder', 'teacher-training-slides-folder', 'teacher-guide', 'quiz', 'vocabulary',
+  'lesson-1-slides', 'lesson-1-sheet', 'lesson-1-practice', 'lesson-1-question-card',
+  'aibo-video', 'waymo-video', 'google-maps', 'cwa-weather-app', 'chatgpt-observation', 'ai-five-big-ideas',
+  'quickdraw-intro', 'quickdraw-play', 'quickdraw-data', 'quickdraw-bread-data', 'quickdraw-house-data', 'drawing-template',
+  'lesson-2-slides', 'lesson-2-practice', 'lesson-2-question-card',
+  'lesson-3-slides', 'lesson-3-practice', 'lesson-3-question-card', 'lesson-23-sheet',
+  'lesson-4-slides', 'lesson-4-practice', 'lesson-4-question-card',
+  'lesson-5-slides', 'lesson-5-practice', 'lesson-5-question-card', 'lesson-45-sheet',
+  'algorithm-extension', 'terms',
+];
+record(resources.length === 37 && resourceSandbox.window.DAY_OF_AI_RESOURCE_META?.total === resources.length && requiredResourceIds.every((id) => resources.some((item) => item.id === id)), 'Day of AI resource library', '37 source links');
 record(new Set(resources.map((item) => item.id)).size === resources.length && resources.every((item) => item.url.startsWith('https://') && item.weeks.length), 'Day of AI resource data', 'unique secure weekly links');
 for (const week of [3, 6, 9, 12, 15]) {
   const item = adaptations[week];

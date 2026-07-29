@@ -12,7 +12,7 @@ window.DAY_OF_AI_ADAPTATIONS = {
     prompts: ['我覺得它＿＿AI。', '因為它會＿＿。', '我看到的線索是＿＿。'],
     teacherQuestions: ['如果換一個人使用，結果會一樣嗎？', '它是在理解，還是只碰到感應器就動？', '現在還不能確定時，我們還要查什麼？'],
     words: [['感知', '用鏡頭、麥克風或感應器收到外面的訊息'], ['證據', '能幫我們判斷的觀察或測試結果']],
-    links: [['原教材第 1 課簡報', 'https://docs.google.com/presentation/d/1IfDOhjUK8C8PSEbPl1j5CS1rW4LB64NR/edit'], ['AI 判斷學習單', 'https://docs.google.com/document/d/1xxQJHgoGWgPVR3GCFUa9915doWqcLfIM/edit']]
+    links: [['原教材第 1 課簡報', 'https://docs.google.com/presentation/d/1IfDOhjUK8C8PSEbPl1j5CS1rW4LB64NR/edit'], ['AI 判斷學習單', 'https://docs.google.com/document/d/1xxQJHgoGWgPVR3GCFUa9915doWqcLfIM/edit'], ['觀察 Google 地圖', 'https://www.google.com/maps'], ['課後練習', 'https://docs.google.com/document/d/1Nt_YPXvkjvAU8iBoIXDpvvytV1PgId6G/edit']]
   },
   6: {
     title: '畫圖猜猜看：AI 怎麼學會？',
@@ -27,7 +27,7 @@ window.DAY_OF_AI_ADAPTATIONS = {
     prompts: ['我畫的是＿＿。', 'AI 猜成＿＿。', '我覺得它看到的線索是＿＿。'],
     teacherQuestions: ['哪一筆新資料讓你改變想法？', '圖很多就一定學得好嗎？', '如果只有同一個人畫的圖，可能少了什麼？'],
     words: [['一大組例子', '放在一起、讓 AI 找規律的許多資料'], ['預測', '看過線索後，猜一個新答案']],
-    links: [['開啟 Quick, Draw!', 'https://quickdraw.withgoogle.com/'], ['看看大家畫的資料', 'https://quickdraw.withgoogle.com/data'], ['原教材第 2 課簡報', 'https://docs.google.com/presentation/d/156YPbIWksakWnn8wHLczW6BBLaz0BJCZ/edit'], ['學習紀錄單', 'https://docs.google.com/document/d/1urFppSfwQz1621Uf935l54mD0ROeyn7n/edit']]
+    links: [['開啟 Quick, Draw!', 'https://quickdraw.withgoogle.com/'], ['觀察麵包資料', 'https://quickdraw.withgoogle.com/data/bread'], ['觀察房子資料', 'https://quickdraw.withgoogle.com/data/house'], ['原教材第 2 課簡報', 'https://docs.google.com/presentation/d/156YPbIWksakWnn8wHLczW6BBLaz0BJCZ/edit'], ['學習紀錄單', 'https://docs.google.com/document/d/1urFppSfwQz1621Uf935l54mD0ROeyn7n/edit'], ['課後練習', 'https://docs.google.com/document/d/12n3Uh2AQfTTnPd_GkE4ZnB_oSaPXQ3U5/edit']]
   },
   9: {
     title: '資料照妖鏡：誰沒有被看見？',
@@ -42,7 +42,7 @@ window.DAY_OF_AI_ADAPTATIONS = {
     prompts: ['資料裡常看到＿＿。', '資料裡很少看到＿＿。', '我想補進＿＿，因為＿＿。'],
     teacherQuestions: ['誰的生活經驗可能沒有出現？', '數量一樣就一定公平嗎？', '不用姓名和照片，還能怎麼完成觀察？'],
     words: [['偏見', '例子不完整，讓某些情況比較容易被猜錯'], ['公平', '不同的人和情況，都有被好好考慮']],
-    links: [['原教材第 3 課簡報', 'https://docs.google.com/presentation/d/1wXRlTv__Fv3fYm8X_Fb5bRciD15sccvA/edit'], ['Quick, Draw! 資料庫', 'https://quickdraw.withgoogle.com/data'], ['偏見探究學習單', 'https://docs.google.com/document/d/1urFppSfwQz1621Uf935l54mD0ROeyn7n/edit']]
+    links: [['原教材第 3 課簡報', 'https://docs.google.com/presentation/d/1wXRlTv__Fv3fYm8X_Fb5bRciD15sccvA/edit'], ['麵包資料：找不同', 'https://quickdraw.withgoogle.com/data/bread'], ['房子資料：找缺少', 'https://quickdraw.withgoogle.com/data/house'], ['偏見探究學習單', 'https://docs.google.com/document/d/1urFppSfwQz1621Uf935l54mD0ROeyn7n/edit'], ['課後練習', 'https://docs.google.com/document/d/1SvkdqD-GHNUrHWW4U7T_aKTKrj5Axxtn/edit']]
   },
   12: {
     title: '步驟料理店：說清楚才能做得到',
@@ -57,7 +57,7 @@ window.DAY_OF_AI_ADAPTATIONS = {
     prompts: ['放進去的是＿＿。', '接著要照順序＿＿。', '最後會得到＿＿。'],
     teacherQuestions: ['「整理一下」到底要做什麼？', '如果資料空白，這套步驟要怎麼辦？', '做到哪裡才算結束？'],
     words: [['解題步驟', '照順序完成任務的方法，也叫演算法'], ['輸入和輸出', '一開始放進去的資料，和最後得到的結果']],
-    links: [['原教材第 4 課簡報', 'https://docs.google.com/presentation/d/135UXEEMbW793bGWO7VZlpdS9EZvlPmd7/edit'], ['演算法學習單', 'https://docs.google.com/document/d/1N3DzaycaBzt2PRpkJtbXBYncehO8cIJM/edit']]
+    links: [['原教材第 4 課簡報', 'https://docs.google.com/presentation/d/135UXEEMbW793bGWO7VZlpdS9EZvlPmd7/edit'], ['演算法學習單', 'https://docs.google.com/document/d/1N3DzaycaBzt2PRpkJtbXBYncehO8cIJM/edit'], ['課後練習', 'https://docs.google.com/document/d/13yBPzg8Hs86pt2YUby7CtBu4xZ52Nvap/edit']]
   },
   15: {
     title: '老師機器人：找錯、修改、再試',
@@ -72,6 +72,6 @@ window.DAY_OF_AI_ADAPTATIONS = {
     prompts: ['我原本猜會＿＿。', '第一個不一樣的地方是＿＿。', '我只修改＿＿，結果變成＿＿。'],
     teacherQuestions: ['哪一個字讓老師需要猜？', '這次成功，是剛好還是真的說清楚？', '換一個起點，指令還能用嗎？'],
     words: [['除錯', '找出錯誤、修改，再試一次'], ['版本', '每次修改都留下一份，方便比較前後差別']],
-    links: [['原教材第 5 課簡報', 'https://docs.google.com/presentation/d/1UR67gAlFiD0ZWWkN-ZvY0dUGOeaCxi8X/edit'], ['演算法學習單', 'https://docs.google.com/document/d/1N3DzaycaBzt2PRpkJtbXBYncehO8cIJM/edit']]
+    links: [['原教材第 5 課簡報', 'https://docs.google.com/presentation/d/1UR67gAlFiD0ZWWkN-ZvY0dUGOeaCxi8X/edit'], ['演算法學習單', 'https://docs.google.com/document/d/1N3DzaycaBzt2PRpkJtbXBYncehO8cIJM/edit'], ['課後練習', 'https://docs.google.com/document/d/1O1kPEIGUWaIdR7O8D6bObOo7UNJqjxUk/edit']]
   }
 };
