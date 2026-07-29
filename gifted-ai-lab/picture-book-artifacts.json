@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-29",
+  "generator": "ChatGPT Image 2.0",
+  "style": "Q 版水粉與彩色鉛筆繪本風",
+  "audience": "國小三年級升四年級資優生",
+  "character": "黃帽 T、青綠書包的中年級女生與白色青綠 AI 機器人",
+  "items": [
+    { "week": 3, "title": "AI 找線索", "labels": ["觀察", "比較", "說理由"], "file": "week-03/week-illustration.webp" },
+    { "week": 6, "title": "機器怎麼學？", "labels": ["資料", "找規律", "猜一猜"], "file": "week-06/week-illustration.webp" },
+    { "week": 9, "title": "資料要公平", "labels": ["有代表", "不洩密", "要小心"], "file": "week-09/week-illustration.webp" },
+    { "week": 12, "title": "整理再解題", "labels": ["輸入", "處理", "輸出"], "file": "week-12/week-illustration.webp" },
+    { "week": 15, "title": "找錯再試", "labels": ["預測", "測試", "修正"], "file": "week-15/week-illustration.webp" },
+    { "week": 18, "title": "Scratch 分類挑戰", "labels": ["看特徵", "分一分", "再測試"], "file": "week-18/week-illustration.webp" },
+    { "week": 21, "title": "提示詞變清楚", "labels": ["角色", "目標", "檢查"], "file": "week-21/week-illustration.webp" },
+    { "week": 24, "title": "AI 使用守則", "labels": ["查證", "隱私", "公平"], "file": "week-24/week-illustration.webp" },
+    { "week": 27, "title": "做出第一版", "labels": ["想一想", "做一做", "試一試"], "file": "week-27/week-illustration.webp" },
+    { "week": 30, "title": "我的成果發表", "labels": ["證據", "改良", "分享"], "file": "week-30/week-illustration.webp" }
+  ]
+}

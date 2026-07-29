@@ -12,7 +12,7 @@ vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-student-language.js')
 const weeks = sandbox.window.GIFTED_WEEKS;
 const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
-const depthAssetVersion = '20260729-phase-six-v1';
+const depthAssetVersion = '20260729-picture-book-v1';
 
 const meta = ({ title, description, url, assetPrefix }) => `
 <meta name="description" content="${description}">
@@ -58,7 +58,7 @@ for (const item of weeks) {
 <head>
 ${commonHead}
 <link rel="stylesheet" href="../week-cockpit.css">
-<link rel="stylesheet" href="../week-cockpit-rich.css">
+<link rel="stylesheet" href="../week-cockpit-rich.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../week-learning-depth.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../week-phase-six.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../classroom-integrations.css">

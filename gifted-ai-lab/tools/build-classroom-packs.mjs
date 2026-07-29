@@ -93,6 +93,7 @@ const offlineAssets = [
   './gifted-ai-lab/week-data.js', './gifted-ai-lab/week-enrichment.js', './gifted-ai-lab/week-student-language.js', './gifted-ai-lab/week-cockpit.js',
   './gifted-ai-lab/week-depth-data.js', './gifted-ai-lab/week-learning-depth.js', './gifted-ai-lab/week-learning-depth.css',
   './gifted-ai-lab/week-phase-six.js', './gifted-ai-lab/week-phase-six.css',
+  './gifted-ai-lab/picture-book-artifacts.json',
   './gifted-ai-lab/week-cockpit.css', './gifted-ai-lab/week-cockpit-rich.css',
   './gifted-ai-lab/week-slides.js', './gifted-ai-lab/week-slides.css', './gifted-ai-lab/week-slides-rich.css',
   './gifted-ai-lab/classroom-integrations.js', './gifted-ai-lab/classroom-integrations.css',
@@ -109,6 +110,7 @@ for (const item of weeks) {
   const base = `./gifted-ai-lab/week-${code}/`;
   offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}student-guide.md`, `${base}student-warmup.md`, `${base}student-review.md`, `${base}student-video-card.html`, `${base}student-video-card.png`, `${base}video-captions.srt`, `${base}depth-source.md`, `${base}depth-video-captions.srt`, `${base}depth-video-transcript.txt`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
   if (fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png'))) offlineAssets.push(`${base}student-infographic.png`);
+  if (fs.existsSync(path.join(labDir, `week-${code}`, 'week-illustration.webp'))) offlineAssets.push(`${base}week-illustration.webp`);
 }
-fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-29-phase-six-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-29-picture-book-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
 console.log(`Built ${weeks.length} classroom packs, ${weeks.length} task sheets, YouTube data and offline manifest.`);

@@ -55,6 +55,8 @@ for (const code of weeks) {
     record(fs.existsSync(target) && fs.statSync(target).size > 0, 'depth resource', `week-${code}/${file}`);
   }
   record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png')), 'student infographic', `week-${code}`);
+  const illustration = path.join(labDir, `week-${code}`, 'week-illustration.webp');
+  record(fs.existsSync(illustration) && fs.statSync(illustration).size > 0, 'picture-book illustration', `week-${code}`);
 }
 
 const studentSandbox = { window: {} };
