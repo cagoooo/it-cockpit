@@ -178,6 +178,14 @@
   window.GIFTED_STUDENT_INFOGRAPHICS = {
     3: 'student-infographic.png',
     6: 'student-infographic.png',
+    9: 'student-infographic.png',
+    12: 'student-infographic.png',
+    15: 'student-infographic.png',
+    18: 'student-infographic.png',
+    21: 'student-infographic.png',
+    24: 'student-infographic.png',
+    27: 'student-infographic.png',
+    30: 'student-infographic.png',
   };
   window.toStudentLanguage = simplifyText;
 })();

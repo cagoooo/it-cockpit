@@ -42,8 +42,11 @@ for (const htmlPath of walk(labDir, '.html')) {
 }
 
 const weeks = ['03', '06', '09', '12', '15', '18', '21', '24', '27', '30'];
+for (const file of ['reports.html', 'reports.js', 'reports.css', 'sync-status.html', 'sync-status.js', 'sync-status.css', 'course-version-manifest.json', 'version-matrix.md', 'week-phase-six.js', 'week-phase-six.css']) {
+  record(fs.existsSync(path.join(labDir, file)), 'phase six core', file);
+}
 for (const code of weeks) {
-  for (const file of ['index.html', 'lecture-slides.html', 'classroom-pack.html', 'student-task.html', 'student-guide.md', 'teacher-pack.pdf', 'video.mp4', 'video-captions.srt']) {
+  for (const file of ['index.html', 'lecture-slides.html', 'classroom-pack.html', 'student-task.html', 'student-guide.md', 'student-warmup.md', 'student-review.md', 'teacher-pack.pdf', 'video.mp4', 'video-captions.srt']) {
     record(fs.existsSync(path.join(labDir, `week-${code}`, file)), 'week core', `week-${code}/${file}`);
   }
   record(fs.existsSync(path.join(labDir, 'youtube', `week-${code}`, 'transcript.json')), 'transcript', `week-${code}`);
@@ -51,7 +54,7 @@ for (const code of weeks) {
     const target = path.join(labDir, `week-${code}`, file);
     record(fs.existsSync(target) && fs.statSync(target).size > 0, 'depth resource', `week-${code}/${file}`);
   }
-  if (['03', '06'].includes(code)) record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png')), 'student infographic', `week-${code}`);
+  record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png')), 'student infographic', `week-${code}`);
 }
 
 const studentSandbox = { window: {} };
@@ -77,8 +80,13 @@ for (const item of depthArtifacts) {
 const studentSources = JSON.parse(fs.readFileSync(path.join(labDir, 'notebook-student-sources.json'), 'utf8'));
 record(studentSources.length === weeks.length, 'NotebookLM student source count', String(studentSources.length));
 for (const item of studentSources) {
-  record(Boolean(item.notebook_id && item.student_source_id), 'NotebookLM student source', `week-${String(item.week).padStart(2, '0')}`);
+  record(Boolean(item.notebook_id && item.student_source_id && item.infographic_id && item.infographic_status === 'completed'), 'NotebookLM student source', `week-${String(item.week).padStart(2, '0')}`);
 }
+
+const versionManifest = JSON.parse(fs.readFileSync(path.join(labDir, 'course-version-manifest.json'), 'utf8'));
+record(versionManifest.weeks?.length === weeks.length, 'course version week count', String(versionManifest.weeks?.length || 0));
+record(versionManifest.formal_plan?.teacher === '黃凱揚老師' && versionManifest.formal_plan?.sessions === 20, 'course version formal plan', 'teacher and sessions');
+for (const item of versionManifest.weeks || []) record(item.status === 'ready', 'course version status', `week-${String(item.week).padStart(2, '0')}`);
 
 const verification = JSON.parse(fs.readFileSync(path.join(labDir, 'youtube', 'verification.json'), 'utf8'));
 record(verification.length === 11, 'YouTube count', String(verification.length));

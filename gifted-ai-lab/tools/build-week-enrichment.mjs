@@ -124,6 +124,28 @@ for (const data of sandbox.window.GIFTED_WEEKS) {
     '- 先留下自己的想法，再請 AI 幫忙；最後由自己選擇和負責。',
   ];
   fs.writeFileSync(path.join(labDir, `week-${code}`, 'student-guide.md'), `${studentGuide.join('\n')}\n`, 'utf8');
+
+  const warmup = [
+    `# W${code}｜${data.title}｜課前暖身`, '',
+    '## 先看一個生活情況', '',
+    `想像你正在學校完成「${data.output}」。開始之前，先猜猜看：哪一步最容易成功？哪一步可能需要再試一次？`, '',
+    '## 老師一次問一題', '',
+    `1. ${data.questions[0]}`, `2. ${data.questions[1]}`, `3. ${data.questions[2]}`, '',
+    '## 動手前的小約定', '',
+    '- 先留下自己的第一個想法。', '- 卡住時先說看到什麼，不急著猜答案。', '- 不輸入姓名、照片、帳號或其他私人資料。'
+  ];
+  fs.writeFileSync(path.join(labDir, `week-${code}`, 'student-warmup.md'), `${warmup.join('\n')}\n`, 'utf8');
+
+  const review = [
+    `# W${code}｜${data.title}｜課後一分鐘複習`, '',
+    '## 今天最重要的一句話', '', data.concept, '',
+    '## 三個詞再說一次', '', ...glossary.map(([term, meaning]) => `- **${term}**：${meaning}`), '',
+    '## 用自己的話完成', '',
+    '- 我原本以為：', '- 我動手試了：', '- 我看到的證據是：', '- 下一次我想改：', '',
+    '## 最後檢查', '',
+    '- [ ] 我能說出今天完成了什麼。', '- [ ] 我能舉一個不同的例子。', '- [ ] 我知道哪個地方還不確定。'
+  ];
+  fs.writeFileSync(path.join(labDir, `week-${code}`, 'student-review.md'), `${review.join('\n')}\n`, 'utf8');
 }
 
 console.log(`Generated ${sandbox.window.GIFTED_WEEKS.length} enrichment sources and student guides.`);

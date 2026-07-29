@@ -20,3 +20,7 @@ jobs:
           node-version: '22'
       - name: Check internal links, offline assets and published media
         run: node gifted-ai-lab/tools/check-gifted-links.mjs
+      - name: Check course material version consistency
+        run: node gifted-ai-lab/tools/check-course-versions.mjs
+      - name: Smoke test feedback, rubric, reports and version center
+        run: node gifted-ai-lab/tools/smoke-phase-six.mjs

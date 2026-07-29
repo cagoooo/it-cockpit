@@ -1,0 +1,1160 @@
+{
+  "schema_version": 1,
+  "release": "2026.07.29-phase6.1",
+  "generated_at": "2026-07-29T05:07:09.276Z",
+  "formal_plan": {
+    "teacher": "黃凱揚老師",
+    "school": "桃園市龍潭區石門國民小學",
+    "school_year": "115",
+    "weeks": 10,
+    "sessions": 20,
+    "minutes_per_session": 45,
+    "source": "materials/teacher-guide.pdf"
+  },
+  "weeks": [
+    {
+      "week": 3,
+      "date": "115.9.23",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "AI 就在生活裡：哪些工具會自己學？",
+      "goal": "能用自己的話說出 AI 是什麼，也能看線索判斷生活工具有沒有用到 AI。",
+      "output": "AI／不是 AI 分類卡，加上一段理由錄音",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "af9a9772-21cb-4614-add1-9d3861308c64",
+      "student_source_id": "0e60d9c5-b2e7-40f8-8720-278b1c1fcc4b",
+      "student_infographic_id": "7b4d625b-2d66-4eaa-9a32-8bef4fed7cd8",
+      "student_infographic_status": "completed",
+      "depth_source_id": "dfbdf10d-c189-4936-99eb-cf297a5c1489",
+      "status": "ready"
+    },
+    {
+      "week": 6,
+      "date": "115.10.14",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "AI 怎麼從很多例子學會？",
+      "goal": "知道 AI 會從很多例子找規律，再猜新的答案，也能畫出學習三步驟。",
+      "output": "AI 學習三步驟圖：看例子→找規律→猜答案",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "07ad6f8c-468f-4ff5-87fb-b3d32c44bd82",
+      "student_source_id": "437a57f2-c43a-415a-b1bb-7b9e6eabc072",
+      "student_infographic_id": "6ee7801e-df74-455d-92a0-d7638b4a0454",
+      "student_infographic_status": "completed",
+      "depth_source_id": "f5f3967e-1ef4-4260-9b02-7f4fb63629bd",
+      "status": "ready"
+    },
+    {
+      "week": 9,
+      "date": "115.11.4",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "AI 會不會不公平？一起整理石門生活資料",
+      "goal": "找出資料少了哪些人或情況，並設計一張安全、不收私人資料的紀錄表。",
+      "output": "石門生活紀錄表第一版",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "05af6960-d89f-41e9-b64d-4c853487d643",
+      "student_source_id": "ef4d724e-fcef-4946-98a4-a6ee4b003dce",
+      "student_infographic_id": "f73eed77-3b75-4111-ab47-553cc38e22dd",
+      "student_infographic_status": "completed",
+      "depth_source_id": "e0f1cf2f-9c14-4cd9-903b-51538a05ca4d",
+      "status": "ready"
+    },
+    {
+      "week": 12,
+      "date": "115.11.25",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "把資料整理好，再寫出清楚步驟",
+      "goal": "整理一小份資料，再用「放進什麼、怎麼做、得到什麼」說清楚解題步驟。",
+      "output": "整理後的資料表，加上一張解題步驟單",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "a18fd57a-16b5-4c38-838a-578fbc065281",
+      "student_source_id": "4a9f116e-e1bf-4102-93ae-5343c80054f5",
+      "student_infographic_id": "051b8a28-4b5a-4b89-b763-fff069977222",
+      "student_infographic_status": "completed",
+      "depth_source_id": "8bec6d1e-4216-4dc7-b920-4c456a1f1973",
+      "status": "ready"
+    },
+    {
+      "week": 15,
+      "date": "115.12.16",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "把指令說清楚：找錯、修改、再試一次",
+      "goal": "寫出別人真的做得到的清楚指令，並學會先猜結果、試做、找錯、修改和再試。",
+      "output": "人類機器人指令第二版，加上找錯紀錄",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "df5767e0-3333-4312-8b65-5220c4c06415",
+      "student_source_id": "644e7119-d77d-4ac6-96f1-96d33c461aff",
+      "student_infographic_id": "60f6dc7d-77b8-487f-98c9-c312913d778a",
+      "student_infographic_status": "completed",
+      "depth_source_id": "99f709c3-aad9-4f52-8538-e555cf0fccfb",
+      "status": "ready"
+    },
+    {
+      "week": 18,
+      "date": "116.3.10",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "用 Scratch 做分類小幫手",
+      "goal": "做出可以操作的 Scratch 分類作品，並比較「照人寫規則」和「從很多例子學」有什麼不同。",
+      "output": "Scratch 分類小幫手第一版，加上 6 次測試紀錄",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "df21f06b-942a-4c98-afda-750f09234a27",
+      "student_source_id": "9bc6be9f-6cbf-4832-a014-894093b34236",
+      "student_infographic_id": "fbef8b9a-1302-4590-8949-89e37b9b35af",
+      "student_infographic_status": "completed",
+      "depth_source_id": "6bae309e-82b0-4780-8efe-98a034252e93",
+      "status": "ready"
+    },
+    {
+      "week": 21,
+      "date": "116.3.31",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "怎麼跟 AI 說清楚？一起想出新點子",
+      "goal": "先想自己的點子，再把任務、格式和規則說清楚，最後檢查 AI 的回答能不能相信。",
+      "output": "三版 AI 任務句，加上回答比較表",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "cea8c93f-0119-42f2-b503-85c07e560fb3",
+      "student_source_id": "98bc20fe-df0b-4f8b-a592-968144039656",
+      "student_infographic_id": "ae8c3f15-85d1-4f09-ab0c-6e51a010bb67",
+      "student_infographic_status": "completed",
+      "depth_source_id": "860259c2-84fe-434d-8e59-558296743bc6",
+      "status": "ready"
+    },
+    {
+      "week": 24,
+      "date": "116.4.21",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "安全、公平地用 AI：選定我的專題",
+      "goal": "知道使用作品要說明來源、重要資料要再確認、私人資料不能亂給，並完成一頁專題計畫。",
+      "output": "我的 AI 安全約定，加上一頁專題計畫",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "264d39dd-3c59-4c79-bcd8-6ef390b63e4f",
+      "student_source_id": "4383d2d2-7dba-4d20-a0f4-8921eae7cefa",
+      "student_infographic_id": "1b2acd95-b3c6-42de-8b7d-deb6ee7c0e60",
+      "student_infographic_status": "completed",
+      "depth_source_id": "0b683f08-169c-419c-8f39-5cfcadb9d915",
+      "status": "ready"
+    },
+    {
+      "week": 27,
+      "date": "116.5.12",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "先做一個能試的小作品",
+      "goal": "把想法畫成步驟和畫面，只做最重要的功能，讓別人可以實際試用。",
+      "output": "操作流程圖、畫面草圖和小作品第一版",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "458e7cf0-447c-4669-b540-4249f4358850",
+      "student_source_id": "77befa61-1006-407a-a1a0-86d8b1f49d00",
+      "student_infographic_id": "d536530d-9a49-46b3-bc97-63bb106337d2",
+      "student_infographic_status": "completed",
+      "depth_source_id": "d131ffe9-8da1-4183-a99d-6cfdf9e804b8",
+      "status": "ready"
+    },
+    {
+      "week": 30,
+      "date": "116.6.2",
+      "teacher": "黃凱揚老師",
+      "sessions": 2,
+      "minutes": 90,
+      "title": "請別人試作品，再改得更好",
+      "goal": "觀察別人怎麼使用作品，找出最重要的問題，修改後再試一次，並清楚介紹學習過程。",
+      "output": "作品第二版、測試紀錄和成果分享",
+      "plan_source": "materials/teacher-guide.pdf",
+      "notebook_id": "d5710175-62dd-4634-a867-df3e0342d0b6",
+      "student_source_id": "0e02bea7-2ae9-46b7-910e-aedd9b9d103b",
+      "student_infographic_id": "66eedc3e-a429-41f0-90ea-0d2726843c28",
+      "student_infographic_status": "completed",
+      "depth_source_id": "085711b2-38e8-440a-acec-c1e66d53afd9",
+      "status": "ready"
+    }
+  ],
+  "files": [
+    {
+      "file": "index.html",
+      "sha256": "e3e051da643f7a6f14f1475ed82b1a8308cb8ebf67a498dcf34f2318dd3a3cc4",
+      "bytes": 40358,
+      "scope": "core"
+    },
+    {
+      "file": "week-data.js",
+      "sha256": "da898eb628bd5f196c9769852357cfd5c6ba5797aa8587f3f61f98b240cc501f",
+      "bytes": 22982,
+      "scope": "core"
+    },
+    {
+      "file": "week-student-language.js",
+      "sha256": "f41d1c31a42b2e6fa39044522979d280f1f6fc0b03183ba719d8650205a6dd35",
+      "bytes": 13084,
+      "scope": "core"
+    },
+    {
+      "file": "week-cockpit.js",
+      "sha256": "21bff710bba12461f3c4e1dc99f79affc693f8db2267479b155681cdaadd7642",
+      "bytes": 20037,
+      "scope": "core"
+    },
+    {
+      "file": "week-learning-depth.js",
+      "sha256": "d6f3f1a10569a50afaa01503a0cc7b532a9e79edcb6bf93156de971a386f6802",
+      "bytes": 13823,
+      "scope": "core"
+    },
+    {
+      "file": "week-phase-six.js",
+      "sha256": "a18c5119a3ebdc6a41d88c567344e8391d4a196681458b54f88595f045a8494f",
+      "bytes": 8208,
+      "scope": "core"
+    },
+    {
+      "file": "reports.html",
+      "sha256": "fdbb163e2244f967ef27b594780df0a48c3fd52764d58546b2ccd9bf19de3591",
+      "bytes": 2559,
+      "scope": "core"
+    },
+    {
+      "file": "reports.js",
+      "sha256": "8f41e05d51f2bbdc4417b9bf452aaefb8f6875b96a39bda35aeafd86d26eeee2",
+      "bytes": 7917,
+      "scope": "core"
+    },
+    {
+      "file": "sync-status.html",
+      "sha256": "b670d071bbb3629d6fe17c662fe751217084a8ed99d97f229d11ff02b58a3709",
+      "bytes": 1925,
+      "scope": "core"
+    },
+    {
+      "file": "sync-status.js",
+      "sha256": "1709d6e48d661050fb5201c35577be0f84e1e2ce0dc364853f079c5fa368bfee",
+      "bytes": 1575,
+      "scope": "core"
+    },
+    {
+      "file": "materials/teacher-guide.pdf",
+      "sha256": "b715154bed90cbe48e02cd9965564724977cbdc5c4808b0f6d4cbe003f128fb6",
+      "bytes": 762182,
+      "scope": "core"
+    },
+    {
+      "file": "materials/student-workbook.pdf",
+      "sha256": "cb8e3bd5f6afe779905a8e2b48a26ef5d9631766d3f447a4dc41c51c4907b4ff",
+      "bytes": 253465,
+      "scope": "core"
+    },
+    {
+      "file": "week-03/index.html",
+      "sha256": "e128c78a2890db9374788dcb4ea87ebc521020f220612727f45320fc538a831f",
+      "bytes": 3934,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/lecture-slides.html",
+      "sha256": "fbba3a5b3557a97850c35c514391df3b2e3f9e24904217512f3e002ca87a4779",
+      "bytes": 3649,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/classroom-pack.html",
+      "sha256": "f600c44382f028f5a215208fe33ccdae8f81eae9253410785510ba940deb3cff",
+      "bytes": 7094,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/student-task.html",
+      "sha256": "87a4961173c1ad8df43bfd2a03366adf05ca511921296e7f8bc184d13173d7b1",
+      "bytes": 5876,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/student-guide.md",
+      "sha256": "3f49dfa14a96d37e60a5a414b9aabeee4d6807fe0730ab250cdd3478bbdaf718",
+      "bytes": 1753,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/student-warmup.md",
+      "sha256": "a7cfd6995aa9af1e2de74fc75f0d58bf0eb53fa01c5e0891e14d5771fd2c0da4",
+      "bytes": 667,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/student-review.md",
+      "sha256": "0d995f73067ac90f98dc17b8c6987b98e4721fdffa6d3fc89106fdfa73f32681",
+      "bytes": 712,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/teacher-pack.pdf",
+      "sha256": "98204e79e7ce1f10d0a1262b4026a4ac0b72786d67af9d34f9c991661b97343e",
+      "bytes": 359116,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/slides.pdf",
+      "sha256": "ab2548eb90e535c4b2e1d223696baf3afe738ca6b0427506e45646e513bfb763",
+      "bytes": 18052810,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/video.mp4",
+      "sha256": "c49c2b49562b318e0064d1df8fa8cbfb4979b17176b197384e7435fc70c4461f",
+      "bytes": 4322647,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/video-captions.srt",
+      "sha256": "eb42a1a8196614f3564787b1060a47963ddc324e59fb28b995168f57fd85c7ab",
+      "bytes": 2045,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/depth-video.mp4",
+      "sha256": "5804bcf0eedf8370f015bbc658159343458c2ec51b45c8e396c4629ae66420f7",
+      "bytes": 2621204,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/depth-video-captions.srt",
+      "sha256": "9928ceda786c7594bd79fb7a6a5613ee0678a613581e486a69ea839a8f8c03b4",
+      "bytes": 1942,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/student-video-card.png",
+      "sha256": "ab33ee47729b12c1f7eac11b3f0c0a18a8a819e90fca6c76303c9a903e6bb7f2",
+      "bytes": 70917,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/student-infographic.png",
+      "sha256": "3cfe694612998fbd1c6eaaa6e5369de7c0a8679805d2e149ec7c135610ad9f67",
+      "bytes": 4708424,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-06/index.html",
+      "sha256": "a46662a11055869d653d6a309c25b57ccbac12a966a93f1461f10c9436dd0d2f",
+      "bytes": 3880,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/lecture-slides.html",
+      "sha256": "11cc21d07b05eb7640e894808c003381772c8b3f123b90e8a2a6d85860bd1a43",
+      "bytes": 3604,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/classroom-pack.html",
+      "sha256": "1ec54d28bbb42f70f0656747a5f7b11abe303f420293428566c26112f1300888",
+      "bytes": 6992,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/student-task.html",
+      "sha256": "1be7c91ce15da38d7626258fa2aa0c48578d0f07c5b152d7a01645ce50a5e3c7",
+      "bytes": 5843,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/student-guide.md",
+      "sha256": "83fb64fdd74b10056efb0cdb971157cb173927bb5ba0cec2bc50ed05e73c7122",
+      "bytes": 1666,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/student-warmup.md",
+      "sha256": "249ab5c7d5341de3b3b970d32f21830df0ff655a8002f8dfff47334a44518bba",
+      "bytes": 616,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/student-review.md",
+      "sha256": "78a663b298984ffa1f61e9e021537bbc40b5764d0ee8973d8b2388dde736bb3c",
+      "bytes": 668,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/teacher-pack.pdf",
+      "sha256": "f14994f15c083bc07ea939a3ede02081510f4214d01b28d8d6421c1ad6aaa1c9",
+      "bytes": 343784,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/slides.pdf",
+      "sha256": "9e7777e1e3181b32b0742dee8aa8dc91420f526d756d38ec9da1a9c70c9d9a9c",
+      "bytes": 18611671,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/video.mp4",
+      "sha256": "3cf10bdaaad80e15810fd082f339e9f9d1233ce7aa46ca34448241f8656320e6",
+      "bytes": 5796350,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/video-captions.srt",
+      "sha256": "1f2057ecd08a8311e8f89317394c96fd1683561bf6ce834d4de5a80592aeb928",
+      "bytes": 2149,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/depth-video.mp4",
+      "sha256": "b47adcac1b3d5afaea84f82d85c2e8e09ed182029662d8b12c0adebadefe5a54",
+      "bytes": 2508705,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/depth-video-captions.srt",
+      "sha256": "d6d34fd3ae49d74a9217991069f1242818b021c83f160b1e42434a8b923e3060",
+      "bytes": 1883,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/student-video-card.png",
+      "sha256": "48af111de5f016e0be7de8355ee9bd76153099d2b483a76583dff0acecbde4f4",
+      "bytes": 69837,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/student-infographic.png",
+      "sha256": "d9e49a61ea9ebc04056762e2b466ac5ee80008dcba21d06272473e46899a0920",
+      "bytes": 4258833,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-09/index.html",
+      "sha256": "a8bb67d31a3dc3805aea39f5358e54c3faef995b4bd9a877665b8efae6b73610",
+      "bytes": 3958,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/lecture-slides.html",
+      "sha256": "f13f3f3ddb2f4a3007615b55ffd77e9fe1eafc503a6ed3f23b99e31392d33f66",
+      "bytes": 3667,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/classroom-pack.html",
+      "sha256": "1b2680ea2f42044f65f079ccb0b5be1d4a9736b9ad47266c0d2b1e5a4949f1ee",
+      "bytes": 7055,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/student-task.html",
+      "sha256": "a4fbf671b6d4aeb74751ff9747d3948ef1ff84197232cd77a2ebcef425c4dfdb",
+      "bytes": 5873,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/student-guide.md",
+      "sha256": "295893b8fcb492030e08f2c015ad5ea3f77821e723a973ca66554b16185449aa",
+      "bytes": 1714,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/student-warmup.md",
+      "sha256": "e352f874e663a485b10c4e6e4a0332a87e19108c6a497b8a7ad0afb4fddba4aa",
+      "bytes": 676,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/student-review.md",
+      "sha256": "d164e36d6b675425e4eb9e12091a94f5934fc34644d9bc6fe43d803545408dfa",
+      "bytes": 721,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/teacher-pack.pdf",
+      "sha256": "aa9bb9172dec822d88ebc9b7cb0de5e619cad085ce0f71439c31e8524f5cdbcc",
+      "bytes": 354810,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/slides.pdf",
+      "sha256": "aacca1085aac04c27c3a067e236e62de8868da6f301ab33083cbedeaae9d4c49",
+      "bytes": 19254658,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/video.mp4",
+      "sha256": "c87103131fad32a19c9a81a55fb0c6b9a7499bedd7d85be35a7220e2e8da0478",
+      "bytes": 5829845,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/video-captions.srt",
+      "sha256": "6844dcd39faa5b58cfca16ff55bec77216ac0c3fe4bc85ff712c0798f94edf90",
+      "bytes": 2856,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/depth-video.mp4",
+      "sha256": "95657ee231a722e4fd4e432dfda56a5b7f4400b0210a9751a3d6c7c85069cde5",
+      "bytes": 2687577,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/depth-video-captions.srt",
+      "sha256": "008e8c08fee606a80e9bcd5937f751b0c624daa3f99d596d3f841895ea2649fa",
+      "bytes": 1927,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/student-video-card.png",
+      "sha256": "c60b0db735327b7b2b052e6c470e30557cfedd8e7c614829d8d14dbe9bff7f0b",
+      "bytes": 71857,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/student-infographic.png",
+      "sha256": "deba61d41204665e3e9dbcbfa4fd9f3f55168fd25e5413c89826265b17c7f5c9",
+      "bytes": 4520505,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-12/index.html",
+      "sha256": "ddcde21dad48629f4050651f30e90bb10ebc5928eec2874ada645b657b2c2787",
+      "bytes": 3936,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/lecture-slides.html",
+      "sha256": "2cbc2a7fce0247cb7244812094c9aa5f9508e62528215ed3d17c9a34688db97a",
+      "bytes": 3635,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/classroom-pack.html",
+      "sha256": "d21db85a035233d22b5526ef1d3724d0ef11769730b06fcf4656a2a00c054e6b",
+      "bytes": 7066,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/student-task.html",
+      "sha256": "8cf10847b5ef3aaae1a82291634b4ad436f7f74a7e347c10b90679dde5b031ce",
+      "bytes": 5840,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/student-guide.md",
+      "sha256": "def5ad9420b6986948bbf9c31ac7d5eb276e65fb058dbce73c39f76fbbf08ae4",
+      "bytes": 1631,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/student-warmup.md",
+      "sha256": "bb06224f787d047c411f6a46b5775fd4359eae2e220c1a26e0f818638837d4ad",
+      "bytes": 652,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/student-review.md",
+      "sha256": "c213993b0ce565310cbdc402757b0b1954fd8d86f07853e193ca7a7c13e92905",
+      "bytes": 658,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/teacher-pack.pdf",
+      "sha256": "e73fe7206890b211e97ce9215afeeda1a3416a54efc3a52ed5338c35bee0b52f",
+      "bytes": 337208,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/slides.pdf",
+      "sha256": "777966d6acc5fd8cc89c63d2a68aa4e491b3d005328119d2f62baaa981acd8d1",
+      "bytes": 11661523,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/video.mp4",
+      "sha256": "2ca93bda64b28d35879ff0176c74ab2e9b1bb7b7f08678bdcbfd82f7428b088b",
+      "bytes": 8378469,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/video-captions.srt",
+      "sha256": "20d618ce96496e12cee8be885b9c44beb6aea0afc4e7bcc9abcc9e0a1237d297",
+      "bytes": 3209,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/depth-video.mp4",
+      "sha256": "6701ee5fca8dfb4d9bf87f0989b64e9db2897e74713aa9e2bbc55e1a2299f522",
+      "bytes": 2416664,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/depth-video-captions.srt",
+      "sha256": "8fb682971b0c2eda6b9ac929d65c83e06839c5707f59dfb49ea1db4761a0a7b8",
+      "bytes": 1779,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/student-video-card.png",
+      "sha256": "1b3918ad16efe0e0fb66e65639bafccc7518eee1b7d95a675c7cf9276e80079f",
+      "bytes": 67105,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/student-infographic.png",
+      "sha256": "153da524bca12dffecd3d278ba1378ee44adf84fb61c662db316bdc228ca64a6",
+      "bytes": 4370189,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-15/index.html",
+      "sha256": "dbc5af26241d342741adf986663720d3cf90923ac58568ffe178fbb7ba265845",
+      "bytes": 3981,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/lecture-slides.html",
+      "sha256": "635d85011d277afac4c7d3522932ec104181d971c95f0c4c6298e674ab894a59",
+      "bytes": 3662,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/classroom-pack.html",
+      "sha256": "599aeac8ca940d45483fa9acd424056507c32899cf9560d5311777a5b9cf0f6d",
+      "bytes": 6933,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/student-task.html",
+      "sha256": "53dcd28698d0bf20b5a62db9028774b783c48fe5038295ce1c383862574c7798",
+      "bytes": 5846,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/student-guide.md",
+      "sha256": "6f27364d5dad885e784ba72ec9106d2d7b949df3d539ecaec327c1d03c92ebee",
+      "bytes": 1660,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/student-warmup.md",
+      "sha256": "1fd63b2686bd37a38342756d0635b4c6e87dfd53ffc4a5eb96d41b3015994259",
+      "bytes": 625,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/student-review.md",
+      "sha256": "5132674de7110244fb00564bf521f6f66576cbcfaa66457e8aadde6bdb09961d",
+      "bytes": 691,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/teacher-pack.pdf",
+      "sha256": "6fcd2b8a68dc87de2de670f7d660db57638d8cd83c8c66b57a7ff56b0de782a2",
+      "bytes": 348439,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/slides.pdf",
+      "sha256": "62d98c711bfc50edc0a78732876537b908da39652a2f7a25133f7f877094372f",
+      "bytes": 14893257,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/video.mp4",
+      "sha256": "9fe142352d6a59ce943e84b5531f1696c18e27502d7883a50610a2c4272bc362",
+      "bytes": 7236700,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/video-captions.srt",
+      "sha256": "da80f0d79448293eacbb7b45f75f622794d1a336d4017b3a2e4dfbb5625f9b2a",
+      "bytes": 3892,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/depth-video.mp4",
+      "sha256": "75b8d2672ea0e639973bd9e9eb4752a6503af0e004248ef488d52539c696dc38",
+      "bytes": 2405519,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/depth-video-captions.srt",
+      "sha256": "b933c259afb6d1ca06c9b072ccc611a909328c2cefd5f4407c70d4dbcc2d498e",
+      "bytes": 1749,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/student-video-card.png",
+      "sha256": "b0d2e9dfb2202682ea25ce4e09925951dfa7682f0f0c6f9288a339c4495003b9",
+      "bytes": 69437,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/student-infographic.png",
+      "sha256": "29c2b4d4bf6999a6ed6662bc04659dfc1d58fc8bc9dd2a6e005e12351c98d37f",
+      "bytes": 4237141,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-18/index.html",
+      "sha256": "1b3252fa057a683f6a08b0a81cad7c920180377fd43057b8c5e39761d5fac1f4",
+      "bytes": 3963,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/lecture-slides.html",
+      "sha256": "c815e8763eea1dee9c648bd5d597b07ac3fda49a11abf4d5395b896b93b887c7",
+      "bytes": 3599,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/classroom-pack.html",
+      "sha256": "c7674044108410d3e3317674227b391a7e5c1a1d9e47b2df333321320c972e23",
+      "bytes": 7012,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/student-task.html",
+      "sha256": "f9898c4e68f09f84b12050be9290f7503513982ee50e31376c9c135e05db766c",
+      "bytes": 5834,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/student-guide.md",
+      "sha256": "8ca7ee6eadd4ae7e6a6b1c463b0cf51f0555cb138ee652c9e3ed83e1e73fdb95",
+      "bytes": 1638,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/student-warmup.md",
+      "sha256": "e9c9735b7405ff78f51b485dad868a0fb942b444a742fd4de8daf365024c422d",
+      "bytes": 645,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/student-review.md",
+      "sha256": "661eeec8af7985d53c5a370f1d21f1543eafdea227a7071aa677685ee4c89f7c",
+      "bytes": 690,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/teacher-pack.pdf",
+      "sha256": "e59ab918af9dc3a65524972788beb87f5ae07ad1331b8005eb5a6e64ab901fe2",
+      "bytes": 341812,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/slides.pdf",
+      "sha256": "d8a0f333c26ecc9fcc707b863f59fccdfe1d28a6e8b997f3355153d45e1aa648",
+      "bytes": 10463590,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/video.mp4",
+      "sha256": "63244a0d74968519547479abb741e6ba9649330ffeb8b15ca90b5ab8ac26410c",
+      "bytes": 3771884,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/video-captions.srt",
+      "sha256": "55582f1bb3a155495a8b01aa42a8f8b73b2c11fa57c66fe58a2d3dee64af919f",
+      "bytes": 2105,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/depth-video.mp4",
+      "sha256": "dc3257c42f6a11a0ba83a4e4d79ffeffe9fed5d003f583277f164142be5a3a12",
+      "bytes": 2549892,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/depth-video-captions.srt",
+      "sha256": "ccaa4c795ade06be1093bfe69b26549037f946c2a41afb8b976467b34dbc0478",
+      "bytes": 1840,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/student-video-card.png",
+      "sha256": "c60fe67313e67852224a004479411a2f4d581f6dea47d580e98ba7b79857dcf0",
+      "bytes": 68238,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/student-infographic.png",
+      "sha256": "bb43e8844a193dd07f80f6fe4594edc6459aba8c767bef6ae8d2caf32fa9d99f",
+      "bytes": 5177694,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-21/index.html",
+      "sha256": "76237de331a3b88e61df71be1181772e31ca1cd506380ab60638858592b8714a",
+      "bytes": 3978,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/lecture-slides.html",
+      "sha256": "bfc95a3518ceb00a2d59d43c4009ed4cdb8bbcb078babb5f7ce9eb119bf44396",
+      "bytes": 3647,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/classroom-pack.html",
+      "sha256": "b4a63dfdd2aa38f542e543a75a549af42d494f24179ee96b1ef789e368f2d4a0",
+      "bytes": 7050,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/student-task.html",
+      "sha256": "cbc729012369c5e4d1dbaa5db7fc422b49302d279f554509a04ca5e22e832bdf",
+      "bytes": 5895,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/student-guide.md",
+      "sha256": "6a8f5effccdf79bffbbe7f87e9ebcd842d6bb494766a81ccb10e06334dcd0b2d",
+      "bytes": 1690,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/student-warmup.md",
+      "sha256": "4c72c4cc237ecf721f792c112de6cac1dd41f9cf977de54e6c02e50bdaf93fcd",
+      "bytes": 654,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/student-review.md",
+      "sha256": "99f7580fe4a54244b33f4a1a66d264f34f85b2d2c2bfa6354a4f1cd268856e93",
+      "bytes": 647,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/teacher-pack.pdf",
+      "sha256": "9be2a0e6fc6d8baa03663e6e9097c40f161b772a6c45d906bfcad9e17f43df95",
+      "bytes": 336887,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/slides.pdf",
+      "sha256": "6836e42eb2159a9f925a895e89ee6634e04536b11c5bede242c01cdb4116cf5a",
+      "bytes": 15607474,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/video.mp4",
+      "sha256": "b9933a67b7562e141a75f23a9b5d93855bd0b89266ae784bfa3d0259b4054368",
+      "bytes": 6582668,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/video-captions.srt",
+      "sha256": "6b4c69eb4ec7cf216cedd53832590f339b7a139a9ce32d281daa06cc1e999c21",
+      "bytes": 3625,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/depth-video.mp4",
+      "sha256": "59582e35e4286bef41dd8d3abe40184bfa07efef5f746896f99fb6a0e2558b57",
+      "bytes": 2337811,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/depth-video-captions.srt",
+      "sha256": "2226c695593453e0e576a4d6aa29923d4e99335fb8ff6e41cf73322e445be3fc",
+      "bytes": 1765,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/student-video-card.png",
+      "sha256": "66f606a3417cce1f0b39d1bba0d31ed29bf665ed801d53b9460301291e4c559d",
+      "bytes": 66830,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/student-infographic.png",
+      "sha256": "fa56eaf14ea8808db7cbb0b95c86f196646637cc5926d8f3ae45f5c307774d74",
+      "bytes": 4051510,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-24/index.html",
+      "sha256": "c6223d42b0d8e75636f488dc6a118f4a3aeae42f04fdc8e9cc72f08caecb82b3",
+      "bytes": 4008,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/lecture-slides.html",
+      "sha256": "e195a765d175af36ddda88978d1a9f802205f66d6a0fe042a1cfc282b4fd382a",
+      "bytes": 3644,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/classroom-pack.html",
+      "sha256": "a88d028b4978630424a9425f88671049cddab6568da996a2778d8ed568ed1b93",
+      "bytes": 7071,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/student-task.html",
+      "sha256": "1501c7207d48196b583d7dc23b0f67caff36e71a1cea8e871db7045a18bd8d4a",
+      "bytes": 5897,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/student-guide.md",
+      "sha256": "ddc5920455d29415125c564ac5716f0609a743c9ecf8b807bc236aff8998efad",
+      "bytes": 1789,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/student-warmup.md",
+      "sha256": "17b96f8122b0c90fff51ae780c7745ec7bb2634f71a19ccd4a8573de5f1d0d33",
+      "bytes": 665,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/student-review.md",
+      "sha256": "5d7afe3677b079cd9b6de2ad32561340657064a3564ce531f96a6d3d0b1fac58",
+      "bytes": 706,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/teacher-pack.pdf",
+      "sha256": "3415dc397a66c923ce848ae57550590bce8150dcfa4fe1ae4328fee44b8c7477",
+      "bytes": 349993,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/slides.pdf",
+      "sha256": "5b94231a887fcdc6b5e4ec06e8bb3c91b3512e9f2c2a4a9b2c51a45e0f74452b",
+      "bytes": 16720616,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/video.mp4",
+      "sha256": "63eed096c8dda7f96a726e1ece0ff9756b412edd0436782a3695c0349394e3b6",
+      "bytes": 6402877,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/video-captions.srt",
+      "sha256": "a321ffb7f609d71fe11c2337274c555285a1261e78635f9dfa8da7fcd005b14a",
+      "bytes": 3114,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/depth-video.mp4",
+      "sha256": "ecebdf74782ee03cbd1412be10c850a4191078566b6eb1a9c9fef719b6a8fc08",
+      "bytes": 2588023,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/depth-video-captions.srt",
+      "sha256": "17117ffc083f0d0242c74162dfcd33d644bf5b537d19fb2b558a10337babc94d",
+      "bytes": 1881,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/student-video-card.png",
+      "sha256": "a026d707bd59e53378914360b95cdfa00ce5d754aa63510aa8b16d127d0b628d",
+      "bytes": 72940,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/student-infographic.png",
+      "sha256": "66544cea42183f16b762d235afbc862eaf6ea1a740d2c7cb243237f89e570313",
+      "bytes": 4137804,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-27/index.html",
+      "sha256": "1cb1bbbe2a53c7acf01424512a6e98af6ea506a2d63293dd933e7a1175ce9adb",
+      "bytes": 3873,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/lecture-slides.html",
+      "sha256": "646ec23048d6f7bd166f3894a831fbbef9f39ddc34514bf3871b0691ff3ad401",
+      "bytes": 3599,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/classroom-pack.html",
+      "sha256": "5c5e848908bae60a61e49eb51c62481534245034978c9e6ad3f5fc02df2dae57",
+      "bytes": 7011,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/student-task.html",
+      "sha256": "0fe3639f213ba8b8c313c198a45446ec70151362bddb80b8fdd10b72d6b4cbda",
+      "bytes": 5841,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/student-guide.md",
+      "sha256": "07a10d5ccbf7eb151d94523b03492ec630a0fffeaa0e9dba10192503e5f6808d",
+      "bytes": 1695,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/student-warmup.md",
+      "sha256": "54ee993428e52dc4d809130e970fbf1fb6b128b5abb22d4b3e482051a64c6c69",
+      "bytes": 625,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/student-review.md",
+      "sha256": "1015d39d3f97b618982c7c27024480eecebf6a5ee162d44b75b32fe79b828de6",
+      "bytes": 679,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/teacher-pack.pdf",
+      "sha256": "e1f0abfc5b18089d7fbbd438e42e16c90556e0625fde30dd72cd52bae3a5c480",
+      "bytes": 347541,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/slides.pdf",
+      "sha256": "2b17798062265d0d931d8b03ab2b463250f52f10bb65366b69abb410bd69296d",
+      "bytes": 14678963,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/video.mp4",
+      "sha256": "3cb45468548123b279bb9a0df184e5354a95e5ca9bb079979d6037427dda466f",
+      "bytes": 4435242,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/video-captions.srt",
+      "sha256": "182e73f2d8dad40bef0b524e7ea9c80f1f32b74e42aea5cc217a1f6c78b744bb",
+      "bytes": 3027,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/depth-video.mp4",
+      "sha256": "c92ed80a1f97e599ebf1688819a5044df6417a3156d67dff7978c44c6014e1a2",
+      "bytes": 2453820,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/depth-video-captions.srt",
+      "sha256": "3ea8e15382db210cb660778dfe995ce25bc2972aab51c7574f3f97c07bdc0214",
+      "bytes": 1809,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/student-video-card.png",
+      "sha256": "4a126e63ac0f7b6cf82150c88409aefbdf0a4472175af4a75c745a9f50858752",
+      "bytes": 64291,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/student-infographic.png",
+      "sha256": "c257235436c59a0c020e589131a00c8d622b8a19137e5a29d1cdc5e935fabb01",
+      "bytes": 3988144,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-30/index.html",
+      "sha256": "0fb4bcd770e2ec5d52bc40d6bb367796a520bdf1bb92867527bb5578c7a229a6",
+      "bytes": 3963,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/lecture-slides.html",
+      "sha256": "c8c45dd470c6afb1efb14875fa3a05c9c76cc52cc60da886d759fa261d00359f",
+      "bytes": 3617,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/classroom-pack.html",
+      "sha256": "0a281a6444667d0fae8a6f46d5c0f6ef356a5abd4fe906e4b92a9b7ccf20349a",
+      "bytes": 7010,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/student-task.html",
+      "sha256": "57f181d9d6f623cc4371f9e6b2e932725011a0c5b34c4441380c7f89d4435cff",
+      "bytes": 5825,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/student-guide.md",
+      "sha256": "d3af1cbf421124c2f3aa27f5d98a7b6d140c77860c686c562e0795dec9876bf5",
+      "bytes": 1657,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/student-warmup.md",
+      "sha256": "69fad75180927ee50d43b4c2dd7ebee67a6aba8c9286604cb8199c362cd6020f",
+      "bytes": 625,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/student-review.md",
+      "sha256": "f394663ac8615af5c7930d925201e7d65565221c8035d838d02b12b04f55cb72",
+      "bytes": 697,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/teacher-pack.pdf",
+      "sha256": "484c598e68d4df6170b755a5015a860241602cf70377f24b292b25f2af20f5c1",
+      "bytes": 350896,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/slides.pdf",
+      "sha256": "9af950b4ffd7c177877812630b51d1de722d6e288b03501005aaeeb8ec765112",
+      "bytes": 14041072,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/video.mp4",
+      "sha256": "b6646d28772ba6d6e4b92490f13d1017b7db80bd61deee40eda7d7a8ce3da92a",
+      "bytes": 5821395,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/video-captions.srt",
+      "sha256": "1bdbd164aeecc8dabda63ef6b5961b3df14cdb391feb13e47c8b8cb18c0f6163",
+      "bytes": 2746,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/depth-video.mp4",
+      "sha256": "953b86ff924f37c6462592636f0c7cb1e33f2a93ceab97da788f2960f22ca4ab",
+      "bytes": 2324517,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/depth-video-captions.srt",
+      "sha256": "a3a8935a7b3d2f9fd0689eaf76ade67453139f058a904409a90c7c019649a975",
+      "bytes": 1698,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/student-video-card.png",
+      "sha256": "541834f955d2ed4d34967cb8180937a69b1fb03d7a9c2c4c7d8be9affd439ff6",
+      "bytes": 65619,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/student-infographic.png",
+      "sha256": "8a315956d274032880760dd0d2470130b8a1c30f35232f007c920de3bf778314",
+      "bytes": 4198136,
+      "scope": "week-30"
+    }
+  ]
+}

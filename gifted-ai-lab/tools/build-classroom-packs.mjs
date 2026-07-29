@@ -92,10 +92,13 @@ const offlineAssets = [
   './', './index.html', './gifted-ai-lab/', './gifted-ai-lab/index.html', './gifted-ai-lab/offline.html',
   './gifted-ai-lab/week-data.js', './gifted-ai-lab/week-enrichment.js', './gifted-ai-lab/week-student-language.js', './gifted-ai-lab/week-cockpit.js',
   './gifted-ai-lab/week-depth-data.js', './gifted-ai-lab/week-learning-depth.js', './gifted-ai-lab/week-learning-depth.css',
+  './gifted-ai-lab/week-phase-six.js', './gifted-ai-lab/week-phase-six.css',
   './gifted-ai-lab/week-cockpit.css', './gifted-ai-lab/week-cockpit-rich.css',
   './gifted-ai-lab/week-slides.js', './gifted-ai-lab/week-slides.css', './gifted-ai-lab/week-slides-rich.css',
   './gifted-ai-lab/classroom-integrations.js', './gifted-ai-lab/classroom-integrations.css',
   './gifted-ai-lab/youtube-data.js', './gifted-ai-lab/transcripts.html', './gifted-ai-lab/transcript-search.js',
+  './gifted-ai-lab/reports.html', './gifted-ai-lab/reports.js', './gifted-ai-lab/reports.css',
+  './gifted-ai-lab/sync-status.html', './gifted-ai-lab/sync-status.js', './gifted-ai-lab/sync-status.css', './gifted-ai-lab/course-version-manifest.json', './gifted-ai-lab/version-matrix.md',
   './gifted-ai-lab/transcript-search.css', './gifted-ai-lab/site.webmanifest', './gifted-ai-lab/lecture-slides.html',
   './gifted-ai-lab/materials/teacher-guide.pdf', './gifted-ai-lab/materials/student-workbook.pdf',
   './gifted-ai-lab/youtube/annual/transcript.json', './gifted-ai-lab/assets/gifted-lab-cover.png',
@@ -104,8 +107,8 @@ const offlineAssets = [
 for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
   const base = `./gifted-ai-lab/week-${code}/`;
-  offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}student-guide.md`, `${base}student-video-card.html`, `${base}student-video-card.png`, `${base}video-captions.srt`, `${base}depth-source.md`, `${base}depth-video-captions.srt`, `${base}depth-video-transcript.txt`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
-  if ([3, 6].includes(item.week)) offlineAssets.push(`${base}student-infographic.png`);
+  offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}student-guide.md`, `${base}student-warmup.md`, `${base}student-review.md`, `${base}student-video-card.html`, `${base}student-video-card.png`, `${base}video-captions.srt`, `${base}depth-source.md`, `${base}depth-video-captions.srt`, `${base}depth-video-transcript.txt`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
+  if (fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png'))) offlineAssets.push(`${base}student-infographic.png`);
 }
-fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-29-student-language-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-29-phase-six-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
 console.log(`Built ${weeks.length} classroom packs, ${weeks.length} task sheets, YouTube data and offline manifest.`);

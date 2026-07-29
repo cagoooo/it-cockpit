@@ -1,0 +1,7 @@
+(async function(){
+  const response=await fetch(`course-version-manifest.json?v=${Date.now()}`);if(!response.ok)throw new Error('無法讀取版本資料');const data=await response.json();
+  const ready=data.weeks.filter(row=>row.status==='ready').length,images=data.weeks.filter(row=>row.student_infographic_status==='completed').length;
+  document.querySelector('#summary').innerHTML=`<div class="metric"><b>${data.release}</b><span>目前發布版本</span></div><div class="metric"><b>${ready} / 10</b><span>週次資料一致</span></div><div class="metric"><b>${images} / 10</b><span>NotebookLM 兒童圖完成</span></div><div class="metric"><b>${data.files.length}</b><span>受雜湊保護檔案</span></div>`;
+  document.querySelector('#weekRows').innerHTML=data.weeks.map(row=>`<tr id="week-${String(row.week).padStart(2,'0')}"><td>第 ${row.week} 週</td><td>${row.date}<br>2 節／90 分鐘</td><td><b>${row.title}</b><br>${row.goal}</td><td class="${row.status==='ready'?'ok':'pending'}">${row.status==='ready'?'資料齊全':'需要檢查'}</td><td class="${row.student_infographic_status==='completed'?'ok':'pending'}">${row.student_infographic_status==='completed'?'已完成':row.student_infographic_status}</td><td><a href="week-${String(row.week).padStart(2,'0')}/">開啟週次</a></td></tr>`).join('');
+  document.querySelector('#generatedAt').textContent=new Date(data.generated_at).toLocaleString('zh-TW');
+})().catch(error=>{document.querySelector('#summary').innerHTML=`<div class="metric"><b>讀取失敗</b><span>${error.message}</span></div>`});
