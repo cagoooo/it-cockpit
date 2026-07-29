@@ -42,6 +42,9 @@ for (const htmlPath of walk(labDir, '.html')) {
 }
 
 const weeks = ['03', '06', '09', '12', '15', '18', '21', '24', '27', '30'];
+const annualIndex = fs.readFileSync(path.join(labDir, 'index.html'), 'utf8');
+record(annualIndex.includes('visualCourseGrid') && annualIndex.includes('lesson-visual-strip'), 'visual course picker', 'index.html');
+record(fs.readFileSync(path.join(labDir, 'week-cockpit.js'), 'utf8').includes('visual-learning-wall'), 'visual learning wall', 'week-cockpit.js');
 for (const file of ['reports.html', 'reports.js', 'reports.css', 'sync-status.html', 'sync-status.js', 'sync-status.css', 'course-version-manifest.json', 'version-matrix.md', 'week-phase-six.js', 'week-phase-six.css']) {
   record(fs.existsSync(path.join(labDir, file)), 'phase six core', file);
 }

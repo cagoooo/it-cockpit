@@ -112,5 +112,5 @@ for (const item of weeks) {
   if (fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png'))) offlineAssets.push(`${base}student-infographic.png`);
   if (fs.existsSync(path.join(labDir, `week-${code}`, 'week-illustration.webp'))) offlineAssets.push(`${base}week-illustration.webp`);
 }
-fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-29-picture-book-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-29-visual-gallery-v2', assets: offlineAssets }, null, 2)}\n`, 'utf8');
 console.log(`Built ${weeks.length} classroom packs, ${weeks.length} task sheets, YouTube data and offline manifest.`);

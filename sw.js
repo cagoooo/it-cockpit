@@ -1,7 +1,7 @@
 // IT Cockpit Service Worker
 // 策略：HTML network-first（永遠拿最新）、靜態資源 cache-first（offline 友善）
 // 新版本部署時 bump CACHE_VERSION，舊快取會被自動清掉
-const CACHE_VERSION = '2026-07-29-gifted-picture-book-v12';
+const CACHE_VERSION = '2026-07-29-gifted-visual-gallery-v13';
 const HTML_CACHE = `it-cockpit-html-${CACHE_VERSION}`;
 const ASSET_CACHE = `it-cockpit-asset-${CACHE_VERSION}`;
 const GIFTED_CORE_CACHE = `it-cockpit-gifted-core-${CACHE_VERSION}`;
@@ -46,8 +46,9 @@ self.addEventListener('fetch', (e) => {
     accept.includes('text/html') ||
     url.pathname.endsWith('.html') ||
     url.pathname.endsWith('/');
+  const isGiftedMutable = url.pathname.includes('/gifted-ai-lab/') && /\.(?:js|css|json)$/.test(url.pathname);
 
-  if (isHtml) {
+  if (isHtml || isGiftedMutable) {
     e.respondWith(networkFirst(req, HTML_CACHE));
   } else {
     e.respondWith(cacheFirst(req, ASSET_CACHE));
