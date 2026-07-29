@@ -72,7 +72,7 @@ for (const item of weeks) {
   <section class="band"><h2>正常與離線雙軌</h2><div class="grid"><div class="cell normal"><b>正常教學</b>使用週次駕駛艙、互動簡報、NotebookLM 與站內影片完成探究。</div><div class="cell offline"><b>無網路／無 AI</b>${escapeHtml(offlineTasks[item.week])}</div><div class="cell"><b>本週證據</b>${escapeHtml(item.output)}</div></div></section>
   <section class="band"><h2>課後銜接</h2><textarea class="answer" data-save="after" aria-label="課後銜接紀錄" placeholder="最有力的推理、需要補強的地方、下次要延續的線索"></textarea></section>
   <footer class="footer">本頁不會上傳學生資料；所有勾選與紀錄只保存在目前瀏覽器。</footer>
-  </main>${persistenceScript(`gifted-pack-${code}`)}</body></html>`;
+  </main>${persistenceScript(`gifted-pack-${code}`)}${[3, 6, 9, 12, 15].includes(item.week) ? '<script src="../source-attribution.js?v=20260729-day-of-ai-v1"></script>' : ''}</body></html>`;
 
   const task = `<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>W${code} 學生任務單｜石門智繪客</title><style>${sharedStyle}</style></head><body><main>
   <header class="top"><div><div class="code">WEEK ${code} · STUDENT MISSION</div><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.goal)}</p></div><div class="actions"><a class="btn" href="index.html">回駕駛艙</a><button class="btn primary" data-print>列印任務單</button></div></header>
@@ -83,7 +83,7 @@ for (const item of weeks) {
   <section class="band"><h2>離線替代任務</h2><p>${escapeHtml(offlineTasks[item.week])}</p></section>
   <section class="band"><h2>完成前安全檢查</h2><div class="checklist">${safetyChecks.map((text,index)=>`<label><input type="checkbox" data-save="safe-${index}"><span>${escapeHtml(text)}</span></label>`).join('')}</div><p class="save-state" aria-live="polite">內容只保存在本機</p></section>
   <footer class="footer">課程設計：黃凱揚老師｜桃園市龍潭區石門國民小學</footer>
-  </main>${persistenceScript(`gifted-task-${code}`)}</body></html>`;
+  </main>${persistenceScript(`gifted-task-${code}`)}${[3, 6, 9, 12, 15].includes(item.week) ? '<script src="../source-attribution.js?v=20260729-day-of-ai-v1"></script>' : ''}</body></html>`;
   fs.writeFileSync(path.join(weekDir, 'classroom-pack.html'), pack, 'utf8');
   fs.writeFileSync(path.join(weekDir, 'student-task.html'), task, 'utf8');
 }
@@ -94,6 +94,7 @@ const offlineAssets = [
   './gifted-ai-lab/week-depth-data.js', './gifted-ai-lab/week-learning-depth.js', './gifted-ai-lab/week-learning-depth.css',
   './gifted-ai-lab/week-phase-six.js', './gifted-ai-lab/week-phase-six.css',
   './gifted-ai-lab/gifted-visual-system.css', './gifted-ai-lab/picture-inquiry.js', './gifted-ai-lab/teacher-sync.js',
+  './gifted-ai-lab/source-credits.html', './gifted-ai-lab/source-attribution.js', './gifted-ai-lab/source-attribution.css',
   './gifted-ai-lab/preflight.html', './gifted-ai-lab/preflight.js', './gifted-ai-lab/preflight.css', './gifted-ai-lab/version.json',
   './gifted-ai-lab/picture-book-artifacts.json',
   './gifted-ai-lab/week-cockpit.css', './gifted-ai-lab/week-cockpit-rich.css',

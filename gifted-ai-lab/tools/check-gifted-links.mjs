@@ -45,8 +45,15 @@ const weeks = ['03', '06', '09', '12', '15', '18', '21', '24', '27', '30'];
 const annualIndex = fs.readFileSync(path.join(labDir, 'index.html'), 'utf8');
 record(annualIndex.includes('visualCourseGrid') && annualIndex.includes('lesson-visual-strip'), 'visual course picker', 'index.html');
 record(fs.readFileSync(path.join(labDir, 'week-cockpit.js'), 'utf8').includes('visual-learning-wall'), 'visual learning wall', 'week-cockpit.js');
-for (const file of ['reports.html', 'reports.js', 'reports.css', 'sync-status.html', 'sync-status.js', 'sync-status.css', 'course-version-manifest.json', 'version-matrix.md', 'week-phase-six.js', 'week-phase-six.css', 'gifted-visual-system.css', 'picture-inquiry.js', 'teacher-sync.js', 'preflight.html', 'preflight.js', 'preflight.css', 'version.json']) {
+for (const file of ['reports.html', 'reports.js', 'reports.css', 'sync-status.html', 'sync-status.js', 'sync-status.css', 'course-version-manifest.json', 'version-matrix.md', 'week-phase-six.js', 'week-phase-six.css', 'gifted-visual-system.css', 'picture-inquiry.js', 'teacher-sync.js', 'preflight.html', 'preflight.js', 'preflight.css', 'version.json', 'source-credits.html', 'source-attribution.js', 'source-attribution.css']) {
   record(fs.existsSync(path.join(labDir, file)), 'phase six core', file);
+}
+const sourcePage = fs.readFileSync(path.join(labDir, 'source-credits.html'), 'utf8');
+record(sourcePage.includes('CC BY-NC-SA 4.0') && sourcePage.includes('Day of AI') && sourcePage.includes('無官方合作、認證或背書'), 'source attribution', 'source-credits.html');
+for (const code of ['03', '06', '09', '12', '15']) {
+  for (const file of ['index.html', 'classroom-pack.html', 'student-task.html']) {
+    record(fs.readFileSync(path.join(labDir, `week-${code}`, file), 'utf8').includes('source-attribution.js'), 'source attribution', `week-${code}/${file}`);
+  }
 }
 for (const code of weeks) {
   for (const file of ['index.html', 'lecture-slides.html', 'classroom-pack.html', 'student-task.html', 'student-guide.md', 'student-warmup.md', 'student-review.md', 'teacher-pack.pdf', 'video.mp4', 'video-captions.srt']) {

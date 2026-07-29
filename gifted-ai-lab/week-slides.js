@@ -6,6 +6,8 @@
   if(!data||!extra){stage.innerHTML='<div style="color:white">找不到本週簡報資料</div>';return;}
 
   const ww=String(week).padStart(2,'0');
+  const sourceCredit=[3,6,9,12,15].includes(week)?'<small class="slide-source">部分內容依 Day of AI 教材改寫｜CC BY-NC-SA 4.0</small>':'';
+  if(sourceCredit)document.head.insertAdjacentHTML('beforeend','<style>.slide-source{position:absolute;left:24px;bottom:14px;z-index:2;color:rgba(239,250,247,.76);font-size:clamp(.64rem,1vw,.82rem);font-weight:600;letter-spacing:0}.slide.content .slide-source{color:rgba(23,59,63,.68)}</style>');
   const esc=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const speaker=text=>`<aside class="speaker"><b>阿凱老師</b>${esc(text)}</aside>`;
   const pathCards=extra.path.map((item,i)=>`<div class="map-card"><span>0${i+1}</span><b>${esc(item[0])}</b><small>${esc(item[2])}</small></div>`).join('');
@@ -32,7 +34,7 @@
   const renderOverview=()=>{overview.innerHTML=`<div class="overview-head"><div><b>W${ww} 章節總覽</b><span>點選任一頁直接跳轉</span></div><button id="closeOverview" aria-label="關閉總覽">×</button></div><div class="overview-grid">${slides.map((slide,i)=>`<button data-jump="${i}" class="${i===index?'active':''}"><span>${String(i+1).padStart(2,'0')}</span><b>${esc(slide.title)}</b><small>${i===0?data.title:(i===slides.length-1?'證據、限制與下一步':extra.path[Math.min(3,Math.max(0,i-5))]?.[0]||'核心概念')}</small></button>`).join('')}</div>`;overview.querySelector('#closeOverview').onclick=closeOverview;overview.querySelectorAll('[data-jump]').forEach(button=>button.onclick=()=>{index=Number(button.dataset.jump);closeOverview();render();});};
   const openOverview=()=>{overviewOpen=true;overview.classList.add('show');overview.setAttribute('aria-hidden','false');renderOverview();};
   function closeOverview(){overviewOpen=false;overview.classList.remove('show');overview.setAttribute('aria-hidden','true');}
-  const render=()=>{stage.innerHTML=slides.map((slide,i)=>slide.html.replace('class="slide',`class="slide ${i===index?'active ':''}`).replace('<section class="slide ',`<section data-page="${String(i+1).padStart(2,'0')} / ${slides.length}" class="slide `)).join('');document.querySelector('#counter').textContent=`${index+1} / ${slides.length}`;document.querySelector('#progress').style.width=`${(index+1)/slides.length*100}%`;document.body.classList.toggle('speaker-hidden',speakerHidden);history.replaceState(null,'',`#slide-${index+1}`);if(overviewOpen)renderOverview();};
+  const render=()=>{stage.innerHTML=slides.map((slide,i)=>slide.html.replace('</section>',`${sourceCredit}</section>`).replace('class="slide',`class="slide ${i===index?'active ':''}`).replace('<section class="slide ',`<section data-page="${String(i+1).padStart(2,'0')} / ${slides.length}" class="slide `)).join('');document.querySelector('#counter').textContent=`${index+1} / ${slides.length}`;document.querySelector('#progress').style.width=`${(index+1)/slides.length*100}%`;document.body.classList.toggle('speaker-hidden',speakerHidden);history.replaceState(null,'',`#slide-${index+1}`);if(overviewOpen)renderOverview();};
   const move=delta=>{index=Math.max(0,Math.min(slides.length-1,index+delta));render();};
   document.querySelector('#prev').onclick=()=>move(-1);document.querySelector('#next').onclick=()=>move(1);document.querySelector('#overviewButton').onclick=()=>overviewOpen?closeOverview():openOverview();
   document.querySelector('#full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();

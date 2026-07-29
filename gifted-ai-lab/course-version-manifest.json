@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release": "2026.07.29-gallery-layout.3",
-  "generated_at": "2026-07-29T12:05:13.694Z",
+  "generated_at": "2026-07-29T12:37:02.444Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -186,8 +186,8 @@
   "files": [
     {
       "file": "index.html",
-      "sha256": "b06cd01ebf5a62863ac6bddb0eb5d46bb5aa7fa9ea340b14f78b83c177d89bbd",
-      "bytes": 45326,
+      "sha256": "3d2a092c97fe796e0088766ec5982cdd989de581e455ce391ea518a74685bd07",
+      "bytes": 45480,
       "scope": "core"
     },
     {
@@ -270,8 +270,8 @@
     },
     {
       "file": "week-03/index.html",
-      "sha256": "91d17fe16884fb626529950acaaac96f21a266838dcfcd97afd7ee36200f0ef1",
-      "bytes": 4176,
+      "sha256": "30ae750b4408b7e31710035922e5f988945237ef2b8d96c82214cde81be4613c",
+      "bytes": 4329,
       "scope": "week-03"
     },
     {
@@ -282,14 +282,14 @@
     },
     {
       "file": "week-03/classroom-pack.html",
-      "sha256": "f600c44382f028f5a215208fe33ccdae8f81eae9253410785510ba940deb3cff",
-      "bytes": 7094,
+      "sha256": "6f798b5bf64a65edc7b72d5778187a0619cbd68f559289b11afab706f18ceae3",
+      "bytes": 7166,
       "scope": "week-03"
     },
     {
       "file": "week-03/student-task.html",
-      "sha256": "87a4961173c1ad8df43bfd2a03366adf05ca511921296e7f8bc184d13173d7b1",
-      "bytes": 5876,
+      "sha256": "cd0d6f88929f028529b3214ea87fcbf5683e93217cdd6ccfa183e13daf48433f",
+      "bytes": 5948,
       "scope": "week-03"
     },
     {
@@ -366,8 +366,8 @@
     },
     {
       "file": "week-06/index.html",
-      "sha256": "7c46cd6dcd6d92079492331b8fed2ba744c4707e6169430aa0522cdb7eaa6b30",
-      "bytes": 4122,
+      "sha256": "255325b60bfc9f89ce85701f253879cb5b15bf514fa88e708a2e30383fc57ffc",
+      "bytes": 4275,
       "scope": "week-06"
     },
     {
@@ -378,14 +378,14 @@
     },
     {
       "file": "week-06/classroom-pack.html",
-      "sha256": "1ec54d28bbb42f70f0656747a5f7b11abe303f420293428566c26112f1300888",
-      "bytes": 6992,
+      "sha256": "af8a94a1d94e6e2f58f0b062bad49060b9a68cb606cb8f03c3f8823cacf1470d",
+      "bytes": 7064,
       "scope": "week-06"
     },
     {
       "file": "week-06/student-task.html",
-      "sha256": "1be7c91ce15da38d7626258fa2aa0c48578d0f07c5b152d7a01645ce50a5e3c7",
-      "bytes": 5843,
+      "sha256": "42980d460a18fb4e771c1e8679f6a90853e365c154a29ed68bcb035220f41fc7",
+      "bytes": 5915,
       "scope": "week-06"
     },
     {
@@ -462,8 +462,8 @@
     },
     {
       "file": "week-09/index.html",
-      "sha256": "7485416cc2e7891bb1ea9ea921f1923801ad867d459576e20ee8330e2789ae87",
-      "bytes": 4200,
+      "sha256": "fffe176484176f014196695986cb5eac04d26bb9f52e78e93ea7b9b810c9093c",
+      "bytes": 4353,
       "scope": "week-09"
     },
     {
@@ -474,14 +474,14 @@
     },
     {
       "file": "week-09/classroom-pack.html",
-      "sha256": "1b2680ea2f42044f65f079ccb0b5be1d4a9736b9ad47266c0d2b1e5a4949f1ee",
-      "bytes": 7055,
+      "sha256": "20de65222170e73b97da8f214efc5e3cf221bdb9447efd9363ad0b0033b76691",
+      "bytes": 7127,
       "scope": "week-09"
     },
     {
       "file": "week-09/student-task.html",
-      "sha256": "a4fbf671b6d4aeb74751ff9747d3948ef1ff84197232cd77a2ebcef425c4dfdb",
-      "bytes": 5873,
+      "sha256": "e8f91767b709a8a27c6bdd73ef0d2f9a3f4ab3fba57e21af056af095cd538385",
+      "bytes": 5945,
       "scope": "week-09"
     },
     {
@@ -558,8 +558,8 @@
     },
     {
       "file": "week-12/index.html",
-      "sha256": "6f9ac7d39274cf04691a2eac907d142379e5f5898efdd053a05bcd557b235886",
-      "bytes": 4178,
+      "sha256": "6bb608f7ac07593c632b8c3a886e17fcaae283072062a3897f108c0df3119723",
+      "bytes": 4331,
       "scope": "week-12"
     },
     {
@@ -570,14 +570,14 @@
     },
     {
       "file": "week-12/classroom-pack.html",
-      "sha256": "d21db85a035233d22b5526ef1d3724d0ef11769730b06fcf4656a2a00c054e6b",
-      "bytes": 7066,
+      "sha256": "a69fb0cb893505d3f0cb36a8f99b5f822b5ad7b9d2d1599be049fb2566dda105",
+      "bytes": 7138,
       "scope": "week-12"
     },
     {
       "file": "week-12/student-task.html",
-      "sha256": "8cf10847b5ef3aaae1a82291634b4ad436f7f74a7e347c10b90679dde5b031ce",
-      "bytes": 5840,
+      "sha256": "a099fa097d2f0b20164d9aae6d111aa3541ad24ab88e750b2a9a20c7fd34c8f0",
+      "bytes": 5912,
       "scope": "week-12"
     },
     {
@@ -654,8 +654,8 @@
     },
     {
       "file": "week-15/index.html",
-      "sha256": "51373f0067a7326e15ca626dea8d3d103270c0c144fd6f379277142c41c4fb45",
-      "bytes": 4223,
+      "sha256": "926ae02bf8ef612787929d519f3e5b20afaa26efaec609a68e2239578761e981",
+      "bytes": 4376,
       "scope": "week-15"
     },
     {
@@ -666,14 +666,14 @@
     },
     {
       "file": "week-15/classroom-pack.html",
-      "sha256": "599aeac8ca940d45483fa9acd424056507c32899cf9560d5311777a5b9cf0f6d",
-      "bytes": 6933,
+      "sha256": "39e27adc6ca266a32e45983d0e004516446bfa31e8e292d5e1039187613e3e53",
+      "bytes": 7005,
       "scope": "week-15"
     },
     {
       "file": "week-15/student-task.html",
-      "sha256": "53dcd28698d0bf20b5a62db9028774b783c48fe5038295ce1c383862574c7798",
-      "bytes": 5846,
+      "sha256": "10326cb791c631ad2a5b2978b0d51a25b9bd976ae4381c75da39ffbc28eadc8a",
+      "bytes": 5918,
       "scope": "week-15"
     },
     {
