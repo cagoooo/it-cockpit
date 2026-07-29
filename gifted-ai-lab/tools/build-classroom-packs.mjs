@@ -95,6 +95,8 @@ const offlineAssets = [
   './gifted-ai-lab/week-phase-six.js', './gifted-ai-lab/week-phase-six.css',
   './gifted-ai-lab/gifted-visual-system.css', './gifted-ai-lab/picture-inquiry.js', './gifted-ai-lab/teacher-sync.js',
   './gifted-ai-lab/source-credits.html', './gifted-ai-lab/source-attribution.js', './gifted-ai-lab/source-attribution.css',
+  './gifted-ai-lab/day-of-ai-adaptations.js', './gifted-ai-lab/day-of-ai-lessons.js', './gifted-ai-lab/day-of-ai-lessons.css',
+  './gifted-ai-lab/notebook-day-of-ai-artifacts.json',
   './gifted-ai-lab/preflight.html', './gifted-ai-lab/preflight.js', './gifted-ai-lab/preflight.css', './gifted-ai-lab/version.json',
   './gifted-ai-lab/picture-book-artifacts.json',
   './gifted-ai-lab/week-cockpit.css', './gifted-ai-lab/week-cockpit-rich.css',

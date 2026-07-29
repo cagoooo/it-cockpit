@@ -13,6 +13,7 @@ const weeks = sandbox.window.GIFTED_WEEKS;
 const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
 const depthAssetVersion = '20260729-phase-8-v1';
+const dayAssetVersion = '20260729-day-of-ai-v1';
 
 const meta = ({ title, description, url, assetPrefix }) => `
 <meta name="description" content="${description}">
@@ -42,6 +43,7 @@ const meta = ({ title, description, url, assetPrefix }) => `
 
 for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
+  const hasDayOfAiLesson = [3, 6, 9, 12, 15].includes(item.week);
   const weekDir = path.join(labDir, `week-${code}`);
   const title = `W${code} ${item.title}｜石門智繪客`;
   const description = `黃凱揚老師第 ${item.week} 週創造力資優資訊科技課程：${item.goal}包含動手闖關、三題小挑戰、NotebookLM、簡報與影片。`;
@@ -62,9 +64,11 @@ ${commonHead}
 <link rel="stylesheet" href="../week-learning-depth.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../week-phase-six.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../classroom-integrations.css">
-<link rel="stylesheet" href="../gifted-visual-system.css?v=${depthAssetVersion}">
+<link rel="stylesheet" href="../gifted-visual-system.css?v=${depthAssetVersion}">${hasDayOfAiLesson ? `
+<link rel="stylesheet" href="../day-of-ai-lessons.css?v=${dayAssetVersion}">
+<link rel="stylesheet" href="../source-attribution.css?v=${dayAssetVersion}">` : ''}
 </head>
-<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script><script src="../youtube-data.js"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../week-phase-six.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js?v=${depthAssetVersion}"></script><script src="../picture-inquiry.js?v=${depthAssetVersion}"></script><script src="../teacher-sync.js?v=${depthAssetVersion}"></script></body>
+<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-adaptations.js?v=${dayAssetVersion}"></script>` : ''}<script src="../youtube-data.js"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../week-phase-six.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js?v=${depthAssetVersion}"></script><script src="../picture-inquiry.js?v=${depthAssetVersion}"></script><script src="../teacher-sync.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-lessons.js?v=${dayAssetVersion}"></script><script src="../source-attribution.js?v=${dayAssetVersion}"></script>` : ''}</body>
 </html>
 `;
 

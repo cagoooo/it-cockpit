@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release": "2026.07.29-gallery-layout.3",
-  "generated_at": "2026-07-29T12:37:02.444Z",
+  "generated_at": "2026-07-29T12:48:00.652Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -270,8 +270,8 @@
     },
     {
       "file": "week-03/index.html",
-      "sha256": "30ae750b4408b7e31710035922e5f988945237ef2b8d96c82214cde81be4613c",
-      "bytes": 4329,
+      "sha256": "efe8d97695a9d0cf50d370f17032ff87eeba9ce5a659e22d12a92b74644f9cd3",
+      "bytes": 4555,
       "scope": "week-03"
     },
     {
@@ -366,8 +366,8 @@
     },
     {
       "file": "week-06/index.html",
-      "sha256": "255325b60bfc9f89ce85701f253879cb5b15bf514fa88e708a2e30383fc57ffc",
-      "bytes": 4275,
+      "sha256": "843e7f2f50a2a00e06490390b59d4f403caa3c552ef188df1885d4a0cffaca95",
+      "bytes": 4501,
       "scope": "week-06"
     },
     {
@@ -462,8 +462,8 @@
     },
     {
       "file": "week-09/index.html",
-      "sha256": "fffe176484176f014196695986cb5eac04d26bb9f52e78e93ea7b9b810c9093c",
-      "bytes": 4353,
+      "sha256": "43e103b682f8f6d55a9bd44998862c252760ea3c9ea66abe2a20fb276edd4acb",
+      "bytes": 4579,
       "scope": "week-09"
     },
     {
@@ -558,8 +558,8 @@
     },
     {
       "file": "week-12/index.html",
-      "sha256": "6bb608f7ac07593c632b8c3a886e17fcaae283072062a3897f108c0df3119723",
-      "bytes": 4331,
+      "sha256": "6c1f5ac654fdbbce79a89f36ad2dfb91871b403184f8e48c98aa693495e76ecf",
+      "bytes": 4557,
       "scope": "week-12"
     },
     {
@@ -654,8 +654,8 @@
     },
     {
       "file": "week-15/index.html",
-      "sha256": "926ae02bf8ef612787929d519f3e5b20afaa26efaec609a68e2239578761e981",
-      "bytes": 4376,
+      "sha256": "f76df8de2bc15400ee363bf861a287179f49e65ce4b6e803b3e28c686a0d94e2",
+      "bytes": 4602,
       "scope": "week-15"
     },
     {

@@ -45,8 +45,18 @@ const weeks = ['03', '06', '09', '12', '15', '18', '21', '24', '27', '30'];
 const annualIndex = fs.readFileSync(path.join(labDir, 'index.html'), 'utf8');
 record(annualIndex.includes('visualCourseGrid') && annualIndex.includes('lesson-visual-strip'), 'visual course picker', 'index.html');
 record(fs.readFileSync(path.join(labDir, 'week-cockpit.js'), 'utf8').includes('visual-learning-wall'), 'visual learning wall', 'week-cockpit.js');
-for (const file of ['reports.html', 'reports.js', 'reports.css', 'sync-status.html', 'sync-status.js', 'sync-status.css', 'course-version-manifest.json', 'version-matrix.md', 'week-phase-six.js', 'week-phase-six.css', 'gifted-visual-system.css', 'picture-inquiry.js', 'teacher-sync.js', 'preflight.html', 'preflight.js', 'preflight.css', 'version.json', 'source-credits.html', 'source-attribution.js', 'source-attribution.css']) {
+for (const file of ['reports.html', 'reports.js', 'reports.css', 'sync-status.html', 'sync-status.js', 'sync-status.css', 'course-version-manifest.json', 'version-matrix.md', 'week-phase-six.js', 'week-phase-six.css', 'gifted-visual-system.css', 'picture-inquiry.js', 'teacher-sync.js', 'preflight.html', 'preflight.js', 'preflight.css', 'version.json', 'source-credits.html', 'source-attribution.js', 'source-attribution.css', 'day-of-ai-adaptations.js', 'day-of-ai-lessons.js', 'day-of-ai-lessons.css']) {
   record(fs.existsSync(path.join(labDir, file)), 'phase six core', file);
+}
+const adaptationSandbox = { window: {} };
+vm.runInNewContext(fs.readFileSync(path.join(labDir, 'day-of-ai-adaptations.js'), 'utf8'), adaptationSandbox);
+const adaptations = adaptationSandbox.window.DAY_OF_AI_ADAPTATIONS || {};
+const dayArtifacts = JSON.parse(fs.readFileSync(path.join(labDir, 'notebook-day-of-ai-artifacts.json'), 'utf8'));
+record(dayArtifacts.length === 5 && dayArtifacts.every((item) => item.source_id && item.report_id && item.quiz_id && item.status === 'completed'), 'Day of AI NotebookLM artifacts', '5 weekly notebooks');
+for (const week of [3, 6, 9, 12, 15]) {
+  const item = adaptations[week];
+  record(Boolean(item && item.scenarios?.length === 3 && item.steps?.length === 4 && item.prompts?.length === 3 && item.links?.length >= 2), 'Day of AI adaptation', `week-${String(week).padStart(2, '0')}`);
+  record(fs.readFileSync(path.join(labDir, `week-${String(week).padStart(2, '0')}`, 'index.html'), 'utf8').includes('day-of-ai-lessons.js'), 'Day of AI cockpit', `week-${String(week).padStart(2, '0')}`);
 }
 const sourcePage = fs.readFileSync(path.join(labDir, 'source-credits.html'), 'utf8');
 record(sourcePage.includes('CC BY-NC-SA 4.0') && sourcePage.includes('Day of AI') && sourcePage.includes('無官方合作、認證或背書'), 'source attribution', 'source-credits.html');
