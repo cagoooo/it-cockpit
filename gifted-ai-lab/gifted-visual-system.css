@@ -1,0 +1,118 @@
+:root{
+  --gifted-ink:#15383c;
+  --gifted-paper:#f6f2e8;
+  --gifted-surface:#fffdf8;
+  --gifted-coral:#de5c46;
+  --gifted-teal:#168277;
+  --gifted-yellow:#f1bd45;
+  --gifted-blue:#3575a7;
+  --gifted-green:#2f7d5a;
+  --gifted-red:#b8463b;
+  --gifted-line:#15383c26;
+  --gifted-shadow:0 8px 24px #15383c18;
+  --gifted-radius:6px;
+  --gifted-space-1:6px;
+  --gifted-space-2:10px;
+  --gifted-space-3:16px;
+  --gifted-space-4:24px;
+}
+
+:where(a,button,input,textarea,select):focus-visible{
+  outline:3px solid var(--gifted-yellow);
+  outline-offset:3px;
+}
+
+.gifted-status{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:32px;
+  padding:5px 9px;
+  border:1px solid var(--gifted-line);
+  border-radius:var(--gifted-radius);
+  background:var(--gifted-surface);
+  color:var(--gifted-ink);
+  font-size:13px;
+  font-weight:800;
+}
+.gifted-status::before{content:"";width:10px;height:10px;border-radius:50%;background:#8b9694;box-shadow:0 0 0 3px #8b969422}
+.gifted-status[data-state="ok"]::before{background:var(--gifted-green);box-shadow:0 0 0 3px #2f7d5a22}
+.gifted-status[data-state="warn"]::before{background:#c68718;box-shadow:0 0 0 3px #c6871822}
+.gifted-status[data-state="error"]::before{background:var(--gifted-red);box-shadow:0 0 0 3px #b8463b22}
+.gifted-status[data-state="checking"]::before{animation:gifted-pulse 1s ease-in-out infinite}
+@keyframes gifted-pulse{50%{opacity:.35;transform:scale(.75)}}
+
+.picture-inquiry{
+  margin:0 0 26px;
+  padding:22px 0 26px;
+  border-top:1px solid var(--gifted-line);
+  border-bottom:1px solid var(--gifted-line);
+}
+.picture-inquiry__head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:14px}
+.picture-inquiry__head h2{margin:3px 0;font-size:26px;letter-spacing:0}
+.picture-inquiry__head p{margin:0;color:#526a6d;font-weight:700}
+.picture-inquiry__layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:18px;align-items:start}
+.picture-inquiry__stage{position:relative;overflow:hidden;border:2px solid var(--gifted-ink);border-radius:var(--gifted-radius);background:#efe7d6;box-shadow:8px 8px 0 #15383c12}
+.picture-inquiry__stage img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+.picture-hotspot{
+  position:absolute;
+  left:var(--hotspot-x);
+  top:var(--hotspot-y);
+  width:44px;
+  height:44px;
+  transform:translate(-50%,-50%);
+  border:3px solid #fff;
+  border-radius:50%;
+  background:var(--gifted-coral);
+  color:#fff;
+  box-shadow:0 3px 12px #15383c55;
+  font-weight:900;
+  cursor:pointer;
+}
+.picture-hotspot:hover,.picture-hotspot.active{background:var(--gifted-ink);transform:translate(-50%,-50%) scale(1.08)}
+.picture-hotspot.found{background:var(--gifted-green)}
+.picture-inquiry__panel{display:grid;gap:10px}
+.clue-card{min-height:132px;padding:15px;border-left:6px solid var(--gifted-yellow);background:var(--gifted-surface);box-shadow:var(--gifted-shadow)}
+.clue-card small,.voice-inquiry small{display:block;color:var(--gifted-coral);font-weight:900}
+.clue-card h3{margin:5px 0;font-size:20px}
+.clue-card p{margin:0;color:#456166}
+.clue-progress{font-weight:900;color:var(--gifted-teal)}
+.voice-inquiry{padding:14px;border:1px solid var(--gifted-line);background:var(--gifted-surface)}
+.voice-inquiry label{display:block;margin:5px 0 8px;font-weight:900}
+.voice-inquiry textarea{display:block;width:100%;min-height:92px;padding:10px;border:1px solid var(--gifted-line);border-radius:4px;background:#fff;color:var(--gifted-ink);resize:vertical}
+.voice-inquiry__actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.voice-inquiry__actions button{min-height:42px;padding:8px 11px;border:1px solid var(--gifted-ink);border-radius:4px;background:#fff;color:var(--gifted-ink);font-weight:900;cursor:pointer}
+.voice-inquiry__actions button.primary{background:var(--gifted-ink);color:#fff}
+.voice-inquiry__status{margin:7px 0 0;color:#526a6d;font-size:13px;font-weight:700}
+
+.teacher-sync-launch{white-space:nowrap}
+.teacher-sync-dialog{width:min(680px,calc(100% - 24px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:7px;background:var(--gifted-paper);color:var(--gifted-ink);box-shadow:0 24px 80px #15383c55}
+.teacher-sync-dialog::backdrop{background:#102d30aa;backdrop-filter:blur(3px)}
+.teacher-sync__head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:15px 18px;border-bottom:1px solid var(--gifted-line);background:var(--gifted-surface)}
+.teacher-sync__head h2{margin:0;font-size:22px}
+.teacher-sync__body{display:grid;gap:16px;padding:18px}
+.teacher-sync__body section{padding:15px;border:1px solid var(--gifted-line);background:var(--gifted-surface)}
+.teacher-sync__body h3{margin:0 0 7px;font-size:17px}
+.teacher-sync__body p{margin:5px 0;color:#526a6d}
+.sync-key-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.sync-key-row input{min-width:0;min-height:44px;padding:9px 10px;border:1px solid var(--gifted-line);font:800 15px/1.4 'JetBrains Mono',monospace;text-transform:uppercase}
+.sync-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.sync-actions button,.teacher-sync__head button{min-height:42px;padding:8px 12px;border:1px solid var(--gifted-ink);border-radius:4px;background:#fff;color:var(--gifted-ink);font-weight:900;cursor:pointer}
+.sync-actions .primary{background:var(--gifted-ink);color:#fff}
+.sync-details{font-size:13px}
+
+@media(max-width:820px){
+  .picture-inquiry__layout{grid-template-columns:1fr}
+  .picture-inquiry__panel{grid-template-columns:1fr 1fr}
+  .voice-inquiry{grid-column:1/-1}
+}
+@media(max-width:560px){
+  .picture-inquiry__head{align-items:start;flex-direction:column}
+  .picture-inquiry__head h2{font-size:23px}
+  .picture-inquiry__panel{grid-template-columns:1fr}
+  .voice-inquiry{grid-column:auto}
+  .picture-hotspot{width:42px;height:42px}
+  .sync-key-row{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.gifted-status::before{animation:none!important}}
+@media print{.picture-hotspot,.voice-inquiry__actions,.teacher-sync-launch,.teacher-sync-dialog{display:none!important}.picture-inquiry__layout{grid-template-columns:1fr 1fr}}

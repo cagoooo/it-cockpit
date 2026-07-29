@@ -9,6 +9,7 @@
   const actions = document.querySelector('.actions');
   actions?.insertAdjacentHTML('afterbegin', `
     <a class="action primary stable-action" href="classroom-pack.html">一鍵上課</a>
+    <a class="action stable-action" href="../preflight.html?week=${code}">iPad 課前檢查</a>
     <a class="action stable-action" href="student-task.html">學生任務單</a>
     <a class="action stable-action" href="../transcripts.html?week=${code}">逐字稿搜尋</a>
     <button class="connection-pill" type="button" data-offline-install aria-live="polite">檢查教材狀態</button>

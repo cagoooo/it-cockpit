@@ -31,6 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gifted-visual-system.css?v=20260729-phase-8-v1">
 <style>
   :root { --ink:#173b3f; --paper:#f7f4ec; --white:#fffdf8; --coral:#df5b45; --teal:#178277; --yellow:#f0bd45; --blue:#316fa3; --line:#173b3f26; }
   * { box-sizing:border-box; }
@@ -224,6 +225,7 @@
       <a class="action" href="transcripts.html">影音逐字稿搜尋</a>
       <a class="action" href="reports.html">學期報告中心</a>
       <a class="action" href="sync-status.html">教材版本中心</a>
+      <a class="action" href="preflight.html?week=03">iPad 課前檢查</a>
     </div>
   </section>
 
@@ -287,7 +289,7 @@ function renderTeacher(){
  <section class="panel"><h3>教師追問句</h3><div class="questions">${current.questions.map(q=>`<p class="question">「${esc(q)}」</p>`).join('')}</div></section>
   <section class="panel"><h3>本週教學資源</h3><div class="links"><a class="resource" href="week-${String(current.week).padStart(2,'0')}/"><b>本週專用教學駕駛艙 →</b><span>好懂版任務、NotebookLM、簡報與影片</span></a>${current.links.filter(x=>x[1]).map(x=>`<a class="resource" href="${x[1]}" ${x[1].startsWith('http')?'target="_blank" rel="noopener noreferrer"':''}><b>${esc(x[0])} →</b><span>開啟互動教材或延伸來源</span></a>`).join('')}<a class="resource" href="${current.notebookUrl}" target="_blank" rel="noopener noreferrer"><b>本週 NotebookLM →</b><span>已加入中年級好懂版來源</span></a><a class="resource" href="week-${String(current.week).padStart(2,'0')}/lecture-slides.html"><b>本週投影簡報 →</b><span>全螢幕、鍵盤與觸控切換</span></a></div></section>
  <section class="panel"><h3>課後快速紀錄</h3><textarea class="teacher-note" data-note="${current.week}" placeholder="學生今天最有力的推理、卡住的地方、下次要延續的線索…"></textarea></section>`;
- const note=teacherView.querySelector('.teacher-note'); note.value=localStorage.getItem(`gifted-note-${current.week}`)||''; note.addEventListener('input',()=>localStorage.setItem(`gifted-note-${current.week}`,note.value));
+ const note=teacherView.querySelector('.teacher-note'); const noteKey=`gifted-week-${String(current.week).padStart(2,'0')}-note`; note.value=localStorage.getItem(noteKey)||''; note.addEventListener('input',()=>localStorage.setItem(noteKey,note.value));
 }
 function renderStudent(){studentView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">我的第 ${current.week} 週任務</div><h2>${esc(current.title)}</h2><p class="lesson-date">完成基本任務後，可以抽取進階挑戰。</p></div><div class="lesson-output">我要完成<br>${esc(current.output)}</div></header>${visualStrip(current)}<section class="panel student-task"><h3>任務步驟</h3><ol>${current.student.map(s=>`<li>${esc(s)}</li>`).join('')}</ol></section><section class="panel"><h3>完成前自我檢查</h3><div class="questions"><p class="question">我有保留第一版與修改版。</p><p class="question">我能說出做這個選擇的理由。</p><p class="question">我有用測試或資料支持結論。</p><p class="question">使用 AI 時，我有查證並保護個資。</p></div></section>`;}
 function renderAnnual(){annualView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">一整年的學習地圖 · 十次資訊課</div><h2>年度總覽與十個週次專用駕駛艙</h2><p class="lesson-date">從這裡可以看到一整年的學習路線；每一週都有自己的 NotebookLM、詳案、簡報與影片。</p></div><div class="lesson-output">年度建議專題<br>磁力玩具智慧解說與安全提醒作品</div></header><section class="panel"><div class="annual-flow">${LESSONS.map(l=>`<a class="annual-step" href="week-${String(l.week).padStart(2,'0')}/"><b>第 ${l.week} 週</b>${esc(l.title)}</a>`).join('')}</div></section><section class="panel"><h3>NotebookLM 年度教材</h3><div class="media-grid"><video class="course-video" controls preload="metadata" poster="assets/gifted-lab-cover.png"><source src="materials/notebooklm-course-video.mp4" type="video/mp4">您的瀏覽器無法播放此影片。</video><div class="media-links"><a class="resource" href="materials/NotebookLM-年度課程簡報.pdf"><b>下載 NotebookLM 年度簡報 →</b><span>15 頁繁體中文課程總覽</span></a><a class="resource" href="materials/teacher-guide.pdf?v=20260726-utf8"><b>下載直式教師詳案 →</b><span>10 次雙節課完整流程</span></a><a class="resource" href="materials/student-workbook.pdf?v=20260726-utf8"><b>下載直式學生手冊 →</b><span>可列印的年度學習紀錄</span></a><a class="resource" href="${NOTEBOOK_URL}" target="_blank" rel="noopener noreferrer"><b>開啟年度 NotebookLM →</b><span>回顧十週內容與年度作品</span></a></div></div></section><section class="panel"><h3>和其他課程怎麼合作</h3><p>藝術課與專題研究／科展課程由另外兩位老師帶領。資訊科技課會接著使用這些視覺作品、科學發現或磁力玩具成果，幫助學生整理資料、設計步驟、製作互動作品、安全使用 AI、測試並分享成果。</p></section>`;}
