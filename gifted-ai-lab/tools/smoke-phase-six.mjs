@@ -13,7 +13,7 @@ const chrome=chromeCandidates.find(candidate=>candidate.includes('/')?fs.existsS
 if(!chrome)throw new Error('Chrome not found');
 const server=http.createServer((request,response)=>{const url=new URL(request.url,'http://localhost');const target=path.resolve(repoDir,`.${decodeURIComponent(url.pathname)}`);if(!target.startsWith(repoDir)||!fs.existsSync(target)||fs.statSync(target).isDirectory()){response.writeHead(404);response.end('Not found');return;}response.writeHead(200,{'Content-Type':target.endsWith('.html')?'text/html; charset=utf-8':target.endsWith('.js')?'text/javascript; charset=utf-8':target.endsWith('.css')?'text/css; charset=utf-8':'application/octet-stream'});fs.createReadStream(target).pipe(response);});
 await new Promise(resolve=>server.listen(8771,'127.0.0.1',resolve));
-const child=spawn(chrome,['--headless=new','--disable-gpu','--no-first-run','--no-default-browser-check','--remote-debugging-port=9331',`--user-data-dir=${profileDir}`,'about:blank'],{stdio:'ignore'});
+const child=spawn(chrome,['--headless=new','--disable-gpu','--no-sandbox','--disable-dev-shm-usage','--no-first-run','--no-default-browser-check','--remote-debugging-port=9331',`--user-data-dir=${profileDir}`,'about:blank'],{stdio:'ignore'});
 process.on('exit',()=>{try{child.kill()}catch{}try{server.close()}catch{}});
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 let version;for(let i=0;i<40;i++){try{version=await fetch('http://127.0.0.1:9331/json/version').then(r=>r.json());break}catch{await delay(250)}}if(!version)throw new Error('Chrome DevTools did not start');
