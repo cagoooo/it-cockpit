@@ -1,7 +1,8 @@
-window.DAY_OF_AI_RESOURCE_META = { lastChecked: '2026-07-30', total: 37 };
+window.DAY_OF_AI_RESOURCE_META = { lastChecked: '2026-07-30', total: 38 };
 window.DAY_OF_AI_RESOURCES = [
   { id: 'course-folder', title: 'Day of AI 中文課程資料夾', url: 'https://drive.google.com/drive/folders/19NRJ3Os-KcpdoOBgB1V5lNL_h60Gj6Jz', type: '教師備課', weeks: [3, 6, 9, 12, 15], audience: 'teacher', note: '原始簡報、學習單與教師資料的總入口。' },
   { id: 'teacher-training-slides-folder', title: 'Day of AI 五課師培簡報資料夾', url: 'https://drive.google.com/drive/folders/1NYTPbmrGT1dk8wxTiuqKsIOsT0aoAXO5', type: '教師備課', weeks: [3, 6, 9, 12, 15], audience: 'teacher', note: '本次核對的五份最新師培簡報總入口。' },
+  { id: 'learning-assessment-folder', title: 'Day of AI 學習與評量附件資料夾', url: 'https://drive.google.com/drive/folders/1VaJQRFBLFzNgsMJG8yE21HE5cx_a1wa1', type: '教師備課', weeks: [3, 6, 9, 12, 15], audience: 'teacher', note: '五課學習單、課後練習、命題卡、總測驗與字彙表的總入口。' },
   { id: 'teacher-guide', title: '什麼是 AI？教師指南', url: 'https://docs.google.com/document/d/13DJBhM2WEG8dpwJjnvUHitU0ze922eyg/edit', type: '教師指南', weeks: [3, 6, 9, 12, 15], audience: 'teacher', note: '本次本土化課程的主要參考來源。' },
   { id: 'quiz', title: '什麼是人工智慧？課前課後挑戰', url: 'https://docs.google.com/document/d/17qbdM5_Om_eDrIxTZ_tFHX8EEBwCzD_H/edit', type: '評量', weeks: [3, 6, 9, 12, 15], audience: 'both', note: '教師可挑選適合中年級的題目，不必一次全部完成。' },
   { id: 'vocabulary', title: 'AI 關鍵詞圖卡', url: 'https://drive.google.com/file/d/1eIjjY55VqnvwJhTLcJhh8RinnzXqpziz/view', type: '圖卡', weeks: [3, 6, 9, 12, 15], audience: 'both', note: '上課前先挑本週需要的詞，搭配生活例子使用。' },
