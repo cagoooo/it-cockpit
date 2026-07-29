@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "release": "2026.07.29-visual-gallery.2",
-  "generated_at": "2026-07-29T06:12:58.452Z",
+  "release": "2026.07.29-gallery-layout.3",
+  "generated_at": "2026-07-29T09:09:07.449Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -186,8 +186,8 @@
   "files": [
     {
       "file": "index.html",
-      "sha256": "c61f09350f7b5c38b768f0ce3c19ec9e3c1b0ea2c14d64f17ae6af778b9140dc",
-      "bytes": 44794,
+      "sha256": "fdac45b5d420f91a26d5e78eff2e3225e8d0c45be19aee4940335fb8e0eb3406",
+      "bytes": 45142,
       "scope": "core"
     },
     {
