@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const toolsDir = path.dirname(fileURLToPath(import.meta.url));
 const labDir = path.resolve(toolsDir, '..');
 const sandbox = { window: {} };
-for (const file of ['week-data.js', 'week-enrichment.js', 'week-depth-data.js']) {
+for (const file of ['week-data.js', 'week-enrichment.js', 'week-depth-data.js', 'week-student-language.js']) {
   vm.runInNewContext(fs.readFileSync(path.join(labDir, file), 'utf8'), sandbox);
 }
 

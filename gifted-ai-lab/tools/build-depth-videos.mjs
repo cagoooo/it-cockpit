@@ -9,7 +9,7 @@ import { writeDynamicAss } from './dynamic-caption-utils.mjs';
 const toolsDir = path.dirname(fileURLToPath(import.meta.url));
 const labDir = path.resolve(toolsDir, '..');
 const sandbox = { window: {} };
-for (const file of ['week-data.js', 'week-enrichment.js', 'week-depth-data.js']) {
+for (const file of ['week-data.js', 'week-enrichment.js', 'week-depth-data.js', 'week-student-language.js']) {
   vm.runInNewContext(fs.readFileSync(path.join(labDir, file), 'utf8'), sandbox);
 }
 
@@ -32,14 +32,14 @@ for (const week of selectedWeeks) {
   const folder = path.join(labDir, `week-${code}`);
   const extra = enrichment[week.week];
   const depth = depthData[week.week];
-  const concepts = extra.quiz.map((item) => `${item[0]} 核心線索是：${item[3]}`).join(' ');
+  const concepts = extra.quiz.map((item) => `${item[0]} 可以從這句話找線索：${item[3]}`).join(' ');
   const script = [
-    `這是資優班第 ${week.week} 週，${week.title}的探究短片。`,
+    `這是資優班第 ${week.week} 週，${week.title}的一起想一想短片。`,
     `先想一想：${extra.drivingQuestion}`,
-    '這一週不急著找標準答案，而要先留下自己的預測，再用證據、反例與重新測試來修正想法。',
+    '這一週不急著找標準答案。先猜一猜，再看看實際結果，試試不一樣的例子，最後想想要不要修改原本的答案。',
     concepts,
-    '完成概念檢核後，可以依理解狀態選擇基礎、進階或研究者路徑。研究者的任務不是做得更多，而是提出可能推翻自己假設的證據，並讓別人能重做你的方法。',
-    `本週要留下的可見成果是：${week.output}。請在作品旁寫下你原本怎麼想、證據改變了什麼，以及下一個還想追問的問題。`,
+    '完成三題小挑戰後，可以選「先學會、再挑戰或小研究」。做小研究不是把題目做更多，而是想出什麼結果會讓自己改變想法，並把步驟寫清楚，讓別人也能試一次。',
+    `本週要留下的成果是：${week.output}。請在作品旁寫下你原本怎麼想、看到的結果讓你改了什麼，以及下一個還想問的問題。`,
     `現在，請從這個挑戰開始：${depth.routes.researcher[2][0]}`,
   ].join('\n\n');
 
@@ -57,8 +57,8 @@ for (const week of selectedWeeks) {
   writeDynamicAss(srtPath, assPath);
   const outputPath = path.join(tempDir, `week-${code}-captioned.mp4`);
   run('ffmpeg', [
-    '-y', '-v', 'error', '-loop', '1', '-i', path.join(folder, 'depth-infographic.png'), '-i', audioPath,
-    '-vf', "scale=1408:792,crop=1280:720,zoompan=z='min(zoom+0.00022,1.10)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1280x720:fps=30,ass=depth-video-captions.ass:fontsdir='C\\:/Windows/Fonts',format=yuv420p",
+    '-y', '-v', 'error', '-loop', '1', '-i', path.join(folder, 'student-video-card.png'), '-i', audioPath,
+    '-vf', "scale=1280:720,ass=depth-video-captions.ass:fontsdir='C\\:/Windows/Fonts',format=yuv420p",
     '-c:v', 'libx264', '-preset', 'veryfast', '-tune', 'stillimage', '-crf', '22', '-c:a', 'aac', '-b:a', '160k',
     '-shortest', '-movflags', '+faststart', outputPath,
   ], { cwd: folder });

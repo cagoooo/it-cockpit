@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
 const labDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -42,20 +43,41 @@ for (const htmlPath of walk(labDir, '.html')) {
 
 const weeks = ['03', '06', '09', '12', '15', '18', '21', '24', '27', '30'];
 for (const code of weeks) {
-  for (const file of ['index.html', 'lecture-slides.html', 'classroom-pack.html', 'student-task.html', 'teacher-pack.pdf', 'video.mp4', 'video-captions.srt']) {
+  for (const file of ['index.html', 'lecture-slides.html', 'classroom-pack.html', 'student-task.html', 'student-guide.md', 'teacher-pack.pdf', 'video.mp4', 'video-captions.srt']) {
     record(fs.existsSync(path.join(labDir, `week-${code}`, file)), 'week core', `week-${code}/${file}`);
   }
   record(fs.existsSync(path.join(labDir, 'youtube', `week-${code}`, 'transcript.json')), 'transcript', `week-${code}`);
-  for (const file of ['depth-source.md', 'depth-infographic.png', 'depth-slides.pdf', 'depth-video.mp4', 'depth-video-captions.srt', 'depth-video-transcript.txt']) {
+  for (const file of ['depth-source.md', 'depth-infographic.png', 'depth-slides.pdf', 'depth-video.mp4', 'depth-video-captions.srt', 'depth-video-transcript.txt', 'student-video-card.html', 'student-video-card.png']) {
     const target = path.join(labDir, `week-${code}`, file);
     record(fs.existsSync(target) && fs.statSync(target).size > 0, 'depth resource', `week-${code}/${file}`);
   }
+  if (['03', '06'].includes(code)) record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png')), 'student infographic', `week-${code}`);
 }
+
+const studentSandbox = { window: {} };
+for (const file of ['week-data.js', 'week-enrichment.js', 'week-depth-data.js', 'week-student-language.js']) {
+  vm.runInNewContext(fs.readFileSync(path.join(labDir, file), 'utf8'), studentSandbox);
+}
+const studentText = JSON.stringify({
+  weeks: studentSandbox.window.GIFTED_WEEKS,
+  enrichment: studentSandbox.window.GIFTED_ENRICHMENT,
+  depth: studentSandbox.window.GIFTED_DEPTH,
+});
+for (const hardTerm of ['表徵與推理', '利害關係人', '控制變因', '可解釋性', '資料最小化', '最小可行原型', '改版優先矩陣', '操作型定義', '壓力測試', '迭代', '辯證', '研究者｜', '進階｜', '基礎｜']) {
+  record(!studentText.includes(hardTerm), 'student language', hardTerm);
+}
+record((studentSandbox.window.GIFTED_WEEKS || []).every((item) => item.goal.length <= 55), 'student language', 'short weekly goals');
 
 const depthArtifacts = JSON.parse(fs.readFileSync(path.join(labDir, 'notebook-depth-artifacts.json'), 'utf8'));
 record(depthArtifacts.length === weeks.length, 'NotebookLM depth count', String(depthArtifacts.length));
 for (const item of depthArtifacts) {
   record(Boolean(item.source_id && item.infographic_id && item.slides_id && item.video_delivery), 'NotebookLM depth metadata', `week-${String(item.week).padStart(2, '0')}`);
+}
+
+const studentSources = JSON.parse(fs.readFileSync(path.join(labDir, 'notebook-student-sources.json'), 'utf8'));
+record(studentSources.length === weeks.length, 'NotebookLM student source count', String(studentSources.length));
+for (const item of studentSources) {
+  record(Boolean(item.notebook_id && item.student_source_id), 'NotebookLM student source', `week-${String(item.week).padStart(2, '0')}`);
 }
 
 const verification = JSON.parse(fs.readFileSync(path.join(labDir, 'youtube', 'verification.json'), 'utf8'));

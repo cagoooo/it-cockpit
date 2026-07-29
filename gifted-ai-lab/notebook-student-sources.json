@@ -1,0 +1,12 @@
+[
+  { "week": 3, "notebook_id": "af9a9772-21cb-4614-add1-9d3861308c64", "student_source_id": "0e60d9c5-b2e7-40f8-8720-278b1c1fcc4b", "infographic_id": "7b4d625b-2d66-4eaa-9a32-8bef4fed7cd8", "infographic_status": "completed" },
+  { "week": 6, "notebook_id": "07ad6f8c-468f-4ff5-87fb-b3d32c44bd82", "student_source_id": "437a57f2-c43a-415a-b1bb-7b9e6eabc072", "infographic_id": "6ee7801e-df74-455d-92a0-d7638b4a0454", "infographic_status": "completed" },
+  { "week": 9, "notebook_id": "05af6960-d89f-41e9-b64d-4c853487d643", "student_source_id": "ef4d724e-fcef-4946-98a4-a6ee4b003dce", "infographic_id": "f73eed77-3b75-4111-ab47-553cc38e22dd", "infographic_status": "pending" },
+  { "week": 12, "notebook_id": "a18fd57a-16b5-4c38-838a-578fbc065281", "student_source_id": "4a9f116e-e1bf-4102-93ae-5343c80054f5", "infographic_id": "051b8a28-4b5a-4b89-b763-fff069977222", "infographic_status": "pending" },
+  { "week": 15, "notebook_id": "df5767e0-3333-4312-8b65-5220c4c06415", "student_source_id": "644e7119-d77d-4ac6-96f1-96d33c461aff", "infographic_id": "60f6dc7d-77b8-487f-98c9-c312913d778a", "infographic_status": "pending" },
+  { "week": 18, "notebook_id": "df21f06b-942a-4c98-afda-750f09234a27", "student_source_id": "9bc6be9f-6cbf-4832-a014-894093b34236", "infographic_id": null, "infographic_status": "rate_limited" },
+  { "week": 21, "notebook_id": "cea8c93f-0119-42f2-b503-85c07e560fb3", "student_source_id": "98bc20fe-df0b-4f8b-a592-968144039656", "infographic_id": null, "infographic_status": "rate_limited" },
+  { "week": 24, "notebook_id": "264d39dd-3c59-4c79-bcd8-6ef390b63e4f", "student_source_id": "4383d2d2-7dba-4d20-a0f4-8921eae7cefa", "infographic_id": null, "infographic_status": "rate_limited" },
+  { "week": 27, "notebook_id": "458e7cf0-447c-4669-b540-4249f4358850", "student_source_id": "77befa61-1006-407a-a1a0-86d8b1f49d00", "infographic_id": null, "infographic_status": "rate_limited" },
+  { "week": 30, "notebook_id": "d5710175-62dd-4634-a867-df3e0342d0b6", "student_source_id": "0e02bea7-2ae9-46b7-910e-aedd9b9d103b", "infographic_id": null, "infographic_status": "rate_limited" }
+]

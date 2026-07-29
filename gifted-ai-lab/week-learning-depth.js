@@ -2,6 +2,7 @@
   const week = Number(document.body.dataset.week);
   const extra = (window.GIFTED_ENRICHMENT || {})[week];
   const depth = (window.GIFTED_DEPTH || {})[week];
+  const studentInfographic = (window.GIFTED_STUDENT_INFOGRAPHICS || {})[week] || 'depth-infographic.png';
   const assessment = document.querySelector('#assessment');
   if (!extra || !depth || !assessment) return;
 
@@ -11,7 +12,7 @@
   const ww = String(week).padStart(2, '0');
   const storageKey = `gifted-week-${ww}-depth-v1`;
   const routeOrder = ['foundation', 'advanced', 'researcher'];
-  const routeNames = { foundation: '基礎', advanced: '進階', researcher: '研究者' };
+  const routeNames = { foundation: '先學會', advanced: '再挑戰', researcher: '小研究' };
 
   const defaultState = () => ({
     questions: extra.quiz.map(() => ({ attempts: 0, solved: false, confidence: '', lastChoice: null })),
@@ -31,32 +32,32 @@
   const quizSection = assessment.querySelector('.section');
   quizSection.classList.add('depth-assessment');
   quizSection.innerHTML = `
-    <div class="section-head"><span>DIAGNOSTIC ASSESSMENT</span><h2>三題診斷式形成評量</h2></div>
-    <p class="depth-intro">先判斷自己的把握度，再作答。答錯時只會收到分層提示，可以修改後再次作答；完成後還要留下解釋證據。</p>
+    <div class="section-head"><span>QUICK CHECK</span><h2>三題小挑戰</h2></div>
+    <p class="depth-intro">先選你有多確定，再回答。答錯沒關係，系統會先給一點提示，讓你修改後再試一次。最後要用自己的話說明理由。</p>
     <div class="depth-summary" aria-live="polite">
-      <div><b id="depthScore">0 / 3</b><span>概念已理解</span></div>
-      <div><b id="depthAttempts">0</b><span>作答次數</span></div>
-      <div><b id="depthEvidence">待補</b><span>解釋證據</span></div>
+      <div><b id="depthScore">0 / 3</b><span>已經學會</span></div>
+      <div><b id="depthAttempts">0</b><span>試了幾次</span></div>
+      <div><b id="depthEvidence">待補</b><span>我的理由</span></div>
     </div>
     <div class="quiz-list depth-quiz-list">${extra.quiz.map((item, qi) => `
       <article class="quiz-item depth-quiz" data-depth-quiz="${qi}">
         <div class="quiz-status"><span>概念 ${String(qi + 1).padStart(2, '0')}</span><b>尚未作答</b></div>
         <h3>${qi + 1}. ${esc(item[0])}</h3>
         <div class="confidence-row" role="group" aria-label="第 ${qi + 1} 題作答把握度">
-          <span>作答前把握度</span>
+          <span>我有多確定</span>
           <button data-confidence="unsure">不確定</button><button data-confidence="likely">大致確定</button><button data-confidence="sure">很確定</button>
         </div>
         <div class="quiz-options">${item[1].map((option, oi) => `<button data-depth-choice="${oi}">${String.fromCharCode(65 + oi)}. ${esc(option)}</button>`).join('')}</div>
         <p class="quiz-feedback" aria-live="polite"></p>
       </article>`).join('')}</div>
-    <label class="evidence-box"><b>用自己的話留下理解證據</b><span>${esc(depth.evidencePrompt)}</span><textarea id="depthEvidenceInput" placeholder="不要填姓名或其他個資；請寫下理由、例子或反例。"></textarea><small>至少 18 個字，才能建議研究者路徑。內容只保存在目前瀏覽器。</small></label>
-    <div class="depth-controls"><button class="action" id="resetDepth">重新診斷</button></div>`;
+    <label class="evidence-box"><b>用自己的話說明理由</b><span>${esc(depth.evidencePrompt)}</span><textarea id="depthEvidenceInput" placeholder="不要填姓名或私人資料；請寫下理由，或舉一個例子。"></textarea><small>寫滿 18 個字，系統才能建議最適合你的挑戰。內容只保存在這台裝置。</small></label>
+    <div class="depth-controls"><button class="action" id="resetDepth">重新挑戰</button></div>`;
 
   const routeSection = document.createElement('section');
   routeSection.className = 'section adaptive-section';
   routeSection.innerHTML = `
-    <div class="section-head"><span>ADAPTIVE CHALLENGE</span><h2>自適應挑戰路徑</h2></div>
-    <div class="route-diagnosis"><div><span>系統建議</span><strong id="routeRecommendation">尚待作答</strong><p id="routeReason">完成形成評量後，系統會依理解證據推薦路徑。</p></div><button class="action primary" id="acceptRoute">採用建議路徑</button></div>
+    <div class="section-head"><span>我的下一關</span><h2>選擇下一個挑戰</h2></div>
+    <div class="route-diagnosis"><div><span>系統建議</span><strong id="routeRecommendation">先完成三題</strong><p id="routeReason">回答三題並寫下理由後，系統會推薦適合的挑戰。</p></div><button class="action primary" id="acceptRoute">選擇這個挑戰</button></div>
     <div class="route-switch" role="group" aria-label="挑戰路徑">${routeOrder.map((key) => `<button data-route="${key}">${routeNames[key]}</button>`).join('')}</div>
     <article class="route-panel" id="routePanel"></article>
     <p class="local-only">路徑、勾選與解釋都只存在這台裝置，不會建立學生帳號或上傳個人資料。</p>`;
@@ -66,17 +67,19 @@
   if (mediaView) {
     mediaView.insertAdjacentHTML('afterbegin', `
       <section class="section depth-materials">
-        <div class="section-head"><span>NOTEBOOKLM DEPTH STUDIO</span><h2>資優探究深化教材</h2></div>
-        <p>依本週診斷提示與三層挑戰重新製作，不是原簡報與原影片的重複版本。</p>
+        <div class="section-head"><span>MORE TO EXPLORE</span><h2>看圖、看影片，再想深一點</h2></div>
+        <p>這些教材用圖片、小實驗和不同例子，幫你把這週的問題想得更清楚。</p>
         <div class="depth-media-grid">
-          <a class="depth-infographic" href="depth-infographic.png" target="_blank" rel="noopener noreferrer"><img src="depth-infographic.png" alt="W${ww} 資優探究資訊圖"><span>開啟高解析度資訊圖</span></a>
+          <a class="depth-infographic" href="${studentInfographic}" target="_blank" rel="noopener noreferrer"><img src="${studentInfographic}" alt="W${ww} 中年級好懂版資訊圖"><span>開啟中年級好懂版資訊圖</span></a>
           <div class="resources depth-resource-list">
-            <a class="resource" href="depth-slides.pdf" target="_blank"><b>資優探究深化簡報 →</b><span>認知衝突、反例、小實驗與三層任務</span></a>
-            <a class="resource" href="depth-video.mp4" target="_blank"><b>研究者挑戰短片 →</b><span>逐句淡入、同步高亮的動態繁體中文字幕</span></a>
+            <a class="resource" href="lecture-slides.html" target="_blank"><b>12 張好懂版課堂簡報 →</b><span>短句、大字、生活例子和四段闖關</span></a>
+            <a class="resource" href="depth-slides.pdf" target="_blank"><b>老師陪讀進階簡報 →</b><span>適合和老師一起挑戰較難的問題</span></a>
+            <a class="resource" href="depth-video.mp4" target="_blank"><b>小研究挑戰短片 →</b><span>有動態繁體中文字幕，可以跟著一起讀</span></a>
             <a class="resource" href="depth-video-captions.srt" target="_blank"><b>標準字幕檔 →</b><span>可供播放器載入、剪輯與無障礙使用</span></a>
             <a class="resource" href="depth-video-transcript.txt" target="_blank"><b>短片逐字稿 →</b><span>可供備課、無聲閱讀與無障礙使用</span></a>
-            <a class="resource" href="depth-source.md"><b>NotebookLM 深化來源 →</b><span>診斷提示、挑戰路徑與完成證據</span></a>
-            <a class="resource" href="${esc((window.GIFTED_WEEKS || []).find((item) => item.week === week)?.notebookUrl || '#')}" target="_blank" rel="noopener noreferrer"><b>回到本週 NotebookLM →</b><span>繼續查詢、比較與產生新教材</span></a>
+            <a class="resource" href="student-guide.md"><b>中年級好懂版 →</b><span>難詞解釋、生活例子和一步一步任務</span></a>
+            <a class="resource" href="depth-source.md"><b>NotebookLM 完整資料 →</b><span>本週問題、提示和各種挑戰</span></a>
+            <a class="resource" href="${esc((window.GIFTED_WEEKS || []).find((item) => item.week === week)?.notebookUrl || '#')}" target="_blank" rel="noopener noreferrer"><b>開啟本週 NotebookLM →</b><span>用自己的問題繼續查詢和比較</span></a>
           </div>
         </div>
       </section>`);
@@ -92,16 +95,16 @@
     return 'researcher';
   };
   const recommendationReason = (route) => {
-    if (route === 'foundation') return '目前仍有兩個以上概念需要重新建立，先用具體例子與操作證據打穩基礎。';
+    if (route === 'foundation') return '目前有兩個以上的想法還要再練，先用生活例子和動手操作弄懂。';
     if (route === 'advanced') return solvedCount() === 3
-      ? '三題都已理解；補強解釋證據後，就能進入研究者路徑。'
-      : '已有主要概念，可進一步處理反例、比較與邊界條件。';
-    return '三題皆理解且已有完整解釋證據，適合設計可反駁、可重做的小研究。';
+      ? '三題都答對了；再把理由說清楚，就能開始小研究。'
+      : '主要想法已經懂了，可以試試不一樣的例子和更難分的情況。';
+    return '三題都答對，而且理由很清楚，適合設計一個別人也能照著做的小研究。';
   };
   const teacherMove = (route) => ({
-    foundation: '教師追問：請先指出你看見的事實，再說這項事實支持哪個判斷。',
-    advanced: '教師追問：什麼反例會讓你的規則失敗？你要如何修改？',
-    researcher: '教師追問：你的假設可能被什麼證據推翻？別人能否重做你的方法？',
+    foundation: '老師會問：你真的看到什麼？這個發現讓你怎麼想？',
+    advanced: '老師會問：有沒有一個不一樣的例子，會讓你的規則失敗？要怎麼改？',
+    researcher: '老師會問：看到什麼結果時，你會願意改變想法？別人能照你的步驟再做一次嗎？',
   }[route]);
 
   function renderQuestion(qi) {
@@ -150,8 +153,8 @@
     document.querySelector('#routePanel').innerHTML = `
       <div class="route-head"><div><span>${esc(route[1])}</span><h3>${esc(route[0])}</h3></div><b>${checks.filter(Boolean).length} / 3</b></div>
       <div class="route-tasks">${route[2].map((task, index) => `<label><input type="checkbox" data-route-check="${index}" ${checks[index] ? 'checked' : ''}><span><b>任務 ${index + 1}</b>${esc(task)}</span></label>`).join('')}</div>
-      <div class="route-evidence"><b>完成證據</b><p>${esc(route[3])}</p></div>
-      <div class="teacher-move"><b>教師診斷追問</b><p>${esc(teacherMove(active))}</p></div>`;
+      <div class="route-evidence"><b>完成時要留下</b><p>${esc(route[3])}</p></div>
+      <div class="teacher-move"><b>老師會這樣問</b><p>${esc(teacherMove(active))}</p></div>`;
     document.querySelectorAll('[data-route-check]').forEach((input) => input.addEventListener('change', () => {
       state.routeChecks[active][Number(input.dataset.routeCheck)] = input.checked;
       save();
@@ -213,7 +216,7 @@
     render();
   });
   document.querySelector('#resetDepth').addEventListener('click', () => {
-    if (!window.confirm('要清除本週形成評量、解釋證據與挑戰進度嗎？')) return;
+    if (!window.confirm('要清除本週三題小挑戰、理由和闖關進度嗎？')) return;
     state = defaultState();
     render();
   });

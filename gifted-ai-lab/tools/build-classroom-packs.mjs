@@ -8,22 +8,23 @@ const labDir = path.resolve(toolsDir, '..');
 const repoDir = path.resolve(labDir, '..');
 const sandbox = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-data.js'), 'utf8'), sandbox);
+vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-student-language.js'), 'utf8'), sandbox);
 const weeks = sandbox.window.GIFTED_WEEKS;
 const youtube = JSON.parse(fs.readFileSync(path.join(labDir, 'youtube', 'manifest.json'), 'utf8'));
 const playlistPath = path.join(labDir, 'youtube', 'playlist.json');
 const playlist = fs.existsSync(playlistPath) ? JSON.parse(fs.readFileSync(playlistPath, 'utf8')) : {};
 
 const offlineTasks = {
-  3: '使用十張生活工具卡，分成 AI、非 AI、不確定三類；每張卡都寫下一項判斷證據。',
-  6: '用兩組紙卡模擬資料集：先看三張猜規則，再加入不同例子，記錄規則如何改變。',
-  9: '比較不同房子、電話與麵包畫法，圈出資料缺口，再設計不含姓名與照片的採集表。',
-  12: '把早餐或借書流程寫成輸入、處理、輸出，請另一人只照字面執行並圈出模糊步驟。',
-  15: '用方格紙設計人類機器人路線；一次只修改一個錯誤，保留 v1、v2 與修改理由。',
-  18: '用紙卡建立回收分類器，寫出如果／否則規則，加入兩個邊界案例與「不確定」結果。',
-  21: '先獨立寫五個點子，再用角色、目標、格式、限制、例子、檢查六欄互相模擬 AI 回覆。',
-  24: '用可以、不可以、看條件三區判斷倫理情境，完成引用、查證、隱私、公平四面鏡。',
-  27: '用三格故事板畫出開始、操作、結果，只保留一個核心功能，完成紙上 MVP 測試。',
-  30: '請測試者在沒有口頭提示下操作紙上或既有原型，記錄停頓、誤解與成功，再選兩項修改。',
+  3: '用十張生活工具卡，分成「AI」、「不是 AI」和「還不確定」；每張卡都寫下理由。',
+  6: '用兩組紙卡當成 AI 學習的例子：先看三張猜規則，再加入不同例子，記下想法怎麼改變。',
+  9: '比較不同房子、電話與麵包的畫法，圈出少了哪些情況，再設計不含姓名和照片的紀錄表。',
+  12: '把早餐或借書寫成「放進什麼、怎麼做、得到什麼」，請另一人只照文字執行，圈出說不清楚的步驟。',
+  15: '用方格紙設計人類機器人路線；一次只改一個錯誤，保留修改前後兩版和理由。',
+  18: '用紙卡做回收分類小幫手，寫出如果／否則規則，加入兩個很難分的例子和「不確定」結果。',
+  21: '先自己寫五個點子，再用「扮演誰、要做什麼、怎麼回答、不能做什麼、參考例子、如何檢查」六欄模擬 AI 回覆。',
+  24: '把情況分成「可以、不可以、要看條件」，檢查來源、真假、私人資料和公平。',
+  27: '用三格故事板畫出開始、操作、結果，只做一個最重要功能，完成紙上小作品測試。',
+  30: '請別人在沒有提示下操作小作品，記下停頓、誤會和成功，再選兩個最重要的地方修改。',
 };
 
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
@@ -58,9 +59,9 @@ for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
   const weekDir = path.join(labDir, `week-${code}`);
   const safetyChecks = [
-    '教材、提示詞與作品中沒有真實姓名、臉部、帳號、聯絡方式或可辨識組合。',
+    '教材、對 AI 說的話和作品中，沒有真實姓名、臉部、帳號、電話或能認出一個人的資料。',
     '若使用 AI，已先自行思考，且只輸入完成任務必要的非個資內容。',
-    'AI 產出已查證，並記錄採用、修改或不採用的理由。',
+    'AI 的答案已用可靠資料再確認，並記下哪些採用、修改或不用。',
     '任何公開成果都已由教師確認；原始作品與觀察紀錄維持私人。',
   ];
   const pack = `<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>W${code} 一鍵上課包｜石門智繪客</title><style>${sharedStyle}</style></head><body><main>
@@ -77,8 +78,8 @@ for (const item of weeks) {
   <header class="top"><div><div class="code">WEEK ${code} · STUDENT MISSION</div><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.goal)}</p></div><div class="actions"><a class="btn" href="index.html">回駕駛艙</a><button class="btn primary" data-print>列印任務單</button></div></header>
   <section class="band"><h2>本週任務</h2><ol>${item.student.map((step)=>`<li>${escapeHtml(step)}</li>`).join('')}</ol></section>
   <section class="band"><h2>我的第一版想法</h2><textarea class="answer" data-save="first" aria-label="第一版想法"></textarea></section>
-  <section class="band"><h2>測試證據與修改</h2><textarea class="answer" data-save="evidence" aria-label="測試證據與修改"></textarea></section>
-  <section class="band"><h2>AI 協作紀錄</h2><div class="privacy"><b>不要填入姓名、照片、帳號、聯絡方式或可識別資料。</b></div><div class="grid"><label class="cell"><b>我先想到的內容</b><textarea class="answer" data-save="human"></textarea></label><label class="cell"><b>AI 協助的部分</b><textarea class="answer" data-save="ai"></textarea></label><label class="cell"><b>我如何查證與決定</b><textarea class="answer" data-save="verify"></textarea></label></div></section>
+  <section class="band"><h2>我看到的測試結果與修改</h2><textarea class="answer" data-save="evidence" aria-label="測試結果與修改"></textarea></section>
+  <section class="band"><h2>我和 AI 怎麼分工</h2><div class="privacy"><b>不要填入姓名、照片、帳號、電話或其他私人資料。</b></div><div class="grid"><label class="cell"><b>我先想到什麼</b><textarea class="answer" data-save="human"></textarea></label><label class="cell"><b>AI 幫了什麼</b><textarea class="answer" data-save="ai"></textarea></label><label class="cell"><b>我怎麼確認和選擇</b><textarea class="answer" data-save="verify"></textarea></label></div></section>
   <section class="band"><h2>離線替代任務</h2><p>${escapeHtml(offlineTasks[item.week])}</p></section>
   <section class="band"><h2>完成前安全檢查</h2><div class="checklist">${safetyChecks.map((text,index)=>`<label><input type="checkbox" data-save="safe-${index}"><span>${escapeHtml(text)}</span></label>`).join('')}</div><p class="save-state" aria-live="polite">內容只保存在本機</p></section>
   <footer class="footer">課程設計：黃凱揚老師｜桃園市龍潭區石門國民小學</footer>
@@ -89,7 +90,7 @@ for (const item of weeks) {
 
 const offlineAssets = [
   './', './index.html', './gifted-ai-lab/', './gifted-ai-lab/index.html', './gifted-ai-lab/offline.html',
-  './gifted-ai-lab/week-data.js', './gifted-ai-lab/week-enrichment.js', './gifted-ai-lab/week-cockpit.js',
+  './gifted-ai-lab/week-data.js', './gifted-ai-lab/week-enrichment.js', './gifted-ai-lab/week-student-language.js', './gifted-ai-lab/week-cockpit.js',
   './gifted-ai-lab/week-depth-data.js', './gifted-ai-lab/week-learning-depth.js', './gifted-ai-lab/week-learning-depth.css',
   './gifted-ai-lab/week-cockpit.css', './gifted-ai-lab/week-cockpit-rich.css',
   './gifted-ai-lab/week-slides.js', './gifted-ai-lab/week-slides.css', './gifted-ai-lab/week-slides-rich.css',
@@ -103,7 +104,8 @@ const offlineAssets = [
 for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
   const base = `./gifted-ai-lab/week-${code}/`;
-  offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}video-captions.srt`, `${base}depth-source.md`, `${base}depth-video-captions.srt`, `${base}depth-video-transcript.txt`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
+  offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}student-guide.md`, `${base}student-video-card.html`, `${base}student-video-card.png`, `${base}video-captions.srt`, `${base}depth-source.md`, `${base}depth-video-captions.srt`, `${base}depth-video-transcript.txt`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
+  if ([3, 6].includes(item.week)) offlineAssets.push(`${base}student-infographic.png`);
 }
-fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-28-captions-v3', assets: offlineAssets }, null, 2)}\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-07-29-student-language-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
 console.log(`Built ${weeks.length} classroom packs, ${weeks.length} task sheets, YouTube data and offline manifest.`);

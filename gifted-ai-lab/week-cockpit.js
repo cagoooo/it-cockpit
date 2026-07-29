@@ -10,55 +10,57 @@
   const allWeeks=window.GIFTED_WEEKS||[];
   const currentIndex=allWeeks.findIndex(item=>item.week===week);
   const prev=allWeeks[currentIndex-1],next=allWeeks[currentIndex+1];
+  const glossary=(window.GIFTED_GLOSSARY||{})[week]||[];
   const localHref=href=>href.startsWith('../')?'../'+href:href;
-  const flowGuide=['喚起原有想法並留下第一版。','用具體例子建立可以操作的概念。','要求學生完成第一個可見產出。','用一句話或作品確認第一節理解。','把概念轉成可測試的第一版。','加入反例、邊界或錯誤輸入。','根據證據修改並保留版本。','完成命名、反思與下次銜接。'];
+  const flowGuide=['先說說原本怎麼想，留下第一版。','用生活例子把想法弄懂。','完成第一個看得見的小成果。','用一句話或作品說說學會了什麼。','把想法做成可以試的第一版。','加入不一樣、很難分或故意錯的例子。','看測試結果修改，並保留前後兩版。','幫作品命名，說說發現和下次想做什麼。'];
   const rubric=[
-    ['概念理解','能完成基本分類或步驟','能用自己的話解釋並比較','能用反例檢查並修正概念'],
-    ['證據推理','提出個人想法','用資料、測試或觀察支持','能說明證據限制與替代解釋'],
-    ['創作歷程','完成一個版本','保留版本並說明修改','比較不同方案後做有理由的選擇'],
-    ['AI 責任','知道不能輸入個資','能查證並標示 AI 協助','能說明人的決策、限制與責任']
+    ['我懂了嗎','能完成基本分類或步驟','能用自己的話說明並比較','能用不同例子檢查並修改想法'],
+    ['我怎麼知道','能說出自己的想法','能用資料、測試或觀察支持','能說明目前還不能確定的地方'],
+    ['我怎麼修改','完成第一版','保留前後版本並說出改了什麼','比較不同做法後，說出選擇理由'],
+    ['我有安全使用 AI 嗎','知道不能輸入私人資料','會再確認 AI 的答案並說明 AI 幫了什麼','能說出最後是誰做決定和負責']
   ];
 
   document.title=`W${ww} ${data.title}｜石門智繪客`;
   app.innerHTML=`
   <header class="topbar"><div class="shell topbar-inner"><a class="brand" href="../index.html"><img class="brand-icon" src="../assets/gifted-favicon-192.png" alt=""><span><b>石門智繪客</b><small>第 ${week} 週專用駕駛艙</small></span></a><nav class="topnav">${prev?`<a class="nav-btn" href="../week-${String(prev.week).padStart(2,'0')}/" title="上一週" aria-label="上一週">←</a>`:''}<a class="nav-btn wide" href="../index.html">年度總覽</a>${next?`<a class="nav-btn" href="../week-${String(next.week).padStart(2,'0')}/" title="下一週" aria-label="下一週">→</a>`:''}</nav></div></header>
   <main class="shell">
-    <section class="hero"><div><div class="code">WEEK ${ww} · ${esc(data.date)} · 90 MIN</div><h1>${esc(data.title)}</h1><p>${esc(data.goal)}</p><div class="driving"><span>本週驅動問題</span><strong>${esc(extra.drivingQuestion)}</strong></div></div><div class="output"><span>本週可見產出</span>${esc(data.output)}<small id="pathProgress">探究進度 0 / 4</small></div></section>
+    <section class="hero"><div><div class="code">第 ${ww} 週 · ${esc(data.date)} · 90 分鐘</div><h1>${esc(data.title)}</h1><p>${esc(data.goal)}</p><div class="driving"><span>這週的大問題</span><strong>${esc(extra.drivingQuestion)}</strong></div></div><div class="output"><span>今天要完成</span>${esc(data.output)}<small id="pathProgress">闖關進度 0 / 4</small></div></section>
     <div class="actions"><a class="action primary" href="lecture-slides.html">開啟 12 張課堂簡報</a><a class="action notebook" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer">開啟本週 NotebookLM</a><a class="action" href="teacher-pack.pdf?v=20260727-rich">下載直式詳案</a><button class="action" id="printWeek">列印本週</button></div>
-    <nav class="tabs" role="tablist" aria-label="課程內容"><button class="tab active" data-view="teacher">教師流程</button><button class="tab" data-view="explore">探究關卡</button><button class="tab" data-view="student">學生工作室</button><button class="tab" data-view="assessment">形成評量</button><button class="tab" data-view="media">NotebookLM</button></nav>
+    <nav class="tabs" role="tablist" aria-label="課程內容"><button class="tab active" data-view="teacher">上課流程</button><button class="tab" data-view="explore">動手闖關</button><button class="tab" data-view="student">我的工作室</button><button class="tab" data-view="assessment">小挑戰</button><button class="tab" data-view="media">影片與教材</button></nav>
 
     <section id="teacher" class="view active">
-      <div class="summary"><div class="summary-cell"><b>核心概念</b>${esc(data.concept)}</div><div class="summary-cell"><b>課前準備</b>${esc(data.materials)}</div><div class="summary-cell"><b>授課設定</b>一對一資優教學｜連續兩節｜證據導向</div></div>
-      <section class="section"><div class="section-head"><span>TEACHING FLOW</span><h2>90 分鐘逐段流程</h2></div><div class="timeline">${data.timeline.map((row,i)=>`<div class="time-row"><div class="time">${esc(row[0])}</div><div class="time-main"><b>${esc(row[1])}</b><span>${esc(flowGuide[i])}</span></div><div class="time-tip">${esc(row[2])}</div></div>`).join('')}</div></section>
-      <section class="section"><div class="section-head"><span>DIAGNOSTIC MOVES</span><h2>一對一即時診斷</h2></div><div class="diagnostic-grid"><div><b>學生快速作答時</b><p>不要立刻進下一題，追問：「${esc(data.questions[0])}」</p></div><div><b>學生卡住時</b><p>只給第一階提示：回到「${esc(extra.path[0][0])}」，先說出看見的事實。</p></div><div><b>學生完成基本任務時</b><p>用迷思句「${esc(extra.misconception[0])}」進行反例壓力測試。</p></div></div></section>
+      <div class="summary"><div class="summary-cell"><b>這週最重要的想法</b>${esc(data.concept)}</div><div class="summary-cell"><b>要準備的東西</b>${esc(data.materials)}</div><div class="summary-cell"><b>上課方式</b>一對一｜連續兩節｜動手試、說理由</div></div>
+      <section class="section"><div class="section-head"><span>今天怎麼上課</span><h2>90 分鐘逐段流程</h2></div><div class="timeline">${data.timeline.map((row,i)=>`<div class="time-row"><div class="time">${esc(row[0])}</div><div class="time-main"><b>${esc(row[1])}</b><span>${esc(flowGuide[i])}</span></div><div class="time-tip">${esc(row[2])}</div></div>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>TEACHER HELP</span><h2>老師怎麼幫你想</h2></div><div class="diagnostic-grid"><div><b>很快答完時</b><p>再說說看：「${esc(data.questions[0])}」</p></div><div><b>卡住時</b><p>先回到「${esc(extra.path[0][0])}」，只說你真的看到什麼。</p></div><div><b>完成基本任務時</b><p>再試一個不一樣的例子：「${esc(extra.misconception[0])}」</p></div></div></section>
       <section class="section"><div class="section-head"><span>QUESTIONS</span><h2>教師追問句</h2></div><div class="questions">${data.questions.map(q=>`<div class="question">「${esc(q)}」</div>`).join('')}</div></section>
-      <section class="section"><div class="section-head"><span>RESOURCES</span><h2>本週教學資源</h2></div><div class="resources">${data.links.filter(x=>x[1]&&!x[1].includes('notebooklm.google.com')).map(x=>`<a class="resource" href="${esc(localHref(x[1]))}"><b>${esc(x[0])} →</b><span>相關互動教材與延伸實作</span></a>`).join('')}<a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer"><b>本週 NotebookLM →</b><span>本週研究、提問與素材產生</span></a><a class="resource" href="enrichment.md"><b>進階探究來源檔 →</b><span>迷思、評量、FAQ 與研究提問</span></a></div></section>
+      <section class="section"><div class="section-head"><span>可以使用的工具</span><h2>本週教學資源</h2></div><div class="resources">${data.links.filter(x=>x[1]&&!x[1].includes('notebooklm.google.com')).map(x=>`<a class="resource" href="${esc(localHref(x[1]))}"><b>${esc(x[0])} →</b><span>可以操作與練習的教材</span></a>`).join('')}<a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer"><b>本週 NotebookLM →</b><span>問問題、整理想法與製作素材</span></a><a class="resource" href="enrichment.md"><b>老師陪讀資料 →</b><span>更多例子、小測驗與延伸問題</span></a></div></section>
       <section class="section"><div class="section-head"><span>AFTER CLASS</span><h2>課後銜接備忘</h2></div><textarea class="teacher-note" placeholder="學生今天最有力的推理、卡住的地方、下次要延續的線索…"></textarea></section>
     </section>
 
     <section id="explore" class="view">
-      <section class="section path-intro"><div class="section-head"><span>INQUIRY PATH</span><h2>四段探究路徑</h2></div><p>每一關都要留下可見證據。完成不等於做完步驟，而是能說明「我怎麼知道」。</p></section>
+      <section class="section path-intro"><div class="section-head"><span>四個任務</span><h2>四段動手闖關</h2></div><p>每一關都要留下看得到的結果。做完步驟還不夠，也要能說出「我是怎麼知道的」。</p></section>
       <div class="path-grid">${extra.path.map((item,i)=>`<article class="path-stage" data-stage="${i}"><label><input class="stage-check" type="checkbox" data-stage="${i}"><span class="stage-no">0${i+1}</span><span><b>${esc(item[0])}</b><strong>${esc(item[1])}</strong><small>證據：${esc(item[2])}</small></span></label></article>`).join('')}</div>
-      <section class="section"><div class="section-head"><span>SUCCESS CRITERIA</span><h2>本週成功條件</h2></div><div class="criteria">${extra.success.map((item,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span>${esc(item)}</div>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>I CAN DO IT</span><h2>做到這些就過關</h2></div><div class="criteria">${extra.success.map((item,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span>${esc(item)}</div>`).join('')}</div></section>
     </section>
 
     <section id="student" class="view">
-      <section class="student-box"><div class="section-head"><span>MY MISSION</span><h2>本週任務</h2></div><ol>${data.student.map(item=>`<li>${esc(item)}</li>`).join('')}</ol></section>
-      <section class="section"><div class="section-head"><span>CONCEPT LAB</span><h2>三張核心概念卡</h2></div><div class="concept-grid">${extra.concepts.map(item=>`<article><b>${esc(item[0])}</b><p>${esc(item[1])}</p></article>`).join('')}</div></section>
-      <section class="section misconception"><div class="section-head"><span>MISCONCEPTION LAB</span><h2>迷思偵探</h2></div><blockquote>「${esc(extra.misconception[0])}」</blockquote><div class="myth-grid"><div><b>概念澄清</b><p>${esc(extra.misconception[1])}</p></div><div><b>動手驗證</b><p>${esc(extra.misconception[2])}</p></div></div></section>
+      <section class="student-box"><div class="section-head"><span>我要完成</span><h2>本週任務</h2></div><ol>${data.student.map(item=>`<li>${esc(item)}</li>`).join('')}</ol></section>
+      <section class="section"><div class="section-head"><span>KEY IDEAS</span><h2>三張重點卡</h2></div><div class="concept-grid">${extra.concepts.map(item=>`<article><b>${esc(item[0])}</b><p>${esc(item[1])}</p></article>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>WORD HELP</span><h2>難詞小幫手</h2></div><div class="concept-grid">${glossary.map(item=>`<article><b>${esc(item[0])}</b><p>${esc(item[1])}</p></article>`).join('')}</div></section>
+      <section class="section misconception"><div class="section-head"><span>IDEA DETECTIVE</span><h2>想法偵探</h2></div><blockquote>「${esc(extra.misconception[0])}」</blockquote><div class="myth-grid"><div><b>先想清楚</b><p>${esc(extra.misconception[1])}</p></div><div><b>動手試試看</b><p>${esc(extra.misconception[2])}</p></div></div></section>
       <section class="section"><div class="section-head"><span>SELF CHECK</span><h2>完成前自我檢查</h2></div><div class="self-check"><div class="check">我有保留第一版與修改版。</div><div class="check">我能說出選擇的理由。</div><div class="check">我有用測試或資料支持結論。</div><div class="check">使用 AI 時，我有查證並保護個資。</div></div></section>
       <section class="section"><div class="section-head"><span>REFLECTION</span><h2>今天要帶走的一句話</h2></div><textarea class="teacher-note student-reflection" placeholder="我原本以為……，現在我發現……，我的證據是……"></textarea></section>
     </section>
 
     <section id="assessment" class="view">
-      <section class="section"><div class="section-head"><span>CHECK FOR UNDERSTANDING</span><h2>三題形成評量</h2></div><div class="quiz-list">${extra.quiz.map((item,qi)=>`<article class="quiz-item" data-quiz="${qi}"><h3>${qi+1}. ${esc(item[0])}</h3><div class="quiz-options">${item[1].map((option,oi)=>`<button data-choice="${oi}">${String.fromCharCode(65+oi)}. ${esc(option)}</button>`).join('')}</div><p class="quiz-feedback" aria-live="polite"></p></article>`).join('')}</div></section>
-      <section class="section"><div class="section-head"><span>RUBRIC</span><h2>證據導向學習量規</h2></div><div class="rubric-wrap"><table class="rubric"><thead><tr><th>面向</th><th>起步</th><th>達成</th><th>深化</th></tr></thead><tbody>${rubric.map(row=>`<tr>${row.map(cell=>`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>
+      <section class="section"><div class="section-head"><span>QUICK CHECK</span><h2>三題小挑戰</h2></div><div class="quiz-list">${extra.quiz.map((item,qi)=>`<article class="quiz-item" data-quiz="${qi}"><h3>${qi+1}. ${esc(item[0])}</h3><div class="quiz-options">${item[1].map((option,oi)=>`<button data-choice="${oi}">${String.fromCharCode(65+oi)}. ${esc(option)}</button>`).join('')}</div><p class="quiz-feedback" aria-live="polite"></p></article>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>CHECK MY WORK</span><h2>我的作品檢查表</h2></div><div class="rubric-wrap"><table class="rubric"><thead><tr><th>看看哪一項</th><th>剛開始</th><th>做到了</th><th>更進一步</th></tr></thead><tbody>${rubric.map(row=>`<tr>${row.map(cell=>`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>
       <section class="section"><div class="section-head"><span>FAQ</span><h2>學生常見問題</h2></div><div class="faq-list">${extra.faq.map(item=>`<details><summary>${esc(item[0])}</summary><p>${esc(item[1])}</p></details>`).join('')}</div></section>
     </section>
 
     <section id="media" class="view">
       <section class="media-grid"><video class="week-video" controls preload="metadata" poster="../assets/gifted-lab-cover.png"><source src="video.mp4" type="video/mp4"></video><div><div class="status-box"><b>本週 NotebookLM 短影片</b><span class="video-status">正在確認影片狀態…</span></div><div class="resources media-links"><a class="resource" href="slides.pdf"><b>NotebookLM 本週簡報 →</b><span>本週專屬概念與任務教材</span></a><a class="resource" href="lecture-slides.html"><b>12 張互動投影簡報 →</b><span>全螢幕、總覽、鍵盤與觸控操作</span></a><a class="resource" href="notebook-faq.md"><b>NotebookLM FAQ 紀錄 →</b><span>由本週全部來源交叉整理的三個追問</span></a><a class="resource" href="video-captions.srt"><b>短影片字幕檔 →</b><span>動態字幕同步文字，可供播放器與剪輯使用</span></a><a class="resource" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer"><b>進入本週 NotebookLM →</b><span>繼續研究、查詢與產出教材</span></a></div></div></section>
-      <section class="section"><div class="section-head"><span>NOTEBOOK PROMPTS</span><h2>五個專屬研究提問</h2></div><div class="prompt-list">${extra.prompts.map((prompt,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span><p>${esc(prompt)}</p><button class="copy-prompt" data-prompt="${esc(prompt)}">複製</button></div>`).join('')}</div></section>
+      <section class="section"><div class="section-head"><span>問問 NotebookLM</span><h2>五個幫助思考的問題</h2></div><div class="prompt-list">${extra.prompts.map((prompt,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span><p>${esc(prompt)}</p><button class="copy-prompt" data-prompt="${esc(prompt)}">複製</button></div>`).join('')}</div></section>
       <section class="section notebook-workflow"><div class="section-head"><span>WORKFLOW</span><h2>NotebookLM 使用節奏</h2></div><div class="workflow"><div><b>課前</b><p>用來源摘要與 FAQ 預測學生迷思。</p></div><div><b>課中</b><p>只查反例與提示，不讓 AI 代替學生作答。</p></div><div><b>課後</b><p>依作品證據整理回饋與下次銜接。</p></div></div></section>
     </section>
   </main>
@@ -87,7 +89,7 @@
   let stageState=JSON.parse(localStorage.getItem(progressKey)||'[false,false,false,false]');
   const updateProgress=()=>{
     document.querySelectorAll('.stage-check').forEach(input=>{input.checked=Boolean(stageState[Number(input.dataset.stage)]);input.closest('.path-stage').classList.toggle('done',input.checked);});
-    document.querySelector('#pathProgress').textContent=`探究進度 ${stageState.filter(Boolean).length} / 4`;
+    document.querySelector('#pathProgress').textContent=`闖關進度 ${stageState.filter(Boolean).length} / 4`;
     localStorage.setItem(progressKey,JSON.stringify(stageState));
   };
   document.querySelectorAll('.stage-check').forEach(input=>input.addEventListener('change',()=>{stageState[Number(input.dataset.stage)]=input.checked;updateProgress();}));

@@ -8,6 +8,7 @@ const labDir = path.resolve(toolsDir, '..');
 const sandbox = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-data.js'), 'utf8'), sandbox);
 vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-enrichment.js'), 'utf8'), sandbox);
+vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-student-language.js'), 'utf8'), sandbox);
 
 for (const data of sandbox.window.GIFTED_WEEKS) {
   const extra = sandbox.window.GIFTED_ENRICHMENT[data.week];
@@ -79,6 +80,50 @@ for (const data of sandbox.window.GIFTED_WEEKS) {
   );
 
   fs.writeFileSync(path.join(labDir, `week-${code}`, 'enrichment.md'), lines.join('\n'), 'utf8');
+
+  const glossary = (sandbox.window.GIFTED_GLOSSARY || {})[data.week] || [];
+  const studentGuide = [
+    `# W${code}｜${data.title}｜中年級好懂版`,
+    '',
+    '## 這週要學會什麼？',
+    '',
+    data.goal,
+    '',
+    '## 先記住這個重點',
+    '',
+    data.concept,
+    '',
+    '## 難詞小幫手',
+    '',
+    ...glossary.map(([term, meaning]) => `- **${term}**：${meaning}`),
+    '',
+    '## 一步一步做',
+    '',
+    ...data.student.map((step, index) => `${index + 1}. ${step}`),
+    '',
+    '## 卡住時這樣想',
+    '',
+    `- 先說：我真的看到了什麼？`,
+    `- 再說：這個發現讓我怎麼想？`,
+    `- 最後問：有沒有一個不同的例子，會讓我改變想法？`,
+    '',
+    '## 完成前自己檢查',
+    '',
+    ...extra.success.map((item) => `- [ ] ${item}`),
+    '',
+    '## 可以問 NotebookLM',
+    '',
+    `1. 請用國小四年級聽得懂的話，解釋「${glossary[0]?.[0] || data.title}」，並舉一個校園生活例子。`,
+    `2. 請一次只問我一個問題，引導我自己找答案，不要直接公布答案。`,
+    `3. 請給我一個不一樣的例子，讓我檢查原本的想法。`,
+    '',
+    '## 使用 AI 的安全約定',
+    '',
+    '- 不輸入姓名、照片、帳號、電話或其他私人資料。',
+    '- AI 的回答可能會錯，重要內容要再找可靠資料確認。',
+    '- 先留下自己的想法，再請 AI 幫忙；最後由自己選擇和負責。',
+  ];
+  fs.writeFileSync(path.join(labDir, `week-${code}`, 'student-guide.md'), `${studentGuide.join('\n')}\n`, 'utf8');
 }
 
-console.log(`Generated ${sandbox.window.GIFTED_WEEKS.length} enrichment sources.`);
+console.log(`Generated ${sandbox.window.GIFTED_WEEKS.length} enrichment sources and student guides.`);

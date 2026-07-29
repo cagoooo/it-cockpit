@@ -8,10 +8,11 @@ const labDir = path.resolve(toolsDir, '..');
 const source = fs.readFileSync(path.join(labDir, 'week-data.js'), 'utf8');
 const sandbox = { window: {} };
 vm.runInNewContext(source, sandbox);
+vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-student-language.js'), 'utf8'), sandbox);
 const weeks = sandbox.window.GIFTED_WEEKS;
 const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
-const depthAssetVersion = '20260728-captions-v2';
+const depthAssetVersion = '20260729-student-language-v1';
 
 const meta = ({ title, description, url, assetPrefix }) => `
 <meta name="description" content="${description}">
@@ -43,7 +44,7 @@ for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
   const weekDir = path.join(labDir, `week-${code}`);
   const title = `W${code} ${item.title}｜石門智繪客`;
-  const description = `黃凱揚老師第 ${item.week} 週創造力資優資訊科技課程：${item.goal}包含探究關卡、形成評量、NotebookLM、簡報與影片。`;
+  const description = `黃凱揚老師第 ${item.week} 週創造力資優資訊科技課程：${item.goal}包含動手闖關、三題小挑戰、NotebookLM、簡報與影片。`;
   const url = `${siteBase}/week-${code}/`;
   const commonHead = `<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -61,7 +62,7 @@ ${commonHead}
 <link rel="stylesheet" href="../week-learning-depth.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../classroom-integrations.css">
 </head>
-<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../youtube-data.js"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js"></script></body>
+<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script><script src="../youtube-data.js"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js"></script></body>
 </html>
 `;
 
@@ -80,7 +81,7 @@ ${commonHead}
 <link rel="stylesheet" href="../week-slides.css">
 <link rel="stylesheet" href="../week-slides-rich.css">
 </head>
-<body data-week="${item.week}"><main id="stage" class="stage"></main><nav class="controls" aria-label="簡報控制列"><a class="ctrl home" href="index.html" aria-label="回到本週駕駛艙">⌂</a><button id="overviewButton" class="ctrl" aria-label="章節總覽">M</button><button id="prev" class="ctrl" aria-label="上一張">←</button><span id="counter" class="counter">1 / 12</span><button id="next" class="ctrl" aria-label="下一張">→</button><button id="full" class="ctrl" aria-label="全螢幕">⛶</button></nav><div id="progress" class="progress"></div><div id="overview" class="slide-overview" aria-hidden="true"></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-slides.js"></script></body>
+<body data-week="${item.week}"><main id="stage" class="stage"></main><nav class="controls" aria-label="簡報控制列"><a class="ctrl home" href="index.html" aria-label="回到本週駕駛艙">⌂</a><button id="overviewButton" class="ctrl" aria-label="章節總覽">M</button><button id="prev" class="ctrl" aria-label="上一張">←</button><span id="counter" class="counter">1 / 12</span><button id="next" class="ctrl" aria-label="下一張">→</button><button id="full" class="ctrl" aria-label="全螢幕">⛶</button></nav><div id="progress" class="progress"></div><div id="overview" class="slide-overview" aria-hidden="true"></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script><script src="../week-slides.js?v=${depthAssetVersion}"></script></body>
 </html>
 `;
 
