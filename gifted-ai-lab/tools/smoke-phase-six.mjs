@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const repoDir=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const qaDir=path.join(repoDir,'.qa-phase-six');
 const profileDir=path.join(qaDir,'chrome-profile');
 fs.rmSync(qaDir,{recursive:true,force:true});fs.mkdirSync(profileDir,{recursive:true});
-const chromeCandidates=process.platform==='win32'?['C:/Program Files (x86)/Google/Chrome/Application/chrome.exe','C:/Program Files/Google/Chrome/Application/chrome.exe']:[process.env.CHROME_PATH,'google-chrome','chromium'].filter(Boolean);
-const chrome=chromeCandidates.find(candidate=>candidate.includes('/')?fs.existsSync(candidate):true);
+const chromeCandidates=process.platform==='win32'?['C:/Program Files (x86)/Google/Chrome/Application/chrome.exe','C:/Program Files/Google/Chrome/Application/chrome.exe']:[process.env.CHROME_PATH,'google-chrome','google-chrome-stable','chromium-browser','chromium'].filter(Boolean);
+const chrome=chromeCandidates.map(candidate=>{if(path.isAbsolute(candidate))return fs.existsSync(candidate)?candidate:null;const result=spawnSync('which',[candidate],{encoding:'utf8'});return result.status===0?result.stdout.trim():null}).find(Boolean);
 if(!chrome)throw new Error('Chrome not found');
 const server=http.createServer((request,response)=>{const url=new URL(request.url,'http://localhost');const target=path.resolve(repoDir,`.${decodeURIComponent(url.pathname)}`);if(!target.startsWith(repoDir)||!fs.existsSync(target)||fs.statSync(target).isDirectory()){response.writeHead(404);response.end('Not found');return;}response.writeHead(200,{'Content-Type':target.endsWith('.html')?'text/html; charset=utf-8':target.endsWith('.js')?'text/javascript; charset=utf-8':target.endsWith('.css')?'text/css; charset=utf-8':'application/octet-stream'});fs.createReadStream(target).pipe(response);});
 await new Promise(resolve=>server.listen(8771,'127.0.0.1',resolve));
