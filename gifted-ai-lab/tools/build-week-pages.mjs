@@ -12,7 +12,7 @@ vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-student-language.js')
 const weeks = sandbox.window.GIFTED_WEEKS;
 const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
-const depthAssetVersion = '20260828-kai-slides-v1';
+const depthAssetVersion = '20260828-kai-slides-v2';
 const dayAssetVersion = '20260729-day-of-ai-v1';
 
 const meta = ({ title, description, url, assetPrefix }) => `
@@ -92,8 +92,33 @@ ${commonHead}
 </html>
 `;
 
+  const notebookSlideTitle = `W${code} ${item.title}｜黃凱揚老師帶課新版投影片`;
+  const notebookSlideUrl = `${url}notebooklm-kai-slides.html`;
+  const notebookSlides = `<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>${notebookSlideTitle}</title>${meta({ title: notebookSlideTitle, description: `石門智繪客第 ${item.week} 週新版 NotebookLM 投影片，可左右播放、觸控翻頁與全螢幕展示。`, url: notebookSlideUrl, assetPrefix: '../assets/' })}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notebooklm-pdf-player.css?v=${depthAssetVersion}">
+</head>
+<body class="pdf-player" data-week="${item.week}" data-pdf="notebooklm-kai-slides.pdf" data-title="${notebookSlideTitle}">
+<header class="pdf-header"><a class="pdf-home" href="index.html" aria-label="回到本週駕駛艙" title="回到本週駕駛艙">⌂</a><div class="pdf-heading"><small>NOTEBOOKLM · W${code}</small><strong>${item.title}</strong></div></header>
+<main class="pdf-stage"><div id="pdfViewport" class="pdf-viewport"><canvas id="slideCanvas" aria-label="新版 NotebookLM 投影片"></canvas><p id="pdfLoading" class="pdf-loading" aria-live="polite">正在載入新版 NotebookLM 簡報…</p></div></main>
+<nav class="pdf-controls" aria-label="投影片控制列"><button id="pdfOverviewButton" type="button" aria-label="投影片總覽" title="投影片總覽">▦</button><button id="pdfPrevious" type="button" aria-label="上一張投影片" title="上一張投影片">←</button><span id="pdfCounter" class="pdf-counter">1 / 1</span><button id="pdfNext" type="button" aria-label="下一張投影片" title="下一張投影片">→</button><button id="pdfFullscreen" type="button" aria-label="全螢幕" title="全螢幕">⛶</button><a id="pdfDirect" href="notebooklm-kai-slides.pdf" aria-label="開啟原始 PDF" title="開啟原始 PDF">↓</a></nav>
+<div id="pdfProgress" class="pdf-progress"></div>
+<aside id="pdfOverview" class="pdf-overview" aria-hidden="true"><div class="pdf-overview-inner"><div class="pdf-overview-head"><div><h1>投影片總覽</h1><p>點選縮圖可直接跳到該頁。</p></div><button id="pdfOverviewClose" class="pdf-overview-close" type="button" aria-label="關閉投影片總覽">×</button></div><div class="pdf-thumb-grid"></div></div></aside>
+<script type="module" src="../notebooklm-pdf-player.js?v=${depthAssetVersion}"></script>
+</body>
+</html>
+`;
+
   fs.writeFileSync(path.join(weekDir, 'index.html'), cockpit, 'utf8');
   fs.writeFileSync(path.join(weekDir, 'lecture-slides.html'), slides, 'utf8');
+  fs.writeFileSync(path.join(weekDir, 'notebooklm-kai-slides.html'), notebookSlides, 'utf8');
 }
 
 console.log(`Generated ${weeks.length} cockpit pages and ${weeks.length} slide pages.`);
