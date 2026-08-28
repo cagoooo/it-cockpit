@@ -12,7 +12,7 @@ vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-student-language.js')
 const weeks = sandbox.window.GIFTED_WEEKS;
 const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
-const depthAssetVersion = '20260828-kai-slides-v2';
+const depthAssetVersion = '20260828-kai-slides-v3';
 const dayAssetVersion = '20260729-day-of-ai-v1';
 
 const meta = ({ title, description, url, assetPrefix }) => `
@@ -116,9 +116,21 @@ ${commonHead}
 </html>
 `;
 
+  const notebookSlideV2Title = `W${code} ${item.title}｜黃凱揚老師帶課 Q 版新版投影片`;
+  const notebookSlideV2Url = `${url}notebooklm-kai-slides-v2.html`;
+  const notebookSlidesV2 = notebookSlides
+    .replaceAll(notebookSlideTitle, notebookSlideV2Title)
+    .replaceAll(notebookSlideUrl, notebookSlideV2Url)
+    .replaceAll('notebooklm-kai-slides.pdf', 'notebooklm-kai-slides-v2.pdf')
+    .replaceAll('新版 NotebookLM', 'Q 版新版 NotebookLM')
+    .replaceAll('黃凱揚老師帶課新版投影片', '黃凱揚老師帶課 Q 版新版投影片')
+    .replaceAll('週Q 版', '週 Q 版')
+    .replaceAll('載入Q 版', '載入 Q 版');
+
   fs.writeFileSync(path.join(weekDir, 'index.html'), cockpit, 'utf8');
   fs.writeFileSync(path.join(weekDir, 'lecture-slides.html'), slides, 'utf8');
   fs.writeFileSync(path.join(weekDir, 'notebooklm-kai-slides.html'), notebookSlides, 'utf8');
+  fs.writeFileSync(path.join(weekDir, 'notebooklm-kai-slides-v2.html'), notebookSlidesV2, 'utf8');
 }
 
 console.log(`Generated ${weeks.length} cockpit pages and ${weeks.length} slide pages.`);
