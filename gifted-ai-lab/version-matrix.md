@@ -1,7 +1,7 @@
 # 石門智繪客教材版本對照表
 
 - 發布版本：2026.08.28-kai-notebooklm-slide-player.3
-- 產生時間：2026-08-28T01:42:51.288Z
+- 產生時間：2026-08-29T06:40:51.741Z
 - 正式計畫來源：`materials/teacher-guide.pdf`
 
 | 週次 | 日期 | 正式課程目標 | 網站與 NotebookLM | 兒童版資訊圖 |

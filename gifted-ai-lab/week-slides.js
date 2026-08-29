@@ -14,7 +14,7 @@
   const conceptCards=extra.concepts.map(item=>`<div class="card"><b>${esc(item[0])}</b><p>${esc(item[1])}</p></div>`).join('');
   const quiz=extra.quiz[0];
   const slides=[
-    {title:'課程開場',html:`<section class="slide cover"><div class="cover-copy"><div class="code">WEEK ${ww} · ${esc(data.date)} · 90 MIN</div><h1>${esc(data.title)}</h1><p class="lead">${esc(data.goal)}</p><span class="tag">黃凱揚老師｜桃園市龍潭區石門國民小學</span></div><img src="../assets/gifted-lab-cover.png" alt="資訊科技專題學習情境">${speaker('今天不只要完成任務，更要留下能支持想法的證據。')}</section>`},
+    {title:'課程開場',html:`<section class="slide cover"><div class="cover-copy"><div class="code">WEEK ${ww} · ${esc(data.date)} · 90 MIN</div><h1>${esc(data.title)}</h1><p class="lead">${esc(data.goal)}</p><span class="tag">黃凱揚老師｜桃園市龍潭區石門國民小學</span></div><img src="../assets/gifted-lab-cover.webp" alt="資訊科技專題學習情境">${speaker('今天不只要完成任務，更要留下能支持想法的證據。')}</section>`},
     {title:'驅動問題',html:`<section class="slide content"><div><div class="rule"></div><h2>今天要破解的問題</h2></div><div class="prompt"><div class="prompt-mark">?</div><q>${esc(extra.drivingQuestion)}</q></div>${speaker('先聽學生原本怎麼想，這一頁不要急著公布答案。')}</section>`},
     {title:'闖關地圖',html:`<section class="slide content"><div><div class="rule"></div><h2>四段闖關地圖</h2></div><div class="map-grid">${pathCards}</div>${speaker('每一關都問：我們留下了什麼看得到的結果？')}</section>`},
     {title:'三個重點',html:`<section class="slide content"><div><div class="rule"></div><h2>三個重要想法</h2></div><div class="cards">${conceptCards}</div>${speaker('不要只讀文字，請學生各找一個生活例子。')}</section>`},

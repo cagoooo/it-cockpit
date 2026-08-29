@@ -373,6 +373,7 @@ body.teacher-mode .teacher-only{display:block}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -959,7 +960,7 @@ body.teacher-mode .teacher-only{display:block}
   <div class="slide-viewer">
     <h3>教學簡報</h3>
     <div class="slide-main" ondblclick="openSlideFullscreen()">
-      <img src="assets/slide_01.jpg" id="slideImg" alt="教學簡報" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:60px 20px;text-align:center;color:var(--dim)\'>簡報圖片載入中...</div>'">
+      <img data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" id="slideImg" alt="教學簡報" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:60px 20px;text-align:center;color:var(--dim)\' decoding="async" loading="eager">簡報圖片載入中...</div>'">
       <button class="slide-nav-btn prev" onclick="changeSlide(-1)">&lsaquo;</button>
       <button class="slide-nav-btn next" onclick="changeSlide(1)">&rsaquo;</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕播放">⛶ 全螢幕</button>
@@ -1158,7 +1159,7 @@ function scrollToSec(id, el) {
 // ===================== SLIDE PLAYER =====================
 var SLIDE_LIST = [];
 for (var si = 1; si <= 15; si++) {
-  SLIDE_LIST.push('assets/slide_' + String(si).padStart(2, '0') + '.jpg');
+  SLIDE_LIST.push('assets/slide_' + String(si).padStart(2, '0') + '.webp');
 }
 var curSlide = 1;
 var totalSlides = SLIDE_LIST.length;

@@ -541,6 +541,7 @@ input, select, textarea, button{font-family:inherit}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -587,7 +588,7 @@ input, select, textarea, button{font-family:inherit}
       </div>
     </div>
     <div class="hero-img-frame">
-      <img src="assets/01_core_diff.jpg" alt="Gemini 引導式學習" loading="eager">
+      <img data-fallback-src="assets/01_core_diff.jpg" src="./assets/01_core_diff.webp" alt="Gemini 引導式學習" loading="eager" decoding="async">
     </div>
   </section>
 
@@ -648,7 +649,7 @@ input, select, textarea, button{font-family:inherit}
           </ul>
         </div>
       </div>
-      <div class="img-frame"><img src="assets/01_core_diff.jpg" alt="引導式學習概念圖" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/01_core_diff.jpg" src="./assets/01_core_diff.webp" alt="引導式學習概念圖" loading="lazy" decoding="async"></div>
     </div>
 
     <div class="canvas-section">
@@ -741,7 +742,7 @@ input, select, textarea, button{font-family:inherit}
         </div>
         <div class="tip-box"><b>💡 切換提醒：</b>同一次對話中可以隨時開關！關掉後會回到一般模式直接給答案。</div>
       </div>
-      <div class="img-frame"><img src="assets/02_open_steps.jpg" alt="開啟步驟圖" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/02_open_steps.jpg" src="./assets/02_open_steps.webp" alt="開啟步驟圖" loading="lazy" decoding="async"></div>
     </div>
 
     <div class="canvas-section">
@@ -832,7 +833,7 @@ input, select, textarea, button{font-family:inherit}
       <h2>✍️ PARTS：寫出好主題的秘密武器</h2>
     </div>
     <div class="two-col">
-      <div class="img-frame"><img src="assets/03_parts_framework.jpg" alt="PARTS 框架圖" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/03_parts_framework.jpg" src="./assets/03_parts_framework.webp" alt="PARTS 框架圖" loading="lazy" decoding="async"></div>
       <div>
         <div class="card">
           <h3>🗝️ PARTS 五大元素</h3>
@@ -966,7 +967,7 @@ input, select, textarea, button{font-family:inherit}
       <h2>💬 4 種互動必殺技</h2>
     </div>
     <div class="two-col">
-      <div class="img-frame"><img src="assets/04_four_skills.jpg" alt="四種互動" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/04_four_skills.jpg" src="./assets/04_four_skills.webp" alt="四種互動" loading="lazy" decoding="async"></div>
       <div>
         <div class="card">
           <h3>💡 學習不卡關的秘訣</h3>
@@ -1095,7 +1096,7 @@ input, select, textarea, button{font-family:inherit}
           <p style="font-size:1rem;line-height:1.8">AI 沒有感情、不會思考，它是「<b>猜</b>」出答案的。<b>不能取代真實朋友、家人和老師</b>。有心事請找真的人！</p>
         </div>
       </div>
-      <div class="img-frame"><img src="assets/05_traps.jpg" alt="地雷與須知" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/05_traps.jpg" src="./assets/05_traps.webp" alt="地雷與須知" loading="lazy" decoding="async"></div>
     </div>
 
     <div class="canvas-section" style="border-color:var(--c2)">
@@ -1185,7 +1186,7 @@ input, select, textarea, button{font-family:inherit}
       <h2>🏠 課堂活動 × 回家自學</h2>
     </div>
     <div class="two-col">
-      <div class="img-frame"><img src="assets/06_scenarios.jpg" alt="實戰場景" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/06_scenarios.jpg" src="./assets/06_scenarios.webp" alt="實戰場景" loading="lazy" decoding="async"></div>
       <div>
         <div class="card">
           <h3>🎒 課堂 4 個互動活動</h3>
@@ -1306,7 +1307,7 @@ input, select, textarea, button{font-family:inherit}
   <section id="slideshow-section">
     <h2>🎞️ 授課簡報（點縮圖換頁｜點全螢幕放大）</h2>
     <div class="slide-player-main" id="slide-main">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="slide">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="slide" decoding="async" loading="eager">
       <button class="slide-nav prev" onclick="slideNav(-1)">◀</button>
       <button class="slide-nav next" onclick="slideNav(1)">▶</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
@@ -1715,9 +1716,9 @@ if(YT_EMBED && !YT_EMBED.includes('__')) {
 
 // SLIDES list — 12 pages converted from NotebookLM slide deck
 SLIDE_LIST = [
-  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg',
-  'assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg',
-  'assets/slide_09.jpg','assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg'
+  './assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp','./assets/slide_04.webp',
+  './assets/slide_05.webp','./assets/slide_06.webp','./assets/slide_07.webp','./assets/slide_08.webp',
+  './assets/slide_09.webp','./assets/slide_10.webp','./assets/slide_11.webp','./assets/slide_12.webp'
 ];
 initSlidePlayer();
 </script>

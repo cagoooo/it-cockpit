@@ -313,6 +313,7 @@ body.slides-fullscreen .draw-toolbar,body.slides-fullscreen .stage-pills{display
   .header-meta{width:100%;margin-left:0}
 }
 </style>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 <header class="site-header">
@@ -415,7 +416,7 @@ body.slides-fullscreen .draw-toolbar,body.slides-fullscreen .stage-pills{display
       <div class="tip-box">🌟 <b>好咒語五要素：</b>① 主體（主角是誰）② 場景（在哪裡）③ 風格（卡通/水彩/照片）④ 顏色 ⑤ 光線。</div>
     </div>
 
-    <figure class="ig-fig"><img src="assets/ig_stage2.jpg" loading="lazy" alt="用 Gemini 生成圖片資訊圖表">
+    <figure class="ig-fig"><img data-fallback-src="assets/ig_stage2.jpg" src="./assets/ig_stage2.webp" loading="lazy" alt="用 Gemini 生成圖片資訊圖表" decoding="async">
       <figcaption>🎨 資訊圖表：用 Gemini 生成圖片（由 NotebookLM AI 生成）</figcaption></figure>
 
     <!-- INTERACTIVE: image prompt builder -->
@@ -497,7 +498,7 @@ body.slides-fullscreen .draw-toolbar,body.slides-fullscreen .stage-pills{display
       <div class="tip-box green">💡 <b>好封面是歌的「臉」：</b>要吸睛、能傳達歌的心情（快樂的歌用明亮活潑畫面），還要留白放標題。</div>
     </div>
 
-    <figure class="ig-fig"><img src="assets/ig_stage3.jpg" loading="lazy" alt="製作端午專輯封面資訊圖表">
+    <figure class="ig-fig"><img data-fallback-src="assets/ig_stage3.jpg" src="./assets/ig_stage3.webp" loading="lazy" alt="製作端午專輯封面資訊圖表" decoding="async">
       <figcaption>💿 資訊圖表：製作端午節 AI 專輯封面（由 NotebookLM AI 生成）</figcaption></figure>
 
     <!-- INTERACTIVE: cover preview -->
@@ -557,7 +558,7 @@ body.slides-fullscreen .draw-toolbar,body.slides-fullscreen .stage-pills{display
       <div class="tip-box blue">🎤 <b>免費版小提醒：</b>MusicFX 主要做「純樂器伴奏」，暫時不會唱中文歌詞。沒關係——<b>讓 AI 當樂團，你和同學當主唱</b>，配著節奏唱出自己寫的端午歌詞，更酷！</div>
     </div>
 
-    <figure class="ig-fig"><img src="assets/ig_stage4.jpg" loading="lazy" alt="端午音樂創作六大魔法資訊圖表">
+    <figure class="ig-fig"><img data-fallback-src="assets/ig_stage4.jpg" src="./assets/ig_stage4.webp" loading="lazy" alt="端午音樂創作六大魔法資訊圖表" decoding="async">
       <figcaption>🎶 資訊圖表：端午音樂創作六大魔法元素（由 NotebookLM AI 生成）</figcaption></figure>
 
     <!-- INTERACTIVE: music prompt generator -->
@@ -811,7 +812,7 @@ body.slides-fullscreen .draw-toolbar,body.slides-fullscreen .stage-pills{display
 var SLIDE_COUNT = 13;           /* updated after slides ready */
 var SLIDE_LIST = [];
 var YOUTUBE_VIDEO_ID = 'geecqaNyO5E';   /* updated after upload */
-(function(){ for(var i=1;i<=SLIDE_COUNT;i++){ SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.jpg'); } })();
+(function(){ for(var i=1;i<=SLIDE_COUNT;i++){ SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.webp'); } })();
 
 /* ===== safe init ===== */
 function safeInit(name,fn){ try{ fn(); }catch(e){ console.error('[init error] '+name+':',e); } }

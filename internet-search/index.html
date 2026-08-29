@@ -555,6 +555,7 @@
       #slide-fs .fs-close { width: 40px; height: 40px; top: 12px; right: 12px; }
     }
   </style>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -894,7 +895,7 @@
       <h3>▶ CLASSROOM LECTURE SLIDES</h3>
       <div class="slide-player" id="slide-player-container">
         <div class="slide-player-main" ondblclick="openSlideFullscreen()">
-          <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+          <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" decoding="async" loading="eager">
           <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
           <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
           <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕投影">⛶ 全螢幕</button>
@@ -1167,7 +1168,7 @@
       if(SLIDE_LIST.length === 0) {
         // Fallback or dynamic setup, standard deck length is 15 pages
         for(let i=1; i<=15; i++) {
-          SLIDE_LIST.push(`assets/slide_${String(i).padStart(2, '0')}.jpg`);
+          SLIDE_LIST.push(`assets/slide_${String(i).padStart(2, '0')}.webp`);
         }
       }
       

@@ -676,6 +676,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -1216,7 +1217,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
   <p style="font-size:.92rem;color:var(--dim);margin:0 0 14px">NotebookLM AI 生成的師培簡報。雙擊主畫面或按右上「⛶ 全螢幕」進入全螢幕模式（手機可按左右按鈕、桌機可用 ← → 鍵翻頁）。</p>
   <div class="slide-player">
     <div class="slide-main" ondblclick="openSlideFullscreen()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="Slide">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="Slide" decoding="async" loading="eager">
       <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
       <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1368,7 +1369,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
 <script>
 /* ===== Slide Player ===== */
-const SLIDE_LIST = Array.from({length:13},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+const SLIDE_LIST = Array.from({length:13},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.webp`);
 const SLIDE_TITLES = SLIDE_LIST.map((_,i)=>`Slide ${i+1}`);
 let curSlide = 0;
 function initSlidePlayer(){

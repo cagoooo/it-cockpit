@@ -411,6 +411,7 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -482,7 +483,7 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/01_認識介面.jpg" alt="PhotoCap 介面與儲存資訊圖" loading="lazy">
+      <img data-fallback-src="assets/01_認識介面.jpg" src="./assets/01_認識介面.webp" alt="PhotoCap 介面與儲存資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -584,7 +585,7 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/02_裁切旋轉尺寸.jpg" alt="裁切旋轉調整尺寸資訊圖" loading="lazy">
+      <img data-fallback-src="assets/02_裁切旋轉尺寸.jpg" src="./assets/02_裁切旋轉尺寸.webp" alt="裁切旋轉調整尺寸資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -672,7 +673,7 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/03_文字貼紙相框.jpg" alt="文字貼紙相框與圖層概念資訊圖" loading="lazy">
+      <img data-fallback-src="assets/03_文字貼紙相框.jpg" src="./assets/03_文字貼紙相框.webp" alt="文字貼紙相框與圖層概念資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -756,7 +757,7 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/04_顏色特效.jpg" alt="顏色調整與特效濾鏡資訊圖" loading="lazy">
+      <img data-fallback-src="assets/04_顏色特效.jpg" src="./assets/04_顏色特效.webp" alt="顏色調整與特效濾鏡資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -978,7 +979,7 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
     <h2>📊 授課簡報（NLM 自動生成 15 頁）</h2>
     <div class="slide-player">
       <div class="slide-main" ondblclick="openSlideFullscreen()">
-        <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+        <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" decoding="async" loading="eager">
         <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
         <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
         <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1110,9 +1111,9 @@ body.slides-fullscreen .draw-toolbar{display:none!important}
 <script>
 /* ============== Data ============== */
 const SLIDE_LIST = [
-  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg',
-  'assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg',
-  'assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'
+  './assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp','./assets/slide_04.webp','./assets/slide_05.webp',
+  './assets/slide_06.webp','./assets/slide_07.webp','./assets/slide_08.webp','./assets/slide_09.webp','./assets/slide_10.webp',
+  './assets/slide_11.webp','./assets/slide_12.webp','./assets/slide_13.webp','./assets/slide_14.webp','./assets/slide_15.webp'
 ];
 let curSlide = 0;
 

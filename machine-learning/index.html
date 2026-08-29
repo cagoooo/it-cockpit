@@ -72,6 +72,7 @@
     .quiz-opt:hover { border-color: var(--c1); }
     .quiz-feedback { display: none; margin-top: 10px; padding: 8px 12px; background: var(--surface); border-left: 4px solid var(--c4); font-size: 0.9rem; }
   </style>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -267,14 +268,14 @@
       <h3 style="margin-top:0; color:var(--c2);">🎬 課堂授課投影片</h3>
       <div class="slide-player">
         <div class="slide-player-main">
-          <img id="slide-current" src="assets/slide_01.jpg" alt="簡報大圖">
+          <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="簡報大圖" decoding="async" loading="eager">
           <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
           <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
           <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
           <div class="slide-counter" id="slide-counter">1 / 12</div>
         </div>
         <div class="slide-strip" id="slide-strip">
-          <img class="strip-thumb active" src="assets/slide_01.jpg" onclick="goSlide(0)" alt="縮圖"><img class="strip-thumb " src="assets/slide_02.jpg" onclick="goSlide(1)" alt="縮圖"><img class="strip-thumb " src="assets/slide_03.jpg" onclick="goSlide(2)" alt="縮圖"><img class="strip-thumb " src="assets/slide_04.jpg" onclick="goSlide(3)" alt="縮圖"><img class="strip-thumb " src="assets/slide_05.jpg" onclick="goSlide(4)" alt="縮圖"><img class="strip-thumb " src="assets/slide_06.jpg" onclick="goSlide(5)" alt="縮圖"><img class="strip-thumb " src="assets/slide_07.jpg" onclick="goSlide(6)" alt="縮圖"><img class="strip-thumb " src="assets/slide_08.jpg" onclick="goSlide(7)" alt="縮圖"><img class="strip-thumb " src="assets/slide_09.jpg" onclick="goSlide(8)" alt="縮圖"><img class="strip-thumb " src="assets/slide_10.jpg" onclick="goSlide(9)" alt="縮圖"><img class="strip-thumb " src="assets/slide_11.jpg" onclick="goSlide(10)" alt="縮圖"><img class="strip-thumb " src="assets/slide_12.jpg" onclick="goSlide(11)" alt="縮圖">
+          <img class="strip-thumb active" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" onclick="goSlide(0)" alt="縮圖" decoding="async" loading="eager"><img class="strip-thumb " data-fallback-src="assets/slide_02.jpg" src="./assets/slide_02.webp" onclick="goSlide(1)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_03.jpg" src="./assets/slide_03.webp" onclick="goSlide(2)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_04.jpg" src="./assets/slide_04.webp" onclick="goSlide(3)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_05.jpg" src="./assets/slide_05.webp" onclick="goSlide(4)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_06.jpg" src="./assets/slide_06.webp" onclick="goSlide(5)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_07.jpg" src="./assets/slide_07.webp" onclick="goSlide(6)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_08.jpg" src="./assets/slide_08.webp" onclick="goSlide(7)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_09.jpg" src="./assets/slide_09.webp" onclick="goSlide(8)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_10.jpg" src="./assets/slide_10.webp" onclick="goSlide(9)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_11.jpg" src="./assets/slide_11.webp" onclick="goSlide(10)" alt="縮圖" decoding="async" loading="lazy"><img class="strip-thumb " data-fallback-src="assets/slide_12.jpg" src="./assets/slide_12.webp" onclick="goSlide(11)" alt="縮圖" decoding="async" loading="lazy">
         </div>
       </div>
     </section>
@@ -321,13 +322,13 @@
   <div id="slide-fs">
     <button class="fs-close" onclick="closeSlideFullscreen()">✕</button>
     <button class="fs-nav prev" onclick="slideNav(-1)">‹</button>
-    <img id="slide-fs-img" src="assets/slide_01.jpg" alt="全螢幕簡報">
+    <img id="slide-fs-img" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="全螢幕簡報" decoding="async" loading="eager">
     <button class="fs-nav next" onclick="slideNav(1)">›</button>
   </div>
 
   <script>
     // 簡報 JS
-    const SLIDES = ['assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg'];
+    const SLIDES = ['./assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp','./assets/slide_04.webp','./assets/slide_05.webp','./assets/slide_06.webp','./assets/slide_07.webp','./assets/slide_08.webp','./assets/slide_09.webp','./assets/slide_10.webp','./assets/slide_11.webp','./assets/slide_12.webp'];
     let currentIdx = 0;
     
     function goSlide(n) {

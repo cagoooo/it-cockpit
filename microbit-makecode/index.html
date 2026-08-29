@@ -429,6 +429,7 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -914,7 +915,7 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
   <section class="slide-player">
     <h3>▶ COURSE SLIDE DECK</h3>
     <div class="slide-main" ondblclick="openSlideFullscreen()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報" onerror="this.style.opacity=.2;this.alt='簡報生成中…'">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" onerror="this.style.opacity=.2;this.alt='簡報生成中…'" decoding="async" loading="eager">
       <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
       <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1293,9 +1294,9 @@ function rps(btn){
 
 /* ============ 簡報播放器 ============ */
 const SLIDE_LIST = [
-  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg',
-  'assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg',
-  'assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'
+  './assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp','./assets/slide_04.webp','./assets/slide_05.webp',
+  './assets/slide_06.webp','./assets/slide_07.webp','./assets/slide_08.webp','./assets/slide_09.webp','./assets/slide_10.webp',
+  './assets/slide_11.webp','./assets/slide_12.webp','./assets/slide_13.webp','./assets/slide_14.webp','./assets/slide_15.webp'
 ];
 let slideIdx = 0;
 function initSlidePlayer(){

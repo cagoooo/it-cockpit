@@ -962,6 +962,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -1049,7 +1050,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
   <div class="info-graphic">
     <span class="label">RISO · INFOGRAPHIC 01</span>
-    <img src="assets/01_basic_shapes.jpg" alt="認識 Inkscape 介面與基本形狀工具" loading="lazy">
+    <img data-fallback-src="assets/01_basic_shapes.jpg" src="./assets/01_basic_shapes.webp" alt="認識 Inkscape 介面與基本形狀工具" loading="lazy" decoding="async">
   </div>
 
   <div class="canvas-section">
@@ -1118,7 +1119,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
   <div class="info-graphic">
     <span class="label">RISO · INFOGRAPHIC 02</span>
-    <img src="assets/02_fill_stroke.jpg" alt="填色、描邊與漸層工具教學" loading="lazy">
+    <img data-fallback-src="assets/02_fill_stroke.jpg" src="./assets/02_fill_stroke.webp" alt="填色、描邊與漸層工具教學" loading="lazy" decoding="async">
   </div>
 
   <div class="canvas-section">
@@ -1190,7 +1191,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
   <div class="info-graphic">
     <span class="label">RISO · INFOGRAPHIC 03</span>
-    <img src="assets/03_path_node.jpg" alt="路徑與節點編輯教學" loading="lazy">
+    <img data-fallback-src="assets/03_path_node.jpg" src="./assets/03_path_node.webp" alt="路徑與節點編輯教學" loading="lazy" decoding="async">
   </div>
 
   <div class="canvas-section">
@@ -1258,7 +1259,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
   <div class="info-graphic">
     <span class="label">RISO · INFOGRAPHIC 04</span>
-    <img src="assets/04_object_ops.jpg" alt="物件操作與布林運算教學" loading="lazy">
+    <img data-fallback-src="assets/04_object_ops.jpg" src="./assets/04_object_ops.webp" alt="物件操作與布林運算教學" loading="lazy" decoding="async">
   </div>
 
   <div class="canvas-section">
@@ -1327,7 +1328,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
   <div class="info-graphic">
     <span class="label">RISO · INFOGRAPHIC 05</span>
-    <img src="assets/05_text_layer.jpg" alt="文字工具與圖層管理教學" loading="lazy">
+    <img data-fallback-src="assets/05_text_layer.jpg" src="./assets/05_text_layer.webp" alt="文字工具與圖層管理教學" loading="lazy" decoding="async">
   </div>
 
   <div class="canvas-section">
@@ -1401,7 +1402,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
   <div class="info-graphic">
     <span class="label">RISO · INFOGRAPHIC 06</span>
-    <img src="assets/06_export_svg_png.jpg" alt="匯出 SVG 與 PNG 教學" loading="lazy">
+    <img data-fallback-src="assets/06_export_svg_png.jpg" src="./assets/06_export_svg_png.webp" alt="匯出 SVG 與 PNG 教學" loading="lazy" decoding="async">
   </div>
 
   <div class="canvas-section">
@@ -1491,7 +1492,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
   <p style="margin-bottom:18px;font-size:0.95rem;color:var(--dim)">點縮圖跳頁，或按 ⛶ 全螢幕鍵盤左右翻頁；手機可用兩側大按鈕切換。</p>
   <div class="slide-player" id="slidePlayer">
     <div class="slide-main" ondblclick="openSlideFullscreen()">
-      <img id="slide-current" src="assets/01_basic_shapes.jpg" alt="授課簡報">
+      <img id="slide-current" data-fallback-src="assets/01_basic_shapes.jpg" src="./assets/01_basic_shapes.webp" alt="授課簡報" decoding="async" loading="lazy">
       <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
       <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1652,13 +1653,13 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 <script>
 /* ===========================
    SLIDE PLAYER（先用 6 張 infographic 作為佔位簡報）
-   待 slide_deck 完成後可在前面 append slide_XX.jpg
+   待 slide_deck 完成後可在前面 append slide_XX.webp
 ============================ */
 const SLIDE_LIST = [
-  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg',
-  'assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg',
-  'assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg',
-  'assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg'
+  './assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp',
+  './assets/slide_04.webp','./assets/slide_05.webp','./assets/slide_06.webp',
+  './assets/slide_07.webp','./assets/slide_08.webp','./assets/slide_09.webp',
+  './assets/slide_10.webp','./assets/slide_11.webp','./assets/slide_12.webp'
 ];
 let curSlide = 0;
 

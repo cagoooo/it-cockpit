@@ -86,11 +86,12 @@ for (const code of weeks) {
     record(fs.existsSync(path.join(labDir, `week-${code}`, file)), 'week core', `week-${code}/${file}`);
   }
   record(fs.existsSync(path.join(labDir, 'youtube', `week-${code}`, 'transcript.json')), 'transcript', `week-${code}`);
-  for (const file of ['depth-source.md', 'depth-infographic.png', 'depth-slides.pdf', 'depth-video.mp4', 'depth-video-captions.srt', 'depth-video-transcript.txt', 'student-video-card.html', 'student-video-card.png']) {
+  for (const file of ['depth-source.md', 'depth-infographic.png', 'depth-infographic.webp', 'depth-slides.pdf', 'depth-video.mp4', 'depth-video-captions.srt', 'depth-video-transcript.txt', 'student-video-card.html', 'student-video-card.png', 'student-video-card.webp']) {
     const target = path.join(labDir, `week-${code}`, file);
     record(fs.existsSync(target) && fs.statSync(target).size > 0, 'depth resource', `week-${code}/${file}`);
   }
-  record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png')), 'student infographic', `week-${code}`);
+  record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.png')), 'student infographic PNG', `week-${code}`);
+  record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.webp')), 'student infographic WebP', `week-${code}`);
   const illustration = path.join(labDir, `week-${code}`, 'week-illustration.webp');
   record(fs.existsSync(illustration) && fs.statSync(illustration).size > 0, 'picture-book illustration', `week-${code}`);
 }

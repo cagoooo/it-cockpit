@@ -432,6 +432,7 @@ footer a{color:var(--c1);text-decoration:none}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 <header class="site-header">
@@ -534,7 +535,7 @@ footer a{color:var(--c1);text-decoration:none}
       </div>
     </div>
 
-    <img src="assets/01_兩大模型對決.jpg" alt="兩大 AI 繪圖模型對決" loading="lazy" style="margin-top:18px;border:2px solid var(--c1);box-shadow:var(--shadow-px)">
+    <img data-fallback-src="assets/01_兩大模型對決.jpg" src="./assets/01_兩大模型對決.webp" alt="兩大 AI 繪圖模型對決" loading="lazy" style="margin-top:18px;border:2px solid var(--c1);box-shadow:var(--shadow-px)" decoding="async">
 
     <div class="quiz-section">
       <div class="quiz-q">🎯 Quiz 1：「Thinking Mode」最大的好處是？</div>
@@ -604,7 +605,7 @@ footer a{color:var(--c1);text-decoration:none}
       </tbody>
     </table>
 
-    <img src="assets/02_中文字渲染原理.jpg" alt="AI 中文字渲染原理" loading="lazy" style="margin-top:18px;border:2px solid var(--c2);box-shadow:var(--shadow-px)">
+    <img data-fallback-src="assets/02_中文字渲染原理.jpg" src="./assets/02_中文字渲染原理.webp" alt="AI 中文字渲染原理" loading="lazy" style="margin-top:18px;border:2px solid var(--c2);box-shadow:var(--shadow-px)" decoding="async">
 
     <div class="tip-box gold">
       <strong>💡 學生小撇步：</strong>想要 AI 把中文字寫對，記得三件事 — (1) 用 <strong>"雙引號"</strong> 把字框起來 (2) 字數控制在 <strong>5 個字以內</strong> (3) 用 <strong>簡單字體</strong>（不要手寫風）。成功率會從 70% → 95% 以上！
@@ -750,7 +751,7 @@ footer a{color:var(--c1);text-decoration:none}
       </div>
     </div>
 
-    <img src="assets/03_提示詞五大原則.jpg" alt="提示詞五大原則" loading="lazy" style="margin-top:18px;border:2px solid var(--c3);box-shadow:var(--shadow-px)">
+    <img data-fallback-src="assets/03_提示詞五大原則.jpg" src="./assets/03_提示詞五大原則.webp" alt="提示詞五大原則" loading="lazy" style="margin-top:18px;border:2px solid var(--c3);box-shadow:var(--shadow-px)" decoding="async">
 
     <!-- ⭐ 提示詞組合器 -->
     <div class="combo-lab">
@@ -900,7 +901,7 @@ footer a{color:var(--c1);text-decoration:none}
       </div>
     </div>
 
-    <img src="assets/04_PK完整流程.jpg" alt="PK 完整流程" loading="lazy" style="margin-top:18px;border:2px solid var(--c2);box-shadow:var(--shadow-px)">
+    <img data-fallback-src="assets/04_PK完整流程.jpg" src="./assets/04_PK完整流程.webp" alt="PK 完整流程" loading="lazy" style="margin-top:18px;border:2px solid var(--c2);box-shadow:var(--shadow-px)" decoding="async">
 
     <div class="tip-box warn">
       <strong>⚠️ 重要！上傳同學照片之前一定要：</strong>(1) 取得同學同意 (2) 不要拿來惡搞 (3) AI 公司也設了安全機制會拒絕修改特定真實人物。如果只是改背景或衣服，建議用「文字描述特徵」的方式請 AI 重畫一個類似的人。
@@ -1316,7 +1317,7 @@ function togglePanel(name){
 function goTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
 /* ─── 簡報播放器 ─── */
-let SLIDE_LIST = ['assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg','assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'];
+let SLIDE_LIST = ['./assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp','./assets/slide_04.webp','./assets/slide_05.webp','./assets/slide_06.webp','./assets/slide_07.webp','./assets/slide_08.webp','./assets/slide_09.webp','./assets/slide_10.webp','./assets/slide_11.webp','./assets/slide_12.webp','./assets/slide_13.webp','./assets/slide_14.webp','./assets/slide_15.webp'];
 let curSlide=0;
 function initSlidePlayer(){
   if(SLIDE_LIST.length===0){

@@ -380,6 +380,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -447,7 +448,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/01_建立部落格.jpg" alt="Blogger 建立部落格五步驟資訊圖" loading="lazy">
+      <img data-fallback-src="assets/01_建立部落格.jpg" src="./assets/01_建立部落格.webp" alt="Blogger 建立部落格五步驟資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -534,7 +535,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/02_提示詞咒語.jpg" alt="Gemini 提示詞咒語公式資訊圖" loading="lazy">
+      <img data-fallback-src="assets/02_提示詞咒語.jpg" src="./assets/02_提示詞咒語.webp" alt="Gemini 提示詞咒語公式資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -771,7 +772,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/03_Canva_AI家族.jpg" alt="Canva AI 工具家族介紹資訊圖" loading="lazy">
+      <img data-fallback-src="assets/03_Canva_AI家族.jpg" src="./assets/03_Canva_AI家族.webp" alt="Canva AI 工具家族介紹資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -959,7 +960,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/04_完整工作流.jpg" alt="完整工作流五步驟資訊圖" loading="lazy">
+      <img data-fallback-src="assets/04_完整工作流.jpg" src="./assets/04_完整工作流.webp" alt="完整工作流五步驟資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -1296,7 +1297,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 <script>
 /* ============== Slide List (placeholder, set after slide_deck downloaded) ============== */
 const SLIDE_COUNT = 12;
-const SLIDE_LIST = Array.from({length:SLIDE_COUNT},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+const SLIDE_LIST = Array.from({length:SLIDE_COUNT},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.webp`);
 let curSlide = 0;
 
 /* ============== Mode Switch ============== */

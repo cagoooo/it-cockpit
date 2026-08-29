@@ -700,6 +700,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -1342,7 +1343,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     <p style="font-size:.95rem;color:var(--dim);margin-bottom:14px">由 NotebookLM 自動生成的 15 頁像素遊戲風授課簡報，主講者：阿凱老師。可雙擊主畫面或點右上角全螢幕，鍵盤左右鍵翻頁。</p>
     <div class="slide-player">
       <div class="slide-main" ondblclick="openSlideFullscreen()">
-        <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+        <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" decoding="async" loading="eager">
         <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
         <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
         <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1606,7 +1607,7 @@ function resetReward(){
 
 /* ═══ Slide Player ═══ */
 const SLIDE_LIST=[];
-for(let i=1;i<=15;i++){SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.jpg')}
+for(let i=1;i<=15;i++){SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.webp')}
 let currentSlide=0;
 function initSlidePlayer(){
   const strip=document.getElementById('slide-strip');

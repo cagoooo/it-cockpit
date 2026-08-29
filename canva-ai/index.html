@@ -325,6 +325,7 @@ canvas{display:block;width:100%;height:auto;touch-action:none}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -827,7 +828,7 @@ canvas{display:block;width:100%;height:auto;touch-action:none}
   <div class="slide-viewer">
     <h3>📽 NotebookLM 生成的授課簡報（共 16 頁）</h3>
     <div class="slide-main">
-      <img src="assets/slide_01.jpg" id="slideImg" loading="lazy" alt="投影片">
+      <img data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" id="slideImg" loading="lazy" alt="投影片" decoding="async">
       <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
       <button class="slide-nav-btn prev" onclick="changeSlide(-1)">‹</button>
       <button class="slide-nav-btn next" onclick="changeSlide(1)">›</button>
@@ -849,20 +850,20 @@ canvas{display:block;width:100%;height:auto;touch-action:none}
   <div>
     <h3 style="color:var(--c5);font-size:1rem;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--c5)">🗺 NotebookLM 生成的學習資訊圖表</h3>
     <div class="infographic-gallery">
-      <div class="infographic-card" onclick="openLightbox('assets/01_MagicMedia簡介.jpg')">
-        <img src="assets/01_MagicMedia簡介.jpg" loading="lazy" alt="Magic Media 簡介">
+      <div class="infographic-card" onclick="openLightbox('./assets/01_MagicMedia簡介.webp')">
+        <img data-fallback-src="assets/01_MagicMedia簡介.jpg" src="./assets/01_MagicMedia簡介.webp" loading="lazy" alt="Magic Media 簡介" decoding="async">
         <div class="infographic-card-label">Magic Media 三大功能簡介</div>
       </div>
-      <div class="infographic-card" onclick="openLightbox('assets/02_提示詞技巧.jpg')">
-        <img src="assets/02_提示詞技巧.jpg" loading="lazy" alt="提示詞技巧">
+      <div class="infographic-card" onclick="openLightbox('./assets/02_提示詞技巧.webp')">
+        <img data-fallback-src="assets/02_提示詞技巧.jpg" src="./assets/02_提示詞技巧.webp" loading="lazy" alt="提示詞技巧" decoding="async">
         <div class="infographic-card-label">AI 提示詞四要素大公開</div>
       </div>
-      <div class="infographic-card" onclick="openLightbox('assets/03_其他AI工具.jpg')">
-        <img src="assets/03_其他AI工具.jpg" loading="lazy" alt="其他AI工具">
+      <div class="infographic-card" onclick="openLightbox('./assets/03_其他AI工具.webp')">
+        <img data-fallback-src="assets/03_其他AI工具.jpg" src="./assets/03_其他AI工具.webp" loading="lazy" alt="其他AI工具" decoding="async">
         <div class="infographic-card-label">Canva 其他 AI 神器集合</div>
       </div>
-      <div class="infographic-card" onclick="openLightbox('assets/04_操作步驟.jpg')">
-        <img src="assets/04_操作步驟.jpg" loading="lazy" alt="操作步驟">
+      <div class="infographic-card" onclick="openLightbox('./assets/04_操作步驟.webp')">
+        <img data-fallback-src="assets/04_操作步驟.jpg" src="./assets/04_操作步驟.webp" loading="lazy" alt="操作步驟" decoding="async">
         <div class="infographic-card-label">Magic Media 操作步驟圖解</div>
       </div>
     </div>
@@ -1058,7 +1059,7 @@ let curSlide = 1, totalSlides = 16;
 const thumbs = document.getElementById('slideThumbs');
 for(let i=1;i<=totalSlides;i++){
   const img = document.createElement('img');
-  img.src = `assets/slide_${String(i).padStart(2,'0')}.jpg`;
+  img.src = `assets/slide_${String(i).padStart(2,'0')}.webp`;
   img.className = 'slide-thumb' + (i===1?' active':'');
   img.loading = 'lazy';
   img.alt = `slide ${i}`;
@@ -1068,7 +1069,7 @@ for(let i=1;i<=totalSlides;i++){
 function changeSlide(d){ goSlide(curSlide+d); }
 function goSlide(n){
   curSlide = Math.max(1,Math.min(totalSlides,n));
-  const src = `assets/slide_${String(curSlide).padStart(2,'0')}.jpg`;
+  const src = `assets/slide_${String(curSlide).padStart(2,'0')}.webp`;
   document.getElementById('slideImg').src = src;
   document.getElementById('slideCounter').textContent = curSlide+' / '+totalSlides;
   document.querySelectorAll('.slide-thumb').forEach((t,i)=>t.classList.toggle('active',i+1===curSlide));
@@ -1086,7 +1087,7 @@ function goSlide(n){
   }
 }
 function openSlideFullscreen(){
-  const src = `assets/slide_${String(curSlide).padStart(2,'0')}.jpg`;
+  const src = `assets/slide_${String(curSlide).padStart(2,'0')}.webp`;
   document.getElementById('slide-fs-img').src = src;
   document.getElementById('slide-fs-counter').textContent = curSlide+' / '+totalSlides;
   document.getElementById('slide-fs').classList.add('show');

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release": "2026.08.28-kai-notebooklm-slide-player.3",
-  "generated_at": "2026-08-28T01:42:51.288Z",
+  "generated_at": "2026-08-29T06:40:51.741Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -186,8 +186,8 @@
   "files": [
     {
       "file": "index.html",
-      "sha256": "ae5ebd4e0e1bdcccd2b6d930cffbf8fb0bbf549cc6284e08960e70b53b94ea75",
-      "bytes": 49519,
+      "sha256": "5e4f58f28ff2dd70729b991b7860f98131f3af0ff583ab22a3c069e8fdcb02e6",
+      "bytes": 49688,
       "scope": "core"
     },
     {
@@ -198,14 +198,14 @@
     },
     {
       "file": "week-student-language.js",
-      "sha256": "f41d1c31a42b2e6fa39044522979d280f1f6fc0b03183ba719d8650205a6dd35",
-      "bytes": 13084,
+      "sha256": "f078b731c9ce46c4eb66a667f6781e9c4dfded01148c92360d2de2b20e546a84",
+      "bytes": 13094,
       "scope": "core"
     },
     {
       "file": "week-cockpit.js",
-      "sha256": "b67c290995e812ce0e77aa4865ea46634bfbfbc8aa8da4910e32df81b1608261",
-      "bytes": 21686,
+      "sha256": "2f8c3785753e2bfa1762b32a5b4506b76e19cba40943a221357af726fe9dbf70",
+      "bytes": 21691,
       "scope": "core"
     },
     {
@@ -216,8 +216,8 @@
     },
     {
       "file": "week-learning-depth.js",
-      "sha256": "d6f3f1a10569a50afaa01503a0cc7b532a9e79edcb6bf93156de971a386f6802",
-      "bytes": 13823,
+      "sha256": "05dd7b081a602030586410db033f1dd5f967a02e6e0b07956f402d2d96c3399c",
+      "bytes": 13824,
       "scope": "core"
     },
     {
@@ -264,8 +264,8 @@
     },
     {
       "file": "reports.html",
-      "sha256": "fdbb163e2244f967ef27b594780df0a48c3fd52764d58546b2ccd9bf19de3591",
-      "bytes": 2559,
+      "sha256": "98e07c9eb3c908429af890364b40d1152a33bd668727513657d4139dbbfd6ae6",
+      "bytes": 2616,
       "scope": "core"
     },
     {
@@ -276,8 +276,8 @@
     },
     {
       "file": "sync-status.html",
-      "sha256": "b670d071bbb3629d6fe17c662fe751217084a8ed99d97f229d11ff02b58a3709",
-      "bytes": 1925,
+      "sha256": "8fcb119a22eb0b28afdb8cadc765bd90b1b1087ebbad557a6a7cbe0456aa6f32",
+      "bytes": 1982,
       "scope": "core"
     },
     {
@@ -300,38 +300,38 @@
     },
     {
       "file": "week-03/index.html",
-      "sha256": "18051efebf508e038e4575f36e5251fb2a2a28eace7c067e044d6c7d93a365b3",
-      "bytes": 4591,
+      "sha256": "e9725972d1db46d17a879ddb12769324055862f15c67261f4a28123e676e2600",
+      "bytes": 4651,
       "scope": "week-03"
     },
     {
       "file": "week-03/lecture-slides.html",
-      "sha256": "5bb0a0ce6f4ad7844624d2e2411cc676266f104790d4a057bf512adedc1b1869",
-      "bytes": 3735,
+      "sha256": "b970466b532daec3ee867f53b06d316be3d87bf3c7d242d83ef2bed0347bf4d6",
+      "bytes": 3795,
       "scope": "week-03"
     },
     {
       "file": "week-03/notebooklm-kai-slides.html",
-      "sha256": "aceb1ca9dccabd980b0ec945a8700d3315d8af0848db6250d704185b1c023e20",
-      "bytes": 4699,
+      "sha256": "a88b0278720f95f980ec52847766b34872d74ff1b683ba56d6104260f4ee2b2f",
+      "bytes": 4759,
       "scope": "week-03"
     },
     {
       "file": "week-03/notebooklm-kai-slides-v2.html",
-      "sha256": "879f94d7ad9e085d8226a84e8416981746a57bf94a25422650ad0675af3e41f8",
-      "bytes": 4764,
+      "sha256": "34c18392f7bc903c3a54aed7c81da9b1e0797b8d3c599f01f15faf49a85b50d7",
+      "bytes": 4824,
       "scope": "week-03"
     },
     {
       "file": "week-03/classroom-pack.html",
-      "sha256": "6f798b5bf64a65edc7b72d5778187a0619cbd68f559289b11afab706f18ceae3",
-      "bytes": 7166,
+      "sha256": "1ca622efb875ed63fe2e9454aa090acd515fc782b544cba9f26d890ce4c000bd",
+      "bytes": 7225,
       "scope": "week-03"
     },
     {
       "file": "week-03/student-task.html",
-      "sha256": "cd0d6f88929f028529b3214ea87fcbf5683e93217cdd6ccfa183e13daf48433f",
-      "bytes": 5948,
+      "sha256": "f2df992ebfc1e317c6dfbd12ae2350d531df9d1d32ff2d1602740a3391f5dfb9",
+      "bytes": 6007,
       "scope": "week-03"
     },
     {
@@ -383,6 +383,12 @@
       "scope": "week-03"
     },
     {
+      "file": "week-03/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "7048e190470ca68794059120970c642865b0c5132592210281365604eb876bb1",
+      "bytes": 172680,
+      "scope": "week-03"
+    },
+    {
       "file": "week-03/video.mp4",
       "sha256": "c49c2b49562b318e0064d1df8fa8cbfb4979b17176b197384e7435fc70c4461f",
       "bytes": 4322647,
@@ -392,6 +398,18 @@
       "file": "week-03/video-captions.srt",
       "sha256": "eb42a1a8196614f3564787b1060a47963ddc324e59fb28b995168f57fd85c7ab",
       "bytes": 2045,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/depth-infographic.png",
+      "sha256": "8d2238f7c6a0784edc02ec8f902fd5096b3c1af162c648e0cc0f61c13ec1c441",
+      "bytes": 5498652,
+      "scope": "week-03"
+    },
+    {
+      "file": "week-03/depth-infographic.webp",
+      "sha256": "901c0542c31d42028aa9bddd2334891498277191deb6ce42d10aa401025384af",
+      "bytes": 508540,
       "scope": "week-03"
     },
     {
@@ -413,6 +431,12 @@
       "scope": "week-03"
     },
     {
+      "file": "week-03/student-video-card.webp",
+      "sha256": "bdab75d70fc45be6d4e5057e06c329cfce50485468682f6af2baa0a1145e28e0",
+      "bytes": 63238,
+      "scope": "week-03"
+    },
+    {
       "file": "week-03/week-illustration.webp",
       "sha256": "d99fba9c71903473e4e335625933ad6122a65d704f304ae463f9da056fece4f7",
       "bytes": 162014,
@@ -425,39 +449,45 @@
       "scope": "week-03"
     },
     {
+      "file": "week-03/student-infographic.webp",
+      "sha256": "b557ed9ff4ec0f5bcd86e26970116587652772d5f2523759228c9da1e141f1ab",
+      "bytes": 380500,
+      "scope": "week-03"
+    },
+    {
       "file": "week-06/index.html",
-      "sha256": "129b13c989b5f63bffe236f968e38ef65463a9e30f63048b52329b929f876832",
-      "bytes": 4537,
+      "sha256": "d3cfc5e2dda7a495ac75c519987222068a2662b5bdef5df4d3de5e091e13530f",
+      "bytes": 4597,
       "scope": "week-06"
     },
     {
       "file": "week-06/lecture-slides.html",
-      "sha256": "84ef4e62ee1cf53c5343f22926afe9a96a0840b6903db009af9e7ea29d357c58",
-      "bytes": 3690,
+      "sha256": "cc4437c762ea58c34d6e4010ed6913906019e0047501813624a0a511d8e92fa3",
+      "bytes": 3750,
       "scope": "week-06"
     },
     {
       "file": "week-06/notebooklm-kai-slides.html",
-      "sha256": "b2a6763dba3e81262af1eac07459d22042d70a52a836cf826523ecad4fb8d63c",
-      "bytes": 4624,
+      "sha256": "95735528108f1bdaa4ad6a9012ed3784aacb4983b02d75943710450a19b8cceb",
+      "bytes": 4684,
       "scope": "week-06"
     },
     {
       "file": "week-06/notebooklm-kai-slides-v2.html",
-      "sha256": "f2a80c089928156b65637ba02c30750218c770a42c28edc24c007a853b6c2d07",
-      "bytes": 4689,
+      "sha256": "61f80fef3072e0e9e93f34c11c691d17994bc66c352573262d88698e8667d23a",
+      "bytes": 4749,
       "scope": "week-06"
     },
     {
       "file": "week-06/classroom-pack.html",
-      "sha256": "af8a94a1d94e6e2f58f0b062bad49060b9a68cb606cb8f03c3f8823cacf1470d",
-      "bytes": 7064,
+      "sha256": "39878e82c6a38c3e9ee50d898f6e7c7f563a93868d264fae8e836a00c7a9ebb6",
+      "bytes": 7123,
       "scope": "week-06"
     },
     {
       "file": "week-06/student-task.html",
-      "sha256": "42980d460a18fb4e771c1e8679f6a90853e365c154a29ed68bcb035220f41fc7",
-      "bytes": 5915,
+      "sha256": "2c20ccd521b562531e29617c9823badaa01b376b1c5f9524c984b086608534fd",
+      "bytes": 5974,
       "scope": "week-06"
     },
     {
@@ -509,6 +539,12 @@
       "scope": "week-06"
     },
     {
+      "file": "week-06/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "c1382ab36170521559bd111d2f803ff746eda10d751fcd660999c14b0a6f16f8",
+      "bytes": 155048,
+      "scope": "week-06"
+    },
+    {
       "file": "week-06/video.mp4",
       "sha256": "3cf10bdaaad80e15810fd082f339e9f9d1233ce7aa46ca34448241f8656320e6",
       "bytes": 5796350,
@@ -518,6 +554,18 @@
       "file": "week-06/video-captions.srt",
       "sha256": "1f2057ecd08a8311e8f89317394c96fd1683561bf6ce834d4de5a80592aeb928",
       "bytes": 2149,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/depth-infographic.png",
+      "sha256": "408c5364ff574711286dd87eb70320f23bbfabbd081a0b681a7367c15ec8216e",
+      "bytes": 5238834,
+      "scope": "week-06"
+    },
+    {
+      "file": "week-06/depth-infographic.webp",
+      "sha256": "06c5c52998d9f95cb2e772457d504306eb82d73783d828b94c883e3e21ecbb5d",
+      "bytes": 492024,
       "scope": "week-06"
     },
     {
@@ -539,6 +587,12 @@
       "scope": "week-06"
     },
     {
+      "file": "week-06/student-video-card.webp",
+      "sha256": "e159695780fe34667622d32fe7c545c9d16f3599c5dbf0c0f6023d2eac14d6e8",
+      "bytes": 58362,
+      "scope": "week-06"
+    },
+    {
       "file": "week-06/week-illustration.webp",
       "sha256": "e32f3c66d070c4aa99e9a7918b379baa883b7307214596caa0e00819c4b81906",
       "bytes": 182866,
@@ -551,39 +605,45 @@
       "scope": "week-06"
     },
     {
+      "file": "week-06/student-infographic.webp",
+      "sha256": "cb1f0bedb6529439e01aeac4d1d0677877a0d7262789089becfcf15774757ad8",
+      "bytes": 288708,
+      "scope": "week-06"
+    },
+    {
       "file": "week-09/index.html",
-      "sha256": "38c38cdf504b983ce913fbcc317ad3b9fad029e0a1669a8e63fbf4a4538f6044",
-      "bytes": 4615,
+      "sha256": "2b48be04281c2a3209d669d15953974a979466de62e4689f24a0b5012beaf67b",
+      "bytes": 4675,
       "scope": "week-09"
     },
     {
       "file": "week-09/lecture-slides.html",
-      "sha256": "9d657385a223acbc3bc631c8e3873ed24a15e4dc07632081ad4705a52ae99c94",
-      "bytes": 3753,
+      "sha256": "ee7d0b1697321cb24c24120e5f1e40db48acd6a3e8eb2f5b02b6e20b24aef707",
+      "bytes": 3813,
       "scope": "week-09"
     },
     {
       "file": "week-09/notebooklm-kai-slides.html",
-      "sha256": "4618e0b3bd516eb733c897194388ced00c72b3e1ce471294466cfaa4cc4b47dc",
-      "bytes": 4729,
+      "sha256": "ebf54e125e1fd31096617c015e7712eb295e9a784b848df9906d3bf5ecfea897",
+      "bytes": 4789,
       "scope": "week-09"
     },
     {
       "file": "week-09/notebooklm-kai-slides-v2.html",
-      "sha256": "70187ee22b635494592ecde0c98ce170f589c9f9413d16afc87e525d8b3def53",
-      "bytes": 4794,
+      "sha256": "ebbc09220b2264f892fd4f3fd80181dc2ca34bafaa9f36d7e73080d54008e3e5",
+      "bytes": 4854,
       "scope": "week-09"
     },
     {
       "file": "week-09/classroom-pack.html",
-      "sha256": "20de65222170e73b97da8f214efc5e3cf221bdb9447efd9363ad0b0033b76691",
-      "bytes": 7127,
+      "sha256": "c17964fc0d37fc7f7afbc1fd2778a1b60db816397b4b6b1399e71b8b6de89506",
+      "bytes": 7186,
       "scope": "week-09"
     },
     {
       "file": "week-09/student-task.html",
-      "sha256": "e8f91767b709a8a27c6bdd73ef0d2f9a3f4ab3fba57e21af056af095cd538385",
-      "bytes": 5945,
+      "sha256": "a5992f3b23a214829cca940465102e3b235749f398d10c066d2f067e18758dc4",
+      "bytes": 6004,
       "scope": "week-09"
     },
     {
@@ -635,6 +695,12 @@
       "scope": "week-09"
     },
     {
+      "file": "week-09/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "adf18d4d09e3e77c74ce0af5bf25517225b10901f66d4dbe873ddcbbafe25972",
+      "bytes": 184088,
+      "scope": "week-09"
+    },
+    {
       "file": "week-09/video.mp4",
       "sha256": "c87103131fad32a19c9a81a55fb0c6b9a7499bedd7d85be35a7220e2e8da0478",
       "bytes": 5829845,
@@ -644,6 +710,18 @@
       "file": "week-09/video-captions.srt",
       "sha256": "6844dcd39faa5b58cfca16ff55bec77216ac0c3fe4bc85ff712c0798f94edf90",
       "bytes": 2856,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/depth-infographic.png",
+      "sha256": "dc80877b0c248a6c2e950549e51cb0d6928223353ffce6d89fab3c74092b28be",
+      "bytes": 4962217,
+      "scope": "week-09"
+    },
+    {
+      "file": "week-09/depth-infographic.webp",
+      "sha256": "aa07163d011e54f55837b35dc81dde79365f438677da55f28698478144aea54e",
+      "bytes": 502164,
       "scope": "week-09"
     },
     {
@@ -665,6 +743,12 @@
       "scope": "week-09"
     },
     {
+      "file": "week-09/student-video-card.webp",
+      "sha256": "e6e723d22156ecbe67102fd7d855deca9538a4c4663e9a77d068543bb36d78a9",
+      "bytes": 64086,
+      "scope": "week-09"
+    },
+    {
       "file": "week-09/week-illustration.webp",
       "sha256": "2f2df6acabed6418dd9215c1dd14f222874a585e9a363369759d4090dbc29275",
       "bytes": 192066,
@@ -677,39 +761,45 @@
       "scope": "week-09"
     },
     {
+      "file": "week-09/student-infographic.webp",
+      "sha256": "8b299f40b053db04a21b32ae10099c5ffa98f7030de891d25180a4c228e306a1",
+      "bytes": 372720,
+      "scope": "week-09"
+    },
+    {
       "file": "week-12/index.html",
-      "sha256": "98c9ad4fa14cf732754728f0f987b93a9112e90ab0d10745f6f0cf41d0f01068",
-      "bytes": 4593,
+      "sha256": "55ac424fc8fad252f198b9b668f55a33a04674387957adef9437759abcc61ed5",
+      "bytes": 4653,
       "scope": "week-12"
     },
     {
       "file": "week-12/lecture-slides.html",
-      "sha256": "99f021108b4212f9641ef955dfb8d8ecb8d6df7011b5f0ee333a078871b74809",
-      "bytes": 3721,
+      "sha256": "39c38c70fef31e59d65d0bdf23d48c18ad3d7297b98dd07cd2206952b99ed9eb",
+      "bytes": 3781,
       "scope": "week-12"
     },
     {
       "file": "week-12/notebooklm-kai-slides.html",
-      "sha256": "69bf971b0e53df188f73cfa4257745b693993cc5766afe6c8a686b7fdf510ab2",
-      "bytes": 4673,
+      "sha256": "ef1460233e3dd6ef0810e32de0ca8b36dc9d6d2699fd7182cd3952d8395569d0",
+      "bytes": 4733,
       "scope": "week-12"
     },
     {
       "file": "week-12/notebooklm-kai-slides-v2.html",
-      "sha256": "5e8827117fbc148ab9abba6b87204f81214fdbab6c6910b504539d06796f8da0",
-      "bytes": 4738,
+      "sha256": "65649b990767c4f0a3ad99099827caa35cf04addd09ca566ea4bd8d2ff030bcd",
+      "bytes": 4798,
       "scope": "week-12"
     },
     {
       "file": "week-12/classroom-pack.html",
-      "sha256": "a69fb0cb893505d3f0cb36a8f99b5f822b5ad7b9d2d1599be049fb2566dda105",
-      "bytes": 7138,
+      "sha256": "96bf3785569252698dcb406355dcbe2f22073e68c181632edbe83066908c0e81",
+      "bytes": 7197,
       "scope": "week-12"
     },
     {
       "file": "week-12/student-task.html",
-      "sha256": "a099fa097d2f0b20164d9aae6d111aa3541ad24ab88e750b2a9a20c7fd34c8f0",
-      "bytes": 5912,
+      "sha256": "1014a8010c801514ec26a13c879a8f48c4bc412448d10a3cf6ca5ef25da3262c",
+      "bytes": 5971,
       "scope": "week-12"
     },
     {
@@ -761,6 +851,12 @@
       "scope": "week-12"
     },
     {
+      "file": "week-12/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "ca5782579c13893910462aa3abed34205a6570cac80a49ebfcf21199bdcc80f8",
+      "bytes": 252776,
+      "scope": "week-12"
+    },
+    {
       "file": "week-12/video.mp4",
       "sha256": "2ca93bda64b28d35879ff0176c74ab2e9b1bb7b7f08678bdcbfd82f7428b088b",
       "bytes": 8378469,
@@ -770,6 +866,18 @@
       "file": "week-12/video-captions.srt",
       "sha256": "20d618ce96496e12cee8be885b9c44beb6aea0afc4e7bcc9abcc9e0a1237d297",
       "bytes": 3209,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/depth-infographic.png",
+      "sha256": "de3d3c0f684afa8d72c67aedc97f6663177f530fdb1af8e113ff89f8fdfb8a4b",
+      "bytes": 4887904,
+      "scope": "week-12"
+    },
+    {
+      "file": "week-12/depth-infographic.webp",
+      "sha256": "100829ff9762ec5d6d2d4ad9e4652a62ccf29826a7343bb698fb78a81ec51d76",
+      "bytes": 463026,
       "scope": "week-12"
     },
     {
@@ -791,6 +899,12 @@
       "scope": "week-12"
     },
     {
+      "file": "week-12/student-video-card.webp",
+      "sha256": "a6194b01ec3f1c2498c29f8c34abec1d63628d6eda84c92b87115a21d67d7c37",
+      "bytes": 57040,
+      "scope": "week-12"
+    },
+    {
       "file": "week-12/week-illustration.webp",
       "sha256": "a3a8428e0f9d2f2fbfc7726f9f59bb12be934755bc3481bdac538c0c6798aa62",
       "bytes": 172804,
@@ -803,39 +917,45 @@
       "scope": "week-12"
     },
     {
+      "file": "week-12/student-infographic.webp",
+      "sha256": "f15eef6730536e4d33495c84a52bee88ee01a1a11d51d9039ed15f06d2367240",
+      "bytes": 321708,
+      "scope": "week-12"
+    },
+    {
       "file": "week-15/index.html",
-      "sha256": "9747a2021d9c594f2907eae28cbbe3f9eb6cc2aecde538db83b409a2c380494d",
-      "bytes": 4638,
+      "sha256": "125c27e08d4cdab59cd0bfad8fedff3ed5b02924ecec480e7176f4f9a409ad7a",
+      "bytes": 4698,
       "scope": "week-15"
     },
     {
       "file": "week-15/lecture-slides.html",
-      "sha256": "74a8e3936e1486cf1771dab081174b8019a8926f8db3a5c871409be73ae420e8",
-      "bytes": 3748,
+      "sha256": "c96d7752591995b24d3d7a448f77ec046b5463210bade9ffa04ed1d2b1d76d7e",
+      "bytes": 3808,
       "scope": "week-15"
     },
     {
       "file": "week-15/notebooklm-kai-slides.html",
-      "sha256": "cdab6caea3d03f6ad200d4ebe2336fb8058536353f18682b6c5db296439397c1",
-      "bytes": 4718,
+      "sha256": "8a237929ada1e5622f8e11c477e4561a1854ff95042c5292d2423044b48a5276",
+      "bytes": 4778,
       "scope": "week-15"
     },
     {
       "file": "week-15/notebooklm-kai-slides-v2.html",
-      "sha256": "9ce335b168eecfa78ada8af2199837021d1293315d337b4b7fa353411994ae2a",
-      "bytes": 4783,
+      "sha256": "73e18642a9a4673ebd3ce0b208ca494138d5d7bc8ec256635a88369ea5d1fd57",
+      "bytes": 4843,
       "scope": "week-15"
     },
     {
       "file": "week-15/classroom-pack.html",
-      "sha256": "39e27adc6ca266a32e45983d0e004516446bfa31e8e292d5e1039187613e3e53",
-      "bytes": 7005,
+      "sha256": "582bbd0bac0e3079630fc3e82f112c7f5a2be0db4fc39229d9223d04a7e65957",
+      "bytes": 7064,
       "scope": "week-15"
     },
     {
       "file": "week-15/student-task.html",
-      "sha256": "10326cb791c631ad2a5b2978b0d51a25b9bd976ae4381c75da39ffbc28eadc8a",
-      "bytes": 5918,
+      "sha256": "58d322e3fd47a440d60071bcb2d0b4668d8003c4460d39d3944af5a9feac784c",
+      "bytes": 5977,
       "scope": "week-15"
     },
     {
@@ -887,6 +1007,12 @@
       "scope": "week-15"
     },
     {
+      "file": "week-15/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "afe30f84b0d623afbc9ae06ed3766ee2a91724489e77ef60b82a95e00bd82172",
+      "bytes": 137510,
+      "scope": "week-15"
+    },
+    {
       "file": "week-15/video.mp4",
       "sha256": "9fe142352d6a59ce943e84b5531f1696c18e27502d7883a50610a2c4272bc362",
       "bytes": 7236700,
@@ -896,6 +1022,18 @@
       "file": "week-15/video-captions.srt",
       "sha256": "da80f0d79448293eacbb7b45f75f622794d1a336d4017b3a2e4dfbb5625f9b2a",
       "bytes": 3892,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/depth-infographic.png",
+      "sha256": "164b9fe0146ac10d007964c9a5439361191558d85a8b6c809266397190769fa7",
+      "bytes": 5481174,
+      "scope": "week-15"
+    },
+    {
+      "file": "week-15/depth-infographic.webp",
+      "sha256": "014c8114da4339581a73095cae82eb05280dafc35765b239cd76e0a51119ff62",
+      "bytes": 521978,
       "scope": "week-15"
     },
     {
@@ -917,6 +1055,12 @@
       "scope": "week-15"
     },
     {
+      "file": "week-15/student-video-card.webp",
+      "sha256": "a83f8be230a516e68389ab8364e87d2c017b7c3bf450f38af6cc282578c8903e",
+      "bytes": 60036,
+      "scope": "week-15"
+    },
+    {
       "file": "week-15/week-illustration.webp",
       "sha256": "c6dfa6e1d693b30ebd5130256f9247322231532b3298c2f10c6e8764f768a375",
       "bytes": 157396,
@@ -929,39 +1073,45 @@
       "scope": "week-15"
     },
     {
+      "file": "week-15/student-infographic.webp",
+      "sha256": "8cd0acdb8beadd143861183fdae1e0a0a913294e5679c7d13641ac5c6f162d42",
+      "bytes": 316280,
+      "scope": "week-15"
+    },
+    {
       "file": "week-18/index.html",
-      "sha256": "d959ab4d17a86a0477b25f3108ec1bf30ba073ed847119f9250e7cda7e81fdf8",
-      "bytes": 4241,
+      "sha256": "58188cea4195b5a07781532bdd84802a40e50a353d228b5e8f10d1b63b72a5bd",
+      "bytes": 4301,
       "scope": "week-18"
     },
     {
       "file": "week-18/lecture-slides.html",
-      "sha256": "7c1eb4d11132d0731c13831236fec99b77e48810ad2797bfa56bae4bff6a0f9a",
-      "bytes": 3685,
+      "sha256": "768c471c1bdbb47849e9278ef3f196b2384a6a170aa6d8a928c777a62c2cb7e7",
+      "bytes": 3745,
       "scope": "week-18"
     },
     {
       "file": "week-18/notebooklm-kai-slides.html",
-      "sha256": "2f4902c86450796e846611a7a6e443218ff2302df7dddef566f52ab06a996ea5",
-      "bytes": 4613,
+      "sha256": "85c901439b79080e569a100f0047743c91f4df5f0f323ab29b53285cfea2bffb",
+      "bytes": 4673,
       "scope": "week-18"
     },
     {
       "file": "week-18/notebooklm-kai-slides-v2.html",
-      "sha256": "e65b705d9f5a138622cf55a992dc7945b899cc79d8de7aa32584dc1fb6375417",
-      "bytes": 4678,
+      "sha256": "f5df17c553c150130ec56918249a2925639c4adebe19b757f3f9823c0eb76326",
+      "bytes": 4738,
       "scope": "week-18"
     },
     {
       "file": "week-18/classroom-pack.html",
-      "sha256": "c7674044108410d3e3317674227b391a7e5c1a1d9e47b2df333321320c972e23",
-      "bytes": 7012,
+      "sha256": "67b4232b51ad02b644770172bd20c79e52e23c477950ff406123939efe4e8280",
+      "bytes": 7071,
       "scope": "week-18"
     },
     {
       "file": "week-18/student-task.html",
-      "sha256": "f9898c4e68f09f84b12050be9290f7503513982ee50e31376c9c135e05db766c",
-      "bytes": 5834,
+      "sha256": "f064863f439f5b62cf0b4e9e67dc79573fccb2431d3b52155650d33d46e4397b",
+      "bytes": 5893,
       "scope": "week-18"
     },
     {
@@ -1013,6 +1163,12 @@
       "scope": "week-18"
     },
     {
+      "file": "week-18/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "34160d017e7d9a47ee6b8fde6c445eff2f0399a45aef1ac7dda83e2fc76adda1",
+      "bytes": 187242,
+      "scope": "week-18"
+    },
+    {
       "file": "week-18/video.mp4",
       "sha256": "63244a0d74968519547479abb741e6ba9649330ffeb8b15ca90b5ab8ac26410c",
       "bytes": 3771884,
@@ -1022,6 +1178,18 @@
       "file": "week-18/video-captions.srt",
       "sha256": "55582f1bb3a155495a8b01aa42a8f8b73b2c11fa57c66fe58a2d3dee64af919f",
       "bytes": 2105,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/depth-infographic.png",
+      "sha256": "0d53ff2a78a56077a908d314f5b48a4dfc77ce3eec1c7f01ecc2c0844bb142bf",
+      "bytes": 4696344,
+      "scope": "week-18"
+    },
+    {
+      "file": "week-18/depth-infographic.webp",
+      "sha256": "8edbe815cf532ce15753d2133b0a9d501b2e114c6ae1e2f0a9cd3766811c6649",
+      "bytes": 491266,
       "scope": "week-18"
     },
     {
@@ -1043,6 +1211,12 @@
       "scope": "week-18"
     },
     {
+      "file": "week-18/student-video-card.webp",
+      "sha256": "dc539c341343b0c6daa83e8550c6f861bda353cf146151082d4b5674220aaacf",
+      "bytes": 58016,
+      "scope": "week-18"
+    },
+    {
       "file": "week-18/week-illustration.webp",
       "sha256": "da511f8a857bb7878c65c4eac84441f2635a3f2e885b2c4ab445c9d6f649076a",
       "bytes": 172672,
@@ -1055,39 +1229,45 @@
       "scope": "week-18"
     },
     {
+      "file": "week-18/student-infographic.webp",
+      "sha256": "39e646dd797a5893f6797801a4028d00750c9a1135f61476feb673eddd32a609",
+      "bytes": 431492,
+      "scope": "week-18"
+    },
+    {
       "file": "week-21/index.html",
-      "sha256": "436927cb8a239d201fd770c0cc6e9500ca08b9369076293bc520c10635d803ee",
-      "bytes": 4256,
+      "sha256": "e8867d79cb5d699fcd419d6fdcd47ec6614357e938691cc829d938879ff99737",
+      "bytes": 4316,
       "scope": "week-21"
     },
     {
       "file": "week-21/lecture-slides.html",
-      "sha256": "996c2180af14542113528efb1cae57273448b043bc9449d6c7c1215732f3d0c2",
-      "bytes": 3733,
+      "sha256": "7e2c5ec0123e64645a4be2c64ceff7a37eb529afb099b4fb5f04efb27235bfb6",
+      "bytes": 3793,
       "scope": "week-21"
     },
     {
       "file": "week-21/notebooklm-kai-slides.html",
-      "sha256": "ea94c7993fb7d91f81c7f2563663db7845c0bdc403e91ce8e262dacb7cf13e25",
-      "bytes": 4693,
+      "sha256": "a09d25b1ed866e4aa62cca0043ace673fb4a12a5c369dcd228900fe7405df98e",
+      "bytes": 4753,
       "scope": "week-21"
     },
     {
       "file": "week-21/notebooklm-kai-slides-v2.html",
-      "sha256": "030f9e36096ec3581800a8ca2e48288c9bda6587ded02a87785dcf42ccfcec60",
-      "bytes": 4758,
+      "sha256": "961334b71a6b43c42f58e2ac25832be65421557af753fe1fce7956ab5931ea05",
+      "bytes": 4818,
       "scope": "week-21"
     },
     {
       "file": "week-21/classroom-pack.html",
-      "sha256": "b4a63dfdd2aa38f542e543a75a549af42d494f24179ee96b1ef789e368f2d4a0",
-      "bytes": 7050,
+      "sha256": "a3ef7785b877704dc7655866576c5116e9502c78e1e6f1df3b8c245748cbb738",
+      "bytes": 7109,
       "scope": "week-21"
     },
     {
       "file": "week-21/student-task.html",
-      "sha256": "cbc729012369c5e4d1dbaa5db7fc422b49302d279f554509a04ca5e22e832bdf",
-      "bytes": 5895,
+      "sha256": "759de414f4ae90fefa735fc0abbe4e90f5dc53469575f49177e9d92d8714c806",
+      "bytes": 5954,
       "scope": "week-21"
     },
     {
@@ -1139,6 +1319,12 @@
       "scope": "week-21"
     },
     {
+      "file": "week-21/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "7cbcb238674ef0e96c3ea0f0e69eb5b9ac7afc91a8f911fe009e7019421fe1e1",
+      "bytes": 217282,
+      "scope": "week-21"
+    },
+    {
       "file": "week-21/video.mp4",
       "sha256": "b9933a67b7562e141a75f23a9b5d93855bd0b89266ae784bfa3d0259b4054368",
       "bytes": 6582668,
@@ -1148,6 +1334,18 @@
       "file": "week-21/video-captions.srt",
       "sha256": "6b4c69eb4ec7cf216cedd53832590f339b7a139a9ce32d281daa06cc1e999c21",
       "bytes": 3625,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/depth-infographic.png",
+      "sha256": "deafdc589ee0ccebd666ef6e373e58260baaabc041d6bfc0bb629faf78831e98",
+      "bytes": 4795198,
+      "scope": "week-21"
+    },
+    {
+      "file": "week-21/depth-infographic.webp",
+      "sha256": "9661fb8085785e5d39dc22dede765b90c9d03c4a94d1fd5544c789d2206c3d61",
+      "bytes": 400714,
       "scope": "week-21"
     },
     {
@@ -1169,6 +1367,12 @@
       "scope": "week-21"
     },
     {
+      "file": "week-21/student-video-card.webp",
+      "sha256": "6fd039e299cc15c282c85ed7e673c0369911dae9a6f504bc3d5a7ef484b3c5ed",
+      "bytes": 57842,
+      "scope": "week-21"
+    },
+    {
       "file": "week-21/week-illustration.webp",
       "sha256": "5fe7f360eff51c5ca538b385f92e42ec650697176be91ad6430ff1d41d998cbf",
       "bytes": 191776,
@@ -1181,39 +1385,45 @@
       "scope": "week-21"
     },
     {
+      "file": "week-21/student-infographic.webp",
+      "sha256": "88e9600f37c00dc44ae89170d09f8beea0dd74633d668bab7add7ae31e992a16",
+      "bytes": 324250,
+      "scope": "week-21"
+    },
+    {
       "file": "week-24/index.html",
-      "sha256": "6999c2c2f85789b16d4b8cf97f7d96dd7f393d854ca13650a05602fed8e048ca",
-      "bytes": 4286,
+      "sha256": "5b0012b73fe14d87991ca448b89ef35763b3a1ff0640c8833e1121c1b389ef23",
+      "bytes": 4346,
       "scope": "week-24"
     },
     {
       "file": "week-24/lecture-slides.html",
-      "sha256": "746861eaca675eca74c3be2a2a313d889437adb11fdddd3b6b4f73b1f264aedf",
-      "bytes": 3730,
+      "sha256": "d84afcb70f003c031a7ce2274fa754035b0c61e2c8894f2f51775a5532f2e530",
+      "bytes": 3790,
       "scope": "week-24"
     },
     {
       "file": "week-24/notebooklm-kai-slides.html",
-      "sha256": "45439635933f82547f2d1482673e6e7a87f7b3e9bdc3a9266a1938c2fd6c4da9",
-      "bytes": 4688,
+      "sha256": "3843f8c6299a8ce815c34c714bf74273730670c3b60f4efb531e61352a60f963",
+      "bytes": 4748,
       "scope": "week-24"
     },
     {
       "file": "week-24/notebooklm-kai-slides-v2.html",
-      "sha256": "cdf01e55ef0844565dd64fd89f3187aa41397d79d3582e7f51a71216c9f0ab92",
-      "bytes": 4753,
+      "sha256": "77378da2241ed625edf225d1e92c3d232f934fcb5af5ad50eb44468b86d0d021",
+      "bytes": 4813,
       "scope": "week-24"
     },
     {
       "file": "week-24/classroom-pack.html",
-      "sha256": "a88d028b4978630424a9425f88671049cddab6568da996a2778d8ed568ed1b93",
-      "bytes": 7071,
+      "sha256": "47e5ad57b50f1764a060aced9bcae0c59a402d7f8190088052e384500b0c91a8",
+      "bytes": 7130,
       "scope": "week-24"
     },
     {
       "file": "week-24/student-task.html",
-      "sha256": "1501c7207d48196b583d7dc23b0f67caff36e71a1cea8e871db7045a18bd8d4a",
-      "bytes": 5897,
+      "sha256": "29523bcad147fa8cf1a46c3e19c13c942d3317ddaee9162c6d35f91a2eb841a2",
+      "bytes": 5956,
       "scope": "week-24"
     },
     {
@@ -1265,6 +1475,12 @@
       "scope": "week-24"
     },
     {
+      "file": "week-24/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "dd538b591ff513c357c77f6855dca6a73d26acbeb3f29b2a52d8b01b66a63185",
+      "bytes": 189738,
+      "scope": "week-24"
+    },
+    {
       "file": "week-24/video.mp4",
       "sha256": "63eed096c8dda7f96a726e1ece0ff9756b412edd0436782a3695c0349394e3b6",
       "bytes": 6402877,
@@ -1274,6 +1490,18 @@
       "file": "week-24/video-captions.srt",
       "sha256": "a321ffb7f609d71fe11c2337274c555285a1261e78635f9dfa8da7fcd005b14a",
       "bytes": 3114,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/depth-infographic.png",
+      "sha256": "dbdd36653adc1ad60cbeeaaa192939a4ffeb7411a41c807dadd43bbd3376e595",
+      "bytes": 5145381,
+      "scope": "week-24"
+    },
+    {
+      "file": "week-24/depth-infographic.webp",
+      "sha256": "2beaba7aba63db5442a8398810ff1eeb6aa7fce8367f17264a39c95d1c85acc5",
+      "bytes": 481578,
       "scope": "week-24"
     },
     {
@@ -1295,6 +1523,12 @@
       "scope": "week-24"
     },
     {
+      "file": "week-24/student-video-card.webp",
+      "sha256": "1925fdb12d15c04fa610134a019f4635395b808c30cb74842c6a097e7a15d624",
+      "bytes": 66836,
+      "scope": "week-24"
+    },
+    {
       "file": "week-24/week-illustration.webp",
       "sha256": "7b9bc9de785843ed4375377cde5308364d04fdf774ba666163d03b5a117f4b0b",
       "bytes": 204556,
@@ -1307,39 +1541,45 @@
       "scope": "week-24"
     },
     {
+      "file": "week-24/student-infographic.webp",
+      "sha256": "e9c14a91ea4cdcce884e95f2bd632cac5f10c736812f1594ca28b5cf5b4d9f96",
+      "bytes": 365376,
+      "scope": "week-24"
+    },
+    {
       "file": "week-27/index.html",
-      "sha256": "ec9dbc89d5e08c623517bffa3b94588e871056a5d064eece5122168978c9e5c5",
-      "bytes": 4151,
+      "sha256": "b8fde862152fa2bbfa3b070a0228b498faef107b39c60b189a55aa2eb1dff2d7",
+      "bytes": 4211,
       "scope": "week-27"
     },
     {
       "file": "week-27/lecture-slides.html",
-      "sha256": "824ddf80a5d941f5f91d16683ab10075c7e3c26b0189206d5076199e27710c6e",
-      "bytes": 3685,
+      "sha256": "42718c006e8b30df60ebed95c3b37be857c20c97a31eaa907821473a8d631368",
+      "bytes": 3745,
       "scope": "week-27"
     },
     {
       "file": "week-27/notebooklm-kai-slides.html",
-      "sha256": "7d0dfe80034e9730eee5f34291d10a9812d8f05f08dfa1d91952e0388d6269cd",
-      "bytes": 4613,
+      "sha256": "611fa39c75c85670263cf358f67de6ed4b1a9fcbae46be9f123cc09e5f2c5c47",
+      "bytes": 4673,
       "scope": "week-27"
     },
     {
       "file": "week-27/notebooklm-kai-slides-v2.html",
-      "sha256": "41885b00633d51e64b7e90bd4f54a007676fc18a19d6fe55e682f122d28b85f2",
-      "bytes": 4678,
+      "sha256": "2c7c97cb6681acf51c1d4b5667fcb90620b1ffb9abfef18df59c15d60652d7c0",
+      "bytes": 4738,
       "scope": "week-27"
     },
     {
       "file": "week-27/classroom-pack.html",
-      "sha256": "5c5e848908bae60a61e49eb51c62481534245034978c9e6ad3f5fc02df2dae57",
-      "bytes": 7011,
+      "sha256": "5b9fb0b68b3e8c27ab5cc4f6fffc42113d5ed660a7305dd63fd4383dbfc43cba",
+      "bytes": 7070,
       "scope": "week-27"
     },
     {
       "file": "week-27/student-task.html",
-      "sha256": "0fe3639f213ba8b8c313c198a45446ec70151362bddb80b8fdd10b72d6b4cbda",
-      "bytes": 5841,
+      "sha256": "975e4fb7c160af8d6a7c7b39fda5231178d95decaf6174536aa5c1dd5bf62e7a",
+      "bytes": 5900,
       "scope": "week-27"
     },
     {
@@ -1391,6 +1631,12 @@
       "scope": "week-27"
     },
     {
+      "file": "week-27/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "03bcf9e0f0bebca67406d75ec779055708820b3c0ab1358bf9bcf75fc35fcd86",
+      "bytes": 187882,
+      "scope": "week-27"
+    },
+    {
       "file": "week-27/video.mp4",
       "sha256": "3cb45468548123b279bb9a0df184e5354a95e5ca9bb079979d6037427dda466f",
       "bytes": 4435242,
@@ -1400,6 +1646,18 @@
       "file": "week-27/video-captions.srt",
       "sha256": "182e73f2d8dad40bef0b524e7ea9c80f1f32b74e42aea5cc217a1f6c78b744bb",
       "bytes": 3027,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/depth-infographic.png",
+      "sha256": "05581f9c5434ac4a82ead7b0cbe6a41e103b687cdec3eb2438aaf9ead640d1cb",
+      "bytes": 5095162,
+      "scope": "week-27"
+    },
+    {
+      "file": "week-27/depth-infographic.webp",
+      "sha256": "b4896e9160377bc70577faeb505b3ecbb253a185339c2d6ac15d30de4d460bef",
+      "bytes": 534608,
       "scope": "week-27"
     },
     {
@@ -1421,6 +1679,12 @@
       "scope": "week-27"
     },
     {
+      "file": "week-27/student-video-card.webp",
+      "sha256": "44dbd45487eb450ed0f95633439e9a34c19c682c34513a14a52f11e6f0a963e6",
+      "bytes": 58090,
+      "scope": "week-27"
+    },
+    {
       "file": "week-27/week-illustration.webp",
       "sha256": "4dec4c426d4a4737f9fc9a7b1f6466c16f867778cf14c29fd1338e05fed292e9",
       "bytes": 139812,
@@ -1433,39 +1697,45 @@
       "scope": "week-27"
     },
     {
+      "file": "week-27/student-infographic.webp",
+      "sha256": "6f6fa458e317e7d8f62118c0f8de46000acb6a3b3fe963e4cafc42c5b750be8f",
+      "bytes": 355514,
+      "scope": "week-27"
+    },
+    {
       "file": "week-30/index.html",
-      "sha256": "ea7b43b143833f2f14da1139a0b62e91705c1a0a4cfda9499080b3b895e7ed6c",
-      "bytes": 4241,
+      "sha256": "b8491c471e0c2ffccf94159ce31bd103062a2083ad1751275f7d8aa58c6f114d",
+      "bytes": 4301,
       "scope": "week-30"
     },
     {
       "file": "week-30/lecture-slides.html",
-      "sha256": "344d3c7bf57f285cd96d9f54b68b910616d0209de7f31ab8ad62fc6bdb30e615",
-      "bytes": 3703,
+      "sha256": "b52bf8759f262ac99acbba2af1cd5ae26ddeb49d26b9a56ab06bfbb02bf6fede",
+      "bytes": 3763,
       "scope": "week-30"
     },
     {
       "file": "week-30/notebooklm-kai-slides.html",
-      "sha256": "6d98f611d5ef0f10fc9ab03113bb9e214ff876fb3544ac6791658a6b7f0618c3",
-      "bytes": 4643,
+      "sha256": "afac17d00c323d91627758f95d04d88a47025b505c0314e75c9771333cc04886",
+      "bytes": 4703,
       "scope": "week-30"
     },
     {
       "file": "week-30/notebooklm-kai-slides-v2.html",
-      "sha256": "62e23f727857789f9e11a365a2276d9c6cb6089767be0a9630d527d7244447a7",
-      "bytes": 4708,
+      "sha256": "1a4402672194dac320070acd6f51c154aa7df32502318470402118d0cbe44a29",
+      "bytes": 4768,
       "scope": "week-30"
     },
     {
       "file": "week-30/classroom-pack.html",
-      "sha256": "0a281a6444667d0fae8a6f46d5c0f6ef356a5abd4fe906e4b92a9b7ccf20349a",
-      "bytes": 7010,
+      "sha256": "7182ac3c315257d37a45e76292d0bec77b07f00043ba14e5b417ea0caa2654dc",
+      "bytes": 7069,
       "scope": "week-30"
     },
     {
       "file": "week-30/student-task.html",
-      "sha256": "57f181d9d6f623cc4371f9e6b2e932725011a0c5b34c4441380c7f89d4435cff",
-      "bytes": 5825,
+      "sha256": "d4dc10136d6edde64ba2f72055391e08e86510295cdba1cc4493fb3d6869596f",
+      "bytes": 5884,
       "scope": "week-30"
     },
     {
@@ -1517,6 +1787,12 @@
       "scope": "week-30"
     },
     {
+      "file": "week-30/notebooklm-kai-slides-v2-thumb.webp",
+      "sha256": "12439781d0f2732c00be1aa292937c2c5c626a53e15a0b9774e2c019999965e2",
+      "bytes": 133716,
+      "scope": "week-30"
+    },
+    {
       "file": "week-30/video.mp4",
       "sha256": "b6646d28772ba6d6e4b92490f13d1017b7db80bd61deee40eda7d7a8ce3da92a",
       "bytes": 5821395,
@@ -1526,6 +1802,18 @@
       "file": "week-30/video-captions.srt",
       "sha256": "1bdbd164aeecc8dabda63ef6b5961b3df14cdb391feb13e47c8b8cb18c0f6163",
       "bytes": 2746,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/depth-infographic.png",
+      "sha256": "b199f333d0f63964ff11f7729dbd5b4401b2bfd0c2f513218e1b5a84ad33f499",
+      "bytes": 5016941,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/depth-infographic.webp",
+      "sha256": "8395809cc11d9eed06e9ed73394a7d1bf2dc1f69cd479be9ba299b282a5ace2b",
+      "bytes": 421552,
       "scope": "week-30"
     },
     {
@@ -1547,6 +1835,12 @@
       "scope": "week-30"
     },
     {
+      "file": "week-30/student-video-card.webp",
+      "sha256": "b8cb02b0affb1121c765ee214bc3caa4474cb573ffb428ee9309334db2d3f3ae",
+      "bytes": 58968,
+      "scope": "week-30"
+    },
+    {
       "file": "week-30/week-illustration.webp",
       "sha256": "d3140690815054de476eb20e1867e7d20653547c9fda277862ed2436c3121e83",
       "bytes": 146626,
@@ -1556,6 +1850,12 @@
       "file": "week-30/student-infographic.png",
       "sha256": "8a315956d274032880760dd0d2470130b8a1c30f35232f007c920de3bf778314",
       "bytes": 4198136,
+      "scope": "week-30"
+    },
+    {
+      "file": "week-30/student-infographic.webp",
+      "sha256": "cbec6ee3c06b6d86a6246eee779b143bb0533755c23652552df56a46131dbba0",
+      "bytes": 362580,
       "scope": "week-30"
     }
   ]

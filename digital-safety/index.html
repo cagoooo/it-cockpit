@@ -321,6 +321,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -758,20 +759,20 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
   <section class="infographic-section">
     <h3>📊 四張數位安全懶人包</h3>
     <div class="info-grid">
-      <a class="info-card" href="assets/01_algorithm.jpg" target="_blank">
-        <img src="assets/01_algorithm.jpg" alt="演算法鉤癮模式">
+      <a class="info-card" href="./assets/01_algorithm.webp" target="_blank">
+        <img data-fallback-src="assets/01_algorithm.jpg" src="./assets/01_algorithm.webp" alt="演算法鉤癮模式" decoding="async" loading="lazy">
         <div class="cap">① 演算法吃掉時間 — 鉤癮模式與解癮術</div>
       </a>
-      <a class="info-card" href="assets/02_photo.jpg" target="_blank">
-        <img src="assets/02_photo.jpg" alt="拍照分享友善指南">
+      <a class="info-card" href="./assets/02_photo.webp" target="_blank">
+        <img data-fallback-src="assets/02_photo.jpg" src="./assets/02_photo.webp" alt="拍照分享友善指南" decoding="async" loading="lazy">
         <div class="cap">② 拍照分享有界線 — 拍照三問與情境</div>
       </a>
-      <a class="info-card" href="assets/03_app.jpg" target="_blank">
-        <img src="assets/03_app.jpg" alt="App 安全檢查清單">
+      <a class="info-card" href="./assets/03_app.webp" target="_blank">
+        <img data-fallback-src="assets/03_app.jpg" src="./assets/03_app.webp" alt="App 安全檢查清單" decoding="async" loading="lazy">
         <div class="cap">③ App 與帳號安全 — 5 大檢查 + 密碼原則</div>
       </a>
-      <a class="info-card" href="assets/04_help.jpg" target="_blank">
-        <img src="assets/04_help.jpg" alt="求救站">
+      <a class="info-card" href="./assets/04_help.webp" target="_blank">
+        <img data-fallback-src="assets/04_help.jpg" src="./assets/04_help.webp" alt="求救站" decoding="async" loading="lazy">
         <div class="cap">④ 遇到困擾求救站 — 4 大情境 + 5 大管道</div>
       </a>
     </div>
@@ -931,7 +932,7 @@ const SLIDE_COUNT = 9; // 9 張授課簡報
 const YOUTUBE_VIDEO_ID = ""; // 上傳完成後填入
 const SLIDE_LIST = [];
 for(let i=1; i<=SLIDE_COUNT; i++){
-  SLIDE_LIST.push('assets/slide_' + String(i).padStart(2,'0') + '.jpg');
+  SLIDE_LIST.push('assets/slide_' + String(i).padStart(2,'0') + '.webp');
 }
 
 // ========== MODE SWITCH ==========

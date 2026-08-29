@@ -796,6 +796,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -923,7 +924,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
         <div class="info-card" onclick="toggleZoom(this)">
           <div class="info-label"><span>📊</span>關卡 1 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
-          <img src="assets/01_電腦硬體家族.jpg" alt="關卡 1：電腦硬體家族資訊圖表" loading="lazy">
+          <img data-fallback-src="assets/01_電腦硬體家族.jpg" src="./assets/01_電腦硬體家族.webp" alt="關卡 1：電腦硬體家族資訊圖表" loading="lazy" decoding="async">
         </div>
 
         <div class="steps-card">
@@ -1003,7 +1004,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
         <div class="info-card" onclick="toggleZoom(this)">
           <div class="info-label"><span>📊</span>關卡 2 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
-          <img src="assets/02_正確開關機.jpg" alt="關卡 2：正確開關機程序資訊圖表" loading="lazy">
+          <img data-fallback-src="assets/02_正確開關機.jpg" src="./assets/02_正確開關機.webp" alt="關卡 2：正確開關機程序資訊圖表" loading="lazy" decoding="async">
         </div>
 
         <div class="steps-card">
@@ -1096,7 +1097,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
         <div class="info-card" onclick="toggleZoom(this)">
           <div class="info-label"><span>📊</span>關卡 3 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
-          <img src="assets/03_桌面與滑鼠.jpg" alt="關卡 3：桌面探險與滑鼠功夫資訊圖表" loading="lazy">
+          <img data-fallback-src="assets/03_桌面與滑鼠.jpg" src="./assets/03_桌面與滑鼠.webp" alt="關卡 3：桌面探險與滑鼠功夫資訊圖表" loading="lazy" decoding="async">
         </div>
 
         <div class="steps-card">
@@ -1179,7 +1180,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
         <div class="info-card" onclick="toggleZoom(this)">
           <div class="info-label"><span>📊</span>關卡 4 視覺化筆記<span class="nlm-tag">🤖 NotebookLM AI</span></div>
-          <img src="assets/04_視窗檔案整理.jpg" alt="關卡 4：視窗大師與檔案總管資訊圖表" loading="lazy">
+          <img data-fallback-src="assets/04_視窗檔案整理.jpg" src="./assets/04_視窗檔案整理.webp" alt="關卡 4：視窗大師與檔案總管資訊圖表" loading="lazy" decoding="async">
         </div>
 
         <div class="steps-card">
@@ -1277,7 +1278,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
       </div>
       <div class="window-body">
         <div class="slide-main" ondblclick="openSlideFullscreen()">
-          <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報" loading="lazy">
+          <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" loading="lazy" decoding="async">
           <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
           <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
           <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
@@ -1487,7 +1488,7 @@ const SLIDE_LIST = (() => {
   const arr = [];
   for(let i=1;i<=13;i++){
     const n = i.toString().padStart(2,'0');
-    arr.push(`assets/slide_${n}.jpg`);
+    arr.push(`assets/slide_${n}.webp`);
   }
   return arr;
 })();

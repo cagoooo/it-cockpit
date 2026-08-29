@@ -648,6 +648,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -711,7 +712,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
     <p class="section-sub">Suno 就像一台「神奇音樂料理機」🥘 — 你輸入文字食材（歌詞、風格），它就煮出一道有歌手演唱的歌曲大餐！</p>
 
-    <img src="assets/01_認識Suno與註冊.jpg" alt="認識 Suno AI 與註冊資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c1)">
+    <img data-fallback-src="assets/01_認識Suno與註冊.jpg" src="./assets/01_認識Suno與註冊.webp" alt="認識 Suno AI 與註冊資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c1)" decoding="async">
 
     <div class="steps-card">
       <h4>📋 操作步驟</h4>
@@ -775,7 +776,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
     <p class="section-sub">分工合作！ChatGPT 是「作文小幫手」📝、Suno 是「作曲大師」🎼。先讓 AI 寫出押韻又有結構的歌詞，再交給 Suno 譜曲。</p>
 
-    <img src="assets/02_用AI寫歌詞.jpg" alt="用 AI 寫歌詞流程圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c2)">
+    <img data-fallback-src="assets/02_用AI寫歌詞.jpg" src="./assets/02_用AI寫歌詞.webp" alt="用 AI 寫歌詞流程圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c2)" decoding="async">
 
     <div class="steps-card">
       <h4>📋 操作步驟</h4>
@@ -860,7 +861,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
     <p class="section-sub">三個魔法欄位 + 一個 Create 按鈕，30 秒就生出兩個版本！</p>
 
-    <img src="assets/03_Custom模式生成班歌.jpg" alt="Custom 模式生成班歌資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c3)">
+    <img data-fallback-src="assets/03_Custom模式生成班歌.jpg" src="./assets/03_Custom模式生成班歌.webp" alt="Custom 模式生成班歌資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c3)" decoding="async">
 
     <div class="steps-card">
       <h4>📋 操作步驟</h4>
@@ -966,7 +967,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
     <p class="section-sub">把「歡樂班歌」變成「溫暖畢業歌」 — 改歌詞、改風格，還能用 Persona 保留同一個歌手嗓音，用 Extend 把短歌延長到完整版！</p>
 
-    <img src="assets/04_升級畢業歌.jpg" alt="升級畢業歌資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c5)">
+    <img data-fallback-src="assets/04_升級畢業歌.jpg" src="./assets/04_升級畢業歌.webp" alt="升級畢業歌資訊圖" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c5)" decoding="async">
 
     <div class="steps-card">
       <h4>📋 操作步驟（從班歌升級成畢業歌）</h4>
@@ -1050,7 +1051,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     </div>
     <p class="section-sub">把畢業歌配上班級照片，做成感動全班的畢業 MV，在畢業典禮上播放！</p>
 
-    <img src="assets/05_下載與畢業MV.jpg" alt="下載與畢業 MV 製作流程" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c4)">
+    <img data-fallback-src="assets/05_下載與畢業MV.jpg" src="./assets/05_下載與畢業MV.webp" alt="下載與畢業 MV 製作流程" loading="lazy" style="width:100%;border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow-md);border:2px solid var(--c4)" decoding="async">
 
     <div class="steps-card">
       <h4>📋 操作步驟</h4>
@@ -1209,7 +1210,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 
   <div class="slide-player">
     <div class="slide-main" ondblclick="openSlideFullscreen()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" decoding="async" loading="eager">
       <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
       <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕（Esc 退出）">⛶ 全螢幕</button>
@@ -1580,7 +1581,7 @@ renderMV();
 
 /* ============ Slide player ============ */
 const TOTAL_SLIDES = 15;
-const SLIDE_LIST = Array.from({length:TOTAL_SLIDES}, (_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+const SLIDE_LIST = Array.from({length:TOTAL_SLIDES}, (_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.webp`);
 let currentSlide = 0;
 
 function initSlidePlayer(){

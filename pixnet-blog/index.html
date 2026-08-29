@@ -635,6 +635,7 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -1118,7 +1119,7 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
   <p class="sub">NotebookLM AI 生成的 15 頁授課簡報 + 4 張 sketch_note 資訊圖表，雙擊或按右上「⛶ 全螢幕」進入投影模式</p>
   <div class="slide-player">
     <div class="slide-main" ondblclick="openSlideFullscreen()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="Slide">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="Slide" decoding="async" loading="eager">
       <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
       <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1268,7 +1269,7 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
 
 <script>
 // Slide Player
-const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.webp`);
 const SLIDE_TITLES = SLIDE_LIST.map((_,i)=>`簡報第 ${i+1} 頁`);
 let curSlide = 0;
 function initSlidePlayer(){

@@ -176,16 +176,16 @@
   window.GIFTED_DEPTH = simplify(window.GIFTED_DEPTH || {});
   window.GIFTED_GLOSSARY = glossaries;
   window.GIFTED_STUDENT_INFOGRAPHICS = {
-    3: 'student-infographic.png',
-    6: 'student-infographic.png',
-    9: 'student-infographic.png',
-    12: 'student-infographic.png',
-    15: 'student-infographic.png',
-    18: 'student-infographic.png',
-    21: 'student-infographic.png',
-    24: 'student-infographic.png',
-    27: 'student-infographic.png',
-    30: 'student-infographic.png',
+    3: 'student-infographic.webp',
+    6: 'student-infographic.webp',
+    9: 'student-infographic.webp',
+    12: 'student-infographic.webp',
+    15: 'student-infographic.webp',
+    18: 'student-infographic.webp',
+    21: 'student-infographic.webp',
+    24: 'student-infographic.webp',
+    27: 'student-infographic.webp',
+    30: 'student-infographic.webp',
   };
   window.toStudentLanguage = simplifyText;
 })();

@@ -523,6 +523,7 @@ footer span { color:var(--c1); }
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -1033,20 +1034,20 @@ footer span { color:var(--c1); }
   <h2 class="section-title">📊 重點資訊圖表（NotebookLM 自動生成）</h2>
   <p class="section-sub">點圖放大，掃 QR Code 帶回家複習</p>
   <div class="info-grid">
-    <div class="info-card" onclick="window.open('assets/01_microbit_makecode.jpg','_blank')">
-      <img src="assets/01_microbit_makecode.jpg" alt="micro:bit + MakeCode 入門" loading="lazy">
+    <div class="info-card" onclick="window.open('./assets/01_microbit_makecode.webp','_blank')">
+      <img data-fallback-src="assets/01_microbit_makecode.jpg" src="./assets/01_microbit_makecode.webp" alt="micro:bit + MakeCode 入門" loading="lazy" decoding="async">
       <div class="label">▢ 01 micro:bit 大腦 + MakeCode</div>
     </div>
-    <div class="info-card" onclick="window.open('assets/02_assembly_motor.jpg','_blank')">
-      <img src="assets/02_assembly_motor.jpg" alt="麥昆組裝與馬達控制" loading="lazy">
+    <div class="info-card" onclick="window.open('./assets/02_assembly_motor.webp','_blank')">
+      <img data-fallback-src="assets/02_assembly_motor.jpg" src="./assets/02_assembly_motor.webp" alt="麥昆組裝與馬達控制" loading="lazy" decoding="async">
       <div class="label">▢ 02 麥昆組裝 + 馬達控制</div>
     </div>
-    <div class="info-card" onclick="window.open('assets/03_tracking_avoid.jpg','_blank')">
-      <img src="assets/03_tracking_avoid.jpg" alt="循跡與避障邏輯" loading="lazy">
+    <div class="info-card" onclick="window.open('./assets/03_tracking_avoid.webp','_blank')">
+      <img data-fallback-src="assets/03_tracking_avoid.jpg" src="./assets/03_tracking_avoid.webp" alt="循跡與避障邏輯" loading="lazy" decoding="async">
       <div class="label">▢ 03 循跡感測 + 超音波避障</div>
     </div>
-    <div class="info-card" onclick="window.open('assets/04_remote_control.jpg','_blank')">
-      <img src="assets/04_remote_control.jpg" alt="紅外線與藍牙遙控" loading="lazy">
+    <div class="info-card" onclick="window.open('./assets/04_remote_control.webp','_blank')">
+      <img data-fallback-src="assets/04_remote_control.jpg" src="./assets/04_remote_control.webp" alt="紅外線與藍牙遙控" loading="lazy" decoding="async">
       <div class="label">▢ 04 紅外線 + 藍牙遙控</div>
     </div>
   </div>
@@ -1058,7 +1059,7 @@ footer span { color:var(--c1); }
   <p class="section-sub">點縮圖跳頁，按 ⛶ 全螢幕，用左右鍵翻頁</p>
   <div class="slide-player">
     <div class="slide-main" ondblclick="openSlideFullscreen()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="簡報">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="簡報" decoding="async" loading="eager">
       <button class="slide-nav-btn prev" onclick="slideNav(-1)">‹</button>
       <button class="slide-nav-btn next" onclick="slideNav(1)">›</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1232,7 +1233,7 @@ footer span { color:var(--c1); }
 // SLIDE PLAYER
 // ═══════════════════════════════════════════
 const SLIDE_COUNT = 13;
-const SLIDE_LIST = Array.from({length:SLIDE_COUNT},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+const SLIDE_LIST = Array.from({length:SLIDE_COUNT},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.webp`);
 let curSlide = 0;
 
 function initSlidePlayer() {

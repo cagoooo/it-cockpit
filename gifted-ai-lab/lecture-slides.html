@@ -32,6 +32,7 @@
   .controls{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:8px;background:#fffdf8f2;border:1px solid #ffffff44;padding:7px;border-radius:8px;box-shadow:0 10px 30px #0005}.ctrl{min-width:44px;height:44px;border:1px solid #132f3326;background:white;color:var(--ink);border-radius:6px;font-weight:900;cursor:pointer}.ctrl:hover{border-color:var(--ink)}.counter{min-width:76px;text-align:center;font:700 13px/1 'JetBrains Mono',monospace}.week-select{height:44px;max-width:220px;border:1px solid #132f3326;background:white;color:var(--ink);border-radius:6px;padding:0 10px;font-weight:800}.home{text-decoration:none;display:grid;place-items:center}.hint{position:fixed;top:12px;right:12px;color:#fff9;font:600 11px/1.3 'JetBrains Mono',monospace}.progress{position:fixed;left:0;bottom:0;height:5px;background:var(--yellow);transition:width .2s}
   @media(max-width:760px){.stage{padding:6px 6px 70px}.cover-copy,.content-slide{padding:5%}.cover-slide{grid-template-columns:1fr}.cover-img{position:absolute;right:0;top:0;width:40%;opacity:.2}.big-grid{gap:7px}.big-card{padding:10px;min-height:0}.task-grid{gap:9px}.task-box{padding:12px}.controls{width:calc(100% - 12px);justify-content:center}.week-select{min-width:0;flex:1}.hint{display:none}}
 </style>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 <main id="stage" class="stage" aria-live="polite"></main>
@@ -60,7 +61,7 @@ const stage=document.querySelector('#stage'),select=document.querySelector('#wee
 function safeWeek(){if(!DATA[week])week=3;return DATA[week]}
 function renderSelect(){select.innerHTML=Object.entries(DATA).map(([w,d])=>`<option value="${w}" ${Number(w)===week?'selected':''}>第 ${w} 週｜${d.title}</option>`).join('')}
 function render(){const d=safeWeek(),w=String(week).padStart(2,'0');stage.innerHTML=`
-<section class="slide cover-slide" data-page="01 / 06"><div class="cover-copy"><div class="code">WEEK ${w} · ${d.date} · 90 MIN</div><h1>${d.title}</h1><p class="lead">${d.goal}</p><span class="tag">黃凱揚老師｜石門國小資優班</span></div><img class="cover-img" src="assets/gifted-lab-cover.png" alt="資訊科技專題學習情境"></section>
+<section class="slide cover-slide" data-page="01 / 06"><div class="cover-copy"><div class="code">WEEK ${w} · ${d.date} · 90 MIN</div><h1>${d.title}</h1><p class="lead">${d.goal}</p><span class="tag">黃凱揚老師｜石門國小資優班</span></div><img class="cover-img" data-fallback-src="assets/gifted-lab-cover.png" src="./assets/gifted-lab-cover.webp" alt="資訊科技專題學習情境" decoding="async" loading="eager"></section>
 <section class="slide content-slide" data-page="02 / 06"><div><div class="rule"></div><h2>今天先想這一題</h2></div><div class="prompt"><div class="prompt-mark">?</div><q>${d.hook}</q></div></section>
 <section class="slide content-slide" data-page="03 / 06"><div><div class="rule"></div><h2>三個關鍵概念</h2></div><div class="big-grid">${d.concepts.map(x=>`<div class="big-card"><b>${x[0]}</b><p>${x[1]}</p></div>`).join('')}</div></section>
 <section class="slide content-slide" data-page="04 / 06"><div><div class="rule"></div><h2>第一節｜理解與小實驗</h2></div><div class="task-grid"><div class="task-box"><h3>先觀察</h3><ol><li>${d.steps[0]}</li><li>把想法與證據說出來</li><li>允許第一次答案被修正</li></ol></div><div class="task-box"><h3>45 分鐘檢查點</h3><ul><li>我能說出自己的理由</li><li>我能指出一筆證據</li><li>我知道哪裡還不確定</li></ul></div></div></section>

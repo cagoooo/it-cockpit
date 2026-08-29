@@ -2,7 +2,7 @@
   const week = Number(document.body.dataset.week);
   const extra = (window.GIFTED_ENRICHMENT || {})[week];
   const depth = (window.GIFTED_DEPTH || {})[week];
-  const studentInfographic = (window.GIFTED_STUDENT_INFOGRAPHICS || {})[week] || 'depth-infographic.png';
+  const studentInfographic = (window.GIFTED_STUDENT_INFOGRAPHICS || {})[week] || 'depth-infographic.webp';
   const assessment = document.querySelector('#assessment');
   if (!extra || !depth || !assessment) return;
 

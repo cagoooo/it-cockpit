@@ -522,6 +522,7 @@ footer a:hover{text-decoration:underline}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -560,7 +561,7 @@ footer a:hover{text-decoration:underline}
 
   <section id="hero">
     <div class="hero-img-frame">
-      <img src="assets/01_qwerty_keyboard.jpg" alt="QWERTY 鍵盤布局">
+      <img data-fallback-src="assets/01_qwerty_keyboard.jpg" src="./assets/01_qwerty_keyboard.webp" alt="QWERTY 鍵盤布局" decoding="async" loading="lazy">
     </div>
     <div class="hero-text">
       <h1>⌨️ 鍵盤魔法學院：打字小超人養成計畫</h1>
@@ -611,7 +612,7 @@ footer a:hover{text-decoration:underline}
 
     <div class="two-col">
       <div class="img-frame">
-        <img src="assets/01_qwerty_keyboard.jpg" alt="STAGE 1 圖卡" loading="lazy" onclick="zoomImg(this)">
+        <img data-fallback-src="assets/01_qwerty_keyboard.jpg" src="./assets/01_qwerty_keyboard.webp" alt="STAGE 1 圖卡" loading="lazy" onclick="zoomImg(this)" decoding="async">
       </div>
       <div>
         <div class="card">
@@ -709,7 +710,7 @@ footer a:hover{text-decoration:underline}
 
     <div class="two-col">
       <div class="img-frame">
-        <img src="assets/02_home_row.jpg" alt="STAGE 2 圖卡" loading="lazy" onclick="zoomImg(this)">
+        <img data-fallback-src="assets/02_home_row.jpg" src="./assets/02_home_row.webp" alt="STAGE 2 圖卡" loading="lazy" onclick="zoomImg(this)" decoding="async">
       </div>
       <div>
         <div class="card">
@@ -812,7 +813,7 @@ footer a:hover{text-decoration:underline}
 
     <div class="two-col">
       <div class="img-frame">
-        <img src="assets/03_finger_gym.jpg" alt="STAGE 3 圖卡" loading="lazy" onclick="zoomImg(this)">
+        <img data-fallback-src="assets/03_finger_gym.jpg" src="./assets/03_finger_gym.webp" alt="STAGE 3 圖卡" loading="lazy" onclick="zoomImg(this)" decoding="async">
       </div>
       <div>
         <div class="card">
@@ -907,7 +908,7 @@ footer a:hover{text-decoration:underline}
 
     <div class="two-col">
       <div class="img-frame">
-        <img src="assets/04_word_magician.jpg" alt="STAGE 4 圖卡" loading="lazy" onclick="zoomImg(this)">
+        <img data-fallback-src="assets/04_word_magician.jpg" src="./assets/04_word_magician.webp" alt="STAGE 4 圖卡" loading="lazy" onclick="zoomImg(this)" decoding="async">
       </div>
       <div>
         <div class="card">
@@ -1013,7 +1014,7 @@ footer a:hover{text-decoration:underline}
 
     <div class="two-col">
       <div class="img-frame">
-        <img src="assets/05_speed_ninja.jpg" alt="STAGE 5 圖卡" loading="lazy" onclick="zoomImg(this)">
+        <img data-fallback-src="assets/05_speed_ninja.jpg" src="./assets/05_speed_ninja.webp" alt="STAGE 5 圖卡" loading="lazy" onclick="zoomImg(this)" decoding="async">
       </div>
       <div>
         <div class="card">
@@ -1850,9 +1851,9 @@ if(YT_VIDEO_ID && !YT_VIDEO_ID.includes('__')){
 // SLIDE_LIST will be filled at build time
 // ────────────────────────────────────────────────────────
 SLIDE_LIST = [
-  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg',
-  'assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg',
-  'assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'
+  './assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp','./assets/slide_04.webp','./assets/slide_05.webp',
+  './assets/slide_06.webp','./assets/slide_07.webp','./assets/slide_08.webp','./assets/slide_09.webp','./assets/slide_10.webp',
+  './assets/slide_11.webp','./assets/slide_12.webp','./assets/slide_13.webp','./assets/slide_14.webp','./assets/slide_15.webp'
 ];
 
 // ────────────────────────────────────────────────────────

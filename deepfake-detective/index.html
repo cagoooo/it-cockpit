@@ -732,6 +732,7 @@ canvas {
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -805,8 +806,8 @@ canvas {
 
     <!-- 資訊圖表 -->
     <div class="infographic-frame">
-      <img src="assets/01_deepfake_define.jpg" alt="認識Deepfake深偽技術資訊圖表" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...<br>（需先從NotebookLM下載並轉換）</div>'">
+      <img data-fallback-src="assets/01_deepfake_define.jpg" src="./assets/01_deepfake_define.webp" alt="認識Deepfake深偽技術資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\' decoding="async">🎨 資訊圖表載入中...<br>（需先從NotebookLM下載並轉換）</div>'">
     </div>
 
     <!-- 步驟說明 -->
@@ -905,8 +906,8 @@ canvas {
   <div class="section-body">
 
     <div class="infographic-frame">
-      <img src="assets/02_detect_tricks.jpg" alt="辨別AI假影片5大技巧資訊圖表" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...</div>'">
+      <img data-fallback-src="assets/02_detect_tricks.jpg" src="./assets/02_detect_tricks.webp" alt="辨別AI假影片5大技巧資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\' decoding="async">🎨 資訊圖表載入中...</div>'">
     </div>
 
     <div class="steps-card">
@@ -1010,8 +1011,8 @@ canvas {
   <div class="section-body">
 
     <div class="infographic-frame">
-      <img src="assets/03_sift_method.jpg" alt="SIFT查核法則資訊圖表" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...</div>'">
+      <img data-fallback-src="assets/03_sift_method.jpg" src="./assets/03_sift_method.webp" alt="SIFT查核法則資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\' decoding="async">🎨 資訊圖表載入中...</div>'">
     </div>
 
     <div class="steps-card">
@@ -1122,8 +1123,8 @@ canvas {
   <div class="section-body">
 
     <div class="infographic-frame">
-      <img src="assets/04_mygopen_tool.jpg" alt="MyGoPen事實查核工具資訊圖表" loading="lazy"
-           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\'>🎨 資訊圖表載入中...</div>'">
+      <img data-fallback-src="assets/04_mygopen_tool.jpg" src="./assets/04_mygopen_tool.webp" alt="MyGoPen事實查核工具資訊圖表" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\'infographic-placeholder\' decoding="async">🎨 資訊圖表載入中...</div>'">
     </div>
 
     <div class="steps-card">
@@ -1309,7 +1310,7 @@ canvas {
   <h3>授課簡報（NotebookLM 生成）</h3>
   <div class="slide-player">
     <div class="slide-player-main" id="slideMain">
-      <img id="slideMainImg" src="assets/slide_01.jpg" alt="簡報第1頁">
+      <img id="slideMainImg" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="簡報第1頁" decoding="async" loading="eager">
       <button class="slide-nav prev" onclick="slideNav(-1)">◀</button>
       <button class="slide-nav next" onclick="slideNav(1)">▶</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶</button>
@@ -1323,7 +1324,7 @@ canvas {
 <div class="slide-fullscreen-overlay" id="slideOverlay">
   <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
   <button class="slide-fs-nav prev" onclick="slideNav(-1, true)">◀</button>
-  <img id="slideOverlayImg" src="assets/slide_01.jpg" alt="簡報全螢幕">
+  <img id="slideOverlayImg" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="簡報全螢幕" decoding="async" loading="eager">
   <button class="slide-fs-nav next" onclick="slideNav(1, true)">▶</button>
   <div class="slide-fs-counter" id="slideOverlayCounter">1 / 15</div>
 </div>
@@ -1870,7 +1871,7 @@ function initSlidePlayer() {
     div.className = 'slide-strip-thumb' + (i === 1 ? ' active' : '');
     div.id = `sthumb_${i}`;
     div.onclick = () => goSlide(i);
-    div.innerHTML = `<img src="assets/slide_${num}.jpg" alt="第${i}頁" loading="lazy">`;
+    div.innerHTML = `<img src="assets/slide_${num}.webp" alt="第${i}頁" loading="lazy">`;
     strip.appendChild(div);
   }
   goSlide(1);
@@ -1887,7 +1888,7 @@ function initSlidePlayer() {
 function goSlide(n) {
   slideCurrent = Math.max(1, Math.min(slideTotal, n));
   const num = String(slideCurrent).padStart(2, '0');
-  const src = `assets/slide_${num}.jpg`;
+  const src = `assets/slide_${num}.webp`;
   document.getElementById('slideMainImg').src = src;
   document.getElementById('slideOverlayImg').src = src;
   document.getElementById('slideCounter').textContent = `${slideCurrent} / ${slideTotal}`;

@@ -346,6 +346,7 @@ body.teacher-mode .teacher-only{display:block}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -413,7 +414,7 @@ body.teacher-mode .teacher-only{display:block}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/01_入門大冒險.jpg" alt="Canva 入門大冒險資訊圖" loading="lazy">
+      <img data-fallback-src="assets/01_入門大冒險.jpg" src="./assets/01_入門大冒險.webp" alt="Canva 入門大冒險資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -498,7 +499,7 @@ body.teacher-mode .teacher-only{display:block}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/02_簡報製作入門.jpg" alt="簡報製作入門資訊圖" loading="lazy">
+      <img data-fallback-src="assets/02_簡報製作入門.jpg" src="./assets/02_簡報製作入門.webp" alt="簡報製作入門資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -674,7 +675,7 @@ body.teacher-mode .teacher-only{display:block}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/03_AI魔法工具.jpg" alt="Canva AI 魔法工具大集合資訊圖" loading="lazy">
+      <img data-fallback-src="assets/03_AI魔法工具.jpg" src="./assets/03_AI魔法工具.webp" alt="Canva AI 魔法工具大集合資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="canvas-section">
@@ -769,7 +770,7 @@ body.teacher-mode .teacher-only{display:block}
     </div>
 
     <div class="section-img-wrap">
-      <img src="assets/04_儲存分享與任務.jpg" alt="儲存分享與學習任務資訊圖" loading="lazy">
+      <img data-fallback-src="assets/04_儲存分享與任務.jpg" src="./assets/04_儲存分享與任務.webp" alt="儲存分享與學習任務資訊圖" loading="lazy" decoding="async">
     </div>
 
     <div class="steps-card">
@@ -966,7 +967,7 @@ body.teacher-mode .teacher-only{display:block}
     <p style="color:var(--dim);margin-bottom:14px;font-size:.95rem">這份 15 頁的簡報是 NotebookLM 根據精華筆記自動生成的，<b>主講者是你們的「阿凱老師」</b>！按 ← → 切換頁面，按 ⛶ 全螢幕。</p>
     <div class="slide-player">
       <div class="slide-main" ondblclick="openSlideFullscreen()">
-        <img id="slide-current" src="assets/slide_01.jpg" alt="簡報第 1 頁">
+        <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="簡報第 1 頁" decoding="async" loading="eager">
         <button class="slide-nav-btn prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
         <button class="slide-nav-btn next" onclick="slideNav(1)" aria-label="下一頁">›</button>
         <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -977,7 +978,7 @@ body.teacher-mode .teacher-only{display:block}
     <div class="slide-fs" id="slide-fs">
       <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
       <button class="slide-fs-nav prev" onclick="slideNav(-1)">‹</button>
-      <img id="slide-fs-img" src="assets/slide_01.jpg" alt="">
+      <img id="slide-fs-img" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="" decoding="async" loading="eager">
       <button class="slide-fs-nav next" onclick="slideNav(1)">›</button>
       <div class="slide-fs-counter" id="slide-fs-counter">1 / 15</div>
     </div>
@@ -1108,7 +1109,7 @@ body.teacher-mode .teacher-only{display:block}
 
 <script>
 /* ============== Slide List ============== */
-const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.jpg`);
+const SLIDE_LIST = Array.from({length:15},(_,i)=>`assets/slide_${String(i+1).padStart(2,'0')}.webp`);
 let curSlide = 0;
 
 /* ============== Mode Switch ============== */

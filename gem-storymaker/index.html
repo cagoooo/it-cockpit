@@ -571,6 +571,7 @@ input, select, textarea, button{font-family:inherit}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -616,7 +617,7 @@ input, select, textarea, button{font-family:inherit}
       </div>
     </div>
     <div class="hero-img-frame">
-      <img src="assets/03_consistency_anchor.jpg" alt="Q 版繪本一致性錨點公式" loading="eager">
+      <img data-fallback-src="assets/03_consistency_anchor.jpg" src="./assets/03_consistency_anchor.webp" alt="Q 版繪本一致性錨點公式" loading="eager" decoding="async">
     </div>
   </section>
 
@@ -677,7 +678,7 @@ input, select, textarea, button{font-family:inherit}
           </ul>
         </div>
       </div>
-      <div class="img-frame"><img src="assets/01_what_is_gem.jpg" alt="Gem 是什麼？專屬 AI 助手功能介紹" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/01_what_is_gem.jpg" src="./assets/01_what_is_gem.webp" alt="Gem 是什麼？專屬 AI 助手功能介紹" loading="lazy" decoding="async"></div>
     </div>
 
     <div class="canvas-section">
@@ -748,7 +749,7 @@ input, select, textarea, button{font-family:inherit}
       <h2>🦴 拆解提示詞三大骨架</h2>
     </div>
     <div class="two-col">
-      <div class="img-frame"><img src="assets/02_three_pillars.jpg" alt="提示詞三大骨架" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/02_three_pillars.jpg" src="./assets/02_three_pillars.webp" alt="提示詞三大骨架" loading="lazy" decoding="async"></div>
       <div>
         <div class="card">
           <h3>🎬 想像你在當話劇導演</h3>
@@ -878,7 +879,7 @@ input, select, textarea, button{font-family:inherit}
           不喜歡再抽！老師統計：學生平均隨機 2–3 次就會找到心動款。
         </div>
       </div>
-      <div class="img-frame"><img src="assets/03_consistency_anchor.jpg" alt="一致性錨點三件套公式" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/03_consistency_anchor.jpg" src="./assets/03_consistency_anchor.webp" alt="一致性錨點三件套公式" loading="lazy" decoding="async"></div>
     </div>
 
     <div class="canvas-section">
@@ -1156,7 +1157,7 @@ input, select, textarea, button{font-family:inherit}
           </ul>
         </div>
       </div>
-      <div class="img-frame"><img src="assets/04_9_steps.jpg" alt="9 步操作流程" loading="lazy"></div>
+      <div class="img-frame"><img data-fallback-src="assets/04_9_steps.jpg" src="./assets/04_9_steps.webp" alt="9 步操作流程" loading="lazy" decoding="async"></div>
     </div>
 
     <div class="canvas-section">
@@ -1320,7 +1321,7 @@ input, select, textarea, button{font-family:inherit}
   <section id="slideshow-section">
     <h2>🎞️ 授課簡報（點縮圖換頁｜按 ⛶ 全螢幕）</h2>
     <div class="slide-player-main" id="slide-main" ondblclick="openSlideFullscreen()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="slide">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="slide" decoding="async" loading="eager">
       <button class="slide-nav prev" onclick="slideNav(-1)">◀</button>
       <button class="slide-nav next" onclick="slideNav(1)">▶</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -1986,9 +1987,9 @@ if(YT_EMBED && !YT_EMBED.includes('__')) {
 
 // SLIDE_LIST — 15 pages converted from NotebookLM slide deck "AI Chibi Masterclass"
 SLIDE_LIST = [
-  'assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg',
-  'assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg',
-  'assets/slide_11.jpg','assets/slide_12.jpg','assets/slide_13.jpg','assets/slide_14.jpg','assets/slide_15.jpg'
+  './assets/slide_01.webp','./assets/slide_02.webp','./assets/slide_03.webp','./assets/slide_04.webp','./assets/slide_05.webp',
+  './assets/slide_06.webp','./assets/slide_07.webp','./assets/slide_08.webp','./assets/slide_09.webp','./assets/slide_10.webp',
+  './assets/slide_11.webp','./assets/slide_12.webp','./assets/slide_13.webp','./assets/slide_14.webp','./assets/slide_15.webp'
 ];
 initSlidePlayer();
 </script>

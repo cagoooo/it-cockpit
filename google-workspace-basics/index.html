@@ -974,6 +974,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -1747,7 +1748,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
 // 全局狀態與初始化
 // ─────────────────────────────────────────────────────────────
 let YOUTUBE_VIDEO_ID = "wbug4-fkQpE"; // 稍後填入
-const SLIDE_LIST = []; // 簡報圖片清單，例如 assets/slide_01.jpg
+const SLIDE_LIST = []; // 簡報圖片清單，例如 ./assets/slide_01.webp
 let currentSlideIdx = 0;
 
 function safeInit(name, fn){
@@ -1831,7 +1832,7 @@ function initSlidePlayer() {
   SLIDE_LIST.length = 0;
   
   for (let i = 1; i <= numSlides; i++) {
-    const filename = `assets/slide_${i.toString().padStart(2, '0')}.jpg`;
+    const filename = `assets/slide_${i.toString().padStart(2, '0')}.webp`;
     SLIDE_LIST.push(filename);
     
     const thumb = document.createElement('div');

@@ -291,6 +291,7 @@ body.teacher-mode .teacher-only{display:block}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 <!-- ═══════════════ HEADER ═══════════════ -->
@@ -1042,7 +1043,7 @@ body.teacher-mode .teacher-only{display:block}
   <h4 style="color:var(--c4)">📊 授課簡報（NotebookLM AI 生成）</h4>
   <div class="slide-player">
     <div class="slide-main" style="position:relative;background:#000;border:2px solid var(--c4);border-radius:6px;overflow:hidden;cursor:pointer" onclick="openSlideFS()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="簡報" style="width:100%;display:block" loading="lazy">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="簡報" style="width:100%;display:block" loading="lazy" decoding="async">
       <button class="slide-nav prev" onclick="event.stopPropagation();slideNav(-1)" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);color:#fff;border:none;font-size:1.4rem;padding:8px 12px;cursor:pointer;border-radius:4px">◀</button>
       <button class="slide-nav next" onclick="event.stopPropagation();slideNav(1)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);color:#fff;border:none;font-size:1.4rem;padding:8px 12px;cursor:pointer;border-radius:4px">▶</button>
       <div id="slide-counter" style="position:absolute;left:12px;bottom:10px;background:rgba(0,0,0,.7);color:var(--c4);font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:3px 10px;border-radius:3px">1 / 13</div>
@@ -1422,7 +1423,7 @@ function goTopAction(){window.scrollTo({top:0,behavior:'smooth'})}
 /* ── Slide Player ── */
 const SLIDE_COUNT=13;
 const SLIDE_LIST=[];
-for(let i=1;i<=SLIDE_COUNT;i++) SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.jpg');
+for(let i=1;i<=SLIDE_COUNT;i++) SLIDE_LIST.push('assets/slide_'+String(i).padStart(2,'0')+'.webp');
 let curSlide=0;
 function goSlide(n){
   if(n<0)n=SLIDE_LIST.length-1;

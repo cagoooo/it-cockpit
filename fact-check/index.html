@@ -299,6 +299,7 @@ body.teacher-mode .teacher-only{display:block}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -839,7 +840,7 @@ body.teacher-mode .teacher-only{display:block}
     <h3>🎞️ 授課簡報</h3>
     <div class="slide-player">
       <div class="slide-main" ondblclick="openSlideFullscreen()">
-        <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+        <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" decoding="async" loading="eager">
         <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
         <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
         <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -853,20 +854,20 @@ body.teacher-mode .teacher-only{display:block}
   <section class="infographic-section">
     <h3>📊 四張偵探懶人包</h3>
     <div class="info-grid">
-      <a class="info-card" href="assets/info_01_aifake.jpg" target="_blank">
-        <img src="assets/info_01_aifake.jpg" alt="AI 假照片大全">
+      <a class="info-card" href="./assets/info_01_aifake.webp" target="_blank">
+        <img data-fallback-src="assets/info_01_aifake.jpg" src="./assets/info_01_aifake.webp" alt="AI 假照片大全" decoding="async" loading="lazy">
         <div class="cap">① 有圖不一定有真相 — AI 假照片特徵</div>
       </a>
-      <a class="info-card" href="assets/info_02_capitalism.jpg" target="_blank">
-        <img src="assets/info_02_capitalism.jpg" alt="監控資本主義">
+      <a class="info-card" href="./assets/info_02_capitalism.webp" target="_blank">
+        <img data-fallback-src="assets/info_02_capitalism.jpg" src="./assets/info_02_capitalism.webp" alt="監控資本主義" decoding="async" loading="lazy">
         <div class="cap">② 為什麼假訊息這麼多 — 監控資本主義</div>
       </a>
-      <a class="info-card" href="assets/info_03_tools.jpg" target="_blank">
-        <img src="assets/info_03_tools.jpg" alt="查核工具">
+      <a class="info-card" href="./assets/info_03_tools.webp" target="_blank">
+        <img data-fallback-src="assets/info_03_tools.jpg" src="./assets/info_03_tools.webp" alt="查核工具" decoding="async" loading="lazy">
         <div class="cap">③ 三大查核工具 — Google Lens / 偵測器 / 查核網站</div>
       </a>
-      <a class="info-card" href="assets/info_04_vaccine.jpg" target="_blank">
-        <img src="assets/info_04_vaccine.jpg" alt="資訊瘟疫疫苗">
+      <a class="info-card" href="./assets/info_04_vaccine.webp" target="_blank">
+        <img data-fallback-src="assets/info_04_vaccine.jpg" src="./assets/info_04_vaccine.webp" alt="資訊瘟疫疫苗" decoding="async" loading="lazy">
         <div class="cap">④ 跟 AI 相處守則 + 資訊瘟疫疫苗</div>
       </a>
     </div>
@@ -1024,7 +1025,7 @@ const SLIDE_COUNT = 13; // 簡報張數
 const YOUTUBE_VIDEO_ID = "R0Bs_W_FS00";
 const SLIDE_LIST = [];
 for(let i=1; i<=SLIDE_COUNT; i++){
-  SLIDE_LIST.push('assets/slide_' + String(i).padStart(2,'0') + '.jpg');
+  SLIDE_LIST.push('assets/slide_' + String(i).padStart(2,'0') + '.webp');
 }
 
 // ========== MODE SWITCH ==========

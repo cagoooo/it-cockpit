@@ -14,6 +14,7 @@ const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
 const depthAssetVersion = '20260828-kai-slides-v3';
 const dayAssetVersion = '20260729-day-of-ai-v1';
+const imageFallbackScript = '<script src="../../assets/webp-fallback.js" defer></script>';
 
 const meta = ({ title, description, url, assetPrefix }) => `
 <meta name="description" content="${description}">
@@ -67,6 +68,7 @@ ${commonHead}
 <link rel="stylesheet" href="../gifted-visual-system.css?v=${depthAssetVersion}">${hasDayOfAiLesson ? `
 <link rel="stylesheet" href="../day-of-ai-lessons.css?v=${dayAssetVersion}">
 <link rel="stylesheet" href="../source-attribution.css?v=${dayAssetVersion}">` : ''}
+${imageFallbackScript}
 </head>
 <body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-adaptations.js?v=${dayAssetVersion}"></script>` : ''}<script src="../youtube-data.js"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../week-phase-six.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js?v=${depthAssetVersion}"></script><script src="../picture-inquiry.js?v=${depthAssetVersion}"></script><script src="../teacher-sync.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-lessons.js?v=${dayAssetVersion}"></script><script src="../source-attribution.js?v=${dayAssetVersion}"></script>` : ''}</body>
 </html>
@@ -87,6 +89,7 @@ ${commonHead}
 <link rel="stylesheet" href="../week-slides.css">
 <link rel="stylesheet" href="../week-slides-rich.css">
 <link rel="stylesheet" href="../gifted-visual-system.css?v=${depthAssetVersion}">
+${imageFallbackScript}
 </head>
 <body data-week="${item.week}"><main id="stage" class="stage"></main><nav class="controls" aria-label="簡報控制列"><a class="ctrl home" href="index.html" aria-label="回到本週駕駛艙">⌂</a><button id="overviewButton" class="ctrl" aria-label="章節總覽">M</button><button id="prev" class="ctrl" aria-label="上一張">←</button><span id="counter" class="counter">1 / 12</span><button id="next" class="ctrl" aria-label="下一張">→</button><button id="full" class="ctrl" aria-label="全螢幕">⛶</button></nav><div id="progress" class="progress"></div><div id="overview" class="slide-overview" aria-hidden="true"></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script><script src="../week-slides.js?v=${depthAssetVersion}"></script></body>
 </html>
@@ -104,6 +107,7 @@ ${commonHead}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../notebooklm-pdf-player.css?v=${depthAssetVersion}">
+${imageFallbackScript}
 </head>
 <body class="pdf-player" data-week="${item.week}" data-pdf="notebooklm-kai-slides.pdf" data-title="${notebookSlideTitle}">
 <header class="pdf-header"><a class="pdf-home" href="index.html" aria-label="回到本週駕駛艙" title="回到本週駕駛艙">⌂</a><div class="pdf-heading"><small>NOTEBOOKLM · W${code}</small><strong>${item.title}</strong></div></header>

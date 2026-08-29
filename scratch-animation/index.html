@@ -298,6 +298,7 @@ body.teacher-mode .teacher-only{display:block}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 <!-- ═══════════════ HEADER ═══════════════ -->
@@ -1059,7 +1060,7 @@ body.teacher-mode .teacher-only{display:block}
   <h4 style="color:#b8941d">📊 授課簡報（NotebookLM AI 生成）</h4>
   <div class="slide-player">
     <div class="slide-main" id="slideMain" style="position:relative;background:#fff;border:2px solid var(--c2);border-radius:var(--radius);overflow:hidden;cursor:pointer" onclick="openSlideFS()">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="簡報" style="width:100%;display:block" loading="lazy">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="簡報" style="width:100%;display:block" loading="lazy" decoding="async">
       <button class="slide-nav prev" onclick="event.stopPropagation();slideNav(-1)" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;font-size:1.4rem;padding:8px 14px;cursor:pointer;border-radius:10px;transition:.2s">◀</button>
       <button class="slide-nav next" onclick="event.stopPropagation();slideNav(1)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;font-size:1.4rem;padding:8px 14px;cursor:pointer;border-radius:10px;transition:.2s">▶</button>
       <div id="slide-counter" style="position:absolute;left:12px;bottom:10px;background:rgba(0,0,0,.6);color:var(--c2);font-size:.8rem;font-weight:700;padding:3px 12px;border-radius:10px">1 / 20</div>
@@ -1583,7 +1584,7 @@ var SLIDE_LIST=[];
 (function(){
   for(var i=1;i<=12;i++){
     var num=i<10?'0'+i:String(i);
-    SLIDE_LIST.push('assets/slide_'+num+'.jpg');
+    SLIDE_LIST.push('assets/slide_'+num+'.webp');
   }
 })();
 var slideIdx=0;

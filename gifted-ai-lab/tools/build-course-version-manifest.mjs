@@ -16,8 +16,9 @@ const records=[];
 for(const file of core)if(fs.existsSync(path.join(labDir,file)))records.push({file,sha256:hash(file),bytes:size(file),scope:'core'});
 const weeks=sandbox.window.GIFTED_WEEKS.map(item=>{
   const code=String(item.week).padStart(2,'0');
-  const files=['index.html','lecture-slides.html','notebooklm-kai-slides.html','notebooklm-kai-slides-v2.html','classroom-pack.html','student-task.html','student-guide.md','student-warmup.md','student-review.md','teacher-pack.pdf','slides.pdf','notebooklm-kai-slides.pdf','notebooklm-kai-slides-v2.pdf','notebooklm-kai-slides-v2-thumb.png','video.mp4','video-captions.srt','depth-video.mp4','depth-video-captions.srt','student-video-card.png','week-illustration.webp'];
+  const files=['index.html','lecture-slides.html','notebooklm-kai-slides.html','notebooklm-kai-slides-v2.html','classroom-pack.html','student-task.html','student-guide.md','student-warmup.md','student-review.md','teacher-pack.pdf','slides.pdf','notebooklm-kai-slides.pdf','notebooklm-kai-slides-v2.pdf','notebooklm-kai-slides-v2-thumb.png','notebooklm-kai-slides-v2-thumb.webp','video.mp4','video-captions.srt','depth-infographic.png','depth-infographic.webp','depth-video.mp4','depth-video-captions.srt','student-video-card.png','student-video-card.webp','week-illustration.webp'];
   if(fs.existsSync(path.join(labDir,`week-${code}`,'student-infographic.png')))files.push('student-infographic.png');
+  if(fs.existsSync(path.join(labDir,`week-${code}`,'student-infographic.webp')))files.push('student-infographic.webp');
   for(const name of files){const file=`week-${code}/${name}`;if(fs.existsSync(path.join(labDir,file)))records.push({file,sha256:hash(file),bytes:size(file),scope:`week-${code}`});}
   const student=notebook.find(row=>row.week===item.week)||{};
   const deep=depth.find(row=>row.week===item.week)||{};

@@ -797,6 +797,7 @@ footer a:hover{color:var(--c2);}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 
@@ -862,7 +863,7 @@ footer a:hover{color:var(--c2);}
     </div>
   </div>
 
-  <img src="assets/01_ar-vs-vr.jpg" alt="AR 與 VR 科技指南" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+  <img data-fallback-src="assets/01_ar-vs-vr.jpg" src="./assets/01_ar-vs-vr.webp" alt="AR 與 VR 科技指南" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)" decoding="async">
 
   <div class="steps-card">
     <h4><span class="ico">📘</span>核心概念一次搞懂</h4>
@@ -951,7 +952,7 @@ footer a:hover{color:var(--c2);}
     </div>
   </div>
 
-  <img src="assets/02_smart-glasses.jpg" alt="三款熱門智慧眼鏡性能比較" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+  <img data-fallback-src="assets/02_smart-glasses.jpg" src="./assets/02_smart-glasses.webp" alt="三款熱門智慧眼鏡性能比較" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)" decoding="async">
 
   <div class="steps-card">
     <h4><span class="ico">🥇</span>Meta Ray-Ban Display｜輕巧時尚的日常 AR 助理</h4>
@@ -1083,7 +1084,7 @@ footer a:hover{color:var(--c2);}
     </div>
   </div>
 
-  <img src="assets/03_vr-mr-devices.jpg" alt="虛擬實境裝置規格對決" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+  <img data-fallback-src="assets/03_vr-mr-devices.jpg" src="./assets/03_vr-mr-devices.webp" alt="虛擬實境裝置規格對決" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)" decoding="async">
 
   <div class="steps-card">
     <h4><span class="ico">🎯</span>Meta Quest 3｜走入大眾家庭的平價 MR</h4>
@@ -1190,7 +1191,7 @@ footer a:hover{color:var(--c2);}
     </div>
   </div>
 
-  <img src="assets/04_diy-guide.jpg" alt="自製 VR 與 AR 攻略" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+  <img data-fallback-src="assets/04_diy-guide.jpg" src="./assets/04_diy-guide.webp" alt="自製 VR 與 AR 攻略" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)" decoding="async">
 
   <div class="steps-card">
     <h4><span class="ico">📦</span>活動一：自製 Google Cardboard VR 眼鏡（6 步驟）</h4>
@@ -1311,7 +1312,7 @@ footer a:hover{color:var(--c2);}
     </div>
   </div>
 
-  <img src="assets/05_safety.jpg" alt="AR/VR 探險家安全手冊" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)">
+  <img data-fallback-src="assets/05_safety.jpg" src="./assets/05_safety.webp" alt="AR/VR 探險家安全手冊" class="stage-hero-img" loading="lazy" onclick="zoomImage(this)" decoding="async">
 
   <div class="steps-card">
     <h4><span class="ico">👀</span>視力保健「eye 眼 6 原則」（台中榮總建議）</h4>
@@ -1426,7 +1427,7 @@ footer a:hover{color:var(--c2);}
   <h3>▶ LESSON SLIDE DECK</h3>
   <div class="slide-player">
     <div class="slide-player-main">
-      <img id="slide-current" src="assets/slide_01.jpg" alt="授課簡報">
+      <img id="slide-current" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="授課簡報" decoding="async" loading="eager">
       <button class="slide-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
       <button class="slide-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
       <button class="slide-fs-btn" onclick="openSlideFullscreen()">⛶ 全螢幕</button>
@@ -1437,7 +1438,7 @@ footer a:hover{color:var(--c2);}
 </section>
 
 <div class="slide-fullscreen-overlay" id="slide-fs">
-  <img class="slide-fs-img" id="slide-fs-img" src="assets/slide_01.jpg" alt="全螢幕">
+  <img class="slide-fs-img" id="slide-fs-img" data-fallback-src="assets/slide_01.jpg" src="./assets/slide_01.webp" alt="全螢幕" decoding="async" loading="eager">
   <div class="slide-fs-counter" id="slide-fs-counter">1 / 12</div>
   <button class="slide-fs-close" onclick="closeSlideFullscreen()">✕</button>
 </div>
@@ -2059,7 +2060,7 @@ function generateInvention(){
 const TOTAL_SLIDES=12;
 const SLIDE_LIST=[];
 for(let i=1;i<=TOTAL_SLIDES;i++){
-  SLIDE_LIST.push(`assets/slide_${String(i).padStart(2,'0')}.jpg`);
+  SLIDE_LIST.push(`assets/slide_${String(i).padStart(2,'0')}.webp`);
 }
 let curSlide=0;
 function initSlidePlayer(){
