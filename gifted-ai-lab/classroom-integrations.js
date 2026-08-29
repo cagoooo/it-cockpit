@@ -2,6 +2,7 @@
   const week = Number(document.body.dataset.week);
   const code = String(week).padStart(2, '0');
   const youtube = window.GIFTED_YOUTUBE?.items?.[String(week)];
+  const shorts = window.GIFTED_SHORTS_K?.items?.[String(week)];
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   }[char]));
@@ -100,6 +101,19 @@
   const mediaView = document.querySelector('#media');
   const localVideo = mediaView?.querySelector('.week-video');
   const mediaGrid = mediaView?.querySelector('.media-grid');
+  const shortsPath = (value) => value ? `../${String(value).replace(/^\.\//, '')}` : '';
+  if (shorts && mediaView && mediaGrid && shorts.local_video) {
+    const watchUrl = shorts.upload?.watch_url || '';
+    const watchLink = watchUrl
+      ? `<a class="shorts-k-watch" href="${escapeHtml(watchUrl)}" target="_blank" rel="noopener noreferrer">播放 ShortsK 不公開影片</a>`
+      : '<span class="shorts-k-pending">尚未上傳 ShortsK；請手動設為不公開</span>';
+    mediaGrid.insertAdjacentHTML('beforebegin', `
+      <section class="section shorts-k-panel" aria-labelledby="shortsKTitle">
+        <div class="shorts-k-head"><div><span class="shorts-k-kicker">SHORTSK · 9:16 · 給三年級</span><h2 id="shortsKTitle">課前先看：一支聽得懂的小影片</h2><p>先看生活中的小問題，再跟著影片做一個小任務。字幕已直接放進影片，也附上可上傳的字幕檔。</p></div><span class="shorts-k-badge">站內預覽</span></div>
+        <div class="shorts-k-layout"><div class="shorts-k-video-wrap"><video class="shorts-k-video" controls preload="none" poster="${escapeHtml(shortsPath(shorts.poster))}"><source src="${escapeHtml(shortsPath(shorts.local_video))}" type="video/mp4"><track kind="subtitles" srclang="zh-TW" label="繁體中文字幕" src="${escapeHtml(shortsPath(shorts.captions_vtt || shorts.captions))}" default>您的瀏覽器無法播放此影片。</video></div><div class="shorts-k-copy"><h3>${escapeHtml(shorts.title || `W${code} 三年級好懂版`)}</h3><p>${escapeHtml(shorts.notebooklm?.query_purpose || '依本週 NotebookLM 來源整理成生活例子與一步小任務。')}</p><div class="shorts-k-actions">${watchLink}<a href="${escapeHtml(shorts.captions ? shortsPath(shorts.captions) : '#')}" target="_blank">開啟字幕檔</a><a href="${escapeHtml(shorts.transcript ? shortsPath(shorts.transcript) : '#')}" target="_blank">看影片逐字稿</a><a href="${escapeHtml(shorts.upload_checklist ? shortsPath(shorts.upload_checklist) : '#')}" target="_blank">手動上傳清單</a></div><p class="shorts-k-note">ShortsK 連結會在教師手動上傳為「不公開」後補上；網站不會自動上傳影片。</p></div></div>
+      </section>
+    `);
+  }
   let videoMode = 'local';
   let transcript = [];
   if (youtube && localVideo && mediaGrid) {

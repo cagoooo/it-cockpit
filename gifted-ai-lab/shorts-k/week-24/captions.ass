@@ -1,0 +1,23 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.57,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf39}AI{\kf19} {\kf39}好像{\kf39}什麼{\kf39}都能{\kf19}做{\kf19}，{\kf19}但{\kf58}每件事{\kf19}都{\kf39}適合{\kf39}交給{\kf19}它{\kf19}嗎{\kf22}？
+Dialogue: 0,0:00:04.58,0:00:07.27,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf30}先{\kf60}按下{\kf60}安全{\kf30}小{\kf60}按鈕{\kf29}。
+Dialogue: 0,0:00:07.64,0:00:10.22,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf57}這個{\kf57}答案{\kf29}從{\kf57}哪裡{\kf29}來{\kf29}？
+Dialogue: 0,0:00:10.23,0:00:12.02,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf36}是{\kf72}真的{\kf36}嗎{\kf35}？
+Dialogue: 0,0:00:12.03,0:00:14.46,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf54}需要{\kf27}放{\kf54}私人{\kf54}資料{\kf27}嗎{\kf27}？
+Dialogue: 0,0:00:14.47,0:00:17.36,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf72}會不會{\kf24}只{\kf48}照顧{\kf24}到{\kf72}一部分{\kf24}人{\kf25}？
+Dialogue: 0,0:00:17.71,0:00:21.32,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf52}不要{\kf26}一{\kf52}開始{\kf26}就{\kf26}想{\kf52}解決{\kf52}所有{\kf52}問題{\kf23}。
+Dialogue: 0,0:00:21.33,0:00:25.90,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf23}先{\kf23}選{\kf69}一個人{\kf23}、{\kf46}一次{\kf46}情況{\kf23}和{\kf46}一個{\kf46}看得{\kf23}見{\kf23}的{\kf46}結果{\kf20}。
+Dialogue: 0,0:00:26.26,0:00:30.86,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf22}把{\kf22}「{\kf22}讓{\kf44}大家{\kf22}都{\kf44}開心{\kf22}」{\kf44}改成{\kf44}一個{\kf44}可以{\kf22}試{\kf22}的{\kf22}小{\kf44}問題{\kf20}。
+Dialogue: 0,0:00:30.87,0:00:34.49,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf56}記得{\kf56}不放{\kf56}姓名{\kf28}、{\kf56}照片{\kf28}或{\kf56}帳號{\kf26}。

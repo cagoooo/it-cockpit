@@ -1,0 +1,21 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.83,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf45}你想{\kf23}蓋{\kf45}一座{\kf45}超大{\kf23}的{\kf45}城堡{\kf23}，{\kf23}但{\kf45}今天{\kf45}不用{\kf45}一次{\kf23}蓋{\kf23}完{\kf20}。
+Dialogue: 0,0:00:04.84,0:00:07.74,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf26}先{\kf26}做{\kf53}一個{\kf53}小小{\kf53}版本{\kf26}來{\kf26}試{\kf27}。
+Dialogue: 0,0:00:08.10,0:00:12.37,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf23}先{\kf23}畫{\kf45}一個{\kf45}畫面{\kf23}，{\kf23}或{\kf23}先{\kf23}做{\kf45}一個{\kf23}最{\kf45}重要{\kf23}的{\kf45}功能{\kf19}。
+Dialogue: 0,0:00:12.38,0:00:16.21,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf51}其他{\kf51}想法{\kf26}先{\kf51}放在{\kf51}旁邊{\kf26}，{\kf51}不會{\kf51}消失{\kf25}。
+Dialogue: 0,0:00:16.58,0:00:19.16,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf57}不要{\kf29}只{\kf57}自己{\kf29}看{\kf57}作品{\kf29}。
+Dialogue: 0,0:00:19.17,0:00:24.13,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf23}請{\kf45}同學{\kf45}操作{\kf45}一次{\kf23}，{\kf45}觀察{\kf45}他在{\kf45}哪裡{\kf68}停下來{\kf23}或{\kf23}看{\kf45}不懂{\kf21}。
+Dialogue: 0,0:00:24.48,0:00:29.16,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf29}畫{\kf29}三{\kf29}格{\kf59}故事{\kf29}板{\kf29}：{\kf59}開始{\kf29}、{\kf59}操作{\kf29}、{\kf59}結果{\kf29}。
+Dialogue: 0,0:00:29.17,0:00:33.11,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf46}做完{\kf23}後{\kf23}問{\kf46}自己{\kf23}：{\kf23}「{\kf46}哪一{\kf23}格{\kf23}最{\kf46}需要{\kf23}改{\kf23}？{\kf25}」

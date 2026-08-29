@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:03.88,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf22}會{\kf44}自己{\kf22}開{\kf22}的{\kf22}門{\kf22}，{\kf44}真的{\kf22}會{\kf44}自己{\kf22}想{\kf44}事情{\kf22}嗎{\kf26}？
+Dialogue: 0,0:00:03.89,0:00:06.00,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf42}先{\kf127}猜猜看{\kf42}！
+Dialogue: 0,0:00:06.37,0:00:11.14,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf43}自動{\kf22}門{\kf43}感應{\kf22}到{\kf43}有人{\kf22}就{\kf43}打開{\kf22}，{\kf43}通常{\kf22}是{\kf22}照{\kf43}固定{\kf43}規則{\kf22}做{\kf22}。
+Dialogue: 0,0:00:11.15,0:00:16.19,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf40}影片{\kf40}推薦{\kf40}會看{\kf20}你{\kf40}以前{\kf40}常看{\kf20}的{\kf40}內容{\kf20}，{\kf40}猜猜{\kf20}你{\kf40}可能{\kf40}喜歡{\kf40}什麼{\kf24}。
+Dialogue: 0,0:00:16.55,0:00:23.77,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf20}找{\kf40}一個{\kf40}生活{\kf20}中{\kf20}會{\kf40}自己{\kf40}動的{\kf40}工具{\kf20}，{\kf40}說說{\kf40}它是{\kf20}照{\kf40}規則{\kf20}做{\kf20}，{\kf60}還是會{\kf20}從{\kf40}很多{\kf40}例子{\kf40}慢慢{\kf40}調整{\kf21}。
+Dialogue: 0,0:00:24.08,0:00:28.73,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf20}用{\kf20}「{\kf61}我看到{\kf40}什麼{\kf20}、{\kf20}我{\kf20}猜{\kf40}什麼{\kf20}、{\kf40}證據{\kf20}在{\kf40}哪裡{\kf20}」{\kf20}說{\kf40}一次{\kf24}。
+Dialogue: 0,0:00:28.74,0:00:33.25,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf50}拍照{\kf25}前{\kf25}先{\kf25}問{\kf50}老師{\kf25}，{\kf50}不放{\kf50}姓名{\kf25}、{\kf25}臉{\kf25}和{\kf50}電話{\kf25}。

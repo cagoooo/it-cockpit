@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "release": "2026.08.28-kai-notebooklm-slide-player.3",
-  "generated_at": "2026-08-29T06:40:51.741Z",
+  "release": "2026.08.29-shorts-k-v1",
+  "generated_at": "2026-08-29T09:00:33.534Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -27,6 +27,9 @@
       "student_infographic_id": "7b4d625b-2d66-4eaa-9a32-8bef4fed7cd8",
       "student_infographic_status": "completed",
       "depth_source_id": "dfbdf10d-c189-4936-99eb-cf297a5c1489",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -44,6 +47,9 @@
       "student_infographic_id": "6ee7801e-df74-455d-92a0-d7638b4a0454",
       "student_infographic_status": "completed",
       "depth_source_id": "f5f3967e-1ef4-4260-9b02-7f4fb63629bd",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -61,6 +67,9 @@
       "student_infographic_id": "f73eed77-3b75-4111-ab47-553cc38e22dd",
       "student_infographic_status": "completed",
       "depth_source_id": "e0f1cf2f-9c14-4cd9-903b-51538a05ca4d",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -78,6 +87,9 @@
       "student_infographic_id": "051b8a28-4b5a-4b89-b763-fff069977222",
       "student_infographic_status": "completed",
       "depth_source_id": "8bec6d1e-4216-4dc7-b920-4c456a1f1973",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -95,6 +107,9 @@
       "student_infographic_id": "60f6dc7d-77b8-487f-98c9-c312913d778a",
       "student_infographic_status": "completed",
       "depth_source_id": "99f709c3-aad9-4f52-8538-e555cf0fccfb",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -112,6 +127,9 @@
       "student_infographic_id": "fbef8b9a-1302-4590-8949-89e37b9b35af",
       "student_infographic_status": "completed",
       "depth_source_id": "6bae309e-82b0-4780-8efe-98a034252e93",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -129,6 +147,9 @@
       "student_infographic_id": "ae8c3f15-85d1-4f09-ab0c-6e51a010bb67",
       "student_infographic_status": "completed",
       "depth_source_id": "860259c2-84fe-434d-8e59-558296743bc6",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -146,6 +167,9 @@
       "student_infographic_id": "1b2acd95-b3c6-42de-8b7d-deb6ee7c0e60",
       "student_infographic_status": "completed",
       "depth_source_id": "0b683f08-169c-419c-8f39-5cfcadb9d915",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -163,6 +187,9 @@
       "student_infographic_id": "d536530d-9a49-46b3-bc97-63bb106337d2",
       "student_infographic_status": "completed",
       "depth_source_id": "d131ffe9-8da1-4183-a99d-6cfdf9e804b8",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     },
     {
@@ -180,14 +207,17 @@
       "student_infographic_id": "66eedc3e-a429-41f0-90ea-0d2726843c28",
       "student_infographic_status": "completed",
       "depth_source_id": "085711b2-38e8-440a-acec-c1e66d53afd9",
+      "shorts_k_source": "shorts-k-manifest.json",
+      "shorts_k_format": "9:16",
+      "shorts_k_status": "ready",
       "status": "ready"
     }
   ],
   "files": [
     {
       "file": "index.html",
-      "sha256": "5e4f58f28ff2dd70729b991b7860f98131f3af0ff583ab22a3c069e8fdcb02e6",
-      "bytes": 49688,
+      "sha256": "1884df564df43bd93b785a5e0b83ee9646a6c279f8039e12a335c12bea551aee",
+      "bytes": 52823,
       "scope": "core"
     },
     {
@@ -299,9 +329,27 @@
       "scope": "core"
     },
     {
+      "file": "shorts-k-manifest.json",
+      "sha256": "20387744487734ae20c7b23278c5d924cbde56087a40b8942af9c5cae0f55454",
+      "bytes": 17169,
+      "scope": "core"
+    },
+    {
+      "file": "shorts-k-data.js",
+      "sha256": "408d62c08428442d0f3d1bea716f430038cc48aed197d42df9208471db142f2e",
+      "bytes": 17195,
+      "scope": "core"
+    },
+    {
+      "file": "shorts-k/notebooklm-mcp-run.json",
+      "sha256": "bf068b6568130da5610d2a94cb2f8bc4bc006f89841bc9de7521b209b1cf07bf",
+      "bytes": 7574,
+      "scope": "core"
+    },
+    {
       "file": "week-03/index.html",
-      "sha256": "e9725972d1db46d17a879ddb12769324055862f15c67261f4a28123e676e2600",
-      "bytes": 4651,
+      "sha256": "6137c8f162274efe1fec9995fa32ef765bff60ea4f7ac8fd8478de83f45ac40e",
+      "bytes": 4717,
       "scope": "week-03"
     },
     {
@@ -455,9 +503,57 @@
       "scope": "week-03"
     },
     {
+      "file": "shorts-k/week-03/short.mp4",
+      "sha256": "750b952a217a1d122f89730274805d27ee252af595a80787d3de539f5ee78b95",
+      "bytes": 1441587,
+      "scope": "week-03"
+    },
+    {
+      "file": "shorts-k/week-03/captions.srt",
+      "sha256": "74798775d73e28dce65e12e8451862387d185221e88ba98665956d95a1dedafc",
+      "bytes": 675,
+      "scope": "week-03"
+    },
+    {
+      "file": "shorts-k/week-03/captions.vtt",
+      "sha256": "9568e430f13e96b5819d3fda19f293ff33bacf0e920c80c7beabda2bb104dded",
+      "bytes": 683,
+      "scope": "week-03"
+    },
+    {
+      "file": "shorts-k/week-03/captions.ass",
+      "sha256": "4d310ae548dd7b16315783b5dd5f03d2c09a2195a2adc0d408d114ed5ddc9455",
+      "bytes": 2427,
+      "scope": "week-03"
+    },
+    {
+      "file": "shorts-k/week-03/cover.webp",
+      "sha256": "919d4dbc0fa9d92858b8662dc1739191e14340f0ea24e210f5781fe1391940b8",
+      "bytes": 63110,
+      "scope": "week-03"
+    },
+    {
+      "file": "shorts-k/week-03/transcript.txt",
+      "sha256": "2006674c40a68bad09decf0def6d029ee337fd5e6e1878c9c8b161c62847e8ec",
+      "bytes": 638,
+      "scope": "week-03"
+    },
+    {
+      "file": "shorts-k/week-03/description.txt",
+      "sha256": "23cbf9cebf3818c330676b814355b2e6d9cd8b26ebc8530b5a12daec15f7974f",
+      "bytes": 742,
+      "scope": "week-03"
+    },
+    {
+      "file": "shorts-k/week-03/upload-checklist.md",
+      "sha256": "0915131415feb3b7067c4b518a9cd996142fb09ab468db3172cd28dc34e4c55d",
+      "bytes": 652,
+      "scope": "week-03"
+    },
+    {
       "file": "week-06/index.html",
-      "sha256": "d3cfc5e2dda7a495ac75c519987222068a2662b5bdef5df4d3de5e091e13530f",
-      "bytes": 4597,
+      "sha256": "9a36958fbb36c819be584e0fe84a1fcaea66cd2b92be9e725a8b1e4c04ebbd6d",
+      "bytes": 4663,
       "scope": "week-06"
     },
     {
@@ -611,9 +707,57 @@
       "scope": "week-06"
     },
     {
+      "file": "shorts-k/week-06/short.mp4",
+      "sha256": "104119c5cc7489c5cc91e7da6e51a0d87cb6b583a70c2fa60393a28017dff21e",
+      "bytes": 1314690,
+      "scope": "week-06"
+    },
+    {
+      "file": "shorts-k/week-06/captions.srt",
+      "sha256": "a2b1c6492310f2c724d783b74e6a392be4bb76e8743f74836cff2241e72b3e70",
+      "bytes": 685,
+      "scope": "week-06"
+    },
+    {
+      "file": "shorts-k/week-06/captions.vtt",
+      "sha256": "7dd070d0d58c5f352416fa74f154ea4d72918162a1824cfa87422c820adfa138",
+      "bytes": 693,
+      "scope": "week-06"
+    },
+    {
+      "file": "shorts-k/week-06/captions.ass",
+      "sha256": "04892cf996d7a2a4c944cf9a631a9a184343c07c8039457ce4d3c153b51b6845",
+      "bytes": 2494,
+      "scope": "week-06"
+    },
+    {
+      "file": "shorts-k/week-06/cover.webp",
+      "sha256": "b7d4e51e0e473ed7243dfcc9e198167ce67cd0dfc7fdf603bb801bd41ca5d4ac",
+      "bytes": 69998,
+      "scope": "week-06"
+    },
+    {
+      "file": "shorts-k/week-06/transcript.txt",
+      "sha256": "0adf3155a1333a910692503d3b8aa7819a630088e023475508823dc95bebdb3d",
+      "bytes": 617,
+      "scope": "week-06"
+    },
+    {
+      "file": "shorts-k/week-06/description.txt",
+      "sha256": "922b322a2347b92dd250127504e8f7feb029845ab79e47c99a0f926d65819b10",
+      "bytes": 751,
+      "scope": "week-06"
+    },
+    {
+      "file": "shorts-k/week-06/upload-checklist.md",
+      "sha256": "8f07d4cec8dfacda50a8b7273553bfc5348767665f81560be251cb9e4cf4c10a",
+      "bytes": 652,
+      "scope": "week-06"
+    },
+    {
       "file": "week-09/index.html",
-      "sha256": "2b48be04281c2a3209d669d15953974a979466de62e4689f24a0b5012beaf67b",
-      "bytes": 4675,
+      "sha256": "3d8320c0f2438da623afabc58cf35b10e952ef57b5e3aef13cad3da4e6106aad",
+      "bytes": 4741,
       "scope": "week-09"
     },
     {
@@ -767,9 +911,57 @@
       "scope": "week-09"
     },
     {
+      "file": "shorts-k/week-09/short.mp4",
+      "sha256": "aa0599850f524dff93c04ee9d1ef6316ba131ad000659cf5520cfea2c29438a3",
+      "bytes": 1285233,
+      "scope": "week-09"
+    },
+    {
+      "file": "shorts-k/week-09/captions.srt",
+      "sha256": "ec795b5e6c331144a9e556aa24d84497eabee7bdf22858be208c9c6f5478206c",
+      "bytes": 641,
+      "scope": "week-09"
+    },
+    {
+      "file": "shorts-k/week-09/captions.vtt",
+      "sha256": "dca0c43bb12d22a3e8178beaa95d1c3ce1b3568ea70482b7315e6e6edde3578c",
+      "bytes": 649,
+      "scope": "week-09"
+    },
+    {
+      "file": "shorts-k/week-09/captions.ass",
+      "sha256": "03bcdbb630c177934bceb1ebab10f2043df035f7944c0cd61a3f283907005020",
+      "bytes": 2313,
+      "scope": "week-09"
+    },
+    {
+      "file": "shorts-k/week-09/cover.webp",
+      "sha256": "6e4e2a106fda8be2834b5f74cd79bf1aad5f0715fcff57876974da68c9f13e22",
+      "bytes": 74588,
+      "scope": "week-09"
+    },
+    {
+      "file": "shorts-k/week-09/transcript.txt",
+      "sha256": "f5ae3a63bb06919a1c193d8ab85883fd5dc60fb9480cd40b6f6300796ad68d7d",
+      "bytes": 647,
+      "scope": "week-09"
+    },
+    {
+      "file": "shorts-k/week-09/description.txt",
+      "sha256": "490e51574c5434d70bff77631fbcee3464cf27ade35a827a089a5fcb76fa5ce6",
+      "bytes": 748,
+      "scope": "week-09"
+    },
+    {
+      "file": "shorts-k/week-09/upload-checklist.md",
+      "sha256": "e0f1eb51f3fe477742f20d8fc1a2356309f54f5c5cf88b83f8828551af02cbf0",
+      "bytes": 655,
+      "scope": "week-09"
+    },
+    {
       "file": "week-12/index.html",
-      "sha256": "55ac424fc8fad252f198b9b668f55a33a04674387957adef9437759abcc61ed5",
-      "bytes": 4653,
+      "sha256": "cd20807ffc1f907546b73192b01c8666d0dd691b9b175518959ce6a504f4e0fe",
+      "bytes": 4719,
       "scope": "week-12"
     },
     {
@@ -923,9 +1115,57 @@
       "scope": "week-12"
     },
     {
+      "file": "shorts-k/week-12/short.mp4",
+      "sha256": "643faf390c707b5642acd5238a02ca1a3713d789a1844f5b2ae54cc2e906783b",
+      "bytes": 1367483,
+      "scope": "week-12"
+    },
+    {
+      "file": "shorts-k/week-12/captions.srt",
+      "sha256": "35b186084497bb804f02600b2d6236164c3e837fc88fa5c49db4505434a977c7",
+      "bytes": 648,
+      "scope": "week-12"
+    },
+    {
+      "file": "shorts-k/week-12/captions.vtt",
+      "sha256": "b7bf45500d096904179c39217264dd72d3cd3aa896d79b39370cf71c3f30f70d",
+      "bytes": 656,
+      "scope": "week-12"
+    },
+    {
+      "file": "shorts-k/week-12/captions.ass",
+      "sha256": "40f33e2283c25e85ed560ceeb1a7d1e335f114327b7f6a42b9040a54aa259af9",
+      "bytes": 2364,
+      "scope": "week-12"
+    },
+    {
+      "file": "shorts-k/week-12/cover.webp",
+      "sha256": "6c8e28d0593101402c6ba12345a3f73dafef52d057931eed8e101c4049852556",
+      "bytes": 67390,
+      "scope": "week-12"
+    },
+    {
+      "file": "shorts-k/week-12/transcript.txt",
+      "sha256": "0ae479a8e5a6c4a3b1791c16652fa5e6ca8cc09c448123f3210adaba82596961",
+      "bytes": 623,
+      "scope": "week-12"
+    },
+    {
+      "file": "shorts-k/week-12/description.txt",
+      "sha256": "a9466f3d97d7ddbdc9f1c04255e722b88685ccfc199fa37ac969ad94d60f4aac",
+      "bytes": 757,
+      "scope": "week-12"
+    },
+    {
+      "file": "shorts-k/week-12/upload-checklist.md",
+      "sha256": "21ae5fa1446c0985d4d1a98042245621cdebaa1c107d611ca555a827490c9b23",
+      "bytes": 656,
+      "scope": "week-12"
+    },
+    {
       "file": "week-15/index.html",
-      "sha256": "125c27e08d4cdab59cd0bfad8fedff3ed5b02924ecec480e7176f4f9a409ad7a",
-      "bytes": 4698,
+      "sha256": "72aa22edd22ba4a6c62d6f8a70b79a454c3afeb237b67e26221b9741c3f7e75b",
+      "bytes": 4764,
       "scope": "week-15"
     },
     {
@@ -1079,9 +1319,57 @@
       "scope": "week-15"
     },
     {
+      "file": "shorts-k/week-15/short.mp4",
+      "sha256": "072b37b84f576dc9c3659fb779f5c56f76ea317be8ccd8b61bd587e882b2cae1",
+      "bytes": 1315036,
+      "scope": "week-15"
+    },
+    {
+      "file": "shorts-k/week-15/captions.srt",
+      "sha256": "7d87b79b0ccf5d690b46c66f1cf5bb7b15ba6e4e03d90336941763712ab3b569",
+      "bytes": 661,
+      "scope": "week-15"
+    },
+    {
+      "file": "shorts-k/week-15/captions.vtt",
+      "sha256": "3fe71222d7823ab9ca0b709efd005b059bc999393023f1e955b0514a609f60bc",
+      "bytes": 669,
+      "scope": "week-15"
+    },
+    {
+      "file": "shorts-k/week-15/captions.ass",
+      "sha256": "e9c59e47251f5d27c5197435c7a7fbc507189e1102e3f5d7df0e58aab7485a95",
+      "bytes": 2414,
+      "scope": "week-15"
+    },
+    {
+      "file": "shorts-k/week-15/cover.webp",
+      "sha256": "4334eaa07255ddfff4d92ef6b2a0ae32192ebe168316565cd1fa505ee1bfe2a8",
+      "bytes": 62926,
+      "scope": "week-15"
+    },
+    {
+      "file": "shorts-k/week-15/transcript.txt",
+      "sha256": "c6154cd02635dfda05029bb42e156e9b924ee63e033918ba251330a6ea327dfd",
+      "bytes": 593,
+      "scope": "week-15"
+    },
+    {
+      "file": "shorts-k/week-15/description.txt",
+      "sha256": "6824c7fddbc19f728b2ad03ca8e6a1585b068cd0d7b669bcb8d32b018af827dd",
+      "bytes": 742,
+      "scope": "week-15"
+    },
+    {
+      "file": "shorts-k/week-15/upload-checklist.md",
+      "sha256": "1dc266a7a7df3a756c2681b5798a83d598c88992d524f85a77bd8a1d4b649b87",
+      "bytes": 647,
+      "scope": "week-15"
+    },
+    {
       "file": "week-18/index.html",
-      "sha256": "58188cea4195b5a07781532bdd84802a40e50a353d228b5e8f10d1b63b72a5bd",
-      "bytes": 4301,
+      "sha256": "f81b1157c9781982a7bffcc716a7f44889741d475991f7f9097f9fa0463acbd1",
+      "bytes": 4367,
       "scope": "week-18"
     },
     {
@@ -1235,9 +1523,57 @@
       "scope": "week-18"
     },
     {
+      "file": "shorts-k/week-18/short.mp4",
+      "sha256": "c84e827387bd35c14b362df610b132b1da2a2396d1ecb50ef9f35fc2bfe426cb",
+      "bytes": 1173219,
+      "scope": "week-18"
+    },
+    {
+      "file": "shorts-k/week-18/captions.srt",
+      "sha256": "318a7f7c2270fe3a37161b73f993a638403abe11350e9e9e017596e51443aa86",
+      "bytes": 580,
+      "scope": "week-18"
+    },
+    {
+      "file": "shorts-k/week-18/captions.vtt",
+      "sha256": "4e6b881a2d2b044afb6851e02efaa0e3cbb02d2ad77f238ced8181facc92a920",
+      "bytes": 588,
+      "scope": "week-18"
+    },
+    {
+      "file": "shorts-k/week-18/captions.ass",
+      "sha256": "c630a7ba121b2d6bcc102e50181982126ec3a63adedc1cabb8082fa66147527e",
+      "bytes": 2155,
+      "scope": "week-18"
+    },
+    {
+      "file": "shorts-k/week-18/cover.webp",
+      "sha256": "613bfefac5b75d8fa47dcc4288cc9345bbcb85271d220a5b62f7b05a3c3e1b37",
+      "bytes": 69602,
+      "scope": "week-18"
+    },
+    {
+      "file": "shorts-k/week-18/transcript.txt",
+      "sha256": "2f0328f8f9c92b7b8b4898a9f926ab5fcf0c36c9837a22b2c30421944627fad4",
+      "bytes": 591,
+      "scope": "week-18"
+    },
+    {
+      "file": "shorts-k/week-18/description.txt",
+      "sha256": "3bf0ee8ec39f4b97a18089be0f789f5b1b1ecc24603d9006a41eb01b482ecce2",
+      "bytes": 762,
+      "scope": "week-18"
+    },
+    {
+      "file": "shorts-k/week-18/upload-checklist.md",
+      "sha256": "e2cf1b2f1d61cfbc22913029151f1cfa35231aba657642ebc14eeeefd963d20c",
+      "bytes": 661,
+      "scope": "week-18"
+    },
+    {
       "file": "week-21/index.html",
-      "sha256": "e8867d79cb5d699fcd419d6fdcd47ec6614357e938691cc829d938879ff99737",
-      "bytes": 4316,
+      "sha256": "1262f1d430f034ede66e60000fa844c1bfb8e42f90aaffeaa8bf54e8f8720d13",
+      "bytes": 4382,
       "scope": "week-21"
     },
     {
@@ -1391,9 +1727,57 @@
       "scope": "week-21"
     },
     {
+      "file": "shorts-k/week-21/short.mp4",
+      "sha256": "123e63e5c45ffc1494e98c1647014287039e8e9f13851e957d262fddd7399f78",
+      "bytes": 1324776,
+      "scope": "week-21"
+    },
+    {
+      "file": "shorts-k/week-21/captions.srt",
+      "sha256": "128e7c6469a834854f2981d9197f312e3a876754df1cca7afe185da999791b7e",
+      "bytes": 635,
+      "scope": "week-21"
+    },
+    {
+      "file": "shorts-k/week-21/captions.vtt",
+      "sha256": "6f9a89545a81c8c57e8eff97bc0175541fd52e3fff11a022e187d1d3d87fe8d4",
+      "bytes": 643,
+      "scope": "week-21"
+    },
+    {
+      "file": "shorts-k/week-21/captions.ass",
+      "sha256": "dbf3c7feb38a52e5ee0dcfabee85c1c4f1f4967a53df425b893521e2553771c4",
+      "bytes": 2386,
+      "scope": "week-21"
+    },
+    {
+      "file": "shorts-k/week-21/cover.webp",
+      "sha256": "1298bb38c9afcfcbd6c3450c0826ad6d8552090c7ddc69bb4f77cbcf32023213",
+      "bytes": 71714,
+      "scope": "week-21"
+    },
+    {
+      "file": "shorts-k/week-21/transcript.txt",
+      "sha256": "07157af1f704d76064789408d3a8cd9a0cb1e9cd88e08756d2cb933a6e60e97d",
+      "bytes": 592,
+      "scope": "week-21"
+    },
+    {
+      "file": "shorts-k/week-21/description.txt",
+      "sha256": "cdff3442f1bd3d77299d679a910ae3a3b1a50ade18cc64699f378cc6abb416b9",
+      "bytes": 739,
+      "scope": "week-21"
+    },
+    {
+      "file": "shorts-k/week-21/upload-checklist.md",
+      "sha256": "dc3f497ed09cb5d77db04d98479cd752d718575c8a94077321f59a5d347acc1a",
+      "bytes": 641,
+      "scope": "week-21"
+    },
+    {
       "file": "week-24/index.html",
-      "sha256": "5b0012b73fe14d87991ca448b89ef35763b3a1ff0640c8833e1121c1b389ef23",
-      "bytes": 4346,
+      "sha256": "4bcb5c5f172015dbafe167af8f9195a01b315f4ee881adc3d7de7f7d67554fbd",
+      "bytes": 4412,
       "scope": "week-24"
     },
     {
@@ -1547,9 +1931,57 @@
       "scope": "week-24"
     },
     {
+      "file": "shorts-k/week-24/short.mp4",
+      "sha256": "5bcb8234d916421a9bec1d1b73ca1513a610c18d28103ae75c79d4e56cfab3c8",
+      "bytes": 1417540,
+      "scope": "week-24"
+    },
+    {
+      "file": "shorts-k/week-24/captions.srt",
+      "sha256": "0f1e8c1b8aac28d1763154b390ff8f77f0b0a240af992d4639c10b94f3fde8f7",
+      "bytes": 739,
+      "scope": "week-24"
+    },
+    {
+      "file": "shorts-k/week-24/captions.vtt",
+      "sha256": "9edc579a5d6576d7777b333a2c6b444158ae7fa39bb823063280518c3f70bf30",
+      "bytes": 747,
+      "scope": "week-24"
+    },
+    {
+      "file": "shorts-k/week-24/captions.ass",
+      "sha256": "0dc6bd5110b8396398f7bfed0ac4828bd616442a4f42d4dba1b6fbfa666ea44f",
+      "bytes": 2649,
+      "scope": "week-24"
+    },
+    {
+      "file": "shorts-k/week-24/cover.webp",
+      "sha256": "e06c393f2f8738ae48dd5a7388cfcd10b3d7bf5172609f72271cef1002be0a65",
+      "bytes": 76522,
+      "scope": "week-24"
+    },
+    {
+      "file": "shorts-k/week-24/transcript.txt",
+      "sha256": "cde6661f734ba2a034dd18a95571dcc3d5c608007589260549efe40f9f2a2397",
+      "bytes": 603,
+      "scope": "week-24"
+    },
+    {
+      "file": "shorts-k/week-24/description.txt",
+      "sha256": "c96fd84133695ac2ac0f77773a0ae46a0d4e22167b4465e3e7c580424bafbd8b",
+      "bytes": 743,
+      "scope": "week-24"
+    },
+    {
+      "file": "shorts-k/week-24/upload-checklist.md",
+      "sha256": "4b16ff60d8157cc09aa1711467434e8dc67dce0e92f27794d37a1844884a87ef",
+      "bytes": 651,
+      "scope": "week-24"
+    },
+    {
       "file": "week-27/index.html",
-      "sha256": "b8fde862152fa2bbfa3b070a0228b498faef107b39c60b189a55aa2eb1dff2d7",
-      "bytes": 4211,
+      "sha256": "1c2a89ea4e9fdda98d13f2ce169560f2a807750c5d3050a5d40b97607ff803a3",
+      "bytes": 4277,
       "scope": "week-27"
     },
     {
@@ -1703,9 +2135,57 @@
       "scope": "week-27"
     },
     {
+      "file": "shorts-k/week-27/short.mp4",
+      "sha256": "f30084d7853467fe8b182b95996866151319c388edb71c2c1d15222e159d2dc1",
+      "bytes": 1262373,
+      "scope": "week-27"
+    },
+    {
+      "file": "shorts-k/week-27/captions.srt",
+      "sha256": "06742af8b3b07599ae8a5968eca947bdd06642a5356a5114b14ca0a28aa7616c",
+      "bytes": 661,
+      "scope": "week-27"
+    },
+    {
+      "file": "shorts-k/week-27/captions.vtt",
+      "sha256": "61e017988d32138cfbe81179ae75d9795ca349aacd55ae7185a46db1edbff407",
+      "bytes": 669,
+      "scope": "week-27"
+    },
+    {
+      "file": "shorts-k/week-27/captions.ass",
+      "sha256": "08ca3365bfc3260b8760a9e1f0ea73be1eef22fe5f41ceae8fcd59f6adf9eec1",
+      "bytes": 2428,
+      "scope": "week-27"
+    },
+    {
+      "file": "shorts-k/week-27/cover.webp",
+      "sha256": "0c53c52b0a16bbd08567eb623fd6ecd1edf8c9f72ce924dd0edd1f389ea1b9b9",
+      "bytes": 61892,
+      "scope": "week-27"
+    },
+    {
+      "file": "shorts-k/week-27/transcript.txt",
+      "sha256": "b3960e4b87c5484541733db988fe6a191a6d9c8d4432de94cbef872b7b5e87b9",
+      "bytes": 593,
+      "scope": "week-27"
+    },
+    {
+      "file": "shorts-k/week-27/description.txt",
+      "sha256": "fbc55857a01ad1722ebbedd91574c5a6418907b7f574a94600888aca5d0a130c",
+      "bytes": 745,
+      "scope": "week-27"
+    },
+    {
+      "file": "shorts-k/week-27/upload-checklist.md",
+      "sha256": "901c1a658eb8aa28bc696c66f50c6acc08d552fed0a266ed3457984b74f8dde4",
+      "bytes": 650,
+      "scope": "week-27"
+    },
+    {
       "file": "week-30/index.html",
-      "sha256": "b8491c471e0c2ffccf94159ce31bd103062a2083ad1751275f7d8aa58c6f114d",
-      "bytes": 4301,
+      "sha256": "a130f58394466e9f5d89f6a40fd78700222583b523ad321d9612181409ef2df6",
+      "bytes": 4367,
       "scope": "week-30"
     },
     {
@@ -1856,6 +2336,54 @@
       "file": "week-30/student-infographic.webp",
       "sha256": "cbec6ee3c06b6d86a6246eee779b143bb0533755c23652552df56a46131dbba0",
       "bytes": 362580,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/short.mp4",
+      "sha256": "7ac5c4a7dca339c0ddde76d0be017e36f07e682df02e7196a2a2e6f2408fffba",
+      "bytes": 1189957,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/captions.srt",
+      "sha256": "390e9bc913d29c84d5e37ad70f305107c4e583aad8bd56a3674bbd4e8fe9b527",
+      "bytes": 661,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/captions.vtt",
+      "sha256": "b0a4acf9808f1323afecdcd1a9dcbea8051fcea978b5ddbbb4c9176e7310c841",
+      "bytes": 669,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/captions.ass",
+      "sha256": "e689a5aa51b5929eff50ea7464e4941c119407382a58ef55aaddaefbe734de39",
+      "bytes": 2358,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/cover.webp",
+      "sha256": "cb70f4257d7903a2725d4dd9d76569944ca691ebbedc9532095d51622316b1ae",
+      "bytes": 62776,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/transcript.txt",
+      "sha256": "ba47e5e8689164543193e5f2bf5bcfdf1599413101c0ec939a3461bcb4e1d8cb",
+      "bytes": 599,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/description.txt",
+      "sha256": "6f602b18120da74cf4572c51e1edf6681b94df94b37030142cd2a14e9e155994",
+      "bytes": 751,
+      "scope": "week-30"
+    },
+    {
+      "file": "shorts-k/week-30/upload-checklist.md",
+      "sha256": "2206b089961d5828b29e55472885a58d546b5641e092baeaa036a99654ecfadd",
+      "bytes": 656,
       "scope": "week-30"
     }
   ]

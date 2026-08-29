@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:05.38,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf41}只跟{\kf41}機器{\kf20}人{\kf20}說{\kf20}「{\kf20}把{\kf41}拖鞋{\kf20}排{\kf41}整齊{\kf20}」{\kf20}，{\kf20}它{\kf41}真的{\kf41}知道{\kf20}要{\kf41}怎麼{\kf20}做{\kf20}嗎{\kf22}？
+Dialogue: 0,0:00:05.70,0:00:10.84,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf21}先{\kf21}說{\kf21}要{\kf43}放進{\kf43}什麼{\kf21}，{\kf43}再說{\kf21}要{\kf43}怎麼{\kf21}做{\kf21}，{\kf43}最後{\kf21}說{\kf21}會{\kf43}得到{\kf43}什麼{\kf25}。
+Dialogue: 0,0:00:10.85,0:00:13.90,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf51}這樣{\kf51}機器{\kf51}人才{\kf51}比較{\kf76}跟得上{\kf25}。
+Dialogue: 0,0:00:14.27,0:00:20.13,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf22}像{\kf43}整理{\kf43}書包{\kf22}：{\kf43}放進{\kf43}物品{\kf22}、{\kf22}照{\kf43}類別{\kf22}分{\kf22}開{\kf22}、{\kf43}得到{\kf43}一個{\kf43}好找{\kf22}的{\kf43}書包{\kf22}。
+Dialogue: 0,0:00:20.14,0:00:23.13,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf25}每{\kf50}一步{\kf50}都要{\kf25}能{\kf50}真的{\kf50}照著{\kf25}做{\kf25}。
+Dialogue: 0,0:00:23.50,0:00:29.30,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf21}請{\kf41}寫出{\kf41}整理{\kf41}鞋子{\kf21}或{\kf41}早餐{\kf21}的{\kf41}三個{\kf41}步驟{\kf21}，{\kf21}再{\kf21}請{\kf41}別人{\kf21}只{\kf21}照{\kf41}你的{\kf41}文字{\kf21}做{\kf22}。
+Dialogue: 0,0:00:29.31,0:00:31.77,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf31}哪{\kf62}一步{\kf62}最不{\kf62}清楚{\kf29}？

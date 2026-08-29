@@ -1,0 +1,19 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.69,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf32}房間{\kf16}裡{\kf16}的{\kf32}玩具{\kf16}混{\kf48}在一起{\kf16}，{\kf111}Scratch{\kf16} {\kf32}可以{\kf16}幫{\kf32}我們{\kf16}分{\kf32}一分{\kf16}嗎{\kf13}？
+Dialogue: 0,0:00:05.00,0:00:10.79,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf43}如果{\kf43}玩具{\kf21}是{\kf43}紅色{\kf21}，{\kf21}就{\kf43}放進{\kf43}紅色{\kf43}盒子{\kf21}；{\kf43}否則{\kf21}就{\kf43}放進{\kf43}另一{\kf21}個{\kf43}盒子{\kf23}。
+Dialogue: 0,0:00:10.80,0:00:13.78,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf89}這就是{\kf30}讓{\kf60}程式{\kf30}做{\kf60}選擇{\kf29}。
+Dialogue: 0,0:00:14.13,0:00:17.27,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf24}紅{\kf24}藍{\kf24}各{\kf48}一半{\kf24}的{\kf48}玩具{\kf24}要{\kf24}放{\kf48}哪裡{\kf26}？
+Dialogue: 0,0:00:17.28,0:00:21.55,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf43}好的{\kf21}小{\kf43}幫手{\kf43}可以{\kf21}說{\kf21}「{\kf43}我不{\kf43}確定{\kf21}」{\kf21}，{\kf43}不要{\kf21}硬{\kf21}猜{\kf22}。
+Dialogue: 0,0:00:21.92,0:00:28.30,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf20}做{\kf40}一個{\kf40}分類{\kf20}小{\kf40}幫手{\kf20}，{\kf40}放入{\kf40}一個{\kf40}很難{\kf20}分{\kf20}的{\kf40}例子{\kf20}，{\kf40}看看{\kf40}你的{\kf40}規則{\kf60}會不會{\kf40}卡住{\kf18}。

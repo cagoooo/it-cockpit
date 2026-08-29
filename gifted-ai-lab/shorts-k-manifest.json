@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-29T08:56:45.884Z",
+  "channel": "ShortsK",
+  "privacy_default": "unlisted",
+  "workflow": "manual_upload_only",
+  "course_url": "https://cagoooo.github.io/it-cockpit/gifted-ai-lab/",
+  "description": "十支給國小三年級看的直式課前小影片：每支先猜一猜，再看生活例子，最後完成一個小任務。",
+  "items": {
+    "3": {
+      "week": 3,
+      "code": "03",
+      "title": "AI 小偵探：工具真的會自己想嗎？",
+      "course_title": "AI 是什麼：生活中的智慧工具",
+      "local_video": "shorts-k/week-03/short.mp4",
+      "poster": "shorts-k/week-03/cover.webp",
+      "card_image": "week-03/week-illustration.webp",
+      "captions": "shorts-k/week-03/captions.srt",
+      "captions_vtt": "shorts-k/week-03/captions.vtt",
+      "transcript": "shorts-k/week-03/transcript.txt",
+      "description": "shorts-k/week-03/description.txt",
+      "upload_checklist": "shorts-k/week-03/upload-checklist.md",
+      "duration_seconds": 33.52,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "af9a9772-21cb-4614-add1-9d3861308c64",
+        "notebook_url": "https://notebooklm.google.com/notebook/af9a9772-21cb-4614-add1-9d3861308c64",
+        "student_source_id": "0e60d9c5-b2e7-40f8-8720-278b1c1fcc4b",
+        "infographic_id": "7b4d625b-2d66-4eaa-9a32-8bef4fed7cd8",
+        "depth_source_id": "dfbdf10d-c189-4936-99eb-cf297a5c1489",
+        "depth_slides_id": "f6f4d4c3-eab7-4bf3-9230-5a58beb47fb2",
+        "existing_video_artifact_ids": [
+          "17c1883f-9e12-42f1-a569-836dbbfb39ed",
+          "25515ddd-fbda-4007-b597-554cee396e3a",
+          "14f72fcb-1d8d-48d9-802a-ad4b388bc557"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "6": {
+      "week": 6,
+      "code": "06",
+      "title": "畫圖猜猜看：電腦怎麼找到線索？",
+      "course_title": "資料集與機器如何學習",
+      "local_video": "shorts-k/week-06/short.mp4",
+      "poster": "shorts-k/week-06/cover.webp",
+      "card_image": "week-06/week-illustration.webp",
+      "captions": "shorts-k/week-06/captions.srt",
+      "captions_vtt": "shorts-k/week-06/captions.vtt",
+      "transcript": "shorts-k/week-06/transcript.txt",
+      "description": "shorts-k/week-06/description.txt",
+      "upload_checklist": "shorts-k/week-06/upload-checklist.md",
+      "duration_seconds": 33.62,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "07ad6f8c-468f-4ff5-87fb-b3d32c44bd82",
+        "notebook_url": "https://notebooklm.google.com/notebook/07ad6f8c-468f-4ff5-87fb-b3d32c44bd82",
+        "student_source_id": "437a57f2-c43a-415a-b1bb-7b9e6eabc072",
+        "infographic_id": "6ee7801e-df74-455d-92a0-d7638b4a0454",
+        "depth_source_id": "f5f3967e-1ef4-4260-9b02-7f4fb63629bd",
+        "depth_slides_id": "bb3ea25d-ae68-452b-acc6-656dc6476581",
+        "existing_video_artifact_ids": [
+          "8354a22d-e6c6-4c84-8a68-7f9b2e748a90"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "9": {
+      "week": 9,
+      "code": "09",
+      "title": "資料照妖鏡：少了誰，答案會變嗎？",
+      "course_title": "資料偏見與石門生活資料採集",
+      "local_video": "shorts-k/week-09/short.mp4",
+      "poster": "shorts-k/week-09/cover.webp",
+      "card_image": "week-09/week-illustration.webp",
+      "captions": "shorts-k/week-09/captions.srt",
+      "captions_vtt": "shorts-k/week-09/captions.vtt",
+      "transcript": "shorts-k/week-09/transcript.txt",
+      "description": "shorts-k/week-09/description.txt",
+      "upload_checklist": "shorts-k/week-09/upload-checklist.md",
+      "duration_seconds": 32.32,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "05af6960-d89f-41e9-b64d-4c853487d643",
+        "notebook_url": "https://notebooklm.google.com/notebook/05af6960-d89f-41e9-b64d-4c853487d643",
+        "student_source_id": "ef4d724e-fcef-4946-98a4-a6ee4b003dce",
+        "infographic_id": "f73eed77-3b75-4111-ab47-553cc38e22dd",
+        "depth_source_id": "e0f1cf2f-9c14-4cd9-903b-51538a05ca4d",
+        "depth_slides_id": "87fc300c-5ba3-4d1d-ad29-a2be40c27088",
+        "existing_video_artifact_ids": [
+          "1713c689-cdff-4720-a60c-e49cc962fea1"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "12": {
+      "week": 12,
+      "code": "12",
+      "title": "教機器人排拖鞋：一步一步才不會亂",
+      "course_title": "資料整理與演算法三元素",
+      "local_video": "shorts-k/week-12/short.mp4",
+      "poster": "shorts-k/week-12/cover.webp",
+      "card_image": "week-12/week-illustration.webp",
+      "captions": "shorts-k/week-12/captions.srt",
+      "captions_vtt": "shorts-k/week-12/captions.vtt",
+      "transcript": "shorts-k/week-12/transcript.txt",
+      "description": "shorts-k/week-12/description.txt",
+      "upload_checklist": "shorts-k/week-12/upload-checklist.md",
+      "duration_seconds": 32.03,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "a18fd57a-16b5-4c38-838a-578fbc065281",
+        "notebook_url": "https://notebooklm.google.com/notebook/a18fd57a-16b5-4c38-838a-578fbc065281",
+        "student_source_id": "4a9f116e-e1bf-4102-93ae-5343c80054f5",
+        "infographic_id": "051b8a28-4b5a-4b89-b763-fff069977222",
+        "depth_source_id": "8bec6d1e-4216-4dc7-b920-4c456a1f1973",
+        "depth_slides_id": "09359208-fadf-4543-be30-3d7c901154a2",
+        "existing_video_artifact_ids": [
+          "76711ce1-c47b-4ccd-9095-c8eff293bf1b"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "15": {
+      "week": 15,
+      "code": "15",
+      "title": "抓錯大師：改一點，再試一次",
+      "course_title": "精準指令與除錯思維",
+      "local_video": "shorts-k/week-15/short.mp4",
+      "poster": "shorts-k/week-15/cover.webp",
+      "card_image": "week-15/week-illustration.webp",
+      "captions": "shorts-k/week-15/captions.srt",
+      "captions_vtt": "shorts-k/week-15/captions.vtt",
+      "transcript": "shorts-k/week-15/transcript.txt",
+      "description": "shorts-k/week-15/description.txt",
+      "upload_checklist": "shorts-k/week-15/upload-checklist.md",
+      "duration_seconds": 33.02,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "df5767e0-3333-4312-8b65-5220c4c06415",
+        "notebook_url": "https://notebooklm.google.com/notebook/df5767e0-3333-4312-8b65-5220c4c06415",
+        "student_source_id": "644e7119-d77d-4ac6-96f1-96d33c461aff",
+        "infographic_id": "60f6dc7d-77b8-487f-98c9-c312913d778a",
+        "depth_source_id": "99f709c3-aad9-4f52-8538-e555cf0fccfb",
+        "depth_slides_id": "2cc1dc3e-c795-4009-b840-257738abcf2e",
+        "existing_video_artifact_ids": [
+          "d5809f9f-0bcf-4389-9051-1290ba6b3364"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "18": {
+      "week": 18,
+      "code": "18",
+      "title": "Scratch 分類小幫手：遇到難題先說不確定",
+      "course_title": "Scratch 互動與分類器概念",
+      "local_video": "shorts-k/week-18/short.mp4",
+      "poster": "shorts-k/week-18/cover.webp",
+      "card_image": "week-18/week-illustration.webp",
+      "captions": "shorts-k/week-18/captions.srt",
+      "captions_vtt": "shorts-k/week-18/captions.vtt",
+      "transcript": "shorts-k/week-18/transcript.txt",
+      "description": "shorts-k/week-18/description.txt",
+      "upload_checklist": "shorts-k/week-18/upload-checklist.md",
+      "duration_seconds": 28.5,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "df21f06b-942a-4c98-afda-750f09234a27",
+        "notebook_url": "https://notebooklm.google.com/notebook/df21f06b-942a-4c98-afda-750f09234a27",
+        "student_source_id": "9bc6be9f-6cbf-4832-a014-894093b34236",
+        "infographic_id": "fbef8b9a-1302-4590-8949-89e37b9b35af",
+        "depth_source_id": "6bae309e-82b0-4780-8efe-98a034252e93",
+        "depth_slides_id": "a8ef8ed6-df58-4840-bc07-f36a894e4d07",
+        "existing_video_artifact_ids": [
+          "5596a035-1701-42e2-8f20-5138e60972bc"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "21": {
+      "week": 21,
+      "code": "21",
+      "title": "AI 聽得懂嗎？把話說完整",
+      "course_title": "提示工程與 AI 創意發想",
+      "local_video": "shorts-k/week-21/short.mp4",
+      "poster": "shorts-k/week-21/cover.webp",
+      "card_image": "week-21/week-illustration.webp",
+      "captions": "shorts-k/week-21/captions.srt",
+      "captions_vtt": "shorts-k/week-21/captions.vtt",
+      "transcript": "shorts-k/week-21/transcript.txt",
+      "description": "shorts-k/week-21/description.txt",
+      "upload_checklist": "shorts-k/week-21/upload-checklist.md",
+      "duration_seconds": 32.18,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "cea8c93f-0119-42f2-b503-85c07e560fb3",
+        "notebook_url": "https://notebooklm.google.com/notebook/cea8c93f-0119-42f2-b503-85c07e560fb3",
+        "student_source_id": "98bc20fe-df0b-4f8b-a592-968144039656",
+        "infographic_id": "ae8c3f15-85d1-4f09-ab0c-6e51a010bb67",
+        "depth_source_id": "860259c2-84fe-434d-8e59-558296743bc6",
+        "depth_slides_id": "59d18bf9-8d07-4e8f-b76e-05024d629e23",
+        "existing_video_artifact_ids": [
+          "26650f17-a340-4c25-92c5-451d2efd1a50"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "24": {
+      "week": 24,
+      "code": "24",
+      "title": "安全 AI 小隊長：能做不一定要做",
+      "course_title": "AI 倫理與專題定題",
+      "local_video": "shorts-k/week-24/short.mp4",
+      "poster": "shorts-k/week-24/cover.webp",
+      "card_image": "week-24/week-illustration.webp",
+      "captions": "shorts-k/week-24/captions.srt",
+      "captions_vtt": "shorts-k/week-24/captions.vtt",
+      "transcript": "shorts-k/week-24/transcript.txt",
+      "description": "shorts-k/week-24/description.txt",
+      "upload_checklist": "shorts-k/week-24/upload-checklist.md",
+      "duration_seconds": 34.77,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "264d39dd-3c59-4c79-bcd8-6ef390b63e4f",
+        "notebook_url": "https://notebooklm.google.com/notebook/264d39dd-3c59-4c79-bcd8-6ef390b63e4f",
+        "student_source_id": "4383d2d2-7dba-4d20-a0f4-8921eae7cefa",
+        "infographic_id": "1b2acd95-b3c6-42de-8b7d-deb6ee7c0e60",
+        "depth_source_id": "0b683f08-169c-419c-8f39-5cfcadb9d915",
+        "depth_slides_id": "8f280169-caa8-4607-b981-591dea05d316",
+        "existing_video_artifact_ids": [
+          "f93609e5-2bda-4c78-9b31-4029de10b44f"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "27": {
+      "week": 27,
+      "code": "27",
+      "title": "先做小作品：小小版本也能測試",
+      "course_title": "原型設計與作品製作",
+      "local_video": "shorts-k/week-27/short.mp4",
+      "poster": "shorts-k/week-27/cover.webp",
+      "card_image": "week-27/week-illustration.webp",
+      "captions": "shorts-k/week-27/captions.srt",
+      "captions_vtt": "shorts-k/week-27/captions.vtt",
+      "transcript": "shorts-k/week-27/transcript.txt",
+      "description": "shorts-k/week-27/description.txt",
+      "upload_checklist": "shorts-k/week-27/upload-checklist.md",
+      "duration_seconds": 33.38,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "458e7cf0-447c-4669-b540-4249f4358850",
+        "notebook_url": "https://notebooklm.google.com/notebook/458e7cf0-447c-4669-b540-4249f4358850",
+        "student_source_id": "77befa61-1006-407a-a1a0-86d8b1f49d00",
+        "infographic_id": "d536530d-9a49-46b3-bc97-63bb106337d2",
+        "depth_source_id": "d131ffe9-8da1-4183-a99d-6cfdf9e804b8",
+        "depth_slides_id": "c8221b1a-e244-4970-844b-7e7323c2ae02",
+        "existing_video_artifact_ids": [
+          "72bd03ba-8f9d-4fbd-b483-ceaab4efa074"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    },
+    "30": {
+      "week": 30,
+      "code": "30",
+      "title": "作品偵探：看別人怎麼用，再改一次",
+      "course_title": "測試精緻化與成果發表",
+      "local_video": "shorts-k/week-30/short.mp4",
+      "poster": "shorts-k/week-30/cover.webp",
+      "card_image": "week-30/week-illustration.webp",
+      "captions": "shorts-k/week-30/captions.srt",
+      "captions_vtt": "shorts-k/week-30/captions.vtt",
+      "transcript": "shorts-k/week-30/transcript.txt",
+      "description": "shorts-k/week-30/description.txt",
+      "upload_checklist": "shorts-k/week-30/upload-checklist.md",
+      "duration_seconds": 32.25,
+      "format": "9:16",
+      "captions_burned_in": true,
+      "audience": "國小三年級升四年級資優學生",
+      "upload": {
+        "status": "ready_for_manual_upload",
+        "privacy": "unlisted",
+        "channel": "ShortsK",
+        "video_id": "",
+        "watch_url": ""
+      },
+      "notebooklm": {
+        "notebook_id": "d5710175-62dd-4634-a867-df3e0342d0b6",
+        "notebook_url": "https://notebooklm.google.com/notebook/d5710175-62dd-4634-a867-df3e0342d0b6",
+        "student_source_id": "0e02bea7-2ae9-46b7-910e-aedd9b9d103b",
+        "infographic_id": "66eedc3e-a429-41f0-90ea-0d2726843c28",
+        "depth_source_id": "085711b2-38e8-440a-acec-c1e66d53afd9",
+        "depth_slides_id": "eb565124-102f-4bfd-b287-eaf14434a818",
+        "existing_video_artifact_ids": [
+          "3e77d8cb-7009-48bc-a434-799d7a3f5fb1"
+        ],
+        "query_status": "completed",
+        "query_purpose": "把本週 NotebookLM 來源轉成短句、生活例子、一步小任務與安全提醒。"
+      }
+    }
+  }
+}

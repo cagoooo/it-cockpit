@@ -1,0 +1,19 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.75,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf42}如果{\kf42}電腦{\kf21}把{\kf42}你的{\kf42}貓咪{\kf21}猜{\kf21}成{\kf21}別{\kf21}的{\kf42}動物{\kf21}，{\kf42}你會{\kf63}怎麼辦{\kf24}？
+Dialogue: 0,0:00:04.76,0:00:07.23,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf31}先{\kf31}別{\kf62}急著{\kf31}怪{\kf62}電腦{\kf30}。
+Dialogue: 0,0:00:07.59,0:00:14.25,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf59}可能是{\kf20}它{\kf39}以前{\kf20}看{\kf20}的{\kf39}例子{\kf39}不夠{\kf20}多{\kf20}，{\kf39}只有{\kf39}一種{\kf39}畫法{\kf20}，{\kf39}所以{\kf39}遇到{\kf20}新{\kf39}畫法{\kf20}就{\kf39}容易{\kf20}猜{\kf20}錯{\kf16}。
+Dialogue: 0,0:00:14.56,0:00:19.39,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf42}我們{\kf42}可以{\kf42}加入{\kf42}不同{\kf21}的{\kf21}人{\kf21}、{\kf42}不同{\kf21}的{\kf42}畫法{\kf21}和{\kf42}不同{\kf21}的{\kf42}情況{\kf20}。
+Dialogue: 0,0:00:19.39,0:00:23.76,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf46}資料{\kf46}比較{\kf46}完整{\kf23}，{\kf46}猜測{\kf23}才{\kf46}比較{\kf23}不{\kf46}容易{\kf46}漏掉{\kf23}誰{\kf22}。
+Dialogue: 0,0:00:24.12,0:00:32.09,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf20}看{\kf40}一張{\kf40}資料{\kf20}表{\kf20}，{\kf20}問{\kf40}自己{\kf20}：{\kf20}「{\kf40}少了{\kf20}哪{\kf40}一種{\kf40}情況{\kf20}？{\kf20}」{\kf40}也要{\kf40}刪掉{\kf40}姓名{\kf20}、{\kf20}臉{\kf20}和{\kf40}電話{\kf20}等{\kf60}不需要{\kf20}的{\kf40}資料{\kf17}。

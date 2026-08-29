@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:03.95,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf43}只說{\kf21}「{\kf43}拿筆{\kf21}」{\kf21}，{\kf43}朋友{\kf43}知道{\kf43}你要{\kf21}哪{\kf43}一支{\kf21}嗎{\kf23}？
+Dialogue: 0,0:00:03.96,0:00:06.28,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf46}AI{\kf23} {\kf23}也{\kf46}可能{\kf23}猜{\kf23}錯{\kf23}喔{\kf25}！
+Dialogue: 0,0:00:06.63,0:00:10.97,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf51}可以{\kf26}說{\kf51}藍色{\kf26}的{\kf26}筆{\kf26}、{\kf26}拿{\kf51}三支{\kf26}、{\kf51}放在{\kf51}桌上{\kf23}。
+Dialogue: 0,0:00:10.98,0:00:15.94,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf52}任務{\kf26}、{\kf52}數量{\kf26}和{\kf52}位置{\kf26}越{\kf52}清楚{\kf26}，{\kf52}回答{\kf52}越好{\kf52}檢查{\kf28}。
+Dialogue: 0,0:00:16.32,0:00:21.19,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf20}先{\kf41}自己{\kf20}想{\kf41}一個{\kf41}點子{\kf20}，{\kf20}再{\kf20}請{\kf20} {\kf41}AI{\kf20} {\kf41}幫忙{\kf20}換{\kf41}方法{\kf20}或{\kf41}補充{\kf20}。
+Dialogue: 0,0:00:21.20,0:00:24.96,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf44}AI{\kf22} {\kf44}說得{\kf44}很像{\kf44}真的{\kf22}，{\kf44}也要{\kf44}自己{\kf44}確認{\kf24}。
+Dialogue: 0,0:00:25.32,0:00:31.96,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf18}寫{\kf36}一個{\kf18}讓{\kf18} {\kf36}AI{\kf18} {\kf54}聽得懂{\kf18}的{\kf36}問題{\kf18}，{\kf18}請{\kf18}它{\kf18}用{\kf36}三個{\kf36}步驟{\kf36}回答{\kf18}，{\kf18}再{\kf18}圈{\kf18}出{\kf18}你{\kf36}願意{\kf36}採用{\kf18}的{\kf36}地方{\kf16}。

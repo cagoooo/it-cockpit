@@ -1,0 +1,21 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:03.93,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf72}為什麼{\kf24}同{\kf72}一句話{\kf24}，{\kf48}機器{\kf24}人{\kf48}常常{\kf48}做錯{\kf23}？
+Dialogue: 0,0:00:03.94,0:00:06.87,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf49}因為{\kf24}它{\kf49}只會{\kf24}照{\kf49}你說{\kf24}的{\kf24}話{\kf24}做{\kf26}。
+Dialogue: 0,0:00:07.23,0:00:10.18,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf59}不要{\kf59}只說{\kf30}「{\kf89}往前走{\kf30}」{\kf28}。
+Dialogue: 0,0:00:10.19,0:00:16.31,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf44}可以{\kf22}說{\kf22}往{\kf44}哪裡{\kf22}、{\kf22}走{\kf22}幾{\kf22}格{\kf22}、{\kf87}什麼時候{\kf22}停{\kf22}，{\kf44}機器{\kf44}人才{\kf44}比較{\kf44}不會{\kf44}迷路{\kf19}。
+Dialogue: 0,0:00:16.67,0:00:19.83,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf32}先{\kf32}猜{\kf63}結果{\kf32}，{\kf32}再{\kf63}實際{\kf32}試{\kf30}。
+Dialogue: 0,0:00:19.84,0:00:24.46,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf42}找到{\kf21}第{\kf42}一個{\kf21}錯{\kf21}的{\kf42}地方{\kf21}，{\kf21}只{\kf21}改{\kf42}一個{\kf42}地方{\kf21}，{\kf42}再試{\kf42}一次{\kf21}。
+Dialogue: 0,0:00:24.82,0:00:29.14,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf51}設計{\kf51}一條{\kf25}方{\kf25}格{\kf51}路線{\kf25}，{\kf25}請{\kf51}同學{\kf25}當{\kf51}機器{\kf25}人{\kf26}。
+Dialogue: 0,0:00:29.15,0:00:32.75,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf24}記{\kf24}下{\kf48}哪裡{\kf48}卡住{\kf24}，{\kf48}說說{\kf24}你{\kf48}改了{\kf48}什麼{\kf25}。

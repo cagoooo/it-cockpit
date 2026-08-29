@@ -1,0 +1,21 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.40,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf48}作品{\kf72}看起來{\kf24}很{\kf48}漂亮{\kf24}，{\kf24}不{\kf48}代表{\kf48}大家{\kf48}都會{\kf24}用{\kf22}。
+Dialogue: 0,0:00:04.41,0:00:07.50,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf52}請看{\kf78}一個人{\kf52}真的{\kf52}操作{\kf52}一次{\kf24}。
+Dialogue: 0,0:00:07.86,0:00:10.26,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf60}他在{\kf60}哪裡{\kf30}停{\kf60}很久{\kf30}？
+Dialogue: 0,0:00:10.27,0:00:12.54,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf65}哪個{\kf65}按鈕{\kf32}按{\kf32}錯{\kf33}？
+Dialogue: 0,0:00:12.55,0:00:14.98,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf31}哪{\kf92}一句話{\kf31}看{\kf61}不懂{\kf29}？
+Dialogue: 0,0:00:14.99,0:00:18.33,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf51}這些{\kf51}都是{\kf51}作品{\kf51}告訴{\kf51}你的{\kf51}線索{\kf27}。
+Dialogue: 0,0:00:18.69,0:00:25.07,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf40}一次{\kf20}挑{\kf40}一個{\kf20}最{\kf40}影響{\kf40}使用{\kf20}的{\kf40}地方{\kf40}修改{\kf20}，{\kf20}再{\kf20}請{\kf40}別人{\kf20}試{\kf40}一次{\kf20}，{\kf40}看看{\kf60}有沒有{\kf40}變好{\kf18}。
+Dialogue: 0,0:00:25.37,0:00:32.04,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf42}說出{\kf42}修改{\kf21}前{\kf21}、{\kf42}修改{\kf21}後{\kf21}和{\kf42}一個{\kf42}證據{\kf21}，{\kf42}也要{\kf42}誠實{\kf42}說出{\kf42}作品{\kf42}現在{\kf21}還{\kf21}做{\kf42}不到{\kf42}什麼{\kf16}。

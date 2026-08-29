@@ -1,0 +1,21 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dynamic,Microsoft JhengHei,58,&H0000D9A2,&H00FFFFFF,&H0015383C,&HCCFFFDF8,-1,0,0,0,100,100,0,0,3,3,1,2,70,70,130,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.21,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf23}你{\kf46}只畫{\kf46}幾筆{\kf23}，{\kf46}電腦{\kf69}為什麼{\kf69}有時候{\kf23}猜{\kf46}得到{\kf21}？
+Dialogue: 0,0:00:04.22,0:00:06.67,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf25}它{\kf49}真的{\kf49}看懂{\kf49}你的{\kf25}畫{\kf25}嗎{\kf23}？
+Dialogue: 0,0:00:07.04,0:00:11.89,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf46}電腦{\kf46}先看{\kf46}很多{\kf23}張{\kf23}圖{\kf23}，{\kf23}再{\kf23}找{\kf46}常常{\kf46}一起{\kf46}出現{\kf23}的{\kf46}線索{\kf25}。
+Dialogue: 0,0:00:11.90,0:00:15.66,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf47}遇到{\kf24}新{\kf24}圖{\kf24}時{\kf24}，{\kf24}它{\kf24}用{\kf47}這些{\kf47}線索{\kf24}猜{\kf24}一{\kf24}猜{\kf19}。
+Dialogue: 0,0:00:16.03,0:00:21.58,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf43}如果{\kf43}例子{\kf43}太少{\kf21}，{\kf21}或{\kf64}每個人{\kf43}畫法{\kf43}都不{\kf43}一樣{\kf21}，{\kf43}電腦{\kf21}就{\kf43}可能{\kf21}猜{\kf21}錯{\kf21}。
+Dialogue: 0,0:00:21.59,0:00:25.76,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf25}猜{\kf25}錯{\kf49}不是{\kf49}秘密{\kf25}，{\kf25}是{\kf49}提醒{\kf49}我們{\kf25}再{\kf25}找{\kf49}線索{\kf22}。
+Dialogue: 0,0:00:26.12,0:00:29.83,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf23}畫{\kf47}一隻{\kf47}奇怪{\kf23}的{\kf23}魚{\kf23}，{\kf23}記{\kf23}下{\kf47}電腦{\kf23}猜{\kf47}什麼{\kf23}。
+Dialogue: 0,0:00:29.84,0:00:33.36,Dynamic,,0,0,0,,{\fad(100,120)\fscx94\fscy94\t(0,180,\fscx100\fscy100)}{\kf25}再{\kf50}說說{\kf25}：{\kf50}哪一{\kf25}筆{\kf25}線{\kf25}讓{\kf25}它{\kf50}這樣{\kf25}猜{\kf27}？
