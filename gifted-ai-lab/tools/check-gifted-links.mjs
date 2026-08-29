@@ -103,7 +103,7 @@ for (const code of weeks) {
   record(fs.existsSync(illustration) && fs.statSync(illustration).size > 0, 'picture-book illustration', `week-${code}`);
   const lessonVideo = lessonVideoManifest.items?.[String(Number(code))];
   record(Boolean(lessonVideo && lessonVideo.format === '9:16' && lessonVideo.captions_burned_in === true && !lessonVideo.upload_checklist), 'lesson video metadata', `week-${code}`);
-  for (const file of ['lesson-video.mp4', 'captions.srt', 'captions.vtt', 'captions.ass', 'cover.webp', 'transcript.txt', 'description.txt']) {
+  for (const file of ['lesson-video.mp4', 'captions.srt', 'captions.vtt', 'captions.ass', 'lesson-video-card.webp', 'transcript.txt', 'description.txt']) {
     const target = path.join(labDir, 'lesson-videos', `week-${code}`, file);
     record(fs.existsSync(target) && fs.statSync(target).size > 0, 'lesson video package', `week-${code}/${file}`);
   }

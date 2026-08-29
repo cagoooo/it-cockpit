@@ -14,7 +14,7 @@ const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
 const depthAssetVersion = '20260828-kai-slides-v3';
 const dayAssetVersion = '20260729-day-of-ai-v1';
-const lessonVideoAssetVersion = '20260829-lesson-videos-v1';
+const lessonVideoAssetVersion = '20260829-lesson-videos-v2';
 const imageFallbackScript = '<script src="../../assets/webp-fallback.js" defer></script>';
 
 const meta = ({ title, description, url, assetPrefix }) => `

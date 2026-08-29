@@ -128,9 +128,9 @@ for (const item of weeks) {
   }
   if (fs.existsSync(path.join(labDir, `week-${code}`, 'week-illustration.webp'))) offlineAssets.push(`${base}week-illustration.webp`);
   const lessonVideoBase = `./gifted-ai-lab/lesson-videos/week-${code}/`;
-  for (const file of ['captions.srt', 'captions.vtt', 'cover.webp', 'transcript.txt', 'description.txt']) {
+  for (const file of ['captions.srt', 'captions.vtt', 'lesson-video-card.webp', 'transcript.txt', 'description.txt']) {
     if (fs.existsSync(path.join(repoDir, lessonVideoBase.replace(/^\.\//, ''), file))) offlineAssets.push(`${lessonVideoBase}${file}`);
   }
 }
-fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-08-29-webp-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-08-29-webp-v2', assets: offlineAssets }, null, 2)}\n`, 'utf8');
 console.log(`Built ${weeks.length} classroom packs, ${weeks.length} task sheets, YouTube data and offline manifest.`);

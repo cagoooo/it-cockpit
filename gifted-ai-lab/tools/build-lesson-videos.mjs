@@ -340,7 +340,10 @@ try {
     ];
     for (let index = 0; index < plan.scenes.length; index += 1) {
       const [tag, text] = plan.scenes[index];
-      const imagePath = findAsset(folder, assetNames[index % assetNames.length]);
+      const dedicatedCardPath = path.join(outDir, 'lesson-video-card.webp');
+      const imagePath = index === 0 && fs.existsSync(dedicatedCardPath)
+        ? dedicatedCardPath
+        : findAsset(folder, assetNames[index % assetNames.length]);
       if (!imagePath) throw new Error(`W${code} 找不到場景圖片。`);
       const htmlPath = path.join(tempDir, `w${code}-scene-${index + 1}.html`);
       const pngPath = path.join(tempDir, `w${code}-scene-${index + 1}.png`);
@@ -378,8 +381,11 @@ try {
       '-vf', "ass=captions.ass:fontsdir='C\\:/Windows/Fonts',format=yuv420p", '-r', '30',
       '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '23', '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', outputPath,
     ], { cwd: outDir });
-    const coverPath = path.join(outDir, 'cover.webp');
-    run('ffmpeg', ['-y', '-v', 'error', '-i', scenePaths[0], '-vf', 'scale=720:-2', '-c:v', 'libwebp', '-quality', '82', '-frames:v', '1', coverPath]);
+    // Keep a dedicated video card asset so the homepage video picker does not reuse the weekly course illustration.
+    const cardPath = path.join(outDir, 'lesson-video-card.webp');
+    if (!fs.existsSync(cardPath)) {
+      run('ffmpeg', ['-y', '-v', 'error', '-i', scenePaths[0], '-vf', 'scale=720:-2', '-c:v', 'libwebp', '-quality', '82', '-frames:v', '1', cardPath]);
+    }
     const transcript = plan.scenes.map(([tag, text], index) => `${index + 1}. ${tag}\n${text}`).join('\n\n');
     const transcriptPath = path.join(outDir, 'transcript.txt');
     fs.writeFileSync(transcriptPath, `W${code}｜${plan.title}\n\n${transcript}\n\n聲音：zh-TW-YunJheNeural\n字幕：繁體中文動態字幕，另附 SRT。\n`, 'utf8');
@@ -412,8 +418,8 @@ try {
       title: plan.title,
       course_title: item.title,
       local_video: `lesson-videos/week-${code}/lesson-video.mp4`,
-      poster: `lesson-videos/week-${code}/cover.webp`,
-      card_image: `week-${code}/week-illustration.webp`,
+      poster: `lesson-videos/week-${code}/lesson-video-card.webp`,
+      card_image: `lesson-videos/week-${code}/lesson-video-card.webp`,
       captions: `lesson-videos/week-${code}/captions.srt`,
       captions_vtt: `lesson-videos/week-${code}/captions.vtt`,
       transcript: `lesson-videos/week-${code}/transcript.txt`,

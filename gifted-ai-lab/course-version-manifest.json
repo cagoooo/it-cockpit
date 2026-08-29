@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "release": "2026.08.29-lesson-videos-v1",
-  "generated_at": "2026-08-29T09:25:13.214Z",
+  "release": "2026.08.29-lesson-videos-v2",
+  "generated_at": "2026-08-29T09:57:31.796Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -216,7 +216,7 @@
   "files": [
     {
       "file": "index.html",
-      "sha256": "71383bd26d476ed71c057b1460e67e394c2585f22ef9ea1e46728ebe3d477f47",
+      "sha256": "5481e44f2d559cac3931215ee5613556c0762ae2a6a91b23f6a865ea494cc900",
       "bytes": 52885,
       "scope": "core"
     },
@@ -330,25 +330,25 @@
     },
     {
       "file": "lesson-video-manifest.json",
-      "sha256": "931c08e754f6664c205f2d8ea93051ad847f36fdc57199cc8288d3efcd30e8f9",
-      "bytes": 14973,
+      "sha256": "3e38492bb76cc792f5eccd0c55c1f164e91447f259308523436a801f853dad1a",
+      "bytes": 15233,
       "scope": "core"
     },
     {
       "file": "lesson-video-data.js",
-      "sha256": "df57c89deaad12fbd22956c53df4f1564d57eaf96e4e0f949597e1c4fd94e950",
-      "bytes": 15004,
+      "sha256": "6ead0a7afa3c34a9dd0556387c14b5b357f1ff419bdca88e5545bb774fec7154",
+      "bytes": 15264,
       "scope": "core"
     },
     {
       "file": "lesson-videos/notebooklm-mcp-run.json",
-      "sha256": "16c835294b34d53383570d1dd307e2236af70e61dee4d5582d562e1bf4c4e022",
+      "sha256": "988cce600ed6878dccbacfab75a66e2968ce302d1b58e40a63b6492522e88178",
       "bytes": 7574,
       "scope": "core"
     },
     {
       "file": "week-03/index.html",
-      "sha256": "4b364b6cab64c88a29f690f400d0c07bda07b3aeb72372a58ccdd853367b5843",
+      "sha256": "6431489b5fdbb81b67cc3f862c48c8ca7216c18774238b27432dcab42234b847",
       "bytes": 4726,
       "scope": "week-03"
     },
@@ -504,8 +504,8 @@
     },
     {
       "file": "lesson-videos/week-03/lesson-video.mp4",
-      "sha256": "b491b4da238a2cd41b1d881cbfb69326d6f3e5cb7790837d6425e7021a8095b7",
-      "bytes": 1442694,
+      "sha256": "210c118d423d3c61be760a7d6bebf2b55ffe7919312a85b7433cd2a6d1f53b85",
+      "bytes": 1419685,
       "scope": "week-03"
     },
     {
@@ -527,9 +527,9 @@
       "scope": "week-03"
     },
     {
-      "file": "lesson-videos/week-03/cover.webp",
-      "sha256": "919d4dbc0fa9d92858b8662dc1739191e14340f0ea24e210f5781fe1391940b8",
-      "bytes": 63110,
+      "file": "lesson-videos/week-03/lesson-video-card.webp",
+      "sha256": "f1ac75c85b9e89fd97fa227c01915bede86afd8c18757897c2bf99170c5b0315",
+      "bytes": 78732,
       "scope": "week-03"
     },
     {
@@ -546,7 +546,7 @@
     },
     {
       "file": "week-06/index.html",
-      "sha256": "067205479bc5364ebf3e282ac39af872ab345601544cac6183ca78a6949199ba",
+      "sha256": "867c77f43efad8e9887f062a5f6937d8997046b12732f069775533b0b419eeda",
       "bytes": 4672,
       "scope": "week-06"
     },
@@ -702,8 +702,8 @@
     },
     {
       "file": "lesson-videos/week-06/lesson-video.mp4",
-      "sha256": "cb527bd2b0c665338f1414199b5c9ee4b8ce4e8c094b5ac2245805dc5be0c690",
-      "bytes": 1316418,
+      "sha256": "9406ff67253112c631a62d6dacbeb9afd8f37d053bcaa9651a3836c4696f1938",
+      "bytes": 1281536,
       "scope": "week-06"
     },
     {
@@ -725,9 +725,9 @@
       "scope": "week-06"
     },
     {
-      "file": "lesson-videos/week-06/cover.webp",
-      "sha256": "b7d4e51e0e473ed7243dfcc9e198167ce67cd0dfc7fdf603bb801bd41ca5d4ac",
-      "bytes": 69998,
+      "file": "lesson-videos/week-06/lesson-video-card.webp",
+      "sha256": "5815e3b7d0e1e127d4592d1489a098fd129398bb66ced90fd453c73953f88a79",
+      "bytes": 69740,
       "scope": "week-06"
     },
     {
@@ -744,7 +744,7 @@
     },
     {
       "file": "week-09/index.html",
-      "sha256": "7deed7bf2d8c23348bcaac844ec5c452c1afb9bd9e5ef8162e8e8e7a78728f7f",
+      "sha256": "46d9335bde5cc59e8b8643306b1811aa0c2e2645898bb8f56969930b7697a43e",
       "bytes": 4750,
       "scope": "week-09"
     },
@@ -900,8 +900,8 @@
     },
     {
       "file": "lesson-videos/week-09/lesson-video.mp4",
-      "sha256": "0dfb71b97e02a2d65002902e7aac9eb16db4083639028da6b4651c079c0d64ff",
-      "bytes": 1285497,
+      "sha256": "a6cc9354ece3337d32035f9a3658ef9dbd51347f422582c5e844a4056718fda2",
+      "bytes": 1263413,
       "scope": "week-09"
     },
     {
@@ -923,9 +923,9 @@
       "scope": "week-09"
     },
     {
-      "file": "lesson-videos/week-09/cover.webp",
-      "sha256": "6e4e2a106fda8be2834b5f74cd79bf1aad5f0715fcff57876974da68c9f13e22",
-      "bytes": 74588,
+      "file": "lesson-videos/week-09/lesson-video-card.webp",
+      "sha256": "3237ee5d60337e63859198f688b9fcbb716fbd01c30d3cd7f7c30e731bb720ce",
+      "bytes": 87910,
       "scope": "week-09"
     },
     {
@@ -942,7 +942,7 @@
     },
     {
       "file": "week-12/index.html",
-      "sha256": "8c68a331d0a0e908d7ba99e09160864766689840ea7fe8ff389f6ccdd91ffc99",
+      "sha256": "c6c3e26f2caf758f0d6fb216fbf107d1916b1293922f877ba08e7ef2b291c163",
       "bytes": 4728,
       "scope": "week-12"
     },
@@ -1098,8 +1098,8 @@
     },
     {
       "file": "lesson-videos/week-12/lesson-video.mp4",
-      "sha256": "bdc96a8bdf4792b52c7ce92ef48db351965b6af2df7dab3e922d1cf443e9cdf5",
-      "bytes": 1367451,
+      "sha256": "581b67bfdee348ea643c8a1d412a12c3abcb15a805e502a577e52b682d76f71a",
+      "bytes": 1338276,
       "scope": "week-12"
     },
     {
@@ -1121,9 +1121,9 @@
       "scope": "week-12"
     },
     {
-      "file": "lesson-videos/week-12/cover.webp",
-      "sha256": "6c8e28d0593101402c6ba12345a3f73dafef52d057931eed8e101c4049852556",
-      "bytes": 67390,
+      "file": "lesson-videos/week-12/lesson-video-card.webp",
+      "sha256": "47dd6ee58b2fe3c610be0746699a6483d32215c81925a6430a59e119e52f4a21",
+      "bytes": 71946,
       "scope": "week-12"
     },
     {
@@ -1140,7 +1140,7 @@
     },
     {
       "file": "week-15/index.html",
-      "sha256": "536f4a6eefa1a0a4e04fd14aeb0609ed86a63d60af05347029356555c57195f3",
+      "sha256": "1cfca8d96db1b7acc2e8788326795d3f824b3b4fda4835f39083c5cdd69434ec",
       "bytes": 4773,
       "scope": "week-15"
     },
@@ -1296,8 +1296,8 @@
     },
     {
       "file": "lesson-videos/week-15/lesson-video.mp4",
-      "sha256": "33e650f0c13d88dd2841322f6a90bc25ab63be6beee9593c6f59359635640bba",
-      "bytes": 1316756,
+      "sha256": "b3d89d42b5a77d5c0a8062d925dedf4d1456854057151dc080657ca63be11fab",
+      "bytes": 1301781,
       "scope": "week-15"
     },
     {
@@ -1319,9 +1319,9 @@
       "scope": "week-15"
     },
     {
-      "file": "lesson-videos/week-15/cover.webp",
-      "sha256": "4334eaa07255ddfff4d92ef6b2a0ae32192ebe168316565cd1fa505ee1bfe2a8",
-      "bytes": 62926,
+      "file": "lesson-videos/week-15/lesson-video-card.webp",
+      "sha256": "f5fa4bf5e18654ebc0d11946ec4d3b52adcb3d5e0d2b5d8948166b7ced8a0cc6",
+      "bytes": 87058,
       "scope": "week-15"
     },
     {
@@ -1338,7 +1338,7 @@
     },
     {
       "file": "week-18/index.html",
-      "sha256": "3eff438ef16cd06d9dafeaef23b9b6dcb93acdab2b21f66632822b6e38ac4545",
+      "sha256": "01cc010f47302ae6061dd15cda9d38bb5a5bf691a0fcea73ca77871383f266e2",
       "bytes": 4376,
       "scope": "week-18"
     },
@@ -1494,8 +1494,8 @@
     },
     {
       "file": "lesson-videos/week-18/lesson-video.mp4",
-      "sha256": "dee2946b60134d1ad0d94780a411720b8af6f9161f308a3fb52dcec85bfb4849",
-      "bytes": 1173016,
+      "sha256": "43ecbf1bbfa9e246ced0a225141f26f660f7dc5ffc36fb208cc6dde107d7e35f",
+      "bytes": 1143270,
       "scope": "week-18"
     },
     {
@@ -1517,9 +1517,9 @@
       "scope": "week-18"
     },
     {
-      "file": "lesson-videos/week-18/cover.webp",
-      "sha256": "613bfefac5b75d8fa47dcc4288cc9345bbcb85271d220a5b62f7b05a3c3e1b37",
-      "bytes": 69602,
+      "file": "lesson-videos/week-18/lesson-video-card.webp",
+      "sha256": "c906eccccca9365a2915e7dc0e5456c8b613a32a172d8ab6dd565719bdb036c6",
+      "bytes": 71330,
       "scope": "week-18"
     },
     {
@@ -1536,7 +1536,7 @@
     },
     {
       "file": "week-21/index.html",
-      "sha256": "03015a5900347e1840f6dc931e83aa5ddd2dee7ffd56f9b24f38837281454b30",
+      "sha256": "fa9694a0fe46798b84ce7e6987b9b228ea5df583150dd10ead7159ee59362ad3",
       "bytes": 4391,
       "scope": "week-21"
     },
@@ -1692,8 +1692,8 @@
     },
     {
       "file": "lesson-videos/week-21/lesson-video.mp4",
-      "sha256": "5eddf70a2e6f317679ad96a46d251779d87be8767decff82f0a5355f49d05759",
-      "bytes": 1323895,
+      "sha256": "75c03ebc01670e1c48f51827aeebfa99bf29944f420691c4bb446bd774260884",
+      "bytes": 1287830,
       "scope": "week-21"
     },
     {
@@ -1715,9 +1715,9 @@
       "scope": "week-21"
     },
     {
-      "file": "lesson-videos/week-21/cover.webp",
-      "sha256": "1298bb38c9afcfcbd6c3450c0826ad6d8552090c7ddc69bb4f77cbcf32023213",
-      "bytes": 71714,
+      "file": "lesson-videos/week-21/lesson-video-card.webp",
+      "sha256": "8d8043bd17c3856fb5bbf43f690edb4869c71ce5148e10f17e7bcd2aa9da6937",
+      "bytes": 79338,
       "scope": "week-21"
     },
     {
@@ -1734,7 +1734,7 @@
     },
     {
       "file": "week-24/index.html",
-      "sha256": "34610347e917e96bb5aa1986c9bc28e6040d2cb48647a574128afcfbfce290a2",
+      "sha256": "99c67269e9db9b3746eb4ebc007cf958ec13049f77b6d2b3cd28c663b96c8b5b",
       "bytes": 4421,
       "scope": "week-24"
     },
@@ -1890,8 +1890,8 @@
     },
     {
       "file": "lesson-videos/week-24/lesson-video.mp4",
-      "sha256": "19e770ae0c325054412593a2ea46d999868e0c6acf89e69a298ac7c1e3ab0ce6",
-      "bytes": 1417261,
+      "sha256": "0f7352ff1ea4dcb92359f504a3a89e1bd1a988e1ae57f01f1a2f3697147e8516",
+      "bytes": 1385567,
       "scope": "week-24"
     },
     {
@@ -1913,9 +1913,9 @@
       "scope": "week-24"
     },
     {
-      "file": "lesson-videos/week-24/cover.webp",
-      "sha256": "e06c393f2f8738ae48dd5a7388cfcd10b3d7bf5172609f72271cef1002be0a65",
-      "bytes": 76522,
+      "file": "lesson-videos/week-24/lesson-video-card.webp",
+      "sha256": "d93379428aed72f475de518c70e97d8aa1b82cbbade920d16dd5de280da617f1",
+      "bytes": 75628,
       "scope": "week-24"
     },
     {
@@ -1932,7 +1932,7 @@
     },
     {
       "file": "week-27/index.html",
-      "sha256": "3d91abe2d08c910902dc9927aa918318234bf1966148441faa498387c4b1c8e4",
+      "sha256": "1fd8f6b3bba1c2c0a15da5c579c6836f36f192e142e4d3da9c2e6e43b2eaacc5",
       "bytes": 4286,
       "scope": "week-27"
     },
@@ -2088,8 +2088,8 @@
     },
     {
       "file": "lesson-videos/week-27/lesson-video.mp4",
-      "sha256": "6275d67b8ded5024f06266371bed2960dcc3ffe7d0187f80faed0618c0a3fc03",
-      "bytes": 1262678,
+      "sha256": "760904cbe7d693eefb69e2d1fd8470207bd55dccc3bd1e778f762cf80c6aab2e",
+      "bytes": 1247982,
       "scope": "week-27"
     },
     {
@@ -2111,9 +2111,9 @@
       "scope": "week-27"
     },
     {
-      "file": "lesson-videos/week-27/cover.webp",
-      "sha256": "0c53c52b0a16bbd08567eb623fd6ecd1edf8c9f72ce924dd0edd1f389ea1b9b9",
-      "bytes": 61892,
+      "file": "lesson-videos/week-27/lesson-video-card.webp",
+      "sha256": "9f7e4266f8da7adf4f6ae2daaed65f30a7a05dfc5a6d0554cca85a5d57ae2399",
+      "bytes": 75024,
       "scope": "week-27"
     },
     {
@@ -2130,7 +2130,7 @@
     },
     {
       "file": "week-30/index.html",
-      "sha256": "402ac04f0fa3b29385641c3d1d15d0d94f43ea748d69f94103d895702c6bd681",
+      "sha256": "d405fb08e61eee95b9ec12009312c729990c6ec4f975dc200d156439285032db",
       "bytes": 4376,
       "scope": "week-30"
     },
@@ -2286,8 +2286,8 @@
     },
     {
       "file": "lesson-videos/week-30/lesson-video.mp4",
-      "sha256": "badb7497aa5fb1b2a5dfd8c5c815d785e510b3942161d61029b64f185cf44172",
-      "bytes": 1189459,
+      "sha256": "f46cb9b80645ee85409f0f09bdf4cc30f5f40241b55b9762528d63727b249bcf",
+      "bytes": 1192798,
       "scope": "week-30"
     },
     {
@@ -2309,9 +2309,9 @@
       "scope": "week-30"
     },
     {
-      "file": "lesson-videos/week-30/cover.webp",
-      "sha256": "cb70f4257d7903a2725d4dd9d76569944ca691ebbedc9532095d51622316b1ae",
-      "bytes": 62776,
+      "file": "lesson-videos/week-30/lesson-video-card.webp",
+      "sha256": "dc85ef5453112075402beb869304cdf07ba27bc44fdc26ff6ca621adf62cd3a1",
+      "bytes": 104878,
       "scope": "week-30"
     },
     {
