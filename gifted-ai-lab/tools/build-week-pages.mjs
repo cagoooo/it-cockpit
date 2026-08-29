@@ -14,7 +14,7 @@ const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
 const depthAssetVersion = '20260828-kai-slides-v3';
 const dayAssetVersion = '20260729-day-of-ai-v1';
-const shortsAssetVersion = '20260829-shorts-k-v1';
+const lessonVideoAssetVersion = '20260829-lesson-videos-v1';
 const imageFallbackScript = '<script src="../../assets/webp-fallback.js" defer></script>';
 
 const meta = ({ title, description, url, assetPrefix }) => `
@@ -71,7 +71,7 @@ ${commonHead}
 <link rel="stylesheet" href="../source-attribution.css?v=${dayAssetVersion}">` : ''}
 ${imageFallbackScript}
 </head>
-<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-adaptations.js?v=${dayAssetVersion}"></script>` : ''}<script src="../youtube-data.js"></script><script src="../shorts-k-data.js?v=${shortsAssetVersion}"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../week-phase-six.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js?v=${depthAssetVersion}"></script><script src="../picture-inquiry.js?v=${depthAssetVersion}"></script><script src="../teacher-sync.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-lessons.js?v=${dayAssetVersion}"></script><script src="../source-attribution.js?v=${dayAssetVersion}"></script>` : ''}</body>
+<body data-week="${item.week}"><div id="app"><p class="loading">正在載入第 ${item.week} 週專用駕駛艙…</p></div><script src="../week-data.js"></script><script src="../week-enrichment.js"></script><script src="../week-depth-data.js?v=${depthAssetVersion}"></script><script src="../week-student-language.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-adaptations.js?v=${dayAssetVersion}"></script>` : ''}<script src="../youtube-data.js"></script><script src="../lesson-video-data.js?v=${lessonVideoAssetVersion}"></script><script src="../week-cockpit.js?v=${depthAssetVersion}"></script><script src="../week-learning-depth.js?v=${depthAssetVersion}"></script><script src="../week-phase-six.js?v=${depthAssetVersion}"></script><script src="../classroom-integrations.js?v=${depthAssetVersion}"></script><script src="../picture-inquiry.js?v=${depthAssetVersion}"></script><script src="../teacher-sync.js?v=${depthAssetVersion}"></script>${hasDayOfAiLesson ? `<script src="../day-of-ai-lessons.js?v=${dayAssetVersion}"></script><script src="../source-attribution.js?v=${dayAssetVersion}"></script>` : ''}</body>
 </html>
 `;
 

@@ -42,13 +42,13 @@ for (const htmlPath of walk(labDir, '.html')) {
 }
 
 const weeks = ['03', '06', '09', '12', '15', '18', '21', '24', '27', '30'];
-const shortsManifestPath = path.join(labDir, 'shorts-k-manifest.json');
-record(fs.existsSync(shortsManifestPath), 'ShortsK manifest', 'shorts-k-manifest.json');
-const shortsManifest = fs.existsSync(shortsManifestPath)
-  ? JSON.parse(fs.readFileSync(shortsManifestPath, 'utf8').replace(/^\uFEFF/, ''))
+const lessonVideoManifestPath = path.join(labDir, 'lesson-video-manifest.json');
+record(fs.existsSync(lessonVideoManifestPath), 'lesson video manifest', 'lesson-video-manifest.json');
+const lessonVideoManifest = fs.existsSync(lessonVideoManifestPath)
+  ? JSON.parse(fs.readFileSync(lessonVideoManifestPath, 'utf8').replace(/^\uFEFF/, ''))
   : { items: {} };
-record(Object.keys(shortsManifest.items || {}).length === weeks.length && shortsManifest.workflow === 'manual_upload_only', 'ShortsK manifest scope', '10 weekly packages');
-record(fs.existsSync(path.join(labDir, 'shorts-k-data.js')) && fs.existsSync(path.join(labDir, 'shorts-k', 'notebooklm-mcp-run.json')), 'ShortsK generated data', 'data and NotebookLM MCP record');
+record(Object.keys(lessonVideoManifest.items || {}).length === weeks.length && !('upload' in (lessonVideoManifest.items?.['3'] || {})), 'lesson video manifest scope', '10 weekly packages');
+record(fs.existsSync(path.join(labDir, 'lesson-video-data.js')) && fs.existsSync(path.join(labDir, 'lesson-videos', 'notebooklm-mcp-run.json')), 'lesson video generated data', 'data and NotebookLM MCP record');
 const annualIndex = fs.readFileSync(path.join(labDir, 'index.html'), 'utf8');
 record(annualIndex.includes('visualCourseGrid') && annualIndex.includes('lesson-visual-strip'), 'visual course picker', 'index.html');
 record(fs.readFileSync(path.join(labDir, 'week-cockpit.js'), 'utf8').includes('visual-learning-wall'), 'visual learning wall', 'week-cockpit.js');
@@ -101,12 +101,11 @@ for (const code of weeks) {
   record(fs.existsSync(path.join(labDir, `week-${code}`, 'student-infographic.webp')), 'student infographic WebP', `week-${code}`);
   const illustration = path.join(labDir, `week-${code}`, 'week-illustration.webp');
   record(fs.existsSync(illustration) && fs.statSync(illustration).size > 0, 'picture-book illustration', `week-${code}`);
-  const shorts = shortsManifest.items?.[String(Number(code))];
-  record(Boolean(shorts && shorts.format === '9:16' && shorts.captions_burned_in === true), 'ShortsK metadata', `week-${code}`);
-  record(Boolean(shorts && shorts.upload?.privacy === 'unlisted' && (!shorts.upload.watch_url || /^https:\/\/(?:www\.)?youtube\.com\/watch\?v=/.test(shorts.upload.watch_url))), 'ShortsK upload gate', `week-${code}`);
-  for (const file of ['short.mp4', 'captions.srt', 'captions.vtt', 'captions.ass', 'cover.webp', 'transcript.txt', 'description.txt', 'upload-checklist.md']) {
-    const target = path.join(labDir, 'shorts-k', `week-${code}`, file);
-    record(fs.existsSync(target) && fs.statSync(target).size > 0, 'ShortsK package', `week-${code}/${file}`);
+  const lessonVideo = lessonVideoManifest.items?.[String(Number(code))];
+  record(Boolean(lessonVideo && lessonVideo.format === '9:16' && lessonVideo.captions_burned_in === true && !lessonVideo.upload_checklist), 'lesson video metadata', `week-${code}`);
+  for (const file of ['lesson-video.mp4', 'captions.srt', 'captions.vtt', 'captions.ass', 'cover.webp', 'transcript.txt', 'description.txt']) {
+    const target = path.join(labDir, 'lesson-videos', `week-${code}`, file);
+    record(fs.existsSync(target) && fs.statSync(target).size > 0, 'lesson video package', `week-${code}/${file}`);
   }
 }
 

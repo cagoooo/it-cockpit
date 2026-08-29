@@ -1,10 +1,10 @@
 # 石門智繪客教材版本對照表
 
-- 發布版本：2026.08.29-shorts-k-v1
-- 產生時間：2026-08-29T09:00:33.534Z
+- 發布版本：2026.08.29-lesson-videos-v1
+- 產生時間：2026-08-29T09:25:13.214Z
 - 正式計畫來源：`materials/teacher-guide.pdf`
 
-| 週次 | 日期 | 正式課程目標 | 網站與 NotebookLM | 兒童版資訊圖 | ShortsK 直式片 |
+| 週次 | 日期 | 正式課程目標 | 網站與 NotebookLM | 兒童版資訊圖 | 直式課前影片 |
 |---|---|---|---|---|---|
 | W03 | 115.9.23 | 能用自己的話說出 AI 是什麼，也能看線索判斷生活工具有沒有用到 AI。 | 一致 | completed | ready |
 | W06 | 115.10.14 | 知道 AI 會從很多例子找規律，再猜新的答案，也能畫出學習三步驟。 | 一致 | completed | ready |
@@ -23,4 +23,4 @@
 2. 執行 `node gifted-ai-lab/tools/build-course-version-manifest.mjs` 更新雜湊。
 3. 執行 `node gifted-ai-lab/tools/check-course-versions.mjs` 驗證所有檔案未漂移。
 4. NotebookLM 產出仍需教師確認，未完成時保留網站自製圖卡。
-5. ShortsK 影片只由教師手動上傳並設為不公開；網址填入 `shorts-k-manifest.json` 後再重建資料。
+5. 直式課前影片與字幕檔保留在 GitHub Pages，供課前引導與課堂複習使用。

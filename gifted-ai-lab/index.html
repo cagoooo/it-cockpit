@@ -136,19 +136,19 @@
   .slide-course-copy span { font-size:14px; line-height:1.4; font-weight:800; }
   .slide-course-copy small { color:#456165; font-size:12px; font-weight:700; }
   .slide-course-arrow { position:absolute; right:10px; bottom:12px; color:var(--teal); font-size:20px; font-weight:900; }
-  .shorts-k-picker { margin:4px 0 28px; padding:24px 0 28px; border-top:5px solid var(--yellow); border-bottom:1px solid var(--line); }
-  .shorts-k-picker-head { display:flex; justify-content:space-between; gap:20px; align-items:end; margin-bottom:16px; }
-  .shorts-k-picker-head h2 { margin:0 0 6px; font-size:clamp(25px,3vw,34px); }
-  .shorts-k-picker-head p:not(.kicker) { margin:0; color:#456165; font-weight:700; }
-  .shorts-k-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
-  .shorts-k-card { position:relative; display:grid; grid-template-rows:auto 1fr; min-width:0; overflow:hidden; color:inherit; text-decoration:none; background:var(--white); border:1px solid var(--line); border-radius:6px; box-shadow:0 3px 0 #173b3f12; }
-  .shorts-k-card:hover { border-color:var(--teal); box-shadow:0 5px 0 #17827726; transform:translateY(-1px); }
-  .shorts-k-card:focus-visible { outline:3px solid var(--yellow); outline-offset:3px; }
-  .shorts-k-card img { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:contain; background:#f0eadc; border-bottom:1px solid var(--line); }
-  .shorts-k-card-copy { display:grid; gap:3px; padding:10px 11px 11px; }
-  .shorts-k-card-copy b { color:var(--teal); font:700 11px/1.4 'JetBrains Mono',monospace; }
-  .shorts-k-card-copy span { font-size:14px; line-height:1.4; font-weight:800; }
-  .shorts-k-card-copy small { color:#456165; font-size:12px; font-weight:700; }
+  .lesson-video-picker { margin:4px 0 28px; padding:24px 0 28px; border-top:5px solid var(--yellow); border-bottom:1px solid var(--line); }
+  .lesson-video-picker-head { display:flex; justify-content:space-between; gap:20px; align-items:end; margin-bottom:16px; }
+  .lesson-video-picker-head h2 { margin:0 0 6px; font-size:clamp(25px,3vw,34px); }
+  .lesson-video-picker-head p:not(.kicker) { margin:0; color:#456165; font-weight:700; }
+  .lesson-video-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+  .lesson-video-card { position:relative; display:grid; grid-template-rows:auto 1fr; min-width:0; overflow:hidden; color:inherit; text-decoration:none; background:var(--white); border:1px solid var(--line); border-radius:6px; box-shadow:0 3px 0 #173b3f12; }
+  .lesson-video-card:hover { border-color:var(--teal); box-shadow:0 5px 0 #17827726; transform:translateY(-1px); }
+  .lesson-video-card:focus-visible { outline:3px solid var(--yellow); outline-offset:3px; }
+  .lesson-video-card img { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:contain; background:#f0eadc; border-bottom:1px solid var(--line); }
+  .lesson-video-card-copy { display:grid; gap:3px; padding:10px 11px 11px; }
+  .lesson-video-card-copy b { color:var(--teal); font:700 11px/1.4 'JetBrains Mono',monospace; }
+  .lesson-video-card-copy span { font-size:14px; line-height:1.4; font-weight:800; }
+  .lesson-video-card-copy small { color:#456165; font-size:12px; font-weight:700; }
   .visual-course-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
   .visual-course-card { display:grid; grid-template-rows:auto 1fr; overflow:hidden; min-width:0; background:var(--white); border:1px solid var(--line); border-radius:7px; text-decoration:none; box-shadow:0 2px 0 #173b3f0d; }
   .visual-course-card:hover { border-color:var(--coral); box-shadow:0 4px 0 #df5b451f; }
@@ -173,7 +173,7 @@
     .annual-flow { grid-template-columns:repeat(2,1fr); }
     .media-grid { grid-template-columns:1fr; }
     .slide-picker-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-    .shorts-k-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .lesson-video-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
     .slide-picker-head { align-items:start; flex-direction:column; }
     .visual-course-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
     .lesson-visual-strip { grid-template-columns:1fr 1fr; }
@@ -200,9 +200,9 @@
     .slide-picker { margin-top:0; }
     .slide-picker-grid { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; padding:3px 2px 9px; }
     .slide-course-card { flex:0 0 78vw; scroll-snap-align:start; }
-    .shorts-k-picker-head { align-items:start; flex-direction:column; }
-    .shorts-k-grid { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; padding:3px 2px 9px; }
-    .shorts-k-card { flex:0 0 78vw; scroll-snap-align:start; }
+    .lesson-video-picker-head { align-items:start; flex-direction:column; }
+    .lesson-video-grid { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; padding:3px 2px 9px; }
+    .lesson-video-card { flex:0 0 78vw; scroll-snap-align:start; }
     .visual-course-grid { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:8px; }
     .visual-course-card { flex:0 0 86vw; scroll-snap-align:start; }
     .visual-course-card span { min-height:0; }
@@ -247,9 +247,9 @@
     <div id="slidePickerGrid" class="slide-picker-grid"></div>
   </section>
 
-  <section class="shorts-k-picker" aria-labelledby="shortsKPickerTitle">
-    <div class="shorts-k-picker-head"><div><p class="kicker">ShortsK · 直式 9:16 · 三年級好懂版</p><h2 id="shortsKPickerTitle">先看一支小影片，再進教室</h2><p>每週一支：先猜生活問題，再跟著阿凱老師做一個小任務。點選就能進入該週影片區。</p></div><a class="action primary" href="week-03/#media">開啟 W03 小影片 →</a></div>
-    <div id="shortsKGrid" class="shorts-k-grid"></div>
+  <section class="lesson-video-picker" aria-labelledby="lessonVideoPickerTitle">
+    <div class="lesson-video-picker-head"><div><p class="kicker">直式 9:16 · 三年級好懂版</p><h2 id="lessonVideoPickerTitle">先看一支小影片，再進教室</h2><p>每週一支：先猜生活問題，再跟著阿凱老師做一個小任務。點選就能進入該週影片區。</p></div><a class="action primary" href="week-03/#media">開啟 W03 小影片 →</a></div>
+    <div id="lessonVideoGrid" class="lesson-video-grid"></div>
   </section>
 
   <section class="visual-picker" aria-labelledby="visualPickerTitle">
@@ -305,7 +305,7 @@
 
 <script src="week-data.js"></script>
 <script src="week-student-language.js?v=20260729-student-language-v1"></script>
-<script src="shorts-k-data.js?v=20260829-shorts-k-v1"></script>
+<script src="lesson-video-data.js?v=20260829-lesson-videos-v1"></script>
 <script src="source-attribution.js?v=20260729-day-of-ai-v1" defer></script>
 <script>
 const NOTEBOOK_URL='https://notebooklm.google.com/notebook/698a4d4b-4b08-402e-a7b8-e02f8a6fa0ff';
@@ -323,7 +323,7 @@ const LESSONS=window.GIFTED_WEEKS||[
 ];
 
 const $=s=>document.querySelector(s);
-const weekNav=$('#weekNav'),visualCourseGrid=$('#visualCourseGrid'),slidePickerGrid=$('#slidePickerGrid'),shortsKGrid=$('#shortsKGrid'),featuredSlideLink=$('#featuredSlideLink'),teacherView=$('#teacherView'),studentView=$('#studentView'),annualView=$('#annualView'),slideLink=$('#slideLink'),weekCockpitLink=$('#weekCockpitLink');
+const weekNav=$('#weekNav'),visualCourseGrid=$('#visualCourseGrid'),slidePickerGrid=$('#slidePickerGrid'),lessonVideoGrid=$('#lessonVideoGrid'),featuredSlideLink=$('#featuredSlideLink'),teacherView=$('#teacherView'),studentView=$('#studentView'),annualView=$('#annualView'),slideLink=$('#slideLink'),weekCockpitLink=$('#weekCockpitLink');
 let current=LESSONS[0];
 const esc=s=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const FLOW_GUIDE=['先請學生說原本怎麼想，不急著公布答案。','用生活例子操作，邊做邊說理由。','完成這一小段作品；卡住時只給一個提示。','用一句話、卡片或畫面說說學會了什麼。','把想法做成能操作的第一版。','加入不同、很難分或故意錯的例子，看看哪裡會失敗。','根據看到的測試結果修改，保留前後版本。','幫檔案命名，說出今天最重要的發現。'];
@@ -333,7 +333,7 @@ const weekImage=l=>`week-${weekCode(l)}/week-illustration.webp`;
 function renderVisualPicker(){visualCourseGrid.innerHTML=LESSONS.map(l=>`<a class="visual-course-card" href="#week-${weekCode(l)}" data-picker-week="${l.week}"><img src="${weekImage(l)}" width="1152" height="768" loading="lazy" alt="${esc(l.title)}的 Q 版繪本圖"><span><b>W${weekCode(l)}</b>${esc(l.title)}</span></a>`).join('');}
 function slideImage(l){const code=weekCode(l);return `week-${code}/notebooklm-kai-slides-v2-thumb.webp`;}
 function renderSlidePicker(){slidePickerGrid.innerHTML=LESSONS.map(l=>{const code=weekCode(l);const fallback=`week-${code}/notebooklm-kai-slides-v2-thumb.png`;return `<a class="slide-course-card" href="week-${code}/notebooklm-kai-slides-v2.html#slide-1"><img src="${slideImage(l)}" onerror="this.onerror=null;this.src='${fallback}'" width="1600" height="900" loading="lazy" alt="${esc(l.title)} Q 版新版簡報封面"><span class="slide-course-copy"><b>W${code} · 可左右播放</b><span>${esc(l.title)}</span><small>Q 版新版 NotebookLM 簡報</small></span><span class="slide-course-arrow" aria-hidden="true">→</span></a>`;}).join('');}
-function renderShortsPicker(){if(!shortsKGrid)return;const items=window.GIFTED_SHORTS_K?.items||{};shortsKGrid.innerHTML=LESSONS.map(l=>{const code=weekCode(l),item=items[String(l.week)]||{},image=item.card_image||weekImage(l),fallback=weekImage(l),status=item.upload?.watch_url?'ShortsK 不公開連結':'站內預覽｜待手動上傳';return `<a class="shorts-k-card" href="week-${code}/#media"><img src="${image}" onerror="this.onerror=null;this.src='${fallback}'" width="1152" height="768" loading="lazy" alt="${esc(item.title||l.title)} 小影片封面"><span class="shorts-k-card-copy"><b>W${code} · 直式小影片</b><span>${esc(item.title||l.title)}</span><small>${status}</small></span></a>`;}).join('');}
+function renderLessonVideoPicker(){if(!lessonVideoGrid)return;const items=window.GIFTED_LESSON_VIDEOS?.items||{};lessonVideoGrid.innerHTML=LESSONS.map(l=>{const code=weekCode(l),item=items[String(l.week)]||{},image=item.card_image||weekImage(l),fallback=weekImage(l);return `<a class="lesson-video-card" href="week-${code}/#media"><img src="${image}" onerror="this.onerror=null;this.src='${fallback}'" width="1152" height="768" loading="lazy" alt="${esc(item.title||l.title)} 小影片封面"><span class="lesson-video-card-copy"><b>W${code} · 直式小影片</b><span>${esc(item.title||l.title)}</span><small>站內影片 · 可直接播放</small></span></a>`;}).join('');}
 function visualStrip(l){const code=weekCode(l),base=`week-${code}/`;return `<div class="lesson-visual-strip" aria-label="第 ${l.week} 週圖像教材"><a class="lesson-visual primary" href="${base}"><img src="${base}week-illustration.webp" width="1152" height="768" alt="${esc(l.title)}的 Q 版繪本情境"><span>本週 Q 版繪本圖</span></a><a class="lesson-visual" href="${base}student-infographic.webp" target="_blank"><img src="${base}student-infographic.webp" loading="lazy" alt="第 ${l.week} 週好懂版資訊圖"><span>好懂版資訊圖</span></a><a class="lesson-visual" href="${base}depth-infographic.webp" target="_blank"><img src="${base}depth-infographic.webp" loading="lazy" alt="第 ${l.week} 週研究挑戰圖"><span>研究挑戰圖</span></a></div>`;}
 function renderNav(){weekNav.innerHTML=LESSONS.map(l=>`<button class="week-btn ${l.week===current.week?'active':''}" data-week="${l.week}"><img class="week-thumb" src="${weekImage(l)}" width="62" height="46" loading="lazy" alt=""><span class="week-no">W${weekCode(l)}</span><span class="week-label">${esc(l.title)}</span></button>`).join('');}
 function renderTeacher(){
@@ -363,7 +363,7 @@ document.querySelectorAll('[data-minutes]').forEach(b=>b.onclick=()=>{clearInter
 $('#timerStart').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('#timerStart').textContent='開始';return;}$('#timerStart').textContent='暫停';timer=setInterval(()=>{seconds=Math.max(0,seconds-1);showTime();if(!seconds){clearInterval(timer);timer=null;$('#timerStart').textContent='開始';timerDisplay.textContent='時間到';}},1000);};
 const challenges=['找一個不一樣的例子，看看目前的規則會不會失敗。','把你的解法改成低年級學生也看得懂。','想出兩種很不一樣的做法，說說各自的好處和問題。','拿掉一項資料，看看答案會不會改變。','請 AI 提出不同想法，再一點一點檢查它有沒有說對。','先不要提示，讓別人自己操作你的作品。'];
 $('#challengePick').onclick=()=>{$('#challengeText').textContent=challenges[Math.floor(Math.random()*challenges.length)];};
-renderVisualPicker();renderSlidePicker();renderShortsPicker();renderAnnual();const hashWeek=(location.hash.match(/week-(\d+)/)||[])[1];selectWeek(hashWeek||3,{updateHash:false});setMode(hashWeek?'teacher':'annual');showTime();
+renderVisualPicker();renderSlidePicker();renderLessonVideoPicker();renderAnnual();const hashWeek=(location.hash.match(/week-(\d+)/)||[])[1];selectWeek(hashWeek||3,{updateHash:false});setMode(hashWeek?'teacher':'annual');showTime();
 </script>
 </body>
 </html>

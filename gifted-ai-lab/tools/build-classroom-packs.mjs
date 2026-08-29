@@ -13,9 +13,9 @@ const weeks = sandbox.window.GIFTED_WEEKS;
 const youtube = JSON.parse(fs.readFileSync(path.join(labDir, 'youtube', 'manifest.json'), 'utf8'));
 const playlistPath = path.join(labDir, 'youtube', 'playlist.json');
 const playlist = fs.existsSync(playlistPath) ? JSON.parse(fs.readFileSync(playlistPath, 'utf8')) : {};
-const shortsManifestPath = path.join(labDir, 'shorts-k-manifest.json');
-const shortsManifest = fs.existsSync(shortsManifestPath)
-  ? JSON.parse(fs.readFileSync(shortsManifestPath, 'utf8'))
+const lessonVideoManifestPath = path.join(labDir, 'lesson-video-manifest.json');
+const lessonVideoManifest = fs.existsSync(lessonVideoManifestPath)
+  ? JSON.parse(fs.readFileSync(lessonVideoManifestPath, 'utf8'))
   : { items: {} };
 
 const offlineTasks = {
@@ -50,7 +50,7 @@ const youtubeData = {
   }])),
 };
 fs.writeFileSync(path.join(labDir, 'youtube-data.js'), `window.GIFTED_YOUTUBE = ${JSON.stringify(youtubeData, null, 2)};\n`, 'utf8');
-fs.writeFileSync(path.join(labDir, 'shorts-k-data.js'), `window.GIFTED_SHORTS_K = ${JSON.stringify(shortsManifest, null, 2)};\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'lesson-video-data.js'), `window.GIFTED_LESSON_VIDEOS = ${JSON.stringify(lessonVideoManifest, null, 2)};\n`, 'utf8');
 
 const sharedStyle = `
 :root{--ink:#15383c;--teal:#168277;--coral:#de5c46;--yellow:#f1bd45;--paper:#f5f1e8;--line:#cbd6d2;--white:#fff}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.65}main{width:min(960px,calc(100% - 28px));margin:24px auto 60px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center;padding-bottom:16px;border-bottom:4px solid var(--ink)}h1{font-size:clamp(1.65rem,3vw,2.45rem);margin:5px 0;letter-spacing:0}.code{font:700 13px monospace;color:var(--coral)}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;min-height:44px;padding:9px 14px;border:1px solid var(--ink);border-radius:5px;background:var(--white);color:var(--ink);font-weight:800;text-decoration:none;cursor:pointer}.btn.primary{background:var(--ink);color:#fff}.band{margin:22px 0;padding:18px 0;border-top:1px solid var(--line)}h2{font-size:1.25rem;margin:0 0 12px;letter-spacing:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.cell{padding:13px;border-left:5px solid var(--teal);background:var(--white)}.cell b{display:block;margin-bottom:5px}.checklist{display:grid;gap:7px}.checklist label{display:flex;gap:10px;align-items:flex-start;padding:11px;background:var(--white);border:1px solid var(--line)}input[type=checkbox]{width:20px;height:20px;flex:0 0 20px}.timeline{width:100%;border-collapse:collapse;background:#fff}.timeline th,.timeline td{padding:9px;border:1px solid var(--line);text-align:left;vertical-align:top}.normal{border-left-color:var(--teal)}.offline{border-left-color:var(--coral)}ol{padding-left:24px}.answer{width:100%;min-height:88px;border:1px solid var(--line);background:#fff;padding:10px;font:inherit}.privacy{border-left:5px solid var(--coral);background:#fff;padding:12px 15px}.footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem}.save-state{font-weight:800;color:var(--teal)}@media(max-width:720px){.top{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.actions{width:100%}.btn{flex:1;justify-content:center}.timeline{font-size:.9rem}}@media print{body{background:#fff}main{width:100%;margin:0}.actions,.no-print{display:none!important}.band{break-inside:avoid}.answer{min-height:110px}.footer{font-size:10pt}}
@@ -117,7 +117,7 @@ const offlineAssets = [
   './gifted-ai-lab/materials/teacher-guide.pdf', './gifted-ai-lab/materials/student-workbook.pdf',
   './gifted-ai-lab/youtube/annual/transcript.json', './gifted-ai-lab/assets/gifted-lab-cover.png', './gifted-ai-lab/assets/gifted-lab-cover.webp',
   './gifted-ai-lab/assets/gifted-favicon-192.png', './gifted-ai-lab/assets/gifted-favicon-32.png',
-  './gifted-ai-lab/shorts-k-manifest.json', './gifted-ai-lab/shorts-k-data.js', './gifted-ai-lab/shorts-k/notebooklm-mcp-run.json',
+  './gifted-ai-lab/lesson-video-manifest.json', './gifted-ai-lab/lesson-video-data.js', './gifted-ai-lab/lesson-videos/notebooklm-mcp-run.json',
 ];
 for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
@@ -127,9 +127,9 @@ for (const item of weeks) {
     if (fs.existsSync(path.join(labDir, `week-${code}`, image))) offlineAssets.push(`${base}${image}`);
   }
   if (fs.existsSync(path.join(labDir, `week-${code}`, 'week-illustration.webp'))) offlineAssets.push(`${base}week-illustration.webp`);
-  const shortsBase = `./gifted-ai-lab/shorts-k/week-${code}/`;
-  for (const file of ['captions.srt', 'captions.vtt', 'cover.webp', 'transcript.txt', 'description.txt', 'upload-checklist.md']) {
-    if (fs.existsSync(path.join(repoDir, shortsBase.replace(/^\.\//, ''), file))) offlineAssets.push(`${shortsBase}${file}`);
+  const lessonVideoBase = `./gifted-ai-lab/lesson-videos/week-${code}/`;
+  for (const file of ['captions.srt', 'captions.vtt', 'cover.webp', 'transcript.txt', 'description.txt']) {
+    if (fs.existsSync(path.join(repoDir, lessonVideoBase.replace(/^\.\//, ''), file))) offlineAssets.push(`${lessonVideoBase}${file}`);
   }
 }
 fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-08-29-webp-v1', assets: offlineAssets }, null, 2)}\n`, 'utf8');
