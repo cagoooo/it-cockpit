@@ -158,13 +158,13 @@ node gifted-ai-lab/tools/check-day-of-ai-resources.mjs
 
 ## 作者與學校
 
-- 教學設計與製作：[黃凱揚老師／阿凱老師](https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5)
+- 教學設計與製作：[黃凱揚老師／阿凱老師](https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5)
 - 任教學校：桃園市龍潭區石門國民小學
 - GitHub：[cagoooo](https://github.com/cagoooo)
 
 ---
 
-Made with ❤️ by [阿凱老師](https://www.smes.tyc.edu.tw/modules/tadnews/page.php?ncsn=11&nsn=16#a5)
+Made with ❤️ by [阿凱老師](https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5)
 
 ---
 
