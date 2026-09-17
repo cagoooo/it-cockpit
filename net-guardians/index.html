@@ -211,8 +211,12 @@ body.teacher-mode .teacher-only{display:block}
 .slide-section,.video-section,.infographic-section{margin-bottom:48px}
 .slide-section h3,.video-section h3,.infographic-section h3{font-size:1.3rem;margin-bottom:14px}
 .slide-player{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-pop)}
-.slide-main{position:relative;background:#000;border:2px solid var(--border);border-radius:12px;overflow:hidden;aspect-ratio:16/9}
-.slide-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-main{position:relative;background:#f1ece2;border:2px solid var(--border);border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block;transition:opacity .25s}
+.slide-main.loading img{opacity:.35;filter:blur(6px)}
+.slide-main .slide-loading{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-weight:700;color:#555;z-index:2;pointer-events:none}
+.slide-main.loading .slide-loading{display:flex}
+.slide-loading span{background:rgba(255,255,255,.9);border:2px solid var(--border);border-radius:20px;padding:6px 16px}
 .slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.92);border:2px solid var(--border);border-radius:50%;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;z-index:3}
 .slide-nav-btn:hover{background:var(--c4);color:#fff}
 .slide-nav-btn.prev{left:10px}.slide-nav-btn.next{right:10px}
@@ -220,7 +224,7 @@ body.teacher-mode .teacher-only{display:block}
 .slide-fs-btn:hover{transform:translateY(-2px)}
 .slide-counter{position:absolute;bottom:12px;left:14px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:16px;font-size:.85rem;z-index:3}
 .slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 4px}
-.strip-thumb{flex-shrink:0;width:96px;height:54px;border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;opacity:.6;transition:.2s;background:#000}
+.strip-thumb{flex-shrink:0;width:96px;height:54px;border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;opacity:.6;transition:.2s;background:#e9e3d6}
 .strip-thumb img{width:100%;height:100%;object-fit:cover}
 .strip-thumb:hover{opacity:1}
 .strip-thumb.active{opacity:1;border-color:var(--c1);box-shadow:0 0 0 2px var(--c1)}
@@ -714,7 +718,8 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
     <div class="slide-player">
       <div class="slide-placeholder" id="slide-placeholder">📑 簡報生成中…<br><small>NotebookLM AI 製作中，完成後此區會顯示完整簡報。</small></div>
       <div class="slide-main" id="slide-main" style="display:none" ondblclick="openSlideFullscreen()">
-        <img id="slide-current" src="" alt="授課簡報">
+        <img id="slide-current" src="" alt="授課簡報" decoding="async" fetchpriority="high">
+        <div class="slide-loading"><span>⏳ 簡報載入中…</span></div>
         <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
         <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
         <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
@@ -729,15 +734,15 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
     <h3>🗂️ 三張網路守門員懶人包</h3>
     <div class="info-grid">
       <a class="info-card" href="./assets/01_boundary.webp" target="_blank">
-        <img data-fallback-src="assets/01_boundary.jpg" src="./assets/01_boundary.webp" alt="網路世界三道界線守門員" decoding="async" loading="lazy">
+        <img data-fallback-src="assets/01_boundary.jpg" src="./assets/thumbs/01_boundary.webp" alt="網路世界三道界線守門員" decoding="async" loading="lazy">
         <div class="cap" style="color:#e03131">① 網路世界有界線：著作權 × 隱私權 × 同理心</div>
       </a>
       <a class="info-card" href="./assets/02_social_engineering.webp" target="_blank">
-        <img data-fallback-src="assets/02_social_engineering.jpg" src="./assets/02_social_engineering.webp" alt="社交工程三大手法" decoding="async" loading="lazy">
+        <img data-fallback-src="assets/02_social_engineering.jpg" src="./assets/thumbs/02_social_engineering.webp" alt="社交工程三大手法" decoding="async" loading="lazy">
         <div class="cap" style="color:#7048e8">② 追星圈的假面怪客：社交工程與 165 查證</div>
       </a>
       <a class="info-card" href="./assets/03_deepfake.webp" target="_blank">
-        <img data-fallback-src="assets/03_deepfake.jpg" src="./assets/03_deepfake.webp" alt="深偽技術正反面與防禦術" decoding="async" loading="lazy">
+        <img data-fallback-src="assets/03_deepfake.jpg" src="./assets/thumbs/03_deepfake.webp" alt="深偽技術正反面與防禦術" decoding="async" loading="lazy">
         <div class="cap" style="color:#1c7ed6">③ 這是誰的臉：深偽技術與五招防禦術</div>
       </a>
     </div>
@@ -871,8 +876,12 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
 // ========== CONFIG ==========
 const SLIDE_COUNT = 11;          // NotebookLM 授課簡報 11 頁
 const YOUTUBE_VIDEO_ID = 'x0dTbIc2GDo';  // NotebookLM 教學影片（YouTube 公開）
-const SLIDE_LIST = [];
-for(let i=1;i<=SLIDE_COUNT;i++) SLIDE_LIST.push('assets/slide_' + String(i).padStart(2,'0') + '.webp');
+const SLIDE_LIST = [], SLIDE_THUMBS = [];
+for(let i=1;i<=SLIDE_COUNT;i++){
+  const n = String(i).padStart(2,'0');
+  SLIDE_LIST.push('assets/slide_' + n + '.webp');     // 1600px 主畫面
+  SLIDE_THUMBS.push('assets/thumbs/slide_' + n + '.webp'); // 320px 縮圖列
+}
 
 function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
 
@@ -1229,6 +1238,29 @@ function makePassCard(){
 
 // ========== SLIDE PLAYER ==========
 let slideIdx = 0;
+const slideLoaded = new Set(), slidePending = {};
+function preloadSlide(n, done){
+  if(slideLoaded.has(n)){ if(done) done(); return; }
+  if(slidePending[n]){ if(done) slidePending[n].push(done); return; }
+  slidePending[n] = done ? [done] : [];
+  const load = src => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = ()=>finish();
+    img.onerror = ()=>{
+      // WebP 失敗改用 JPG；JPG 也失敗就結束等待，避免一直顯示載入中
+      if(src.endsWith('.webp')){ SLIDE_LIST[n] = src.replace('.webp','.jpg'); load(SLIDE_LIST[n]); }
+      else finish();
+    };
+    img.src = src;
+  };
+  const finish = ()=>{
+    slideLoaded.add(n);
+    const cbs = slidePending[n] || []; delete slidePending[n];
+    cbs.forEach(cb=>cb());
+  };
+  load(SLIDE_LIST[n]);
+}
 function initSlidePlayer(){
   if(SLIDE_COUNT === 0) return;
   document.getElementById('slide-placeholder').style.display = 'none';
@@ -1240,8 +1272,9 @@ function initSlidePlayer(){
     t.className = 'strip-thumb' + (i===0 ? ' active' : '');
     t.onclick = ()=>goSlide(i);
     const img = document.createElement('img');
-    img.src = src; img.alt = '第 ' + (i+1) + ' 頁'; img.loading = 'lazy';
+    img.alt = '第 ' + (i+1) + ' 頁'; img.loading = 'lazy'; img.decoding = 'async';
     img.setAttribute('data-fallback-src', src.replace('.webp','.jpg'));
+    img.src = SLIDE_THUMBS[i];
     t.appendChild(img); strip.appendChild(t);
   });
   goSlide(0);
@@ -1250,8 +1283,22 @@ function goSlide(n){
   if(n < 0 || n >= SLIDE_COUNT) return;
   slideIdx = n;
   const cur = document.getElementById('slide-current');
-  cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
-  cur.src = SLIDE_LIST[n];
+  const main = document.getElementById('slide-main');
+  if(!slideLoaded.has(n)){
+    // 先放小縮圖當模糊預覽，大圖下載完再換上
+    main.classList.add('loading');
+    cur.removeAttribute('data-webp-fallback-index');
+    cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
+    cur.src = SLIDE_THUMBS[n];
+    preloadSlide(n, ()=>{ if(slideIdx === n){ cur.src = SLIDE_LIST[n]; main.classList.remove('loading'); } });
+  } else {
+    cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
+    cur.src = SLIDE_LIST[n];
+    main.classList.remove('loading');
+  }
+  // 預先載入前後頁，翻頁不再等待
+  preloadSlide((n + 1) % SLIDE_COUNT);
+  preloadSlide((n - 1 + SLIDE_COUNT) % SLIDE_COUNT);
   document.getElementById('slide-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
   document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
   const fs = document.getElementById('slide-fs');
