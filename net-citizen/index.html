@@ -706,7 +706,7 @@
         <div class="slide-player-main" id="slideMain" ondblclick="openSlideFullscreen()">
           <picture>
             <source id="slideMainWebp" type="image/webp" srcset="">
-            <img id="slideMainImg" src="" alt="簡報頁面" loading="lazy">
+            <img id="slideMainImg" src="" alt="簡報頁面" decoding="async" fetchpriority="high">
           </picture>
           <button class="slide-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
           <button class="slide-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
@@ -1303,7 +1303,8 @@
         const d = document.createElement('div');
         d.className = 'strip-thumb' + (i === 0 ? ' active' : '');
         const img = document.createElement('img');
-        img.src = src; img.loading = 'lazy'; img.alt = '第 ' + (i + 1) + ' 頁縮圖';
+        img.src = src.replace('assets/', 'assets/thumbs/').replace(/\.jpg$/i, '.webp'); img.loading = 'lazy'; img.decoding = 'async'; img.alt = '第 ' + (i + 1) + ' 頁縮圖';
+        img.onerror = () => { img.onerror = null; img.src = src; }; // WebP 縮圖失敗改用原 JPG
         d.appendChild(img);
         d.onclick = () => goSlide(i);
         strip.appendChild(d);
@@ -1319,6 +1320,10 @@
       const mainWebp = document.getElementById('slideMainWebp');
       if(mainImg) mainImg.src = src;
       if(mainWebp) mainWebp.srcset = webp;
+      // 預先載入前後頁，翻頁不用等待
+      [currentSlide + 1, currentSlide - 1].forEach(k => {
+        if(k >= 0 && k < SLIDE_FILES.length){ const pre = new Image(); pre.src = SLIDE_FILES[k].replace(/\.jpg$/i, '.webp'); }
+      });
       const counter = document.getElementById('slideCounter');
       if(counter) counter.textContent = (currentSlide + 1) + ' / ' + SLIDE_FILES.length;
       document.querySelectorAll('.strip-thumb').forEach((el, i) => el.classList.toggle('active', i === currentSlide));
