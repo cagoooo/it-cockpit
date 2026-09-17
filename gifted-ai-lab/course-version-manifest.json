@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release": "2026.08.29-lesson-videos-v2",
-  "generated_at": "2026-09-17T05:24:09.377Z",
+  "generated_at": "2026-09-17T12:18:18.843Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -318,14 +318,14 @@
     },
     {
       "file": "materials/teacher-guide.pdf",
-      "sha256": "b715154bed90cbe48e02cd9965564724977cbdc5c4808b0f6d4cbe003f128fb6",
-      "bytes": 762182,
+      "sha256": "70e5195d0290c356b950377a50a89d9152c9dcb4311c801f2365597589777c1d",
+      "bytes": 762244,
       "scope": "core"
     },
     {
       "file": "materials/student-workbook.pdf",
-      "sha256": "cb8e3bd5f6afe779905a8e2b48a26ef5d9631766d3f447a4dc41c51c4907b4ff",
-      "bytes": 253465,
+      "sha256": "fa48abef89fe98d50677a5ab417a2d2ee09a06227a2d1d0d7cccaa7c0044cd86",
+      "bytes": 253527,
       "scope": "core"
     },
     {
@@ -402,8 +402,8 @@
     },
     {
       "file": "week-03/teacher-pack.pdf",
-      "sha256": "98204e79e7ce1f10d0a1262b4026a4ac0b72786d67af9d34f9c991661b97343e",
-      "bytes": 359116,
+      "sha256": "572883cef8aaf13be717f4d75b486fc1bc238d2afa0fa048e19e39ac37544359",
+      "bytes": 359178,
       "scope": "week-03"
     },
     {
@@ -600,8 +600,8 @@
     },
     {
       "file": "week-06/teacher-pack.pdf",
-      "sha256": "f14994f15c083bc07ea939a3ede02081510f4214d01b28d8d6421c1ad6aaa1c9",
-      "bytes": 343784,
+      "sha256": "75f8df9f48ea39c08444defeadf21dff0793d43a3b5da9f07aad3e02eae9d0f7",
+      "bytes": 343846,
       "scope": "week-06"
     },
     {
@@ -798,8 +798,8 @@
     },
     {
       "file": "week-09/teacher-pack.pdf",
-      "sha256": "aa9bb9172dec822d88ebc9b7cb0de5e619cad085ce0f71439c31e8524f5cdbcc",
-      "bytes": 354810,
+      "sha256": "a84fee77c265fd60cd8869db3cbe780b7c5ac29345928ec7fa526cdc015270a4",
+      "bytes": 354872,
       "scope": "week-09"
     },
     {
@@ -996,8 +996,8 @@
     },
     {
       "file": "week-12/teacher-pack.pdf",
-      "sha256": "e73fe7206890b211e97ce9215afeeda1a3416a54efc3a52ed5338c35bee0b52f",
-      "bytes": 337208,
+      "sha256": "e62434b804e827c8a81a8e2671c2b05cde72d96ce6b5e963d98998825d230677",
+      "bytes": 337270,
       "scope": "week-12"
     },
     {
@@ -1194,8 +1194,8 @@
     },
     {
       "file": "week-15/teacher-pack.pdf",
-      "sha256": "6fcd2b8a68dc87de2de670f7d660db57638d8cd83c8c66b57a7ff56b0de782a2",
-      "bytes": 348439,
+      "sha256": "b8d7a391c4f63ab08d67c07e79c60f5227a3e09e7469208466ffc03d04790eb5",
+      "bytes": 348501,
       "scope": "week-15"
     },
     {
@@ -1392,8 +1392,8 @@
     },
     {
       "file": "week-18/teacher-pack.pdf",
-      "sha256": "e59ab918af9dc3a65524972788beb87f5ae07ad1331b8005eb5a6e64ab901fe2",
-      "bytes": 341812,
+      "sha256": "831633fbe09c5fa792ac76c0a336b323334bab58312f36bb54224e8f41378182",
+      "bytes": 341874,
       "scope": "week-18"
     },
     {
@@ -1590,8 +1590,8 @@
     },
     {
       "file": "week-21/teacher-pack.pdf",
-      "sha256": "9be2a0e6fc6d8baa03663e6e9097c40f161b772a6c45d906bfcad9e17f43df95",
-      "bytes": 336887,
+      "sha256": "6879e255fff76a68e87e0737f031eb7c221a5e93bda70ebaa25cdb595d0cedc4",
+      "bytes": 336949,
       "scope": "week-21"
     },
     {
@@ -1788,8 +1788,8 @@
     },
     {
       "file": "week-24/teacher-pack.pdf",
-      "sha256": "3415dc397a66c923ce848ae57550590bce8150dcfa4fe1ae4328fee44b8c7477",
-      "bytes": 349993,
+      "sha256": "a196f0abfc2d8c416e483bab6a8f414cd7f7c08a8f14d701b6b175558ce0793a",
+      "bytes": 350055,
       "scope": "week-24"
     },
     {
@@ -1986,8 +1986,8 @@
     },
     {
       "file": "week-27/teacher-pack.pdf",
-      "sha256": "e1f0abfc5b18089d7fbbd438e42e16c90556e0625fde30dd72cd52bae3a5c480",
-      "bytes": 347541,
+      "sha256": "92f1daff81b1d54cec9dc21558e3152e75d4998bf86a14bb911c4bb2c963f3d2",
+      "bytes": 347603,
       "scope": "week-27"
     },
     {
@@ -2184,8 +2184,8 @@
     },
     {
       "file": "week-30/teacher-pack.pdf",
-      "sha256": "484c598e68d4df6170b755a5015a860241602cf70377f24b292b25f2af20f5c1",
-      "bytes": 350896,
+      "sha256": "0f47441ccd09dfddf2cc4a01a1580a5e3baddcd3a0512f799bc15d0d92833289",
+      "bytes": 351020,
       "scope": "week-30"
     },
     {
