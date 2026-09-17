@@ -10,7 +10,7 @@
   if (!tabs || !main) return;
 
   document.querySelector('.actions')?.insertAdjacentHTML('beforeend', `<a class="action" href="../resource-library.html?week=${week}">教材連結庫</a>`);
-  tabs.insertAdjacentHTML('beforeend', '<button class="tab" data-view="day-ai">生活探究</button>');
+  tabs.insertAdjacentHTML('beforeend', '<button class="tab" type="button" role="tab" aria-controls="day-ai" aria-selected="false" data-view="day-ai">生活探究</button>');
   main.insertAdjacentHTML('beforeend', `
     <section id="day-ai" class="view day-ai-view">
       <section class="day-ai-hero">

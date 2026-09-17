@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release": "2026.08.29-lesson-videos-v2",
-  "generated_at": "2026-08-29T10:13:04.618Z",
+  "generated_at": "2026-09-17T04:33:20.054Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -216,8 +216,8 @@
   "files": [
     {
       "file": "index.html",
-      "sha256": "6329eb72ce727541ed1cc18612dd7e7acceb1fedef47acdaccc45e99b9c6272c",
-      "bytes": 52885,
+      "sha256": "39304c26260afa1af6b8ad270eb2ed1597d3e6811c858891c89acb7aaae319a7",
+      "bytes": 52943,
       "scope": "core"
     },
     {
@@ -234,8 +234,8 @@
     },
     {
       "file": "week-cockpit.js",
-      "sha256": "2f8c3785753e2bfa1762b32a5b4506b76e19cba40943a221357af726fe9dbf70",
-      "bytes": 21691,
+      "sha256": "b1d7755bdcfbf21b52625ceb41e47f582a0a62b71670173328d4f0eedf26695b",
+      "bytes": 22638,
       "scope": "core"
     },
     {
@@ -348,8 +348,8 @@
     },
     {
       "file": "week-03/index.html",
-      "sha256": "6431489b5fdbb81b67cc3f862c48c8ca7216c18774238b27432dcab42234b847",
-      "bytes": 4726,
+      "sha256": "263c65ca8feec09de625874ba4bb4ef53796f9e56110217389a74871476151ee",
+      "bytes": 4730,
       "scope": "week-03"
     },
     {
@@ -546,8 +546,8 @@
     },
     {
       "file": "week-06/index.html",
-      "sha256": "867c77f43efad8e9887f062a5f6937d8997046b12732f069775533b0b419eeda",
-      "bytes": 4672,
+      "sha256": "7b4d157cccd0ff77d11b96d873d0091f1d05bc0692fdeb1724cc530cd7893b3e",
+      "bytes": 4676,
       "scope": "week-06"
     },
     {
@@ -744,8 +744,8 @@
     },
     {
       "file": "week-09/index.html",
-      "sha256": "46d9335bde5cc59e8b8643306b1811aa0c2e2645898bb8f56969930b7697a43e",
-      "bytes": 4750,
+      "sha256": "48d1206264c95390518c859822d1c02feebdaf3a712c498a13ccd2457b056937",
+      "bytes": 4754,
       "scope": "week-09"
     },
     {
@@ -942,8 +942,8 @@
     },
     {
       "file": "week-12/index.html",
-      "sha256": "c6c3e26f2caf758f0d6fb216fbf107d1916b1293922f877ba08e7ef2b291c163",
-      "bytes": 4728,
+      "sha256": "f13b6b75237952ca0884a97ada8104adf21e9a18fa44cbe24393cc257d73fae5",
+      "bytes": 4732,
       "scope": "week-12"
     },
     {
@@ -1140,8 +1140,8 @@
     },
     {
       "file": "week-15/index.html",
-      "sha256": "1cfca8d96db1b7acc2e8788326795d3f824b3b4fda4835f39083c5cdd69434ec",
-      "bytes": 4773,
+      "sha256": "e5ef7c9ef650f5a60d453b7927977cc800fd2089b5ff1c32e04fc51a278a7c9a",
+      "bytes": 4777,
       "scope": "week-15"
     },
     {
@@ -1338,8 +1338,8 @@
     },
     {
       "file": "week-18/index.html",
-      "sha256": "01cc010f47302ae6061dd15cda9d38bb5a5bf691a0fcea73ca77871383f266e2",
-      "bytes": 4376,
+      "sha256": "e4fe76929c40dd736f3221c8401e822354c388082cbf4c2d5743df507474bd8a",
+      "bytes": 4378,
       "scope": "week-18"
     },
     {
@@ -1536,8 +1536,8 @@
     },
     {
       "file": "week-21/index.html",
-      "sha256": "fa9694a0fe46798b84ce7e6987b9b228ea5df583150dd10ead7159ee59362ad3",
-      "bytes": 4391,
+      "sha256": "76042753c8842680c9e276538e971e577a34d58f6ccbaf70d7e54aa99f35452b",
+      "bytes": 4393,
       "scope": "week-21"
     },
     {
@@ -1734,8 +1734,8 @@
     },
     {
       "file": "week-24/index.html",
-      "sha256": "99c67269e9db9b3746eb4ebc007cf958ec13049f77b6d2b3cd28c663b96c8b5b",
-      "bytes": 4421,
+      "sha256": "c65304faee0896788f9c83ee70fe4f276ed0226e9b912b3aaf0a6f3f3accd03d",
+      "bytes": 4423,
       "scope": "week-24"
     },
     {
@@ -1932,8 +1932,8 @@
     },
     {
       "file": "week-27/index.html",
-      "sha256": "1fd8f6b3bba1c2c0a15da5c579c6836f36f192e142e4d3da9c2e6e43b2eaacc5",
-      "bytes": 4286,
+      "sha256": "cf310f4b7dce3cd1b3cd496b43109e87a710b2f7bcabce26902f28533f9ddeb4",
+      "bytes": 4288,
       "scope": "week-27"
     },
     {
@@ -2130,8 +2130,8 @@
     },
     {
       "file": "week-30/index.html",
-      "sha256": "d405fb08e61eee95b9ec12009312c729990c6ec4f975dc200d156439285032db",
-      "bytes": 4376,
+      "sha256": "0d828e7664cfc1421444127ec549d27d1b6acf03dc8f850456434198a35ed992",
+      "bytes": 4378,
       "scope": "week-30"
     },
     {

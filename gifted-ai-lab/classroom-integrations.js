@@ -17,7 +17,7 @@
   `);
 
   const tabs = document.querySelector('.tabs');
-  tabs?.insertAdjacentHTML('beforeend', '<button class="tab" data-view="safety">安全護欄</button>');
+  tabs?.insertAdjacentHTML('beforeend', '<button class="tab" type="button" role="tab" aria-controls="safety" aria-selected="false" data-view="safety">安全護欄</button>');
   document.querySelector('main')?.insertAdjacentHTML('beforeend', `
     <section id="safety" class="view safety-view">
       <section class="section safety-hero"><div class="section-head"><span>PRIVACY &amp; AI SAFETY</span><h2>資料分級與公開前把關</h2></div><div class="data-levels">

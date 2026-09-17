@@ -26,7 +26,7 @@
   <main class="shell">
     <section class="hero"><div class="hero-copy"><div class="code">第 ${ww} 週 · ${esc(data.date)} · 90 分鐘</div><h1>${esc(data.title)}</h1><p>${esc(data.goal)}</p><div class="driving"><span>這週的大問題</span><strong>${esc(extra.drivingQuestion)}</strong></div></div><div class="hero-side"><figure class="week-visual"><img src="week-illustration.webp" width="1152" height="768" alt="${esc(data.title)}的 Q 版繪本情境圖" fetchpriority="high"><figcaption>先看圖找線索，再開始今天的挑戰。</figcaption></figure><div class="output"><span>今天要完成</span>${esc(data.output)}<small id="pathProgress">闖關進度 0 / 4</small></div></div></section>
     <div class="actions"><a class="action primary" href="lecture-slides.html">開啟 12 張課堂簡報</a><a class="action notebook" href="${esc(data.notebookUrl)}" target="_blank" rel="noopener noreferrer">開啟本週 NotebookLM</a><a class="action" href="teacher-pack.pdf?v=20260727-rich">下載直式詳案</a><button class="action" id="printWeek">列印本週</button></div>
-    <nav class="tabs" role="tablist" aria-label="課程內容"><button class="tab active" data-view="teacher">上課流程</button><button class="tab" data-view="explore">動手闖關</button><button class="tab" data-view="student">我的工作室</button><button class="tab" data-view="assessment">小挑戰</button><button class="tab" data-view="media">影片與教材</button></nav>
+    <nav class="tabs" role="tablist" aria-label="課程內容"><button class="tab active" type="button" role="tab" aria-controls="teacher" aria-selected="true" data-view="teacher">上課流程</button><button class="tab" type="button" role="tab" aria-controls="explore" aria-selected="false" data-view="explore">動手闖關</button><button class="tab" type="button" role="tab" aria-controls="student" aria-selected="false" data-view="student">我的工作室</button><button class="tab" type="button" role="tab" aria-controls="assessment" aria-selected="false" data-view="assessment">小挑戰</button><button class="tab" type="button" role="tab" aria-controls="media" aria-selected="false" data-view="media">影片與教材</button></nav>
     <section class="visual-learning-wall" aria-label="本週圖像學習牆"><a class="visual-learning-card" href="week-illustration.webp" target="_blank"><img src="week-illustration.webp" width="1152" height="768" alt="${esc(data.title)}的 Q 版繪本圖"><span><b>故事情境</b>先看圖猜猜今天要做什麼</span></a><a class="visual-learning-card" href="student-infographic.webp" target="_blank"><img src="student-infographic.webp" loading="lazy" alt="第 ${week} 週好懂版資訊圖"><span><b>好懂圖解</b>用一張圖整理重要想法</span></a><a class="visual-learning-card" href="depth-infographic.webp" target="_blank"><img src="depth-infographic.webp" loading="lazy" alt="第 ${week} 週研究挑戰圖"><span><b>再想一步</b>看看還能研究什麼問題</span></a></section>
 
     <section id="teacher" class="view active">
@@ -70,13 +70,25 @@
   <div class="draw-toolbar" aria-label="畫筆工具"><button class="draw-color active" data-color="#15383c" style="--swatch:#15383c" aria-label="深綠色"></button><button class="draw-color" data-color="#de5c46" style="--swatch:#de5c46" aria-label="紅色"></button><button class="draw-color" data-color="#f1bd45" style="--swatch:#f1bd45" aria-label="黃色"></button><button class="draw-color" data-color="#168277" style="--swatch:#168277" aria-label="綠色"></button><button class="draw-color" data-color="#3575a7" style="--swatch:#3575a7" aria-label="藍色"></button><button id="clearDraw">清除</button><button id="closeDraw">完成</button></div>
   <aside class="tool-dock"><div class="tools"><div class="tool-head"><span>課堂工具</span><button class="nav-btn close-tools" aria-label="關閉工具">×</button></div><div class="timer-display">10:00</div><div class="timer-controls"><button data-min="5">5 分</button><button data-min="10">10 分</button><button data-min="15">15 分</button><button class="start-timer">開始</button></div><button class="action pick-challenge">抽進階挑戰</button><p class="challenge">完成基本任務後，再抽一張挑戰卡。</p><button class="action draw-toggle">開啟全頁畫筆</button></div><button class="tool-toggle" aria-label="開啟課堂工具" title="課堂工具">＋</button></aside>`;
 
-  const showView=view=>{
-    document.querySelectorAll('.tab').forEach(tab=>tab.classList.toggle('active',tab.dataset.view===view));
+  const viewIds=['teacher','explore','student','assessment','media','safety','day-ai'];
+  const showView=(view,{scroll=true}={})=>{
+    if(!viewIds.includes(view))return;
+    const target=document.getElementById(view);
+    if(!target)return;
+    document.querySelectorAll('.tab').forEach(tab=>{
+      const active=tab.dataset.view===view;
+      tab.classList.toggle('active',active);
+      tab.setAttribute('aria-selected',String(active));
+    });
     document.querySelectorAll('.view').forEach(section=>section.classList.toggle('active',section.id===view));
     history.replaceState(null,'',`#${view}`);
+    if(scroll)requestAnimationFrame(()=>{
+      const top=Math.max(0,window.scrollY+target.getBoundingClientRect().top-84);
+      window.scrollTo({top,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+    });
   };
   document.querySelector('.tabs').addEventListener('click',event=>{const tab=event.target.closest('[data-view]');if(tab)showView(tab.dataset.view);});
-  const initialView=location.hash.slice(1);if(['teacher','explore','student','assessment','media'].includes(initialView))showView(initialView);
+  const initialView=location.hash.slice(1);if(viewIds.includes(initialView))showView(initialView,{scroll:false});
   document.querySelector('#printWeek').onclick=()=>window.print();
 
   const note=document.querySelector('.teacher-note');
