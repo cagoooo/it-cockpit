@@ -64,7 +64,7 @@ for (const item of weeks) {
 <head>
 ${commonHead}
 <link rel="stylesheet" href="../week-cockpit.css">
-<link rel="stylesheet" href="../week-cockpit-rich.css?v=${depthAssetVersion}">
+<link rel="stylesheet" href="../week-cockpit-rich.css?v=${cockpitAssetVersion}">
 <link rel="stylesheet" href="../week-learning-depth.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../week-phase-six.css?v=${depthAssetVersion}">
 <link rel="stylesheet" href="../classroom-integrations.css">
