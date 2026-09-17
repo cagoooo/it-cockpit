@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>網路好公民｜三年級授課簡報</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Bungee&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fef9f0; --panel:#fff; --c1:#ff6b6b; --c2:#ffa94d; --c3:#51cf66; --c4:#339af0; --c5:#cc5de8;
+      --red-soft:#ffe3e3; --yellow-soft:#fff3bf; --green-soft:#d3f9d8; --blue-soft:#d0ebff;
+      --text:#2c2c2c; --dim:#6f6f6f;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;overflow:hidden}
+    body{font-family:'Noto Sans TC',sans-serif;color:var(--text);background:var(--bg);
+      background-image:radial-gradient(rgba(44,44,44,.08) 1.4px,transparent 1.4px);background-size:26px 26px}
+    .deck{position:relative;width:100vw;height:100vh}
+    .slide{position:absolute;inset:0;padding:5vh 6vw 13vh;display:none;flex-direction:column;justify-content:center;gap:3vh}
+    .slide.active{display:flex;animation:pop .35s ease-out}
+    @keyframes pop{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+    .slide::after{content:'';position:absolute;left:0;right:0;top:0;height:10px;
+      background:repeating-linear-gradient(90deg,var(--c1) 0 60px,var(--c2) 60px 120px,var(--c3) 120px 180px,var(--c4) 180px 240px)}
+    .kicker{font-family:'Bungee',sans-serif;font-size:1.1rem;letter-spacing:.08em;display:inline-block;background:var(--text);color:#fff;padding:4px 14px;border-radius:8px;align-self:flex-start}
+    h1{font-size:clamp(2.4rem,5.4vw,4.6rem);line-height:1.25;margin:0;font-weight:900}
+    h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.3;margin:0;font-weight:900}
+    p,li{font-size:clamp(1.2rem,2.1vw,1.8rem);line-height:1.6}
+    .hl{background:linear-gradient(transparent 58%,var(--yellow-soft) 58%);padding:0 6px}
+    .row{display:grid;gap:2.2vw}
+    .r2{grid-template-columns:repeat(2,1fr)} .r3{grid-template-columns:repeat(3,1fr)} .r4{grid-template-columns:repeat(4,1fr)}
+    .box{background:var(--panel);border:3px solid var(--text);border-radius:22px;padding:2.4vh 1.8vw;box-shadow:6px 6px 0 var(--text)}
+    .box h3{margin:0 0 .6vh;font-size:clamp(1.4rem,2.5vw,2.1rem)}
+    .box p{margin:0;font-size:clamp(1.05rem,1.8vw,1.5rem)}
+    .big-ic{font-size:clamp(2.4rem,5vw,4.2rem);display:block;line-height:1.2}
+    .center{text-align:center}
+    .bubble{position:relative;background:#fff;border:3px solid var(--text);border-radius:26px;padding:2.6vh 2vw;box-shadow:6px 6px 0 var(--text);text-align:center}
+    .bubble::after{content:'';position:absolute;bottom:-22px;left:22%;border-width:22px 18px 0 0;border-style:solid;border-color:var(--text) transparent transparent transparent}
+    .bubble .no{position:absolute;top:-20px;left:50%;transform:translateX(-50%);background:var(--c1);color:#fff;border:3px solid var(--text);border-radius:999px;padding:0 16px;font-weight:900;font-size:clamp(1rem,1.6vw,1.3rem)}
+    .bubble b{font-size:clamp(1.6rem,3vw,2.6rem);display:block}
+    .chat{max-width:760px;margin:0 auto;width:100%;background:#fff;border:3px solid var(--text);border-radius:28px;padding:2vh 2vw;box-shadow:6px 6px 0 var(--text)}
+    .msg{display:flex;gap:12px;align-items:flex-end;margin:1.2vh 0}
+    .msg .av{font-size:2.2rem}
+    .msg .bub{background:var(--bg);border:2.5px solid var(--text);border-radius:18px 18px 18px 4px;padding:.8vh 1.2vw;font-size:clamp(1.1rem,2vw,1.6rem)}
+    .msg.hurt .bub{background:var(--red-soft)}
+    .msg.sys{justify-content:center}
+    .msg.sys .bub{border-style:dashed;color:var(--dim);border-radius:12px}
+    .sfx{position:absolute;right:7vw;top:12vh;font-family:'Bungee',sans-serif;font-size:clamp(2rem,5vw,4rem);color:var(--c1);transform:rotate(8deg);-webkit-text-stroke:2px var(--text);animation:sfx 1.6s ease-in-out infinite}
+    @keyframes sfx{50%{transform:rotate(8deg) scale(1.12)}}
+    .lamp{width:clamp(40px,5vw,70px);height:clamp(40px,5vw,70px);border-radius:50%;border:3px solid var(--text);display:inline-block;vertical-align:middle}
+    .lamp.r{background:#fa5252;box-shadow:0 0 22px #fa5252}.lamp.y{background:#fcc419;box-shadow:0 0 22px #fcc419}.lamp.g{background:#40c057;box-shadow:0 0 22px #40c057}
+    .flow{display:flex;align-items:center;gap:1.2vw}
+    .flow .box{flex:1;text-align:center}
+    .flow .arr{font-size:clamp(2rem,4vw,3.4rem);font-weight:900}
+    table{border-collapse:separate;border-spacing:0;width:100%;border:3px solid var(--text);border-radius:20px;overflow:hidden;background:#fff}
+    th,td{padding:1.4vh 1.4vw;font-size:clamp(1.05rem,1.9vw,1.6rem);border-bottom:2px solid #e5e5e5;text-align:left}
+    th{background:var(--text);color:#fff}
+    tr:last-child td{border-bottom:none}
+    td:first-child{font-weight:900;background:var(--bg)}
+    .num-card{display:flex;gap:1.4vw;align-items:center}
+    .num-card .n{flex:0 0 auto;width:clamp(48px,5vw,80px);height:clamp(48px,5vw,80px);border:3px solid var(--text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bungee',sans-serif;font-size:clamp(1.4rem,2.6vw,2.4rem);color:#fff}
+    .url{font-family:monospace;font-size:clamp(1rem,1.8vw,1.5rem);background:#fff;border:2.5px solid var(--text);border-radius:12px;padding:.6vh 1vw;display:inline-block}
+
+    .speaker{position:absolute;bottom:3vh;left:2.4vw;display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:52%}
+    .speaker .avatar{flex:0 0 60px;width:60px;height:60px;background:var(--c2);border:3px solid var(--text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:3px 3px 0 var(--text)}
+    .speaker .sb{background:#fff;border:2.5px solid var(--text);padding:8px 14px;font-size:.95rem;font-weight:600;border-radius:14px;box-shadow:3px 3px 0 var(--text);position:relative}
+    .speaker .sb::before{content:'';position:absolute;left:-12px;bottom:16px;border-style:solid;border-width:8px 12px 8px 0;border-color:transparent var(--text) transparent transparent}
+    body.no-speaker .speaker{display:none}
+
+    .progress{position:fixed;left:0;right:0;bottom:0;height:8px;background:rgba(0,0,0,.08);z-index:20}
+    .progress-fill{height:100%;width:0;background:var(--c1);transition:width .3s}
+    .hint{position:fixed;right:18px;bottom:16px;font-size:.8rem;color:var(--dim);z-index:20;background:rgba(255,255,255,.85);padding:3px 10px;border-radius:8px}
+    .navb{position:fixed;top:50%;transform:translateY(-50%);z-index:20;width:48px;height:72px;border:2.5px solid var(--text);border-radius:12px;background:rgba(255,255,255,.85);font-size:2rem;font-weight:900;cursor:pointer;color:var(--text);opacity:.35;transition:.15s}
+    .navb:hover{opacity:1}
+    .navb.prev{left:8px}.navb.next{right:8px}
+    .back{position:fixed;right:18px;top:18px;z-index:20;font-weight:900;font-size:.85rem;text-decoration:none;color:var(--text);background:#fff;border:2.5px solid var(--text);border-radius:10px;padding:4px 12px;box-shadow:3px 3px 0 var(--text)}
+    .overview{position:fixed;inset:0;background:rgba(254,249,240,.97);z-index:50;display:none;padding:4vh 4vw;overflow:auto}
+    .overview.show{display:block}
+    .overview h3{margin:0 0 2vh;font-size:1.6rem}
+    #ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .ov{background:#fff;border:2.5px solid var(--text);border-radius:14px;padding:12px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--text);text-align:left;font-family:inherit;color:var(--text)}
+    .ov.cur{background:var(--yellow-soft)}
+    .ov b{display:block;font-size:1.05rem}
+    .ov span{font-size:.85rem;color:var(--dim)}
+    @media (max-width:800px){
+      .r2,.r3,.r4{grid-template-columns:1fr}
+      .flow{flex-direction:column}.flow .arr{transform:rotate(90deg)}
+      .slide{justify-content:flex-start;overflow-y:auto;padding-top:7vh}
+      .speaker{display:none}.hint{display:none}.sfx{display:none}
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html" title="回到駕駛艙（Esc）">← 駕駛艙</a>
+  <div class="deck" id="deck">
+    <!-- 1 封面 -->
+    <section class="slide active" id="s1">
+      <span class="kicker">GRADE 3 · DIGITAL CITIZEN</span>
+      <h1>網路好公民<br><span class="hl">說好話・交對友・想清楚再分享</span></h1>
+      <p style="margin:0">三年級資訊科技｜三個小故事，一份網路守則</p>
+      <div class="row r3" style="max-width:1100px">
+        <div class="box center"><span class="big-ic">💬</span><h3>我有話要說</h3></div>
+        <div class="box center"><span class="big-ic">🤝</span><h3>誰在安慰你？</h3></div>
+        <div class="box center"><span class="big-ic">🚦</span><h3>分享紅綠燈</h3></div>
+      </div>
+      <div class="speaker"><div class="avatar">😄</div><div class="sb">嗨！我是阿凱老師，今天我們要當網路小鎮的好公民！</div></div>
+    </section>
+
+    <!-- 2 HOOK -->
+    <section class="slide" id="s2">
+      <span class="kicker">HOOK</span>
+      <h2>群組為什麼突然安靜了？</h2>
+      <div class="sfx">SILENCE…</div>
+      <div class="chat">
+        <div class="msg"><span class="av">🧒</span><span class="bub">小華：這個摺紙教學超好玩！大家一起試試看！</span></div>
+        <div class="msg hurt"><span class="av">👦</span><span class="bub">小明：這很無聊。</span></div>
+        <div class="msg sys"><span class="bub">……小美收起了畫，小安不說笑話了……</span></div>
+      </div>
+      <div class="speaker"><div class="avatar">🤔</div><div class="sb">請大家想一想：如果你是小華，心情會怎麼樣？</div></div>
+    </section>
+
+    <!-- 3 WHAT -->
+    <section class="slide" id="s3">
+      <span class="kicker">WHAT</span>
+      <h2>網路就像一座<span class="hl">熱鬧的小鎮</span></h2>
+      <div class="row r4">
+        <div class="box center"><span class="big-ic">🔍</span><h3>查資料</h3><p>搜尋引擎找新知識</p></div>
+        <div class="box center"><span class="big-ic">💬</span><h3>聊天分享</h3><p>社群媒體和朋友互動</p></div>
+        <div class="box center"><span class="big-ic">🛒</span><h3>買東西</h3><p>網路購物平臺</p></div>
+        <div class="box center"><span class="big-ic">📷</span><h3>發表作品</h3><p>上傳照片和影片</p></div>
+      </div>
+      <p style="margin:0">小鎮裡有自由，也有<b>規則</b>：懂得是非判斷，遵守道德規範。</p>
+      <div class="speaker"><div class="avatar">🏘️</div><div class="sb">在網路上做的事，跟在真實世界一樣重要喔！</div></div>
+    </section>
+
+    <!-- 4 WHY -->
+    <section class="slide" id="s4">
+      <span class="kicker">WHY</span>
+      <h2>螢幕的另一邊，是<span class="hl">真實的人</span></h2>
+      <div class="row r3">
+        <div class="box"><span class="big-ic">👀</span><h3>會被看見</h3><p>每一句話都有真實的人讀到、感受到。</p></div>
+        <div class="box"><span class="big-ic">💾</span><h3>會被保存</h3><p>留言可能被截圖、轉傳，很難真正刪掉。</p></div>
+        <div class="box"><span class="big-ic">⚖️</span><h3>受法律保護</h3><p>言論自由和個人資料，都受到法律保障。</p></div>
+      </div>
+      <div class="speaker"><div class="avatar">❤️</div><div class="sb">所以發言不只是「說出想法」，也是展現尊重和負責。</div></div>
+    </section>
+
+    <!-- 5 three questions -->
+    <section class="slide" id="s5">
+      <span class="kicker">STAGE 1 · 發言三問</span>
+      <h2>按下「送出」之前，先停一下！</h2>
+      <div class="row r3" style="margin-top:2vh">
+        <div class="bubble"><span class="no">1</span><b>這是真的嗎？</b><p style="margin:0">不確定，先不說</p></div>
+        <div class="bubble"><span class="no" style="background:var(--c2)">2</span><b>一定要現在說嗎？</b><p style="margin:0">生氣時，先冷靜</p></div>
+        <div class="bubble"><span class="no" style="background:var(--c4)">3</span><b>別人這樣說我，我會怎樣？</b><p style="margin:0">換位思考</p></div>
+      </div>
+      <div class="speaker"><div class="avatar">✋</div><div class="sb">全班一起比出三根手指，把三個問題唸一遍！</div></div>
+    </section>
+
+    <!-- 6 five tips -->
+    <section class="slide" id="s6">
+      <span class="kicker">STAGE 1 · 發言訣竅</span>
+      <h2>網路發言五個小訣竅</h2>
+      <div class="row r2">
+        <div class="box num-card"><span class="n" style="background:var(--c1)">1</span><div><h3>保持禮貌</h3><p>不說讓人生氣、不舒服的話</p></div></div>
+        <div class="box num-card"><span class="n" style="background:var(--c2)">2</span><div><h3>多鼓勵、少批評</h3><p>不人身攻擊、不酸言酸語</p></div></div>
+        <div class="box num-card"><span class="n" style="background:var(--c3)">3</span><div><h3>主題要明確</h3><p>標題和內容寫清楚</p></div></div>
+        <div class="box num-card"><span class="n" style="background:var(--c4)">4</span><div><h3>先檢查是否重複</h3><p>避免洗版</p></div></div>
+      </div>
+      <div class="box num-card" style="max-width:50%"><span class="n" style="background:var(--c5)">5</span><div><h3>尊重不同意見</h3><p>先聽理由，不急著否定</p></div></div>
+      <div class="speaker"><div class="avatar">📝</div><div class="sb">待會到駕駛艙玩「留言變身器」，練習把話說得更溫暖！</div></div>
+    </section>
+
+    <!-- 7 online vs offline -->
+    <section class="slide" id="s7">
+      <span class="kicker">STAGE 2 · 網路交友</span>
+      <h2>網路上的朋友 vs. 身邊的朋友</h2>
+      <table>
+        <thead><tr><th>比一比</th><th>👫 學校同學</th><th>💻 網路上認識的人</th></tr></thead>
+        <tbody>
+          <tr><td>長相</td><td>看得到</td><td>看不見，照片可能是假的</td></tr>
+          <tr><td>聲音語氣</td><td>聽得到</td><td>只有文字，容易誤會</td></tr>
+          <tr><td>他在做什麼</td><td>一起上課、下課</td><td>不知道，可能在忙</td></tr>
+        </tbody>
+      </table>
+      <p style="margin:0">💛 友誼秘訣：<b>多思考一秒鐘</b>・<b>真誠尊重</b>・<b>體諒不催促</b></p>
+      <div class="speaker"><div class="avatar">🤝</div><div class="sb">網路上可以交到好朋友，但要多一份謹慎。</div></div>
+    </section>
+
+    <!-- 8 never ask -->
+    <section class="slide" id="s8">
+      <span class="kicker">STAGE 2 · 危險訊號</span>
+      <h2>真正的朋友<span class="hl">不會</span>跟你要……</h2>
+      <div class="row r3">
+        <div class="box center"><span class="big-ic">🏫</span><h3>就讀學校</h3></div>
+        <div class="box center"><span class="big-ic">🏠</span><h3>家裡住址</h3></div>
+        <div class="box center"><span class="big-ic">🪪</span><h3>身分證件</h3></div>
+        <div class="box center"><span class="big-ic">🔑</span><h3>帳號密碼</h3></div>
+        <div class="box center"><span class="big-ic">📸</span><h3>你的照片</h3></div>
+        <div class="box center"><span class="big-ic">🎥</span><h3>開視訊</h3></div>
+      </div>
+      <div class="speaker"><div class="avatar">⚠️</div><div class="sb">「只有我懂你」「這是我們的小秘密」——聽到要特別小心！</div></div>
+    </section>
+
+    <!-- 9 four steps -->
+    <section class="slide" id="s9">
+      <span class="kicker">STAGE 2 · 安全四步驟</span>
+      <h2>遇到不合理的要求，這樣做！</h2>
+      <div class="flow">
+        <div class="box"><span class="big-ic">✋</span><h3>停止對話</h3></div><span class="arr">→</span>
+        <div class="box"><span class="big-ic">📱</span><h3>截圖存證</h3></div><span class="arr">→</span>
+        <div class="box"><span class="big-ic">🚫</span><h3>封鎖對方</h3></div><span class="arr">→</span>
+        <div class="box" style="background:var(--green-soft)"><span class="big-ic">🧑‍🏫</span><h3>告訴大人</h3></div>
+      </div>
+      <p style="margin:0">可信任的大人：家長、導師、輔導老師。<b>告訴大人不是告狀，是保護自己！</b></p>
+      <div class="speaker"><div class="avatar">🛡️</div><div class="sb">請每位同學說出：我可以找哪三位大人幫忙？</div></div>
+    </section>
+
+    <!-- 10 red light -->
+    <section class="slide" id="s10">
+      <span class="kicker">STAGE 3 · 分享紅綠燈</span>
+      <h2><span class="lamp r"></span> 紅燈：危險！絕對不能傳</h2>
+      <div class="row r3">
+        <div class="box" style="background:var(--red-soft)"><span class="big-ic">🤳</span><h3>沒經過同意的照片、影片</h3><p>擅自傳出去是違法的</p></div>
+        <div class="box" style="background:var(--red-soft)"><span class="big-ic">📲</span><h3>亂要權限的網站、App</h3><p>不需要卻要相簿、通訊錄、位置</p></div>
+        <div class="box" style="background:var(--red-soft)"><span class="big-ic">🔗</span><h3>要填很多個資的連結</h3><p>姓名、電話、住址、生日、密碼</p></div>
+      </div>
+      <div class="speaker"><div class="avatar">🚨</div><div class="sb">個人資料受到法律保護，不能隨意公開！</div></div>
+    </section>
+
+    <!-- 11 yellow light -->
+    <section class="slide" id="s11">
+      <span class="kicker">STAGE 3 · 分享紅綠燈</span>
+      <h2><span class="lamp y"></span> 黃燈：可疑！先查證</h2>
+      <div class="row r3">
+        <div class="box" style="background:var(--yellow-soft)"><span class="big-ic">🎁</span><h3>太吸引人的好康</h3><p>免費點數、寶物、限時抽獎、心理測驗</p></div>
+        <div class="box" style="background:var(--yellow-soft)"><span class="big-ic">🌐</span><h3>別人傳來的連結</h3><p>不管是誰傳的，都先別急著點</p></div>
+        <div class="box" style="background:var(--yellow-soft)"><span class="big-ic">📢</span><h3>未經證實的消息</h3><p>不當假訊息的幫手</p></div>
+      </div>
+      <p style="margin:0">🔎 查證好幫手：官方網站・台灣事實查核中心・MyGoPen・問大人</p>
+      <div class="speaker"><div class="avatar">🧐</div><div class="sb">覺得「好像哪裡怪怪的」，就是該停下來查證的時候！</div></div>
+    </section>
+
+    <!-- 12 green light -->
+    <section class="slide" id="s12">
+      <span class="kicker">STAGE 3 · 分享紅綠燈</span>
+      <h2><span class="lamp g"></span> 綠燈：確認過，再分享</h2>
+      <div class="row r2">
+        <div class="box" style="background:var(--green-soft)"><span class="big-ic">🏛️</span><h3>來源正確的消息</h3><p>正式單位、官方網站、正式帳號發布，確認內容正確</p></div>
+        <div class="box" style="background:var(--green-soft)"><span class="big-ic">📸</span><h3>大家都同意的照片</h3><p>合照時大家都說「這張可以放上網」</p></div>
+      </div>
+      <p style="margin:0">綠燈不是什麼都能亂傳，而是<b>安全、也不會傷害別人</b>的內容。</p>
+      <div class="speaker"><div class="avatar">✅</div><div class="sb">接下來到駕駛艙玩「分享紅綠燈大挑戰」！</div></div>
+    </section>
+
+    <!-- 13 recap -->
+    <section class="slide" id="s13">
+      <span class="kicker">RECAP</span>
+      <h2>網路好公民 5 個叮嚀</h2>
+      <div class="row r2">
+        <div class="box num-card"><span class="n" style="background:var(--c1)">1</span><div><h3>送出前問三問</h3></div></div>
+        <div class="box num-card"><span class="n" style="background:var(--c2)">2</span><div><h3>多鼓勵、少批評</h3></div></div>
+        <div class="box num-card"><span class="n" style="background:var(--c4)">3</span><div><h3>個資不給網友</h3></div></div>
+        <div class="box num-card"><span class="n" style="background:var(--c5)">4</span><div><h3>停止・截圖・封鎖・告訴大人</h3></div></div>
+      </div>
+      <div class="box num-card"><span class="n" style="background:var(--c3)">5</span><div><h3>分享前看紅綠燈：先同意、先查證</h3></div></div>
+      <div class="speaker"><div class="avatar">🌟</div><div class="sb">這五個叮嚀，就是我們今天的網路守則！</div></div>
+    </section>
+
+    <!-- 14 closing -->
+    <section class="slide" id="s14">
+      <span class="kicker">MISSION</span>
+      <h1>每一個字，都在決定<br>網路世界的<span class="hl">模樣</span></h1>
+      <p style="margin:0">今日任務：到駕駛艙完成「<b>網路好公民承諾卡</b>」，選出三個你最想做到的約定！</p>
+      <div><span class="url">cagoooo.github.io/it-cockpit/net-citizen/</span></div>
+      <div class="speaker"><div class="avatar">🎉</div><div class="sb">讓我們一起把網路變成充滿尊重和善意的地方吧！</div></div>
+    </section>
+  </div>
+
+  <button class="navb prev" onclick="prev()" aria-label="上一頁">‹</button>
+  <button class="navb next" onclick="next()" aria-label="下一頁">›</button>
+  <div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="hint">← → 換頁 · M 章節 · F 全螢幕 · S 主講 · Esc 返回</div>
+  <div class="overview" id="overview"><h3>▶ 章節導覽（按 M 或 Esc 關閉）</h3><div id="ov-grid"></div></div>
+
+  <script>
+    const SLIDES = [
+      {t:'封面', s:'網路好公民三大任務'},
+      {t:'群組為什麼安靜了？', s:'故事暖身'},
+      {t:'網路是熱鬧的小鎮', s:'我們在網路上做什麼'},
+      {t:'螢幕後是真實的人', s:'會被看見、保存、受法律保護'},
+      {t:'發言三問', s:'真的嗎？現在說？換位思考'},
+      {t:'發言五訣竅', s:'禮貌、鼓勵、明確、不重複、尊重'},
+      {t:'網路朋友 vs 身邊朋友', s:'看不見、聽不到、易誤會'},
+      {t:'真正的朋友不會要…', s:'學校、住址、證件、密碼、照片、視訊'},
+      {t:'安全四步驟', s:'停止・截圖・封鎖・告訴大人'},
+      {t:'紅燈', s:'絕對不能傳'},
+      {t:'黃燈', s:'先查證'},
+      {t:'綠燈', s:'確認過再分享'},
+      {t:'5 個叮嚀', s:'今日網路守則'},
+      {t:'結語與任務', s:'承諾卡'}
+    ];
+    const N = SLIDES.length;
+    let curIdx = 0;
+    function goSlide(idx){
+      idx = Math.max(0, Math.min(N - 1, idx));
+      document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === idx));
+      curIdx = idx;
+      document.getElementById('progress-fill').style.width = ((idx + 1) / N * 100) + '%';
+      history.replaceState(null, '', '#s' + (idx + 1));
+      document.querySelectorAll('.ov').forEach((o, i) => o.classList.toggle('cur', i === idx));
+    }
+    function next(){ goSlide(curIdx + 1); }
+    function prev(){ goSlide(curIdx - 1); }
+    function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+    function toggleFullscreen(){
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+      else document.exitFullscreen();
+    }
+    function buildOverview(){
+      const g = document.getElementById('ov-grid');
+      SLIDES.forEach((s, i) => {
+        const b = document.createElement('button');
+        b.className = 'ov';
+        b.innerHTML = '<b></b><span></span>';
+        b.querySelector('b').textContent = (i + 1) + '. ' + s.t;
+        b.querySelector('span').textContent = s.s;
+        b.onclick = e => { e.stopPropagation(); goSlide(i); toggleOverview(); };
+        g.appendChild(b);
+      });
+    }
+    document.addEventListener('keydown', e => {
+      const ov = document.getElementById('overview');
+      if(ov.classList.contains('show')){
+        if(['Escape', 'm', 'M'].includes(e.key)){ ov.classList.remove('show'); e.preventDefault(); }
+        return;
+      }
+      const k = e.key;
+      if(['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(k)){ next(); e.preventDefault(); }
+      else if(['ArrowLeft', 'ArrowUp', 'PageUp'].includes(k)){ prev(); e.preventDefault(); }
+      else if(k === 'Home'){ goSlide(0); e.preventDefault(); }
+      else if(k === 'End'){ goSlide(N - 1); e.preventDefault(); }
+      else if(k === 'm' || k === 'M'){ toggleOverview(); e.preventDefault(); }
+      else if(k === 'f' || k === 'F'){ toggleFullscreen(); e.preventDefault(); }
+      else if(k === 's' || k === 'S'){ document.body.classList.toggle('no-speaker'); e.preventDefault(); }
+      else if(k === 'Escape'){
+        if(document.fullscreenElement) document.exitFullscreen();
+        else window.location.href = 'index.html';
+        e.preventDefault();
+      }
+      else if(/^[1-9]$/.test(k)){ goSlide(parseInt(k) - 1); e.preventDefault(); }
+    });
+    document.addEventListener('click', e => {
+      if(e.target.closest('.speaker, .overview, .hint, .progress, a, button')) return;
+      if(window.innerWidth <= 800) return;
+      if(e.clientX > window.innerWidth / 2) next(); else prev();
+    });
+    let touchX = 0;
+    document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
+    document.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+    }, {passive:true});
+    buildOverview();
+    const m = location.hash.match(/^#s(\d+)$/);
+    goSlide(m ? parseInt(m[1]) - 1 : 0);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>網路好公民：說好話・交對友・想清楚再分享｜三年級資訊科技教學駕駛艙</title>
+  <meta name="description" content="三年級數位公民課：網路發言禮儀、網路交友安全、分享紅綠燈與尊重他人權益。三大關卡互動練習、形成性評量與演講簡報。">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cagoooo.github.io/it-cockpit/net-citizen/">
+  <meta property="og:title" content="網路好公民：說好話・交對友・想清楚再分享｜三年級資訊科技">
+  <meta property="og:description" content="發言前三問、網路交友四步驟、分享紅綠燈！三大關卡互動練習，陪三年級孩子當個有禮貌、會保護自己、懂得尊重別人的網路好公民。">
+  <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/net-citizen/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:site_name" content="IT COCKPIT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/net-citizen/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Bungee&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fef9f0; --surface:#fff8ee; --panel:#ffffff;
+      --c1:#ff6b6b; --c2:#ffa94d; --c3:#51cf66; --c4:#339af0; --c5:#cc5de8;
+      --red-soft:#ffe3e3; --yellow-soft:#fff3bf; --green-soft:#d3f9d8; --blue-soft:#d0ebff; --purple-soft:#f3d9fa;
+      --text:#2c2c2c; --dim:#6f6f6f;
+      --border:2.5px solid var(--text);
+      --shadow:5px 5px 0 var(--text);
+      --shadow-s:3px 3px 0 var(--text);
+    }
+    html{font-size:18px;scroll-behavior:smooth}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;
+      background-image:radial-gradient(rgba(44,44,44,.07) 1.2px,transparent 1.2px);background-size:22px 22px}
+    a{color:inherit}
+    button{font-family:inherit}
+    .container{max-width:1400px;margin:0 auto;padding:24px}
+
+    /* ===== Header ===== */
+    .site-header{position:sticky;top:0;z-index:200;background:var(--panel);border-bottom:var(--border)}
+    .header-inner{max-width:1400px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .home-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:2.5px solid var(--text);background:var(--c2);
+      color:var(--text);text-decoration:none;font-weight:900;font-size:.85rem;white-space:nowrap;border-radius:10px;box-shadow:var(--shadow-s);transition:.15s}
+    .home-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--text)}
+    .header-title{font-size:1.05rem;font-weight:900;flex:1;min-width:200px}
+    .header-title small{display:block;font-size:.8rem;color:var(--dim);font-weight:500}
+    .progress-wrap{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700}
+    .progress-track{width:150px;height:14px;border:2px solid var(--text);border-radius:8px;background:#fff;overflow:hidden}
+    .progress-fill{height:100%;width:0;background:var(--c3);transition:width .4s}
+    .mode-btn{border:2.5px solid var(--text);background:#fff;padding:5px 12px;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;box-shadow:var(--shadow-s)}
+    .mode-btn.on{background:var(--c5);color:#fff}
+
+    /* ===== Hero ===== */
+    .hero{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:stretch;margin-top:10px}
+    .hero-card{background:var(--panel);border:var(--border);border-radius:20px;box-shadow:var(--shadow);padding:30px 32px;position:relative}
+    .grade-chip{display:inline-block;background:var(--c4);color:#fff;font-weight:900;padding:4px 14px;border:2px solid var(--text);border-radius:999px;font-size:.9rem}
+    .hero h1{font-size:2.1rem;line-height:1.35;margin:14px 0 8px;font-weight:900}
+    .hero h1 .hl{background:linear-gradient(transparent 58%,var(--yellow-soft) 58%);padding:0 4px}
+    .hero p.lead{font-size:1.05rem;margin:0 0 18px}
+    .obj-list{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+    .obj-chip{font-size:1rem;padding:7px 16px;border:2px solid var(--text);border-radius:999px;background:var(--surface);font-weight:700}
+    .lecture-cta{display:block;margin-top:22px;padding:16px 20px;background:var(--c1);color:#fff;border:2.5px solid var(--text);border-radius:14px;
+      box-shadow:var(--shadow);text-decoration:none;transition:.15s}
+    .lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--text)}
+    .lecture-cta .t{display:block;font-size:1.3rem;font-weight:900}
+    .lecture-cta .s{display:block;font-size:.9rem;opacity:.95}
+    .story-stack{display:flex;flex-direction:column;gap:14px}
+    .story-card{display:flex;gap:14px;align-items:center;background:var(--panel);border:var(--border);border-radius:16px;box-shadow:var(--shadow-s);
+      padding:14px 18px;text-decoration:none;transition:.15s;cursor:pointer}
+    .story-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow)}
+    .story-card .num{flex:0 0 58px;height:58px;border:2.5px solid var(--text);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-family:'Bungee',sans-serif;font-size:1.4rem}
+    .story-card h3{margin:0;font-size:1.1rem}
+    .story-card p{margin:0;font-size:.95rem;color:var(--dim)}
+    .story-card .done{margin-left:auto;font-size:.8rem;font-weight:900;padding:2px 10px;border-radius:999px;border:2px solid var(--text);background:#eee;white-space:nowrap}
+    .story-card .done.ok{background:var(--c3);color:#fff}
+
+    /* ===== Sections ===== */
+    .level-section{margin:56px 0;background:var(--panel);border:var(--border);border-radius:24px;box-shadow:var(--shadow);padding:34px 36px;scroll-margin-top:90px}
+    .section-header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    .stage-badge{font-family:'Bungee',sans-serif;font-size:.9rem;padding:6px 14px;border:2.5px solid var(--text);border-radius:10px;color:#fff;box-shadow:var(--shadow-s);letter-spacing:.05em}
+    .section-title{font-size:1.6rem;font-weight:900;margin:0}
+    .section-sub{font-size:1rem;color:var(--dim);margin:2px 0 0}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--surface);border:2.5px solid var(--text);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow-s)}
+    .card h4{margin:0 0 10px;font-size:1.15rem}
+    .card p{margin:0 0 8px}
+    .sub-title{font-size:1.3rem;font-weight:900;margin:34px 0 14px;display:flex;align-items:center;gap:10px}
+    .sub-title::before{content:'';width:12px;height:26px;background:var(--accent,var(--c1));border:2px solid var(--text);border-radius:4px}
+    .steps-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+    .steps-list li{display:flex;gap:14px;align-items:flex-start;font-size:1rem}
+    .step-num{flex:0 0 34px;height:34px;border:2px solid var(--text);border-radius:50%;background:var(--accent,var(--c1));color:#fff;
+      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem}
+    .tip-box{font-size:.95rem;padding:14px 18px;border:2px dashed var(--text);border-radius:12px;background:var(--yellow-soft);margin-top:16px}
+    .teacher-only{display:none}
+    body.teacher .teacher-only{display:block}
+    .teacher-note{margin-top:22px;background:var(--purple-soft);border:2.5px solid var(--c5);border-radius:14px;padding:16px 20px;font-size:.95rem}
+    .teacher-note h5{margin:0 0 6px;font-size:1rem;color:#862e9c}
+    .teacher-note ul{margin:0;padding-left:1.2em}
+
+    /* comic chat mock */
+    .phone{background:#fff;border:3px solid var(--text);border-radius:26px;padding:14px;box-shadow:var(--shadow);max-width:460px;margin:0 auto}
+    .phone-top{text-align:center;font-weight:900;border-bottom:2px solid #ddd;padding-bottom:8px;margin-bottom:10px;font-size:.95rem}
+    .msg{display:flex;gap:8px;margin:10px 0;align-items:flex-end}
+    .msg .av{flex:0 0 38px;height:38px;border-radius:50%;border:2px solid var(--text);display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:var(--blue-soft)}
+    .msg .bub{background:var(--surface);border:2px solid var(--text);border-radius:14px 14px 14px 4px;padding:7px 12px;font-size:.95rem;max-width:80%}
+    .msg .who{display:block;font-size:.75rem;color:var(--dim);font-weight:700}
+    .msg.me{flex-direction:row-reverse}
+    .msg.me .bub{background:var(--green-soft);border-radius:14px 14px 4px 14px}
+    .msg.sys{justify-content:center}
+    .msg.sys .bub{background:#f1f1f1;border-style:dashed;font-size:.85rem;color:var(--dim);border-radius:10px}
+    .msg.hurt .bub{background:var(--red-soft)}
+
+    /* three questions */
+    .ask-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .ask{border:2.5px solid var(--text);border-radius:22px;padding:22px 18px 18px;background:#fff;box-shadow:var(--shadow-s);position:relative;text-align:center}
+    .ask::after{content:'';position:absolute;bottom:-14px;left:40px;border-width:14px 12px 0 0;border-style:solid;border-color:var(--text) transparent transparent transparent}
+    .ask .q-no{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--accent,var(--c1));color:#fff;border:2px solid var(--text);border-radius:999px;padding:0 12px;font-weight:900;font-size:.9rem}
+    .ask .big{font-size:1.3rem;font-weight:900;display:block;margin-bottom:4px}
+    .ask .small{font-size:.9rem;color:var(--dim)}
+
+    /* interactive shared */
+    .lab{margin-top:22px;background:var(--blue-soft);border:2.5px solid var(--text);border-radius:18px;padding:22px 24px;box-shadow:var(--shadow-s)}
+    .lab-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .lab-head h4{margin:0;font-size:1.2rem}
+    .lab-tag{font-family:'Bungee',sans-serif;font-size:.7rem;background:var(--text);color:#fff;padding:3px 10px;border-radius:6px}
+    .lab-hint{font-size:.95rem;color:#444;margin:0 0 14px}
+    .btn{border:2.5px solid var(--text);background:#fff;padding:9px 16px;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:var(--shadow-s);transition:.12s;color:var(--text)}
+    .btn:hover{transform:translate(-1px,-1px)}
+    .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--text)}
+    .btn.primary{background:var(--c4);color:#fff}
+    .btn.green{background:var(--c3);color:#fff}
+    .btn.red{background:var(--c1);color:#fff}
+    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+    /* reply transformer */
+    .scene{background:#fff;border:2.5px solid var(--text);border-radius:16px;padding:18px 20px}
+    .scene-meta{font-size:.9rem;color:var(--dim);font-weight:700}
+    .scene-post{font-size:1.1rem;font-weight:700;margin:6px 0 14px}
+    .options{display:flex;flex-direction:column;gap:10px}
+    .opt{text-align:left;border:2.5px solid var(--text);background:var(--surface);border-radius:12px;padding:10px 14px;font-size:1rem;cursor:pointer;transition:.12s;color:var(--text)}
+    .opt:hover{background:var(--yellow-soft)}
+    .opt.good{background:var(--green-soft);border-color:#2b8a3e}
+    .opt.bad{background:var(--red-soft);border-color:#c92a2a}
+    .feedback{margin-top:12px;font-size:1rem;font-weight:700;min-height:1.7em}
+    .meter{display:flex;align-items:center;gap:10px;margin-top:14px;font-weight:700;font-size:.95rem;flex-wrap:wrap}
+    .meter-bar{flex:1;min-width:160px;height:20px;border:2.5px solid var(--text);border-radius:12px;background:#fff;overflow:hidden}
+    .meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--c2),var(--c3));transition:width .4s}
+
+    /* compare table */
+    .compare{width:100%;border-collapse:separate;border-spacing:0;border:2.5px solid var(--text);border-radius:14px;overflow:hidden;background:#fff}
+    .compare th,.compare td{padding:11px 14px;border-bottom:2px solid #e5e5e5;font-size:1rem;text-align:left;vertical-align:top}
+    .compare th{background:var(--text);color:#fff}
+    .compare tr:last-child td{border-bottom:none}
+    .compare td:first-child{font-weight:900;background:var(--surface);white-space:nowrap}
+
+    .never-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .never{border:2.5px solid var(--text);border-radius:14px;background:#fff;padding:12px;text-align:center;font-weight:900;position:relative}
+    .never .ic{font-size:1.8rem;display:block}
+    .never::after{content:'✕';position:absolute;top:4px;right:8px;color:var(--c1);font-size:1.1rem}
+
+    .flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+    .flow-step{flex:1;min-width:150px;border:2.5px solid var(--text);border-radius:16px;background:#fff;padding:14px;text-align:center;box-shadow:var(--shadow-s)}
+    .flow-step .ic{font-size:2rem;display:block}
+    .flow-step b{display:block;font-size:1.05rem}
+    .flow-step span{font-size:.9rem;color:var(--dim)}
+    .flow-arrow{display:flex;align-items:center;font-size:1.6rem;font-weight:900}
+
+    /* chat simulator */
+    .sim{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+    .sim .phone{max-width:none;min-height:360px}
+    .sim-log{max-height:380px;overflow-y:auto;padding-right:4px}
+    .sim-choices{display:flex;flex-direction:column;gap:10px}
+    .shield{display:flex;gap:6px;font-size:1.4rem;margin-top:8px}
+    .order-pool,.order-slots{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .order-slot{min-width:150px;min-height:52px;border:2.5px dashed var(--text);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;padding:6px 10px}
+    .order-slot.filled{border-style:solid;background:var(--green-soft)}
+
+    /* traffic light */
+    .lights{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .light-col{border:3px solid var(--text);border-radius:20px;padding:18px;background:#fff;box-shadow:var(--shadow-s)}
+    .light-col h4{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:1.2rem}
+    .lamp{width:34px;height:34px;border-radius:50%;border:2.5px solid var(--text);flex:0 0 34px}
+    .lamp.r{background:#fa5252;box-shadow:0 0 12px #fa5252}
+    .lamp.y{background:#fcc419;box-shadow:0 0 12px #fcc419}
+    .lamp.g{background:#40c057;box-shadow:0 0 12px #40c057}
+    .light-col ul{margin:0;padding-left:1.1em;font-size:.97rem}
+    .light-col li{margin-bottom:6px}
+    .sort-zone{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+    .bin{min-height:170px;border:3px dashed var(--text);border-radius:18px;padding:10px;background:rgba(255,255,255,.7);cursor:pointer;transition:.15s}
+    .bin.hot{transform:scale(1.02);background:#fff}
+    .bin h5{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+    .bin.r{border-color:#e03131}.bin.y{border-color:#f08c00}.bin.g{border-color:#2f9e44}
+    .deck-pool{display:flex;flex-wrap:wrap;gap:10px;min-height:60px;padding:10px;border:2.5px solid var(--text);border-radius:14px;background:#fff}
+    .chip-card{border:2.5px solid var(--text);background:var(--yellow-soft);border-radius:12px;padding:8px 12px;font-size:.95rem;font-weight:700;cursor:grab;user-select:none;max-width:320px;touch-action:manipulation}
+    .chip-card.sel{outline:4px solid var(--c4);transform:translateY(-2px)}
+    .bin .chip-card{display:block;margin:6px 0;background:#fff;max-width:none}
+    .chip-card.right{background:var(--green-soft)}
+    .chip-card.wrong{background:var(--red-soft)}
+    .check-places{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .check-places span{border:2px solid var(--text);border-radius:999px;padding:4px 14px;background:#fff;font-weight:700;font-size:.95rem}
+
+    /* quiz */
+    .quiz-section{margin-top:28px;background:var(--surface);border:2.5px solid var(--text);border-radius:18px;padding:22px 24px}
+    .quiz-section h4{margin:0 0 6px;font-size:1.2rem}
+    .quiz-item{background:#fff;border:2px solid var(--text);border-radius:14px;padding:14px 18px;margin-top:14px}
+    .quiz-q{font-size:1.05rem;font-weight:700;margin:0 0 10px}
+    .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .quiz-opt{font-size:1rem;padding:10px 14px;border:2px solid var(--text);border-radius:10px;background:var(--surface);cursor:pointer;text-align:left;color:var(--text)}
+    .quiz-opt:hover:not(:disabled){background:var(--yellow-soft)}
+    .quiz-opt.correct{background:var(--green-soft);border-color:#2b8a3e}
+    .quiz-opt.wrong{background:var(--red-soft);border-color:#c92a2a}
+    .quiz-opt:disabled{cursor:default}
+    .quiz-feedback{font-size:.95rem;margin-top:8px;font-weight:700;min-height:1.5em}
+    .quiz-score{font-weight:900;margin-top:12px}
+
+    /* promise card */
+    .promise{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+    .form-row{margin-bottom:14px}
+    .form-row label{display:block;font-weight:700;margin-bottom:4px}
+    .form-row input[type=text]{width:100%;font-size:1rem;padding:9px 12px;border:2.5px solid var(--text);border-radius:10px;font-family:inherit;background:#fff}
+    .check-list label{display:flex;gap:8px;align-items:flex-start;font-weight:500;margin:6px 0;cursor:pointer}
+    .check-list input{margin-top:6px;width:18px;height:18px}
+    .p-card{background:#fff;border:3px solid var(--text);border-radius:22px;padding:24px 26px;box-shadow:var(--shadow);position:relative;min-height:360px}
+    .p-card::before{content:'網路好公民承諾卡';position:absolute;top:-18px;left:22px;background:var(--c3);color:#fff;font-weight:900;border:2.5px solid var(--text);border-radius:999px;padding:2px 16px}
+    .p-card h4{font-size:1.3rem;margin:10px 0 12px}
+    .p-card ol{padding-left:1.3em;margin:0 0 12px}
+    .p-card .sign{border-top:2px dashed var(--text);padding-top:10px;font-weight:700}
+    .stamp{position:absolute;right:20px;bottom:18px;border:3px solid var(--c1);color:var(--c1);font-weight:900;padding:4px 12px;border-radius:10px;transform:rotate(-8deg);font-size:1.05rem;opacity:.9}
+
+    /* FAQ */
+    .faq-item{border:2.5px solid var(--text);border-radius:14px;background:#fff;margin-top:12px;overflow:hidden}
+    .faq-q{width:100%;text-align:left;background:var(--surface);border:none;padding:13px 18px;font-size:1rem;font-weight:900;cursor:pointer;display:flex;gap:10px;color:var(--text)}
+    .faq-q::after{content:'＋';margin-left:auto}
+    .faq-item.open .faq-q::after{content:'－'}
+    .faq-a{display:none;padding:12px 18px 16px;font-size:.97rem;line-height:1.75}
+    .faq-item.open .faq-a{display:block}
+
+    /* floating tools (z-index 400 > canvas 250) */
+    .float-tools{position:fixed;right:18px;bottom:18px;z-index:400;display:flex;flex-direction:column;gap:10px}
+    .float-btn{width:52px;height:52px;border-radius:50%;border:2.5px solid var(--text);background:#fff;font-size:1.4rem;cursor:pointer;box-shadow:var(--shadow-s);transition:.12s}
+    .float-btn:hover{transform:scale(1.08)}
+    .float-btn.yellow{background:var(--c2)}.float-btn.pink{background:var(--c1)}.float-btn.blue{background:var(--c4)}.float-btn.green{background:var(--c3)}
+    .tool-panel{position:fixed;right:82px;bottom:18px;z-index:400;width:300px;background:#fff;border:2.5px solid var(--text);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px;display:none}
+    .tool-panel.show{display:block}
+    .tool-panel h4{margin:0 0 10px;display:flex;justify-content:space-between;font-size:1.05rem}
+    .tool-panel .close{cursor:pointer}
+    .tool-panel input[type=number]{width:62px;padding:4px 6px;border:2px solid var(--text);border-radius:8px;font-family:inherit;font-size:.95rem}
+    .lottery-result,.timer-display{margin-top:12px;text-align:center;font-size:2rem;font-weight:900;border:2.5px dashed var(--text);border-radius:12px;padding:8px;background:var(--yellow-soft)}
+    .timer-display.done{background:var(--red-soft);animation:blink .6s 4}
+    @keyframes blink{50%{opacity:.3}}
+    .panel-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.9rem;margin-bottom:8px}
+    #drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent;display:block}
+    #drawCanvas.active{pointer-events:all;cursor:crosshair}
+    .draw-toolbar{position:fixed;left:18px;bottom:18px;z-index:300;background:#fff;border:2.5px solid var(--text);border-radius:14px;padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-s)}
+    .draw-toolbar.show{display:flex}
+    .color-dot{width:28px;height:28px;border:2px solid var(--text);border-radius:50%;cursor:pointer;padding:0;transition:.15s}
+    .color-dot.active{transform:scale(1.25)}
+    .draw-clear{border:2px solid var(--text);background:#fff;border-radius:8px;padding:3px 10px;font-weight:700;cursor:pointer}
+
+    .toast{position:fixed;left:50%;top:84px;transform:translateX(-50%) translateY(-20px);z-index:500;background:var(--c3);color:#fff;font-weight:900;
+      border:2.5px solid var(--text);border-radius:999px;padding:8px 22px;box-shadow:var(--shadow-s);opacity:0;pointer-events:none;transition:.3s}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    .site-credit{text-align:center;padding:28px 16px 90px;font-size:.85rem;color:var(--dim)}
+    .site-credit__heart{display:inline-block;margin:0 2px}
+    .site-credit__author{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+    .site-credit__author:hover{color:var(--c1)}
+
+    @media (max-width:960px){
+      .hero,.grid-2,.sim,.promise{grid-template-columns:1fr}
+      .grid-3,.ask-row,.lights,.sort-zone{grid-template-columns:1fr}
+      .never-grid{grid-template-columns:repeat(2,1fr)}
+      .level-section{padding:24px 18px}
+      .hero h1{font-size:1.6rem}
+      .progress-track{width:90px}
+    }
+    @media (max-width:600px){
+      .container{padding:16px}
+      .quiz-opts{grid-template-columns:1fr}
+      .flow-arrow{display:none}
+      .header-title{font-size:.95rem}
+      .site-header{position:static}
+      .header-inner{padding:10px 16px}
+      .tool-panel{right:16px;bottom:84px;width:calc(100% - 32px)}
+      .compare td:first-child{white-space:normal}
+    }
+    @media print{
+      .site-header,.float-tools,.tool-panel,#drawCanvas,.draw-toolbar,.toast,.hero,.site-credit,main>section:not(#mission),#mission .promise>div:first-child{display:none!important}
+      body{background:#fff}
+      #mission{border:none;box-shadow:none;margin:0}
+      .promise{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+      <div class="header-title">網路好公民：說好話・交對友・想清楚再分享<small>三年級｜資訊素養・數位公民</small></div>
+      <div class="progress-wrap" title="完成各關卡評量即可點亮">
+        <span>通關</span>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <span id="progressText">0 / 3</span>
+      </div>
+      <button class="mode-btn" id="modeBtn" onclick="toggleTeacher()">👩‍🏫 教師模式</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero-card">
+        <span class="grade-chip">三年級｜數位公民</span>
+        <h1>螢幕的另一邊，<br>是<span class="hl">真實的人</span>！</h1>
+        <p class="lead">網路就像一座熱鬧的小鎮：可以聊天、交朋友、分享有趣的東西。這堂課跟著三個小故事，學會當個<b>說話有禮貌、懂得保護自己、分享前會想清楚</b>的網路好公民。</p>
+        <ul class="obj-list">
+          <li class="obj-chip">💬 發言前先問三個問題</li>
+          <li class="obj-chip">🤝 分辨網路朋友的怪要求</li>
+          <li class="obj-chip">🛡️ 遇到危險會用四步驟</li>
+          <li class="obj-chip">🚦 用紅綠燈判斷能不能分享</li>
+        </ul>
+        <a href="lecture-slides.html" class="lecture-cta" title="老師上課投影用">
+          <span class="t">🎬 進入演講簡報模式</span>
+          <span class="s">14 張漫畫風投影片 · 鍵盤翻頁 · 全螢幕投影 · 可離線</span>
+        </a>
+      </div>
+      <nav class="story-stack" aria-label="關卡導覽">
+        <a class="story-card" href="#sec1">
+          <span class="num" style="background:var(--c1);color:#fff">1</span>
+          <div><h3>我有話要說</h3><p>群組為什麼突然安靜了？學會友善發言</p></div>
+          <span class="done" data-done="1">未通關</span>
+        </a>
+        <a class="story-card" href="#sec2">
+          <span class="num" style="background:var(--c4);color:#fff">2</span>
+          <div><h3>小心！誰在安慰你？</h3><p>網路交友的真誠、尊重與自我保護</p></div>
+          <span class="done" data-done="2">未通關</span>
+        </a>
+        <a class="story-card" href="#sec3">
+          <span class="num" style="background:var(--c3);color:#fff">3</span>
+          <div><h3>好像哪裡怪怪的？</h3><p>分享紅綠燈：尊重別人的個人資料</p></div>
+          <span class="done" data-done="3">未通關</span>
+        </a>
+        <a class="story-card" href="#mission">
+          <span class="num" style="background:var(--c2)">★</span>
+          <div><h3>今日任務：承諾卡</h3><p>寫下自己的網路好公民約定</p></div>
+        </a>
+      </nav>
+    </section>
+
+    <!-- ===== STAGE 1 ===== -->
+    <section class="level-section" id="sec1" style="--accent:var(--c1)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c1)">STAGE 1</span>
+        <div>
+          <h2 class="section-title">我有話要說：網路發言禮儀</h2>
+          <p class="section-sub">網路上的言論自由受到保障，但每一句話都會被真實的人看見、感受，甚至被保存與轉傳。</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3 class="sub-title">📖 故事：群組突然安靜了</h3>
+          <div class="phone" aria-label="班級群組對話示意">
+            <div class="phone-top">💬 三年甲班聊天群組</div>
+            <div class="msg"><span class="av">🧒</span><span class="bub"><span class="who">小華</span>這個摺紙教學超好玩！大家可以一起試試看！📎 摺紙影片</span></div>
+            <div class="msg hurt"><span class="av">👦</span><span class="bub"><span class="who">小明</span>這很無聊。</span></div>
+            <div class="msg sys"><span class="bub">……群組突然安靜了……</span></div>
+            <div class="msg sys"><span class="bub">小美把畫畫作品收起來了　小安也不想分享笑話了</span></div>
+          </div>
+        </div>
+        <div>
+          <h3 class="sub-title">🤔 想一想</h3>
+          <div class="card">
+            <p><b>小華的心情：</b>「原來大家覺得我分享的東西不好玩。」</p>
+            <p><b>結果：</b>從那天開始，群組變得安安靜靜，再也沒有人敢分享有趣的事情了。</p>
+          </div>
+          <div class="card" style="margin-top:16px;background:var(--blue-soft)">
+            <h4>🌐 我們在網路上可以做什麼？</h4>
+            <p>🔍 用搜尋引擎查新知識、蒐集資料</p>
+            <p>💬 用社群媒體和好朋友聊天、分享生活</p>
+            <p>🛒 在購物平臺買日常用品</p>
+            <p style="margin:0">📷 發表意見、上傳照片與影片</p>
+          </div>
+          <div class="tip-box">網路是開放的空間，但我們要有<b>是非判斷</b>的能力：知道什麼話讓人開心、什麼話讓人難過，並遵守社會的道德規範。</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">✋ 按下「送出」之前，先停一下問自己</h3>
+      <div class="ask-row">
+        <div class="ask"><span class="q-no">第 1 問</span><span class="big">這是真的嗎？</span><span class="small">不確定的事，先不要說</span></div>
+        <div class="ask"><span class="q-no">第 2 問</span><span class="big">一定要現在說嗎？</span><span class="small">生氣的時候，先冷靜一下</span></div>
+        <div class="ask"><span class="q-no">第 3 問</span><span class="big">如果別人這樣說我，我會怎樣？</span><span class="small">換位思考，體會對方感受</span></div>
+      </div>
+
+      <h3 class="sub-title" style="margin-top:44px">📝 網路發言五個小訣竅</h3>
+      <div class="grid-2">
+        <ol class="steps-list">
+          <li><span class="step-num">1</span><div><b>保持禮貌：</b>不用讓人生氣、不舒服的句子。就像在教室裡，不隨便罵人或打斷別人說話。</div></li>
+          <li><span class="step-num">2</span><div><b>多鼓勵、少批評：</b>多稱讚、肯定和支持；不人身攻擊、不說酸言酸語。</div></li>
+          <li><span class="step-num">3</span><div><b>發文主題要明確：</b>標題和內容寫清楚，讓讀者快速知道你想說什麼。</div></li>
+        </ol>
+        <ol class="steps-list" start="4">
+          <li><span class="step-num">4</span><div><b>發文前先檢查是否重複：</b>看看是不是有人已經發過一樣的內容，避免洗版。</div></li>
+          <li><span class="step-num">5</span><div><b>尊重不同的意見：</b>先聽聽對方的理由，不急著否定或生氣。</div></li>
+          <li><span class="step-num" style="background:var(--c3)">★</span><div>我們在鍵盤上敲下的每一個字，都在決定網路世界是<b>善良</b>還是<b>充滿爭吵</b>。</div></li>
+        </ol>
+      </div>
+
+      <div class="lab" id="lab1">
+        <div class="lab-head"><span class="lab-tag">LAB 1</span><h4>留言變身器：選出最友善的回覆</h4></div>
+        <p class="lab-hint">看看每個情境，選出你覺得最「好公民」的留言。選對了，友善溫度計就會上升喔！</p>
+        <div class="scene">
+          <div class="scene-meta" id="replyMeta">情境 1 / 5</div>
+          <div class="scene-post" id="replyPost"></div>
+          <div class="options" id="replyOpts"></div>
+          <div class="feedback" id="replyFb"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn primary" id="replyNext" onclick="nextReply()" disabled>下一題 →</button>
+            <button class="btn" onclick="resetReply()">↻ 重來</button>
+          </div>
+        </div>
+        <div class="meter"><span>🌡️ 友善溫度計</span><div class="meter-bar"><div class="meter-fill" id="replyMeter"></div></div><span id="replyScore">0 / 5</span></div>
+      </div>
+
+      <div class="quiz-section" data-stage="1">
+        <h4>✅ 小試身手（全部答對就通關！）</h4>
+        <div class="quiz-list"></div>
+      </div>
+
+      <div class="teacher-note teacher-only">
+        <h5>👩‍🏫 教師提示</h5>
+        <ul>
+          <li>先讀故事，請學生分享「如果你是小華／小美，你的心情？」再揭示發言三問。</li>
+          <li>LAB 1 可全班投影，抽號請學生說明選擇理由；強調「不同意見可以說，但要有禮貌、說理由」。</li>
+          <li>延伸討論：言論自由受法律保障，但不代表可以傷害別人。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== STAGE 2 ===== -->
+    <section class="level-section" id="sec2" style="--accent:var(--c4)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c4)">STAGE 2</span>
+        <div>
+          <h2 class="section-title">小心！誰在安慰你？網路交友</h2>
+          <p class="section-sub">網路能把不同城市、不同國家的人連在一起，但隔著螢幕，我們看不到對方真正的樣子。</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">🔍 網路上的朋友 vs. 身邊的朋友</h3>
+      <table class="compare">
+        <thead><tr><th>比一比</th><th>👫 學校裡的同學</th><th>💻 網路上認識的人</th></tr></thead>
+        <tbody>
+          <tr><td>看得到嗎？</td><td>看得到長相和行為</td><td>看不見真正的長相，照片可能是假的</td></tr>
+          <tr><td>聽得到嗎？</td><td>聽得到聲音和語氣</td><td>只看到文字，容易產生誤會</td></tr>
+          <tr><td>知道心情嗎？</td><td>看表情就知道開心或難過</td><td>一句無心的玩笑，可能變成傷人的話</td></tr>
+          <tr><td>知道他在做什麼？</td><td>一起上課、下課玩耍</td><td>不知道他在寫功課、吃飯還是休息</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-title">💛 讓網路友誼長久的秘訣</h3>
+      <div class="grid-3">
+        <div class="card" style="background:var(--yellow-soft)"><h4>⏱️ 多思考一秒鐘</h4><p style="margin:0">傳送前問自己：「這句話有禮貌嗎？會不會造成誤會？」</p></div>
+        <div class="card" style="background:var(--green-soft)"><h4>🤝 真誠與尊重</h4><p style="margin:0">打字時多花一點心思，體會對方的感受，讓對方知道你在乎這段友誼。</p></div>
+        <div class="card" style="background:var(--blue-soft)"><h4>🌙 學會體諒</h4><p style="margin:0">對方沒馬上回訊息，不要一直傳貼圖催促，也不要生氣，給彼此空間。</p></div>
+      </div>
+
+      <h3 class="sub-title">🚫 真正的朋友「不會」這樣要求你</h3>
+      <div class="grid-2">
+        <div class="never-grid">
+          <div class="never"><span class="ic">🏫</span>就讀學校</div>
+          <div class="never"><span class="ic">🏠</span>家裡住址</div>
+          <div class="never"><span class="ic">🪪</span>身分證件</div>
+          <div class="never"><span class="ic">🔑</span>帳號密碼</div>
+          <div class="never"><span class="ic">📸</span>上傳照片</div>
+          <div class="never"><span class="ic">🎥</span>開視訊</div>
+        </div>
+        <div class="card" style="background:var(--red-soft)">
+          <h4>⚠️ 真誠 ≠ 分享重大秘密</h4>
+          <p>真正的朋友會尊重你的感受，<b>不會強迫你做奇怪的事情</b>，也不會跟你要個人隱私資訊。</p>
+          <p style="margin:0">如果有人一直對你特別好、說「只有我懂你」，接著提出奇怪要求——這就是要特別小心的訊號！</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">🛡️ 遇到不合理的要求：安全四步驟</h3>
+      <div class="flow">
+        <div class="flow-step"><span class="ic">✋</span><b>1. 停止對話</b><span>不再回覆</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="ic">📱</span><b>2. 截圖存證</b><span>保留對話內容</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="ic">🚫</span><b>3. 封鎖對方</b><span>不讓他再聯絡你</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="ic">🧑‍🏫</span><b>4. 告訴大人</b><span>家長、導師、輔導老師</span></div>
+      </div>
+
+      <div class="lab" id="lab2">
+        <div class="lab-head"><span class="lab-tag">LAB 2</span><h4>聊天室模擬器：「暖暖」傳訊息來了</h4></div>
+        <p class="lab-hint">你在遊戲裡認識了一位網友「暖暖」。讀讀他傳來的訊息，選出最安全的回覆。保護盾會記錄你的表現！</p>
+        <div class="sim">
+          <div class="phone">
+            <div class="phone-top">🎮 遊戲聊天室｜暖暖</div>
+            <div class="sim-log" id="simLog"></div>
+          </div>
+          <div>
+            <div class="card">
+              <h4 id="simTitle">你要怎麼回？</h4>
+              <div class="sim-choices" id="simChoices"></div>
+              <div class="feedback" id="simFb"></div>
+              <div>保護盾：<span class="shield" id="simShield"></span></div>
+              <button class="btn" style="margin-top:10px" onclick="resetSim()">↻ 重新開始</button>
+            </div>
+            <div class="card" id="orderGame" style="margin-top:16px;display:none">
+              <h4>🧩 最後挑戰：排出安全四步驟的順序</h4>
+              <p style="font-size:.95rem">依序點選下面的卡片，放進 1 → 4 的格子。</p>
+              <div class="order-slots" id="orderSlots"></div>
+              <div class="order-pool" id="orderPool"></div>
+              <div class="feedback" id="orderFb"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-section" data-stage="2">
+        <h4>✅ 小試身手（全部答對就通關！）</h4>
+        <div class="quiz-list"></div>
+      </div>
+
+      <div class="teacher-note teacher-only">
+        <h5>👩‍🏫 教師提示</h5>
+        <ul>
+          <li>標題「誰在安慰你」點出網路誘拐常見手法：先給予關心、建立信任，再索取照片或個資。談論時語氣平穩，避免恐嚇。</li>
+          <li>強調「告訴大人不是告狀，也不會被罵」，並讓學生說出自己可以求助的三位大人。</li>
+          <li>可補充求助管道：113 保護專線、學校輔導室。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== STAGE 3 ===== -->
+    <section class="level-section" id="sec3" style="--accent:var(--c3)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c3)">STAGE 3</span>
+        <div>
+          <h2 class="section-title">好像哪裡怪怪的？數位分享紅綠燈</h2>
+          <p class="section-sub">有些內容包含別人的個人資料，個人資料受到法律保護，不能隨意公開。分享前，像過馬路一樣先看燈號！</p>
+        </div>
+      </div>
+
+      <div class="lights">
+        <div class="light-col" style="background:var(--red-soft)">
+          <h4><span class="lamp r"></span>紅燈：危險！絕對不能傳</h4>
+          <ul>
+            <li><b>沒經過本人同意的照片或影片</b>：擅自傳出去是違法的，先問過、得到同意才是尊重。</li>
+            <li><b>要求開啟權限的不明網站、App</b>：用途不需要，卻要打開相簿、通訊錄、位置。</li>
+            <li><b>要求輸入很多個資的可疑連結</b>：姓名、電話、住址、學校、生日、帳號密碼都不能填。</li>
+          </ul>
+        </div>
+        <div class="light-col" style="background:var(--yellow-soft)">
+          <h4><span class="lamp y"></span>黃燈：可疑！先查證</h4>
+          <ul>
+            <li><b>太吸引人的好康</b>：免費點數、免費寶物、限時抽獎、心理測驗還要填很多資料。</li>
+            <li><b>別人傳來的連結</b>：不管是誰傳的，都不急著打開，先查證。</li>
+            <li><b>未經證實的消息</b>：來源不明先不轉發，免得變成假訊息的幫手。</li>
+          </ul>
+        </div>
+        <div class="light-col" style="background:var(--green-soft)">
+          <h4><span class="lamp g"></span>綠燈：確認過，再分享</h4>
+          <ul>
+            <li><b>已確認來源正確的消息</b>：來自正式單位、官方網站或正式帳號。</li>
+            <li><b>得到大家同意的照片</b>：合照時大家都說「這張可以放上網」。</li>
+            <li>綠燈不是什麼都能亂傳，而是<b>安全、不傷害別人</b>的內容。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tip-box">🔎 <b>黃燈查證好幫手：</b>
+        <div class="check-places"><span>🏛️ 官方網站</span><span>✅ 台灣事實查核中心</span><span>🔍 MyGoPen</span><span>👨‍👩‍👧 問家長、老師或可信任的大人</span></div>
+      </div>
+
+      <div class="lab" id="lab3" style="background:var(--green-soft)">
+        <div class="lab-head"><span class="lab-tag">LAB 3</span><h4>分享紅綠燈大挑戰</h4></div>
+        <p class="lab-hint">把每張訊息卡放進正確的燈號：<b>先點一張卡片，再點燈號區</b>（電腦也可以直接拖曳）。全部放好後按「檢查答案」。</p>
+        <div class="deck-pool" id="deckPool" aria-label="待分類卡片"></div>
+        <div class="sort-zone">
+          <div class="bin r" data-bin="r"><h5><span class="lamp r" style="width:22px;height:22px;flex-basis:22px"></span>紅燈｜絕對不能傳</h5></div>
+          <div class="bin y" data-bin="y"><h5><span class="lamp y" style="width:22px;height:22px;flex-basis:22px"></span>黃燈｜先查證</h5></div>
+          <div class="bin g" data-bin="g"><h5><span class="lamp g" style="width:22px;height:22px;flex-basis:22px"></span>綠燈｜可以分享</h5></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+          <button class="btn green" onclick="checkLights()">🚦 檢查答案</button>
+          <button class="btn" onclick="resetLights()">↻ 重新洗牌</button>
+        </div>
+        <div class="feedback" id="lightFb"></div>
+      </div>
+
+      <div class="quiz-section" data-stage="3">
+        <h4>✅ 小試身手（全部答對就通關！）</h4>
+        <div class="quiz-list"></div>
+      </div>
+
+      <div class="teacher-note teacher-only">
+        <h5>👩‍🏫 教師提示</h5>
+        <ul>
+          <li>連結生活經驗：班級合照、運動會影片、家長群組轉傳的「好康」訊息。</li>
+          <li>LAB 3 的黃燈卡片沒有「絕對」答案時，請學生說明理由，重點在「先停下來查證」的習慣。</li>
+          <li>可示範開啟台灣事實查核中心、MyGoPen 網站，讓學生看看查證結果長什麼樣子。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== MISSION ===== -->
+    <section class="level-section" id="mission" style="--accent:var(--c2)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c2);color:var(--text)">MISSION</span>
+        <div>
+          <h2 class="section-title">今日任務：我的網路好公民承諾卡</h2>
+          <p class="section-sub">選出三個你最想做到的約定，寫下一句自己的話。完成後可以請老師列印或截圖分享。</p>
+        </div>
+      </div>
+      <div class="promise">
+        <div>
+          <div class="form-row"><label for="pName">我的名字或座號</label><input type="text" id="pName" maxlength="12" placeholder="例如：3 年甲班 15 號"></div>
+          <div class="form-row check-list" id="pChecks">
+            <label>我承諾（選 3 個）：</label>
+            <label><input type="checkbox" value="發言前先問自己三個問題">發言前先問自己三個問題</label>
+            <label><input type="checkbox" value="多鼓勵、少批評，不說酸言酸語">多鼓勵、少批評，不說酸言酸語</label>
+            <label><input type="checkbox" value="尊重和我不同的意見">尊重和我不同的意見</label>
+            <label><input type="checkbox" value="不給網友學校、住址、照片和密碼">不給網友學校、住址、照片和密碼</label>
+            <label><input type="checkbox" value="遇到怪要求：停止、截圖、封鎖、告訴大人">遇到怪要求：停止、截圖、封鎖、告訴大人</label>
+            <label><input type="checkbox" value="別人的照片先問過同意才分享">別人的照片先問過同意才分享</label>
+            <label><input type="checkbox" value="看到好康訊息和連結先查證">看到好康訊息和連結先查證</label>
+          </div>
+          <div class="form-row"><label for="pWords">我想對網路世界說一句話</label><input type="text" id="pWords" maxlength="40" placeholder="例如：用溫暖的話讓大家都敢分享！"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn primary" onclick="window.print()">🖨️ 列印承諾卡</button>
+            <button class="btn" onclick="clearPromise()">↻ 清除</button>
+          </div>
+          <p style="font-size:.85rem;color:var(--dim)">🔒 填寫的內容只留在這台電腦的畫面上，不會上傳到網路。</p>
+        </div>
+        <div class="p-card" id="pCard">
+          <h4 id="pcName">＿＿＿＿ 的承諾</h4>
+          <ol id="pcList"><li style="color:var(--dim)">勾選左邊的約定，這裡會出現喔！</li></ol>
+          <p class="sign" id="pcWords">我想說：＿＿＿＿＿＿＿＿</p>
+          <span class="stamp" id="pcStamp" style="display:none">好公民認證</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="level-section" id="faq" style="--accent:var(--c5)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c5)">FAQ</span>
+        <div><h2 class="section-title">小朋友常問的問題</h2></div>
+      </div>
+      <div id="faqList"></div>
+    </section>
+
+    <!-- ===== TEACHER ===== -->
+    <section class="level-section teacher-only" id="teacher" style="--accent:var(--c5)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c5)">TEACHER</span>
+        <div><h2 class="section-title">教師專區：課程設計建議</h2><p class="section-sub">依三份「延伸學習文章」（國小三至四年級）整理，可 1 節上完一關，或 2 節濃縮版。</p></div>
+      </div>
+      <div class="grid-3">
+        <div class="card"><h4>第 1 節｜我有話要說</h4><p>主題：社會參與與言論自由</p><p>5' 故事情境 → 10' 發言三問 → 10' 五個訣竅 → 10' LAB 1 → 5' 評量</p></div>
+        <div class="card"><h4>第 2 節｜小心！誰在安慰你？</h4><p>主題：網路交友</p><p>5' 網路 vs 身邊朋友 → 8' 友誼秘訣 → 10' 不會要求的事 + 四步驟 → 12' LAB 2 → 5' 評量</p></div>
+        <div class="card"><h4>第 3 節｜好像哪裡怪怪的？</h4><p>主題：善用資訊、尊重他人權益</p><p>5' 引起動機 → 12' 分享紅綠燈 → 13' LAB 3 → 5' 評量 → 5' 承諾卡</p></div>
+      </div>
+      <div class="grid-2" style="margin-top:18px">
+        <div class="card">
+          <h4>🎯 學習表現對應</h4>
+          <p>・理解網路言論自由與尊重他人的平衡</p>
+          <p>・辨識網路交友風險並能說出求助步驟</p>
+          <p style="margin:0">・知道個人資料受法律保護，分享前會查證與取得同意</p>
+        </div>
+        <div class="card">
+          <h4>🛠️ 課堂工具</h4>
+          <p>右下角：🎲 抽號碼、⏱️ 計時器、✏️ 畫筆標註、⬆️ 回頂端</p>
+          <p style="margin:0">教師模式會顯示每一關的教學提示與本專區。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-credit">
+    Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+    <a href="https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+    ・桃園市龍潭區石門國民小學
+  </footer>
+
+  <!-- floating tools -->
+  <div class="float-tools">
+    <button class="float-btn yellow" onclick="togglePanel('lottery')" title="隨機抽號">🎲</button>
+    <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+    <button class="float-btn pink" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+    <button class="float-btn green" onclick="goTop()" title="回到頂端">⬆️</button>
+  </div>
+  <div class="tool-panel" id="panel-lottery">
+    <h4>🎲 隨機抽號 <span class="close" onclick="togglePanel('lottery')">✕</span></h4>
+    <div class="panel-row">
+      <span>號碼</span><input type="number" id="lot-min" value="1" min="1"><span>～</span><input type="number" id="lot-max" value="30" min="1"><span>號</span>
+      <label style="margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked> 不重複</label>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="btn primary" style="flex:1" onclick="doLottery()">🎰 抽一個</button>
+      <button class="btn" onclick="resetLottery()" title="重置">↻</button>
+    </div>
+    <div class="lottery-result" id="lot-out">等待抽號…</div>
+  </div>
+  <div class="tool-panel" id="panel-timer">
+    <h4>⏱️ 計時器 <span class="close" onclick="togglePanel('timer')">✕</span></h4>
+    <div class="panel-row">
+      <button class="btn" onclick="setTimer(60)">1 分</button>
+      <button class="btn" onclick="setTimer(180)">3 分</button>
+      <button class="btn" onclick="setTimer(300)">5 分</button>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="btn green" style="flex:1" onclick="startTimer()">▶ 開始 / 暫停</button>
+      <button class="btn" onclick="setTimer(timerTotal)">↻</button>
+    </div>
+    <div class="timer-display" id="timerOut">03:00</div>
+  </div>
+  <canvas id="drawCanvas"></canvas>
+  <div class="draw-toolbar" id="drawToolbar">
+    <span>🖊️</span>
+    <button class="color-dot active" style="background:#ff6b6b" onclick="setPenColor('#ff6b6b',this)" aria-label="紅色"></button>
+    <button class="color-dot" style="background:#fab005" onclick="setPenColor('#fab005',this)" aria-label="黃色"></button>
+    <button class="color-dot" style="background:#339af0" onclick="setPenColor('#339af0',this)" aria-label="藍色"></button>
+    <button class="color-dot" style="background:#40c057" onclick="setPenColor('#40c057',this)" aria-label="綠色"></button>
+    <button class="color-dot" style="background:#2c2c2c" onclick="setPenColor('#2c2c2c',this)" aria-label="黑色"></button>
+    <button class="draw-clear" onclick="clearDrawing()">清除</button>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ---------- storage helpers ---------- */
+    const STORE_KEY = 'net-citizen-progress';
+    function loadDone(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }catch(e){ return {}; } }
+    function saveDone(d){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(d)); }catch(e){} }
+    let doneMap = loadDone();
+
+    function showToast(t){
+      const el = document.getElementById('toast');
+      el.textContent = t; el.classList.add('show');
+      clearTimeout(showToast._t); showToast._t = setTimeout(() => el.classList.remove('show'), 2200);
+    }
+    function renderProgress(){
+      const n = [1,2,3].filter(k => doneMap[k]).length;
+      document.getElementById('progressFill').style.width = (n / 3 * 100) + '%';
+      document.getElementById('progressText').textContent = n + ' / 3';
+      document.querySelectorAll('[data-done]').forEach(el => {
+        const ok = !!doneMap[el.dataset.done];
+        el.classList.toggle('ok', ok);
+        el.textContent = ok ? '已通關 ✓' : '未通關';
+      });
+    }
+
+    /* ---------- teacher mode ---------- */
+    function toggleTeacher(){
+      const btn = document.getElementById('modeBtn');
+      if(document.body.classList.contains('teacher')){
+        document.body.classList.remove('teacher'); btn.classList.remove('on'); btn.textContent = '👩‍🏫 教師模式';
+        return;
+      }
+      const pw = prompt('請輸入教師密碼');
+      if(pw === 'it2026'){
+        document.body.classList.add('teacher'); btn.classList.add('on'); btn.textContent = '🧒 學生模式';
+        showToast('已開啟教師模式');
+      } else if(pw !== null){ alert('密碼不正確喔！'); }
+    }
+
+    /* ---------- LAB 1: reply transformer ---------- */
+    const REPLY_SCENES = [
+      { post:'小華在群組分享摺紙教學影片：「這個超好玩！大家一起試試看！」', opts:[
+        {t:'這很無聊。', ok:false, why:'太直接又沒有理由，會讓分享的人很難過。'},
+        {t:'謝謝分享！我等一下來試試看，摺好給你看～', ok:true, why:'給對方肯定和回應，大家會更願意分享。'},
+        {t:'（已讀不回，再貼一個翻白眼貼圖）', ok:false, why:'翻白眼貼圖也是一種酸言酸語喔。'} ]},
+      { post:'小美上傳了自己的畫，可是你覺得顏色有點太暗。', opts:[
+        {t:'好醜，顏色好奇怪。', ok:false, why:'這是批評而不是建議，會讓人不敢再分享作品。'},
+        {t:'哈哈哈哈哈', ok:false, why:'沒有說清楚，對方可能以為你在嘲笑他。'},
+        {t:'構圖好有趣！如果天空再亮一點，會不會更像白天呢？', ok:true, why:'先稱讚再提出具體建議，是「多鼓勵、少批評」。'} ]},
+      { post:'同學在討論區說：「我覺得營養午餐應該多一點青菜。」你不同意。', opts:[
+        {t:'我比較想要多一點水果，因為飯後吃水果很清爽，你覺得呢？', ok:true, why:'說出自己的想法和理由，也尊重不同意見。'},
+        {t:'你很奇怪欸，誰喜歡吃青菜。', ok:false, why:'針對個人攻擊，不是在討論事情。'},
+        {t:'（連發十次「不要！」）', ok:false, why:'洗版會讓討論變得混亂，也不禮貌。'} ]},
+      { post:'有人在群組說：「聽說明天停課！」可是老師沒有說過。', opts:[
+        {t:'太好了！我馬上轉傳給全班！', ok:false, why:'還沒確認是真的，轉傳可能變成假消息。'},
+        {t:'這是真的嗎？我們先等老師或學校的公告確認喔。', ok:true, why:'用了發言第一問：「這是真的嗎？」'},
+        {t:'你亂講！騙子！', ok:false, why:'可以提醒查證，但不需要罵人。'} ]},
+      { post:'你正在生氣，因為遊戲輸了，想在群組留言罵隊友。', opts:[
+        {t:'先深呼吸，等冷靜下來再說：「下次我們一起練習配合吧！」', ok:true, why:'用了第二問：「一定要現在說嗎？」冷靜後再表達。'},
+        {t:'都是你害的，超爛！', ok:false, why:'生氣時說的話，對方看了會很受傷，也可能被截圖轉傳。'},
+        {t:'把隊友的名字貼出來，叫大家不要跟他玩。', ok:false, why:'這是排擠和網路霸凌，絕對不可以。'} ]}
+    ];
+    let replyIdx = 0, replyScore = 0, replyAnswered = false;
+    function renderReply(){
+      const s = REPLY_SCENES[replyIdx];
+      document.getElementById('replyMeta').textContent = `情境 ${replyIdx + 1} / ${REPLY_SCENES.length}`;
+      document.getElementById('replyPost').textContent = s.post;
+      document.getElementById('replyFb').textContent = '';
+      const box = document.getElementById('replyOpts'); box.innerHTML = '';
+      replyAnswered = false;
+      document.getElementById('replyNext').disabled = true;
+      s.opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'opt'; b.textContent = o.t;
+        b.onclick = () => pickReply(o, b);
+        box.appendChild(b);
+      });
+    }
+    function pickReply(o, btn){
+      if(replyAnswered) return;
+      replyAnswered = true;
+      const fb = document.getElementById('replyFb');
+      btn.classList.add(o.ok ? 'good' : 'bad');
+      if(o.ok){ replyScore++; fb.textContent = '🎉 好公民留言！' + o.why; }
+      else {
+        fb.textContent = '🤔 再想想：' + o.why;
+        const s = REPLY_SCENES[replyIdx];
+        [...document.querySelectorAll('#replyOpts .opt')].forEach((b, i) => { if(s.opts[i].ok) b.classList.add('good'); });
+      }
+      document.getElementById('replyMeter').style.width = (replyScore / REPLY_SCENES.length * 100) + '%';
+      document.getElementById('replyScore').textContent = replyScore + ' / ' + REPLY_SCENES.length;
+      const nx = document.getElementById('replyNext');
+      nx.disabled = false;
+      nx.textContent = replyIdx === REPLY_SCENES.length - 1 ? '看結果 🏁' : '下一題 →';
+    }
+    function nextReply(){
+      if(replyIdx < REPLY_SCENES.length - 1){ replyIdx++; renderReply(); return; }
+      const fb = document.getElementById('replyFb');
+      fb.textContent = replyScore === REPLY_SCENES.length ? '🌟 滿分！你的留言讓網路世界變得好溫暖！' : `完成！友善溫度 ${replyScore} / ${REPLY_SCENES.length}，按「重來」再挑戰滿分吧！`;
+      document.getElementById('replyNext').disabled = true;
+    }
+    function resetReply(){
+      replyIdx = 0; replyScore = 0;
+      document.getElementById('replyMeter').style.width = '0';
+      document.getElementById('replyScore').textContent = '0 / ' + REPLY_SCENES.length;
+      renderReply();
+    }
+
+    /* ---------- LAB 2: chat simulator ---------- */
+    const SIM_STEPS = [
+      { from:'暖暖', text:'嗨～剛剛一起打怪好開心！你今天看起來心情不太好？', opts:[
+        {t:'對呀，考試考不好有點難過。', ok:true, fb:'分享一般心情沒關係，但要記得：他還是你不認識的人。'},
+        {t:'我叫王小明，住在龍潭，給你我的電話！', ok:false, fb:'才剛認識就給姓名、住址、電話，太危險了！'} ]},
+      { from:'暖暖', text:'別難過～只有我最懂你了！你讀哪一間學校？我去找你玩。', opts:[
+        {t:'學校是秘密喔，我們在遊戲裡一起玩就好。', ok:true, fb:'做得好！就讀學校是個人資訊，不告訴網友。'},
+        {t:'我讀○○國小三年甲班！', ok:false, fb:'說出學校班級，陌生人就可能找到你。'} ]},
+      { from:'暖暖', text:'傳一張你的照片給我好不好？我也會傳我的，這是我們的小秘密喔～', opts:[
+        {t:'好吧，我偷偷傳給你，不要告訴別人。', ok:false, fb:'「小秘密」是危險訊號！真正的朋友不會要你傳照片還要保密。'},
+        {t:'我不傳照片。這讓我不舒服，我要停止聊天了。', ok:true, fb:'很勇敢！說出不舒服、立刻停止對話。'} ]},
+      { from:'暖暖', text:'你不傳的話，我就不跟你好了，還要跟大家說你很小氣！', opts:[
+        {t:'截圖存證、封鎖他，然後去告訴爸媽和老師。', ok:true, fb:'完全正確！被威脅時，一定要讓可信任的大人知道。'},
+        {t:'怕他生氣，還是傳好了……', ok:false, fb:'被威脅不是你的錯，不要照做，趕快找大人幫忙！'} ]}
+    ];
+    let simIdx = 0, simShields = [], simTimer = null;
+    function addSimMsg(who, text, cls){
+      const log = document.getElementById('simLog');
+      const d = document.createElement('div');
+      d.className = 'msg ' + (cls || '');
+      if(cls === 'sys'){ d.innerHTML = '<span class="bub"></span>'; d.querySelector('.bub').textContent = text; }
+      else {
+        d.innerHTML = '<span class="av">' + (cls === 'me' ? '🙂' : '😺') + '</span><span class="bub"><span class="who"></span><span class="tx"></span></span>';
+        d.querySelector('.who').textContent = who; d.querySelector('.tx').textContent = text;
+      }
+      log.appendChild(d);
+      log.scrollTop = log.scrollHeight;
+    }
+    function renderSimStep(){
+      simTimer = null;
+      if(simIdx >= SIM_STEPS.length) return;
+      const step = SIM_STEPS[simIdx];
+      addSimMsg(step.from, step.text);
+      document.getElementById('simTitle').textContent = `你要怎麼回？（${simIdx + 1} / ${SIM_STEPS.length}）`;
+      const box = document.getElementById('simChoices'); box.innerHTML = '';
+      step.opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'opt'; b.textContent = o.t;
+        b.onclick = () => pickSim(o);
+        box.appendChild(b);
+      });
+    }
+    function pickSim(o){
+      addSimMsg('我', o.t, 'me');
+      simShields.push(o.ok);
+      document.getElementById('simShield').textContent = simShields.map(ok => ok ? '🛡️' : '💔').join(' ');
+      document.getElementById('simFb').textContent = (o.ok ? '✅ ' : '⚠️ ') + o.fb;
+      document.getElementById('simChoices').innerHTML = '';
+      simIdx++;
+      if(simIdx < SIM_STEPS.length){ simTimer = setTimeout(renderSimStep, 700); }
+      else {
+        addSimMsg('', '你已封鎖暖暖。記得：被要求照片或秘密，一定要告訴大人！', 'sys');
+        document.getElementById('simTitle').textContent = '聊天結束';
+        document.getElementById('orderGame').style.display = 'block';
+        renderOrder();
+      }
+    }
+    function resetSim(){
+      clearTimeout(simTimer);
+      simIdx = 0; simShields = []; orderPicked = [];
+      document.getElementById('simLog').innerHTML = '';
+      document.getElementById('simShield').textContent = '';
+      document.getElementById('simFb').textContent = '';
+      document.getElementById('orderGame').style.display = 'none';
+      document.getElementById('orderFb').textContent = '';
+      renderSimStep();
+    }
+    const ORDER = ['✋ 停止對話', '📱 截圖存證', '🚫 封鎖對方', '🧑‍🏫 告訴大人'];
+    let orderPicked = [];
+    function renderOrder(){
+      const slots = document.getElementById('orderSlots'); slots.innerHTML = '';
+      for(let i = 0; i < 4; i++){
+        const s = document.createElement('div');
+        s.className = 'order-slot' + (orderPicked[i] ? ' filled' : '');
+        s.textContent = orderPicked[i] || (i + 1);
+        slots.appendChild(s);
+      }
+      const pool = document.getElementById('orderPool'); pool.innerHTML = '';
+      const rest = ORDER.filter(x => !orderPicked.includes(x));
+      shuffle(rest.slice()).forEach(x => {
+        const b = document.createElement('button');
+        b.className = 'btn'; b.textContent = x;
+        b.onclick = () => pickOrder(x);
+        pool.appendChild(b);
+      });
+    }
+    function pickOrder(x){
+      const fb = document.getElementById('orderFb');
+      if(ORDER[orderPicked.length] === x){
+        orderPicked.push(x); fb.textContent = '';
+        renderOrder();
+        if(orderPicked.length === 4){ fb.textContent = '🎉 順序完全正確！停止 → 截圖 → 封鎖 → 告訴大人。'; }
+      } else {
+        fb.textContent = '🤔 再想想，第 ' + (orderPicked.length + 1) + ' 步應該先做什麼？';
+      }
+    }
+    function shuffle(a){ for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+    /* ---------- LAB 3: traffic light sort ---------- */
+    const LIGHT_CARDS = [
+      {t:'偷拍同學睡著的照片，想傳到班級群組', a:'r'},
+      {t:'手電筒 App 要求打開通訊錄和位置', a:'r'},
+      {t:'「填姓名、電話、住址就送 1000 點數」的連結', a:'r'},
+      {t:'朋友傳來「點這裡領免費寶物」的網址', a:'y'},
+      {t:'來源不明的「明天颱風停課」消息', a:'y'},
+      {t:'要填生日和學校才能玩的心理測驗', a:'y'},
+      {t:'學校官方網站公布的運動會時間', a:'g'},
+      {t:'全組都同意上傳的科展合照', a:'g'},
+      {t:'自己畫的圖，想分享給家人看', a:'g'}
+    ];
+    let selCard = null;
+    function resetLights(){
+      selCard = null;
+      const pool = document.getElementById('deckPool'); pool.innerHTML = '';
+      document.querySelectorAll('.bin .chip-card').forEach(c => c.remove());
+      shuffle(LIGHT_CARDS.map((c, i) => i)).forEach(i => {
+        const c = document.createElement('div');
+        c.className = 'chip-card'; c.textContent = LIGHT_CARDS[i].t;
+        c.dataset.idx = i; c.draggable = true; c.tabIndex = 0;
+        c.addEventListener('click', e => { e.stopPropagation(); selectCard(c); });
+        c.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); selectCard(c); } });
+        c.addEventListener('dragstart', e => { selectCard(c); e.dataTransfer.setData('text/plain', i); });
+        pool.appendChild(c);
+      });
+      document.getElementById('lightFb').textContent = '';
+    }
+    function selectCard(c){
+      document.querySelectorAll('.chip-card.sel').forEach(x => x.classList.remove('sel'));
+      c.classList.remove('right', 'wrong');
+      selCard = (selCard === c) ? null : c;
+      if(selCard) selCard.classList.add('sel');
+    }
+    function dropInto(bin){
+      if(!selCard) { showToast('先點一張卡片喔！'); return; }
+      selCard.classList.remove('sel', 'right', 'wrong');
+      bin.appendChild(selCard);
+      selCard = null;
+    }
+    function initLights(){
+      document.querySelectorAll('.bin').forEach(bin => {
+        bin.addEventListener('click', () => dropInto(bin));
+        bin.addEventListener('dragover', e => { e.preventDefault(); bin.classList.add('hot'); });
+        bin.addEventListener('dragleave', () => bin.classList.remove('hot'));
+        bin.addEventListener('drop', e => { e.preventDefault(); bin.classList.remove('hot'); dropInto(bin); });
+      });
+      const pool = document.getElementById('deckPool');
+      pool.addEventListener('click', () => { if(selCard && selCard.parentElement !== pool){ selCard.classList.remove('sel'); pool.appendChild(selCard); selCard = null; } });
+      resetLights();
+    }
+    function checkLights(){
+      const fb = document.getElementById('lightFb');
+      if(document.querySelectorAll('#deckPool .chip-card').length){ fb.textContent = '還有卡片沒放進燈號區喔！'; return; }
+      let right = 0;
+      document.querySelectorAll('.bin').forEach(bin => {
+        bin.querySelectorAll('.chip-card').forEach(c => {
+          const ok = LIGHT_CARDS[c.dataset.idx].a === bin.dataset.bin;
+          c.classList.toggle('right', ok); c.classList.toggle('wrong', !ok);
+          if(ok) right++;
+        });
+      });
+      fb.textContent = right === LIGHT_CARDS.length
+        ? '🚦 全對！你是分享紅綠燈小達人！'
+        : `答對 ${right} / ${LIGHT_CARDS.length}。紅色底的卡片再想想，點一下就能移到別的燈號。`;
+    }
+
+    /* ---------- quizzes ---------- */
+    const QUIZ = {
+      1: [
+        {q:'在網路上按下「送出」之前，哪一個不是要問自己的問題？', o:['這是真的嗎？','一定要現在說嗎？','這樣說會不會很酷？','如果別人這樣說我，我會怎樣？'], a:2, why:'發言三問是：是真的嗎？一定要現在說嗎？別人這樣說我會怎樣？'},
+        {q:'同學分享的作品你不太喜歡，最好的做法是？', o:['直接說「好醜」','先稱讚優點，再有禮貌地給建議','在群組裡大家一起笑他','當作沒看到並發翻白眼貼圖'], a:1, why:'多鼓勵、少批評，建議要具體又有禮貌。'},
+        {q:'網路上的言論自由受法律保障，所以……', o:['想罵誰就罵誰','還是要尊重別人、遵守道德規範','只能說好話不能有意見','可以隨便散播別人的秘密'], a:1, why:'有言論自由，也要有是非判斷，尊重別人。'}
+      ],
+      2: [
+        {q:'在網路上交朋友，哪一件事最需要小心？', o:['一起討論喜歡的電影','分享遊戲攻略','對方要你的學校和住址','互相鼓勵寫功課'], a:2, why:'就讀學校、住址都是個人隱私，不能給網友。'},
+        {q:'網友沒有馬上回你訊息，你應該？', o:['一直傳貼圖催他','很生氣不跟他好了','體諒他可能在忙，給彼此空間','到處說他壞話'], a:2, why:'看不見對方的生活狀況，要學會體諒。'},
+        {q:'網友威脅你傳照片，正確的順序是？', o:['傳照片→封鎖','停止對話→截圖存證→封鎖→告訴大人','封鎖→刪除所有對話→不告訴任何人','先罵回去→再截圖'], a:1, why:'記得保留證據，一定要告訴可信任的大人。'}
+      ],
+      3: [
+        {q:'想把同學的照片傳到網路上，應該先？', o:['直接傳，反正很可愛','問過照片裡的本人並得到同意','把臉塗掉就可以隨便傳','傳到只有好朋友的群組就沒關係'], a:1, why:'沒經過本人同意傳照片是違法行為。'},
+        {q:'收到「限時免費送寶物，填電話就能拿」的訊息，屬於哪個燈號？', o:['綠燈：馬上填','黃燈或紅燈：先停下來查證，不填個資','不用想，轉傳給大家','只要是朋友傳的就安全'], a:1, why:'太吸引人的好康，還要你填個資，要提高警覺。'},
+        {q:'下面哪一個是可以幫忙「查證」訊息的地方？', o:['來源不明的留言區','台灣事實查核中心','陌生人傳來的網址','聊天群組的傳言'], a:1, why:'可以用官方網站、台灣事實查核中心、MyGoPen 查證。'}
+      ]
+    };
+    const PRAISE = ['🎉 太棒了！', '✨ 答對囉！', '🌟 你真厲害！', '👍 好公民！'];
+    function renderQuizzes(){
+      document.querySelectorAll('.quiz-section').forEach(sec => {
+        const stage = sec.dataset.stage;
+        const list = sec.querySelector('.quiz-list'); list.innerHTML = '';
+        const state = QUIZ[stage].map(() => null);
+        QUIZ[stage].forEach((item, qi) => {
+          const wrap = document.createElement('div'); wrap.className = 'quiz-item';
+          const q = document.createElement('p'); q.className = 'quiz-q'; q.textContent = (qi + 1) + '. ' + item.q;
+          const opts = document.createElement('div'); opts.className = 'quiz-opts';
+          const fb = document.createElement('div'); fb.className = 'quiz-feedback';
+          item.o.forEach((txt, oi) => {
+            const b = document.createElement('button'); b.className = 'quiz-opt'; b.textContent = txt;
+            b.onclick = () => {
+              const btns = opts.querySelectorAll('.quiz-opt');
+              if(oi === item.a){
+                b.classList.add('correct'); btns.forEach(x => x.disabled = true);
+                fb.textContent = PRAISE[Math.floor(Math.random() * PRAISE.length)] + ' ' + item.why;
+                if(state[qi] === null) state[qi] = true;
+                if(state.every(x => x !== null)) finishStage(stage, state, sec);
+              } else {
+                b.classList.add('wrong'); b.disabled = true;
+                fb.textContent = '差一點點！再試一次看看～';
+                state[qi] = false;
+              }
+            };
+            opts.appendChild(b);
+          });
+          wrap.append(q, opts, fb); list.appendChild(wrap);
+        });
+        const old = sec.querySelector('.quiz-score'); if(old) old.remove();
+      });
+    }
+    function finishStage(stage, state, sec){
+      let score = sec.querySelector('.quiz-score');
+      if(!score){ score = document.createElement('div'); score.className = 'quiz-score'; sec.appendChild(score); }
+      const firstTry = state.filter(Boolean).length;
+      score.textContent = `🏁 本關完成！第一次就答對 ${firstTry} / ${state.length} 題。`;
+      if(!doneMap[stage]){ doneMap[stage] = true; saveDone(doneMap); renderProgress(); showToast('STAGE ' + stage + ' 通關！🎉'); }
+    }
+
+    /* ---------- promise card ---------- */
+    function updatePromise(){
+      const name = document.getElementById('pName').value.trim();
+      const words = document.getElementById('pWords').value.trim();
+      const boxes = [...document.querySelectorAll('#pChecks input:checked')];
+      document.getElementById('pcName').textContent = (name || '＿＿＿＿') + ' 的承諾';
+      const list = document.getElementById('pcList'); list.innerHTML = '';
+      if(!boxes.length){ const li = document.createElement('li'); li.style.color = 'var(--dim)'; li.textContent = '勾選左邊的約定，這裡會出現喔！'; list.appendChild(li); }
+      boxes.forEach(b => { const li = document.createElement('li'); li.textContent = b.value; list.appendChild(li); });
+      document.getElementById('pcWords').textContent = '我想說：' + (words || '＿＿＿＿＿＿＿＿');
+      document.getElementById('pcStamp').style.display = (name && boxes.length === 3) ? 'block' : 'none';
+    }
+    function initPromise(){
+      document.querySelectorAll('#pChecks input').forEach(cb => cb.addEventListener('change', () => {
+        const checked = document.querySelectorAll('#pChecks input:checked');
+        if(checked.length > 3){ cb.checked = false; showToast('選 3 個就好喔！'); }
+        updatePromise();
+      }));
+      ['pName', 'pWords'].forEach(id => document.getElementById(id).addEventListener('input', updatePromise));
+    }
+    function clearPromise(){
+      document.getElementById('pName').value = ''; document.getElementById('pWords').value = '';
+      document.querySelectorAll('#pChecks input').forEach(cb => cb.checked = false);
+      updatePromise();
+    }
+
+    /* ---------- FAQ ---------- */
+    const FAQS = [
+      ['網路上說話又沒人看到我，為什麼要有禮貌？', '螢幕另一邊是真實的人，他會感受到你的話。而且網路上的留言會被保存、截圖、轉傳，很難真正刪掉。'],
+      ['我不同意別人的想法，可以說出來嗎？', '可以！每個人看事情的角度不同。說出自己的想法和理由，不要罵人或人身攻擊，就是尊重的討論。'],
+      ['網友對我很好，也不能相信他嗎？', '網路上可以交到好朋友，但你看不見對方真正的樣子。真正的朋友不會跟你要學校、住址、照片、密碼，也不會叫你保守秘密。'],
+      ['告訴爸媽或老師，會不會被罵？', '不會！遇到讓你害怕或不舒服的事，不是你的錯。告訴可信任的大人，是保護自己最勇敢的做法。'],
+      ['為什麼傳同學的照片要先問？', '照片裡的人有自己的權利，個人資料受到法律保護。沒經過同意就傳出去，可能讓對方難過，也是違法的行為。'],
+      ['朋友傳來的連結一定安全嗎？', '不一定！朋友也可能被騙或帳號被盜。先不要急著點開，用官方網站、台灣事實查核中心、MyGoPen 查證，或問大人。']
+    ];
+    function renderFaq(){
+      const box = document.getElementById('faqList');
+      FAQS.forEach(([q, a]) => {
+        const item = document.createElement('div'); item.className = 'faq-item';
+        const b = document.createElement('button'); b.className = 'faq-q'; b.textContent = '❓ ' + q;
+        const p = document.createElement('div'); p.className = 'faq-a'; p.textContent = a;
+        b.onclick = () => item.classList.toggle('open');
+        item.append(b, p); box.appendChild(item);
+      });
+    }
+
+    /* ---------- floating tools ---------- */
+    function togglePanel(name){
+      const el = document.getElementById('panel-' + name);
+      const willShow = !el.classList.contains('show');
+      document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('show'));
+      if(willShow) el.classList.add('show');
+    }
+    function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+    let lotPool = [];
+    function refillLotPool(){
+      const min = parseInt(document.getElementById('lot-min').value) || 1;
+      const max = parseInt(document.getElementById('lot-max').value) || 30;
+      if(min > max) return false;
+      lotPool = []; for(let i = min; i <= max; i++) lotPool.push(i);
+      return true;
+    }
+    function doLottery(){
+      const unique = document.getElementById('lot-unique').checked;
+      const min = parseInt(document.getElementById('lot-min').value) || 1;
+      const max = parseInt(document.getElementById('lot-max').value) || 30;
+      if(min > max){ alert('最小號必須 ≤ 最大號！'); return; }
+      if(unique && lotPool.length === 0) refillLotPool();
+      const out = document.getElementById('lot-out');
+      const spin = setInterval(() => { out.textContent = (Math.floor(Math.random() * (max - min + 1)) + min) + ' 號'; }, 60);
+      setTimeout(() => {
+        clearInterval(spin);
+        let num;
+        if(unique){
+          if(lotPool.length === 0) refillLotPool();
+          num = lotPool.splice(Math.floor(Math.random() * lotPool.length), 1)[0];
+        } else num = Math.floor(Math.random() * (max - min + 1)) + min;
+        out.textContent = '🌟 ' + num + ' 號 🌟';
+      }, 1200);
+    }
+    function resetLottery(){ refillLotPool(); document.getElementById('lot-out').textContent = '等待抽號…'; }
+
+    let timerTotal = 180, timerLeft = 180, timerId = null;
+    function fmtTime(s){ return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+    function setTimer(sec){
+      clearInterval(timerId); timerId = null;
+      timerTotal = sec; timerLeft = sec;
+      const out = document.getElementById('timerOut');
+      out.classList.remove('done'); out.textContent = fmtTime(sec);
+    }
+    function startTimer(){
+      if(timerId){ clearInterval(timerId); timerId = null; return; }
+      if(timerLeft <= 0) setTimer(timerTotal);
+      timerId = setInterval(() => {
+        timerLeft--;
+        const out = document.getElementById('timerOut');
+        out.textContent = fmtTime(Math.max(0, timerLeft));
+        if(timerLeft <= 0){ clearInterval(timerId); timerId = null; out.classList.add('done'); out.textContent = '時間到！'; }
+      }, 1000);
+    }
+
+    let drawActive = false, penColor = '#ff6b6b', penSize = 4;
+    let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+    function initDraw(){
+      drawCanvas = document.getElementById('drawCanvas');
+      drawCtx = drawCanvas.getContext('2d');
+      const size = () => { drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight; };
+      size();
+      const line = (x, y) => {
+        drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+        drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(x, y); drawCtx.stroke();
+        dLastX = x; dLastY = y;
+      };
+      drawCanvas.addEventListener('mousedown', e => { if(!drawActive) return; isDrawing = true; dLastX = e.clientX; dLastY = e.clientY; });
+      drawCanvas.addEventListener('mousemove', e => { if(drawActive && isDrawing) line(e.clientX, e.clientY); });
+      drawCanvas.addEventListener('mouseup', () => isDrawing = false);
+      drawCanvas.addEventListener('mouseleave', () => isDrawing = false);
+      drawCanvas.addEventListener('touchstart', e => { if(!drawActive) return; e.preventDefault(); const t = e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY; }, {passive:false});
+      drawCanvas.addEventListener('touchmove', e => { if(!drawActive || !isDrawing) return; e.preventDefault(); const t = e.touches[0]; line(t.clientX, t.clientY); }, {passive:false});
+      drawCanvas.addEventListener('touchend', () => isDrawing = false);
+      window.addEventListener('resize', size);
+    }
+    function toggleDraw(){
+      drawActive = !drawActive;
+      drawCanvas.classList.toggle('active', drawActive);
+      document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+      document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c3)' : '';
+    }
+    function setPenColor(c, el){
+      penColor = c;
+      document.querySelectorAll('.draw-toolbar .color-dot').forEach(d => d.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height); }
+
+    function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
+    document.addEventListener('DOMContentLoaded', () => {
+      safeInit('renderProgress', renderProgress);
+      safeInit('renderReply', renderReply);
+      safeInit('renderSimStep', renderSimStep);
+      safeInit('initLights', initLights);
+      safeInit('renderQuizzes', renderQuizzes);
+      safeInit('initPromise', initPromise);
+      safeInit('renderFaq', renderFaq);
+      safeInit('initDraw', initDraw);
+    });
+  </script>
+</body>
+</html>

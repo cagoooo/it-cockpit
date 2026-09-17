@@ -10,7 +10,7 @@
 
 IT Cockpit 是一套為國小資訊科技課程設計的互動式教學入口。它將三至六年級、創造能力資賦優異課程與教師研習教材，整理成可直接投影、操作、練習與複習的獨立教學艙。
 
-本專案目前整理 **39 個課程入口**，其中 38 個教學艙已上線，Tinkercad 3D 列印課程仍在規劃中。內容從電腦操作、網路搜尋、影像設計、Scratch、micro:bit，到 AI 素養、媒體識讀、生成式 AI 創作與專題實作。
+本專案目前整理 **40 個課程入口**，其中 39 個教學艙已上線，Tinkercad 3D 列印課程仍在規劃中。內容從電腦操作、網路搜尋、影像設計、Scratch、micro:bit，到 AI 素養、媒體識讀、生成式 AI 創作與專題實作。
 
 ## 快速入口
 
@@ -47,7 +47,8 @@ IT Cockpit 是一套為國小資訊科技課程設計的互動式教學入口。
 [英文打字](https://cagoooo.github.io/it-cockpit/typing-en/) ·
 [PaGamO 世界冒險](https://cagoooo.github.io/it-cockpit/pagamo-world/) ·
 [網路搜尋](https://cagoooo.github.io/it-cockpit/internet-search/) ·
-[AI 探索家](https://cagoooo.github.io/it-cockpit/ai-explorer/)
+[AI 探索家](https://cagoooo.github.io/it-cockpit/ai-explorer/) ·
+[網路好公民](https://cagoooo.github.io/it-cockpit/net-citizen/)
 
 ### 四年級｜數位創作與機器學習
 
