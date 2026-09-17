@@ -68,7 +68,7 @@
   <footer class="shell week-footer"><span>桃園市龍潭區石門國民小學 · W${ww} 資訊科技課程</span><span>Made with ❤️ by <a href="https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5" target="_blank" rel="noopener noreferrer">阿凱老師</a></span></footer>
   <canvas id="drawCanvas" class="page-draw" aria-hidden="true"></canvas>
   <div class="draw-toolbar" aria-label="畫筆工具"><button class="draw-color active" data-color="#15383c" style="--swatch:#15383c" aria-label="深綠色"></button><button class="draw-color" data-color="#de5c46" style="--swatch:#de5c46" aria-label="紅色"></button><button class="draw-color" data-color="#f1bd45" style="--swatch:#f1bd45" aria-label="黃色"></button><button class="draw-color" data-color="#168277" style="--swatch:#168277" aria-label="綠色"></button><button class="draw-color" data-color="#3575a7" style="--swatch:#3575a7" aria-label="藍色"></button><button id="clearDraw">清除</button><button id="closeDraw">完成</button></div>
-  <aside class="tool-dock"><div class="tools"><div class="tool-head"><span>課堂工具</span><button class="nav-btn close-tools" aria-label="關閉工具">×</button></div><div class="timer-display">10:00</div><div class="timer-controls"><button data-min="5">5 分</button><button data-min="10">10 分</button><button data-min="15">15 分</button><button class="start-timer">開始</button></div><button class="action pick-challenge">抽進階挑戰</button><p class="challenge">完成基本任務後，再抽一張挑戰卡。</p><button class="action draw-toggle">開啟全頁畫筆</button></div><button class="tool-toggle" aria-label="開啟課堂工具" title="課堂工具">＋</button></aside>`;
+  <aside class="tool-dock"><div class="tools"><div class="tool-head"><span>課堂工具</span><button class="nav-btn close-tools" aria-label="關閉工具">×</button></div><div class="timer-display">10:00</div><div class="timer-controls"><button data-min="5">5 分</button><button data-min="10">10 分</button><button data-min="15">15 分</button><button class="start-timer">開始</button></div><button class="action pick-challenge" type="button" aria-controls="challengeCard">抽進階挑戰</button><p class="challenge" id="challengeCard" role="status" aria-live="polite">完成基本任務後，再抽一張挑戰卡。</p><button class="action draw-toggle" type="button">開啟全頁畫筆</button></div><button class="tool-toggle" type="button" aria-label="開啟課堂工具" title="課堂工具">＋</button></aside>`;
 
   const viewIds=['teacher','explore','student','assessment','media','safety','day-ai'];
   const showView=(view,{scroll=true}={})=>{
@@ -126,8 +126,18 @@
   const showTime=()=>{display.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;};
   document.querySelectorAll('[data-min]').forEach(button=>button.onclick=()=>{clearInterval(timer);timer=null;seconds=Number(button.dataset.min)*60;showTime();document.querySelector('.start-timer').textContent='開始';});
   document.querySelector('.start-timer').onclick=event=>{if(timer){clearInterval(timer);timer=null;event.target.textContent='開始';return;}event.target.textContent='暫停';timer=setInterval(()=>{seconds=Math.max(0,seconds-1);showTime();if(!seconds){clearInterval(timer);timer=null;display.textContent='時間到';event.target.textContent='開始';}},1000);};
-  const challenges=[...extra.success.map(item=>'把「'+item+'」提升到更高標準。'),'找一個會讓目前規則失敗的反例。','提出兩種完全不同的解法並比較證據。','請 AI 反對你的想法，再逐點查證。','讓別人在沒有提示下操作你的作品。'];
-  document.querySelector('.pick-challenge').onclick=()=>document.querySelector('.challenge').textContent=challenges[Math.floor(Math.random()*challenges.length)];
+  const challenges=[...new Set([...extra.success.map(item=>'把「'+item+'」提升到更高標準。'),'找一個會讓目前規則失敗的反例。','提出兩種完全不同的解法並比較證據。','請 AI 反對你的想法，再逐點查證。','讓別人在沒有提示下操作你的作品。'])];
+  const challengeButton=document.querySelector('.pick-challenge'),challengeCard=document.querySelector('.challenge');let challengeQueue=[],lastChallenge='',challengeTimer=null;
+  const refillChallenges=()=>{challengeQueue=[...challenges].sort(()=>Math.random()-.5);if(challengeQueue.length>1&&challengeQueue[0]===lastChallenge)[challengeQueue[0],challengeQueue[1]]=[challengeQueue[1],challengeQueue[0]];};
+  const nextChallenge=()=>{if(!challengeQueue.length)refillChallenges();lastChallenge=challengeQueue.shift();return lastChallenge;};
+  const pickChallenge=()=>{
+    if(challengeTimer||!challengeButton||!challengeCard||!challenges.length)return;
+    challengeButton.disabled=true;challengeButton.setAttribute('aria-busy','true');challengeButton.textContent='抽題中…';challengeCard.classList.remove('challenge-result');challengeCard.classList.add('challenge-drawing');challengeCard.setAttribute('aria-live','off');
+    let turn=0;
+    const spin=()=>{if(turn<8){challengeCard.textContent=challenges[Math.floor(Math.random()*challenges.length)];turn+=1;challengeTimer=window.setTimeout(spin,70+turn*22);return;}challengeCard.textContent=nextChallenge();challengeCard.classList.remove('challenge-drawing');challengeCard.classList.add('challenge-result');challengeCard.setAttribute('aria-live','polite');challengeButton.disabled=false;challengeButton.removeAttribute('aria-busy');challengeButton.textContent='再抽一題';challengeTimer=null;};
+    spin();
+  };
+  challengeButton?.addEventListener('click',pickChallenge);
 
   const canvas=document.querySelector('#drawCanvas'),ctx=canvas.getContext('2d'),drawToolbar=document.querySelector('.draw-toolbar');let drawing=false,drawColor='#15383c';
   const resizeCanvas=()=>{const ratio=devicePixelRatio||1;canvas.width=Math.round(innerWidth*ratio);canvas.height=Math.round(innerHeight*ratio);canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(ratio,0,0,ratio,0,0);ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=4;};

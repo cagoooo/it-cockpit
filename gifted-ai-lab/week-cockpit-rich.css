@@ -58,6 +58,12 @@
 .copy-prompt { min-width: 64px; height: 36px; border: 1px solid var(--line); border-radius: 5px; background: var(--white); font-weight: 800; cursor: pointer; }
 .copy-prompt:hover { border-color: var(--teal); }
 .pick-challenge, .draw-toggle { width: 100%; margin-top: 10px; }
+.pick-challenge:disabled { opacity: .65; cursor: wait; }
+.challenge { transition: background-color .2s ease, transform .2s ease; }
+.challenge.challenge-drawing { background: #fff5d6; animation: challenge-draw .14s ease-in-out infinite alternate; }
+.challenge.challenge-result { animation: challenge-result .42s ease-out; }
+@keyframes challenge-draw { from { transform: translateY(1px) rotate(-.35deg); } to { transform: translateY(-1px) rotate(.35deg); } }
+@keyframes challenge-result { from { opacity: .35; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
 .page-draw { display: block; position: fixed; inset: 0; z-index: 250; background: transparent; pointer-events: none; touch-action: none; }
 .page-draw.active { pointer-events: all; cursor: crosshair; }
 .draw-toolbar { display: none; position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 500; max-width: calc(100vw - 36px); align-items: center; gap: 8px; padding: 10px; border: 1px solid var(--line); background: var(--white); box-shadow: 0 10px 35px #15383c38; overflow-x: auto; overscroll-behavior: contain; }
@@ -84,6 +90,10 @@
   .page-draw, .draw-toolbar { display: none !important; }
   .view:not(.active) { display: none !important; }
   .view.active { display: block !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .challenge.challenge-drawing, .challenge.challenge-result { animation: none; }
 }
 
 /* Phase 7: weekly picture-book visuals */
