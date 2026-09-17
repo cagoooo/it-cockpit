@@ -241,6 +241,48 @@
     .faq-a{display:none;padding:12px 18px 16px;font-size:.97rem;line-height:1.75}
     .faq-item.open .faq-a{display:block}
 
+    /* ===== Slide player ===== */
+    .slide-player{margin-top:10px}
+    .slide-player-main{position:relative;border:2.5px solid var(--text);border-radius:16px;overflow:hidden;background:#000;box-shadow:var(--shadow)}
+    .slide-player-main picture,.slide-player-main img{display:block;width:100%;height:auto}
+    .slide-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:64px;background:rgba(0,0,0,.55);border:none;color:#fff;font-size:1.8rem;font-weight:900;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;transition:.15s}
+    .slide-nav.prev{left:0;border-radius:0 12px 12px 0}
+    .slide-nav.next{right:0;border-radius:12px 0 0 12px}
+    .slide-nav:hover{background:var(--c4)}
+    .slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c4);color:#fff;border:2px solid var(--text);padding:7px 14px;font-size:.9rem;font-weight:900;cursor:pointer;border-radius:20px;box-shadow:var(--shadow-s);z-index:3;display:flex;align-items:center;gap:6px;transition:.15s}
+    .slide-fs-btn:hover{transform:translateY(-2px)}
+    .slide-counter{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:999px;font-weight:700;font-size:.85rem;z-index:2}
+    .slide-strip{display:flex;gap:10px;overflow-x:auto;padding:14px 4px;scroll-behavior:smooth}
+    .strip-thumb{flex:0 0 120px;border:2.5px solid var(--text);border-radius:10px;overflow:hidden;cursor:pointer;opacity:.6;transition:.15s;background:#000}
+    .strip-thumb img{display:block;width:100%;height:auto}
+    .strip-thumb.active{opacity:1;outline:3px solid var(--c4);transform:translateY(-2px)}
+
+    #slide-fs{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center}
+    #slide-fs.show{display:flex}
+    #slide-fs picture,#slide-fs img{max-width:92vw;max-height:88vh;display:block}
+    #slide-fs .fs-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:2px solid var(--c4);background:rgba(0,0,0,.6);color:#fff;font-size:1.4rem;cursor:pointer;z-index:2}
+    #slide-fs .fs-nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--c4);color:var(--c4);font-size:2rem;font-weight:900;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center}
+    #slide-fs .fs-nav.prev{left:20px}
+    #slide-fs .fs-nav.next{right:20px}
+    #slide-fs .fs-nav:hover{background:var(--c4);color:#fff;box-shadow:0 0 16px var(--c4)}
+    #slide-fs .fs-nav:active{transform:translateY(-50%) scale(.95)}
+    #slide-fs .fs-counter{position:absolute;left:20px;bottom:16px;color:#fff;font-weight:700;background:rgba(0,0,0,.6);padding:4px 14px;border-radius:999px}
+    body.slides-fullscreen{overflow:hidden}
+    body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar{display:none!important}
+    @media (max-width:720px){
+      #slide-fs .fs-nav{width:46px;height:64px;font-size:1.6rem}
+      #slide-fs .fs-nav.prev{left:8px}
+      #slide-fs .fs-nav.next{right:8px}
+      #slide-fs .fs-close{width:40px;height:40px;top:12px;right:12px}
+    }
+
+    /* ===== Video ===== */
+    .video-wrap{margin-top:10px}
+    .video-embed{position:relative;width:100%;padding-top:56.25%;border:2.5px solid var(--text);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#000}
+    .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video-no-id{padding:60px 20px;text-align:center;font-size:1.1rem;font-weight:700;color:var(--dim);background:var(--surface);border:2.5px dashed var(--text);border-radius:16px}
+    .video-yt-link{display:inline-block;margin-top:12px;font-weight:700;color:var(--c1)}
+
     /* floating tools (z-index 400 > canvas 250) */
     .float-tools{position:fixed;right:18px;bottom:18px;z-index:400;display:flex;flex-direction:column;gap:10px}
     .float-btn{width:52px;height:52px;border-radius:50%;border:2.5px solid var(--text);background:#fff;font-size:1.4rem;cursor:pointer;box-shadow:var(--shadow-s);transition:.12s}
@@ -651,6 +693,44 @@
       </div>
     </section>
 
+    <!-- ===== SLIDE DECK PLAYER ===== -->
+    <section class="level-section" id="slides" style="--accent:var(--c4)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c4)">SLIDES</span>
+        <div>
+          <h2 class="section-title">📊 授課簡報播放器</h2>
+          <p class="section-sub">NotebookLM AI 生成的教學簡報，線上翻頁快速複習，也可以點右上角進入全螢幕。</p>
+        </div>
+      </div>
+      <div class="slide-player">
+        <div class="slide-player-main" id="slideMain" ondblclick="openSlideFullscreen()">
+          <picture>
+            <source id="slideMainWebp" type="image/webp" srcset="">
+            <img id="slideMainImg" src="" alt="簡報頁面" loading="lazy">
+          </picture>
+          <button class="slide-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+          <button class="slide-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+          <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+          <div class="slide-counter" id="slideCounter">1 / 1</div>
+        </div>
+        <div class="slide-strip" id="slideStrip"></div>
+      </div>
+    </section>
+
+    <!-- ===== VIDEO ===== -->
+    <section class="level-section" id="video" style="--accent:var(--c1)">
+      <div class="section-header">
+        <span class="stage-badge" style="background:var(--c1)">VIDEO</span>
+        <div>
+          <h2 class="section-title">▶ 自學影片</h2>
+          <p class="section-sub">NotebookLM AI 生成的動畫講解影片，把三個故事的重點再說一次！</p>
+        </div>
+      </div>
+      <div class="video-wrap" id="videoWrap">
+        <div class="video-no-id" id="videoPlaceholder">🎬 自學影片由 NotebookLM AI 自動生成中…</div>
+      </div>
+    </section>
+
     <!-- ===== FAQ ===== -->
     <section class="level-section" id="faq" style="--accent:var(--c5)">
       <div class="section-header">
@@ -734,6 +814,16 @@
     <button class="color-dot" style="background:#40c057" onclick="setPenColor('#40c057',this)" aria-label="綠色"></button>
     <button class="color-dot" style="background:#2c2c2c" onclick="setPenColor('#2c2c2c',this)" aria-label="黑色"></button>
     <button class="draw-clear" onclick="clearDrawing()">清除</button>
+  </div>
+  <div id="slide-fs">
+    <button class="fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+    <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+    <picture>
+      <source id="slideFsWebp" type="image/webp" srcset="">
+      <img id="slide-fs-img" src="" alt="簡報全螢幕大圖">
+    </picture>
+    <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+    <div class="fs-counter" id="slide-fs-counter">1 / 1</div>
   </div>
   <div class="toast" id="toast"></div>
 
@@ -1202,6 +1292,99 @@
     }
     function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height); }
 
+    /* ---------- slide deck player ---------- */
+    const SLIDE_FILES = ['assets/slide_01.jpg','assets/slide_02.jpg','assets/slide_03.jpg','assets/slide_04.jpg','assets/slide_05.jpg','assets/slide_06.jpg','assets/slide_07.jpg','assets/slide_08.jpg','assets/slide_09.jpg','assets/slide_10.jpg','assets/slide_11.jpg'];
+    let currentSlide = 0;
+    function initSlidePlayer(){
+      const strip = document.getElementById('slideStrip');
+      if(!strip || !SLIDE_FILES.length) return;
+      strip.innerHTML = '';
+      SLIDE_FILES.forEach((src, i) => {
+        const d = document.createElement('div');
+        d.className = 'strip-thumb' + (i === 0 ? ' active' : '');
+        const img = document.createElement('img');
+        img.src = src; img.loading = 'lazy'; img.alt = '第 ' + (i + 1) + ' 頁縮圖';
+        d.appendChild(img);
+        d.onclick = () => goSlide(i);
+        strip.appendChild(d);
+      });
+      goSlide(0);
+    }
+    function goSlide(n){
+      if(!SLIDE_FILES.length) return;
+      currentSlide = Math.max(0, Math.min(SLIDE_FILES.length - 1, n));
+      const src = SLIDE_FILES[currentSlide];
+      const webp = src.replace(/\.jpg$/i, '.webp');
+      const mainImg = document.getElementById('slideMainImg');
+      const mainWebp = document.getElementById('slideMainWebp');
+      if(mainImg) mainImg.src = src;
+      if(mainWebp) mainWebp.srcset = webp;
+      const counter = document.getElementById('slideCounter');
+      if(counter) counter.textContent = (currentSlide + 1) + ' / ' + SLIDE_FILES.length;
+      document.querySelectorAll('.strip-thumb').forEach((el, i) => el.classList.toggle('active', i === currentSlide));
+      const strip = document.getElementById('slideStrip');
+      const activeThumb = document.querySelector('.strip-thumb.active');
+      if(strip && activeThumb){
+        const targetLeft = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
+        strip.scrollTo({left: Math.max(0, targetLeft), behavior: 'smooth'});
+      }
+      const fs = document.getElementById('slide-fs');
+      if(fs && fs.classList.contains('show')){
+        const fsImg = document.getElementById('slide-fs-img');
+        const fsWebp = document.getElementById('slideFsWebp');
+        const fsCounter = document.getElementById('slide-fs-counter');
+        if(fsImg) fsImg.src = src;
+        if(fsWebp) fsWebp.srcset = webp;
+        if(fsCounter) fsCounter.textContent = (currentSlide + 1) + ' / ' + SLIDE_FILES.length;
+      }
+    }
+    function slideNav(dir){ goSlide(currentSlide + dir); }
+    function openSlideFullscreen(){
+      const fs = document.getElementById('slide-fs');
+      if(!fs) return;
+      fs.classList.add('show');
+      document.body.classList.add('slides-fullscreen');
+      goSlide(currentSlide);
+    }
+    function closeSlideFullscreen(){
+      const fs = document.getElementById('slide-fs');
+      if(fs) fs.classList.remove('show');
+      document.body.classList.remove('slides-fullscreen');
+    }
+    function initSlideKeys(){
+      document.addEventListener('keydown', e => {
+        const fs = document.getElementById('slide-fs');
+        if(!fs || !fs.classList.contains('show')) return;
+        if(e.key === 'ArrowLeft'){ slideNav(-1); }
+        else if(e.key === 'ArrowRight'){ slideNav(1); }
+        else if(e.key === 'Escape'){ closeSlideFullscreen(); }
+      });
+    }
+
+    /* ---------- video ---------- */
+    const YOUTUBE_VIDEO_ID = 'DH4eTpWW5EI';
+    function initVideo(){
+      const wrap = document.getElementById('videoWrap');
+      if(!wrap || !YOUTUBE_VIDEO_ID) return;
+      wrap.innerHTML = '';
+      const embed = document.createElement('div');
+      embed.className = 'video-embed';
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID;
+      iframe.title = '網路好公民自學影片';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.loading = 'lazy';
+      embed.appendChild(iframe);
+      wrap.appendChild(embed);
+      const link = document.createElement('a');
+      link.className = 'video-yt-link';
+      link.href = 'https://www.youtube.com/watch?v=' + YOUTUBE_VIDEO_ID;
+      link.target = '_blank'; link.rel = 'noopener noreferrer';
+      link.textContent = '🔗 在 YouTube 開啟';
+      wrap.appendChild(link);
+    }
+
     function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
     document.addEventListener('DOMContentLoaded', () => {
       safeInit('renderProgress', renderProgress);
@@ -1212,6 +1395,9 @@
       safeInit('initPromise', initPromise);
       safeInit('renderFaq', renderFaq);
       safeInit('initDraw', initDraw);
+      safeInit('initSlidePlayer', initSlidePlayer);
+      safeInit('initSlideKeys', initSlideKeys);
+      safeInit('initVideo', initVideo);
     });
   </script>
 </body>
