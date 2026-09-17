@@ -532,6 +532,7 @@ body.slides-fullscreen .draw-toolbar{display:none !important}
     } catch (e) {}
   })();
 </script>
+<script src="../assets/slide-thumbs.js"></script>
 <script src="../assets/webp-fallback.js" defer></script>
 </head>
 <body>
@@ -1068,7 +1069,7 @@ function initSlidePlayer(){
   SLIDE_LIST.forEach((src,i)=>{
     const t = document.createElement('div');
     t.className = 'strip-thumb' + (i===0?' active':'');
-    t.style.backgroundImage = `url(${src})`;
+    t.style.backgroundImage = `url(${src.replace('assets/', 'assets/thumbs/')})`; // 縮圖改用 320px 小圖
     t.dataset.idx = i;
     t.onclick = ()=>goSlide(i);
     strip.appendChild(t);
