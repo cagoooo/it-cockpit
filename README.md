@@ -87,7 +87,8 @@ Tinkercad 3D 列印（規劃中） ·
 [Suno 班級神曲](https://cagoooo.github.io/it-cockpit/suno-class-song/) ·
 [畢業紀念影片](https://cagoooo.github.io/it-cockpit/grad-film-ai/) ·
 [痞客邦部落格](https://cagoooo.github.io/it-cockpit/pixnet-blog/) ·
-[AI 公平性與偏誤](https://cagoooo.github.io/it-cockpit/ai-fairness/)
+[AI 公平性與偏誤](https://cagoooo.github.io/it-cockpit/ai-fairness/) ·
+[網路守門員特訓營](https://cagoooo.github.io/it-cockpit/net-guardians/)
 
 ### 教師研習
 

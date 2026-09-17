@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>網路守門員特訓營：界線 × 假面 × 真臉｜六年級授課簡報</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="網路守門員特訓營｜六年級授課簡報">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/net-guardians/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Bangers&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fef9f0;--panel:#fff;--ink:#2c2c2c;--dim:#6f6f6f;
+  --red:#ff6b6b;--orange:#ffa94d;--green:#51cf66;--blue:#339af0;--purple:#9775fa;--yellow:#ffe066;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--ink);
+  background-image:radial-gradient(rgba(44,44,44,.08) 1.4px,transparent 1.4px);background-size:22px 22px}
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;padding:5vh 6vw 13vh;display:none;flex-direction:column;justify-content:center}
+.slide.active{display:flex;animation:in .35s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,var(--red) 0 60px,var(--orange) 60px 120px,var(--green) 120px 180px,var(--blue) 180px 240px,var(--purple) 240px 300px);border-bottom:3px solid var(--ink)}
+.tag{font-family:'Bangers',sans-serif;letter-spacing:3px;font-size:1.3rem;display:inline-block;background:var(--ink);color:var(--yellow);padding:2px 16px;border-radius:8px;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--red);margin-bottom:14px;align-self:flex-start}
+h1{font-size:clamp(2.6rem,5.6vw,5rem);font-weight:900;line-height:1.2}
+h2{font-size:clamp(2rem,3.6vw,3.2rem);font-weight:900;line-height:1.25;margin-bottom:2.4vh}
+.hl{background:linear-gradient(transparent 60%,var(--yellow) 60%);padding:0 6px}
+.red{color:#e03131}.blue{color:#1c7ed6}.green{color:#2b8a3e}.purple{color:#7048e8}.orange{color:#e8590c}
+p,li,td{font-size:clamp(1.15rem,1.8vw,1.6rem);line-height:1.6}
+.sub{font-size:clamp(1.3rem,2.2vw,2rem);color:#444;margin-top:1.6vh}
+.sfx{font-family:'Bangers','Noto Sans TC',sans-serif;letter-spacing:3px;font-size:clamp(2rem,4vw,3.4rem);background:var(--red);color:#fff;border:4px solid var(--ink);padding:2px 26px;box-shadow:6px 6px 0 var(--ink);display:inline-block;transform:rotate(-5deg)}
+.grid{display:grid;gap:2vw}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+.card{background:var(--panel);border:4px solid var(--ink);border-radius:18px;padding:2.2vh 1.4vw;box-shadow:6px 6px 0 var(--ink)}
+.card h3{font-size:clamp(1.4rem,2.4vw,2.1rem);font-weight:900;margin-bottom:.8vh}
+.card .big{font-size:clamp(2.6rem,4.8vw,4.2rem);line-height:1;margin-bottom:1vh}
+.card.r{background:#fff5f5}.card.b{background:#e7f5ff}.card.g{background:#ebfbee}.card.p{background:#f3f0ff}.card.o{background:#fff4e6}
+.flow{display:flex;align-items:center;gap:1.2vw;justify-content:center}
+.flow .card{flex:1;text-align:center}
+.arrow{font-size:clamp(2rem,4vw,3.4rem);font-weight:900}
+.bubble{position:relative;background:#fff;border:4px solid var(--ink);border-radius:22px;padding:1.6vh 1.6vw;box-shadow:5px 5px 0 var(--ink);font-weight:700}
+table{width:100%;border-collapse:separate;border-spacing:0;border:4px solid var(--ink);border-radius:16px;overflow:hidden;background:#fff;box-shadow:6px 6px 0 var(--ink)}
+th{font-size:clamp(1.2rem,2vw,1.8rem);padding:1.2vh 1vw;border-bottom:4px solid var(--ink);background:var(--yellow)}
+td{padding:1.1vh 1vw;border-bottom:2px dashed #bbb;border-right:2px solid var(--ink);vertical-align:top}
+td:last-child{border-right:none}tr:last-child td{border-bottom:none}
+.panel4{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw}
+.panel4 .card{min-height:32vh;display:flex;flex-direction:column;justify-content:space-between}
+.qq{font-size:clamp(1.6rem,2.8vw,2.5rem);font-weight:900;color:#e03131}
+.num{display:inline-flex;width:clamp(2.4rem,3.6vw,3.2rem);height:clamp(2.4rem,3.6vw,3.2rem);border-radius:50%;background:var(--red);color:#fff;border:3px solid var(--ink);align-items:center;justify-content:center;font-weight:900;font-size:clamp(1.2rem,2vw,1.8rem);margin-bottom:1vh}
+.url{font-family:Consolas,monospace;font-size:clamp(1.1rem,2vw,1.8rem);background:#fff;border:3px solid var(--ink);border-radius:12px;padding:.6vh 1.2vw;display:inline-block;margin-top:1vh;word-break:break-all}
+.center{text-align:center;align-items:center}
+.center .tag{align-self:center}
+
+/* speaker */
+.speaker{position:absolute;left:3vw;bottom:2.4vh;display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:60vw}
+.speaker .avatar{width:58px;height:58px;background:var(--yellow);border:3px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:3px 3px 0 var(--ink);flex-shrink:0}
+.speaker .bubble{font-size:clamp(.9rem,1.3vw,1.15rem);padding:8px 16px;max-width:52vw}
+.speaker .bubble::before{content:'';position:absolute;left:-15px;bottom:16px;border-style:solid;border-width:9px 15px 9px 0;border-color:transparent var(--ink) transparent transparent}
+.speaker .bubble::after{content:'';position:absolute;left:-9px;bottom:18px;border-style:solid;border-width:7px 11px 7px 0;border-color:transparent #fff transparent transparent}
+body.hide-speaker .speaker{display:none}
+
+.progress{position:fixed;left:0;right:0;bottom:0;height:8px;background:rgba(0,0,0,.08);z-index:20}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--orange),var(--green),var(--blue));width:0;transition:width .3s}
+.hint{position:fixed;right:18px;bottom:16px;font-size:.85rem;color:var(--dim);background:rgba(255,255,255,.9);border:2px solid var(--ink);border-radius:12px;padding:4px 12px;z-index:20}
+.pageno{position:fixed;right:18px;top:20px;font-family:'Bangers',sans-serif;letter-spacing:2px;font-size:1.3rem;background:#fff;border:3px solid var(--ink);border-radius:10px;padding:0 12px;z-index:20}
+.back{position:fixed;left:18px;top:20px;font-size:.9rem;font-weight:700;background:#fff;border:3px solid var(--ink);border-radius:20px;padding:4px 14px;z-index:20;box-shadow:3px 3px 0 var(--ink);color:var(--ink);text-decoration:none}
+.overview{position:fixed;inset:0;background:rgba(254,249,240,.98);z-index:50;display:none;padding:4vh 4vw;overflow:auto}
+.overview.show{display:block}
+.overview h3{font-size:1.8rem;margin-bottom:2vh}
+#ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.ov-item{background:#fff;border:3px solid var(--ink);border-radius:14px;padding:12px 14px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
+.ov-item:hover{background:var(--yellow)}
+.ov-item b{display:block;font-size:1.1rem}.ov-item span{font-size:.9rem;color:var(--dim)}
+@media (max-width:800px){
+  .g3,.g4,.g5,.panel4,.g2{grid-template-columns:1fr}
+  .slide{padding:7vh 5vw 16vh;overflow:auto;justify-content:flex-start}
+  .flow{flex-direction:column}.arrow{transform:rotate(90deg)}
+  .speaker{max-width:90vw}.speaker .bubble{max-width:75vw}
+  .hint{display:none}
+}
+</style>
+</head>
+<body>
+<a class="back" href="index.html" title="回駕駛艙">← 駕駛艙</a>
+<div class="pageno" id="pageno">1 / 14</div>
+<div class="deck" id="deck">
+
+<!-- 1 封面 -->
+<section class="slide active center" id="s1">
+  <span class="sfx">WAIT! 等一下！</span>
+  <h1 style="margin-top:4vh">網路守門員特訓營</h1>
+  <p class="sub"><span class="hl">界線 × 假面 × 真臉</span></p>
+  <div class="grid g3" style="margin-top:5vh;width:min(1100px,90vw)">
+    <div class="card r"><div class="big">🚧</div><h3 class="red">網路世界有界線</h3></div>
+    <div class="card p"><div class="big">🎭</div><h3 class="purple">追星圈的假面怪客</h3></div>
+    <div class="card b"><div class="big">🎬</div><h3 class="blue">這是誰的臉？</h3></div>
+  </div>
+  <p style="margin-top:3vh;color:var(--dim)">六年級資訊科技 · 阿凱老師 · 桃園市龍潭區石門國民小學</p>
+  <div class="speaker"><div class="avatar">😄</div><div class="bubble">嗨！我是阿凱老師。今天要練成三種超能力：尊重、識破、查證！</div></div>
+</section>
+
+<!-- 2 HOOK -->
+<section class="slide" id="s2">
+  <span class="tag">HOOK · 你會怎麼做？</span>
+  <h2>三個情境，<span class="hl">3 秒內</span>決定你的下一步</h2>
+  <div class="panel4">
+    <div class="card r"><div><div class="big">📸</div><h3>同學打翻便當的狼狽照</h3><p>做成搞笑貼圖傳到群組？</p></div><p class="qq">分享？</p></div>
+    <div class="card p"><div><div class="big">💌</div><h3>「站姐」說你抽中小卡</h3><p>只要傳簡訊驗證碼給她？</p></div><p class="qq">給碼？</p></div>
+    <div class="card b"><div><div class="big">📹</div><h3>「表哥」視訊說出車禍</h3><p>臉和聲音都很像，要你幫忙匯錢？</p></div><p class="qq">相信？</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🤔</div><div class="bubble">先別急著回答！舉手投票：這三件事，你會按下去嗎？下課前我們再來看一次。</div></div>
+</section>
+
+<!-- 3 WHAT 地圖 -->
+<section class="slide" id="s3">
+  <span class="tag">MAP · 今日任務地圖</span>
+  <h2>三道關卡，打造你的<span class="hl">網路防護罩</span></h2>
+  <div class="flow">
+    <div class="card r"><div class="big">🚧</div><h3 class="red">關卡一 界線</h3><p>著作權・隱私權・同理心</p></div>
+    <div class="arrow">➜</div>
+    <div class="card p"><div class="big">🎭</div><h3 class="purple">關卡二 假面</h3><p>社交工程三大手法＋165 查證</p></div>
+    <div class="arrow">➜</div>
+    <div class="card b"><div class="big">🎬</div><h3 class="blue">關卡三 真臉</h3><p>深偽技術正反面＋防禦術</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🗺️</div><div class="bubble">每過一關，就多一層防護罩。最後你會拿到「守門員結業證書」！</div></div>
+</section>
+
+<!-- 4 著作權 -->
+<section class="slide" id="s4">
+  <span class="tag">GATE 1 · 著作權</span>
+  <h2>「我可以使用嗎？」——<span class="hl">放在網路上 ≠ 免費</span></h2>
+  <p style="margin-bottom:3vh">作品<strong class="red">完成的那一刻起</strong>，就自動受到著作權保護。插畫、照片、影片、文章都一樣，不能未經許可截圖或改作。</p>
+  <div class="flow">
+    <div class="card r"><div class="num">1</div><h3 class="red">詢問</h3><p>使用前先問創作者願不願意分享</p></div>
+    <div class="arrow">➜</div>
+    <div class="card o"><div class="num" style="background:var(--orange)">2</div><h3 class="orange">同意</h3><p>確定得到同意後，才開始使用</p></div>
+    <div class="arrow">➜</div>
+    <div class="card g"><div class="num" style="background:var(--green)">3</div><h3 class="green">標示</h3><p>清楚寫下原創者的名字</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">©️</div><div class="bubble">記住這三個詞：詢問、同意、標示。少一個都不行喔！</div></div>
+</section>
+
+<!-- 5 隱私 + 同理心 -->
+<section class="slide" id="s5">
+  <span class="tag">GATE 2 + 3 · 隱私權 × 同理心</span>
+  <h2>按「刪除」不等於<span class="hl">消失</span></h2>
+  <div class="grid g2">
+    <div class="card b">
+      <div class="big">🔒</div><h3 class="blue">隱私權：這是別人的個資嗎？</h3>
+      <p>照片、姓名、班級、出糗瞬間都是隱私。亂散布可能讓人被陌生人盯上、被拿去詐騙。</p>
+      <p style="margin-top:1vh"><strong>👣 數位足跡：</strong>早就被截圖、轉傳、被搜尋引擎記錄。</p>
+    </div>
+    <div class="card g">
+      <div class="big">💚</div><h3 class="green">同理心：如果是我被惡搞呢？</h3>
+      <p>一個「小惡作劇」可能變成對方難以脫下的<strong>數位標籤</strong>。</p>
+      <p style="margin-top:1vh"><strong>⚠️ 惡作劇和霸凌只有一線之隔</strong>——按下分享前，換位思考！</p>
+    </div>
+  </div>
+  <div class="speaker"><div class="avatar">💭</div><div class="bubble">每個人都有權利決定自己的照片要不要公開，我們不能替別人做決定。</div></div>
+</section>
+
+<!-- 6 社交工程是什麼 -->
+<section class="slide" id="s6">
+  <span class="tag">WHAT · 社交工程</span>
+  <h2>壞人不撬鎖，<span class="hl">騙你自己交出鑰匙</span></h2>
+  <div class="grid g2" style="align-items:center">
+    <div class="card o center" style="display:flex;flex-direction:column">
+      <div class="big">🗄️ ➜ 🗝️ ➜ 🦹</div>
+      <p>你有一個裝滿寶藏的保險箱，壞人假扮成<strong>好朋友或管理員</strong>，讓你<strong>心甘情願</strong>把鑰匙交給他。</p>
+    </div>
+    <div class="grid" style="gap:1.6vh">
+      <div class="card r"><h3 class="red">🤩 好奇心</h3><p>「點開就知道是誰偷看你！」</p></div>
+      <div class="card p"><h3 class="purple">🤝 信任感</h3><p>「我是後援會站姐，相信我～」</p></div>
+      <div class="card g"><h3 class="green">🎁 貪小便宜</h3><p>「限量周邊免費送！」</p></div>
+    </div>
+  </div>
+  <div class="speaker"><div class="avatar">🎭</div><div class="bubble">發現自己「好想馬上點」的時候，就是該停下來的時候！</div></div>
+</section>
+
+<!-- 7 三大手法 -->
+<section class="slide" id="s7">
+  <span class="tag">RADAR · 三大手法</span>
+  <h2>社交工程<span class="hl">威脅雷達</span></h2>
+  <table>
+    <tr><th></th><th>🎣 網路釣魚</th><th>🎭 假冒身分</th><th>🍬 誘餌攻擊</th></tr>
+    <tr><td><strong>假裝成</strong></td><td>知名公司、遊戲平臺、銀行、政府</td><td>客服、專員、站姐、後援會、工作人員</td><td>好康放送者、賣家</td></tr>
+    <tr><td><strong>常見話術</strong></td><td>「帳號有問題，請重設密碼」</td><td>「核對資料、退款、抽明星小卡」</td><td>「限量周邊免費送、保證中獎」</td></tr>
+    <tr><td><strong>防禦戰術</strong></td><td class="green"><strong>不點連結，自己搜尋官網</strong></td><td class="green"><strong>不回答，改用官方 App／客服電話查證</strong></td><td class="green"><strong>好到不真實＝陷阱開始</strong></td></tr>
+  </table>
+  <div class="speaker"><div class="avatar">📡</div><div class="bubble">驗證碼就是鑰匙！不管對方是誰，都不能給。</div></div>
+</section>
+
+<!-- 8 警訊與口訣 -->
+<section class="slide" id="s8">
+  <span class="tag">ALERT · 私下交易警訊</span>
+  <h2>出現任何一個，<span class="hl">立刻踩剎車</span></h2>
+  <div class="grid g3">
+    <div class="card r center" style="display:flex;flex-direction:column"><div class="big">⏰</div><h3 class="red">一直催你</h3><p>「只剩一個，快決定！」</p></div>
+    <div class="card o center" style="display:flex;flex-direction:column"><div class="big">💸</div><h3 class="orange">先付錢</h3><p>「先匯運費或訂金才保留」</p></div>
+    <div class="card p center" style="display:flex;flex-direction:column"><div class="big">🔑</div><h3 class="purple">要帳密驗證碼</h3><p>「給我驗證碼核對身分」</p></div>
+  </div>
+  <div class="bubble" style="margin-top:3.5vh;text-align:center;font-size:clamp(1.4rem,2.6vw,2.3rem)">
+    守門員口訣：<span class="red">不點</span>、<span class="orange">不給</span>、<span class="green">不急</span>、<span class="blue">先查</span>、<span class="purple">快說</span>
+  </div>
+  <div class="speaker"><div class="avatar">🛑</div><div class="bubble">大家跟我一起唸一次：不點、不給、不急、先查、快說！</div></div>
+</section>
+
+<!-- 9 165 -->
+<section class="slide" id="s9">
+  <span class="tag">CHECK · 165 打詐儀錶板</span>
+  <h2>不確定？讓 <span class="hl">165 AI 防詐客服</span>幫你判斷</h2>
+  <div class="flow">
+    <div class="card b"><div class="num" style="background:var(--blue)">1</div><h3 class="blue">搜尋</h3><p>搜尋「打詐儀錶板」</p><div class="url">165dashboard.tw</div></div>
+    <div class="arrow">➜</div>
+    <div class="card p"><div class="num" style="background:var(--purple)">2</div><h3 class="purple">點客服</h3><p>點網頁<strong>右下角</strong>「防詐客服」圖示</p></div>
+    <div class="arrow">➜</div>
+    <div class="card g"><div class="num" style="background:var(--green)">3</div><h3 class="green">貼上狀況</h3><p>輸入遇到的狀況、對方訊息或可疑網址</p></div>
+  </div>
+  <p style="margin-top:3vh;text-align:center">⚠️ 只貼「對方傳的內容」，<strong class="red">自己的帳密、驗證碼絕對不要貼</strong>；最後一定要告訴家長或老師。</p>
+  <div class="speaker"><div class="avatar">🛡️</div><div class="bubble">老師現在就來示範一次，把一則可疑訊息貼進防詐客服看看！</div></div>
+</section>
+
+<!-- 10 深偽 -->
+<section class="slide" id="s10">
+  <span class="tag">DEEPFAKE · AI 雙面刃</span>
+  <h2>深偽技術：AI 學會一個人的<span class="hl">臉、表情和聲音</span></h2>
+  <table>
+    <tr><th style="background:#d3f9d8">❤️ 正向應用</th><th style="background:#ffe3e3">⚠️ 負面風險</th></tr>
+    <tr><td>電影特效讓演員變老、變年輕</td><td>製造假影片，讓人被誤會、名譽受損</td></tr>
+    <tr><td>讓歷史人物「動起來」上課</td><td>真假難辨，沒查證就被誤導</td></tr>
+    <tr><td>幫失去聲音的患者合成音色重新溝通</td><td>假冒親友影像或聲音視訊借錢、求救</td></tr>
+    <tr><td>有趣的變臉濾鏡</td><td>公開的正面照、語音被拿去冒用身分</td></tr>
+  </table>
+  <div class="speaker"><div class="avatar">🎬</div><div class="bubble">技術本身沒有好壞，重點是「誰用」和「怎麼用」。</div></div>
+</section>
+
+<!-- 11 找露餡 -->
+<section class="slide" id="s11">
+  <span class="tag">SCAN · 深偽破綻掃描儀</span>
+  <h2>眼見不一定為憑：<span class="hl">三個地方找露餡</span></h2>
+  <div class="grid g3">
+    <div class="card b"><div class="big">💇</div><h3 class="blue">頭髮與背景邊緣</h3><p>有沒有不自然的模糊、光影跳動？</p></div>
+    <div class="card p"><div class="big">😐</div><h3 class="purple">表情與眨眼</h3><p>動作是否僵硬？配件不對稱、陰影怪怪的？</p></div>
+    <div class="card r"><div class="big">✋</div><h3 class="red">臉前揮手測試</h3><p>手在臉前揮動，是否出現殘影或局部消失？</p></div>
+  </div>
+  <p style="margin-top:3vh;text-align:center">📺 課堂影片：公視 P# 新聞實驗室〈10分鐘用AI生成假影片 連專家都被騙倒 如何識別？〉<strong>05:28–05:56</strong></p>
+  <div class="speaker"><div class="avatar">🔍</div><div class="bubble">打開駕駛艙的「互動 4」，看誰最快找出 4 個露餡！</div></div>
+</section>
+
+<!-- 12 二重驗證 + 密語 -->
+<section class="slide" id="s12">
+  <span class="tag">DEFENSE · 防禦三張卡</span>
+  <h2>就算畫面再逼真，<span class="hl">也要再確認</span></h2>
+  <div class="grid g3">
+    <div class="card b"><div class="big">📞</div><h3 class="blue">二重驗證</h3><p>先掛斷，<strong>不打對方給的新號碼</strong>，改用家裡電話等原本管道打給本人。</p></div>
+    <div class="card p"><div class="big">🔐</div><h3 class="purple">防詐密語</h3><p>和家人約定只有彼此知道的問題：「我們第一次出國去哪裡？」答錯就是假親友。</p></div>
+    <div class="card r"><div class="big">🆘</div><h3 class="red">存疑與舉報</h3><p>保護好正面照與語音；成為受害者就<strong>保存證據</strong>，找師長、學校或撥 <strong>110</strong>。</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🔐</div><div class="bubble">今天回家的作業：和家人約好一組防詐密語，答案只記在心裡！</div></div>
+</section>
+
+<!-- 13 五個叮嚀 -->
+<section class="slide" id="s13">
+  <span class="tag">RECAP · 守門員五個叮嚀</span>
+  <h2>帶著這五句話<span class="hl">走進網路世界</span></h2>
+  <div class="grid g5">
+    <div class="card r center" style="display:flex;flex-direction:column"><div class="num">1</div><h3>用之前</h3><p>詢問、同意、標示</p></div>
+    <div class="card b center" style="display:flex;flex-direction:column"><div class="num" style="background:var(--blue)">2</div><h3>分享前</h3><p>是別人的個資嗎？</p></div>
+    <div class="card g center" style="display:flex;flex-direction:column"><div class="num" style="background:var(--green)">3</div><h3>惡搞前</h3><p>換成我會難過嗎？</p></div>
+    <div class="card p center" style="display:flex;flex-direction:column"><div class="num" style="background:var(--purple)">4</div><h3>點連結前</h3><p>不點不給，先查快說</p></div>
+    <div class="card o center" style="display:flex;flex-direction:column"><div class="num" style="background:var(--orange)">5</div><h3>相信影片前</h3><p>二重驗證＋防詐密語</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🖐️</div><div class="bubble">伸出五根手指頭，一根一根跟我複習一次！</div></div>
+</section>
+
+<!-- 14 結語 -->
+<section class="slide center" id="s14">
+  <span class="sfx" style="background:var(--green)">MISSION CLEAR!</span>
+  <h2 style="margin-top:3vh">看到任何東西，<span class="hl">先停一下、想一下</span>，再決定要不要按下去</h2>
+  <div class="grid g2" style="width:min(1100px,90vw);margin-top:2vh">
+    <div class="card o"><h3>🛡️ 回到駕駛艙繼續練習</h3><div class="url">cagoooo.github.io/it-cockpit/net-guardians/</div><p style="margin-top:1vh">4 個互動遊戲 × 12 題檢定 × 自學影片</p></div>
+    <div class="card b"><h3>❓ Q&amp;A 時間</h3><p>回到第 2 頁的三個情境——現在你會怎麼做？</p><p style="margin-top:1vh">🔎 查證工具：<strong>165dashboard.tw</strong></p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🎉</div><div class="bubble">恭喜結訓！你已經是合格的網路守門員，記得保護自己，也保護身邊的人！</div></div>
+</section>
+
+</div>
+<div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="hint">← → 換頁 · M 章節 · F 全螢幕 · S 主講 · Esc 返回</div>
+<div class="overview" id="overview"><h3>▶ 章節導覽（按 M 或 Esc 關閉）</h3><div id="ov-grid"></div></div>
+
+<script>
+const SLIDES = [
+  {t:'封面', s:'網路守門員特訓營'},
+  {t:'開場情境', s:'三個你會怎麼做'},
+  {t:'任務地圖', s:'界線・假面・真臉'},
+  {t:'著作權', s:'詢問・同意・標示'},
+  {t:'隱私與同理心', s:'數位足跡與換位思考'},
+  {t:'社交工程', s:'騙你交出鑰匙'},
+  {t:'三大手法', s:'釣魚・假冒・誘餌'},
+  {t:'警訊與口訣', s:'不點不給不急先查快說'},
+  {t:'165 打詐儀錶板', s:'防詐客服三步驟'},
+  {t:'深偽技術', s:'正反面應用'},
+  {t:'找露餡', s:'三個破綻位置'},
+  {t:'防禦三張卡', s:'二重驗證・密語・舉報'},
+  {t:'五個叮嚀', s:'總複習'},
+  {t:'結語 Q&A', s:'任務完成'}
+];
+const N = SLIDES.length;
+let curIdx = 0;
+function goSlide(idx){
+  idx = Math.max(0, Math.min(N-1, idx));
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active', i===idx));
+  curIdx = idx;
+  document.getElementById('progress-fill').style.width = ((idx+1)/N*100) + '%';
+  document.getElementById('pageno').textContent = (idx+1) + ' / ' + N;
+  history.replaceState(null, '', '#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx+1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx-1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){ document.body.classList.toggle('hide-speaker'); }
+(function buildOverview(){
+  const g = document.getElementById('ov-grid');
+  SLIDES.forEach((s,i)=>{
+    const d = document.createElement('div');
+    d.className = 'ov-item';
+    const b = document.createElement('b'); b.textContent = (i+1) + '. ' + s.t;
+    const sp = document.createElement('span'); sp.textContent = s.s;
+    d.appendChild(b); d.appendChild(sp);
+    d.onclick = ()=>{ goSlide(i); toggleOverview(); };
+    g.appendChild(d);
+  });
+})();
+document.addEventListener('keydown', e=>{
+  const ov = document.getElementById('overview');
+  if(ov.classList.contains('show')){
+    if(['Escape','m','M'].includes(e.key)){ ov.classList.remove('show'); e.preventDefault(); }
+    return;
+  }
+  const k = e.key;
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(k)){ next(); e.preventDefault(); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ prev(); e.preventDefault(); }
+  else if(k === 'Home'){ goSlide(0); e.preventDefault(); }
+  else if(k === 'End'){ goSlide(N-1); e.preventDefault(); }
+  else if(k === 'm' || k === 'M'){ toggleOverview(); e.preventDefault(); }
+  else if(k === 'f' || k === 'F'){ toggleFullscreen(); e.preventDefault(); }
+  else if(k === 's' || k === 'S'){ toggleSpeaker(); e.preventDefault(); }
+  else if(/^[1-9]$/.test(k)){ const t = parseInt(k)-1; if(t < N){ goSlide(t); e.preventDefault(); } }
+  else if(k === 'Escape'){
+    if(document.fullscreenElement) document.exitFullscreen();
+    else window.location.href = 'index.html';
+    e.preventDefault();
+  }
+});
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, a, button, .back, .pageno')) return;
+  if(window.innerWidth <= 800) return;
+  if(e.clientX > window.innerWidth/2) next(); else prev();
+});
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+const m = location.hash.match(/^#s(\d+)$/);
+if(m){ const i = parseInt(m[1])-1; if(i >= 0 && i < N) goSlide(i); } else goSlide(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>網路守門員特訓營：界線 × 假面 × 真臉｜六年級資訊科技教學駕駛艙</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/net-guardians/">
+<meta property="og:title" content="網路守門員特訓營：界線 × 假面 × 真臉｜六年級資訊科技">
+<meta property="og:description" content="著作權三步驟、隱私與同理心、社交工程三大手法、165 打詐儀錶板查證、深偽技術辨識與防詐密語。4 大關卡 × 4 個互動 × 12 題評量，國小六年級網路素養必修課。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/net-guardians/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/net-guardians/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Bangers&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fef9f0;--surface:#fff3e0;--panel:#ffffff;
+  --c1:#ff6b6b;--c2:#ffa94d;--c3:#51cf66;--c4:#339af0;--c5:#9775fa;
+  --text:#2c2c2c;--dim:#6f6f6f;--border:#2c2c2c;
+  --shadow-soft:0 4px 14px rgba(0,0,0,.08);
+  --shadow-pop:4px 4px 0 var(--border);
+}
+html{font-size:18px;scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;padding-bottom:80px;
+  background-image:radial-gradient(rgba(44,44,44,.07) 1.2px,transparent 1.2px);background-size:18px 18px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(254,249,240,.97);backdrop-filter:blur(6px);border-bottom:3px solid var(--border);padding:12px 24px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:2px solid var(--c1);background:var(--panel);color:var(--c1);font-weight:700;font-size:.85rem;letter-spacing:1px;border-radius:24px;transition:.2s;white-space:nowrap;box-shadow:var(--shadow-pop)}
+.home-btn:hover{background:var(--c1);color:#fff;transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--border)}
+.header-title{font-size:1.4rem;font-weight:900;color:var(--text);letter-spacing:.5px}
+.header-title .hl{color:var(--c1)}
+.header-sub{font-size:.95rem;color:var(--dim)}
+.grade-chip{display:inline-block;padding:4px 12px;background:var(--c2);color:#fff;font-size:.85rem;border-radius:16px;font-weight:700;border:2px solid var(--border)}
+.mode-toggle{margin-left:auto;display:flex;gap:8px}
+.mode-btn{padding:6px 14px;border:2px solid var(--border);background:var(--panel);font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:16px;transition:.2s;box-shadow:2px 2px 0 var(--border)}
+.mode-btn.active{background:var(--c4);color:#fff}
+.progress-wrap{max-width:1400px;margin:8px auto 0;padding:0 4px}
+.progress-label{font-size:.8rem;color:var(--dim);margin-bottom:4px;display:flex;justify-content:space-between}
+.progress-bar{height:10px;background:var(--surface);border:2px solid var(--border);border-radius:8px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));width:0%;transition:width .4s}
+
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:stretch;margin-bottom:32px}
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+.hero-main{background:var(--panel);border:3px solid var(--border);border-radius:18px;padding:26px;box-shadow:6px 6px 0 var(--border);position:relative;overflow:hidden}
+.sfx{font-family:'Bangers','Noto Sans TC',sans-serif;letter-spacing:2px;display:inline-block;background:var(--c1);color:#fff;border:3px solid var(--border);padding:4px 16px;font-size:1.5rem;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--border);margin-bottom:12px}
+.hero-title{font-size:1.9rem;font-weight:900;line-height:1.35;margin-bottom:10px}
+.hero-title .hl{background:linear-gradient(transparent 58%,#ffe066 58%);padding:0 4px}
+.hero-desc{font-size:1.05rem;color:#444}
+.hero-panels{display:grid;grid-template-columns:1fr;gap:12px}
+.comic-panel{background:var(--panel);border:3px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:4px 4px 0 var(--border);display:flex;gap:14px;align-items:center}
+.comic-panel .ic{font-size:2.2rem;flex-shrink:0;width:60px;height:60px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.comic-panel h4{font-size:1.05rem;font-weight:900}
+.comic-panel p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.comic-panel.p1 .ic{background:#fff0f0}.comic-panel.p1 h4{color:var(--c1)}
+.comic-panel.p2 .ic{background:#f3f0ff}.comic-panel.p2 h4{color:var(--c5)}
+.comic-panel.p3 .ic{background:#e7f5ff}.comic-panel.p3 h4{color:var(--c4)}
+
+/* Speech bubble (阿凱老師) */
+.akai-say{display:flex;gap:12px;align-items:flex-start;margin:16px 0 0}
+.akai-say .ava{width:52px;height:52px;border-radius:50%;background:#ffe066;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.akai-say .bub{position:relative;background:#fff;border:3px solid var(--border);border-radius:16px;padding:10px 16px;font-size:1rem;font-weight:700;box-shadow:3px 3px 0 var(--border)}
+.akai-say .bub::before{content:'';position:absolute;left:-14px;top:14px;border-width:8px 14px 8px 0;border-style:solid;border-color:transparent var(--border) transparent transparent}
+.akai-say .bub::after{content:'';position:absolute;left:-9px;top:16px;border-width:6px 10px 6px 0;border-style:solid;border-color:transparent #fff transparent transparent}
+.akai-say .bub small{display:block;font-size:.78rem;color:var(--dim);font-weight:400}
+
+/* Objective chips */
+.obj-section{margin-bottom:28px}
+.obj-title{font-size:1.1rem;font-weight:900;color:var(--c1);margin-bottom:12px}
+.obj-chips{display:flex;gap:10px;flex-wrap:wrap}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;font-size:1rem;padding:9px 18px;background:var(--panel);border:2px solid var(--border);border-radius:24px;box-shadow:var(--shadow-pop);font-weight:700}
+.obj-chip.red{color:#e03131}.obj-chip.orange{color:#e8590c}.obj-chip.green{color:#2b8a3e}.obj-chip.blue{color:#1c7ed6}.obj-chip.purple{color:#7048e8}
+
+.lecture-cta{display:block;margin:18px 0 0;padding:18px 22px;background:var(--c1);color:#fff;border:3px solid var(--border);box-shadow:6px 6px 0 var(--border);transition:.2s;border-radius:14px}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--border)}
+.lecture-cta .cta-tag{display:inline-block;background:#fff;color:var(--c1);font-size:.8rem;padding:2px 10px;border:2px solid var(--border);margin-bottom:6px;font-weight:700;border-radius:10px}
+.lecture-cta .cta-title{display:block;font-size:1.4rem;font-weight:900}
+.lecture-cta .cta-sub{display:block;font-size:.9rem;opacity:.95}
+
+/* Stage nav */
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:16px}
+.stage-pill{padding:10px 20px;background:var(--panel);border:2px solid var(--border);border-radius:24px;font-size:.95rem;font-weight:700;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.stage-pill:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.stage-pill.done{background:var(--c3);color:#fff}
+
+/* Stage */
+.level-section{margin-bottom:60px;scroll-margin-top:130px}
+.section-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.stage-badge{font-family:'Bangers','Fredoka',sans-serif;font-size:1.05rem;letter-spacing:2px;padding:6px 16px;background:var(--border);color:#ffe066;border-radius:10px;white-space:nowrap;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--c1)}
+.section-title{font-size:1.4rem;font-weight:900}
+.section-sub{font-size:1rem;color:var(--dim);margin-top:4px}
+
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:900px){.card-grid{grid-template-columns:1fr}}
+.steps-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.steps-card h4{font-size:1.05rem;margin-bottom:12px;color:var(--c1)}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{counter-increment:step;position:relative;padding:9px 0 9px 48px;font-size:1rem;line-height:1.7;border-bottom:1px dashed #bbb}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(step);position:absolute;left:0;top:10px;width:34px;height:34px;background:var(--c2);color:#fff;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.steps-list li.green::before{background:var(--c3)}.steps-list li.blue::before{background:var(--c4)}.steps-list li.purple::before{background:var(--c5)}.steps-list li.red::before{background:var(--c1)}
+
+.gate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+@media (max-width:700px){.gate-row{grid-template-columns:1fr}}
+.gate{border:3px solid var(--border);border-radius:14px;padding:12px;background:#fff;box-shadow:3px 3px 0 var(--border)}
+.gate .n{font-family:'Bangers',sans-serif;font-size:1rem;letter-spacing:1px;color:#fff;background:var(--border);display:inline-block;padding:0 8px;border-radius:6px}
+.gate h5{font-size:1.05rem;margin:4px 0 2px}
+.gate .q{font-size:.92rem;font-weight:700;color:var(--dim)}
+.gate.g1{background:#fff5f5}.gate.g1 h5{color:#e03131}
+.gate.g2{background:#e7f5ff}.gate.g2 h5{color:#1c7ed6}
+.gate.g3{background:#ebfbee}.gate.g3 h5{color:#2b8a3e}
+
+.tip-box{margin-top:14px;padding:14px 18px;background:#fff3cd;border:2px solid var(--c2);border-radius:12px;font-size:.95rem;color:#5c4a1b}
+.warn-box{margin-top:14px;padding:14px 18px;background:#ffe3e3;border:2px solid var(--c1);border-radius:12px;font-size:.95rem;color:#7a1e2b}
+
+.compare{width:100%;border-collapse:separate;border-spacing:0;border:3px solid var(--border);border-radius:14px;overflow:hidden;font-size:.95rem;margin-top:6px}
+.compare th{padding:10px;font-size:1rem;border-bottom:3px solid var(--border)}
+.compare th.good{background:#d3f9d8;color:#2b8a3e}.compare th.bad{background:#ffe3e3;color:#c92a2a}
+.compare td{padding:9px 12px;border-bottom:1px dashed #bbb;vertical-align:top;background:#fff}
+.compare td:first-child{border-right:2px solid var(--border)}
+.compare tr:last-child td{border-bottom:none}
+
+/* Canvas */
+.canvas-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.canvas-title{font-size:1.05rem;font-weight:900;margin-bottom:8px;color:#1c7ed6}
+.canvas-hint{font-size:.92rem;color:var(--dim);margin-bottom:12px}
+.game-canvas{width:100%;background:var(--panel);border:2px solid var(--border);border-radius:12px;display:block;touch-action:manipulation}
+.game-controls{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+.ctrl-btn{padding:9px 16px;background:var(--c4);color:#fff;border:2px solid var(--border);border-radius:24px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;transition:.2s;box-shadow:3px 3px 0 var(--border)}
+.ctrl-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--border)}
+.ctrl-btn.red{background:var(--c1)}.ctrl-btn.green{background:#40c057}.ctrl-btn.orange{background:#fd7e14}.ctrl-btn.purple{background:var(--c5)}
+.ctrl-btn.outline{background:var(--panel);color:var(--text)}
+.game-result{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:.98rem;font-weight:700;display:none}
+.game-result.show{display:block}
+.game-result.ok{background:#d3f9d8;color:#2b8a3e;border:2px solid var(--c3)}
+.game-result.bad{background:#fff3cd;color:#8a5a00;border:2px solid var(--c2)}
+
+.pass-card{margin-top:16px;background:#fff;border:3px dashed var(--c5);border-radius:14px;padding:16px}
+.pass-card h5{font-size:1.02rem;color:#7048e8;margin-bottom:8px}
+.pass-card select,.pass-card input{font-family:inherit;font-size:.95rem;padding:7px 10px;border:2px solid var(--border);border-radius:8px;width:100%;margin-bottom:8px;background:#fff}
+.pass-out{margin-top:6px;padding:12px;background:#f3f0ff;border:2px solid var(--c5);border-radius:10px;font-weight:700;display:none}
+.pass-out.show{display:block}
+
+/* Quiz */
+.quiz-section{background:var(--panel);border:3px solid var(--c5);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop);margin-top:20px}
+.quiz-title{font-size:1.1rem;font-weight:900;color:#7048e8;margin-bottom:14px}
+.quiz-q{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed #ccc}
+.quiz-q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.quiz-q-text{font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:700px){.quiz-opts{grid-template-columns:1fr}}
+.quiz-opt{padding:10px 16px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:.98rem;cursor:pointer;text-align:left;transition:.2s;color:var(--text)}
+.quiz-opt:hover{background:#fff;transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border)}
+.quiz-opt.correct{background:#d3f9d8;border-color:#2b8a3e;color:#2b8a3e}
+.quiz-opt.wrong{background:#ffe3e3;border-color:#e03131;color:#c92a2a}
+.quiz-fb{margin-top:10px;font-size:.95rem;padding:10px 14px;border-radius:10px;display:none}
+.quiz-fb.show{display:block}.quiz-fb.ok{background:#d3f9d8;color:#2b8a3e}.quiz-fb.bad{background:#fff3cd;color:#856404}
+
+.teacher-only{display:none;background:#ede7f6;border:3px dashed var(--c5);border-radius:14px;padding:16px 20px;margin-top:18px;position:relative}
+body.teacher-mode .teacher-only{display:block}
+.teacher-only::before{content:'教師備註';position:absolute;top:-12px;left:16px;background:var(--c5);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:10px}
+.teacher-only ul{margin-top:6px;padding-left:22px;font-size:.95rem;color:#3a2d6b}
+
+/* Project */
+.project-section{background:linear-gradient(135deg,#fff3e0 0%,#ffe8f0 100%);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px;box-shadow:var(--shadow-pop)}
+.project-section h3{font-size:1.3rem;color:#e03131;margin-bottom:8px}
+.project-tasks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media (max-width:900px){.project-tasks{grid-template-columns:1fr}}
+.task-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.task-card h4{font-size:1rem;color:#1c7ed6;margin-bottom:6px}
+.task-card p{font-size:.95rem;line-height:1.6}
+
+/* NLM */
+.nb-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px}
+.nb-section h3{font-size:1.3rem;color:#7048e8;margin-bottom:14px}
+.nb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+@media (max-width:1000px){.nb-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.nb-grid{grid-template-columns:1fr}}
+.nb-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border);transition:.2s;display:block}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.nb-card h4{font-size:1rem;color:#7048e8;margin-bottom:6px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.nb-card .link{display:inline-block;margin-top:8px;color:#1c7ed6;font-weight:700;font-size:.9rem}
+.flow-box{background:var(--panel);border:2px dashed var(--c5);border-radius:12px;padding:14px 18px;margin-bottom:20px}
+.flow-box h4{font-size:1rem;color:#7048e8;margin-bottom:8px}
+.flow-steps{display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem}
+.flow-step{background:var(--surface);padding:5px 12px;border:1px solid var(--c5);border-radius:16px;color:#7048e8;font-weight:700}
+.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:900px){.faq-list{grid-template-columns:1fr}}
+.faq-item{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.faq-q{font-size:1rem;font-weight:700;color:#e03131;margin-bottom:8px}
+.faq-a{font-size:.97rem;line-height:1.7}
+
+/* Slides */
+.slide-section,.video-section,.infographic-section{margin-bottom:48px}
+.slide-section h3,.video-section h3,.infographic-section h3{font-size:1.3rem;margin-bottom:14px}
+.slide-player{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-pop)}
+.slide-main{position:relative;background:#000;border:2px solid var(--border);border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.92);border:2px solid var(--border);border-radius:50%;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;z-index:3}
+.slide-nav-btn:hover{background:var(--c4);color:#fff}
+.slide-nav-btn.prev{left:10px}.slide-nav-btn.next{right:10px}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#fff;border:2px solid var(--border);padding:7px 14px;font-size:.95rem;cursor:pointer;border-radius:20px;font-weight:700;box-shadow:2px 2px 0 var(--border);z-index:5;font-family:inherit}
+.slide-fs-btn:hover{transform:translateY(-2px)}
+.slide-counter{position:absolute;bottom:12px;left:14px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:16px;font-size:.85rem;z-index:3}
+.slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 4px}
+.strip-thumb{flex-shrink:0;width:96px;height:54px;border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;opacity:.6;transition:.2s;background:#000}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb:hover{opacity:1}
+.strip-thumb.active{opacity:1;border-color:var(--c1);box-shadow:0 0 0 2px var(--c1)}
+.slide-fs{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9999;align-items:center;justify-content:center}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:100%;max-height:100vh;object-fit:contain}
+.slide-fs-close{position:fixed;top:16px;right:16px;background:var(--c1);color:#fff;border:none;width:44px;height:44px;font-size:1.4rem;cursor:pointer;border-radius:50%;z-index:10000}
+.slide-fs-counter{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.92);padding:5px 18px;border-radius:20px;font-size:.9rem;z-index:10000}
+.fs-nav{position:fixed;top:50%;transform:translateY(-50%);width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--c1);color:var(--c1);font-size:2rem;font-weight:900;cursor:pointer;z-index:10000;display:flex;align-items:center;justify-content:center;border-radius:12px}
+.fs-nav.prev{left:20px}.fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--c1);color:#fff;box-shadow:0 0 16px var(--c1)}
+@media (max-width:720px){.fs-nav{width:46px;height:64px;font-size:1.6rem}.fs-nav.prev{left:8px}.fs-nav.next{right:8px}}
+.slide-placeholder,.video-placeholder{padding:50px 20px;text-align:center;color:var(--dim);font-size:1rem;background:var(--surface);border-radius:12px;border:2px dashed #aaa}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar{display:none !important}
+
+.video-wrap{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop)}
+.video-ratio{position:relative;padding-top:56.25%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border-top:2px solid var(--border)}
+.nlm-badge{background:var(--c5);color:#fff;font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:14px}
+.video-hint{font-size:.9rem;color:var(--dim)}
+.video-yt-link{margin-left:auto;color:#e03131;font-size:.9rem;font-weight:700}
+
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:1000px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop);transition:.2s;display:block}
+.info-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--border)}
+.info-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-bottom:2px solid var(--border);background:var(--surface)}
+.info-card .cap{padding:10px 14px;font-size:.92rem;font-weight:700}
+
+/* Footer */
+.footer{padding:28px 24px;text-align:center;color:var(--dim);font-size:.88rem;border-top:3px solid var(--border);background:var(--surface);margin-top:40px}
+.footer p{margin:3px 0}
+.footer a{color:#1c7ed6;font-weight:700}
+.site-credit{margin-top:10px;font-size:.9rem;color:#555}
+.site-credit__heart{display:inline-block;margin:0 2px}
+.site-credit .site-credit__author{color:inherit;font-weight:700;border-bottom:1px dotted currentColor;padding-bottom:1px}
+.site-credit .site-credit__author:hover{color:#e03131}
+
+/* Floating tools */
+.float-tools{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:400}
+.float-btn{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);background:var(--c2);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:var(--shadow-pop);transition:.2s}
+.float-btn:hover{transform:translate(-2px,-2px)}
+.float-btn.red{background:var(--c1)}.float-btn.green{background:var(--c3)}.float-btn.purple{background:var(--c5)}.float-btn.blue{background:var(--c4)}
+.float-panel{position:fixed;bottom:90px;right:84px;background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;width:290px;box-shadow:var(--shadow-pop);display:none;z-index:400}
+.float-panel.show{display:block}
+.float-panel h4{font-size:1rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;color:#e03131}
+.float-panel .close{cursor:pointer;font-size:1.2rem;color:var(--dim);background:none;border:none}
+.btn-primary{background:var(--c1);color:#fff;border:2px solid var(--border);padding:9px 14px;border-radius:10px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;box-shadow:2px 2px 0 var(--border)}
+.lottery-result{margin-top:12px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-size:1.5rem;font-weight:900;text-align:center;color:#e03131;min-height:60px;display:flex;align-items:center;justify-content:center}
+.timer-display{font-size:2rem;font-weight:900;text-align:center;color:#1c7ed6;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:10px;margin:10px 0}
+@media (max-width:600px){.float-panel{right:12px;left:12px;width:auto}}
+
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:var(--panel);border:3px solid var(--border);padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-pop);border-radius:16px}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:28px;height:28px;border:2px solid var(--border);cursor:pointer;padding:0;border-radius:50%}
+.draw-toolbar .color-dot.active{transform:scale(1.2)}
+.draw-toolbar .draw-clear{background:var(--panel);border:2px solid var(--c1);color:#e03131;padding:5px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;border-radius:14px}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+.pulse{animation:pop .5s ease-in-out}
+</style>
+<script>
+  // Akai 排行榜流量歸因 beacon (toolId 81 stage="net-guardians")
+  (function () {
+    try {
+      var TOOL_ID = 81, STAGE_ID = 'net-guardians';
+      var SENT_KEY = 'akai_beacon_' + TOOL_ID + '_' + STAGE_ID + '_sent';
+      if (sessionStorage.getItem(SENT_KEY)) return;
+      var SID_KEY = 'akai_beacon_sid';
+      var sid = sessionStorage.getItem(SID_KEY);
+      if (!sid) { sid = 'cockpit-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); sessionStorage.setItem(SID_KEY, sid); }
+      var device = window.innerWidth < 768 ? 'mobile' : (window.innerWidth < 1024 ? 'tablet' : 'desktop');
+      new Image().src = 'https://asia-east1-akai-e693f.cloudfunctions.net/beaconToolClick?toolId=' + TOOL_ID + '&stageId=' + STAGE_ID
+        + '&referrer=' + encodeURIComponent(document.referrer || '') + '&device=' + device + '&sessionId=' + encodeURIComponent(sid);
+      sessionStorage.setItem(SENT_KEY, '1');
+    } catch (e) {}
+  })();
+</script>
+<script src="../assets/webp-fallback.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div>
+      <div class="header-title">🛡️ 網路守門員特訓營：<span class="hl">界線 × 假面 × 真臉</span></div>
+      <div class="header-sub">六年級 · 資訊科技 · 網路素養與數位公民</div>
+    </div>
+    <span class="grade-chip">六年級</span>
+    <div class="mode-toggle">
+      <button class="mode-btn active" onclick="switchMode('student',this)">學生模式</button>
+      <button class="mode-btn" onclick="switchMode('teacher',this)">教師模式 🔒</button>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>守門員特訓進度</span><span id="progTxt">0 / 4 關完成</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-main">
+      <span class="sfx">WAIT! 等一下！</span>
+      <h1 class="hero-title">按下「分享」、「點連結」、「相信影片」之前，<span class="hl">先當三秒鐘的網路守門員</span></h1>
+      <p class="hero-desc">網路世界看起來自由，其實處處有界線：別人的作品有著作權、別人的照片有隱私權；有些「熱心站姐」其實是假面怪客；連視訊裡的臉都可能是 AI 做出來的。今天我們要練成三種超能力 —— <strong>尊重、識破、查證</strong>！</p>
+      <div class="akai-say">
+        <div class="ava">😄</div>
+        <div class="bub">嗨！我是阿凱老師。今天的任務很簡單：看到任何東西，先停一下、想一下，再決定要不要按下去！<small>— 你的網路守門員教練</small></div>
+      </div>
+    </div>
+    <div class="hero-panels">
+      <div class="comic-panel p1"><div class="ic">🚧</div><div><h4>第一格：網路世界有界線</h4><p>著作權「詢問 → 同意 → 標示」、隱私權與數位足跡、同理心換位思考。</p></div></div>
+      <div class="comic-panel p2"><div class="ic">🎭</div><div><h4>第二格：追星圈的假面怪客</h4><p>社交工程三大手法：網路釣魚、假冒身分、誘餌攻擊，再用 165 打詐儀錶板查證。</p></div></div>
+      <div class="comic-panel p3"><div class="ic">🎬</div><div><h4>第三格：這是誰的臉？</h4><p>深偽技術的正反面，學會找露餡、二重驗證、防詐密語與存證求助。</p></div></div>
+    </div>
+  </section>
+
+  <section class="obj-section">
+    <div class="obj-title">🎯 今天你會學到</div>
+    <div class="obj-chips">
+      <span class="obj-chip red">©️ 著作權正確使用三步驟</span>
+      <span class="obj-chip blue">🔒 隱私權與數位足跡</span>
+      <span class="obj-chip green">💚 同理心：換位思考再分享</span>
+      <span class="obj-chip purple">🎭 識破社交工程三大手法</span>
+      <span class="obj-chip orange">🛡️ 165 打詐儀錶板查證</span>
+      <span class="obj-chip red">🎬 辨識深偽與防詐密語</span>
+    </div>
+    <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+      <span class="cta-tag">老師上課用 ⮕</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張漫畫風投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線可用</span>
+    </a>
+  </section>
+
+  <nav class="stage-nav">
+    <a href="#sec1" class="stage-pill" id="pill1">🚧 1. 網路世界有界線</a>
+    <a href="#sec2" class="stage-pill" id="pill2">🎭 2. 追星圈的假面怪客</a>
+    <a href="#sec3" class="stage-pill" id="pill3">🛡️ 3. 165 查證求助站</a>
+    <a href="#sec4" class="stage-pill" id="pill4">🎬 4. 這是誰的臉？</a>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 01</div>
+      <div>
+        <div class="section-title">🚧 等一下！網路世界有界線</div>
+        <div class="section-sub">放在網路上 ≠ 可以隨便拿。三道守門員幫你在按下「使用」和「分享」之前踩剎車。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🚦 三道界線守門員</h4>
+        <div class="gate-row">
+          <div class="gate g1"><span class="n">GATE 1</span><h5>著作權</h5><div class="q">「我可以使用嗎？」</div></div>
+          <div class="gate g2"><span class="n">GATE 2</span><h5>隱私權</h5><div class="q">「這是別人的個資嗎？」</div></div>
+          <div class="gate g3"><span class="n">GATE 3</span><h5>同理心</h5><div class="q">「如果是我被惡搞，我會難過嗎？」</div></div>
+        </div>
+        <h4>©️ 著作權：正確使用三步驟</h4>
+        <ol class="steps-list">
+          <li class="red"><strong>詢問：</strong>使用之前先問創作者，確認對方願不願意分享。</li>
+          <li><strong>同意：</strong>確定得到對方同意後，才可以正式開始使用。</li>
+          <li class="green"><strong>標示：</strong>使用時清楚寫下原創者的名字，讓大家知道這是誰的創作。</li>
+        </ol>
+        <div class="tip-box"><strong>💡 大誤會：</strong>作品從<strong>完成的那一刻起</strong>就自動受著作權保護，不用申請！同學的攝影作品、網路插畫、影片、文章都一樣，不能未經許可截圖或改作。</div>
+        <div class="warn-box"><strong>👣 數位足跡：</strong>照片、姓名、班級、出糗瞬間都是隱私。按「刪除」不代表消失——可能早被截圖、轉傳或被搜尋引擎記錄。一個「小惡作劇」可能變成對方難以脫下的數位標籤，惡作劇與霸凌只有一線之隔。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 1：守門員出動！這次要攔下的是哪一道界線？</div>
+        <div class="canvas-hint">讀情境，選出它碰到的界線；如果完全沒問題，就選「可以放行」。</div>
+        <canvas id="game1" class="game-canvas" width="600" height="360"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn red" onclick="game1Pick('copy')">©️ 著作權</button>
+          <button class="ctrl-btn" onclick="game1Pick('privacy')">🔒 隱私權</button>
+          <button class="ctrl-btn green" onclick="game1Pick('empathy')">💚 同理心</button>
+          <button class="ctrl-btn orange" onclick="game1Pick('ok')">✅ 可以放行</button>
+          <button class="ctrl-btn outline" onclick="game1Next()">下一題 ➜</button>
+        </div>
+        <div class="game-result" id="game1Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 1 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：小安在網路上找到一張很漂亮的插畫想放進海報，最正確的做法是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,1,'A')">A. 放在網路上就是公開的，直接用</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'B')">B. 先詢問作者、得到同意，使用時標示作者名字</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'C')">C. 把圖稍微改個顏色就不算別人的</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'D')">D. 截圖就好，截圖不算使用</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：作品什麼時候開始受到著作權保護？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,2,'A')">A. 作品完成的那一刻起就自動受保護</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'B')">B. 要去政府機關登記之後</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'C')">C. 賣出去賺錢之後</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'D')">D. 只有名人的作品才有</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：把同學出糗的照片傳到群組後又馬上刪掉，為什麼還是不行？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,3,'A')">A. 其實刪掉就沒事了</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'B')">B. 因為會浪費手機流量</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'C')">C. 有數位足跡，可能早被截圖轉傳，傷害收不回來</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'D')">D. 因為群組管理員會生氣</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>教材來源：延伸學習文章〈等一下！網路世界有界線〉（善用資訊，尊重他人權益）。</li>
+        <li>暖身提問：「網路上找得到的圖，是不是就可以隨便用？」先讓學生舉手表態，再揭曉「完成即受保護」。</li>
+        <li>實作：請學生為一張自己拍的照片寫出「標示範例」（作者、出處、日期），練習第三步驟。</li>
+        <li>同理心討論：用「如果今天被惡搞的是你」角色互換，引導學生說出感受；注意避免點名真實事件。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section id="sec2" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 02</div>
+      <div>
+        <div class="section-title">🎭 追星圈的假面怪客：認識社交工程</div>
+        <div class="section-sub">壞人不必敲壞保險箱的鎖，只要假扮成你的朋友或管理員，讓你「自己把鑰匙交出去」。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🗝️ 社交工程三大手法</h4>
+        <ol class="steps-list">
+          <li class="blue"><strong>網路釣魚：</strong>假裝成知名公司、遊戲平臺、銀行或政府，說「帳號有問題」「要重設密碼」「要補填資料」，引你進假網站輸入帳密。<br>👉 不點對方的連結、不急著下載附件，<strong>自己搜尋官方網站</strong>或請大人確認。</li>
+          <li class="purple"><strong>假冒身分：</strong>冒充客服、銀行專員、政府人員，或追星圈的資深粉絲、後援會「站姐」、工作人員，用「帳號異常、核對資料、退款、領福利、抽明星小卡」騙個資、帳密、驗證碼。<br>👉 先不要回答，<strong>改用官方網站、官方 App 或客服電話查證</strong>。</li>
+          <li class="red"><strong>誘餌攻擊：</strong>「限量周邊免費送」「保證中獎」「免費貼圖」，一點連結、加群組、下載檔案，帳號就可能被盜或中毒。<br>👉 <strong>好到難以置信的優惠，通常就是陷阱的開始。</strong></li>
+        </ol>
+        <div class="warn-box"><strong>🚨 私下交易三大警訊：</strong>①一直催你快點決定 ②要求先付運費或訂金 ③跟你要帳號密碼或驗證碼 —— 出現任何一個就要提高警覺！</div>
+        <div class="tip-box"><strong>🧠 壞人利用的三種心理：</strong>好奇心、信任感、貪小便宜。發現自己「好想馬上點」的時候，就是該停下來的時候。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 2：可疑訊息偵測器</div>
+        <div class="canvas-hint">手機收到一則訊息！判斷它是哪一種社交工程手法，或其實是安全的訊息。</div>
+        <canvas id="game2" class="game-canvas" width="600" height="380"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn" onclick="game2Pick('phish')">🎣 網路釣魚</button>
+          <button class="ctrl-btn purple" onclick="game2Pick('fake')">🎭 假冒身分</button>
+          <button class="ctrl-btn red" onclick="game2Pick('bait')">🍬 誘餌攻擊</button>
+          <button class="ctrl-btn green" onclick="game2Pick('safe')">✅ 安全訊息</button>
+          <button class="ctrl-btn outline" onclick="game2Next()">下一則 ➜</button>
+        </div>
+        <div class="game-result" id="game2Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 2 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：什麼是「社交工程」？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,1,'A')">A. 一種社群網站的程式設計課</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'B')">B. 利用好奇心、信任感、貪小便宜，讓人自己交出個資或帳密的詐騙手法</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'C')">C. 用電腦病毒直接破壞硬碟</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'D')">D. 交朋友的好方法</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：自稱「後援會站姐」的人說你抽中明星小卡，要你提供簡訊驗證碼「核對身分」，這是哪種手法？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,2,'A')">A. 假冒身分（加上誘餌）</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'B')">B. 正常的抽獎流程</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'C')">C. 著作權問題</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'D')">D. 深偽技術</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：收到「你的遊戲帳號異常，請點此連結重設密碼」的訊息，最安全的做法是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,3,'A')">A. 趕快點連結，免得帳號被停用</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'B')">B. 回覆訊息問對方是不是真的</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'C')">C. 下載附件看看裡面寫什麼</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'D')">D. 不點連結，自己搜尋官方網站或請大人幫忙確認</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>教材來源：延伸學習文章〈追星圈的假面怪客〉（社交工程）。</li>
+        <li>用「保險箱與鑰匙」比喻開場：壞人不撬鎖，而是騙你交鑰匙。</li>
+        <li>分組活動：每組把互動 2 的訊息「改寫成更像真的」，再交換給別組辨識，體會詐騙話術的包裝。</li>
+        <li>提醒學生：驗證碼等同鑰匙，任何人（包含自稱客服、朋友）要都不能給。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section id="sec3" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 03</div>
+      <div>
+        <div class="section-title">🛡️ 165 查證求助站：不確定就先查</div>
+        <div class="section-sub">不確定對方是不是詐騙？除了問家長和老師，還可以請內政部警政署「165 打詐儀錶板」的 AI 智能客服幫忙判斷。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🔎 165 打詐儀錶板：防詐客服三步驟</h4>
+        <ol class="steps-list">
+          <li class="blue"><strong>搜尋：</strong>搜尋「打詐儀錶板」網頁（<a href="https://165dashboard.tw/" target="_blank" rel="noopener" style="color:#1c7ed6;font-weight:700">165dashboard.tw</a>）。</li>
+          <li class="purple"><strong>點客服：</strong>進到網頁後，點右下角的「防詐客服」圖示。</li>
+          <li class="green"><strong>貼上狀況：</strong>在對話框輸入你遇到的狀況、對方傳的訊息，或直接貼上可疑網址，讓它協助判斷並提供處置建議。</li>
+        </ol>
+        <div class="tip-box"><strong>🧩 守門員口訣：「不點、不給、不急、先查、快說」</strong><br>不點可疑連結 → 不給帳密與驗證碼 → 不被催促 → 先用官方管道或 165 查證 → 快告訴家長老師。</div>
+        <div class="warn-box"><strong>⚠️ 貼上訊息前：</strong>把自己的真實姓名、電話、密碼、驗證碼先遮掉，只貼「對方傳來的內容」和「可疑網址」就好。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 3：危機處理排排看</div>
+        <div class="canvas-hint">情境：追星群組有人私訊你「限量小卡免費送，先給簡訊驗證碼」。依序點下 5 個正確行動（點錯會提醒你）。</div>
+        <canvas id="game3" class="game-canvas" width="600" height="380"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn outline" onclick="game3Reset()">↻ 重新挑戰</button>
+          <a class="ctrl-btn green" href="https://165dashboard.tw/" target="_blank" rel="noopener">🌐 開啟 165 打詐儀錶板</a>
+        </div>
+        <div class="game-result" id="game3Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 3 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：在 165 打詐儀錶板網頁上，「防詐客服」圖示在哪裡？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,1,'A')">A. 左上角</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'B')">B. 右下角</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'C')">C. 要下載 App 才有</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'D')">D. 要打電話才能用</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：可以在防詐客服對話框裡輸入什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,2,'A')">A. 自己的帳號密碼，讓它幫忙檢查</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'B')">B. 只能輸入電話號碼</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'C')">C. 遇到的狀況、對方傳的訊息，或可疑網址</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'D')">D. 什麼都不能輸入，只能看</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：網拍賣家一直催你「只剩一個，先匯訂金才保留」，你應該？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,3,'A')">A. 停下來不匯款，找家長一起查證</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'B')">B. 趕快匯，不然被搶走</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'C')">C. 把帳號密碼給他證明自己有誠意</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'D')">D. 先付運費就好，比較便宜</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>課堂示範：教師投影開啟 <a href="https://165dashboard.tw/" target="_blank" rel="noopener">165dashboard.tw</a>，現場把互動 2 的一則假訊息貼進「防詐客服」，讓學生看 AI 的判斷與處置建議。</li>
+        <li>強調：AI 客服是「輔助判斷」，最後仍要告訴家長與老師。</li>
+        <li>個資保護：示範時使用教師準備的假訊息，不要貼學生真實帳號或聊天紀錄。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section id="sec4" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 04</div>
+      <div>
+        <div class="section-title">🎬 這是誰的臉？認識深偽技術（Deepfake）</div>
+        <div class="section-sub">變臉濾鏡好好玩，背後的「深偽技術」能讓 AI 學會一個人的臉、表情甚至聲音。眼見，不一定為憑！</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>⚖️ 深偽技術的正反兩面</h4>
+        <table class="compare">
+          <tr><th class="good">❤️ 正向應用</th><th class="bad">⚠️ 負面風險</th></tr>
+          <tr><td>電影特效讓演員變老、變年輕，或修正拍攝瑕疵</td><td>製造虛假影片，讓他人被誤會、名譽受傷害</td></tr>
+          <tr><td>讓歷史人物「動起來」，帶學生重回現場</td><td>真假難辨，沒查證就被誤導</td></tr>
+          <tr><td>幫失去聲音的患者合成相近音色重新溝通</td><td>詐騙集團假冒親友影像或聲音視訊借錢、求救</td></tr>
+          <tr><td>有趣的變臉濾鏡增加生活娛樂</td><td>公開的正面照、語音被拿去當 AI 模仿材料冒用身分</td></tr>
+        </table>
+        <h4 style="margin-top:18px">🕵️ 網路小偵探：五招防禦術</h4>
+        <ol class="steps-list">
+          <li class="blue"><strong>找露餡：</strong>看臉和背景交界（頭髮邊緣）有沒有模糊或光影跳動，表情、眨眼是否僵硬；配件不對稱、陰影怪、手在臉前揮動出現殘影。</li>
+          <li class="purple"><strong>二重驗證：</strong>接到親友求救或借錢視訊，先掛斷，<strong>不打對方給的新號碼</strong>，改用家裡電話等原本的管道打給本人。</li>
+          <li class="green"><strong>防詐密語：</strong>和家人約定只有彼此知道的問題，例如「我們第一次出國去哪裡？」答錯或支支吾吾就是假親友。</li>
+          <li><strong>保護影像：</strong>管理好社群隱私設定，不隨意公開高畫質正面照、自拍影片、長段語音。</li>
+          <li class="red"><strong>存證求助：</strong>發現自己或同學成為受害者，立刻保存證據，向師長、學校求助或撥打 <strong>110</strong>，不要因為害怕而隱瞞。</li>
+        </ol>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 4：假影片找露餡</div>
+        <div class="canvas-hint">這是一張「深偽視訊截圖」示意圖，裡面藏了 4 個露餡線索。直接在圖上點出來！</div>
+        <canvas id="game4" class="game-canvas" width="600" height="400"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn outline" onclick="game4Reset()">↻ 重新找</button>
+          <button class="ctrl-btn purple" onclick="game4Hint()">💡 給我提示</button>
+        </div>
+        <div class="game-result" id="game4Result"></div>
+        <div class="pass-card">
+          <h5>🔐 家庭防詐密語卡（回家和家人一起完成）</h5>
+          <select id="pass-q">
+            <option>我們第一次出國是去哪裡？</option>
+            <option>爸爸最喜歡吃的食物是什麼？</option>
+            <option>家裡的寵物小時候叫什麼綽號？</option>
+            <option>我小時候最怕的卡通角色是誰？</option>
+            <option>全家去年一起看的電影叫什麼？</option>
+          </select>
+          <input id="pass-who" type="text" maxlength="12" placeholder="要跟誰約定？（例：媽媽）">
+          <button class="ctrl-btn purple" onclick="makePassCard()">產生密語卡</button>
+          <div class="pass-out" id="pass-out"></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 4 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：「表哥」突然視訊說出車禍急需借錢，臉和聲音都很像，你應該先？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,1,'A')">A. 看得到臉就一定是真的，趕快幫忙</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'B')">B. 打他剛剛給的新號碼確認</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'C')">C. 掛斷後用原本就有的聯絡方式打給本人確認</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'D')">D. 點開他傳來的連結看看</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：下列哪一個是深偽技術的「正向應用」？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,2,'A')">A. 幫失去聲音的患者合成相近音色重新溝通</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'B')">B. 做同學的惡搞影片傳到群組</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'C')">C. 假冒名人推銷商品</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'D')">D. 假冒親友視訊借錢</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：發現有人用 AI 做了你同學的假影片在傳，最好的做法是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,3,'A')">A. 覺得好笑就轉給更多人</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'B')">B. 不轉傳，保存證據，告訴師長或學校求助</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'C')">C. 怕惹麻煩，裝作不知道</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'D')">D. 自己也做一支回敬對方</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>教材來源：延伸學習文章〈這是誰的臉？〉（網路識讀／深偽技術）。</li>
+        <li>影片示範：公視 P# 新聞實驗室〈<a href="https://www.youtube.com/watch?v=J56oMYQ2Heg&t=328s" target="_blank" rel="noopener">10分鐘用AI生成假影片 連專家都被騙倒 如何識別？</a>〉05:28–05:56，展示配件不對稱、陰影怪異、手在臉前揮動產生殘影。</li>
+        <li>回家作業：防詐密語卡請學生與家人口頭約定，<strong>密語答案不要寫在卡片上、也不要帶到學校</strong>。</li>
+        <li>延伸閱讀：<a href="https://pansci.asia/archives/342421" target="_blank" rel="noopener">泛科學 Deepfake 專文</a>、<a href="https://www.sinica.edu.tw/news_content/557/2445" target="_blank" rel="noopener">中研院 深偽偵測</a>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 今日實作任務 -->
+  <section class="project-section">
+    <h3>🎒 今日實作任務：守門員結業挑戰</h3>
+    <p>三選一（或全部挑戰），下次上課分享你的成果！</p>
+    <div class="project-tasks">
+      <div class="task-card"><h4>©️ 任務 A：標示小達人</h4><p>替你自己的一張照片或畫作寫出完整標示（作者、作品名、日期），再練習寫一段「詢問使用」的禮貌訊息。</p></div>
+      <div class="task-card"><h4>🎭 任務 B：假訊息改寫王</h4><p>把一則假面怪客的訊息找出 3 個破綻（催促、要驗證碼、好到不真實），寫成一張「提醒同學」的漫畫四格。</p></div>
+      <div class="task-card"><h4>🔐 任務 C：家庭防詐密語</h4><p>回家和家人約定一組防詐密語（答案只記在腦子裡），並一起檢查社群帳號的隱私設定。</p></div>
+    </div>
+  </section>
+
+  <!-- 簡報 -->
+  <section class="slide-section">
+    <h3>📊 授課簡報（NotebookLM × 阿凱老師）</h3>
+    <div class="slide-player">
+      <div class="slide-placeholder" id="slide-placeholder">📑 簡報生成中…<br><small>NotebookLM AI 製作中，完成後此區會顯示完整簡報。</small></div>
+      <div class="slide-main" id="slide-main" style="display:none" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="" alt="授課簡報">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 1</div>
+      </div>
+      <div class="slide-strip" id="slide-strip" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- 資訊圖表 -->
+  <section class="infographic-section">
+    <h3>🗂️ 三張網路守門員懶人包</h3>
+    <div class="info-grid">
+      <a class="info-card" href="./assets/01_boundary.webp" target="_blank">
+        <img data-fallback-src="assets/01_boundary.jpg" src="./assets/01_boundary.webp" alt="網路世界三道界線守門員" decoding="async" loading="lazy">
+        <div class="cap" style="color:#e03131">① 網路世界有界線：著作權 × 隱私權 × 同理心</div>
+      </a>
+      <a class="info-card" href="./assets/02_social_engineering.webp" target="_blank">
+        <img data-fallback-src="assets/02_social_engineering.jpg" src="./assets/02_social_engineering.webp" alt="社交工程三大手法" decoding="async" loading="lazy">
+        <div class="cap" style="color:#7048e8">② 追星圈的假面怪客：社交工程與 165 查證</div>
+      </a>
+      <a class="info-card" href="./assets/03_deepfake.webp" target="_blank">
+        <img data-fallback-src="assets/03_deepfake.jpg" src="./assets/03_deepfake.webp" alt="深偽技術正反面與防禦術" decoding="async" loading="lazy">
+        <div class="cap" style="color:#1c7ed6">③ 這是誰的臉：深偽技術與五招防禦術</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 影片 -->
+  <section class="video-section">
+    <h3>▶ 學生自學影片</h3>
+    <div class="video-wrap">
+      <div class="video-ratio" id="video-ratio" style="display:none">
+        <iframe id="nlm-video-iframe" src="" title="網路守門員特訓營 NotebookLM 教學影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-placeholder" id="video-placeholder">🎬 自學影片由 NotebookLM AI 自動生成中，完成後會在這裡播放。</div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 可開啟 CC 字幕（中文／English），搭配上方簡報一起複習</span>
+        <a href="#" target="_blank" rel="noopener" class="video-yt-link" id="yt-link" style="display:none">↗ 在 YouTube 開啟</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NLM 資源站 -->
+  <section class="nb-section">
+    <h3>🧭 NotebookLM 資源站 & 查證工具</h3>
+    <div class="nb-grid">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/b7e296a2-5c66-4bbf-8d77-6a3089529ad3" target="_blank" rel="noopener">
+        <h4>📚 本單元筆記本</h4><p>三篇延伸學習文章 + 阿凱老師主講者插畫，簡報與資訊圖表的生成來源。</p><span class="link">前往 NotebookLM →</span>
+      </a>
+      <a class="nb-card" href="https://165dashboard.tw/" target="_blank" rel="noopener">
+        <h4>🛡️ 165 打詐儀錶板</h4><p>內政部警政署，右下角「防詐客服」可協助判斷可疑訊息與網址。</p><span class="link">前往網站 →</span>
+      </a>
+      <a class="nb-card" href="https://www.youtube.com/watch?v=J56oMYQ2Heg" target="_blank" rel="noopener">
+        <h4>📺 公視 P# 新聞實驗室</h4><p>〈10分鐘用AI生成假影片 連專家都被騙倒 如何識別？〉（2024）</p><span class="link">觀看影片 →</span>
+      </a>
+      <a class="nb-card" href="https://i-win.org.tw/" target="_blank" rel="noopener">
+        <h4>🌐 iWIN 網路內容防護</h4><p>遇到網路霸凌或不當內容，可申訴協助平台移除。</p><span class="link">前往網站 →</span>
+      </a>
+    </div>
+    <div class="flow-box">
+      <h4>🔄 本頁怎麼來的？（NLM × Claude 流程）</h4>
+      <div class="flow-steps">
+        <span class="flow-step">1. 三份延伸學習文章</span>
+        <span class="flow-step">2. NotebookLM 精簡筆記本 + 主講者插畫</span>
+        <span class="flow-step">3. notebook_query 萃取 FAQ</span>
+        <span class="flow-step">4. 生成簡報 / 影片 / 3 張資訊圖表</span>
+        <span class="flow-step">5. Claude 編寫互動駕駛艙</span>
+        <span class="flow-step">6. GitHub Pages 上線</span>
+      </div>
+    </div>
+    <h4 style="font-size:1.1rem;color:#e03131;margin-bottom:12px">❓ 常見問題 FAQ</h4>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Q：網路上找到的圖片或文章是公開的，可以直接拿來做作業嗎？</div><div class="faq-a">不行喔！作品一完成就自動受<strong>著作權</strong>保護。要合法使用，記得「<strong>詢問 → 同意 → 標示</strong>」三步驟。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：只是開玩笑把同學出糗照傳到群組，事後刪除不就沒事了？</div><div class="faq-a">網路有<strong>數位足跡</strong>，照片可能早被截圖、轉貼，刪了也收不回來。惡搞和霸凌只有一線之隔，分享前先<strong>換位思考</strong>。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：有人說「限量周邊、免費貼圖」送我，要我點連結填帳密，是真的嗎？</div><div class="faq-a">這通常是<strong>誘餌攻擊</strong>或<strong>網路釣魚</strong>！絕不隨意點連結或給密碼、驗證碼。不確定就問家長老師，或用<strong>165 打詐儀錶板</strong>防詐客服判斷。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：視訊裡看到親友的臉跟我借錢，眼見為憑應該是真的吧？</div><div class="faq-a">不一定！<strong>深偽技術</strong>可以模仿臉和聲音。觀察臉部邊緣與表情，並用<strong>二重驗證</strong>或<strong>防詐密語</strong>確認身分。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：我平常在社群發自拍或語音，也有風險嗎？</div><div class="faq-a">有的。公開的高畫質正面照和語音可能被 AI 拿去模仿冒用。做好<strong>隱私設定</strong>，不隨意公開；若成為受害者，<strong>保存證據</strong>並找師長或撥 110。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：用 165 防詐客服時，可以把自己的帳號密碼貼上去問嗎？</div><div class="faq-a">千萬不要！只要貼<strong>對方傳來的訊息</strong>或<strong>可疑網址</strong>就好。帳號密碼、驗證碼任何時候都不給任何人。</div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>🛡️ 網路守門員特訓營：界線 × 假面 × 真臉｜六年級資訊科技教學駕駛艙</p>
+  <p>教材來源：延伸學習文章〈等一下！網路世界有界線〉〈追星圈的假面怪客〉〈這是誰的臉？〉｜AI 生成：NotebookLM｜整合：Claude Code</p>
+  <p>© 2026 IT COCKPIT · <a href="../index.html">回主頁</a> · 桃園市龍潭區石門國民小學</p>
+  <div class="site-credit">
+    Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+    <a href="https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+  </div>
+</footer>
+
+<div class="float-tools">
+  <button class="float-btn red" onclick="togglePanel('lottery')" title="抽號">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn green" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn purple" onclick="goTop()" title="回頂部">⬆️</button>
+</div>
+
+<div class="float-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <button class="close" onclick="togglePanel('lottery')">✕</button></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c2)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="float-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <button class="close" onclick="togglePanel('timer')">✕</button></h4>
+  <div class="timer-display" id="timer-display">00:00</div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim)">
+    <span>設定分鐘</span>
+    <input type="number" id="timer-min" value="5" min="0" max="60" style="width:60px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1;background:#40c057">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="flex:1;background:var(--c2)">⏸ 暫停</button>
+    <button class="btn-primary" onclick="resetTimer()">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff6b6b" onclick="setPenColor('#ff6b6b',this)"></button>
+  <button class="color-dot" style="background:#ffa94d" onclick="setPenColor('#ffa94d',this)"></button>
+  <button class="color-dot" style="background:#51cf66" onclick="setPenColor('#51cf66',this)"></button>
+  <button class="color-dot" style="background:#339af0" onclick="setPenColor('#339af0',this)"></button>
+  <button class="color-dot" style="background:#2c2c2c" onclick="setPenColor('#2c2c2c',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<div class="slide-fs" id="slide-fs">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="簡報全螢幕">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="slide-fs-counter" id="slide-fs-counter">1 / 1</div>
+</div>
+
+<script>
+// ========== CONFIG ==========
+const SLIDE_COUNT = 11;          // NotebookLM 授課簡報 11 頁
+const YOUTUBE_VIDEO_ID = 'x0dTbIc2GDo';  // NotebookLM 教學影片（YouTube 公開）
+const SLIDE_LIST = [];
+for(let i=1;i<=SLIDE_COUNT;i++) SLIDE_LIST.push('assets/slide_' + String(i).padStart(2,'0') + '.webp');
+
+function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
+
+// ========== MODE ==========
+function switchMode(mode, btn){
+  if(mode === 'teacher'){
+    const pwd = prompt('請輸入教師密碼：');
+    if(pwd !== 'it2026'){ alert('密碼錯誤'); return; }
+  }
+  document.body.classList.toggle('teacher-mode', mode === 'teacher');
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ========== PROGRESS ==========
+const doneStages = new Set();
+function markStageDone(n){
+  if(doneStages.has(n)) return;
+  doneStages.add(n);
+  const pill = document.getElementById('pill'+n);
+  if(pill) pill.classList.add('done');
+  document.getElementById('progFill').style.width = (doneStages.size/4*100) + '%';
+  document.getElementById('progTxt').textContent = doneStages.size + ' / 4 關完成';
+}
+
+// ========== QUIZ ==========
+const ANS = {'1-1':'B','1-2':'A','1-3':'C','2-1':'B','2-2':'A','2-3':'D','3-1':'B','3-2':'C','3-3':'A','4-1':'C','4-2':'A','4-3':'B'};
+const EXPLAIN = {
+  '1-1':'網路上的作品也有著作權，要「詢問 → 同意 → 標示」才能合法使用。',
+  '1-2':'作品完成的那一刻起就自動受保護，不需要登記。',
+  '1-3':'數位足跡讓照片可能早被截圖轉傳，刪除也收不回來。',
+  '2-1':'社交工程利用好奇心、信任感和貪小便宜的心態，讓你「自己交出鑰匙」。',
+  '2-2':'冒充站姐是假冒身分，「抽中小卡」是誘餌。驗證碼絕對不能給任何人！',
+  '2-3':'不點對方的連結，自己搜尋官方網站或請家長老師確認，才是最安全的做法。',
+  '3-1':'進入 165 打詐儀錶板後，點右下角的「防詐客服」圖示。',
+  '3-2':'輸入遇到的狀況、對方的訊息或可疑網址；自己的帳密千萬不要貼。',
+  '3-3':'一直催促＋要求先付訂金是詐騙警訊，停下來和家長一起查證。',
+  '4-1':'二重驗證：掛斷後用原本就有的管道（例如家裡電話）打給本人，不打對方給的新號碼。',
+  '4-2':'幫助失聲患者重新溝通是深偽技術的正向應用，其他都是負面風險。',
+  '4-3':'不轉傳、保存證據、勇敢向師長學校求助，必要時撥打 110。'
+};
+const PRAISE = ['🎉 太棒了！','✨ 答對囉！','🌟 守門員正解！','💪 你真厲害！','🔥 完全正確！'];
+function q(btn, stage, num, choice){
+  const key = stage + '-' + num, correct = ANS[key], box = btn.parentElement;
+  box.querySelectorAll('.quiz-opt').forEach(o=>{o.disabled=true;o.style.cursor='default';});
+  const fb = document.getElementById('fb-' + key);
+  fb.classList.add('show');
+  if(choice === correct){
+    btn.classList.add('correct','pulse'); fb.classList.add('ok');
+    fb.textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)] + ' ' + EXPLAIN[key];
+  } else {
+    btn.classList.add('wrong');
+    box.querySelectorAll('.quiz-opt').forEach(o=>{ if(o.textContent.trim().startsWith(correct + '.')) o.classList.add('correct'); });
+    fb.classList.add('bad');
+    fb.textContent = '💡 正確答案是 ' + correct + '。' + EXPLAIN[key];
+  }
+  const answered = document.getElementById('sec'+stage).querySelectorAll('.quiz-fb.show').length;
+  if(answered >= 3) markStageDone(stage);
+}
+
+// ========== helpers ==========
+function wrapText(ctx, text, maxW){
+  const out=[]; let line='';
+  for(const ch of text){
+    const t = line + ch;
+    if(ctx.measureText(t).width > maxW && line !== ''){ out.push(line); line = ch; } else line = t;
+  }
+  if(line) out.push(line);
+  return out;
+}
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+function mouseEvt(e, cv){
+  const r = cv.getBoundingClientRect();
+  return { x:(e.clientX - r.left) * (cv.width / r.width), y:(e.clientY - r.top) * (cv.height / r.height) };
+}
+function showResult(id, ok, text){
+  const el = document.getElementById(id);
+  el.className = 'game-result show ' + (ok ? 'ok' : 'bad');
+  el.textContent = text;
+}
+const FONT = '"Noto Sans TC", "Microsoft JhengHei", sans-serif';
+
+// ========== GAME 1: 三道界線 ==========
+const G1 = [
+  {s:'小宇在網路上找到一位插畫家的可愛貓咪圖，想直接放進自己的班級海報，沒有寫作者名字。', a:'copy', e:'這是別人的作品，要先詢問、取得同意，並標示作者名字。'},
+  {s:'小美拍到同學打翻便當的狼狽瞬間，想做成搞笑貼圖傳到年級群組。', a:'empathy', e:'如果被惡搞的是你會難過嗎？惡作劇和霸凌只有一線之隔。'},
+  {s:'阿哲想把全班合照連同每個人的姓名、班級和住家附近地標一起公開貼到社群。', a:'privacy', e:'姓名、班級、住處線索都是個資，每個人有權決定要不要公開。'},
+  {s:'小晴用自己畫的圖做成卡片，並在卡片上寫上自己的名字後分享給家人。', a:'ok', e:'自己的創作、自己分享，沒有碰到任何界線，放行！'},
+  {s:'志明把 YouTuber 的影片整段下載後重新上傳到自己的頻道，說是自己剪的。', a:'copy', e:'未經許可重新上傳並冒稱自己做的，侵害著作權。'},
+  {s:'小芬拍到鄰座同學的聯絡簿，上面有家長電話，想傳給不認識的網友看。', a:'privacy', e:'家長電話是個人資料，散布可能讓他人暴露在危險之中。'},
+  {s:'文文取得攝影社學長同意後使用他的照片做簡報，並在頁尾標示「攝影：王學長」。', a:'ok', e:'詢問、同意、標示三步驟都做到了，放行！'},
+  {s:'阿凱想把朋友唱歌走音的影片配上嘲笑字幕，說「大家一起來笑他」。', a:'empathy', e:'嘲笑別人的內容會變成對方的數位標籤，先換位思考。'}
+];
+const G1LABEL = {copy:'©️ 著作權', privacy:'🔒 隱私權', empathy:'💚 同理心', ok:'✅ 可以放行'};
+let g1i = 0, g1s = {ok:0,bad:0}, g1Done = false;
+function drawG1(){
+  const c = document.getElementById('game1'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fffdf7'; ctx.fillRect(0,0,c.width,c.height);
+  // comic frame
+  ctx.lineWidth=4; ctx.strokeStyle='#2c2c2c'; roundRect(ctx,16,16,c.width-32,c.height-32,14); ctx.stroke();
+  ctx.fillStyle='#ff6b6b'; roundRect(ctx,30,30,150,34,8); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#fff'; ctx.font='bold 17px '+FONT; ctx.fillText('情境 ' + (g1i+1) + ' / ' + G1.length, 52, 53);
+  // gates
+  const gates=[['著作權','#ff6b6b'],['隱私權','#339af0'],['同理心','#51cf66']];
+  gates.forEach((g,i)=>{
+    const x = 330 + i*82;
+    ctx.fillStyle=g[1]; ctx.fillRect(x,30,70,12); ctx.strokeRect(x,30,70,12);
+    ctx.fillStyle='#2c2c2c'; ctx.fillRect(x+4,42,6,26); ctx.fillRect(x+60,42,6,26);
+    ctx.font='bold 13px '+FONT; ctx.fillText(g[0], x+14, 62);
+  });
+  // speech bubble
+  ctx.fillStyle='#fff'; roundRect(ctx,40,92,c.width-80,168,18); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#2c2c2c'; ctx.font='18px '+FONT;
+  wrapText(ctx, G1[g1i].s, c.width-120).forEach((l,i)=>ctx.fillText(l, 60, 130 + i*30));
+  ctx.fillStyle='#7048e8'; ctx.font='bold 16px '+FONT;
+  ctx.fillText('👮 守門員判斷：這次要攔下哪一道界線？', 44, 296);
+  ctx.fillStyle='#6f6f6f'; ctx.font='14px '+FONT;
+  ctx.fillText('✅ 答對 ' + g1s.ok + '　｜　❌ 再想想 ' + g1s.bad, 44, 328);
+}
+function game1Pick(choice){
+  if(g1Done) return;
+  g1Done = true;
+  const it = G1[g1i];
+  if(choice === it.a){ g1s.ok++; showResult('game1Result', true, '🎉 正確！' + it.e); }
+  else { g1s.bad++; showResult('game1Result', false, '💡 答案是「' + G1LABEL[it.a] + '」。' + it.e); }
+  drawG1();
+}
+function game1Next(){ g1i = (g1i+1) % G1.length; g1Done = false; document.getElementById('game1Result').className='game-result'; drawG1(); }
+
+// ========== GAME 2: 可疑訊息偵測器 ==========
+const G2 = [
+  {from:'遊戲官方客服', msg:'【系統通知】您的帳號登入異常，將於 24 小時內停權！請立即點擊 http://g4me-login.xyz 重新驗證密碼。', a:'phish', e:'假冒平臺說帳號有問題、附上奇怪網址，是典型網路釣魚。自己開官方 App 查。'},
+  {from:'後援會站姐 ✨', msg:'恭喜妳抽中偶像簽名小卡！為了核對身分，請把手機收到的 6 位數驗證碼傳給我喔～', a:'fake', e:'冒充站姐的假冒身分！驗證碼等於帳號鑰匙，任何人要都不能給。'},
+  {from:'免費貼圖大放送', msg:'限時 10 分鐘！加入群組並下載 sticker_free.apk，全套 40 款明星貼圖免費送，保證中獎！', a:'bait', e:'「免費、保證中獎、限時」是誘餌攻擊，下載不明檔案可能被植入惡意程式。'},
+  {from:'導師 王老師（班級群組）', msg:'提醒大家：明天校外教學 8:00 在穿堂集合，記得帶水壺和雨具。', a:'safe', e:'班級群組中老師的一般提醒，沒有要連結、帳密或金錢，是安全訊息。'},
+  {from:'網路銀行服務中心', msg:'您的帳戶資料不完整，請於今日內至 bank-update-tw.com 補填身分證字號與密碼，逾期將凍結。', a:'phish', e:'假冒銀行＋限期＋要你到網站填密碼，是網路釣魚。不點連結，請大人打官方電話。'},
+  {from:'演唱會工作人員', msg:'我是主辦單位工作人員，妳訂的票有問題需要退款，請加我私人 LINE 並提供帳號密碼處理。', a:'fake', e:'冒充工作人員要求私下聯絡與帳密，是假冒身分。改用官方網站或客服電話查證。'},
+  {from:'周邊二手賣家', msg:'限量應援手燈只剩最後一支！別人也在問，先匯 300 元運費我就幫你保留，快點決定！', a:'bait', e:'好到難以置信＋一直催＋先付運費，是誘餌與私下交易警訊。'},
+  {from:'媽媽', msg:'放學後直接到安親班，我六點去接你，路上小心！', a:'safe', e:'熟悉家人的日常訊息，沒有可疑要求。若內容奇怪，也可以打電話直接確認。'}
+];
+const G2LABEL = {phish:'🎣 網路釣魚', fake:'🎭 假冒身分', bait:'🍬 誘餌攻擊', safe:'✅ 安全訊息'};
+let g2i = 0, g2s = {ok:0,bad:0}, g2Done = false, g2Reveal = false;
+function drawG2(){
+  const c = document.getElementById('game2'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#eef6ff'; ctx.fillRect(0,0,c.width,c.height);
+  // phone
+  const px=150, py=14, pw=300, ph=352;
+  ctx.fillStyle='#2c2c2c'; roundRect(ctx,px,py,pw,ph,30); ctx.fill();
+  ctx.fillStyle='#f8f9fa'; roundRect(ctx,px+12,py+28,pw-24,ph-56,14); ctx.fill();
+  ctx.fillStyle='#495057'; roundRect(ctx,px+pw/2-30,py+10,60,8,4); ctx.fill();
+  const it = G2[g2i];
+  ctx.fillStyle='#fff'; ctx.fillRect(px+12,py+28,pw-24,44);
+  ctx.fillStyle='#2c2c2c'; ctx.font='bold 15px '+FONT; ctx.fillText('💬 ' + it.from, px+26, py+56);
+  ctx.fillStyle='#adb5bd'; ctx.font='12px '+FONT; ctx.fillText('訊息 ' + (g2i+1) + '/' + G2.length, px+pw-80, py+56);
+  // bubble
+  ctx.font='15px '+FONT;
+  const lines = wrapText(ctx, it.msg, pw-80);
+  const bh = lines.length*24 + 22;
+  ctx.fillStyle='#fff'; ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2;
+  roundRect(ctx,px+26,py+88,pw-52,bh,14); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#2c2c2c';
+  lines.forEach((l,i)=>ctx.fillText(l, px+40, py+114 + i*24));
+  if(g2Reveal){
+    const ok = g2Done === 'ok';
+    ctx.save(); ctx.translate(px+pw/2, py+ph-60); ctx.rotate(-0.12);
+    ctx.fillStyle = it.a === 'safe' ? '#51cf66' : '#ff6b6b';
+    roundRect(ctx,-110,-24,220,48,10); ctx.fill(); ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 22px '+FONT; ctx.textAlign='center';
+    ctx.fillText(it.a === 'safe' ? 'SAFE 安全' : 'STOP 小心！', 0, 8);
+    ctx.restore();
+  }
+  ctx.fillStyle='#495057'; ctx.font='14px '+FONT; ctx.textAlign='left';
+  ctx.fillText('✅ ' + g2s.ok, 30, 350); ctx.fillText('❌ ' + g2s.bad, 30, 330);
+}
+function game2Pick(choice){
+  if(g2Done) return;
+  const it = G2[g2i];
+  if(choice === it.a){ g2s.ok++; g2Done='ok'; showResult('game2Result', true, '🎉 偵測成功！' + it.e); }
+  else { g2s.bad++; g2Done='bad'; showResult('game2Result', false, '💡 答案是「' + G2LABEL[it.a] + '」。' + it.e); }
+  g2Reveal = true; drawG2();
+}
+function game2Next(){ g2i=(g2i+1)%G2.length; g2Done=false; g2Reveal=false; document.getElementById('game2Result').className='game-result'; drawG2(); }
+
+// ========== GAME 3: 危機處理排序 ==========
+const G3_STEPS = [
+  {t:'先停下來，不回覆驗證碼', ok:true, ord:0},
+  {t:'不點對方給的連結或檔案', ok:true, ord:1},
+  {t:'到 165 打詐儀錶板問防詐客服', ok:true, ord:2},
+  {t:'截圖保存對話當證據', ok:true, ord:3},
+  {t:'告訴家長或老師一起處理', ok:true, ord:4},
+  {t:'趕快把驗證碼傳給他', ok:false},
+  {t:'加入他說的秘密群組看看', ok:false},
+  {t:'先匯運費表示誠意', ok:false}
+];
+let g3Layout = [], g3Next = 0, g3Wrong = 0;
+function game3Reset(){
+  const idx = G3_STEPS.map((_,i)=>i).sort(()=>Math.random()-.5);
+  g3Layout = idx.map((si,k)=>({si, x: 20 + (k%2)*292, y: 110 + Math.floor(k/2)*62, w: 268, h: 50, done:false, shake:0}));
+  g3Next = 0; g3Wrong = 0;
+  document.getElementById('game3Result').className='game-result';
+  drawG3();
+}
+function drawG3(){
+  const c = document.getElementById('game3'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fffdf7'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle='#2c2c2c'; ctx.font='bold 17px '+FONT;
+  ctx.fillText('🛡️ 依正確順序點擊行動卡（已完成 ' + g3Next + ' / 5）', 20, 34);
+  // slots
+  for(let i=0;i<5;i++){
+    const x = 20 + i*114;
+    ctx.fillStyle = i < g3Next ? '#51cf66' : '#fff';
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2;
+    roundRect(ctx,x,50,104,40,8); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = i < g3Next ? '#fff' : '#adb5bd'; ctx.font='bold 15px '+FONT;
+    ctx.fillText('第 ' + (i+1) + ' 步', x+26, 76);
+  }
+  g3Layout.forEach(b=>{
+    const st = G3_STEPS[b.si];
+    const dx = b.shake ? (Math.random()*6-3) : 0;
+    ctx.fillStyle = b.done ? '#d3f9d8' : (b.shake ? '#ffe3e3' : '#fff');
+    ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2;
+    roundRect(ctx,b.x+dx,b.y,b.w,b.h,10); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = b.done ? '#2b8a3e' : '#2c2c2c'; ctx.font='15px '+FONT;
+    ctx.fillText((b.done ? '✔ ' : '') + st.t, b.x+14+dx, b.y+31);
+  });
+}
+function game3Click(p){
+  if(g3Next >= 5) return;
+  const b = g3Layout.find(b=>p.x>=b.x && p.x<=b.x+b.w && p.y>=b.y && p.y<=b.y+b.h);
+  if(!b || b.done) return;
+  const st = G3_STEPS[b.si];
+  if(st.ok && st.ord === g3Next){
+    b.done = true; g3Next++;
+    if(g3Next === 5){ showResult('game3Result', true, '🎉 完美處理！停下來 → 不點連結 → 165 查證 → 截圖存證 → 告訴大人。' + (g3Wrong ? '（途中修正了 ' + g3Wrong + ' 次，很棒！）' : '')); }
+    else showResult('game3Result', true, '👍 對！下一步是什麼呢？');
+  } else {
+    g3Wrong++;
+    b.shake = 1; setTimeout(()=>{ b.shake = 0; drawG3(); }, 350);
+    showResult('game3Result', false, st.ok ? '⏳ 這是好行動，但順序還沒到喔！先想想更前面的步驟。' : '🚫 危險！「' + st.t + '」正是詐騙者想要你做的事。');
+  }
+  drawG3();
+}
+function initGame3(){
+  const c = document.getElementById('game3');
+  c.addEventListener('click', e=>game3Click(mouseEvt(e, c)));
+  game3Reset();
+}
+
+// ========== GAME 4: 找露餡 ==========
+const G4_SPOTS = [
+  {x:212, y:118, r:40, t:'頭髮邊緣模糊、有馬賽克般的方塊：臉和背景交界處常露餡。'},
+  {x:388, y:222, r:30, t:'兩邊耳環不對稱：一邊圓形、一邊三角形，配件不一致是深偽常見破綻。'},
+  {x:330, y:268, r:32, t:'陰影方向怪怪的：光從左邊來，鼻子的影子卻出現在錯的一側。'},
+  {x:452, y:300, r:44, t:'手在臉前揮動出現殘影和半透明手指，這是 AI 合成跟不上的漏洞。'}
+];
+let g4Found = [];
+function drawG4(){
+  const c = document.getElementById('game4'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  // video call frame
+  ctx.fillStyle='#343a40'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle='#dee2e6'; ctx.fillRect(40,40,520,320);
+  // background stripes (room)
+  ctx.fillStyle='#c5d3e0'; ctx.fillRect(40,40,520,200);
+  ctx.fillStyle='#a3b8cc'; ctx.fillRect(420,70,110,90);
+  ctx.fillStyle='#fff'; ctx.font='bold 14px '+FONT; ctx.fillText('● REC 視訊通話中', 52, 62);
+  ctx.fillStyle='#ff6b6b'; ctx.beginPath(); ctx.arc(56,57,5,0,Math.PI*2); ctx.fill();
+  // body
+  ctx.fillStyle='#4dabf7'; ctx.beginPath(); ctx.moveTo(190,360); ctx.quadraticCurveTo(300,270,410,360); ctx.fill();
+  // neck & face
+  ctx.fillStyle='#f1c9a5'; ctx.fillRect(280,280,40,40);
+  ctx.beginPath(); ctx.ellipse(300,210,92,108,0,0,Math.PI*2); ctx.fill();
+  // hair
+  ctx.fillStyle='#3b2a20';
+  ctx.beginPath(); ctx.ellipse(300,140,100,58,0,Math.PI,Math.PI*2); ctx.fill();
+  ctx.fillRect(200,130,24,70); ctx.fillRect(376,130,24,70);
+  // glitch pixels on left hair edge (spot 1)
+  for(let i=0;i<22;i++){
+    const gx = 190 + ((i*37)%46), gy = 92 + ((i*53)%56);
+    ctx.fillStyle = i%3===0 ? '#c5d3e0' : (i%3===1 ? '#6b4f3f' : '#9aa9b8');
+    ctx.fillRect(gx, gy, 9, 9);
+  }
+  ctx.globalAlpha = .35; ctx.fillStyle='#c5d3e0'; ctx.beginPath(); ctx.ellipse(212,120,26,34,0,0,Math.PI*2); ctx.fill(); ctx.globalAlpha = 1;
+  // eyes
+  ctx.fillStyle='#fff'; ctx.beginPath(); ctx.ellipse(265,200,16,10,0,0,Math.PI*2); ctx.ellipse(335,200,16,10,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#2c2c2c'; ctx.beginPath(); ctx.arc(265,200,6,0,Math.PI*2); ctx.arc(335,200,6,0,Math.PI*2); ctx.fill();
+  // nose + wrong shadow (spot 3) : light from left, shadow drawn on left
+  ctx.strokeStyle='#b07a55'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(300,212); ctx.lineTo(292,240); ctx.lineTo(304,242); ctx.stroke();
+  ctx.fillStyle='rgba(60,40,30,.45)'; ctx.beginPath(); ctx.ellipse(322,262,26,12,0.3,0,Math.PI*2); ctx.fill();
+  // light source hint
+  ctx.fillStyle='#ffe066'; ctx.beginPath(); ctx.arc(70,110,16,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#495057'; ctx.font='12px '+FONT; ctx.fillText('光源', 56, 142);
+  // mouth
+  ctx.strokeStyle='#c0504d'; ctx.lineWidth=4; ctx.beginPath(); ctx.arc(300,262,22,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+  // earrings asymmetric (spot 2)
+  ctx.fillStyle='#fcc419'; ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.arc(212,226,9,0,Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(388,210); ctx.lineTo(400,234); ctx.lineTo(376,234); ctx.closePath(); ctx.fill(); ctx.stroke();
+  // hand with ghost trail (spot 4)
+  for(let k=3;k>=0;k--){
+    ctx.globalAlpha = k===0 ? 1 : 0.18;
+    const ox = k*16;
+    ctx.fillStyle='#f1c9a5';
+    ctx.beginPath(); ctx.ellipse(452+ox,318,28,34,0,0,Math.PI*2); ctx.fill();
+    for(let f=0;f<4;f++){ roundRect(ctx,430+ox+f*12,262,10,40,5); ctx.fill(); }
+  }
+  ctx.globalAlpha = 1;
+  // UI bar
+  ctx.fillStyle='#212529'; ctx.fillRect(40,360,520,34);
+  ctx.fillStyle='#ff6b6b'; ctx.beginPath(); ctx.arc(300,377,12,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#fff'; ctx.font='13px '+FONT; ctx.fillText('「表哥」：我出車禍了，快借我錢！', 60, 382);
+  // found marks
+  g4Found.forEach(i=>{
+    const s = G4_SPOTS[i];
+    ctx.strokeStyle='#ff2d55'; ctx.lineWidth=4; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle='#ff2d55'; ctx.beginPath(); ctx.arc(s.x+s.r*.7,s.y-s.r*.7,13,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='bold 14px '+FONT; ctx.textAlign='center'; ctx.fillText(String(g4Found.indexOf(i)+1), s.x+s.r*.7, s.y-s.r*.7+5); ctx.textAlign='left';
+  });
+  ctx.fillStyle='#fff'; ctx.font='bold 15px '+FONT; ctx.fillText('找到 ' + g4Found.length + ' / 4 個露餡', 430, 30);
+}
+function game4Click(p){
+  const idx = G4_SPOTS.findIndex(s=>Math.hypot(p.x-s.x, p.y-s.y) <= s.r + 8);
+  if(idx < 0){ showResult('game4Result', false, '🔍 這裡看起來正常，再找找臉部邊緣、配件、陰影和手。'); return; }
+  if(g4Found.includes(idx)){ showResult('game4Result', true, '✔ 這個已經找到囉！' + G4_SPOTS[idx].t); return; }
+  g4Found.push(idx); drawG4();
+  if(g4Found.length === 4) showResult('game4Result', true, '🏆 4 個露餡全找到！記得：就算畫面很逼真，也要用「二重驗證」和「防詐密語」確認。');
+  else showResult('game4Result', true, '🎯 找到了！' + G4_SPOTS[idx].t);
+}
+function game4Reset(){ g4Found = []; document.getElementById('game4Result').className='game-result'; drawG4(); }
+function game4Hint(){
+  const left = G4_SPOTS.findIndex((s,i)=>!g4Found.includes(i));
+  if(left < 0) return;
+  const hints = ['看看左上方頭髮和背景的交界處。','比比看兩邊耳朵的配件一樣嗎？','注意光源在左邊，那影子應該在哪邊？','右下角那隻揮動的手，是不是有奇怪的殘影？'];
+  showResult('game4Result', false, '💡 提示：' + hints[left]);
+}
+function initGame4(){
+  const c = document.getElementById('game4');
+  c.addEventListener('click', e=>game4Click(mouseEvt(e, c)));
+  drawG4();
+}
+function makePassCard(){
+  const qv = document.getElementById('pass-q').value;
+  const who = (document.getElementById('pass-who').value || '家人').replace(/[<>&"']/g,'');
+  const out = document.getElementById('pass-out');
+  out.textContent = '🔐 我和「' + who + '」的防詐密語問題：' + qv + '　（答案只記在心裡，不寫下來、不告訴別人！）';
+  out.classList.add('show');
+}
+
+// ========== SLIDE PLAYER ==========
+let slideIdx = 0;
+function initSlidePlayer(){
+  if(SLIDE_COUNT === 0) return;
+  document.getElementById('slide-placeholder').style.display = 'none';
+  document.getElementById('slide-main').style.display = 'block';
+  const strip = document.getElementById('slide-strip');
+  strip.style.display = 'flex'; strip.innerHTML = '';
+  SLIDE_LIST.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0 ? ' active' : '');
+    t.onclick = ()=>goSlide(i);
+    const img = document.createElement('img');
+    img.src = src; img.alt = '第 ' + (i+1) + ' 頁'; img.loading = 'lazy';
+    img.setAttribute('data-fallback-src', src.replace('.webp','.jpg'));
+    t.appendChild(img); strip.appendChild(t);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n < 0 || n >= SLIDE_COUNT) return;
+  slideIdx = n;
+  const cur = document.getElementById('slide-current');
+  cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
+  cur.src = SLIDE_LIST[n];
+  document.getElementById('slide-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  }
+  const strip = document.getElementById('slide-strip');
+  const active = document.querySelectorAll('.strip-thumb')[n];
+  if(active && strip){
+    const left = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, left), behavior: 'smooth'});
+  }
+}
+function slideNav(dir){ if(SLIDE_COUNT === 0) return; goSlide((slideIdx + dir + SLIDE_COUNT) % SLIDE_COUNT); }
+function openSlideFullscreen(){
+  if(SLIDE_COUNT === 0) return;
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[slideIdx];
+  document.getElementById('slide-fs-counter').textContent = (slideIdx+1) + ' / ' + SLIDE_COUNT;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+
+// ========== VIDEO ==========
+function initVideo(){
+  if(!YOUTUBE_VIDEO_ID) return;
+  document.getElementById('video-placeholder').style.display = 'none';
+  document.getElementById('video-ratio').style.display = 'block';
+  document.getElementById('nlm-video-iframe').src = 'https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID + '?rel=0&modestbranding=1&cc_load_policy=1';
+  const yt = document.getElementById('yt-link');
+  yt.href = 'https://www.youtube.com/watch?v=' + YOUTUBE_VIDEO_ID;
+  yt.style.display = 'inline';
+}
+
+// ========== FLOAT TOOLS ==========
+function togglePanel(name){
+  ['lottery','timer'].forEach(p=>{
+    const el = document.getElementById('panel-'+p);
+    if(p === name) el.classList.toggle('show'); else el.classList.remove('show');
+  });
+}
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const tm = setInterval(()=>{ out.textContent = (Math.floor(Math.random()*(max-min+1)) + min) + ' 號'; }, 60);
+  setTimeout(()=>{
+    clearInterval(tm);
+    let num;
+    if(unique){ if(lotPool.length === 0) refillLotPool(); num = lotPool.splice(Math.floor(Math.random()*lotPool.length), 1)[0]; }
+    else num = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){ refillLotPool(); document.getElementById('lot-out').textContent = '等待抽號...'; }
+let timerInt = null, timerSec = 0;
+function renderTimer(){
+  const m = Math.floor(timerSec/60), s = timerSec % 60;
+  document.getElementById('timer-display').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+function startTimer(){
+  if(timerInt) return;
+  if(timerSec <= 0) timerSec = (parseInt(document.getElementById('timer-min').value) || 5) * 60;
+  renderTimer();
+  timerInt = setInterval(()=>{
+    timerSec--; renderTimer();
+    if(timerSec <= 0){ clearInterval(timerInt); timerInt = null; alert('⏰ 時間到！'); }
+  }, 1000);
+}
+function pauseTimer(){ if(timerInt){ clearInterval(timerInt); timerInt = null; } }
+function resetTimer(){ pauseTimer(); timerSec = 0; renderTimer(); }
+
+// ========== DRAW ==========
+let drawActive = false, penColor = '#ff6b6b', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  const line = (x,y)=>{
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(x, y); drawCtx.stroke();
+    dLastX = x; dLastY = y;
+  };
+  drawCanvas.addEventListener('mousedown', e=>{ if(!drawActive) return; isDrawing = true; dLastX = e.clientX; dLastY = e.clientY; });
+  drawCanvas.addEventListener('mousemove', e=>{ if(drawActive && isDrawing) line(e.clientX, e.clientY); });
+  drawCanvas.addEventListener('mouseup', ()=>isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e=>{ if(!drawActive) return; e.preventDefault(); const t=e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e=>{ if(!drawActive || !isDrawing) return; e.preventDefault(); const t=e.touches[0]; line(t.clientX, t.clientY); }, {passive:false});
+  drawCanvas.addEventListener('touchend', ()=>isDrawing = false);
+  window.addEventListener('resize', ()=>{ drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight; });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c1)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key === 'ArrowLeft') slideNav(-1);
+    else if(e.key === 'ArrowRight') slideNav(1);
+    else if(e.key === 'Escape') closeSlideFullscreen();
+  }
+});
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  safeInit('initDraw', initDraw);
+  safeInit('initSlidePlayer', initSlidePlayer);
+  safeInit('initVideo', initVideo);
+  safeInit('drawG1', drawG1);
+  safeInit('drawG2', drawG2);
+  safeInit('initGame3', initGame3);
+  safeInit('initGame4', initGame4);
+});
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(()=>{ safeInit('redraw', ()=>{ drawG1(); drawG2(); drawG3(); drawG4(); }); });
+}
+</script>
+</body>
+</html>
