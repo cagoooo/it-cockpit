@@ -17,6 +17,14 @@ const cockpitAssetVersion = '20260917-challenge-draw-v1';
 const dayAssetVersion = '20260729-day-of-ai-v1';
 const dayLessonAssetVersion = '20260917-tabs-scroll-v1';
 const lessonVideoAssetVersion = '20260829-lesson-videos-v2';
+const slidePlayerAssetVersion = '20260923-slide-images-v1';
+// 由 tools/build-slide-images.py 產生：各週簡報已轉成逐頁 WebP 的頁數。
+const slideImageManifestPath = path.join(labDir, 'slide-image-manifest.json');
+const slideImageManifest = fs.existsSync(slideImageManifestPath) ? JSON.parse(fs.readFileSync(slideImageManifestPath, 'utf8')) : {};
+const slideImageAttrs = (code, deck) => {
+  const pages = slideImageManifest[`week-${code}/${deck}`]?.pages;
+  return pages ? ` data-images="${deck}-pages/" data-pages="${pages}"` : '';
+};
 const imageFallbackScript = '<script src="../../assets/webp-fallback.js" defer></script>';
 
 const meta = ({ title, description, url, assetPrefix }) => `
@@ -109,16 +117,16 @@ ${imageFallbackScript}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../notebooklm-pdf-player.css?v=${depthAssetVersion}">
+<link rel="stylesheet" href="../notebooklm-pdf-player.css?v=${slidePlayerAssetVersion}">
 ${imageFallbackScript}
 </head>
-<body class="pdf-player" data-week="${item.week}" data-pdf="notebooklm-kai-slides.pdf" data-title="${notebookSlideTitle}">
+<body class="pdf-player" data-week="${item.week}" data-pdf="notebooklm-kai-slides.pdf"${slideImageAttrs(code, 'notebooklm-kai-slides')} data-title="${notebookSlideTitle}">
 <header class="pdf-header"><a class="pdf-home" href="index.html" aria-label="回到本週駕駛艙" title="回到本週駕駛艙">⌂</a><div class="pdf-heading"><small>NOTEBOOKLM · W${code}</small><strong>${item.title}</strong></div></header>
-<main class="pdf-stage"><div id="pdfViewport" class="pdf-viewport"><canvas id="slideCanvas" aria-label="新版 NotebookLM 投影片"></canvas><p id="pdfLoading" class="pdf-loading" aria-live="polite">正在載入新版 NotebookLM 簡報…</p></div></main>
+<main class="pdf-stage"><div id="pdfViewport" class="pdf-viewport"><img id="slideImage" width="1376" height="768" alt="" hidden draggable="false"><canvas id="slideCanvas" aria-label="新版 NotebookLM 投影片" hidden></canvas><p id="pdfLoading" class="pdf-loading" aria-live="polite">正在載入新版 NotebookLM 簡報…</p></div></main>
 <nav class="pdf-controls" aria-label="投影片控制列"><button id="pdfOverviewButton" type="button" aria-label="投影片總覽" title="投影片總覽">▦</button><button id="pdfPrevious" type="button" aria-label="上一張投影片" title="上一張投影片">←</button><span id="pdfCounter" class="pdf-counter">1 / 1</span><button id="pdfNext" type="button" aria-label="下一張投影片" title="下一張投影片">→</button><button id="pdfFullscreen" type="button" aria-label="全螢幕" title="全螢幕">⛶</button><a id="pdfDirect" href="notebooklm-kai-slides.pdf" aria-label="開啟原始 PDF" title="開啟原始 PDF">↓</a></nav>
 <div id="pdfProgress" class="pdf-progress"></div>
 <aside id="pdfOverview" class="pdf-overview" aria-hidden="true"><div class="pdf-overview-inner"><div class="pdf-overview-head"><div><h1>投影片總覽</h1><p>點選縮圖可直接跳到該頁。</p></div><button id="pdfOverviewClose" class="pdf-overview-close" type="button" aria-label="關閉投影片總覽">×</button></div><div class="pdf-thumb-grid"></div></div></aside>
-<script type="module" src="../notebooklm-pdf-player.js?v=${depthAssetVersion}"></script>
+<script type="module" src="../notebooklm-pdf-player.js?v=${slidePlayerAssetVersion}"></script>
 </body>
 </html>
 `;
@@ -129,6 +137,7 @@ ${imageFallbackScript}
     .replaceAll(notebookSlideTitle, notebookSlideV2Title)
     .replaceAll(notebookSlideUrl, notebookSlideV2Url)
     .replaceAll('notebooklm-kai-slides.pdf', 'notebooklm-kai-slides-v2.pdf')
+    .replaceAll(slideImageAttrs(code, 'notebooklm-kai-slides'), slideImageAttrs(code, 'notebooklm-kai-slides-v2'))
     .replaceAll('新版 NotebookLM', 'Q 版新版 NotebookLM')
     .replaceAll('黃凱揚老師帶課新版投影片', '黃凱揚老師帶課 Q 版新版投影片')
     .replaceAll('週Q 版', '週 Q 版')
