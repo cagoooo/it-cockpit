@@ -115,7 +115,7 @@ const offlineAssets = [
   './gifted-ai-lab/sync-status.html', './gifted-ai-lab/sync-status.js', './gifted-ai-lab/sync-status.css', './gifted-ai-lab/course-version-manifest.json', './gifted-ai-lab/version-matrix.md',
   './gifted-ai-lab/transcript-search.css', './gifted-ai-lab/site.webmanifest', './gifted-ai-lab/lecture-slides.html',
   './gifted-ai-lab/materials/teacher-guide.pdf', './gifted-ai-lab/materials/student-workbook.pdf',
-  './gifted-ai-lab/youtube/annual/transcript.json', './gifted-ai-lab/assets/gifted-lab-cover.png', './gifted-ai-lab/assets/gifted-lab-cover.webp',
+  './gifted-ai-lab/youtube/annual/transcript.json', './gifted-ai-lab/assets/gifted-lab-cover.webp',
   './gifted-ai-lab/assets/gifted-favicon-192.png', './gifted-ai-lab/assets/gifted-favicon-32.png',
   './gifted-ai-lab/lesson-video-manifest.json', './gifted-ai-lab/lesson-video-data.js', './gifted-ai-lab/lesson-videos/notebooklm-mcp-run.json',
 ];
@@ -123,7 +123,8 @@ for (const item of weeks) {
   const code = String(item.week).padStart(2, '0');
   const base = `./gifted-ai-lab/week-${code}/`;
   offlineAssets.push(base, `${base}index.html`, `${base}lecture-slides.html`, `${base}classroom-pack.html`, `${base}student-task.html`, `${base}student-guide.md`, `${base}student-warmup.md`, `${base}student-review.md`, `${base}student-video-card.html`, `${base}video-captions.srt`, `${base}depth-source.md`, `${base}depth-video-captions.srt`, `${base}depth-video-transcript.txt`, `${base}teacher-pack.pdf`, `./gifted-ai-lab/youtube/week-${code}/transcript.json`);
-  for (const image of ['student-video-card.png', 'student-video-card.webp', 'student-infographic.png', 'student-infographic.webp']) {
+  // 離線包只收頁面實際使用的 WebP；同名 PNG 只是讀不到 WebP 時的備援（單張 4~5MB），不預先下載
+  for (const image of ['student-video-card.webp', 'student-infographic.webp']) {
     if (fs.existsSync(path.join(labDir, `week-${code}`, image))) offlineAssets.push(`${base}${image}`);
   }
   if (fs.existsSync(path.join(labDir, `week-${code}`, 'week-illustration.webp'))) offlineAssets.push(`${base}week-illustration.webp`);
@@ -132,5 +133,5 @@ for (const item of weeks) {
     if (fs.existsSync(path.join(repoDir, lessonVideoBase.replace(/^\.\//, ''), file))) offlineAssets.push(`${lessonVideoBase}${file}`);
   }
 }
-fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-08-29-webp-v2', assets: offlineAssets }, null, 2)}\n`, 'utf8');
+fs.writeFileSync(path.join(labDir, 'offline-manifest.json'), `${JSON.stringify({ version: '2026-09-24-webp-only', assets: offlineAssets }, null, 2)}\n`, 'utf8');
 console.log(`Built ${weeks.length} classroom packs, ${weeks.length} task sheets, YouTube data and offline manifest.`);

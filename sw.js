@@ -7,9 +7,11 @@ const ASSET_CACHE = `it-cockpit-asset-${CACHE_VERSION}`;
 const GIFTED_CORE_CACHE = `it-cockpit-gifted-core-${CACHE_VERSION}`;
 const GIFTED_MANIFEST = './gifted-ai-lab/offline-manifest.json';
 
-self.addEventListener('install', (event) => {
+// 安裝時不預先下載資優班離線教材：原本每次安裝（含每次改版）都會在背景抓整包教材，
+// 跟正在開啟的頁面搶頻寬，連總入口與一般課程的訪客也會被迫下載。
+// 改由資優班頁面在閒置時送出 CACHE_GIFTED_CORE（background），逐一補抓缺少的檔案。
+self.addEventListener('install', () => {
   self.skipWaiting();
-  event.waitUntil(cacheGiftedCore());
 });
 
 self.addEventListener('activate', (e) => {
@@ -26,7 +28,7 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('message', (e) => {
   if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
-  if (e.data && e.data.type === 'CACHE_GIFTED_CORE') e.waitUntil(cacheGiftedCore());
+  if (e.data && e.data.type === 'CACHE_GIFTED_CORE') e.waitUntil(cacheGiftedCore({ background: Boolean(e.data.background) }));
 });
 
 self.addEventListener('fetch', (e) => {
@@ -74,7 +76,15 @@ async function networkFirst(req, cacheName) {
   }
 }
 
-async function cacheGiftedCore() {
+let giftedCoreJob = null;
+function cacheGiftedCore(options = {}) {
+  if (!giftedCoreJob) giftedCoreJob = runGiftedCoreCache(options).finally(() => { giftedCoreJob = null; });
+  return giftedCoreJob;
+}
+
+// 一次只下載一個檔案，不和頁面搶頻寬。background：只補抓快取裡還沒有的；
+// 教師手動按「下載離線教材」時則逐一向伺服器確認是否有新版。
+async function runGiftedCoreCache({ background = false } = {}) {
   try {
     const manifestUrl = new URL(GIFTED_MANIFEST, self.registration.scope);
     const response = await fetch(manifestUrl, { cache: 'no-store' });
@@ -82,10 +92,16 @@ async function cacheGiftedCore() {
     const responseCopy = response.clone();
     const manifest = await response.json();
     const cache = await caches.open(GIFTED_CORE_CACHE);
-    await Promise.allSettled(manifest.assets.map((asset) => {
+    for (const asset of manifest.assets) {
       const url = new URL(asset, self.registration.scope).href;
-      return cache.add(new Request(url, { cache: 'reload' }));
-    }));
+      try {
+        if (background && await cache.match(url)) continue;
+        const fresh = await fetch(new Request(url, { cache: background ? 'default' : 'no-cache' }));
+        if (fresh.ok) await cache.put(url, fresh);
+      } catch {
+        // 單一檔案失敗不影響其他教材
+      }
+    }
     await cache.put(manifestUrl.href, responseCopy);
   } catch {
     // Existing caches remain available when an update cannot be downloaded.

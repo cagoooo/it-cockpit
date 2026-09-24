@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release": "2026.08.29-lesson-videos-v2",
-  "generated_at": "2026-09-24T03:40:12.844Z",
+  "generated_at": "2026-09-24T04:23:53.952Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -348,8 +348,8 @@
     },
     {
       "file": "week-03/index.html",
-      "sha256": "49e62c84b1d3ecf41d00595eadb68817c11db46be9b57d6dc384b32de2309318",
-      "bytes": 5227,
+      "sha256": "dd2ae1cd9c3e646c82046cb94722d456de549ea9e597cbff6469f646985bfe27",
+      "bytes": 5233,
       "scope": "week-03"
     },
     {
@@ -540,8 +540,8 @@
     },
     {
       "file": "week-06/index.html",
-      "sha256": "823acd515e5b2ca8f978be933be935bd259a2805df0ecc0c80c6344514806c11",
-      "bytes": 5173,
+      "sha256": "e536dc23f828bb5dfe46ec8441bd658a67bbda578427869de56de0e22db5c990",
+      "bytes": 5179,
       "scope": "week-06"
     },
     {
@@ -732,8 +732,8 @@
     },
     {
       "file": "week-09/index.html",
-      "sha256": "fe5ca10a2c883a41ab56fe985a3b69e3b25405ccb9fd355dec2ebd71ff26dd49",
-      "bytes": 5251,
+      "sha256": "e8d177d8a0c467280e396a13ff91f1128d7d5a0dbfe294d8e532567748f103dc",
+      "bytes": 5257,
       "scope": "week-09"
     },
     {
@@ -924,8 +924,8 @@
     },
     {
       "file": "week-12/index.html",
-      "sha256": "75bd4cad1b4b0171dad14bf1ff625e70e4fdbf5096105d858cda98c86035d15f",
-      "bytes": 5229,
+      "sha256": "e8cc19de8cb8ed133a5674134d0700399d8147dfd03f858db7aa799eb4b17d57",
+      "bytes": 5235,
       "scope": "week-12"
     },
     {
@@ -1116,8 +1116,8 @@
     },
     {
       "file": "week-15/index.html",
-      "sha256": "6afd77bfa39e680b90149b05d2a2bb700d312d49dd7c9eda467c6c04f1d1edc5",
-      "bytes": 5274,
+      "sha256": "04e08275438d4375fd413b7aef9abb44d9f88cb388a02e02cca4cc56b1152deb",
+      "bytes": 5280,
       "scope": "week-15"
     },
     {
@@ -1308,8 +1308,8 @@
     },
     {
       "file": "week-18/index.html",
-      "sha256": "02e9cb515b4eb508d2393db7a0ad466390c3a07f7859787d46e855c43a7985b2",
-      "bytes": 4875,
+      "sha256": "625f7084a9b20950e6a064117fc0a720d27c642b76f39d334cd30f4cfc9b2899",
+      "bytes": 4881,
       "scope": "week-18"
     },
     {
@@ -1500,8 +1500,8 @@
     },
     {
       "file": "week-21/index.html",
-      "sha256": "dbedcf7af674e46e2beb0e085e8d49d851480109aad60723bc2191a17ad9f791",
-      "bytes": 4890,
+      "sha256": "5a5ccf289084a049e7ab19034f541f76daed33590bf878abca0ca75b867e3c24",
+      "bytes": 4896,
       "scope": "week-21"
     },
     {
@@ -1692,8 +1692,8 @@
     },
     {
       "file": "week-24/index.html",
-      "sha256": "7ec3524b03d606ff457b9393c6382c2cff50ea26e8f8d5f209f4e8e1db9a1fdf",
-      "bytes": 4920,
+      "sha256": "e39d72780176658d101a319b29265eaeed5962ad43022ea059552d19d3d6e309",
+      "bytes": 4926,
       "scope": "week-24"
     },
     {
@@ -1884,8 +1884,8 @@
     },
     {
       "file": "week-27/index.html",
-      "sha256": "4f5571af972ffe67576285f819d90006f38c560f5d5e6f83879545507fc083dd",
-      "bytes": 4785,
+      "sha256": "39c16ac931a02aceb7ceecd41361fb562dd6f3fb6bc514bfe13fca0ab2109829",
+      "bytes": 4791,
       "scope": "week-27"
     },
     {
@@ -2076,8 +2076,8 @@
     },
     {
       "file": "week-30/index.html",
-      "sha256": "a802a97ea9a5db6e5b5fd46f8143aad05471f64f79ebf20d5adeb2ef71551b05",
-      "bytes": 4875,
+      "sha256": "372ba33de87c167138793f0cec556be00ac50076c867623fa394640ef822ddb5",
+      "bytes": 4881,
       "scope": "week-30"
     },
     {

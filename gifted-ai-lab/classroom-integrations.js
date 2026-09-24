@@ -181,8 +181,14 @@
     statusButton.textContent = navigator.onLine ? (controlled ? '核心教材可離線' : '教材已連線') : (controlled ? '離線教材模式' : '目前離線');
     statusButton.classList.toggle('offline', !navigator.onLine);
   };
+  // 頁面載入完成、閒置 10 秒後才請 Service Worker 在背景逐一補抓離線教材，不和本頁及接著開的簡報搶頻寬；省流量模式則不抓
+  const scheduleOfflineCache = (registration) => {
+    if (navigator.connection?.saveData) return;
+    const start = () => setTimeout(() => registration.active?.postMessage({ type: 'CACHE_GIFTED_CORE', background: true }), 10000);
+    if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
+  };
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('../../sw.js').then(() => navigator.serviceWorker.ready).then(() => setConnectionStatus()).catch(() => setConnectionStatus());
+    navigator.serviceWorker.register('../../sw.js').then(() => navigator.serviceWorker.ready).then((registration) => { setConnectionStatus(); scheduleOfflineCache(registration); }).catch(() => setConnectionStatus());
   }
   addEventListener('online', setConnectionStatus);
   addEventListener('offline', setConnectionStatus);
