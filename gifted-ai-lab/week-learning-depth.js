@@ -70,7 +70,7 @@
         <div class="section-head"><span>MORE TO EXPLORE</span><h2>看圖、看影片，再想深一點</h2></div>
         <p>這些教材用圖片、小實驗和不同例子，幫你把這週的問題想得更清楚。</p>
         <div class="depth-media-grid">
-          <a class="depth-infographic" href="${studentInfographic}" target="_blank" rel="noopener noreferrer"><img src="${studentInfographic}" alt="W${ww} 中年級好懂版資訊圖"><span>開啟中年級好懂版資訊圖</span></a>
+          <a class="depth-infographic" href="${studentInfographic}" target="_blank" rel="noopener noreferrer"><img src="${studentInfographic}" loading="lazy" alt="W${ww} 中年級好懂版資訊圖"><span>開啟中年級好懂版資訊圖</span></a>
           <div class="resources depth-resource-list">
             <a class="resource" href="lecture-slides.html" target="_blank"><b>12 張好懂版課堂簡報 →</b><span>短句、大字、生活例子和四段闖關</span></a>
             <a class="resource" href="depth-slides.pdf" target="_blank"><b>老師陪讀進階簡報 →</b><span>適合和老師一起挑戰較難的問題</span></a>

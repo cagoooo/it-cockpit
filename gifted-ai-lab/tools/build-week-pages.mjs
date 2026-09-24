@@ -12,8 +12,8 @@ vm.runInNewContext(fs.readFileSync(path.join(labDir, 'week-student-language.js')
 const weeks = sandbox.window.GIFTED_WEEKS;
 const siteBase = 'https://cagoooo.github.io/it-cockpit/gifted-ai-lab';
 const imageUrl = `${siteBase}/assets/gifted-og.jpg`;
-const depthAssetVersion = '20260828-kai-slides-v3';
-const cockpitAssetVersion = '20260917-challenge-draw-v1';
+const depthAssetVersion = '20260924-lazy-media-v1';
+const cockpitAssetVersion = '20260924-lazy-media-v1';
 const dayAssetVersion = '20260729-day-of-ai-v1';
 const dayLessonAssetVersion = '20260917-tabs-scroll-v1';
 const lessonVideoAssetVersion = '20260829-lesson-videos-v2';
@@ -65,7 +65,10 @@ for (const item of weeks) {
 <title>${title}</title>${meta({ title, description, url, assetPrefix: '../assets/' })}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">`;
+<!-- 字型只載實際用到的 400/700/900（800 由瀏覽器以 900 顯示），且不阻擋畫面：先用系統字體顯示，下載完再替換 -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet"></noscript>`;
 
   const cockpit = `<!DOCTYPE html>
 <html lang="zh-Hant-TW">

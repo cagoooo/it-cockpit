@@ -1,8 +1,9 @@
-"""為資優班首頁的小卡片產生小尺寸縮圖（*-sm.webp），首頁不必再下載全尺寸大圖。
+"""為資優班首頁與週次駕駛艙的小卡片產生小尺寸縮圖（*-sm.webp），不必再下載全尺寸大圖。
 
 - week-XX/week-illustration-sm.webp：側邊欄週次小圖、繪本卡片
 - week-XX/notebooklm-kai-slides-v2-thumb-sm.webp：簡報卡片
 - lesson-videos/week-XX/lesson-video-card-sm.webp：小影片卡片
+- week-XX/student-infographic-sm.webp、depth-infographic-sm.webp：週次駕駛艙「圖像學習牆」卡片（原圖 2752px）
 用法：python gifted-ai-lab/tools/build-home-thumbs.py
 """
 from pathlib import Path
@@ -14,6 +15,8 @@ TARGETS = (
     ('week-[0-9][0-9]/week-illustration.webp', 480),
     ('week-[0-9][0-9]/notebooklm-kai-slides-v2-thumb.webp', 640),
     ('lesson-videos/week-[0-9][0-9]/lesson-video-card.webp', 480),
+    ('week-[0-9][0-9]/student-infographic.webp', 800),
+    ('week-[0-9][0-9]/depth-infographic.webp', 800),
 )
 
 for pattern, width in TARGETS:
