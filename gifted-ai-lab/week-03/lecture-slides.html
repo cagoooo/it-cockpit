@@ -30,7 +30,10 @@
 <meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/assets/gifted-og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<!-- 字型只載實際用到的 400/700/900（800 由瀏覽器以 900 顯示），且不阻擋畫面：先用系統字體顯示，下載完再替換 -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="../week-slides.css">
 <link rel="stylesheet" href="../week-slides-rich.css">
 <link rel="stylesheet" href="../gifted-visual-system.css?v=20260924-lazy-media-v1">
