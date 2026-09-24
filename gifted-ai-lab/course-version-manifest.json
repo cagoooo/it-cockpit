@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release": "2026.08.29-lesson-videos-v2",
-  "generated_at": "2026-09-23T12:02:42.075Z",
+  "generated_at": "2026-09-24T02:38:59.362Z",
   "formal_plan": {
     "teacher": "黃凱揚老師",
     "school": "桃園市龍潭區石門國民小學",
@@ -216,8 +216,8 @@
   "files": [
     {
       "file": "index.html",
-      "sha256": "39304c26260afa1af6b8ad270eb2ed1597d3e6811c858891c89acb7aaae319a7",
-      "bytes": 52943,
+      "sha256": "991e754e6700b390503ad2ad0d2e753c9caaf1ac8aa4213e302e39754b1c8d8a",
+      "bytes": 53776,
       "scope": "core"
     },
     {
