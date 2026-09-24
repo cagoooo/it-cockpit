@@ -15,6 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # 資優班這幾種 PNG 是製作影片／圖卡腳本的原始素材，網頁一律使用同名 WebP；
+      # 留在 repo 但不部署，讓 Pages 網站維持在 1 GB 上限以下
+      - name: Exclude build-only source images
+        run: rm -f gifted-ai-lab/week-*/student-infographic.png gifted-ai-lab/week-*/depth-infographic.png gifted-ai-lab/week-*/notebooklm-kai-slides-v2-thumb.png gifted-ai-lab/week-*/student-video-card.png
       - uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
