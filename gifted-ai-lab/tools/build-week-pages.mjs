@@ -29,7 +29,7 @@ const imageFallbackScript = '<script src="../../assets/webp-fallback.js" defer><
 
 const meta = ({ title, description, url, assetPrefix }) => `
 <meta name="description" content="${description}">
-<meta name="author" content="黃凱揚老師｜桃園市龍潭區石門國民小學">
+<meta name="author" content="阿凱老師｜桃園市龍潭區石門國民小學">
 <meta name="theme-color" content="#15383c">
 <link rel="canonical" href="${url}">
 <link rel="icon" href="${assetPrefix}gifted-favicon.ico" sizes="any">
@@ -58,7 +58,7 @@ for (const item of weeks) {
   const hasDayOfAiLesson = [3, 6, 9, 12, 15].includes(item.week);
   const weekDir = path.join(labDir, `week-${code}`);
   const title = `W${code} ${item.title}｜石門智繪客`;
-  const description = `黃凱揚老師第 ${item.week} 週創造力資優資訊科技課程：${item.goal}包含動手闖關、三題小挑戰、NotebookLM、簡報與影片。`;
+  const description = `阿凱老師第 ${item.week} 週創造力資優資訊科技課程：${item.goal}包含動手闖關、三題小挑戰、NotebookLM、簡報與影片。`;
   const url = `${siteBase}/week-${code}/`;
   const commonHead = `<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -112,7 +112,7 @@ ${imageFallbackScript}
 </html>
 `;
 
-  const notebookSlideTitle = `W${code} ${item.title}｜黃凱揚老師帶課新版投影片`;
+  const notebookSlideTitle = `W${code} ${item.title}｜阿凱老師帶課新版投影片`;
   const notebookSlideUrl = `${url}notebooklm-kai-slides.html`;
   const notebookSlides = `<!DOCTYPE html>
 <html lang="zh-Hant-TW">
@@ -140,7 +140,7 @@ ${imageFallbackScript}
 </html>
 `;
 
-  const notebookSlideV2Title = `W${code} ${item.title}｜黃凱揚老師帶課 Q 版新版投影片`;
+  const notebookSlideV2Title = `W${code} ${item.title}｜阿凱老師帶課 Q 版新版投影片`;
   const notebookSlideV2Url = `${url}notebooklm-kai-slides-v2.html`;
   const notebookSlidesV2 = notebookSlides
     .replaceAll(notebookSlideTitle, notebookSlideV2Title)
@@ -148,7 +148,7 @@ ${imageFallbackScript}
     .replaceAll('notebooklm-kai-slides.pdf', 'notebooklm-kai-slides-v2.pdf')
     .replaceAll(slideImageAttrs(code, 'notebooklm-kai-slides'), slideImageAttrs(code, 'notebooklm-kai-slides-v2'))
     .replaceAll('新版 NotebookLM', 'Q 版新版 NotebookLM')
-    .replaceAll('黃凱揚老師帶課新版投影片', '黃凱揚老師帶課 Q 版新版投影片')
+    .replaceAll('阿凱老師帶課新版投影片', '阿凱老師帶課 Q 版新版投影片')
     .replaceAll('週Q 版', '週 Q 版')
     .replaceAll('載入Q 版', '載入 Q 版');
 

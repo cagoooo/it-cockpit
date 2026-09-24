@@ -24,7 +24,7 @@ for (const week of weeks) {
     '',
     '## 課程定位',
     '',
-    `- 授課教師：黃凱揚老師`,
+    `- 授課教師：阿凱老師`,
     `- 學校：桃園市龍潭區石門國民小學`,
     `- 本週驅動問題：${extra.drivingQuestion}`,
     `- 本週可見產出：${week.output}`,

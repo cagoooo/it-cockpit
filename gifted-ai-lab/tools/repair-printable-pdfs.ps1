@@ -80,7 +80,8 @@ foreach ($target in $targets) {
         $body = $content
     }
 
-    $body = $body.Replace(([string][char]0xFEFF), '')
+    # Trim so repeated runs do not keep adding blank lines around the body
+    $body = $body.Replace(([string][char]0xFEFF), '').Trim()
     $body = [regex]::Replace($body, '(?is)^\s*<p>\s*#\s*(.*?)\s*</p>', '<h1>$1</h1>', 1)
     $titleMatch = [regex]::Match($body, '(?is)<h1[^>]*>(.*?)</h1>')
     $documentTitle = if ($titleMatch.Success) {
@@ -98,6 +99,7 @@ foreach ($target in $targets) {
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>$documentTitle</title>
 $style
+<script src="../../assets/webp-fallback.js" defer></script>
 </head>
 <body>
 $body

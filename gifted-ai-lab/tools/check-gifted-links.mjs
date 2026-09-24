@@ -137,7 +137,7 @@ for (const item of studentSources) {
 
 const versionManifest = JSON.parse(fs.readFileSync(path.join(labDir, 'course-version-manifest.json'), 'utf8'));
 record(versionManifest.weeks?.length === weeks.length, 'course version week count', String(versionManifest.weeks?.length || 0));
-record(versionManifest.formal_plan?.teacher === '黃凱揚老師' && versionManifest.formal_plan?.sessions === 20, 'course version formal plan', 'teacher and sessions');
+record(versionManifest.formal_plan?.teacher === '阿凱老師' && versionManifest.formal_plan?.sessions === 20, 'course version formal plan', 'teacher and sessions');
 for (const item of versionManifest.weeks || []) record(item.status === 'ready', 'course version status', `week-${String(item.week).padStart(2, '0')}`);
 
 const verification = JSON.parse(fs.readFileSync(path.join(labDir, 'youtube', 'verification.json'), 'utf8'));

@@ -17,7 +17,7 @@ IT Cockpit 是一套為國小資訊科技課程設計的互動式教學入口。
 | 入口 | 用途 |
 |---|---|
 | [開啟 IT Cockpit](https://cagoooo.github.io/it-cockpit/) | 依年級與主題選擇全部教學艙 |
-| [資優班專區](https://cagoooo.github.io/it-cockpit/gifted-ai-lab/) | 黃凱揚老師 10 次雙節、共 20 節的 AI 創意解題課程 |
+| [資優班專區](https://cagoooo.github.io/it-cockpit/gifted-ai-lab/) | 阿凱老師 10 次雙節、共 20 節的 AI 創意解題課程 |
 | [資優班教材連結庫](https://cagoooo.github.io/it-cockpit/gifted-ai-lab/resource-library.html) | 依週次、使用對象與關鍵字篩選網站、影片、簡報及學習單 |
 | [iPad 課前檢查](https://cagoooo.github.io/it-cockpit/gifted-ai-lab/preflight.html) | 檢查版本、快取、容量、圖片、影片與外部服務 |
 | [逐字稿搜尋](https://cagoooo.github.io/it-cockpit/gifted-ai-lab/transcripts.html) | 搜尋資優班影片內容並快速跳到對應段落 |
@@ -160,7 +160,7 @@ node gifted-ai-lab/tools/check-day-of-ai-resources.mjs
 
 ## 作者與學校
 
-- 教學設計與製作：[黃凱揚老師／阿凱老師](https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5)
+- 教學設計與製作：[阿凱老師](https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5)
 - 任教學校：桃園市龍潭區石門國民小學
 - GitHub：[cagoooo](https://github.com/cagoooo)
 

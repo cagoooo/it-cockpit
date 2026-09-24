@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>石門智繪客｜資優班資訊科技課程</title>
-<meta name="description" content="黃凱揚老師規劃的創造力資優資訊科技課程：10 次雙節課、10 本獨立 NotebookLM、動手闖關、三題小挑戰、學生任務、簡報與影片。">
-<meta name="author" content="黃凱揚老師｜桃園市龍潭區石門國民小學">
+<meta name="description" content="阿凱老師規劃的創造力資優資訊科技課程：10 次雙節課、10 本獨立 NotebookLM、動手闖關、三題小挑戰、學生任務、簡報與影片。">
+<meta name="author" content="阿凱老師｜桃園市龍潭區石門國民小學">
 <meta name="theme-color" content="#173b3f">
 <link rel="canonical" href="https://cagoooo.github.io/it-cockpit/gifted-ai-lab/">
 <link rel="icon" href="assets/gifted-favicon.ico" sizes="any">
@@ -237,7 +237,7 @@
 <main class="shell">
   <section class="intro">
     <div>
-      <p class="kicker">115 學年度 · 黃凱揚老師 · 20 節</p>
+      <p class="kicker">115 學年度 · 阿凱老師 · 20 節</p>
       <h1>石門智繪客</h1>
       <p class="intro-copy">為一位三年級升四年級的創造能力資優學生設計。從生活中的 AI 出發，用短句、生活例子和動手測試，一步一步完成 Scratch 作品、安全使用 AI、小作品測試與成果分享。</p>
       <div class="facts"><span class="fact">10 次雙節課</span><span class="fact">每 3 週一次</span><span class="fact">每次 90 分鐘</span><span class="fact">一學年一件完整作品</span></div>
@@ -246,7 +246,7 @@
   </section>
 
   <section class="slide-picker" aria-labelledby="slidePickerTitle">
-    <div class="slide-picker-head"><div><p class="kicker">首頁快速入口 · 每週專屬投影片</p><h2 id="slidePickerTitle">直接播放黃凱揚老師的 Q 版新版簡報</h2><p>每週都有新的可愛人物與課程主題，點選任一週就能左右翻頁、全螢幕播放，也可以用 iPad 手指滑動。</p></div><a id="featuredSlideLink" class="action primary" href="week-03/notebooklm-kai-slides-v2.html#slide-1">開啟 W03 Q 版簡報 →</a></div>
+    <div class="slide-picker-head"><div><p class="kicker">首頁快速入口 · 每週專屬投影片</p><h2 id="slidePickerTitle">直接播放阿凱老師的 Q 版新版簡報</h2><p>每週都有新的可愛人物與課程主題，點選任一週就能左右翻頁、全螢幕播放，也可以用 iPad 手指滑動。</p></div><a id="featuredSlideLink" class="action primary" href="week-03/notebooklm-kai-slides-v2.html#slide-1">開啟 W03 Q 版簡報 →</a></div>
     <div id="slidePickerGrid" class="slide-picker-grid"></div>
   </section>
 
@@ -346,7 +346,7 @@ function renderLessonVideoPicker(){if(!lessonVideoGrid)return;const items=window
 function visualStrip(l){const code=weekCode(l),base=`week-${code}/`;return `<div class="lesson-visual-strip" aria-label="第 ${l.week} 週圖像教材"><a class="lesson-visual primary" href="${base}"><img src="${base}week-illustration.webp" width="1152" height="768" alt="${esc(l.title)}的 Q 版繪本情境"><span>本週 Q 版繪本圖</span></a><a class="lesson-visual" href="${base}student-infographic.webp" target="_blank"><img src="${base}student-infographic.webp" loading="lazy" alt="第 ${l.week} 週好懂版資訊圖"><span>好懂版資訊圖</span></a><a class="lesson-visual" href="${base}depth-infographic.webp" target="_blank"><img src="${base}depth-infographic.webp" loading="lazy" alt="第 ${l.week} 週研究挑戰圖"><span>研究挑戰圖</span></a></div>`;}
 function renderNav(){weekNav.innerHTML=LESSONS.map(l=>`<button class="week-btn ${l.week===current.week?'active':''}" data-week="${l.week}"><img class="week-thumb" src="${weekImageSmall(l)}" onerror="this.onerror=null;this.src='${weekImage(l)}'" width="62" height="46" loading="lazy" alt=""><span class="week-no">W${weekCode(l)}</span><span class="week-label">${esc(l.title)}</span></button>`).join('');}
 function renderTeacher(){
- teacherView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">第 ${String(current.week).padStart(2,'0')} 週 · ${current.date} · 90 分鐘</div><h2>${esc(current.title)}</h2><p class="lesson-date">兩節連排｜一般教室｜授課教師：黃凱揚老師</p></div><div class="lesson-output">今天要完成<br>${esc(current.output)}</div></header>${visualStrip(current)}
+ teacherView.innerHTML=`<header class="lesson-head"><div><div class="lesson-code">第 ${String(current.week).padStart(2,'0')} 週 · ${current.date} · 90 分鐘</div><h2>${esc(current.title)}</h2><p class="lesson-date">兩節連排｜一般教室｜授課教師：阿凱老師</p></div><div class="lesson-output">今天要完成<br>${esc(current.output)}</div></header>${visualStrip(current)}
  <div class="summary-grid"><div class="summary-cell"><b>這週要學會</b>${esc(current.goal)}</div><div class="summary-cell"><b>最重要的想法</b>${esc(current.concept)}</div><div class="summary-cell"><b>要準備的東西</b>${esc(current.materials)}</div></div>
  <section class="panel"><h3>90 分鐘逐段流程</h3><div class="timeline">${current.timeline.map((t,i)=>`<div class="timeline-row"><div class="timeline-time">${t[0]}</div><div class="timeline-main"><strong>${esc(t[1])}</strong><span>${esc(FLOW_GUIDE[i])}</span></div><div class="timeline-note">${esc(t[2])}</div></div>`).join('')}</div></section>
  <section class="panel"><h3>教師追問句</h3><div class="questions">${current.questions.map(q=>`<p class="question">「${esc(q)}」</p>`).join('')}</div></section>

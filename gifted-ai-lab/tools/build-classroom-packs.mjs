@@ -71,7 +71,7 @@ for (const item of weeks) {
     '任何公開成果都已由教師確認；原始作品與觀察紀錄維持私人。',
   ];
   const pack = `<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>W${code} 一鍵上課包｜石門智繪客</title><style>${sharedStyle}</style>${imageFallbackScript}</head><body><main>
-  <header class="top"><div><div class="code">WEEK ${code} · ${escapeHtml(item.date)} · 90 MIN</div><h1>${escapeHtml(item.title)}</h1><p>黃凱揚老師｜桃園市龍潭區石門國民小學</p></div><div class="actions"><a class="btn" href="index.html">回駕駛艙</a><button class="btn primary" data-print>列印上課包</button></div></header>
+  <header class="top"><div><div class="code">WEEK ${code} · ${escapeHtml(item.date)} · 90 MIN</div><h1>${escapeHtml(item.title)}</h1><p>阿凱老師｜桃園市龍潭區石門國民小學</p></div><div class="actions"><a class="btn" href="index.html">回駕駛艙</a><button class="btn primary" data-print>列印上課包</button></div></header>
   <section class="band"><h2>30 秒開課入口</h2><div class="grid"><a class="cell" href="lecture-slides.html"><b>課堂簡報</b>12 張互動投影</a><a class="cell" href="student-task.html"><b>學生任務單</b>可填寫與列印</a><a class="cell" href="teacher-pack.pdf"><b>直式教師詳案</b>90 分鐘完整流程</a></div></section>
   <section class="band"><h2>課前檢查</h2><div class="checklist">${['電腦或 iPad 已充電並可投影。','已開啟本週簡報與駕駛艙。','紙本任務單、色筆或便利貼已備妥。','站內教材可開啟；外部 AI 或 NotebookLM 失效時改走離線流程。',...safetyChecks].map((text,index)=>`<label><input type="checkbox" data-save="check-${index}"><span>${escapeHtml(text)}</span></label>`).join('')}</div><p class="save-state" aria-live="polite">勾選狀態只保存在本機</p></section>
   <section class="band"><h2>90 分鐘流程</h2><table class="timeline"><thead><tr><th>時間</th><th>活動</th><th>教師提醒</th></tr></thead><tbody>${item.timeline.map((row)=>`<tr><td>${escapeHtml(row[0])}</td><td>${escapeHtml(row[1])}</td><td>${escapeHtml(row[2])}</td></tr>`).join('')}</tbody></table></section>
@@ -88,7 +88,7 @@ for (const item of weeks) {
   <section class="band"><h2>我和 AI 怎麼分工</h2><div class="privacy"><b>不要填入姓名、照片、帳號、電話或其他私人資料。</b></div><div class="grid"><label class="cell"><b>我先想到什麼</b><textarea class="answer" data-save="human"></textarea></label><label class="cell"><b>AI 幫了什麼</b><textarea class="answer" data-save="ai"></textarea></label><label class="cell"><b>我怎麼確認和選擇</b><textarea class="answer" data-save="verify"></textarea></label></div></section>
   <section class="band"><h2>離線替代任務</h2><p>${escapeHtml(offlineTasks[item.week])}</p></section>
   <section class="band"><h2>完成前安全檢查</h2><div class="checklist">${safetyChecks.map((text,index)=>`<label><input type="checkbox" data-save="safe-${index}"><span>${escapeHtml(text)}</span></label>`).join('')}</div><p class="save-state" aria-live="polite">內容只保存在本機</p></section>
-  <footer class="footer">課程設計：黃凱揚老師｜桃園市龍潭區石門國民小學</footer>
+  <footer class="footer">課程設計：阿凱老師｜桃園市龍潭區石門國民小學</footer>
   </main>${persistenceScript(`gifted-task-${code}`)}${[3, 6, 9, 12, 15].includes(item.week) ? '<script src="../source-attribution.js?v=20260729-day-of-ai-v1"></script>' : ''}</body></html>`;
   fs.writeFileSync(path.join(weekDir, 'classroom-pack.html'), pack, 'utf8');
   fs.writeFileSync(path.join(weekDir, 'student-task.html'), task, 'utf8');

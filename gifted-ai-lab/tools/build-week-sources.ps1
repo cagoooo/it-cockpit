@@ -48,7 +48,7 @@ for ($i = 0; $i -lt $weeks.Count; $i++) {
 
 ## 課程識別
 
-- 授課教師：黃凱揚老師
+- 授課教師：阿凱老師
 - 學校：桃園市龍潭區石門國民小學
 - 對象：三年級創造能力資賦優異學生 1 名
 - 日期：$($item.Date)
@@ -116,7 +116,7 @@ Made with ❤️ by [阿凱老師](https://www.smes.tyc.edu.tw/modules/school/in
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>W$weekCode $($item.Title)｜石門智繪客</title>
-<meta name="description" content="黃凱揚老師第 $week 週資優班資訊科技專用教學駕駛艙：$($item.Title)。">
+<meta name="description" content="阿凱老師第 $week 週資優班資訊科技專用教學駕駛艙：$($item.Title)。">
 <meta name="theme-color" content="#15383c">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">

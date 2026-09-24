@@ -66,7 +66,7 @@ ${chapterText(item.chapters)}
 字幕
 本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。
 
-課程設計與內容審訂：黃凱揚老師
+課程設計與內容審訂：阿凱老師
 學校：桃園市龍潭區石門國民小學
 影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。
 
@@ -93,7 +93,7 @@ ${chapterText(annualChapters)}
 字幕
 本片提供繁體中文 CC 字幕，可由 YouTube 播放器的「字幕」按鈕開啟。
 
-課程設計與內容審訂：黃凱揚老師
+課程設計與內容審訂：阿凱老師
 學校：桃園市龍潭區石門國民小學
 影片由 NotebookLM 協助產製，教學內容、活動流程與發布資料均由教師規劃及審訂。
 
@@ -127,7 +127,7 @@ const entries = [
   }),
 ].map(item => ({
   ...item,
-  tags: ['石門智繪客','資優教育','AI素養','資訊科技','NotebookLM','石門國小','黃凱揚老師'],
+  tags: ['石門智繪客','資優教育','AI素養','資訊科技','NotebookLM','石門國小','阿凱老師'],
   privacy: 'public',
   caption: `youtube/${item.slug}/zh-TW.srt`,
   ...(oldBySlug.get(item.slug) || {}),

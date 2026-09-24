@@ -1,7 +1,7 @@
 # 石門智繪客：開發進度與優化路線圖
 
 - 專案：115 學年度創造能力資賦優異校本方案－資訊科技課程
-- 授課教師：黃凱揚老師
+- 授課教師：阿凱老師
 - 學校：桃園市龍潭區石門國民小學
 - 更新日期：2026-07-30
 - 線上專區：https://cagoooo.github.io/it-cockpit/gifted-ai-lab/
@@ -488,8 +488,8 @@ P1 定義：現有版本已能上課，但完成後可明顯提升個別化、�
 
 - 已完成規格卡：`rdq/RDQ-spec-gifted-ai-lab-next-phase-20260728.md`，狀態為 `confirmed`，第一批與第二批均已通過驗收。
 - 第五階段規格卡：`rdq/RDQ-spec-gifted-ai-lab-phase-5-20260728.md`，狀態為 `completed`；A 教學深化組已通過驗收。
-- 第六階段規格：`rdq/RDQ-spec-gifted-ai-lab-phase-6-20260729.md`，黃凱揚老師確認依 I → E → G 執行，狀態為 `completed`。
-- 第八階段規格：`rdq/RDQ-spec-gifted-ai-lab-phase-8-20260729.md`，已依黃凱揚老師選定的 P1-16、P1-17、P0-02、P0-07 完成實作與驗收。
+- 第六階段規格：`rdq/RDQ-spec-gifted-ai-lab-phase-6-20260729.md`，阿凱老師確認依 I → E → G 執行，狀態為 `completed`。
+- 第八階段規格：`rdq/RDQ-spec-gifted-ai-lab-phase-8-20260729.md`，已依阿凱老師選定的 P1-16、P1-17、P0-02、P0-07 完成實作與驗收。
 - I「中年級理解校準組」已完成；正式上課後依學生回饋進行第二輪內容微調。
 - E「版本穩定與教材同步組」已完成；版本中心與 CI 共同避免新舊教材混用。
 - G「評量報告組」已完成；待十週逐步累積教師確認的真實學習證據。
