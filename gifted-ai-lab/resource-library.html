@@ -11,7 +11,10 @@
 <link rel="apple-touch-icon" href="assets/gifted-apple-touch-icon.png" sizes="180x180">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- 字型只載 400/700/900（800 由瀏覽器以 900 顯示），與其他頁共用同一網址可直接用快取；且不阻擋畫面 -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="resource-library.css?v=20260730-v1">
 <script src="../assets/webp-fallback.js" defer></script>
 </head>
