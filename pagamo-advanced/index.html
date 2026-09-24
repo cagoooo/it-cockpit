@@ -20,7 +20,10 @@
 <meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/pagamo-advanced/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<!-- 字型不阻擋畫面：先用系統字體顯示，下載完再替換；中文字型只載本頁用到的粗細 -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Noto+Sans+TC:wght@400;700;900&amp;display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Noto+Sans+TC:wght@400;700;900&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Noto+Sans+TC:wght@400;700;900&amp;display=swap" rel="stylesheet"></noscript>
 <style>
 :root{
   --bg:#0d0d2b; --surface:#1a1a3e; --panel:#252552;

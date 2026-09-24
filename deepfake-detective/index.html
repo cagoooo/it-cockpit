@@ -20,7 +20,10 @@
 <meta property="og:site_name" content="IT COCKPIT">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/deepfake-detective/og-image.png">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<!-- 字型不阻擋畫面：先用系統字體顯示，下載完再替換；中文字型只載本頁用到的粗細 -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;display=swap" rel="stylesheet"></noscript>
 <style>
 /* ===== BASE ===== */
 html { font-size: 18px; }

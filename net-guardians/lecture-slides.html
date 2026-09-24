@@ -9,7 +9,10 @@
 <meta property="og:image" content="https://cagoooo.github.io/it-cockpit/net-guardians/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Bangers&display=swap" rel="stylesheet">
+<!-- 字型不阻擋畫面：先用系統字體顯示，下載完再替換；中文字型只載本頁用到的粗細 -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;display=swap" rel="stylesheet"></noscript>
 <style>
 :root{
   --bg:#fef9f0;--panel:#fff;--ink:#2c2c2c;--dim:#6f6f6f;
