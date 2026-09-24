@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Create or repair the public Kai A playlist for the gifted AI course."""
+"""Create or repair the public ShortsK playlist for the gifted AI course."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ MANIFEST = ROOT / "youtube" / "manifest.json"
 STATE = ROOT / "youtube" / "playlist.json"
 TOKEN = Path.home() / ".youtube_auth" / "token_personal.diesel-yt-up.json"
 CHANNEL_ID = "UCPXF_pIyPI4652zPGlr6ieg"
-CHANNEL_TITLE = "Kai A"
+CHANNEL_TITLE = "ShortsK"
 PLAYLIST_TITLE = "石門智繪客｜創造力資優 AI 素養資訊科技課程"
 
 
@@ -52,7 +52,7 @@ def client():
 def verify_channel(youtube):
     items = youtube.channels().list(part="id,snippet", mine=True).execute().get("items", [])
     if len(items) != 1 or items[0]["id"] != CHANNEL_ID or items[0]["snippet"]["title"] != CHANNEL_TITLE:
-        raise RuntimeError("Authenticated YouTube channel is not the verified Kai A channel")
+        raise RuntimeError("Authenticated YouTube channel is not the verified ShortsK channel")
     print(f"[CHANNEL] {CHANNEL_TITLE} ({CHANNEL_ID})")
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Publish the gifted AI course videos and captions to the verified Kai A channel."""
+"""Publish the gifted AI course videos and captions to the verified ShortsK channel (formerly Kai A)."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ MANIFEST_PATH = ROOT / "youtube" / "manifest.json"
 VERIFICATION_PATH = ROOT / "youtube" / "verification.json"
 DEFAULT_TOKEN = Path.home() / ".youtube_auth" / "token_personal.diesel-yt-up.json"
 EXPECTED_CHANNEL_ID = "UCPXF_pIyPI4652zPGlr6ieg"
-EXPECTED_CHANNEL_TITLE = "Kai A"
+EXPECTED_CHANNEL_TITLE = "ShortsK"
 RETRYABLE_STATUS_CODES = {500, 502, 503, 504}
 
 
