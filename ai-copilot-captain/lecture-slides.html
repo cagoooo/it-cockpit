@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI 小機長：安全又負責任地使用生成式 AI｜六年級授課簡報</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="AI 小機長｜六年級授課簡報">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/ai-copilot-captain/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 字型不阻擋畫面：先用系統字體顯示，下載完再替換；中文字型只載本頁用到的粗細 -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#fef9f0;--panel:#fff;--ink:#2c2c2c;--dim:#6f6f6f;
+  --red:#ff6b6b;--orange:#ffa94d;--green:#51cf66;--blue:#339af0;--purple:#9775fa;--yellow:#ffe066;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--ink);
+  background-image:radial-gradient(rgba(44,44,44,.08) 1.4px,transparent 1.4px);background-size:22px 22px}
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;padding:5vh 6vw 13vh;display:none;flex-direction:column;justify-content:center}
+.slide.active{display:flex;animation:in .35s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,var(--red) 0 60px,var(--orange) 60px 120px,var(--green) 120px 180px,var(--blue) 180px 240px,var(--purple) 240px 300px);border-bottom:3px solid var(--ink)}
+.tag{font-family:'Bangers',sans-serif;letter-spacing:3px;font-size:1.3rem;display:inline-block;background:var(--ink);color:var(--yellow);padding:2px 16px;border-radius:8px;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--red);margin-bottom:14px;align-self:flex-start}
+h1{font-size:clamp(2.6rem,5.6vw,5rem);font-weight:900;line-height:1.2}
+h2{font-size:clamp(2rem,3.6vw,3.2rem);font-weight:900;line-height:1.25;margin-bottom:2.4vh}
+.hl{background:linear-gradient(transparent 60%,var(--yellow) 60%);padding:0 6px}
+.red{color:#e03131}.blue{color:#1c7ed6}.green{color:#2b8a3e}.purple{color:#7048e8}.orange{color:#e8590c}
+p,li,td{font-size:clamp(1.15rem,1.8vw,1.6rem);line-height:1.6}
+.sub{font-size:clamp(1.3rem,2.2vw,2rem);color:#444;margin-top:1.6vh}
+.sfx{font-family:'Bangers','Noto Sans TC',sans-serif;letter-spacing:3px;font-size:clamp(2rem,4vw,3.4rem);background:var(--red);color:#fff;border:4px solid var(--ink);padding:2px 26px;box-shadow:6px 6px 0 var(--ink);display:inline-block;transform:rotate(-5deg)}
+.grid{display:grid;gap:2vw}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+.card{background:var(--panel);border:4px solid var(--ink);border-radius:18px;padding:2.2vh 1.4vw;box-shadow:6px 6px 0 var(--ink)}
+.card h3{font-size:clamp(1.4rem,2.4vw,2.1rem);font-weight:900;margin-bottom:.8vh}
+.card .big{font-size:clamp(2.6rem,4.8vw,4.2rem);line-height:1;margin-bottom:1vh}
+.card.r{background:#fff5f5}.card.b{background:#e7f5ff}.card.g{background:#ebfbee}.card.p{background:#f3f0ff}.card.o{background:#fff4e6}
+.flow{display:flex;align-items:center;gap:1.2vw;justify-content:center}
+.flow .card{flex:1;text-align:center}
+.arrow{font-size:clamp(2rem,4vw,3.4rem);font-weight:900}
+.bubble{position:relative;background:#fff;border:4px solid var(--ink);border-radius:22px;padding:1.6vh 1.6vw;box-shadow:5px 5px 0 var(--ink);font-weight:700}
+table{width:100%;border-collapse:separate;border-spacing:0;border:4px solid var(--ink);border-radius:16px;overflow:hidden;background:#fff;box-shadow:6px 6px 0 var(--ink)}
+th{font-size:clamp(1.2rem,2vw,1.8rem);padding:1.2vh 1vw;border-bottom:4px solid var(--ink);background:var(--yellow)}
+td{padding:1.1vh 1vw;border-bottom:2px dashed #bbb;border-right:2px solid var(--ink);vertical-align:top}
+td:last-child{border-right:none}tr:last-child td{border-bottom:none}
+.panel4{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw}
+.panel4 .card{min-height:32vh;display:flex;flex-direction:column;justify-content:space-between}
+.qq{font-size:clamp(1.6rem,2.8vw,2.5rem);font-weight:900;color:#e03131}
+.num{display:inline-flex;width:clamp(2.4rem,3.6vw,3.2rem);height:clamp(2.4rem,3.6vw,3.2rem);border-radius:50%;background:var(--red);color:#fff;border:3px solid var(--ink);align-items:center;justify-content:center;font-weight:900;font-size:clamp(1.2rem,2vw,1.8rem);margin-bottom:1vh}
+.url{font-family:Consolas,monospace;font-size:clamp(1.1rem,2vw,1.8rem);background:#fff;border:3px solid var(--ink);border-radius:12px;padding:.6vh 1.2vw;display:inline-block;margin-top:1vh;word-break:break-all}
+.center{text-align:center;align-items:center}
+.center .tag{align-self:center}
+
+/* speaker */
+.speaker{position:absolute;left:3vw;bottom:2.4vh;display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:60vw}
+.speaker .avatar{width:58px;height:58px;background:var(--yellow);border:3px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:3px 3px 0 var(--ink);flex-shrink:0}
+.speaker .bubble{font-size:clamp(.9rem,1.3vw,1.15rem);padding:8px 16px;max-width:52vw}
+.speaker .bubble::before{content:'';position:absolute;left:-15px;bottom:16px;border-style:solid;border-width:9px 15px 9px 0;border-color:transparent var(--ink) transparent transparent}
+.speaker .bubble::after{content:'';position:absolute;left:-9px;bottom:18px;border-style:solid;border-width:7px 11px 7px 0;border-color:transparent #fff transparent transparent}
+body.hide-speaker .speaker{display:none}
+
+.progress{position:fixed;left:0;right:0;bottom:0;height:8px;background:rgba(0,0,0,.08);z-index:20}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--orange),var(--green),var(--blue));width:0;transition:width .3s}
+.hint{position:fixed;right:18px;bottom:16px;font-size:.85rem;color:var(--dim);background:rgba(255,255,255,.9);border:2px solid var(--ink);border-radius:12px;padding:4px 12px;z-index:20}
+.pageno{position:fixed;right:18px;top:20px;font-family:'Bangers',sans-serif;letter-spacing:2px;font-size:1.3rem;background:#fff;border:3px solid var(--ink);border-radius:10px;padding:0 12px;z-index:20}
+.back{position:fixed;left:18px;top:20px;font-size:.9rem;font-weight:700;background:#fff;border:3px solid var(--ink);border-radius:20px;padding:4px 14px;z-index:20;box-shadow:3px 3px 0 var(--ink);color:var(--ink);text-decoration:none}
+.overview{position:fixed;inset:0;background:rgba(254,249,240,.98);z-index:50;display:none;padding:4vh 4vw;overflow:auto}
+.overview.show{display:block}
+.overview h3{font-size:1.8rem;margin-bottom:2vh}
+#ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.ov-item{background:#fff;border:3px solid var(--ink);border-radius:14px;padding:12px 14px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
+.ov-item:hover{background:var(--yellow)}
+.ov-item b{display:block;font-size:1.1rem}.ov-item span{font-size:.9rem;color:var(--dim)}
+@media (max-width:800px){
+  .g3,.g4,.g5,.panel4,.g2{grid-template-columns:1fr}
+  .slide{padding:7vh 5vw 16vh;overflow:auto;justify-content:flex-start}
+  .flow{flex-direction:column}.arrow{transform:rotate(90deg)}
+  .speaker{max-width:90vw}.speaker .bubble{max-width:75vw}
+  .hint{display:none}
+}
+</style>
+</head>
+<body>
+<a class="back" href="index.html" title="回駕駛艙">← 駕駛艙</a>
+<div class="pageno" id="pageno">1 / 14</div>
+<div class="deck" id="deck">
+
+<!-- 1 封面 -->
+<section class="slide active center" id="s1">
+  <span class="sfx" style="background:var(--blue)">READY? 準備起飛！</span>
+  <h1 style="margin-top:4vh">✈️ AI 小機長</h1>
+  <p class="sub"><span class="hl">安全又負責任地使用生成式 AI</span></p>
+  <div class="grid g3" style="margin-top:5vh;width:min(1100px,90vw)">
+    <div class="card b"><div class="big">🤖</div><h3 class="blue">認識 AI ＋ 好提示</h3></div>
+    <div class="card r"><div class="big">🐢</div><h3 class="red">Gina 為海洋而戰</h3></div>
+    <div class="card p"><div class="big">🚀</div><h3 class="purple">Alex 打造遊戲</h3></div>
+  </div>
+  <p style="margin-top:3vh;color:var(--dim)">六年級資訊科技 · 阿凱老師 · 桃園市龍潭區石門國民小學</p>
+  <div class="speaker"><div class="avatar">😄</div><div class="bubble">嗨！我是阿凱老師。今天你們都是機長，AI 只是副駕駛！</div></div>
+</section>
+
+<!-- 2 HOOK -->
+<section class="slide" id="s2">
+  <span class="tag">HOOK · 你會怎麼做？</span>
+  <h2>AI 說的話，<span class="hl">你都會相信嗎？</span></h2>
+  <div class="panel4">
+    <div class="card b"><div><div class="big">📝</div><h3>AI 幫你寫報告</h3><p>裡面有一個超精確的數字，你會直接交嗎？</p></div><p class="qq">相信？</p></div>
+    <div class="card r"><div><div class="big">📱</div><h3>AI 說「告訴我你的地址」</h3><p>它說這樣可以給你更好的建議。</p></div><p class="qq">給嗎？</p></div>
+    <div class="card p"><div><div class="big">💬</div><h3>AI 好像最懂你</h3><p>心情不好時，只想跟它聊天？</p></div><p class="qq">朋友？</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🤔</div><div class="bubble">先舉手投票！下課前我們再回來看這三個問題，看看你的答案會不會變。</div></div>
+</section>
+
+<!-- 3 WHAT -->
+<section class="slide" id="s3">
+  <span class="tag">WHAT · 生成式 AI</span>
+  <h2>生成式 AI：會「生出」新內容的 AI</h2>
+  <div class="grid g2">
+    <div class="card b"><h3 class="blue">🧠 大型語言模型（LLM）</h3><p>讀過超大量的書和網頁文字，學會猜「<strong>下一個最可能出現的字</strong>」。ChatGPT、Copilot 都是這一類。</p></div>
+    <div class="card o"><h3 class="orange">🔤 生活比喻</h3><p>像讀完整座圖書館的<strong>文字接龍高手</strong>——接得很順，但<strong>不一定是對的</strong>。</p></div>
+  </div>
+  <div class="grid g3" style="margin-top:2.4vh">
+    <div class="card g"><div class="big">📚</div><h3>整理筆記重點</h3></div>
+    <div class="card p"><div class="big">✏️</div><h3>出練習題複習</h3></div>
+    <div class="card r"><div class="big">🎨</div><h3>做創意圖片影片</h3></div>
+  </div>
+  <div class="speaker"><div class="avatar">💡</div><div class="bubble">問問看：你們在哪裡看過 AI？手機、遊戲、影片推薦都算喔！</div></div>
+</section>
+
+<!-- 4 WHY 副駕駛 -->
+<section class="slide" id="s4">
+  <span class="tag">WHY · 為什麼是副駕駛？</span>
+  <h2>AI 是副駕駛，<span class="hl">你是機長</span></h2>
+  <div class="grid g2">
+    <div class="card b"><div class="big">🤖</div><h3 class="blue">副駕駛（AI）</h3><p>✅ 整理大量資料<br>✅ 發想點子<br>⚠️ 會說錯、會有偏見</p></div>
+    <div class="card o"><div class="big">🧑‍✈️</div><h3 class="orange">機長（你）</h3><p>✅ 決定方向<br>✅ 查證事實<br>✅ 保護自己和別人</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:2.4vh">
+    <div class="card r"><h3 class="red">規則 1：AI 會出錯</h3><p>答案要自己查證。</p></div>
+    <div class="card g"><h3 class="green">規則 2：AI 不是真人</h3><p>個資不能給，心事找真人。</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">✈️</div><div class="bubble">這兩條規則今天會一直出現，請大家跟我念一次！</div></div>
+</section>
+
+<!-- 5 搜尋 vs 提示 -->
+<section class="slide" id="s5">
+  <span class="tag">SKILL ① · 搜尋 vs 提示</span>
+  <h2>自己找答案，還是請 AI 整理？</h2>
+  <div class="flow">
+    <div class="card g"><div class="big">🔎</div><h3 class="green">搜尋</h3><p>「羅馬帝國歷史」→ 約 9 億筆結果，要自己一筆筆讀。</p></div>
+    <div class="arrow">VS</div>
+    <div class="card b"><div class="big">💬</div><h3 class="blue">提示</h3><p>「請說明羅馬帝國的歷史」→ AI 直接整理摘要給你。</p></div>
+  </div>
+  <p style="margin-top:3vh;text-align:center">給 AI 的指令叫<strong>提示</strong>；一次次修改讓結果更好，叫<strong>提示工程</strong>。</p>
+  <div class="speaker"><div class="avatar">🧭</div><div class="bubble">提示很方便，但 AI 的整理不一定對——這就是等一下 Gina 會遇到的事。</div></div>
+</section>
+
+<!-- 6 五要素 -->
+<section class="slide" id="s6">
+  <span class="tag">SKILL ② · 好提示五要素</span>
+  <h2>好提示 = <span class="hl">角色＋目標＋對象＋背景＋範圍</span></h2>
+  <div class="grid g5">
+    <div class="card r"><h3 class="red">角色</h3><p>請 AI 扮演誰</p></div>
+    <div class="card g"><h3 class="green">目標</h3><p>要做什麼（說明、摘要、比較）</p></div>
+    <div class="card o"><h3 class="orange">對象</h3><p>給誰看</p></div>
+    <div class="card b"><h3 class="blue">背景</h3><p>AI 要知道的資訊</p></div>
+    <div class="card p"><h3 class="purple">範圍</h3><p>字數、語氣、格式</p></div>
+  </div>
+  <div class="bubble" style="margin-top:3vh">「請你當一位<span class="red">自然老師</span>，向<span class="orange">12 歲的學生</span><span class="green">說明光合作用的過程</span>，幫他們<span class="blue">準備考試</span>，<span class="purple">不超過 300 字、語氣友善</span>。」</div>
+  <div class="speaker"><div class="avatar">✍️</div><div class="bubble">老師現場示範：拿掉一個要素，看看 Copilot 的回答差多少！</div></div>
+</section>
+
+<!-- 7 Gina 虛構 -->
+<section class="slide" id="s7">
+  <span class="tag">STORY · Gina 為海洋而戰</span>
+  <h2>🐢 AI 寫的大綱裡，<span class="hl">哪句是真的？</span></h2>
+  <div class="panel4">
+    <div class="card r"><div><h3>「漂浮在海裡的塑膠已突破 500 兆個」</h3></div><p class="qq">❌ 不正確</p></div>
+    <div class="card g"><div><h3>「誤吃塑膠是海龜面臨的主要威脅之一」</h3></div><p class="qq" style="color:#2b8a3e">⭕ 正確</p></div>
+    <div class="card r"><div><h3>「2032 年海中塑膠會比魚還多」</h3></div><p class="qq">❌ 不正確</p></div>
+  </div>
+  <p style="margin-top:2.4vh"><strong>虛構內容：</strong>AI 說得很有自信，但其實是錯的或編出來的——它不是故意的，只是在猜下一句。</p>
+  <div class="speaker"><div class="avatar">🔍</div><div class="bubble">先讓全班猜，再一張一張翻牌揭曉！</div></div>
+</section>
+
+<!-- 8 查證三問 -->
+<section class="slide" id="s8">
+  <span class="tag">CHECK · 查證三問</span>
+  <h2>網路像超大圖書館：<span class="hl">先找值得信任的來源</span></h2>
+  <div class="grid g3">
+    <div class="card b"><div class="num">1</div><h3>作者是誰？</h3><p>對方可靠嗎？有沒有好紀錄？</p></div>
+    <div class="card g"><div class="num" style="background:var(--green)">2</div><h3>誰發布的？</h3><p>大學、新聞媒體，還是個人部落格？</p></div>
+    <div class="card o"><div class="num" style="background:var(--orange)">3</div><h3>有沒有目的？</h3><p>是不是想賺錢或影響你的想法？</p></div>
+  </div>
+  <p style="margin-top:3vh">💡 Copilot 會附上引用來源，<strong>記得點進去檢查！</strong></p>
+  <div class="speaker"><div class="avatar">🧐</div><div class="bubble">查證不是不信任 AI，而是機長的基本功。</div></div>
+</section>
+
+<!-- 9 隱私 -->
+<section class="slide" id="s9">
+  <span class="tag">PRIVACY · 線上隱私</span>
+  <h2>🔒 金科玉律：<span class="hl">能認出一個人的資料不給 AI</span></h2>
+  <div class="grid g2">
+    <div class="card p"><h3 class="purple">Gina 訪問 Lee 博士</h3><p>逐字稿裡有：全名、任職大學、電子郵件、住家地址、還沒公開的機密研究……而且對方想當<strong>匿名消息來源</strong>。</p></div>
+    <div class="card r"><h3 class="red">🚫 不能給 AI 的</h3><p>姓名・電子郵件・電話<br>住址・學校班級・照片<br>別人的祕密</p></div>
+  </div>
+  <p style="margin-top:2.4vh">有些公司會把資料分享給第三方，或用 Cookie 追蹤你。想請 AI 摘要，<strong>先刪掉敏感資料</strong>。</p>
+  <div class="speaker"><div class="avatar">🙅</div><div class="bubble">自己的不行，別人的更不行！</div></div>
+</section>
+
+<!-- 10 偏見 -->
+<section class="slide" id="s10">
+  <span class="tag">BIAS · AI 中的偏見</span>
+  <h2>🎨 Gina 的三次嘗試</h2>
+  <div class="flow">
+    <div class="card r"><div class="big">👨‍🔬</div><h3 class="red">① 科學家拿塑膠瓶</h3><p>畫成男性——但 Lee 博士是女性！</p></div>
+    <div class="arrow">➜</div>
+    <div class="card o"><div class="big">🍾</div><h3 class="orange">② 手拿瓶子特寫</h3><p>看不出海龜受害</p></div>
+    <div class="arrow">➜</div>
+    <div class="card g"><div class="big">🐢</div><h3 class="green">③ 滿是塑膠瓶的海＋海龜</h3><p>成功！</p></div>
+  </div>
+  <p style="margin-top:2.4vh"><strong>偏見：</strong>訓練資料不平均，AI 可能出現種族、性別、年齡的刻板印象。<strong>發布前標註「AI 生成」並列出來源。</strong></p>
+  <div class="speaker"><div class="avatar">⚖️</div><div class="bubble">想想看：如果 AI 畫的科學家永遠長一個樣子，會讓誰覺得自己不能當科學家？</div></div>
+</section>
+
+<!-- 11 Alex 心理健康 -->
+<section class="slide" id="s11">
+  <span class="tag">STORY · 與 Alex 打造遊戲</span>
+  <h2>🚀 AI 很像真人，<span class="hl">但它不是朋友</span></h2>
+  <div class="grid g3">
+    <div class="card p"><div class="big">🧙</div><h3>Orion</h3><p>睿智、有同情心</p></div>
+    <div class="card o"><div class="big">⚡</div><h3>Nova</h3><p>活力十足、愛冒險</p></div>
+    <div class="card b"><div class="big">🌙</div><h3>Luna</h3><p>冷靜、愛分析</p></div>
+  </div>
+  <p style="margin-top:2.4vh">AI 幫 Alex 想角色點子，<strong>當起點、不照抄</strong>。朋友 Ash 想讓 AI 角色像好友陪玩家聊天，Alex 覺得不健康：AI <strong>沒有真正的感情</strong>，依賴它會遠離真實的家人朋友。</p>
+  <div class="speaker"><div class="avatar">💚</div><div class="bubble">AI 跟計算機一樣是工具。心事，要找真人說。</div></div>
+</section>
+
+<!-- 12 安全 + 身心 -->
+<section class="slide" id="s12">
+  <span class="tag">SAFETY · 速度 vs 安全</span>
+  <h2>🛡️ 網路安全五招 ＋ 💗 數位身心健康</h2>
+  <div class="grid g2">
+    <div class="card b"><h3 class="blue">網路安全五招</h3><p>① 只下載可信任的程式<br>② 看網址有沒有鎖頭<br>③ 只去 https 網站<br>④ 不從不明連結下載<br>⑤ 裝置和 App 要更新</p></div>
+    <div class="card g"><h3 class="green">數位身心健康</h3><p>⏰ 設定螢幕時間<br>🤝 AI 不能取代真人<br>🗣️ 有煩惱找家人、輔導老師<br>💌 也關心你的朋友</p></div>
+  </div>
+  <p style="margin-top:2.4vh">🎮 AI 寫程式超快，但只靠 AI 不懂安全，就像房子沒上鎖。<em>（程式碼只當展示）</em></p>
+  <div class="speaker"><div class="avatar">🔐</div><div class="bubble">程式碼這頁看看就好：「哇，AI 也能寫程式！」重點是安全。</div></div>
+</section>
+
+<!-- 13 深偽 + 七守則 -->
+<section class="slide" id="s13">
+  <span class="tag">NEW · 深偽與七大守則</span>
+  <h2>🎭 看到太逼真的內容，<span class="hl">先停一下</span></h2>
+  <div class="grid g2">
+    <div class="card r"><h3 class="red">深偽（Deepfake）</h3><p>AI 做的假照片、假影片、假聲音，可能冒充名人或你認識的人。<br>👉 看手指、光影 → 向可信來源查證 → 不急著轉傳</p></div>
+    <div class="card o"><h3 class="orange">AI 小機長七大守則</h3><p>① 當副駕駛 ② 不完美 ③ 事實查核 ④ 留意偏見<br>⑤ 列出來源 ⑥ 保護個資 ⑦ 重視身心健康</p></div>
+  </div>
+  <div class="bubble" style="margin-top:3vh;text-align:center">🆘 遇到不舒服或可疑的狀況，<strong>一定要告訴信任的大人</strong>！</div>
+  <div class="speaker"><div class="avatar">🚨</div><div class="bubble">深偽和前面的「AI 虛構」是同一件事的兩面：眼見不一定為憑！</div></div>
+</section>
+
+<!-- 14 結語 -->
+<section class="slide center" id="s14">
+  <span class="sfx" style="background:var(--green)">MISSION CLEAR!</span>
+  <h2 style="margin-top:3vh">AI 是副駕駛，<span class="hl">機長永遠是你</span></h2>
+  <div class="grid g2" style="width:min(1100px,90vw);margin-top:2vh">
+    <div class="card b"><h3>✈️ 回到駕駛艙繼續練習</h3><div class="url">cagoooo.github.io/it-cockpit/ai-copilot-captain/</div><p style="margin-top:1vh">5 個互動 × 15 題檢定 × 自學影片 × 班級小約定</p></div>
+    <div class="card o"><h3>❓ Q&amp;A 時間</h3><p>回到第 2 頁的三個問題——現在你的答案是什麼？</p><p style="margin-top:1vh">✍️ 一起簽下「班級 AI 使用小約定」</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🎉</div><div class="bubble">恭喜結訓！你已經是合格的 AI 小機長，記得保護自己，也保護身邊的人！</div></div>
+</section>
+
+</div>
+<div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="hint">← → 換頁 · M 章節 · F 全螢幕 · S 主講 · Esc 返回</div>
+<div class="overview" id="overview"><h3>▶ 章節導覽（按 M 或 Esc 關閉）</h3><div id="ov-grid"></div></div>
+
+<script>
+const SLIDES = [
+  {t:'封面', s:'AI 小機長'},
+  {t:'開場情境', s:'AI 說的話你都信嗎'},
+  {t:'生成式 AI', s:'會生出新內容的 AI'},
+  {t:'副駕駛與機長', s:'兩條核心規則'},
+  {t:'搜尋 vs 提示', s:'提示工程'},
+  {t:'好提示五要素', s:'角色目標對象背景範圍'},
+  {t:'Gina 的大綱', s:'AI 會虛構'},
+  {t:'查證三問', s:'找可靠來源'},
+  {t:'線上隱私', s:'個資不給 AI'},
+  {t:'AI 的偏見', s:'三次生圖嘗試'},
+  {t:'Alex 的遊戲', s:'AI 不是朋友'},
+  {t:'安全與身心', s:'五招＋健康習慣'},
+  {t:'深偽與七守則', s:'先停一下'},
+  {t:'結語 Q&A', s:'任務完成'}
+];
+const N = SLIDES.length;
+let curIdx = 0;
+function goSlide(idx){
+  idx = Math.max(0, Math.min(N-1, idx));
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active', i===idx));
+  curIdx = idx;
+  document.getElementById('progress-fill').style.width = ((idx+1)/N*100) + '%';
+  document.getElementById('pageno').textContent = (idx+1) + ' / ' + N;
+  history.replaceState(null, '', '#s' + (idx+1));
+}
+function next(){ if(curIdx < N-1) goSlide(curIdx+1); }
+function prev(){ if(curIdx > 0) goSlide(curIdx-1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+function toggleSpeaker(){ document.body.classList.toggle('hide-speaker'); }
+(function buildOverview(){
+  const g = document.getElementById('ov-grid');
+  SLIDES.forEach((s,i)=>{
+    const d = document.createElement('div');
+    d.className = 'ov-item';
+    const b = document.createElement('b'); b.textContent = (i+1) + '. ' + s.t;
+    const sp = document.createElement('span'); sp.textContent = s.s;
+    d.appendChild(b); d.appendChild(sp);
+    d.onclick = ()=>{ goSlide(i); toggleOverview(); };
+    g.appendChild(d);
+  });
+})();
+document.addEventListener('keydown', e=>{
+  const ov = document.getElementById('overview');
+  if(ov.classList.contains('show')){
+    if(['Escape','m','M'].includes(e.key)){ ov.classList.remove('show'); e.preventDefault(); }
+    return;
+  }
+  const k = e.key;
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(k)){ next(); e.preventDefault(); }
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){ prev(); e.preventDefault(); }
+  else if(k === 'Home'){ goSlide(0); e.preventDefault(); }
+  else if(k === 'End'){ goSlide(N-1); e.preventDefault(); }
+  else if(k === 'm' || k === 'M'){ toggleOverview(); e.preventDefault(); }
+  else if(k === 'f' || k === 'F'){ toggleFullscreen(); e.preventDefault(); }
+  else if(k === 's' || k === 'S'){ toggleSpeaker(); e.preventDefault(); }
+  else if(/^[1-9]$/.test(k)){ const t = parseInt(k)-1; if(t < N){ goSlide(t); e.preventDefault(); } }
+  else if(k === 'Escape'){
+    if(document.fullscreenElement) document.exitFullscreen();
+    else window.location.href = 'index.html';
+    e.preventDefault();
+  }
+});
+document.addEventListener('click', e=>{
+  if(e.target.closest('.speaker, .overview, .hint, .progress, a, button, .back, .pageno')) return;
+  if(window.innerWidth <= 800) return;
+  if(e.clientX > window.innerWidth/2) next(); else prev();
+});
+let touchStartX = 0;
+document.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 60){ if(dx < 0) next(); else prev(); }
+}, {passive:true});
+const m = location.hash.match(/^#s(\d+)$/);
+if(m){ const i = parseInt(m[1])-1; if(i >= 0 && i < N) goSlide(i); } else goSlide(0);
+</script>
+</body>
+</html>

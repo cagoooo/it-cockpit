@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 小機長：安全又負責任地使用生成式 AI｜六年級資訊科技教學駕駛艙</title>
+<meta name="description" content="AI 是副駕駛，你是機長！六年級生成式 AI 素養課：認識生成式 AI、好提示五要素、AI 會虛構要查證、保護個資、AI 偏見、AI 不是真朋友、網路安全與深偽。5 大關卡 × 5 個互動 × 15 題評量。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/ai-copilot-captain/">
+<meta property="og:title" content="AI 小機長：安全又負責任地使用生成式 AI｜六年級資訊科技">
+<meta property="og:description" content="AI 是副駕駛，你是機長！好提示五要素、AI 虛構要查證、保護個資、AI 偏見、AI 不是真朋友、深偽辨識。5 大關卡 × 5 個互動 × 15 題評量。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/ai-copilot-captain/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/ai-copilot-captain/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;family=Fredoka:wght@500;700&amp;display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;family=Fredoka:wght@500;700&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;family=Fredoka:wght@500;700&amp;display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#fef9f0;--surface:#fff3e0;--panel:#ffffff;
+  --c1:#ff6b6b;--c2:#ffa94d;--c3:#51cf66;--c4:#339af0;--c5:#9775fa;
+  --text:#2c2c2c;--dim:#6f6f6f;--border:#2c2c2c;
+  --shadow-soft:0 4px 14px rgba(0,0,0,.08);
+  --shadow-pop:4px 4px 0 var(--border);
+}
+html{font-size:18px;scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;padding-bottom:80px;
+  background-image:radial-gradient(rgba(44,44,44,.07) 1.2px,transparent 1.2px);background-size:18px 18px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(254,249,240,.97);backdrop-filter:blur(6px);border-bottom:3px solid var(--border);padding:12px 24px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:2px solid var(--c1);background:var(--panel);color:var(--c1);font-weight:700;font-size:.85rem;letter-spacing:1px;border-radius:24px;transition:.2s;white-space:nowrap;box-shadow:var(--shadow-pop)}
+.home-btn:hover{background:var(--c1);color:#fff;transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--border)}
+.header-title{font-size:1.4rem;font-weight:900;color:var(--text);letter-spacing:.5px}
+.header-title .hl{color:var(--c1)}
+.header-sub{font-size:.95rem;color:var(--dim)}
+.grade-chip{display:inline-block;padding:4px 12px;background:var(--c2);color:#fff;font-size:.85rem;border-radius:16px;font-weight:700;border:2px solid var(--border)}
+.mode-toggle{margin-left:auto;display:flex;gap:8px}
+.mode-btn{padding:6px 14px;border:2px solid var(--border);background:var(--panel);font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:16px;transition:.2s;box-shadow:2px 2px 0 var(--border)}
+.mode-btn.active{background:var(--c4);color:#fff}
+.progress-wrap{max-width:1400px;margin:8px auto 0;padding:0 4px}
+.progress-label{font-size:.8rem;color:var(--dim);margin-bottom:4px;display:flex;justify-content:space-between}
+.progress-bar{height:10px;background:var(--surface);border:2px solid var(--border);border-radius:8px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));width:0%;transition:width .4s}
+
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:stretch;margin-bottom:32px}
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+.hero-main{background:var(--panel);border:3px solid var(--border);border-radius:18px;padding:26px;box-shadow:6px 6px 0 var(--border);position:relative;overflow:hidden}
+.sfx{font-family:'Bangers','Noto Sans TC',sans-serif;letter-spacing:2px;display:inline-block;background:var(--c1);color:#fff;border:3px solid var(--border);padding:4px 16px;font-size:1.5rem;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--border);margin-bottom:12px}
+.hero-title{font-size:1.9rem;font-weight:900;line-height:1.35;margin-bottom:10px}
+.hero-title .hl{background:linear-gradient(transparent 58%,#ffe066 58%);padding:0 4px}
+.hero-desc{font-size:1.05rem;color:#444}
+.hero-panels{display:grid;grid-template-columns:1fr;gap:12px}
+.comic-panel{background:var(--panel);border:3px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:4px 4px 0 var(--border);display:flex;gap:14px;align-items:center}
+.comic-panel .ic{font-size:2.2rem;flex-shrink:0;width:60px;height:60px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.comic-panel h4{font-size:1.05rem;font-weight:900}
+.comic-panel p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.comic-panel.p1 .ic{background:#fff0f0}.comic-panel.p1 h4{color:var(--c1)}
+.comic-panel.p2 .ic{background:#f3f0ff}.comic-panel.p2 h4{color:var(--c5)}
+.comic-panel.p3 .ic{background:#e7f5ff}.comic-panel.p3 h4{color:var(--c4)}
+
+/* Speech bubble (阿凱老師) */
+.akai-say{display:flex;gap:12px;align-items:flex-start;margin:16px 0 0}
+.akai-say .ava{width:52px;height:52px;border-radius:50%;background:#ffe066;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.akai-say .bub{position:relative;background:#fff;border:3px solid var(--border);border-radius:16px;padding:10px 16px;font-size:1rem;font-weight:700;box-shadow:3px 3px 0 var(--border)}
+.akai-say .bub::before{content:'';position:absolute;left:-14px;top:14px;border-width:8px 14px 8px 0;border-style:solid;border-color:transparent var(--border) transparent transparent}
+.akai-say .bub::after{content:'';position:absolute;left:-9px;top:16px;border-width:6px 10px 6px 0;border-style:solid;border-color:transparent #fff transparent transparent}
+.akai-say .bub small{display:block;font-size:.78rem;color:var(--dim);font-weight:400}
+
+/* Objective chips */
+.obj-section{margin-bottom:28px}
+.obj-title{font-size:1.1rem;font-weight:900;color:var(--c1);margin-bottom:12px}
+.obj-chips{display:flex;gap:10px;flex-wrap:wrap}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;font-size:1rem;padding:9px 18px;background:var(--panel);border:2px solid var(--border);border-radius:24px;box-shadow:var(--shadow-pop);font-weight:700}
+.obj-chip.red{color:#e03131}.obj-chip.orange{color:#e8590c}.obj-chip.green{color:#2b8a3e}.obj-chip.blue{color:#1c7ed6}.obj-chip.purple{color:#7048e8}
+
+.lecture-cta{display:block;margin:18px 0 0;padding:18px 22px;background:var(--c1);color:#fff;border:3px solid var(--border);box-shadow:6px 6px 0 var(--border);transition:.2s;border-radius:14px}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--border)}
+.lecture-cta .cta-tag{display:inline-block;background:#fff;color:var(--c1);font-size:.8rem;padding:2px 10px;border:2px solid var(--border);margin-bottom:6px;font-weight:700;border-radius:10px}
+.lecture-cta .cta-title{display:block;font-size:1.4rem;font-weight:900}
+.lecture-cta .cta-sub{display:block;font-size:.9rem;opacity:.95}
+
+/* Stage nav */
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:16px}
+.stage-pill{padding:10px 20px;background:var(--panel);border:2px solid var(--border);border-radius:24px;font-size:.95rem;font-weight:700;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.stage-pill:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.stage-pill.done{background:var(--c3);color:#fff}
+
+/* Stage */
+.level-section{margin-bottom:60px;scroll-margin-top:130px}
+.section-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.stage-badge{font-family:'Bangers','Fredoka',sans-serif;font-size:1.05rem;letter-spacing:2px;padding:6px 16px;background:var(--border);color:#ffe066;border-radius:10px;white-space:nowrap;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--c1)}
+.section-title{font-size:1.4rem;font-weight:900}
+.section-sub{font-size:1rem;color:var(--dim);margin-top:4px}
+
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:900px){.card-grid{grid-template-columns:1fr}}
+.steps-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.steps-card h4{font-size:1.05rem;margin-bottom:12px;color:var(--c1)}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{counter-increment:step;position:relative;padding:9px 0 9px 48px;font-size:1rem;line-height:1.7;border-bottom:1px dashed #bbb}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(step);position:absolute;left:0;top:10px;width:34px;height:34px;background:var(--c2);color:#fff;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.steps-list li.green::before{background:var(--c3)}.steps-list li.blue::before{background:var(--c4)}.steps-list li.purple::before{background:var(--c5)}.steps-list li.red::before{background:var(--c1)}
+
+.gate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+@media (max-width:700px){.gate-row{grid-template-columns:1fr}}
+.gate{border:3px solid var(--border);border-radius:14px;padding:12px;background:#fff;box-shadow:3px 3px 0 var(--border)}
+.gate .n{font-family:'Bangers',sans-serif;font-size:1rem;letter-spacing:1px;color:#fff;background:var(--border);display:inline-block;padding:0 8px;border-radius:6px}
+.gate h5{font-size:1.05rem;margin:4px 0 2px}
+.gate .q{font-size:.92rem;font-weight:700;color:var(--dim)}
+.gate.g1{background:#fff5f5}.gate.g1 h5{color:#e03131}
+.gate.g2{background:#e7f5ff}.gate.g2 h5{color:#1c7ed6}
+.gate.g3{background:#ebfbee}.gate.g3 h5{color:#2b8a3e}
+
+.tip-box{margin-top:14px;padding:14px 18px;background:#fff3cd;border:2px solid var(--c2);border-radius:12px;font-size:.95rem;color:#5c4a1b}
+.warn-box{margin-top:14px;padding:14px 18px;background:#ffe3e3;border:2px solid var(--c1);border-radius:12px;font-size:.95rem;color:#7a1e2b}
+
+.compare{width:100%;border-collapse:separate;border-spacing:0;border:3px solid var(--border);border-radius:14px;overflow:hidden;font-size:.95rem;margin-top:6px}
+.compare th{padding:10px;font-size:1rem;border-bottom:3px solid var(--border)}
+.compare th.good{background:#d3f9d8;color:#2b8a3e}.compare th.bad{background:#ffe3e3;color:#c92a2a}
+.compare td{padding:9px 12px;border-bottom:1px dashed #bbb;vertical-align:top;background:#fff}
+.compare td:first-child{border-right:2px solid var(--border)}
+.compare tr:last-child td{border-bottom:none}
+
+/* Canvas */
+.canvas-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.canvas-title{font-size:1.05rem;font-weight:900;margin-bottom:8px;color:#1c7ed6}
+.canvas-hint{font-size:.92rem;color:var(--dim);margin-bottom:12px}
+.game-canvas{width:100%;background:var(--panel);border:2px solid var(--border);border-radius:12px;display:block;touch-action:manipulation}
+.game-controls{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+.ctrl-btn{padding:9px 16px;background:var(--c4);color:#fff;border:2px solid var(--border);border-radius:24px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;transition:.2s;box-shadow:3px 3px 0 var(--border)}
+.ctrl-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--border)}
+.ctrl-btn.red{background:var(--c1)}.ctrl-btn.green{background:#40c057}.ctrl-btn.orange{background:#fd7e14}.ctrl-btn.purple{background:var(--c5)}
+.ctrl-btn.outline{background:var(--panel);color:var(--text)}
+.game-result{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:.98rem;font-weight:700;display:none}
+.game-result.show{display:block}
+.game-result.ok{background:#d3f9d8;color:#2b8a3e;border:2px solid var(--c3)}
+.game-result.bad{background:#fff3cd;color:#8a5a00;border:2px solid var(--c2)}
+
+.pass-card{margin-top:16px;background:#fff;border:3px dashed var(--c5);border-radius:14px;padding:16px}
+.pass-card h5{font-size:1.02rem;color:#7048e8;margin-bottom:8px}
+.pass-card select,.pass-card input{font-family:inherit;font-size:.95rem;padding:7px 10px;border:2px solid var(--border);border-radius:8px;width:100%;margin-bottom:8px;background:#fff}
+.pass-out{margin-top:6px;padding:12px;background:#f3f0ff;border:2px solid var(--c5);border-radius:10px;font-weight:700;display:none}
+.pass-out.show{display:block}
+
+/* Quiz */
+.quiz-section{background:var(--panel);border:3px solid var(--c5);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop);margin-top:20px}
+.quiz-title{font-size:1.1rem;font-weight:900;color:#7048e8;margin-bottom:14px}
+.quiz-q{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed #ccc}
+.quiz-q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.quiz-q-text{font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:700px){.quiz-opts{grid-template-columns:1fr}}
+.quiz-opt{padding:10px 16px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:.98rem;cursor:pointer;text-align:left;transition:.2s;color:var(--text)}
+.quiz-opt:hover{background:#fff;transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border)}
+.quiz-opt.correct{background:#d3f9d8;border-color:#2b8a3e;color:#2b8a3e}
+.quiz-opt.wrong{background:#ffe3e3;border-color:#e03131;color:#c92a2a}
+.quiz-fb{margin-top:10px;font-size:.95rem;padding:10px 14px;border-radius:10px;display:none}
+.quiz-fb.show{display:block}.quiz-fb.ok{background:#d3f9d8;color:#2b8a3e}.quiz-fb.bad{background:#fff3cd;color:#856404}
+
+.teacher-only{display:none;background:#ede7f6;border:3px dashed var(--c5);border-radius:14px;padding:16px 20px;margin-top:18px;position:relative}
+body.teacher-mode .teacher-only{display:block}
+.teacher-only::before{content:'教師備註';position:absolute;top:-12px;left:16px;background:var(--c5);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:10px}
+.teacher-only ul{margin-top:6px;padding-left:22px;font-size:.95rem;color:#3a2d6b}
+
+/* Project */
+.project-section{background:linear-gradient(135deg,#fff3e0 0%,#ffe8f0 100%);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px;box-shadow:var(--shadow-pop)}
+.project-section h3{font-size:1.3rem;color:#e03131;margin-bottom:8px}
+.project-tasks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media (max-width:900px){.project-tasks{grid-template-columns:1fr}}
+.task-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.task-card h4{font-size:1rem;color:#1c7ed6;margin-bottom:6px}
+.task-card p{font-size:.95rem;line-height:1.6}
+
+/* NLM */
+.nb-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px}
+.nb-section h3{font-size:1.3rem;color:#7048e8;margin-bottom:14px}
+.nb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+@media (max-width:1000px){.nb-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.nb-grid{grid-template-columns:1fr}}
+.nb-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border);transition:.2s;display:block}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.nb-card h4{font-size:1rem;color:#7048e8;margin-bottom:6px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.nb-card .link{display:inline-block;margin-top:8px;color:#1c7ed6;font-weight:700;font-size:.9rem}
+.flow-box{background:var(--panel);border:2px dashed var(--c5);border-radius:12px;padding:14px 18px;margin-bottom:20px}
+.flow-box h4{font-size:1rem;color:#7048e8;margin-bottom:8px}
+.flow-steps{display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem}
+.flow-step{background:var(--surface);padding:5px 12px;border:1px solid var(--c5);border-radius:16px;color:#7048e8;font-weight:700}
+.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:900px){.faq-list{grid-template-columns:1fr}}
+.faq-item{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.faq-q{font-size:1rem;font-weight:700;color:#e03131;margin-bottom:8px}
+.faq-a{font-size:.97rem;line-height:1.7}
+
+/* Slides */
+.slide-section,.video-section,.infographic-section{margin-bottom:48px}
+.slide-section h3,.video-section h3,.infographic-section h3{font-size:1.3rem;margin-bottom:14px}
+.slide-player{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-pop)}
+.slide-main{position:relative;background:#f1ece2;border:2px solid var(--border);border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block;transition:opacity .25s}
+.slide-main.loading img{opacity:.35;filter:blur(6px)}
+.slide-main .slide-loading{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-weight:700;color:#555;z-index:2;pointer-events:none}
+.slide-main.loading .slide-loading{display:flex}
+.slide-loading span{background:rgba(255,255,255,.9);border:2px solid var(--border);border-radius:20px;padding:6px 16px}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.92);border:2px solid var(--border);border-radius:50%;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;z-index:3}
+.slide-nav-btn:hover{background:var(--c4);color:#fff}
+.slide-nav-btn.prev{left:10px}.slide-nav-btn.next{right:10px}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#fff;border:2px solid var(--border);padding:7px 14px;font-size:.95rem;cursor:pointer;border-radius:20px;font-weight:700;box-shadow:2px 2px 0 var(--border);z-index:5;font-family:inherit}
+.slide-fs-btn:hover{transform:translateY(-2px)}
+.slide-counter{position:absolute;bottom:12px;left:14px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:16px;font-size:.85rem;z-index:3}
+.slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 4px}
+.strip-thumb{flex-shrink:0;width:96px;height:54px;border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;opacity:.6;transition:.2s;background:#e9e3d6}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb:hover{opacity:1}
+.strip-thumb.active{opacity:1;border-color:var(--c1);box-shadow:0 0 0 2px var(--c1)}
+.slide-fs{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9999;align-items:center;justify-content:center}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:100%;max-height:100vh;object-fit:contain}
+.slide-fs-close{position:fixed;top:16px;right:16px;background:var(--c1);color:#fff;border:none;width:44px;height:44px;font-size:1.4rem;cursor:pointer;border-radius:50%;z-index:10000}
+.slide-fs-counter{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.92);padding:5px 18px;border-radius:20px;font-size:.9rem;z-index:10000}
+.fs-nav{position:fixed;top:50%;transform:translateY(-50%);width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--c1);color:var(--c1);font-size:2rem;font-weight:900;cursor:pointer;z-index:10000;display:flex;align-items:center;justify-content:center;border-radius:12px}
+.fs-nav.prev{left:20px}.fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--c1);color:#fff;box-shadow:0 0 16px var(--c1)}
+@media (max-width:720px){.fs-nav{width:46px;height:64px;font-size:1.6rem}.fs-nav.prev{left:8px}.fs-nav.next{right:8px}}
+.slide-placeholder,.video-placeholder{padding:50px 20px;text-align:center;color:var(--dim);font-size:1rem;background:var(--surface);border-radius:12px;border:2px dashed #aaa}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar{display:none !important}
+
+.video-wrap{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop)}
+.video-ratio{position:relative;padding-top:56.25%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border-top:2px solid var(--border)}
+.nlm-badge{background:var(--c5);color:#fff;font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:14px}
+.video-hint{font-size:.9rem;color:var(--dim)}
+.video-yt-link{margin-left:auto;color:#e03131;font-size:.9rem;font-weight:700}
+
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:1000px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop);transition:.2s;display:block}
+.info-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--border)}
+.info-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-bottom:2px solid var(--border);background:var(--surface)}
+.info-card .cap{padding:10px 14px;font-size:.92rem;font-weight:700}
+
+/* Footer */
+.footer{padding:28px 24px;text-align:center;color:var(--dim);font-size:.88rem;border-top:3px solid var(--border);background:var(--surface);margin-top:40px}
+.footer p{margin:3px 0}
+.footer a{color:#1c7ed6;font-weight:700}
+.site-credit{margin-top:10px;font-size:.9rem;color:#555}
+.site-credit__heart{display:inline-block;margin:0 2px}
+.site-credit .site-credit__author{color:inherit;font-weight:700;border-bottom:1px dotted currentColor;padding-bottom:1px}
+.site-credit .site-credit__author:hover{color:#e03131}
+
+/* Floating tools */
+.float-tools{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:400}
+.float-btn{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);background:var(--c2);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:var(--shadow-pop);transition:.2s}
+.float-btn:hover{transform:translate(-2px,-2px)}
+.float-btn.red{background:var(--c1)}.float-btn.green{background:var(--c3)}.float-btn.purple{background:var(--c5)}.float-btn.blue{background:var(--c4)}
+.float-panel{position:fixed;bottom:90px;right:84px;background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;width:290px;box-shadow:var(--shadow-pop);display:none;z-index:400}
+.float-panel.show{display:block}
+.float-panel h4{font-size:1rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;color:#e03131}
+.float-panel .close{cursor:pointer;font-size:1.2rem;color:var(--dim);background:none;border:none}
+.btn-primary{background:var(--c1);color:#fff;border:2px solid var(--border);padding:9px 14px;border-radius:10px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;box-shadow:2px 2px 0 var(--border)}
+.lottery-result{margin-top:12px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-size:1.5rem;font-weight:900;text-align:center;color:#e03131;min-height:60px;display:flex;align-items:center;justify-content:center}
+.timer-display{font-size:2rem;font-weight:900;text-align:center;color:#1c7ed6;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:10px;margin:10px 0}
+@media (max-width:600px){.float-panel{right:12px;left:12px;width:auto}}
+
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:var(--panel);border:3px solid var(--border);padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-pop);border-radius:16px}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:28px;height:28px;border:2px solid var(--border);cursor:pointer;padding:0;border-radius:50%}
+.draw-toolbar .color-dot.active{transform:scale(1.2)}
+.draw-toolbar .draw-clear{background:var(--panel);border:2px solid var(--c1);color:#e03131;padding:5px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;border-radius:14px}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+.pulse{animation:pop .5s ease-in-out}
+
+/* ===== AI 小機長 專屬（天空藍機長主題，覆寫 comic-soft 主色）===== */
+:root{--sky:#1c7ed6}
+body{background-color:#f4f9ff}
+.home-btn{border-color:var(--sky);color:var(--sky)}
+.home-btn:hover{background:var(--sky)}
+.header-title .hl{color:var(--sky)}
+.lecture-cta{background:var(--sky)}
+.lecture-cta .cta-tag{color:var(--sky)}
+.stage-badge{box-shadow:3px 3px 0 var(--sky)}
+.sfx{background:var(--sky)}
+.site-header{background:rgba(244,249,255,.97)}
+.slide-main{background:#e9f1fa}
+.hero-title .hl{background:linear-gradient(transparent 58%,#a5d8ff 58%)}
+.motto{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.motto span{display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:1rem;padding:8px 16px;border:3px solid var(--border);border-radius:30px;box-shadow:3px 3px 0 var(--border)}
+.motto .m1{background:#d0ebff;color:#1864ab}.motto .m2{background:#fff3bf;color:#8a5a00}
+.rule-box{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+@media (max-width:700px){.rule-box{grid-template-columns:1fr}}
+.rule{border:3px solid var(--border);border-radius:14px;padding:12px 14px;background:#fff;box-shadow:3px 3px 0 var(--border);font-weight:700}
+.rule b{display:block;font-size:1.05rem}
+.rule.r1{background:#fff5f5}.rule.r1 b{color:#e03131}
+.rule.r2{background:#ebfbee}.rule.r2 b{color:#2b8a3e}
+
+/* 提示詞組合器 */
+.pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:700px){.pb-grid{grid-template-columns:1fr}}
+.pb-field label{display:block;font-weight:900;font-size:.95rem;margin-bottom:4px}
+.pb-field select,.pb-field input{width:100%;font-family:inherit;font-size:.98rem;padding:8px 10px;border:2px solid var(--border);border-radius:10px;background:#fff}
+.pb-field.f1 label{color:#e03131}.pb-field.f2 label{color:#2b8a3e}.pb-field.f3 label{color:#e8590c}.pb-field.f4 label{color:#1c7ed6}.pb-field.f5 label{color:#7048e8}
+.pb-out{margin-top:14px;background:#fff;border:3px solid var(--border);border-radius:14px;padding:14px 16px;font-size:1.02rem;line-height:1.8;min-height:80px}
+.pb-out .t1{background:#ffe3e3}.pb-out .t2{background:#d3f9d8}.pb-out .t3{background:#ffe8cc}.pb-out .t4{background:#d0ebff}.pb-out .t5{background:#e5dbff}
+.pb-out mark{padding:1px 4px;border-radius:4px;color:inherit}
+.meter{margin-top:12px;display:flex;align-items:center;gap:10px;font-weight:900}
+.meter-bar{flex:1;height:16px;border:2px solid var(--border);border-radius:10px;background:#fff;overflow:hidden}
+.meter-fill{height:100%;width:0;background:linear-gradient(90deg,#ff6b6b,#ffa94d,#51cf66);transition:width .4s}
+
+/* 查證卡 */
+.fact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.fact-cards{grid-template-columns:1fr}}
+.fact-card{background:#fff;border:3px dashed var(--c4);border-radius:14px;padding:14px;position:relative}
+.fact-card p{font-weight:700;margin-bottom:10px}
+.fact-card .fc-btns{display:flex;gap:8px}
+.fact-card .fc-btns button{flex:1;font-family:inherit;font-weight:700;padding:7px;border:2px solid var(--border);border-radius:10px;cursor:pointer;background:var(--surface)}
+.fact-card .fc-fb{display:none;margin-top:10px;font-size:.92rem;padding:8px 10px;border-radius:8px}
+.fact-card .fc-fb.show{display:block}
+.fact-card .fc-fb.ok{background:#d3f9d8;color:#2b8a3e}.fact-card .fc-fb.bad{background:#fff3cd;color:#856404}
+.fact-card .stamp{position:absolute;top:-12px;right:-8px;font-weight:900;font-size:.8rem;padding:4px 10px;border:2px solid var(--border);border-radius:14px;transform:rotate(8deg);display:none}
+.fact-card .stamp.show{display:block}
+.fact-card .stamp.true{background:#51cf66;color:#fff}.fact-card .stamp.false{background:#ff6b6b;color:#fff}
+
+/* 個資偵探 */
+.chat-log{background:#efe9ff;border:3px solid var(--border);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:88%;padding:10px 14px;border:2px solid var(--border);border-radius:14px;font-size:.98rem;line-height:1.7}
+.msg.g{background:#fff;align-self:flex-start}.msg.l{background:#ffe066;align-self:flex-end}
+.msg .who{display:block;font-size:.8rem;font-weight:900;color:var(--dim)}
+.pii{cursor:pointer;border-bottom:2px dotted #7048e8;transition:.15s;padding:0 2px;border-radius:4px}
+.pii:hover{background:#e5dbff}
+.pii.found{background:#63e6be;border-bottom-color:transparent;font-weight:700}
+.pii.miss{background:#ffc9c9}
+.word{cursor:pointer;border-radius:4px;padding:0 1px}
+.word:hover{background:#f1f3f5}
+.word.wrongpick{background:#ffe3e3;text-decoration:line-through}
+
+/* 情境判斷卡 */
+.scn-card{background:#fff;border:3px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow-pop);min-height:150px}
+.scn-card .scn-tag{display:inline-block;font-size:.8rem;font-weight:900;padding:2px 10px;border-radius:10px;background:var(--border);color:#ffe066;margin-bottom:8px}
+.scn-card .scn-text{font-size:1.08rem;font-weight:700}
+.scn-count{font-size:.9rem;color:var(--dim);margin-top:8px}
+
+/* 小約定 */
+.pledge-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+@media (max-width:800px){.pledge-list{grid-template-columns:1fr}}
+.pledge-list label{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;font-size:.98rem;box-shadow:2px 2px 0 var(--border)}
+.pledge-list input{width:20px;height:20px;margin-top:4px;flex-shrink:0;accent-color:#1c7ed6}
+.pledge-list label:has(input:checked){background:#e7f5ff}
+.pledge-cert{display:none;margin-top:16px;background:#fff;border:4px double #1c7ed6;border-radius:16px;padding:18px;text-align:center}
+.pledge-cert.show{display:block}
+.pledge-cert h4{font-size:1.4rem;color:#1c7ed6}
+.pledge-cert .seat{font-size:1.2rem;font-weight:900;margin:6px 0}
+
+/* 七大要點 */
+.takeaways{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:10px}
+@media (max-width:1000px){.takeaways{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.takeaways{grid-template-columns:1fr}}
+.tk{background:#fff;border:3px solid var(--border);border-radius:18px 18px 18px 4px;padding:12px 14px;box-shadow:3px 3px 0 var(--border)}
+.tk b{display:block;color:#1c7ed6;font-size:1.02rem}
+.tk span{font-size:.92rem;color:#444}
+
+/* 完整頁尾 */
+.site-footer{margin-top:40px;background:linear-gradient(180deg,#e7f1fb,#dbe8f6);border-top:1px solid #b9cde3;position:relative}
+.site-footer::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#1c7ed6,#ffa94d,#ff6b6b)}
+.footer-inner{max-width:1400px;margin:0 auto;padding:34px 24px 22px;display:grid;grid-template-columns:1.2fr 2fr 1fr;gap:24px;align-items:start}
+@media (max-width:1000px){.footer-inner{grid-template-columns:1fr 1fr}.footer-points{grid-column:1/-1;order:3}}
+@media (max-width:640px){.footer-inner{grid-template-columns:1fr}}
+.footer-brand{display:flex;gap:14px;align-items:center}
+.footer-brand .fb-icon{width:52px;height:52px;border-radius:14px;background:#1c7ed6;color:#fff;font-size:1.7rem;display:flex;align-items:center;justify-content:center;border:3px solid var(--border);box-shadow:3px 3px 0 var(--border);flex-shrink:0}
+.footer-brand strong{display:block;font-size:1.1rem}
+.footer-brand span{font-size:.92rem;color:#4a5a6a}
+.footer-points{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:640px){.footer-points{grid-template-columns:1fr}}
+.footer-points li{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.7);border:1px solid #b9cde3;border-radius:12px;padding:10px 12px}
+.footer-points .fp-icon{font-size:1.4rem;line-height:1.2}
+.footer-points strong{display:block;font-size:.95rem}
+.footer-points small{font-size:.88rem;color:#4a5a6a;line-height:1.5;display:block}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-link{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.95rem;color:#1864ab;padding:6px 14px;background:#fff;border:2px solid #a5c8eb;border-radius:20px;width:fit-content}
+.footer-link:hover{background:#1c7ed6;color:#fff;border-color:#1c7ed6}
+@media (max-width:640px){.footer-links{flex-direction:row;flex-wrap:wrap}}
+.footer-bottom{max-width:1400px;margin:0 auto;padding:14px 24px 26px;border-top:1px solid #b9cde3;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:.92rem;color:#3d4d5d}
+.footer-bottom .src{flex-basis:100%;font-size:.88rem;color:#55677a}
+.site-credit{font-size:.95rem;color:#3d4d5d;margin:0}
+.site-credit .site-credit__author{color:inherit;font-weight:700;border-bottom:1px dotted currentColor;padding-bottom:1px}
+.site-credit .site-credit__author:hover{color:#1c7ed6}
+.version-tag{font-size:.85rem;padding:3px 12px;border:1px solid #a5c8eb;border-radius:20px;background:rgba(255,255,255,.7)}
+@media (max-width:640px){.footer-bottom{flex-direction:column;text-align:center}.footer-school{display:block}.footer-dot{display:none}}
+@media print{.site-footer,.float-tools,.draw-toolbar,#drawCanvas{display:none}}
+</style>
+<script>
+  // Akai 排行榜流量歸因 beacon (toolId 81 stage="ai-copilot-captain")
+  (function () {
+    try {
+      var TOOL_ID = 81, STAGE_ID = 'ai-copilot-captain';
+      var SENT_KEY = 'akai_beacon_' + TOOL_ID + '_' + STAGE_ID + '_sent';
+      if (sessionStorage.getItem(SENT_KEY)) return;
+      var SID_KEY = 'akai_beacon_sid';
+      var sid = sessionStorage.getItem(SID_KEY);
+      if (!sid) { sid = 'cockpit-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); sessionStorage.setItem(SID_KEY, sid); }
+      var device = window.innerWidth < 768 ? 'mobile' : (window.innerWidth < 1024 ? 'tablet' : 'desktop');
+      new Image().src = 'https://asia-east1-akai-e693f.cloudfunctions.net/beaconToolClick?toolId=' + TOOL_ID + '&stageId=' + STAGE_ID
+        + '&referrer=' + encodeURIComponent(document.referrer || '') + '&device=' + device + '&sessionId=' + encodeURIComponent(sid);
+      sessionStorage.setItem(SENT_KEY, '1');
+    } catch (e) {}
+  })();
+</script>
+<script src="../assets/webp-fallback.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div>
+      <div class="header-title">✈️ AI 小機長：<span class="hl">安全又負責任地使用生成式 AI</span></div>
+      <div class="header-sub">六年級 · 資訊科技 · AI 素養與數位公民</div>
+    </div>
+    <span class="grade-chip">六年級</span>
+    <div class="mode-toggle">
+      <button class="mode-btn active" onclick="switchMode('student',this)">學生模式</button>
+      <button class="mode-btn" onclick="switchMode('teacher',this)">教師模式 🔒</button>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>機長訓練進度</span><span id="progTxt">0 / 5 關完成</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-main">
+      <span class="sfx">READY? 準備起飛！</span>
+      <h1 class="hero-title">AI 可以當你的副駕駛，<span class="hl">但機長永遠是你自己</span></h1>
+      <p class="hero-desc">生成式 AI 會寫文章、畫圖、出題，甚至寫程式，超級厲害！可是它也會說錯話、會有偏見，也不是真正的朋友。今天跟著小記者 <strong>Gina</strong> 和遊戲設計師 <strong>Alex</strong> 的冒險，練成「會問、會查、會保護自己」的 AI 小機長。</p>
+      <div class="motto">
+        <span class="m1">🧑‍✈️ 你是機長：負責方向和決定</span>
+        <span class="m2">🤖 AI 是副駕駛：幫忙但會出錯</span>
+      </div>
+      <div class="rule-box">
+        <div class="rule r1"><b>規則 1：AI 會出錯</b>它的答案要自己查證，不能照單全收。</div>
+        <div class="rule r2"><b>規則 2：AI 不是真人</b>個人資料不能給，心事要找真人說。</div>
+      </div>
+      <div class="akai-say">
+        <div class="ava">😄</div>
+        <div class="bub">嗨！我是阿凱老師。今天我們會用老師的學校帳號一起操作 Copilot，你負責動腦、判斷、做決定！<small>— 你的飛行教練</small></div>
+      </div>
+    </div>
+    <div class="hero-panels">
+      <div class="comic-panel p3"><div class="ic">🤖</div><div><h4>第 1～2 關：認識 AI ＋ 學會下指令</h4><p>生成式 AI 是什麼、搜尋和提示的差別、好提示五要素。</p></div></div>
+      <div class="comic-panel p1"><div class="ic">🐢</div><div><h4>第 3～4 關：Gina 為海洋而戰</h4><p>AI 會虛構要查證、別把個資交給 AI、AI 畫圖的偏見與標註。</p></div></div>
+      <div class="comic-panel p2"><div class="ic">🚀</div><div><h4>第 5 關：Alex 打造太空遊戲</h4><p>AI 不是真朋友、網路安全五招、數位身心健康、深偽辨識。</p></div></div>
+    </div>
+  </section>
+
+  <section class="obj-section">
+    <div class="obj-title">🎯 今天你會學到</div>
+    <div class="obj-chips">
+      <span class="obj-chip blue">🤖 說出生成式 AI 能做什麼</span>
+      <span class="obj-chip orange">✍️ 用五要素寫出好提示</span>
+      <span class="obj-chip red">🔍 查證 AI 的答案</span>
+      <span class="obj-chip purple">🔒 不把個資交給 AI</span>
+      <span class="obj-chip green">⚖️ 發現 AI 的偏見</span>
+      <span class="obj-chip blue">💚 分清楚 AI 和真朋友</span>
+    </div>
+    <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+      <span class="cta-tag">老師上課用 ⮕</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張機長漫畫風投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線可用</span>
+    </a>
+  </section>
+
+  <nav class="stage-nav">
+    <a href="#sec1" class="stage-pill" id="pill1">🤖 1. AI 是副駕駛</a>
+    <a href="#sec2" class="stage-pill" id="pill2">✍️ 2. 好提示五要素</a>
+    <a href="#sec3" class="stage-pill" id="pill3">🔍 3. Gina 的查證與個資</a>
+    <a href="#sec4" class="stage-pill" id="pill4">🎨 4. AI 畫圖與偏見</a>
+    <a href="#sec5" class="stage-pill" id="pill5">🚀 5. Alex 的安全遊戲</a>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 01</div>
+      <div>
+        <div class="section-title">🤖 什麼是生成式 AI？把 AI 當成副駕駛</div>
+        <div class="section-sub">它能「生出」新的文字、圖片、影片、聲音和程式碼——但方向盤要握在你手上。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>📖 三分鐘看懂生成式 AI</h4>
+        <ol class="steps-list">
+          <li class="blue"><strong>生成式 AI</strong> 是人工智慧的一種，可以產生<strong>全新的內容</strong>：文字、圖片、影片、聲音，甚至程式碼。</li>
+          <li><strong>大型語言模型（LLM）</strong> 讀過非常大量的書籍、文章和網頁文字，學會猜「下一個最可能出現的字」，所以能寫出像真人說話的句子。ChatGPT、Microsoft Copilot 都是這一類。</li>
+          <li class="green"><strong>生活比喻：</strong>它像一個讀完整座圖書館的「文字接龍高手」，接得又快又順——但接得順不代表一定是對的。</li>
+          <li class="purple"><strong>搜尋 vs 提示：</strong>搜尋「羅馬帝國歷史」會跑出約 9 億筆網頁，要自己一筆筆找；<strong>提示</strong>則是直接請 AI 整理重點給你。</li>
+        </ol>
+        <div class="tip-box"><strong>💡 AI 可以幫忙：</strong>整理一大堆筆記的重點、出練習題幫你準備考試、做出有創意的圖片或影片完成校園專題。</div>
+        <div class="warn-box"><strong>⚠️ 但 AI 不完美：</strong>它可能捏造資訊、帶有偏見，也可能讓你的資料外流。所以機長（你）要負責檢查和決定。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 1：駕駛艙任務分配——這件事交給誰？</div>
+        <div class="canvas-hint">讀任務卡，判斷它可以「交給 AI 副駕駛幫忙」，還是一定要「機長自己負責」。</div>
+        <canvas id="game1" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn" onclick="game1Pick('ai')">🤖 交給 AI 副駕駛幫忙</button>
+          <button class="ctrl-btn red" onclick="game1Pick('me')">🧑‍✈️ 機長自己負責</button>
+          <button class="ctrl-btn outline" onclick="game1Next()">下一張 ➜</button>
+        </div>
+        <div class="game-result" id="game1Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 1 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：下面哪一個最能說明「生成式 AI」？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,1,'A')">A. 只能幫忙算數學的計算機</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'B')">B. 可以產生新的文字、圖片、聲音等內容的 AI</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'C')">C. 一定不會出錯的百科全書</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'D')">D. 有真正感情的機器人朋友</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：「AI 是副駕駛，你是機長」這句話的意思是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,2,'A')">A. AI 可以幫忙，但最後的判斷和責任在自己身上</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'B')">B. 全部交給 AI 做就好</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'C')">C. AI 比人厲害，所以要聽 AI 的</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'D')">D. 只有當飛行員才可以用 AI</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：「搜尋」和「提示」最大的不同是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,3,'A')">A. 沒有不同</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'B')">B. 搜尋一定比較正確</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'C')">C. 搜尋是自己在很多網頁裡找；提示是請 AI 直接整理回答</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'D')">D. 提示只能用英文</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>對應教材：Microsoft × Cyberlite《課堂工具套件》2026 修訂版第 5–13 頁（章節 1）。</li>
+        <li>國小調整：由老師以學校帳號登入 Copilot 投影示範，學生不需註冊；多數 AI 工具規定 13 歲以上（18 歲以下需家長同意）。</li>
+        <li>暖身提問：「你在哪裡看過 AI？」讓學生先說，再揭曉三種用途（摘要、出題、創作）。</li>
+        <li>延伸：教材建議的 Code.org 影片介紹聊天機器人與大型語言模型如何運作（可選播）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section id="sec2" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 02</div>
+      <div>
+        <div class="section-title">✍️ 好提示五要素：當個會下指令的機長</div>
+        <div class="section-sub">給 AI 的指令叫「提示」；一次次修改提示讓結果變好，叫「提示工程」。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🧩 好提示的五個要素</h4>
+        <ol class="steps-list">
+          <li class="red"><strong>角色：</strong>請 AI 扮演誰？（例：請你當一位自然老師）</li>
+          <li class="green"><strong>目標：</strong>要 AI 做什麼？用動詞：說明、摘要、翻譯、比較、出題。</li>
+          <li><strong>對象：</strong>內容是給誰看的？（例：給 12 歲的六年級學生）</li>
+          <li class="blue"><strong>背景：</strong>AI 需要知道哪些資訊？（例：要準備下週的自然考試）</li>
+          <li class="purple"><strong>範圍：</strong>方向與限制，例如字數、語氣、格式。</li>
+        </ol>
+        <div class="tip-box"><strong>💡 三個秘訣：</strong>① 給明確的指示 ② 提供背景資訊 ③ 反覆嘗試和實驗——沒有一次就完美的提示！</div>
+        <div class="tip-box" style="background:#e7f5ff;border-color:#339af0;color:#1c3d5a"><strong>📝 範例：</strong>「請你當一位自然老師，向 12 歲的學生說明光合作用的過程，幫他們準備考試。答案不要超過 300 字，語氣要友善。」</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 2：提示詞組合器</div>
+        <div class="canvas-hint">選好五個要素，看看你的提示有多完整。五個都填好，提示星等就會滿格！</div>
+        <div class="pb-grid">
+          <div class="pb-field f1"><label>① 角色</label><select id="pb1" onchange="buildPrompt()"><option value="">（還沒選）</option><option>請你當一位親切的自然老師</option><option>請你當一位說故事高手</option><option>請你當一位旅遊導覽員</option></select></div>
+          <div class="pb-field f2"><label>② 目標</label><select id="pb2" onchange="buildPrompt()"><option value="">（還沒選）</option><option>說明光合作用的過程</option><option>整理海龜面臨的三個危機</option><option>出 5 題臺灣地理練習題</option></select></div>
+          <div class="pb-field f3"><label>③ 對象</label><select id="pb3" onchange="buildPrompt()"><option value="">（還沒選）</option><option>給 12 歲的六年級學生看</option><option>給低年級的弟弟妹妹聽</option><option>給班上的家長看</option></select></div>
+          <div class="pb-field f4"><label>④ 背景</label><select id="pb4" onchange="buildPrompt()"><option value="">（還沒選）</option><option>我們下週要考自然</option><option>這是校園環保海報要用的</option><option>我們要做分組上台報告</option></select></div>
+          <div class="pb-field f5" style="grid-column:1/-1"><label>⑤ 範圍（可以自己打）</label><input id="pb5" oninput="buildPrompt()" placeholder="例：不超過 200 字，語氣活潑，分成三點"></div>
+        </div>
+        <div class="pb-out" id="pbOut">先從左上角選一個「角色」開始吧！</div>
+        <div class="meter"><span id="pbStar">☆☆☆☆☆</span><div class="meter-bar"><div class="meter-fill" id="pbFill"></div></div><span id="pbPct">0/5</span></div>
+        <div class="game-controls">
+          <button class="ctrl-btn green" onclick="copyPrompt()">📋 複製提示</button>
+          <button class="ctrl-btn outline" onclick="resetPrompt()">↻ 重來</button>
+        </div>
+        <div class="game-result" id="game2Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 2 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：「答案不要超過 200 字，語氣要友善」屬於好提示的哪一個要素？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,1,'A')">A. 角色</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'B')">B. 對象</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'C')">C. 背景</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'D')">D. 範圍</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：下面哪一個提示最清楚？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,2,'A')">A. 「海龜」</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'B')">B. 「請向六年級學生說明海龜面臨的三個危機，用 150 字以內、條列方式回答」</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'C')">C. 「隨便寫點東西」</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'D')">D. 「你知道嗎？」</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：AI 給的答案不是你想要的，最好的做法是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,3,'A')">A. 修改提示、補充細節，再試一次</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'B')">B. 直接放棄</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'C')">C. 對 AI 生氣罵它</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'D')">D. 把錯的答案直接交出去</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>對應教材：第 14–15 頁（提示工程、良好提示的要素）＋附件《Elements of a Good Prompt》。</li>
+        <li>課堂示範點（教師指南）：第 15 頁由老師示範一個提示，全班一起看 Copilot 怎麼回應；再改變其中一個要素比較差異。</li>
+        <li>原教材範例對象為 14 歲，本頁已改為 12 歲六年級學生。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section id="sec3" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 03</div>
+      <div>
+        <div class="section-title">🔍 Gina 為海洋而戰：AI 會「虛構」，個資不能給</div>
+        <div class="section-sub">小記者 Gina 想報導塑膠污染如何傷害海龜，她請 Copilot 幫忙寫大綱……</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🐢 Gina 的調查任務</h4>
+        <ol class="steps-list">
+          <li class="blue"><strong>寫大綱：</strong>Gina 輸入「撰寫新聞報導文章大綱，突顯塑膠污染對海龜族群的影響」，還能調整語氣（專業、幽默、新聞）、格式（大綱、段落、部落格）和長度。</li>
+          <li class="red"><strong>虛構內容：</strong>AI 有時會說出<strong>看起來很有自信、其實是錯的或編出來的</strong>資訊。它不是故意說謊，而是在「猜下一句」。</li>
+          <li class="green"><strong>查證三問：</strong>① 作者是誰？可靠嗎？② 網站是誰發布的？（大學、新聞媒體，還是個人部落格）③ 發布的人有沒有賺錢或其他目的？</li>
+          <li class="purple"><strong>保護隱私：</strong>Gina 訪問了海洋科學家 Lee 博士。逐字稿裡有很多敏感資料，不能整份貼給 AI 做摘要！</li>
+        </ol>
+        <div class="warn-box"><strong>🔒 金科玉律：</strong>絕對不要把能認出一個人的資料——<strong>全名、電子郵件、電話、住址、學校班級、照片</strong>——交給 AI 或不信任的網站，不管是自己的還是別人的。</div>
+        <div class="tip-box"><strong>💡 小技巧：</strong>Copilot 的回答會附上引用來源，記得點進去看看來源是不是可靠。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 3A：幫 Gina 事實查核</div>
+        <div class="canvas-hint">AI 大綱裡出現三句「事實」，你覺得哪些是正確的？</div>
+        <div class="fact-cards" id="factCards"></div>
+        <div class="canvas-title" style="margin-top:20px">🎮 互動 3B：個資偵探——找出不該交給 AI 的資訊</div>
+        <div class="canvas-hint">點一下訪談逐字稿裡的<strong>敏感資訊</strong>（共 5 個）。點錯也沒關係，再找找看！</div>
+        <div class="chat-log" id="chatLog"></div>
+        <div class="game-controls">
+          <button class="ctrl-btn purple" onclick="piiHint()">💡 給我提示</button>
+          <button class="ctrl-btn outline" onclick="piiReset()">↻ 重來</button>
+        </div>
+        <div class="game-result" id="game3Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 3 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：AI 說出看起來很有自信、但其實是編出來的內容，這叫做？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,1,'A')">A. 搜尋</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'B')">B. 虛構內容</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'C')">C. 備份</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'D')">D. 更新</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：想請 AI 摘要一份訪談，先要怎麼做最安全？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,2,'A')">A. 整份直接貼上，比較快</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'B')">B. 再多加上自己的電話</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'C')">C. 先刪掉姓名、信箱、住址和機密內容再貼</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'D')">D. 把檔案傳到不明網站</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：哪一個來源通常比較值得信任？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,3,'A')">A. 大學研究單位或可靠新聞媒體的報導</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'B')">B. 不知道是誰寫的轉傳訊息</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'C')">C. 想賣你東西的廣告頁面</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'D')">D. 標題很聳動的影片留言</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>對應教材：第 16–28 頁（Gina 的調查、虛構內容和事實查核、隱私權相當重要）。</li>
+        <li>課堂示範點：第 19 頁用 Copilot 寫大綱；第 22–23 頁事實查核（原教材使用 Teams 教育版「搜尋教練」）；第 27–28 頁找出不該給 AI 的個資。</li>
+        <li>教材設定：三句陳述中只有「誤食塑膠是海龜主要威脅之一」被標為正確，另兩句的數字與年份為錯誤示範。</li>
+        <li>提醒：逐字稿中的人名、信箱、地址皆為教材虛構情境。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section id="sec4" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 04</div>
+      <div>
+        <div class="section-title">🎨 一張圖勝過千言萬語：AI 畫圖與偏見</div>
+        <div class="section-sub">Gina 用 Microsoft Designer 畫報導插圖，試了三次才成功——還發現 AI 的「刻板印象」。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>⚖️ AI 中的偏見</h4>
+        <ol class="steps-list">
+          <li class="red"><strong>第一次：</strong>「一名科學家拿起塑膠瓶，背景是海洋」→ AI 畫出一位白人男性科學家，可是 Lee 博士其實是女性！</li>
+          <li><strong>為什麼？</strong>訓練 AI 的資料大多來自某些地區和族群，AI 可能出現<strong>種族、性別、年齡</strong>等偏見，讓人誤以為「只有某種人才能當科學家」。</li>
+          <li class="green"><strong>第二、三次：</strong>改成「一隻手拿著塑膠瓶的特寫」還不夠；最後「滿是塑膠瓶的海洋相片，背景有多隻海龜」才成功！</li>
+          <li class="purple"><strong>準備發布：</strong>AI 產生的圖片要<strong>標註「AI 生成」</strong>，參考資料要列出來源。用 AI 要公開透明！</li>
+        </ol>
+        <div class="tip-box"><strong>💡 讓圖更好的方法：</strong>在提示加上細節（例如「在生意盎然的珊瑚礁中優雅地游泳」）和風格（寫實、梵谷風、普普藝術）。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 4：Gina 的三次嘗試</div>
+        <div class="canvas-hint">按下三個提示，看看 AI 會畫出什麼。想一想：哪一張最能表達「塑膠污染傷害海龜」？</div>
+        <canvas id="game4" class="game-canvas" width="600" height="340"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn" onclick="drawAttempt(1)">① 一名科學家拿起塑膠瓶</button>
+          <button class="ctrl-btn orange" onclick="drawAttempt(2)">② 手拿塑膠瓶的特寫</button>
+          <button class="ctrl-btn green" onclick="drawAttempt(3)">③ 滿是塑膠瓶的海洋＋海龜</button>
+          <button class="ctrl-btn purple" onclick="toggleAiLabel()">🏷️ 加上「AI 生成」標註</button>
+        </div>
+        <div class="game-result" id="game4Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 4 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：AI 一畫「科學家」就都是同一種性別和膚色，這是什麼問題？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,1,'A')">A. 網路太慢</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'B')">B. 電腦中毒</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'C')">C. AI 的偏見（刻板印象）</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'D')">D. 畫得太好</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：把 AI 畫的圖放進報告時，應該怎麼做？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,2,'A')">A. 標註「AI 生成」並說明用了什麼工具</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'B')">B. 說是自己畫的</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'C')">C. 什麼都不用寫</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'D')">D. 把圖片的角落裁掉</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：AI 畫出來的圖不符合你的想法，可以怎麼改提示？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,3,'A')">A. 把提示縮短成一個字</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'B')">B. 加入更多細節，例如人物、場景、風格</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'C')">C. 一直按重新整理</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'D')">D. 換成同學的照片</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>對應教材：第 29–35 頁（一張圖片勝過千言萬語、AI 中的偏見、成為 AI 藝術家、準備發布）。</li>
+        <li>課堂示範點：第 30–33 頁用 Microsoft Designer 生圖三次嘗試，觀察偏見；第 34 頁「海龜」提示加細節與風格。</li>
+        <li>本頁互動以簡筆畫模擬三次結果，非真實 AI 輸出；實際示範時可現場生成比較。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section id="sec5" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 05</div>
+      <div>
+        <div class="section-title">🚀 與 Alex 打造遊戲：AI 不是真朋友，安全最重要</div>
+        <div class="section-sub">遊戲設計師 Alex 用 AI 設計太空冒險角色 Orion、Nova、Luna，還請 AI 幫忙寫程式。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🪐 Alex 的冒險學到什麼？</h4>
+        <ol class="steps-list">
+          <li class="blue"><strong>AI 點子是起點：</strong>AI 幫 Alex 想出三個角色，但要當成靈感、自己再創作，並列出參考來源，<strong>不抄襲</strong>。</li>
+          <li class="red"><strong>AI 不是真朋友：</strong>朋友 Ash 問要不要讓 AI 角色像好朋友一樣陪玩家聊天。Alex 覺得不好——AI 的回答很像真人，但它<strong>沒有真正的感情</strong>，依賴它會讓人離真實的家人朋友越來越遠。</li>
+          <li><strong>速度 vs 安全：</strong>AI 寫程式超快，但只靠 AI、不懂安全，就像房子沒上鎖。網路安全五招：只下載可信任的程式、看網址有沒有鎖頭、只去 <code>https</code> 網站、不從不明連結下載、裝置和 App 要更新。</li>
+          <li class="green"><strong>數位身心健康：</strong>設定螢幕時間、記得 AI 不能取代真人、有煩惱跟家人或輔導老師說、也關心你的朋友。</li>
+          <li class="purple"><strong>深偽（Deepfake）：</strong>AI 能做出假照片、假影片、假聲音，冒充名人或你認識的人。看到太逼真的內容先<strong>停一下</strong>：看手指、光影是否怪怪的，向可信來源查證，不急著相信或轉傳。</li>
+        </ol>
+        <div class="warn-box"><strong>🆘 一定要記得：</strong>遇到讓你不舒服、害怕或可疑的狀況，<strong>馬上告訴信任的大人</strong>（家人、導師、輔導老師）。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 5：機長判斷時間——安全起飛還是緊急煞車？</div>
+        <div class="canvas-hint">讀情境，判斷這樣做是「✅ 安全起飛」還是「🛑 緊急煞車」。</div>
+        <div class="scn-card" id="scnCard"></div>
+        <div class="game-controls">
+          <button class="ctrl-btn green" onclick="scnPick(true)">✅ 安全起飛</button>
+          <button class="ctrl-btn red" onclick="scnPick(false)">🛑 緊急煞車</button>
+          <button class="ctrl-btn outline" onclick="scnNext()">下一題 ➜</button>
+        </div>
+        <div class="game-result" id="game5Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 5 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：小宇心情不好，每天只跟 AI 聊天，不想跟家人說話。比較好的建議是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,5,1,'A')">A. AI 最懂他，繼續就好</button>
+          <button class="quiz-opt" onclick="q(this,5,1,'B')">B. AI 不是真人，找信任的家人、老師或朋友聊聊</button>
+          <button class="quiz-opt" onclick="q(this,5,1,'C')">C. 把 AI 設成唯一的好朋友</button>
+          <button class="quiz-opt" onclick="q(this,5,1,'D')">D. 熬夜聊更久</button>
+        </div>
+        <div class="quiz-fb" id="fb-5-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：同學傳來「免費遊戲外掛」的不明連結，你應該？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,5,2,'A')">A. 趕快下載</button>
+          <button class="quiz-opt" onclick="q(this,5,2,'B')">B. 轉傳給更多人</button>
+          <button class="quiz-opt" onclick="q(this,5,2,'C')">C. 輸入帳號密碼試試看</button>
+          <button class="quiz-opt" onclick="q(this,5,2,'D')">D. 不點、不下載，告訴大人</button>
+        </div>
+        <div class="quiz-fb" id="fb-5-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：看到一段名人說奇怪話的超逼真影片，第一步該做什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,5,3,'A')">A. 先停一下，檢查破綻並向可信來源查證</button>
+          <button class="quiz-opt" onclick="q(this,5,3,'B')">B. 馬上轉傳到班級群組</button>
+          <button class="quiz-opt" onclick="q(this,5,3,'C')">C. 很逼真所以一定是真的</button>
+          <button class="quiz-opt" onclick="q(this,5,3,'D')">D. 留言罵那個名人</button>
+        </div>
+        <div class="quiz-fb" id="fb-5-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>對應教材：第 36–49 頁（章節 3，Alex）與第 51 頁（AI 新發展與深偽）。</li>
+        <li>國小調整：第 44–45 頁的 Python／HTML 程式碼只當展示（「哇，AI 也能幫忙寫程式」），不要求學生寫程式。</li>
+        <li>第 46–48 頁網路安全與身心健康可搭配「機長判斷時間」討論；第 51 頁深偽可與前面的「AI 虛構」互相呼應。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 七大要點 -->
+  <section class="project-section" style="background:linear-gradient(135deg,#e7f5ff 0%,#fff9db 100%)">
+    <h3 style="color:#1c7ed6">🧭 AI 小機長的七大飛行守則</h3>
+    <div class="takeaways">
+      <div class="tk"><b>① 把 AI 當副駕駛</b><span>它聽你的指令幫忙，但怎麼用、要不要用，由你決定。</span></div>
+      <div class="tk"><b>② AI 並不完美</b><span>它可能犯錯，答案要保持警覺。</span></div>
+      <div class="tk"><b>③ 一律事實查核</b><span>用可靠的來源確認 AI 說的事。</span></div>
+      <div class="tk"><b>④ 留意偏見</b><span>檢查內容公不公平，必要時改提示。</span></div>
+      <div class="tk"><b>⑤ 列出引用來源</b><span>用 AI 做的作品要標註，不抄襲。</span></div>
+      <div class="tk"><b>⑥ 保護個人資料</b><span>姓名、電話、住址、照片都不給 AI。</span></div>
+      <div class="tk"><b>⑦ 重視身心健康</b><span>限制螢幕時間，多和真人相處。</span></div>
+      <div class="tk" style="background:#fff3bf"><b>🆘 遇到問題</b><span>不舒服或可疑，馬上告訴信任的大人！</span></div>
+    </div>
+  </section>
+
+  <!-- 今日實作任務：班級 AI 使用小約定 -->
+  <section class="project-section">
+    <h3>🎒 今日實作任務：簽下「班級 AI 使用小約定」</h3>
+    <p>讀完每一條，真的做得到就打勾。十條都勾完，就能領取你的「AI 小機長執照」！（只記錄座號，不用寫名字喔）</p>
+    <ul class="pledge-list" id="pledgeList"></ul>
+    <div class="game-controls">
+      <input id="seatNo" type="number" min="1" max="40" placeholder="座號" style="width:110px;font-family:inherit;font-size:1rem;padding:8px 10px;border:2px solid var(--border);border-radius:10px">
+      <button class="ctrl-btn green" onclick="issueLicense()">🪪 領取機長執照</button>
+      <button class="ctrl-btn outline" onclick="window.print()">🖨️ 列印</button>
+    </div>
+    <div class="pledge-cert" id="pledgeCert">
+      <h4>🪪 AI 小機長執照</h4>
+      <div class="seat" id="certSeat"></div>
+      <p>我承諾：AI 是副駕駛，我是機長。我會查證、保護個資、尊重他人、不抄襲，遇到問題告訴大人。</p>
+      <p style="color:var(--dim);font-size:.9rem" id="certDate"></p>
+    </div>
+    <div class="project-tasks" style="margin-top:18px">
+      <div class="task-card"><h4>✍️ 延伸 A：提示改造王</h4><p>把「寫一篇海洋的文章」改寫成包含五要素的好提示，和同學比一比誰的比較完整。</p></div>
+      <div class="task-card"><h4>🔍 延伸 B：查證小偵探</h4><p>找一句「聽說」的網路消息，用查證三問寫下：作者是誰？誰發布？有沒有目的？</p></div>
+      <div class="task-card"><h4>🏠 延伸 C：回家分享</h4><p>把七大飛行守則講給家人聽，一起約定家裡使用 AI 的小規則。</p></div>
+    </div>
+  </section>
+
+  <!-- 簡報 -->
+  <section class="slide-section">
+    <h3>📊 授課簡報（NotebookLM × 阿凱老師）</h3>
+    <div class="slide-player">
+      <div class="slide-placeholder" id="slide-placeholder">📑 簡報生成中…<br><small>NotebookLM AI 製作中，完成後此區會顯示完整簡報。</small></div>
+      <div class="slide-main" id="slide-main" style="display:none" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="" alt="授課簡報" decoding="async" fetchpriority="high">
+        <div class="slide-loading"><span>⏳ 簡報載入中…</span></div>
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 1</div>
+      </div>
+      <div class="slide-strip" id="slide-strip" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- 資訊圖表 -->
+  <section class="infographic-section" id="info-section" style="display:none">
+    <h3>🗂️ AI 小機長懶人包</h3>
+    <div class="info-grid" style="grid-template-columns:1fr">
+      <a class="info-card" href="./assets/01_captain.webp" target="_blank">
+        <img data-fallback-src="assets/01_captain.jpg" src="./assets/01_captain.webp" alt="AI 小機長七大守則資訊圖表" decoding="async" loading="lazy" style="aspect-ratio:auto;object-fit:contain">
+        <div class="cap" style="color:#1c7ed6">AI 是副駕駛，你是機長：兩條核心規則與七大學習要點</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 影片 -->
+  <section class="video-section">
+    <h3>▶ 學生自學影片</h3>
+    <div class="video-wrap">
+      <div class="video-ratio" id="video-ratio" style="display:none">
+        <iframe id="nlm-video-iframe" src="" title="AI 小機長 NotebookLM 教學影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-placeholder" id="video-placeholder">🎬 自學影片由 NotebookLM AI 自動生成中，完成後會在這裡播放。</div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 可開啟 CC 字幕（中文／English），搭配上方簡報一起複習</span>
+        <a href="#" target="_blank" rel="noopener" class="video-yt-link" id="yt-link" style="display:none">↗ 在 YouTube 開啟</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NLM 資源站 -->
+  <section class="nb-section">
+    <h3>🧭 NotebookLM 資源站 & 延伸資源</h3>
+    <div class="nb-grid">
+      <a class="nb-card" href="https://notebooklm.google.com/notebook/884aa6d5-86c6-4aa3-b138-97e193f3f57a" target="_blank" rel="noopener">
+        <h4>📚 本單元筆記本</h4><p>教材精華筆記 + 阿凱老師主講者插畫，簡報、影片與資訊圖表的生成來源。</p><span class="link">前往 NotebookLM →</span>
+      </a>
+      <a class="nb-card" href="https://copilot.microsoft.com" target="_blank" rel="noopener">
+        <h4>🤖 Microsoft Copilot</h4><p>本課示範工具。國小由老師以學校帳號投影操作，學生不需自行註冊。</p><span class="link">前往 Copilot →</span>
+      </a>
+      <a class="nb-card" href="https://designer.microsoft.com" target="_blank" rel="noopener">
+        <h4>🎨 Microsoft Designer</h4><p>Gina 用來畫報導插圖的 AI 生圖工具（老師示範用）。</p><span class="link">前往 Designer →</span>
+      </a>
+      <a class="nb-card" href="https://youtu.be/X-AWdfSFCHQ" target="_blank" rel="noopener">
+        <h4>📺 Code.org 影片</h4><p>教材推薦：聊天機器人與大型語言模型是怎麼運作的？</p><span class="link">觀看影片 →</span>
+      </a>
+    </div>
+    <div class="flow-box">
+      <h4>🔄 本頁怎麼來的？（NLM × Claude 流程）</h4>
+      <div class="flow-steps">
+        <span class="flow-step">1. Microsoft × Cyberlite 課堂工具套件（52 頁）</span>
+        <span class="flow-step">2. ECPAT 國小教師使用指南</span>
+        <span class="flow-step">3. 改寫成六年級精華筆記</span>
+        <span class="flow-step">4. NotebookLM 生成簡報 / 影片 / 資訊圖表</span>
+        <span class="flow-step">5. Claude 編寫互動駕駛艙</span>
+        <span class="flow-step">6. GitHub Pages 上線</span>
+      </div>
+    </div>
+    <h4 style="font-size:1.1rem;color:#e03131;margin-bottom:12px">❓ 常見問題 FAQ</h4>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Q：AI 回答得很有自信，就一定對嗎？</div><div class="faq-a">不一定！AI 會出現<strong>虛構內容</strong>，說得頭頭是道卻是錯的。重要的事一定要用<strong>可靠的來源查證</strong>。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：可以把同學的照片和名字給 AI 做成梗圖嗎？</div><div class="faq-a">不行。那是<strong>別人的個人資料</strong>，交出去就收不回來，也可能傷害對方。自己的個資也一樣要保護。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：用 AI 畫的圖，可以說是我自己畫的嗎？</div><div class="faq-a">不可以。要<strong>標註「AI 生成」</strong>，說明你用了什麼工具、怎麼用。誠實透明是 AI 小機長的基本守則。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：心情不好時，可以只跟 AI 聊天嗎？</div><div class="faq-a">AI 沒有真正的感情，<strong>不能取代真人</strong>。有煩惱請找信任的家人、導師、輔導老師或好朋友。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：小學生可以自己註冊 ChatGPT 嗎？</div><div class="faq-a">很多 AI 工具規定<strong>13 歲以上</strong>才能使用，未滿 18 歲還需要家長同意。所以這堂課由<strong>老師用學校帳號的 Copilot</strong> 示範。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：怎麼分辨深偽影片？</div><div class="faq-a">先<strong>停一下</strong>：看手指、臉部邊緣、光影是不是不自然，再到<strong>可信的新聞或官方來源</strong>查證，不要急著轉傳。</div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fb-icon" aria-hidden="true">✈️</div>
+      <div><strong>AI 小機長｜六年級資訊科技</strong><span>AI 是副駕駛，你是機長：會問、會查、會保護自己。</span></div>
+    </div>
+    <ul class="footer-points">
+      <li><span class="fp-icon">🔒</span><div><strong>不收集個資</strong><small>本頁不需登入；小約定只用座號，資料不會上傳。</small></div></li>
+      <li><span class="fp-icon">🤖</span><div><strong>AI 協作說明</strong><small>簡報、影片、圖表由 NotebookLM 生成，Claude Code 整合。</small></div></li>
+      <li><span class="fp-icon">📘</span><div><strong>教材來源</strong><small>Microsoft × Cyberlite 課堂工具套件（2026 修訂）與 ECPAT 國小教師指南。</small></div></li>
+    </ul>
+    <nav class="footer-links">
+      <a class="footer-link" href="../index.html">🏠 IT COCKPIT 主頁</a>
+      <a class="footer-link" href="lecture-slides.html">🎬 演講簡報模式</a>
+      <a class="footer-link" href="#sec1">⬆️ 回到第 1 關</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p class="site-credit">Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+      <a href="https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+      <span class="footer-school"><span class="footer-dot" aria-hidden="true">・</span>桃園市龍潭區石門國民小學</span></p>
+    <p class="version-tag">v1.0 · 2026-10-28</p>
+  </div>
+</footer>
+
+<div class="float-tools">
+  <button class="float-btn red" onclick="togglePanel('lottery')" title="抽號">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn green" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn purple" onclick="goTop()" title="回頂部">⬆️</button>
+</div>
+<div class="float-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <button class="close" onclick="togglePanel('lottery')">✕</button></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c2)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="float-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <button class="close" onclick="togglePanel('timer')">✕</button></h4>
+  <div class="timer-display" id="timer-display">00:00</div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim)">
+    <span>設定分鐘</span>
+    <input type="number" id="timer-min" value="5" min="0" max="60" style="width:60px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1;background:#40c057">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="flex:1;background:var(--c2)">⏸ 暫停</button>
+    <button class="btn-primary" onclick="resetTimer()">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff6b6b" onclick="setPenColor('#ff6b6b',this)"></button>
+  <button class="color-dot" style="background:#ffa94d" onclick="setPenColor('#ffa94d',this)"></button>
+  <button class="color-dot" style="background:#51cf66" onclick="setPenColor('#51cf66',this)"></button>
+  <button class="color-dot" style="background:#339af0" onclick="setPenColor('#339af0',this)"></button>
+  <button class="color-dot" style="background:#2c2c2c" onclick="setPenColor('#2c2c2c',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<div class="slide-fs" id="slide-fs">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="簡報全螢幕">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="slide-fs-counter" id="slide-fs-counter">1 / 1</div>
+</div>
+
+<script>
+// ========== CONFIG ==========
+const SLIDE_COUNT = 12;          // NotebookLM 授課簡報 12 頁
+const YOUTUBE_VIDEO_ID = '';     // NotebookLM 教學影片（YouTube 不公開）
+const HAS_INFOGRAPHIC = true;
+const STAGE_TOTAL = 5;
+const SLIDE_LIST = [], SLIDE_THUMBS = [];
+for(let i=1;i<=SLIDE_COUNT;i++){
+  const n = String(i).padStart(2,'0');
+  SLIDE_LIST.push('assets/slide_' + n + '.webp');     // 1600px 主畫面
+  SLIDE_THUMBS.push('assets/thumbs/slide_' + n + '.webp'); // 320px 縮圖列
+}
+
+function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
+
+// ========== MODE ==========
+function switchMode(mode, btn){
+  if(mode === 'teacher'){
+    const pwd = prompt('請輸入教師密碼：');
+    if(pwd !== 'it2026'){ alert('密碼錯誤'); return; }
+  }
+  document.body.classList.toggle('teacher-mode', mode === 'teacher');
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ========== PROGRESS ==========
+const doneStages = new Set();
+function markStageDone(n){
+  if(doneStages.has(n)) return;
+  doneStages.add(n);
+  const pill = document.getElementById('pill'+n);
+  if(pill) pill.classList.add('done');
+  document.getElementById('progFill').style.width = (doneStages.size/STAGE_TOTAL*100) + '%';
+  document.getElementById('progTxt').textContent = doneStages.size + ' / ' + STAGE_TOTAL + ' 關完成';
+}
+
+// ========== QUIZ ==========
+const ANS = {'1-1':'B','1-2':'A','1-3':'C','2-1':'D','2-2':'B','2-3':'A','3-1':'B','3-2':'C','3-3':'A','4-1':'C','4-2':'A','4-3':'B','5-1':'B','5-2':'D','5-3':'A'};
+const EXPLAIN = {
+  '1-1':'生成式 AI 能產生新的文字、圖片、聲音、影片和程式碼。',
+  '1-2':'AI 是好幫手，但方向、查證和責任都在機長（你）身上。',
+  '1-3':'搜尋要自己在很多網頁裡找；提示是請 AI 直接整理回答。',
+  '2-1':'字數、語氣、格式這些「限制」屬於範圍。',
+  '2-2':'有目標、對象和範圍的提示最清楚，AI 才知道你要什麼。',
+  '2-3':'提示工程就是反覆修改、補充細節，再試一次！',
+  '3-1':'這叫做虛構內容：AI 在猜下一句，不是故意說謊，但會說錯。',
+  '3-2':'先拿掉能認出人的資料和機密內容，再交給 AI。',
+  '3-3':'大學研究單位和可靠的新聞媒體通常比較值得信任，但還是要多方查證。',
+  '4-1':'訓練資料不平均，AI 就可能出現刻板印象，這叫偏見。',
+  '4-2':'用 AI 做的作品要誠實標註，這是公開透明。',
+  '4-3':'加上人物、場景、風格等細節，AI 才畫得更接近你的想法。',
+  '5-1':'AI 沒有真正的感情，心事要找信任的真人說。',
+  '5-2':'不明連結可能有病毒或詐騙：不點、不下載，告訴大人。',
+  '5-3':'看到太逼真的內容先停一下，檢查破綻再查證，不急著轉傳。'
+};
+const PRAISE = ['🎉 太棒了！','✨ 答對囉！','🌟 機長正解！','💪 你真厲害！','🛫 順利起飛！'];
+function q(btn, stage, num, choice){
+  const key = stage + '-' + num, correct = ANS[key], box = btn.parentElement;
+  box.querySelectorAll('.quiz-opt').forEach(o=>{o.disabled=true;o.style.cursor='default';});
+  const fb = document.getElementById('fb-' + key);
+  fb.classList.add('show');
+  if(choice === correct){
+    btn.classList.add('correct','pulse'); fb.classList.add('ok');
+    fb.textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)] + ' ' + EXPLAIN[key];
+  } else {
+    btn.classList.add('wrong');
+    box.querySelectorAll('.quiz-opt').forEach(o=>{ if(o.textContent.trim().startsWith(correct + '.')) o.classList.add('correct'); });
+    fb.classList.add('bad');
+    fb.textContent = '💡 正確答案是 ' + correct + '。' + EXPLAIN[key];
+  }
+  const answered = document.getElementById('sec'+stage).querySelectorAll('.quiz-fb.show').length;
+  if(answered >= 3) markStageDone(stage);
+}
+
+// ========== helpers ==========
+function wrapText(ctx, text, maxW){
+  const out=[]; let line='';
+  for(const ch of text){
+    const t = line + ch;
+    if(ctx.measureText(t).width > maxW && line !== ''){ out.push(line); line = ch; } else line = t;
+  }
+  if(line) out.push(line);
+  return out;
+}
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+function showResult(id, ok, text){
+  const el = document.getElementById(id);
+  el.className = 'game-result show ' + (ok ? 'ok' : 'bad');
+  el.textContent = text;
+}
+const FONT = '"Noto Sans TC", "Microsoft JhengHei", sans-serif';
+
+// ========== GAME 1: 駕駛艙任務分配 ==========
+const G1 = [
+  {t:'把 10 頁自然課筆記整理成 5 個重點', a:'ai', why:'整理摘要是 AI 的強項，但整理完要自己再對照課本檢查。'},
+  {t:'決定報告裡哪一句話是「真的」', a:'me', why:'判斷真假要靠機長查證可靠來源，不能直接相信 AI。'},
+  {t:'幫忙想 5 個海報標題的點子', a:'ai', why:'發想點子可以請 AI 幫忙，最後選哪一個由你決定。'},
+  {t:'要不要把同學的照片上傳給 AI', a:'me', why:'這是別人的個資，機長要守住——答案是不要上傳！'},
+  {t:'出 3 題數學練習題幫我複習', a:'ai', why:'出練習題是 AI 能幫忙的事，但答案也要自己驗算。'},
+  {t:'交作業時說明哪裡用了 AI', a:'me', why:'誠實標註是機長的責任，AI 不會替你負責。'},
+  {t:'心情不好時找人說心事', a:'me', why:'AI 不是真人，心事要找信任的家人、老師或朋友。'}
+];
+let g1i = 0, g1s = {ok:0,bad:0}, g1Done = false;
+function drawG1(){
+  const cv = document.getElementById('game1'); if(!cv) return;
+  const ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  const sky = ctx.createLinearGradient(0,0,0,H); sky.addColorStop(0,'#d0ebff'); sky.addColorStop(1,'#f4f9ff');
+  ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+  // 駕駛艙窗框
+  ctx.fillStyle = '#2c2c2c'; ctx.fillRect(0,H-70,W,70);
+  ctx.fillStyle = '#ffd43b'; [80,140,200,400,460,520].forEach(x=>{ctx.beginPath();ctx.arc(x,H-35,9,0,Math.PI*2);ctx.fill();});
+  ctx.font = '26px ' + FONT; ctx.fillText('🧑‍✈️', 280, H-22); ctx.fillText('🤖', 330, H-22);
+  // 雲
+  ctx.fillStyle = '#fff'; [[70,50],[520,70]].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,20,0,7);ctx.arc(x+24,y-8,24,0,7);ctx.arc(x+50,y,18,0,7);ctx.fill();});
+  // 任務卡
+  roundRect(ctx, 60, 70, W-120, 150, 16); ctx.fillStyle = '#fff'; ctx.fill();
+  ctx.lineWidth = 3; ctx.strokeStyle = '#2c2c2c'; ctx.stroke();
+  ctx.fillStyle = '#1c7ed6'; ctx.font = 'bold 16px ' + FONT;
+  ctx.fillText('任務卡 ' + (g1i+1) + ' / ' + G1.length, 80, 98);
+  ctx.fillStyle = '#2c2c2c'; ctx.font = 'bold 24px ' + FONT;
+  wrapText(ctx, G1[g1i].t, W-170).forEach((l,i)=>ctx.fillText(l, 80, 138 + i*34));
+  ctx.fillStyle = '#6f6f6f'; ctx.font = '15px ' + FONT;
+  ctx.fillText('答對 ' + g1s.ok + '　再想想 ' + g1s.bad, 80, 205);
+}
+function game1Pick(choice){
+  if(g1Done) return;
+  g1Done = true;
+  const it = G1[g1i], ok = choice === it.a;
+  ok ? g1s.ok++ : g1s.bad++;
+  showResult('game1Result', ok, (ok ? '✅ 判斷正確！' : '🤔 再想想～') + (it.a==='ai' ? '可以交給 AI 副駕駛幫忙。' : '這要機長自己負責。') + it.why);
+  drawG1();
+}
+function game1Next(){ g1i = (g1i+1) % G1.length; g1Done = false; document.getElementById('game1Result').className='game-result'; drawG1(); }
+
+// ========== GAME 2: 提示詞組合器 ==========
+function buildPrompt(){
+  const v = [1,2,3,4,5].map(i=>document.getElementById('pb'+i).value.trim());
+  const filled = v.filter(Boolean).length;
+  const parts = [];
+  v.forEach((s,i)=>{ if(s) parts.push('<mark class="t'+(i+1)+'">'+s.replace(/[<>&]/g,'')+'</mark>'); });
+  document.getElementById('pbOut').innerHTML = parts.length ? parts.join('，') + '。' : '先從左上角選一個「角色」開始吧！';
+  document.getElementById('pbFill').style.width = (filled/5*100) + '%';
+  document.getElementById('pbPct').textContent = filled + '/5';
+  document.getElementById('pbStar').textContent = '★'.repeat(filled) + '☆'.repeat(5-filled);
+  const names = ['角色','目標','對象','背景','範圍'];
+  const missing = names.filter((n,i)=>!v[i]);
+  if(filled === 5) showResult('game2Result', true, '🌟 五要素全到齊！這是一個超清楚的好提示，AI 一看就知道你要什麼。');
+  else if(filled > 0) showResult('game2Result', false, '還少了：' + missing.join('、') + '。補上它們，AI 的回答會更貼近你的需要！');
+  else document.getElementById('game2Result').className = 'game-result';
+}
+function copyPrompt(){
+  const t = document.getElementById('pbOut').textContent;
+  if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>showResult('game2Result', true, '📋 已複製！可以請老師貼到 Copilot 試試看。')).catch(()=>{});
+}
+function resetPrompt(){ [1,2,3,4,5].forEach(i=>document.getElementById('pb'+i).value=''); buildPrompt(); }
+
+// ========== GAME 3A: 事實查核 ==========
+const FACTS = [
+  {t:'「目前漂浮在全球海洋中的塑膠製品數量已突破 500 兆個。」', ok:false, why:'不正確。數字被誇大了，這就是 AI 的「虛構」——數字看起來很精確，卻沒有可靠來源支持。'},
+  {t:'「誤食人類污染所導致的塑膠製品，正是全球海龜所面臨的主要威脅之一。」', ok:true, why:'正確！可靠的研究和保育組織都指出，誤食塑膠是海龜面臨的重大威脅之一。'},
+  {t:'「科學家預測，在 2032 年海中的塑膠製品數量可能會超過魚類。」', ok:false, why:'不正確。AI 把年份弄錯了。遇到「預測」和「年份」更要回頭找原始來源。'}
+];
+function initFacts(){
+  const box = document.getElementById('factCards'); box.innerHTML = '';
+  FACTS.forEach((f,i)=>{
+    const d = document.createElement('div'); d.className = 'fact-card';
+    d.innerHTML = '<span class="stamp" id="st'+i+'"></span><p>'+f.t+'</p><div class="fc-btns"><button onclick="factPick('+i+',true)">⭕ 正確</button><button onclick="factPick('+i+',false)">❌ 不正確</button></div><div class="fc-fb" id="ff'+i+'"></div>';
+    box.appendChild(d);
+  });
+}
+let factDone = 0;
+function factPick(i, ans){
+  const fb = document.getElementById('ff'+i);
+  if(fb.classList.contains('show')) return;
+  const f = FACTS[i], ok = ans === f.ok;
+  fb.className = 'fc-fb show ' + (ok?'ok':'bad');
+  fb.textContent = (ok ? '✅ 答對！' : '🤔 其實是：') + f.why;
+  const st = document.getElementById('st'+i);
+  st.className = 'stamp show ' + (f.ok?'true':'false'); st.textContent = f.ok ? '正確' : '不正確';
+  factDone++;
+}
+
+// ========== GAME 3B: 個資偵探 ==========
+const CHAT = [
+  ['g','Gina','嗨，在開始專訪之前，我想確認幾項資訊。您的全名是 [[Mika Lee 博士]]，是 [[海洋研究大學]] 的科學家，而電子郵件是 [[mikalee@u.marineresearch.com]]，對嗎？'],
+  ['l','Lee 博士','對，沒錯，但我想成為您文章中的匿名消息來源。'],
+  ['g','Gina','好的。聽說您可能掌握幾項塑膠污染問題的內線消息，可以分享嗎？'],
+  ['l','Lee 博士','雖然不該透露，但我發現了 [[海中塑膠微粒含量正在急遽上升的機密資料]]，下週才會發布，請妥善處理。'],
+  ['g','Gina','我保證謹慎處理。報導發表後我會寄一份給您，可以寄到您的住家地址 [[321 Central Street, Singapore 001002]] 嗎？'],
+  ['l','Lee 博士','聽起來很不錯，預祝妳撰文順利。']
+];
+const PII_WHY = ['全名','任職單位','電子郵件','尚未公開的機密研究','住家地址'];
+let piiFound = 0;
+function renderChat(){
+  const box = document.getElementById('chatLog'); box.innerHTML = ''; piiFound = 0; let pid = 0;
+  CHAT.forEach(([side, who, text])=>{
+    const m = document.createElement('div'); m.className = 'msg ' + side;
+    let html = '<span class="who">' + who + '</span>';
+    text.split(/(\[\[.+?\]\])/).forEach(seg=>{
+      if(seg.startsWith('[[')){ html += '<span class="pii" data-id="'+pid+'" onclick="piiClick(this)">' + seg.slice(2,-2) + '</span>'; pid++; }
+      else html += seg.split(/(，|。|？|、)/).map(w=>w ? '<span class="word" onclick="wordClick(this)">'+w+'</span>' : '').join('');
+    });
+    m.innerHTML = html; box.appendChild(m);
+  });
+}
+function piiClick(el){
+  if(el.classList.contains('found')) return;
+  el.classList.add('found'); piiFound++;
+  const why = PII_WHY[+el.dataset.id];
+  if(piiFound >= 5) showResult('game3Result', true, '🕵️ 全部找到了！姓名、單位、信箱、住址和機密資料都不該交給 AI。想請 AI 摘要時，先把這些刪掉或改成「某位科學家」。');
+  else showResult('game3Result', true, '🔒 找到「' + why + '」！已找到 ' + piiFound + ' / 5 個。');
+}
+function wordClick(el){
+  if(el.classList.contains('wrongpick')) return;
+  el.classList.add('wrongpick');
+  setTimeout(()=>el.classList.remove('wrongpick'), 900);
+  showResult('game3Result', false, '這段不是能認出人的資料喔，再找找看！（已找到 ' + piiFound + ' / 5 個）');
+}
+function piiHint(){
+  const left = [...document.querySelectorAll('.pii:not(.found)')];
+  if(!left.length) return;
+  left[0].classList.add('miss'); setTimeout(()=>left[0].classList.remove('miss'), 1500);
+  showResult('game3Result', false, '💡 提示：看看閃紅色的地方，它是「' + PII_WHY[+left[0].dataset.id] + '」。');
+}
+function piiReset(){ renderChat(); document.getElementById('game3Result').className = 'game-result'; }
+
+// ========== GAME 4: Gina 的三次嘗試 ==========
+let g4Attempt = 0, g4Label = false;
+const G4_TEXT = {
+  1:'第一次：AI 畫了一位男性科學家。可是 Lee 博士是女性！這就是 AI 的偏見（刻板印象）。',
+  2:'第二次：好一點了，但只看到手和瓶子，還是看不出海龜受到傷害。',
+  3:'第三次：成功！海裡滿是塑膠瓶、海龜在其中游，一眼就看懂報導主題。重點是：反覆修改提示！'
+};
+function drawWaves(ctx, W, H, y){
+  ctx.fillStyle = '#74c0fc'; ctx.fillRect(0, y, W, H-y);
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 3;
+  for(let r=0;r<3;r++){ ctx.beginPath(); for(let x=0;x<=W;x+=20){ ctx.lineTo(x, y+18+r*40 + Math.sin(x/30+r)*6); } ctx.stroke(); }
+}
+function drawBottle(ctx, x, y, s, rot){
+  ctx.save(); ctx.translate(x,y); ctx.rotate(rot||0); ctx.scale(s,s);
+  ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.strokeStyle = '#2c2c2c'; ctx.lineWidth = 2;
+  roundRect(ctx,-10,-22,20,40,6); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#4dabf7'; ctx.fillRect(-5,-30,10,8); ctx.strokeRect(-5,-30,10,8);
+  ctx.restore();
+}
+function drawTurtle(ctx, x, y, s){
+  ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
+  ctx.fillStyle = '#69db7c'; ctx.strokeStyle = '#2c2c2c'; ctx.lineWidth = 2;
+  [[-24,-14],[24,-14],[-22,16],[22,16]].forEach(([fx,fy])=>{ctx.beginPath();ctx.ellipse(fx,fy,12,6,fx>0?0.5:-0.5,0,7);ctx.fill();ctx.stroke();});
+  ctx.beginPath(); ctx.arc(34,0,9,0,7); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#c92a2a'; ctx.beginPath(); ctx.ellipse(0,0,28,20,0,0,7); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#ffa8a8'; ctx.beginPath(); ctx.moveTo(-14,-8); ctx.lineTo(14,8); ctx.moveTo(14,-8); ctx.lineTo(-14,8); ctx.stroke();
+  ctx.restore();
+}
+function drawG4(){
+  const cv = document.getElementById('game4'); if(!cv) return;
+  const ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  ctx.fillStyle = '#e7f5ff'; ctx.fillRect(0,0,W,H);
+  if(g4Attempt === 0){
+    ctx.fillStyle = '#1c7ed6'; ctx.font = 'bold 24px ' + FONT; ctx.textAlign = 'center';
+    ctx.fillText('🎨 按下方的提示按鈕，讓 AI 開始畫圖', W/2, H/2-10);
+    ctx.fillStyle = '#6f6f6f'; ctx.font = '16px ' + FONT;
+    ctx.fillText('（簡筆畫模擬，示意 Gina 三次嘗試的結果）', W/2, H/2+24); ctx.textAlign = 'left';
+  } else if(g4Attempt === 1){
+    drawWaves(ctx, W, H, 210);
+    ctx.fillStyle = '#fff'; ctx.strokeStyle = '#2c2c2c'; ctx.lineWidth = 3;
+    roundRect(ctx, 230, 150, 140, 190, 30); ctx.fill(); ctx.stroke();       // 白袍
+    ctx.fillStyle = '#ffd8a8'; ctx.beginPath(); ctx.arc(300, 110, 42, 0, 7); ctx.fill(); ctx.stroke(); // 臉
+    ctx.fillStyle = '#e8a33d'; ctx.beginPath(); ctx.arc(300, 88, 40, Math.PI, 0); ctx.fill();  // 短髮
+    ctx.fillStyle = '#2c2c2c'; ctx.beginPath(); ctx.arc(286,112,4,0,7); ctx.arc(314,112,4,0,7); ctx.fill();
+    ctx.beginPath(); ctx.arc(300,128,10,0.2,Math.PI-0.2); ctx.stroke();
+    drawBottle(ctx, 395, 200, 1.6, 0.2);
+    ctx.fillStyle = '#e03131'; ctx.font = 'bold 18px ' + FONT; ctx.fillText('⚠️ 偏見警報：Lee 博士是女性！', 20, 34);
+  } else if(g4Attempt === 2){
+    drawWaves(ctx, W, H, 150);
+    ctx.fillStyle = '#ffd8a8'; ctx.strokeStyle = '#2c2c2c'; ctx.lineWidth = 3;
+    roundRect(ctx, 210, 190, 170, 70, 30); ctx.fill(); ctx.stroke();
+    drawBottle(ctx, 300, 165, 3.2, 0);
+    ctx.fillStyle = '#e8590c'; ctx.font = 'bold 18px ' + FONT; ctx.fillText('🤔 看不出海龜受到傷害……', 20, 34);
+  } else {
+    drawWaves(ctx, W, H, 60);
+    const bs = [[60,120,.1],[140,250,-.6],[220,100,.9],[350,280,.4],[430,140,-.3],[520,230,1.1],[90,300,.7],[480,90,.2],[300,210,-1],[560,310,.5]];
+    bs.forEach(([x,y,r])=>drawBottle(ctx,x,y,1.1,r));
+    drawTurtle(ctx, 270, 160, 1.6); drawTurtle(ctx, 450, 250, 1.1);
+    ctx.fillStyle = '#2b8a3e'; ctx.font = 'bold 18px ' + FONT; ctx.fillText('✅ 一眼看懂：塑膠污染正在傷害海龜', 20, 34);
+  }
+  if(g4Label && g4Attempt){
+    roundRect(ctx, W-150, H-46, 136, 34, 10); ctx.fillStyle = 'rgba(44,44,44,.85)'; ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 16px ' + FONT; ctx.fillText('🏷️ AI 生成圖片', W-140, H-23);
+  }
+}
+function drawAttempt(n){
+  g4Attempt = n; drawG4();
+  showResult('game4Result', n === 3, G4_TEXT[n] + (n===3 && !g4Label ? ' 最後別忘了按「加上 AI 生成標註」！' : ''));
+}
+function toggleAiLabel(){
+  if(!g4Attempt){ showResult('game4Result', false, '先讓 AI 畫一張圖，再加標註吧！'); return; }
+  g4Label = !g4Label; drawG4();
+  if(g4Label) showResult('game4Result', true, '🏷️ 標註完成！用 AI 做的作品要公開透明，讓讀者知道這是 AI 生成的。');
+}
+
+// ========== GAME 5: 機長判斷時間 ==========
+const SCN = [
+  {tag:'聊天',t:'小美請 Copilot 幫她把自然課重點整理成 5 點，再對照課本檢查。', ok:true, why:'用 AI 整理重點，再自己查證——標準的機長操作！'},
+  {tag:'個資',t:'阿哲把自己的全名、班級、手機號碼打給 AI，請它「記住我」。', ok:false, why:'個人資料不能給 AI，交出去就收不回來。'},
+  {tag:'友誼',t:'小安覺得 AI 比同學更懂他，決定以後只跟 AI 說心事。', ok:false, why:'AI 沒有真正的感情，心事要找信任的真人。'},
+  {tag:'網路安全',t:'下載遊戲前，小芸先確認網址是 https 開頭、有鎖頭，而且是官方網站。', ok:true, why:'只從可信任、有鎖頭的官方網站下載，安全起飛！'},
+  {tag:'深偽',t:'群組流傳一段校長宣布「明天放假」的影片，看起來超真，小傑馬上轉傳。', ok:false, why:'可能是深偽影片！先停一下，向學校官方管道查證。'},
+  {tag:'誠實',t:'阿凱把 AI 畫的插圖放進報告，並在圖下寫「本圖由 AI 生成」。', ok:true, why:'誠實標註 AI 生成，公開透明！'},
+  {tag:'抄襲',t:'小雨把 AI 寫的整篇作文直接交出去，說是自己寫的。', ok:false, why:'這是抄襲。AI 的點子只能當起點，要自己寫並說明用了 AI。'},
+  {tag:'求助',t:'有人在遊戲裡一直要小晴的照片，小晴覺得不舒服，就告訴了媽媽和導師。', ok:true, why:'遇到不舒服的狀況告訴信任的大人，做得非常好！'}
+];
+let scnI = 0, scnDone = false, scnScore = 0;
+function renderScn(){
+  const s = SCN[scnI];
+  document.getElementById('scnCard').innerHTML = '<span class="scn-tag">#' + s.tag + '</span><div class="scn-text">' + s.t + '</div><div class="scn-count">情境 ' + (scnI+1) + ' / ' + SCN.length + '　｜　答對 ' + scnScore + ' 題</div>';
+}
+function scnPick(ans){
+  if(scnDone) return; scnDone = true;
+  const s = SCN[scnI], ok = ans === s.ok; if(ok) scnScore++;
+  showResult('game5Result', ok, (ok ? '✅ 判斷正確！' : '🤔 再想想：') + (s.ok ? '這是安全起飛。' : '這裡要緊急煞車！') + s.why);
+  renderScn();
+}
+function scnNext(){ scnI = (scnI+1) % SCN.length; scnDone = false; document.getElementById('game5Result').className = 'game-result'; renderScn(); }
+
+// ========== 班級 AI 使用小約定 ==========
+const PLEDGE = [
+  '我會負責任地使用 AI 工具。','我知道 AI 有限制，不一定都正確。','我不給 AI 個人資料，也不亂點可疑連結。',
+  '我會用可靠的來源查證 AI 的答案。','AI 不是真人，我會多和家人朋友互動。','我會留意 AI 內容裡的偏見。',
+  '用了 AI 我會說出來，不抄襲。','遇到困難或疑慮，我會找老師幫忙。','看到有人濫用 AI，我會告訴老師。','我會保持好奇心，繼續學習 AI。'
+];
+function initPledge(){
+  document.getElementById('pledgeList').innerHTML = PLEDGE.map((p,i)=>'<li><label><input type="checkbox" class="pl-ck"><span><strong>' + (i+1) + '.</strong> ' + p + '</span></label></li>').join('');
+}
+function issueLicense(){
+  const n = document.querySelectorAll('.pl-ck:checked').length;
+  if(n < PLEDGE.length){ alert('還有 ' + (PLEDGE.length - n) + ' 條約定沒有打勾喔！'); return; }
+  const seat = parseInt(document.getElementById('seatNo').value);
+  document.getElementById('certSeat').textContent = (seat ? seat + ' 號' : '') + ' AI 小機長';
+  document.getElementById('certDate').textContent = '核發日期：' + new Date().toLocaleDateString('zh-TW');
+  document.getElementById('pledgeCert').classList.add('show');
+}
+
+// ========== SLIDE PLAYER ==========
+let slideIdx = 0;
+const slideLoaded = new Set(), slidePending = {};
+function preloadSlide(n, done){
+  if(slideLoaded.has(n)){ if(done) done(); return; }
+  if(slidePending[n]){ if(done) slidePending[n].push(done); return; }
+  slidePending[n] = done ? [done] : [];
+  const load = src => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = ()=>finish();
+    img.onerror = ()=>{
+      // WebP 失敗改用 JPG；JPG 也失敗就結束等待，避免一直顯示載入中
+      if(src.endsWith('.webp')){ SLIDE_LIST[n] = src.replace('.webp','.jpg'); load(SLIDE_LIST[n]); }
+      else finish();
+    };
+    img.src = src;
+  };
+  const finish = ()=>{
+    slideLoaded.add(n);
+    const cbs = slidePending[n] || []; delete slidePending[n];
+    cbs.forEach(cb=>cb());
+  };
+  load(SLIDE_LIST[n]);
+}
+function initSlidePlayer(){
+  if(SLIDE_COUNT === 0) return;
+  document.getElementById('slide-placeholder').style.display = 'none';
+  document.getElementById('slide-main').style.display = 'block';
+  const strip = document.getElementById('slide-strip');
+  strip.style.display = 'flex'; strip.innerHTML = '';
+  SLIDE_LIST.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0 ? ' active' : '');
+    t.onclick = ()=>goSlide(i);
+    const img = document.createElement('img');
+    img.alt = '第 ' + (i+1) + ' 頁'; img.loading = 'lazy'; img.decoding = 'async';
+    img.setAttribute('data-fallback-src', src.replace('.webp','.jpg'));
+    img.src = SLIDE_THUMBS[i];
+    t.appendChild(img); strip.appendChild(t);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n < 0 || n >= SLIDE_COUNT) return;
+  slideIdx = n;
+  const cur = document.getElementById('slide-current');
+  const main = document.getElementById('slide-main');
+  if(!slideLoaded.has(n)){
+    // 先放小縮圖當模糊預覽，大圖下載完再換上
+    main.classList.add('loading');
+    cur.removeAttribute('data-webp-fallback-index');
+    cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
+    cur.src = SLIDE_THUMBS[n];
+    preloadSlide(n, ()=>{ if(slideIdx === n){ cur.src = SLIDE_LIST[n]; main.classList.remove('loading'); } });
+  } else {
+    cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
+    cur.src = SLIDE_LIST[n];
+    main.classList.remove('loading');
+  }
+  // 預先載入前後頁，翻頁不再等待
+  preloadSlide((n + 1) % SLIDE_COUNT);
+  preloadSlide((n - 1 + SLIDE_COUNT) % SLIDE_COUNT);
+  document.getElementById('slide-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  }
+  const strip = document.getElementById('slide-strip');
+  const active = document.querySelectorAll('.strip-thumb')[n];
+  if(active && strip){
+    const left = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, left), behavior: 'smooth'});
+  }
+}
+function slideNav(dir){ if(SLIDE_COUNT === 0) return; goSlide((slideIdx + dir + SLIDE_COUNT) % SLIDE_COUNT); }
+function openSlideFullscreen(){
+  if(SLIDE_COUNT === 0) return;
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[slideIdx];
+  document.getElementById('slide-fs-counter').textContent = (slideIdx+1) + ' / ' + SLIDE_COUNT;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+
+// ========== VIDEO ==========
+function initVideo(){
+  if(!YOUTUBE_VIDEO_ID) return;
+  document.getElementById('video-placeholder').style.display = 'none';
+  document.getElementById('video-ratio').style.display = 'block';
+  document.getElementById('nlm-video-iframe').src = 'https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID + '?rel=0&modestbranding=1&cc_load_policy=1';
+  const yt = document.getElementById('yt-link');
+  yt.href = 'https://www.youtube.com/watch?v=' + YOUTUBE_VIDEO_ID;
+  yt.style.display = 'inline';
+}
+
+// ========== FLOAT TOOLS ==========
+function togglePanel(name){
+  ['lottery','timer'].forEach(p=>{
+    const el = document.getElementById('panel-'+p);
+    if(p === name) el.classList.toggle('show'); else el.classList.remove('show');
+  });
+}
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const tm = setInterval(()=>{ out.textContent = (Math.floor(Math.random()*(max-min+1)) + min) + ' 號'; }, 60);
+  setTimeout(()=>{
+    clearInterval(tm);
+    let num;
+    if(unique){ if(lotPool.length === 0) refillLotPool(); num = lotPool.splice(Math.floor(Math.random()*lotPool.length), 1)[0]; }
+    else num = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){ refillLotPool(); document.getElementById('lot-out').textContent = '等待抽號...'; }
+let timerInt = null, timerSec = 0;
+function renderTimer(){
+  const m = Math.floor(timerSec/60), s = timerSec % 60;
+  document.getElementById('timer-display').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+function startTimer(){
+  if(timerInt) return;
+  if(timerSec <= 0) timerSec = (parseInt(document.getElementById('timer-min').value) || 5) * 60;
+  renderTimer();
+  timerInt = setInterval(()=>{
+    timerSec--; renderTimer();
+    if(timerSec <= 0){ clearInterval(timerInt); timerInt = null; alert('⏰ 時間到！'); }
+  }, 1000);
+}
+function pauseTimer(){ if(timerInt){ clearInterval(timerInt); timerInt = null; } }
+function resetTimer(){ pauseTimer(); timerSec = 0; renderTimer(); }
+
+// ========== DRAW ==========
+let drawActive = false, penColor = '#ff6b6b', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  const line = (x,y)=>{
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(x, y); drawCtx.stroke();
+    dLastX = x; dLastY = y;
+  };
+  drawCanvas.addEventListener('mousedown', e=>{ if(!drawActive) return; isDrawing = true; dLastX = e.clientX; dLastY = e.clientY; });
+  drawCanvas.addEventListener('mousemove', e=>{ if(drawActive && isDrawing) line(e.clientX, e.clientY); });
+  drawCanvas.addEventListener('mouseup', ()=>isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e=>{ if(!drawActive) return; e.preventDefault(); const t=e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e=>{ if(!drawActive || !isDrawing) return; e.preventDefault(); const t=e.touches[0]; line(t.clientX, t.clientY); }, {passive:false});
+  drawCanvas.addEventListener('touchend', ()=>isDrawing = false);
+  window.addEventListener('resize', ()=>{ drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight; });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c1)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key === 'ArrowLeft') slideNav(-1);
+    else if(e.key === 'ArrowRight') slideNav(1);
+    else if(e.key === 'Escape') closeSlideFullscreen();
+  }
+});
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  safeInit('initDraw', initDraw);
+  safeInit('initSlidePlayer', initSlidePlayer);
+  safeInit('initVideo', initVideo);
+  safeInit('initInfographic', ()=>{ if(HAS_INFOGRAPHIC) document.getElementById('info-section').style.display = 'block'; });
+  safeInit('drawG1', drawG1);
+  safeInit('initFacts', initFacts);
+  safeInit('renderChat', renderChat);
+  safeInit('drawG4', drawG4);
+  safeInit('renderScn', renderScn);
+  safeInit('initPledge', initPledge);
+});
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(()=>{ safeInit('redraw', ()=>{ drawG1(); drawG4(); }); });
+}
+</script>
+</body>
+</html>
