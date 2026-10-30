@@ -68,6 +68,14 @@ a{color:var(--c1)}
 .lecture-cta .t{display:block;font-weight:900;font-size:1.2rem}
 .lecture-cta .s{display:block;font-size:.85rem;opacity:.9}
 .care-note{margin-top:18px;background:#fff8e6;border-left:5px solid var(--c4);padding:12px 16px;border-radius:8px;font-size:.95rem}
+/* video */
+.video-block{margin-bottom:30px}
+.video-wrap{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border-top:5px solid var(--c3);max-width:1100px}
+.video-ratio{position:relative;padding-top:56.25%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 16px;font-size:.92rem;color:var(--dim)}
+.video-meta a{margin-left:auto;font-weight:700;text-decoration:none}
+.nlm-badge{background:var(--c3);color:#fff;font-weight:700;padding:3px 10px;border-radius:6px;font-size:.85rem}
 /* objectives & pills */
 .block-title{font-size:1.4rem;font-weight:900;color:var(--ink);margin:0 0 14px}
 .obj-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
@@ -299,6 +307,14 @@ body.lecturer .teacher-note{display:block}
         </dl>
         <a href="lecture-slides.html" class="lecture-cta"><span class="t">🎬 進入演講簡報模式</span><span class="s">14 張投影片 · 全螢幕 · 鍵盤翻頁 · 可離線</span></a>
       </div>
+    </div>
+  </section>
+
+  <section class="video-block">
+    <h2 class="block-title">▶ 研習導讀影片（6 分 39 秒）</h2>
+    <div class="video-wrap">
+      <div class="video-ratio"><iframe src="https://www.youtube.com/embed/lwIXM2Dbl70?rel=0&modestbranding=1" title="數位素養與網路安全 教師研習導讀影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+      <div class="video-meta"><span class="nlm-badge">🤖 NotebookLM AI 生成</span><span>CC 字幕：中文／English・可先看影片再進入五大關卡</span><a href="https://www.youtube.com/watch?v=lwIXM2Dbl70" target="_blank" rel="noopener">↗ 在 YouTube 開啟</a></div>
     </div>
   </section>
 
@@ -541,7 +557,7 @@ body.lecturer .teacher-note{display:block}
     <ul class="footer-points">
       <li><span class="fp-icon">🔒</span><div><strong>不收集個資</strong><small>本頁不需登入，回饋文字只存在您的瀏覽器。</small></div></li>
       <li><span class="fp-icon">📘</span><div><strong>教材來源</strong><small>台灣展翅協會、台灣微軟研習資源清單及國內外公開資料。</small></div></li>
-      <li><span class="fp-icon">🤖</span><div><strong>AI 協作說明</strong><small>由 Claude Code 整理公開網頁資料製作，內容經人工設計審閱。</small></div></li>
+      <li><span class="fp-icon">🤖</span><div><strong>AI 協作說明</strong><small>導讀影片由 NotebookLM 生成；駕駛艙由 Claude Code 整理公開資料製作。</small></div></li>
     </ul>
     <nav class="footer-links">
       <a class="footer-link" href="../index.html">🏠 IT COCKPIT 主頁</a>
@@ -553,7 +569,7 @@ body.lecturer .teacher-note{display:block}
     <p class="site-credit">Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
       <a href="https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
       <span class="footer-school"><span class="footer-dot" aria-hidden="true">・</span>桃園市龍潭區石門國民小學</span></p>
-    <p class="version-tag">v1.0 · 2026-10-30</p>
+    <p class="version-tag">v1.1 · 2026-10-30</p>
   </div>
 </footer>
 
