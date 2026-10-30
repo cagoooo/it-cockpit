@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>數位素養與網路安全｜教師研習簡報</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=Inter+Tight:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5f0;--panel:#fff;--c1:#1f4e79;--c2:#0f8b8d;--c3:#e0644f;--c4:#e9a23b;--c5:#6c5ce7;--text:#1f2933;--dim:#5b6673;--border:#d8d2c4;--ink:#16324f}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);font-family:'Noto Sans TC',sans-serif;color:var(--text)}
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;padding:5vh 6vw 13vh;display:none;flex-direction:column;justify-content:center;opacity:0;transition:opacity .35s}
+.slide.active{display:flex;opacity:1}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:8px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3))}
+.kicker{font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:3px;color:var(--c3);font-size:clamp(.9rem,1.4vw,1.2rem);margin-bottom:1vh}
+h1{font-family:'Noto Serif TC',serif;font-size:clamp(2.4rem,5.4vw,4.6rem);line-height:1.25;margin:0 0 2vh;color:var(--ink)}
+h2{font-family:'Noto Serif TC',serif;font-size:clamp(2rem,3.6vw,3.2rem);line-height:1.3;margin:0 0 3vh;color:var(--ink)}
+h2 .hl,h1 .hl{color:var(--c2)}
+p,li{font-size:clamp(1.15rem,1.9vw,1.7rem);line-height:1.6}
+ul{margin:0;padding-left:1.2em}
+.sub{color:var(--dim);font-size:clamp(1.2rem,2vw,1.8rem)}
+.grid{display:grid;gap:2vw}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}.g6{grid-template-columns:repeat(6,1fr)}
+.card{background:var(--panel);border-radius:16px;padding:2.2vh 1.6vw;box-shadow:0 6px 20px rgba(22,50,79,.08);border-top:6px solid var(--cc,var(--c1))}
+.card h3{margin:0 0 1vh;font-size:clamp(1.3rem,2.1vw,1.9rem);color:var(--cc,var(--c1))}
+.card p,.card li{font-size:clamp(1.05rem,1.6vw,1.45rem);margin:0}
+.big{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:clamp(2.6rem,5vw,4.6rem);color:var(--c3);line-height:1.1}
+.tags{display:flex;gap:1vw;flex-wrap:wrap;margin-top:3vh}
+.tag{font-weight:700;font-size:clamp(1rem,1.5vw,1.3rem);padding:.5vh 1.2vw;border-radius:10px;border:2px solid var(--tc);color:var(--tc);background:#fff}
+.quote{font-family:'Noto Serif TC',serif;font-size:clamp(1.8rem,3.4vw,3rem);color:var(--ink);border-left:10px solid var(--c2);padding-left:2vw;margin:2vh 0}
+.src{position:absolute;bottom:10.5vh;right:6vw;font-size:clamp(.85rem,1.1vw,1rem);color:var(--dim)}
+.speaker{position:absolute;bottom:2.5vh;left:3vw;display:flex;align-items:flex-end;gap:12px;z-index:8;max-width:60%}
+.speaker .avatar{width:58px;height:58px;border-radius:50%;background:var(--c4);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,.15)}
+.speaker .bubble{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:8px 14px;font-size:clamp(.9rem,1.2vw,1.1rem);font-weight:600;line-height:1.5}
+.progress{position:fixed;left:0;right:0;bottom:0;height:6px;background:#e3ddcf;z-index:20}
+.progress-fill{height:100%;width:0;background:var(--c2);transition:width .3s}
+.hint{position:fixed;right:2vw;bottom:2vh;font-size:.85rem;color:var(--dim);background:rgba(255,255,255,.85);padding:4px 12px;border-radius:14px;z-index:20}
+.counter{position:fixed;right:2vw;top:2.5vh;font-family:'Inter Tight',sans-serif;font-weight:800;color:var(--dim);z-index:20}
+.overview{position:fixed;inset:0;background:rgba(22,50,79,.96);z-index:50;display:none;padding:4vh 4vw;overflow:auto}
+.overview.show{display:block}
+.overview h3{color:#fff;margin:0 0 2vh;font-size:1.6rem}
+#ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.ov{background:#fff;border-radius:12px;padding:14px;cursor:pointer}
+.ov b{color:var(--c3);font-family:'Inter Tight',sans-serif}
+.ov div{font-weight:700}.ov small{color:var(--dim)}
+.flow .card{border-top-color:var(--c1);text-align:center}
+.flow .no{font-family:'Inter Tight',sans-serif;font-size:2.2rem;font-weight:800;color:var(--c1)}
+.hot .big{color:var(--c1)}
+@media (max-width:760px){
+  .slide{padding:6vh 5vw 18vh;justify-content:flex-start;overflow:auto}
+  .g2,.g3,.g4,.g5,.g6{grid-template-columns:1fr 1fr}
+  .speaker{max-width:90%}.speaker .avatar{width:42px;height:42px;font-size:1.3rem}
+  .hint{display:none}.src{position:static;margin-top:2vh}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<section class="slide active">
+  <div class="kicker">TEACHER PD · 120 MIN</div>
+  <h1>守護孩子的數位生活<br><span class="hl">數位素養與網路安全</span></h1>
+  <p class="sub">生成式 AI × 兒少網路安全 × 網路誘拐 × 性私密影像防治</p>
+  <div class="tags"><span class="tag" style="--tc:var(--c3)">台灣展翅協會 ECPAT Taiwan</span><span class="tag" style="--tc:var(--c1)">台灣微軟 數位安全須知</span><span class="tag" style="--tc:var(--c2)">桃園市龍潭區石門國民小學 阿凱老師</span></div>
+  <div class="speaker"><div class="avatar">🙂</div><div class="bubble">各位老師好！今天我們不談恐懼，談「孩子出事時，我們能做什麼」。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">HOOK</div>
+  <h2>先猜猜看：國中生裡，<span class="hl">幾 %</span> 自己或看過同學遭遇 AI 相關問題？</h2>
+  <div class="grid g4">
+    <div class="card"><h3>A</h3><p>5%</p></div><div class="card"><h3>B</h3><p>12%</p></div><div class="card"><h3>C</h3><p>31%</p></div><div class="card"><h3>D</h3><p>55%</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🤔</div><div class="bubble">請先在心裡選一個，答案下一頁揭曉。駕駛艙上也可以用滑桿一起猜。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 1 · 看見數據</div>
+  <h2>答案是 <span class="hl">31.4%</span>——而且孩子越來越早上網</h2>
+  <div class="grid g4">
+    <div class="card" style="--cc:var(--c3)"><div class="big">91.6%</div><p>國中生有自己的手機</p></div>
+    <div class="card" style="--cc:var(--c3)"><div class="big">9.98 歲</div><p>第一支手機平均年齡（2024：10.8 歲）</p></div>
+    <div class="card" style="--cc:var(--c3)"><div class="big">20.1%</div><p>曾遭遇網路風險</p></div>
+    <div class="card" style="--cc:var(--c3)"><div class="big">2.5%</div><p>看過 AI 生成同學的色情影像</p></div>
+  </div>
+  <div class="src">資料來源：兒福聯盟《2026 台灣國中生手機及網路使用概況調查》，有效問卷 11,920 份</div>
+  <div class="speaker"><div class="avatar">📊</div><div class="bubble">2.5% 等於每 40 位孩子就有 1 位。傷害不必真的拍過才會發生。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 1 · 看見數據</div>
+  <h2>熱線告訴我們：數位性暴力是最常見的求助</h2>
+  <div class="grid g3">
+    <div class="card"><div class="big">1,820 件</div><p>2022 年 Web547 檢舉中涉及兒少性虐待／性剝削（25.84%）</p></div>
+    <div class="card"><div class="big">53%</div><p>2022 年 Web885 諮詢與數位性暴力相關（61／115）</p></div>
+    <div class="card"><div class="big">42.4%</div><p>國中生在社群平台註冊假年齡</p></div>
+  </div>
+  <p class="quote">Childlight：兒少性剝削是「全球性的公共衛生大流行」。</p>
+  <div class="src">資料來源：台灣展翅協會「網路新國民」；兒福聯盟 2026；Childlight Into the Light Index 2024</div>
+  <div class="speaker"><div class="avatar">🌏</div><div class="bubble">這不是遙遠的新聞，而是我們班孩子手機裡的日常。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 2 · 生成式 AI</div>
+  <h2>AI 是副駕駛，<span class="hl">學生是機長</span></h2>
+  <div class="grid g4">
+    <div class="card" style="--cc:var(--c1)"><h3>會問</h3><p>用好提示說清楚需求</p></div>
+    <div class="card" style="--cc:var(--c2)"><h3>會查</h3><p>AI 會虛構，重要資訊要查證</p></div>
+    <div class="card" style="--cc:var(--c3)"><h3>會保護</h3><p>不輸入姓名、照片、學校、密碼</p></div>
+    <div class="card" style="--cc:var(--c5)"><h3>會負責</h3><p>標示 AI 使用，不拿 AI 傷害人</p></div>
+  </div>
+  <div class="src">素材：台灣微軟《Microsoft 專用的數位安全須知》生成式 AI 教材包</div>
+  <div class="speaker"><div class="avatar">🤖</div><div class="bubble">這四個動詞，就是我們要教給孩子的 AI 素養。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 2 · 生成式 AI</div>
+  <h2>好提示五要素 ＋ 班級 AI 使用約定</h2>
+  <div class="grid g2">
+    <div class="card"><h3>✍️ 五要素</h3><ul><li><b>角色</b>：請 AI 扮演誰</li><li><b>目標</b>：要 AI 做什麼</li><li><b>對象</b>：給誰看</li><li><b>背景</b>：需要知道什麼</li><li><b>範圍</b>：字數、語氣、格式</li></ul></div>
+    <div class="card" style="--cc:var(--c2)"><h3>📜 約定範例</h3><ul><li>不輸入自己或別人的個資</li><li>先想自己的想法再問 AI</li><li>AI 答案要查證</li><li>作業用到 AI 要寫出來</li><li>沒經同意不改別人照片</li></ul></div>
+  </div>
+  <div class="src">教材包：Elements of a Good Prompt.pptx、Classroom Agreement.pptx、教師指南國小版</div>
+  <div class="speaker"><div class="avatar">📜</div><div class="bubble">駕駛艙可以一鍵產生班級約定，回去就能貼在聯絡簿。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 2 · 互動</div>
+  <h2>AI 使用紅綠燈：這樣做可以嗎？</h2>
+  <div class="grid g3">
+    <div class="card" style="--cc:#2f9e44"><h3>🟢 可以</h3><p>AI 整理筆記重點，再對照課本修正</p></div>
+    <div class="card" style="--cc:var(--c4)"><h3>🟡 要小心</h3><p>心情不好時每天找 AI 聊到很晚</p></div>
+    <div class="card" style="--cc:var(--c3)"><h3>🔴 不可以</h3><p>把同學照片丟給 AI 改成搞笑或曝露的樣子</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">🚦</div><div class="bubble">請和旁邊老師討論：意見不同的那題，理由是什麼？</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 3 · 網路誘拐</div>
+  <h2>壞人不會一開始就露出真面目</h2>
+  <div class="grid g6 flow">
+    <div class="card"><div class="no">1</div><p>鎖定</p></div><div class="card"><div class="no">2</div><p>信任</p></div><div class="card"><div class="no">3</div><p>好處</p></div>
+    <div class="card"><div class="no">4</div><p>孤立</p></div><div class="card"><div class="no">5</div><p>性化</p></div><div class="card"><div class="no">6</div><p>控制</p></div>
+  </div>
+  <p class="quote">要你保密的人，就是要告訴大人的人。</p>
+  <div class="src">課堂遊戲：展翅 × 玩轉《交友大作戰》網路誘拐議題式遊戲</div>
+  <div class="speaker"><div class="avatar">🚩</div><div class="bubble">孩子往往覺得「他是真的懂我」，所以我們要教的是辨識警訊，而不是只說「不要跟陌生人說話」。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 4 · 性私密影像</div>
+  <h2>迷思 vs 事實</h2>
+  <div class="grid g3">
+    <div class="card" style="--cc:var(--c3)"><h3>是孩子自己傳的？</h3><p>孩子是被誘騙利用的一方，責任在誘騙與散布者。</p></div>
+    <div class="card" style="--cc:var(--c3)"><h3>AI 假圖不嚴重？</h3><p>不實性影像一樣造成傷害，製作與散布也可能觸法。</p></div>
+    <div class="card" style="--cc:var(--c3)"><h3>先傳給我看？</h3><p>老師不索取、不保存影像，記錄帳號網址時間即可。</p></div>
+  </div>
+  <div class="src">參考：台灣展翅協會 倖存者篇影片、展翅 × 放伴《性私密影像》議題模組</div>
+  <div class="speaker"><div class="avatar">🛡️</div><div class="bubble">責怪會讓孩子再也不敢開口——這是最大的風險。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 4 · 練習</div>
+  <h2>小安說：「我傳給網友的照片，他說要放到群組…」</h2>
+  <div class="grid g2">
+    <div class="card" style="--cc:var(--c3)"><h3>❌ 不要說</h3><ul><li>「你怎麼會傳照片給網友？」</li><li>「先把照片傳給我看看。」</li><li>「我不會跟任何人說。」</li></ul></div>
+    <div class="card" style="--cc:var(--c2)"><h3>✅ 可以說</h3><p>「謝謝你願意告訴老師，這不是你的錯。我們一起想辦法，我會找能幫忙的人一起處理。」</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">💛</div><div class="bubble">先接住情緒，再處理事情。保密不等於不通報，要誠實告訴孩子。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 4 · 移除與協助</div>
+  <h2>影像外流後，還有機會止血</h2>
+  <div class="grid g3">
+    <div class="card"><h3>轉碼比對移除計畫</h3><p>台灣展翅協會協助兒少性影像的辨識與移除（流程以官網為準）。</p></div>
+    <div class="card" style="--cc:var(--c2)"><h3>Web885 網路幫幫我</h3><p>FB 私訊快速諮詢（週一至週五 09:00–17:30），或填線上諮詢單。</p></div>
+    <div class="card" style="--cc:var(--c5)"><h3>議題模組課程</h3><p>展翅 × 放伴 7 堂 × 45 分鐘，免費下載，可選單元使用。</p></div>
+  </div>
+  <div class="src">ecpat.org.tw ／ web885.org.tw ／ parents.smartkid.org.tw</div>
+  <div class="speaker"><div class="avatar">🧹</div><div class="bubble">越早求助，越有機會移除。老師不用一個人扛。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 5 · 教師行動</div>
+  <h2>老師的五個步驟</h2>
+  <div class="grid g5 flow">
+    <div class="card"><div class="no">1</div><p>接住孩子</p></div>
+    <div class="card"><div class="no">2</div><p>確保安全</p></div>
+    <div class="card"><div class="no">3</div><p>記錄線索</p></div>
+    <div class="card"><div class="no">4</div><p>立即通報<br><small>最遲 24 小時＋校安</small></p></div>
+    <div class="card"><div class="no">5</div><p>持續陪伴</p></div>
+  </div>
+  <div class="src">依據：兒童及少年性剝削防制條例、兒少權法責任通報規定；依各校程序辦理</div>
+  <div class="speaker"><div class="avatar">📋</div><div class="bubble">責任通報不需要先確認屬實，也不需要家長同意。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">STAGE 5 · 求助管道</div>
+  <h2>把這些號碼寫在教室公告欄</h2>
+  <div class="grid g4 hot">
+    <div class="card"><div class="big">113</div><p>保護專線（24 小時）</p></div>
+    <div class="card"><div class="big">110</div><p>遭威脅勒索、立即危險</p></div>
+    <div class="card"><div class="big" style="font-size:clamp(1.6rem,2.6vw,2.4rem)">02-2562-1233</div><p>台灣展翅協會</p></div>
+    <div class="card"><div class="big" style="font-size:clamp(1.6rem,2.6vw,2.4rem)">Web885</div><p>網路幫幫我 線上諮詢</p></div>
+  </div>
+  <div class="speaker"><div class="avatar">📞</div><div class="bubble">也請孩子寫下三位「我信任的大人」，這比任何號碼都重要。</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">CLOSING · Q&amp;A</div>
+  <h1>做孩子出事時，<br><span class="hl">第一個敢說的大人</span></h1>
+  <p class="sub">駕駛艙（含互動練習、課程設計工具、完整資源清單）：</p>
+  <p style="font-family:'Inter Tight',sans-serif;font-weight:800;color:var(--c1)">cagoooo.github.io/it-cockpit/teacher-digital-safety/</p>
+  <div class="tags"><span class="tag" style="--tc:var(--c3)">資源：台灣展翅協會</span><span class="tag" style="--tc:var(--c1)">資源：台灣微軟</span><span class="tag" style="--tc:var(--c2)">阿凱老師・桃園市龍潭區石門國民小學</span></div>
+  <div class="speaker"><div class="avatar">🎉</div><div class="bubble">謝謝大家！回去第一件事：和孩子一起訂 AI 約定。</div></div>
+</section>
+
+</div>
+<div class="counter" id="counter">1 / 14</div>
+<div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="hint">← → 換頁 · M 章節 · F 全螢幕 · S 主講 · Esc 返回</div>
+<div class="overview" id="overview"><h3>▶ 章節導覽（按 M 或 Esc 關閉）</h3><div id="ov-grid"></div></div>
+<script>
+const SLIDES=[
+  {t:'封面',s:'數位素養與網路安全'},{t:'開場猜猜看',s:'AI 相關問題比例'},{t:'看見數據',s:'兒福聯盟 2026'},{t:'熱線數據',s:'Web547、Web885、Childlight'},
+  {t:'AI 是副駕駛',s:'會問會查會保護會負責'},{t:'五要素與約定',s:'台灣微軟教材包'},{t:'AI 紅綠燈',s:'情境討論'},{t:'網路誘拐',s:'六個階段'},
+  {t:'迷思 vs 事實',s:'性私密影像'},{t:'第一句話',s:'回應練習'},{t:'移除與協助',s:'轉碼比對、Web885'},{t:'五個步驟',s:'通報流程'},
+  {t:'求助管道',s:'113、110、Web885'},{t:'結語 Q&A',s:'第一個敢說的大人'}
+];
+const N=SLIDES.length; let cur=0;
+function goSlide(i){
+  if(i<0)i=0; if(i>=N)i=N-1;
+  document.querySelectorAll('.slide').forEach((s,k)=>s.classList.toggle('active',k===i));
+  cur=i;
+  document.getElementById('progress-fill').style.width=((i+1)/N*100)+'%';
+  document.getElementById('counter').textContent=(i+1)+' / '+N;
+  history.replaceState(null,'','#s'+(i+1));
+}
+function next(){ if(cur<N-1) goSlide(cur+1); }
+function prev(){ if(cur>0) goSlide(cur-1); }
+function toggleOverview(){ document.getElementById('overview').classList.toggle('show'); }
+function toggleFullscreen(){ if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
+function toggleSpeaker(){ document.querySelectorAll('.speaker').forEach(s=>s.style.display=(s.style.display==='none')?'':'none'); }
+document.getElementById('ov-grid').innerHTML=SLIDES.map((s,i)=>`<div class="ov" onclick="goSlide(${i});toggleOverview()"><b>${String(i+1).padStart(2,'0')}</b><div>${s.t}</div><small>${s.s}</small></div>`).join('');
+document.addEventListener('keydown',e=>{
+  const ov=document.getElementById('overview');
+  if(ov.classList.contains('show')){ if(['Escape','m','M'].includes(e.key)){ ov.classList.remove('show'); e.preventDefault(); } return; }
+  const k=e.key;
+  switch(k){
+    case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': next(); e.preventDefault(); break;
+    case 'ArrowLeft': case 'ArrowUp': case 'PageUp': prev(); e.preventDefault(); break;
+    case 'Home': goSlide(0); e.preventDefault(); break;
+    case 'End': goSlide(N-1); e.preventDefault(); break;
+    case 'm': case 'M': toggleOverview(); e.preventDefault(); break;
+    case 'f': case 'F': toggleFullscreen(); e.preventDefault(); break;
+    case 's': case 'S': toggleSpeaker(); e.preventDefault(); break;
+    case 'Escape':
+      if(document.fullscreenElement){ document.exitFullscreen(); }
+      else { window.location.href='index.html'; }
+      e.preventDefault(); break;
+    default:
+      if(/^[1-9]$/.test(k)){ const t=parseInt(k)-1; if(t<N){ goSlide(t); e.preventDefault(); } }
+  }
+});
+document.addEventListener('click',e=>{
+  if(e.target.closest('.speaker,.overview,.hint,.progress,a,button')) return;
+  if(e.clientX>window.innerWidth/2) next(); else prev();
+});
+let tx=0;
+document.addEventListener('touchstart',e=>{ tx=e.touches[0].clientX; },{passive:true});
+document.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>60){ if(dx<0) next(); else prev(); } },{passive:true});
+const m=location.hash.match(/^#s(\d+)$/); if(m){ const i=parseInt(m[1])-1; if(i>=0&&i<N) goSlide(i); } else goSlide(0);
+</script>
+</body>
+</html>

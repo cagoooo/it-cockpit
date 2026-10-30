@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>數位素養與網路安全｜教師研習駕駛艙</title>
+<meta name="description" content="國小教師研習：安全且負責任地運用生成式 AI、兒少網路安全、網路誘拐辨識、性私密影像防治與教師通報。台灣展翅協會 × 台灣微軟研習資源整理，5 大關卡 × 5 個互動 × 10 題評量 × 完整資源清單。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/teacher-digital-safety/">
+<meta property="og:title" content="數位素養與網路安全｜教師研習駕駛艙">
+<meta property="og:description" content="生成式 AI 安全使用、網路誘拐辨識、性私密影像防治、教師通報流程。台灣展翅協會 × 台灣微軟資源整理，給國小老師的 120 分鐘研習。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/teacher-digital-safety/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/teacher-digital-safety/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=Inter+Tight:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--surface:#efebe2;--panel:#ffffff;
+  --c1:#1f4e79;--c2:#0f8b8d;--c3:#e0644f;--c4:#e9a23b;--c5:#6c5ce7;
+  --text:#1f2933;--dim:#5b6673;--border:#d8d2c4;--ink:#16324f;
+  --ok:#2f9e44;--warn:#e9a23b;--bad:#d9480f;
+  --shadow:0 6px 20px rgba(22,50,79,.08);
+  --radius:14px;
+}
+html{font-size:18px;scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;padding-bottom:40px}
+a{color:var(--c1)}
+.container{max-width:1400px;margin:0 auto;padding:0 24px}
+/* header */
+.site-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.header-inner{max-width:1400px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:2px solid var(--c1);color:var(--c1);background:#fff;font-weight:700;font-size:.85rem;border-radius:24px;text-decoration:none;white-space:nowrap;transition:.2s}
+.home-btn:hover{background:var(--c1);color:#fff}
+.header-title{font-weight:900;font-size:1.05rem;color:var(--ink);flex:1;min-width:220px}
+.header-title small{display:block;font-weight:500;font-size:.8rem;color:var(--dim)}
+.mode-btn{padding:6px 14px;border:2px solid var(--border);background:#fff;font-family:inherit;font-size:.85rem;font-weight:700;border-radius:16px;cursor:pointer}
+.mode-btn.on{background:var(--c2);border-color:var(--c2);color:#fff}
+.progress{height:5px;background:var(--surface)}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));transition:width .3s}
+/* hero */
+.hero{padding:44px 0 28px}
+.hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:stretch}
+.eyebrow{display:inline-block;background:var(--c3);color:#fff;font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:20px;letter-spacing:1px}
+.hero h1{font-family:'Noto Serif TC',serif;font-size:2.4rem;line-height:1.3;color:var(--ink);margin:14px 0 10px}
+.hero h1 .hl{color:var(--c2)}
+.hero p.lead{font-size:1.1rem;color:var(--dim);margin:0 0 18px}
+.src-tags{display:flex;gap:8px;flex-wrap:wrap}
+.src-tag{font-size:.85rem;font-weight:700;padding:5px 12px;border-radius:8px;border:1.5px solid}
+.src-tag.ecpat{border-color:var(--c3);color:var(--c3);background:#fff4f1}
+.src-tag.ms{border-color:var(--c1);color:var(--c1);background:#eef4fa}
+.src-tag.other{border-color:var(--c2);color:var(--c2);background:#ecf8f7}
+.meta-card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;border-top:5px solid var(--c2)}
+.meta-card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem}
+.meta-card dt{font-weight:700;color:var(--c1)}
+.meta-card dd{margin:0}
+.lecture-cta{display:block;margin-top:18px;padding:16px 20px;background:var(--c1);color:#fff;border-radius:12px;text-decoration:none;transition:.2s;box-shadow:0 6px 0 #0d2c47}
+.lecture-cta:hover{transform:translateY(-2px);box-shadow:0 8px 0 #0d2c47}
+.lecture-cta .t{display:block;font-weight:900;font-size:1.2rem}
+.lecture-cta .s{display:block;font-size:.85rem;opacity:.9}
+.care-note{margin-top:18px;background:#fff8e6;border-left:5px solid var(--c4);padding:12px 16px;border-radius:8px;font-size:.95rem}
+/* objectives & pills */
+.block-title{font-size:1.4rem;font-weight:900;color:var(--ink);margin:0 0 14px}
+.obj-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.obj-chip{background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:8px 18px;font-size:1rem;font-weight:500}
+.agenda{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:34px}
+.stage-pill{display:block;background:#fff;border-radius:12px;padding:14px;text-decoration:none;color:var(--text);box-shadow:var(--shadow);border-bottom:4px solid var(--pc,var(--c1));transition:.2s}
+.stage-pill:hover{transform:translateY(-3px)}
+.stage-pill b{display:block;color:var(--pc,var(--c1));font-size:.85rem;letter-spacing:1px}
+.stage-pill span{font-weight:700;font-size:.98rem}
+.stage-pill small{display:block;color:var(--dim);font-size:.85rem}
+/* sections */
+.level-section{background:var(--panel);border-radius:18px;box-shadow:var(--shadow);padding:30px 32px;margin-bottom:30px;border-top:6px solid var(--sc,var(--c1))}
+.section-header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.stage-badge{font-family:'Inter Tight',sans-serif;font-weight:800;background:var(--sc,var(--c1));color:#fff;padding:6px 14px;border-radius:8px;letter-spacing:2px;font-size:.85rem}
+.section-title{font-size:1.5rem;font-weight:900;color:var(--ink);margin:0}
+.section-sub{color:var(--dim);font-size:1rem;margin:2px 0 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:var(--bg);border-radius:12px;padding:18px 20px;border:1px solid var(--border)}
+.card h4{margin:0 0 8px;font-size:1.08rem;color:var(--ink)}
+.card ul,.card ol{margin:0;padding-left:1.3em}
+.card li{margin-bottom:4px}
+.tip-box{background:#ecf8f7;border-left:5px solid var(--c2);padding:12px 16px;border-radius:8px;font-size:.95rem;margin:16px 0}
+.warn-box{background:#fff4f1;border-left:5px solid var(--c3);padding:12px 16px;border-radius:8px;font-size:.95rem;margin:16px 0}
+.src-line{font-size:.85rem;color:var(--dim);margin-top:10px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:12px 0}
+.stat{background:#fff;border-radius:12px;padding:16px;border:1px solid var(--border);text-align:center}
+.stat .n{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:2.1rem;color:var(--c3);line-height:1.2}
+.stat .l{font-size:.92rem;color:var(--text)}
+/* interactive */
+.canvas-section{margin-top:22px;background:linear-gradient(180deg,#f4f8fb,#fff);border:2px dashed var(--c2);border-radius:14px;padding:20px}
+.canvas-title{font-weight:900;font-size:1.15rem;color:var(--c2)}
+.canvas-hint{font-size:.95rem;color:var(--dim);margin-bottom:12px}
+.btn{font-family:inherit;font-size:1rem;font-weight:700;padding:9px 18px;border-radius:10px;border:none;background:var(--c1);color:#fff;cursor:pointer;transition:.15s}
+.btn:hover{filter:brightness(1.1)}
+.btn.alt{background:#fff;color:var(--c1);border:2px solid var(--c1)}
+.result{margin-top:12px;font-weight:700;min-height:1.5em}
+/* guess sliders */
+.guess-row{display:grid;grid-template-columns:2fr 2fr 90px 90px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.guess-row input[type=range]{width:100%;accent-color:var(--c2)}
+.guess-row .gv{font-weight:800;color:var(--c2);text-align:center}
+.guess-row .av{font-weight:800;color:var(--c3);text-align:center;opacity:0;transition:.4s}
+.guess-row.show .av{opacity:1}
+/* traffic light */
+.tl-list{display:grid;gap:10px}
+.tl-item{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.tl-btns{display:flex;gap:6px}
+.tl-btns button{font-family:inherit;font-weight:700;font-size:.9rem;border:2px solid;border-radius:20px;padding:5px 12px;background:#fff;cursor:pointer}
+.tl-btns .g{border-color:var(--ok);color:var(--ok)} .tl-btns .y{border-color:var(--warn);color:#b26b00} .tl-btns .r{border-color:var(--bad);color:var(--bad)}
+.tl-btns button.picked{color:#fff}
+.tl-btns .g.picked{background:var(--ok)} .tl-btns .y.picked{background:var(--warn)} .tl-btns .r.picked{background:var(--bad)}
+.tl-fb{grid-column:1/-1;font-size:.92rem;display:none;padding:8px 10px;border-radius:8px;background:var(--bg)}
+.tl-fb.show{display:block}
+/* agreement builder */
+.agree-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin-bottom:12px}
+.agree-grid label{display:flex;gap:8px;align-items:flex-start;font-size:.98rem;cursor:pointer}
+.agree-out{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 18px;white-space:pre-wrap;font-size:.98rem;min-height:80px}
+/* chat */
+.chat{max-width:620px;background:#e9eef3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:82%;padding:10px 14px;border-radius:14px;font-size:.98rem;cursor:pointer;border:2px solid transparent;transition:.2s;position:relative}
+.msg.them{background:#fff;align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:#cfe8ff;align-self:flex-end;border-bottom-right-radius:4px;cursor:default}
+.msg .who{display:block;font-size:.78rem;color:var(--dim);font-weight:700}
+.msg.flag-ok{border-color:var(--bad);background:#fff1ec}
+.msg.flag-no{border-color:var(--ok)}
+.msg .why{display:none;font-size:.88rem;margin-top:6px;padding-top:6px;border-top:1px dashed #c9b6ad;color:#7a2e12}
+.msg.flag-ok .why,.msg.flag-no .why{display:block}
+.msg.flag-no .why{color:#2b6b34;border-color:#a5d2ab}
+.stage-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}
+.ss{background:#fff;border-radius:10px;padding:12px 10px;border-top:4px solid var(--c3);font-size:.92rem;text-align:center}
+.ss b{display:block;color:var(--c3);font-size:1rem}
+/* flip myths */
+.flip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.flip{perspective:900px;height:200px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.flip-f,.flip-b{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:center;font-size:.98rem}
+.flip-f{background:#fff4f1;border:2px solid var(--c3)}
+.flip-f b{color:var(--c3)}
+.flip-b{background:#ecf8f7;border:2px solid var(--c2);transform:rotateY(180deg)}
+.flip-b b{color:var(--c2)}
+/* response picker */
+.resp-q{font-weight:700;margin:6px 0 10px}
+.resp-opts{display:grid;gap:8px}
+.resp-opts button{text-align:left;font-family:inherit;font-size:.98rem;background:#fff;border:2px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer}
+.resp-opts button.good{border-color:var(--ok);background:#ebfbee}
+.resp-opts button.bad{border-color:var(--bad);background:#fff1ec}
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:10px 0}
+.flow-step{background:#fff;border-radius:12px;padding:14px;border:1px solid var(--border);position:relative}
+.flow-step .no{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--c1);color:#fff;font-weight:800;align-items:center;justify-content:center;margin-bottom:6px}
+.flow-step h5{margin:0 0 4px;font-size:1rem}
+.flow-step p{margin:0;font-size:.9rem;color:var(--dim)}
+.hotlines{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.hot{background:#fff;border-radius:12px;padding:14px;text-align:center;border:1px solid var(--border)}
+.hot .num{font-family:'Inter Tight',sans-serif;font-size:1.6rem;font-weight:800;color:var(--c1)}
+.hot small{display:block;color:var(--dim);font-size:.85rem}
+/* planner */
+.planner-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.planner-row label{font-weight:700;font-size:.95rem;display:flex;flex-direction:column;gap:4px}
+.planner-row select{font-family:inherit;font-size:1rem;padding:7px 10px;border-radius:8px;border:1.5px solid var(--border)}
+.plan-out{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+.plan-out h5{margin:0 0 8px;font-size:1.05rem;color:var(--c1)}
+/* quiz */
+.quiz-section{margin-top:22px;border-top:1px dashed var(--border);padding-top:18px}
+.quiz-q{margin-bottom:16px}
+.quiz-q-text{font-weight:700;font-size:1.05rem;margin-bottom:8px}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quiz-opt{text-align:left;font-family:inherit;font-size:1rem;background:#fff;border:2px solid var(--border);border-radius:10px;padding:9px 14px;cursor:pointer}
+.quiz-opt.correct{border-color:var(--ok);background:#ebfbee}
+.quiz-opt.wrong{border-color:var(--bad);background:#fff1ec}
+.quiz-fb{font-size:.95rem;margin-top:6px;min-height:1.2em}
+.teacher-note{margin-top:18px;background:#f3f0ff;border-left:5px solid var(--c5);padding:12px 16px;border-radius:8px;font-size:.95rem;display:none}
+body.lecturer .teacher-note{display:block}
+/* resources */
+.res-group{margin-bottom:24px}
+.res-group h3{font-size:1.2rem;margin:0 0 4px}
+.res-group .by{font-size:.9rem;color:var(--dim);margin-bottom:10px}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.res{display:block;background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--text);transition:.2s;border-left:5px solid var(--rc,var(--c1))}
+.res:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.res b{display:block;color:var(--rc,var(--c1));font-size:1rem}
+.res span{font-size:.9rem;color:var(--dim);display:block}
+.res em{font-style:normal;font-size:.78rem;font-weight:700;color:#fff;background:var(--rc,var(--c1));padding:1px 8px;border-radius:6px;display:inline-block;margin-bottom:4px}
+.reflect textarea{width:100%;min-height:110px;font-family:inherit;font-size:1rem;padding:12px;border-radius:10px;border:1.5px solid var(--border)}
+/* footer */
+.site-footer{margin-top:40px;background:linear-gradient(180deg,#ebe6da,#e3ddcf);border-top:1px solid var(--border);position:relative}
+.site-footer::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3))}
+.footer-inner{max-width:1400px;margin:0 auto;padding:30px 24px 18px;display:grid;grid-template-columns:1.2fr 2fr 1fr;gap:24px;align-items:start}
+.footer-brand{display:flex;gap:12px;align-items:center}
+.fb-icon{width:48px;height:48px;border-radius:12px;background:var(--c1);display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:var(--shadow);flex-shrink:0}
+.footer-brand strong{display:block;font-size:1.05rem}
+.footer-brand span{font-size:.9rem;color:var(--dim)}
+.footer-points{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.footer-points li{display:flex;gap:8px}
+.fp-icon{font-size:1.3rem}
+.footer-points strong{display:block;font-size:.95rem}
+.footer-points small{font-size:.85rem;color:var(--dim);line-height:1.5;display:block}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-link{color:var(--ink);text-decoration:none;font-weight:700;font-size:.95rem}
+.footer-link:hover{color:var(--c3)}
+.footer-bottom{max-width:1400px;margin:0 auto;padding:12px 24px 22px;border-top:1px solid #cfc7b5;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.site-credit{margin:0;font-size:.95rem}
+.site-credit__heart{display:inline-block;margin:0 2px}
+.site-credit__author{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor;font-weight:700}
+.site-credit__author:hover{color:var(--c3)}
+.version-tag{margin:0;font-size:.85rem;background:rgba(255,255,255,.7);border:1px solid #cfc7b5;border-radius:20px;padding:2px 12px}
+/* float tools */
+.float-tools{position:fixed;right:18px;bottom:18px;z-index:400;display:flex;flex-direction:column;gap:8px}
+.float-btn{width:50px;height:50px;border-radius:50%;border:none;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);color:#fff}
+.float-btn.red{background:var(--c3)} .float-btn.blue{background:var(--c1)} .float-btn.green{background:var(--c2)} .float-btn.purple{background:var(--c5)}
+.float-panel{position:fixed;right:80px;bottom:18px;z-index:400;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:16px 18px;width:300px;display:none}
+.float-panel.show{display:block}
+.float-panel h4{margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+.float-panel .close{border:none;background:none;font-size:1.1rem;cursor:pointer}
+.float-panel input[type=number]{width:60px;padding:4px 6px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit}
+.big-out{font-family:'Inter Tight',sans-serif;font-size:2.2rem;font-weight:800;text-align:center;color:var(--c1);margin-top:10px}
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:18px;bottom:18px;z-index:300;background:#fff;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.18);padding:10px 14px;display:none;gap:8px;align-items:center}
+.draw-toolbar.show{display:flex}
+.color-dot{width:26px;height:26px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #999;cursor:pointer;padding:0}
+.color-dot.active{transform:scale(1.2);box-shadow:0 0 0 2px var(--ink)}
+.draw-clear{font-family:inherit;font-weight:700;border:2px solid var(--c3);color:var(--c3);background:#fff;border-radius:8px;padding:4px 10px;cursor:pointer}
+/* RWD */
+@media (max-width:1100px){
+  .agenda{grid-template-columns:repeat(3,1fr)}
+  .stat-grid,.hotlines{grid-template-columns:repeat(2,1fr)}
+  .stage-steps{grid-template-columns:repeat(3,1fr)}
+  .flow{grid-template-columns:repeat(2,1fr)}
+  .res-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .footer-points{grid-column:1/-1;order:3}
+}
+@media (max-width:760px){
+  html{font-size:17px}
+  .container{padding:0 16px}
+  .hero-grid,.two-col,.agree-grid,.quiz-opts{grid-template-columns:1fr}
+  .hero h1{font-size:1.8rem}
+  .agenda{grid-template-columns:1fr 1fr}
+  .level-section{padding:22px 18px}
+  .flip-grid,.res-grid,.footer-points,.footer-inner{grid-template-columns:1fr}
+  .stage-steps{grid-template-columns:repeat(2,1fr)}
+  .guess-row{grid-template-columns:1fr 1fr;}
+  .guess-row .q{grid-column:1/-1}
+  .tl-item{grid-template-columns:1fr}
+  .footer-links{flex-direction:row;flex-wrap:wrap}
+  .footer-link{background:#fff;border-radius:20px;padding:6px 14px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .footer-school{display:block}
+  .footer-dot{display:none}
+  .float-panel{right:12px;left:12px;width:auto;bottom:80px}
+  .header-title small{display:none}
+}
+@media print{.float-tools,.float-panel,.draw-toolbar,#drawCanvas,.site-header{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div class="header-title">數位素養與網路安全｜教師研習駕駛艙<small>生成式 AI × 兒少網路安全 × 網路誘拐 × 性私密影像防治</small></div>
+    <button class="mode-btn" id="modeBtn" onclick="toggleLecturer()">👩‍🏫 講師提示：關</button>
+  </div>
+  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">教師研習 · 120 分鐘</span>
+        <h1>守護孩子的數位生活：<br><span class="hl">數位素養與網路安全</span></h1>
+        <p class="lead">從「孩子真實遇到什麼」出發，學會安全且負責任地帶學生使用生成式 AI，辨識網路誘拐的徵兆，知道學生遇到性私密影像外流時，老師第一句話該怎麼說、下一步該找誰。</p>
+        <div class="src-tags">
+          <span class="src-tag ecpat">台灣展翅協會 ECPAT Taiwan</span>
+          <span class="src-tag ms">台灣微軟 Microsoft 數位安全須知</span>
+          <span class="src-tag other">衛福部・兒福聯盟・Childlight 等國內外資料</span>
+        </div>
+        <div class="care-note">💛 <strong>研習前的提醒：</strong>本研習會談到兒少性剝削與性私密影像。內容以「預防與保護」為主，不呈現任何不當影像。若過程中勾起您不舒服的經驗，可隨時暫停；需要協助可撥 <strong>113 保護專線</strong>。</div>
+      </div>
+      <div class="meta-card">
+        <dl>
+          <dt>對象</dt><dd>國小教師（導師、科任、輔導與行政同仁）</dd>
+          <dt>時間</dt><dd>120 分鐘（5 大關卡，可拆成兩場 60 分鐘）</dd>
+          <dt>形式</dt><dd>講述 ＋ 5 個互動練習 ＋ 10 題自我檢核 ＋ 課程設計實作</dd>
+          <dt>素材</dt><dd>台灣展翅協會 × 台灣微軟研習資源清單（16 項，全部附連結）</dd>
+          <dt>產出</dt><dd>一份自己班級可用的 AI 使用約定 ＋ 一節課的教學草案</dd>
+        </dl>
+        <a href="lecture-slides.html" class="lecture-cta"><span class="t">🎬 進入演講簡報模式</span><span class="s">14 張投影片 · 全螢幕 · 鍵盤翻頁 · 可離線</span></a>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="block-title">🎯 研習結束時，您能夠…</h2>
+  <div class="obj-chips">
+    <span class="obj-chip">📊 說出台灣兒少網路風險的最新數據</span>
+    <span class="obj-chip">🤖 帶學生安全、負責任地使用生成式 AI</span>
+    <span class="obj-chip">🚩 辨識網路誘拐的六個階段與警訊</span>
+    <span class="obj-chip">🛡️ 用「不責怪」的方式回應性私密影像事件</span>
+    <span class="obj-chip">📞 知道通報流程與求助管道</span>
+    <span class="obj-chip">📝 把資源轉成自己班級的一節課</span>
+  </div>
+
+  <h2 class="block-title">🗺️ 研習流程</h2>
+  <nav class="agenda">
+    <a href="#sec1" class="stage-pill" style="--pc:var(--c3)"><b>STAGE 1 · 15'</b><span>看見數據</span><small>孩子的網路現況</small></a>
+    <a href="#sec2" class="stage-pill" style="--pc:var(--c1)"><b>STAGE 2 · 30'</b><span>生成式 AI 安全負責</span><small>台灣微軟教材包</small></a>
+    <a href="#sec3" class="stage-pill" style="--pc:var(--c5)"><b>STAGE 3 · 25'</b><span>網路誘拐辨識</span><small>交友大作戰</small></a>
+    <a href="#sec4" class="stage-pill" style="--pc:var(--c2)"><b>STAGE 4 · 25'</b><span>性私密影像防治</span><small>不責怪、不轉傳</small></a>
+    <a href="#sec5" class="stage-pill" style="--pc:var(--c4)"><b>STAGE 5 · 25'</b><span>教師行動與通報</span><small>求助 × 課程設計</small></a>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section class="level-section" id="sec1" style="--sc:var(--c3)">
+    <div class="section-header"><span class="stage-badge">STAGE 1</span><div><h2 class="section-title">看見數據：孩子的網路世界比我們想的更早開始</h2><p class="section-sub">先猜，再看答案——落差本身就是最好的開場。</p></div></div>
+    <div class="canvas-section" style="margin-top:0">
+      <div class="canvas-title">🎮 互動 1：您猜幾 %？</div>
+      <div class="canvas-hint">拖動滑桿寫下您的猜測，再按「揭曉」。資料來源：兒福聯盟《2026 台灣國中生手機及網路使用概況調查》（有效問卷 11,920 份）。</div>
+      <div id="guessBox"></div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="revealGuess()">🔍 揭曉答案</button><button class="btn alt" onclick="resetGuess()">↻ 重來</button></div>
+      <div class="result" id="guessResult"></div>
+    </div>
+    <h3 style="margin:24px 0 6px">📌 其他需要知道的數字</h3>
+    <div class="stat-grid">
+      <div class="stat"><div class="n">9.98 歲</div><div class="l">國中生擁有第一支手機的平均年齡（2024 年為 10.8 歲）</div></div>
+      <div class="stat"><div class="n">42.4%</div><div class="l">在社群平台註冊時填了假年齡</div></div>
+      <div class="stat"><div class="n">1,820 件</div><div class="l">2022 年 Web547 檢舉中涉及兒少性虐待／性剝削的內容（占 25.84%）</div></div>
+      <div class="stat"><div class="n">53%</div><div class="l">2022 年 Web885 諮詢中與數位性暴力相關的比例（61／115 件）</div></div>
+    </div>
+    <p class="src-line">資料來源：兒福聯盟 2026 調查；台灣展翅協會「網路新國民」網站公布之 Web547、Web885 年度數據。</p>
+    <div class="two-col" style="margin-top:14px">
+      <div class="card"><h4>🌏 國際也在敲警鐘</h4><ul>
+        <li>Childlight《Into the Light Index 2024》形容兒少性剝削是全球性的「公共衛生大流行」（a global health pandemic）。</li>
+        <li>Global Initiative（2025）指出東南亞已有以營利為目的的組織犯罪集團介入，跨國分工招募與金流。</li>
+      </ul></div>
+      <div class="card"><h4>🏫 這對國小老師代表什麼？</h4><ul>
+        <li>孩子在國小階段就已擁有手機與社群帳號，<strong>預防教育要在國小就開始</strong>。</li>
+        <li>AI 生成的不實影像已經出現在校園，傷害不必「真的拍過」才會發生。</li>
+        <li>老師不必是技術專家，但要成為孩子<strong>「出事時第一個敢說的大人」</strong>。</li>
+      </ul></div>
+    </div>
+    <div class="teacher-note">👩‍🏫 講師提示：請學員先在紙上或用手機寫下猜測，再請 2～3 位分享。多數人會低估「AI 相關問題」的比例，這正好帶出第 2 關。</div>
+    <div class="quiz-section" id="quiz1"></div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="level-section" id="sec2" style="--sc:var(--c1)">
+    <div class="section-header"><span class="stage-badge">STAGE 2</span><div><h2 class="section-title">安全且負責任地運用生成式 AI</h2><p class="section-sub">素材：台灣微軟《Microsoft 專用的數位安全須知》生成式 AI 完整教材包</p></div></div>
+    <div class="two-col">
+      <div class="card"><h4>🧭 核心觀念：AI 是副駕駛，學生是機長</h4><ul>
+        <li><strong>會問：</strong>用好提示說清楚需求。</li>
+        <li><strong>會查：</strong>AI 會「一本正經地虛構」，重要資訊要交叉查證。</li>
+        <li><strong>會保護：</strong>不輸入真實姓名、照片、學校、住址、帳密。</li>
+        <li><strong>會負責：</strong>作品要說明哪裡用了 AI，不拿 AI 傷害別人。</li>
+      </ul></div>
+      <div class="card"><h4>✍️ 好提示五要素（教材包重點）</h4><ol>
+        <li><strong>角色：</strong>請 AI 扮演誰（例：一位自然老師）</li>
+        <li><strong>目標：</strong>要 AI 做什麼（說明、摘要、出題）</li>
+        <li><strong>對象：</strong>給誰看（例：12 歲學生）</li>
+        <li><strong>背景：</strong>AI 需要知道的情況</li>
+        <li><strong>範圍：</strong>字數、語氣、格式等限制</li>
+      </ol></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h4>📦 教材包內容（Google 雲端資料夾，免登入可瀏覽）</h4><ul>
+      <li>Generative AI 20260702（修訂版）.pdf — 課堂工具套件主教材</li>
+      <li>Generative AI 教師指南【國小版】20260702.pdf ／【國中版】.pptx</li>
+      <li>Elements of a Good Prompt.pptx — 好提示要素簡報</li>
+      <li>Classroom Agreement.pptx — 班級 AI 使用約定範本</li>
+    </ul><p class="src-line">來源：台灣微軟。<a href="https://drive.google.com/drive/folders/1CTkK4kND4U6NVuMWwoC8BEze2gcWxnQ_?usp=sharing" target="_blank" rel="noopener">開啟教材包 ↗</a>　｜　已轉成六年級學生版駕駛艙：<a href="../ai-copilot-captain/index.html">AI 小機長 ↗</a></p></div>
+    <div class="canvas-section">
+      <div class="canvas-title">🎮 互動 2：AI 使用紅綠燈</div>
+      <div class="canvas-hint">這些是班上可能發生的情境。請判斷：🟢 可以做、🟡 要小心（需要調整或大人陪同）、🔴 不可以。</div>
+      <div class="tl-list" id="tlList"></div>
+      <div class="result" id="tlResult"></div>
+    </div>
+    <div class="canvas-section">
+      <div class="canvas-title">🎮 互動 3：產生我的班級 AI 使用約定</div>
+      <div class="canvas-hint">勾選適合您班級的條目，下方會即時組成約定文字，可複製後貼到聯絡簿或班級公告（參考 Classroom Agreement 範本精神改寫）。</div>
+      <div class="agree-grid" id="agreeGrid"></div>
+      <div class="agree-out" id="agreeOut"></div>
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="copyAgree()">📋 複製約定</button><span class="result" id="agreeMsg" style="margin:0"></span></div>
+    </div>
+    <div class="teacher-note">👩‍🏫 講師提示：紅綠燈題目沒有「標準答案」的爭議時，鼓勵學員說出理由。重點是讓老師們形成共同語言：個資不輸入、生成他人影像要同意、AI 結果要查證。</div>
+    <div class="quiz-section" id="quiz2"></div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="level-section" id="sec3" style="--sc:var(--c5)">
+    <div class="section-header"><span class="stage-badge">STAGE 3</span><div><h2 class="section-title">網路誘拐辨識：壞人不會一開始就露出真面目</h2><p class="section-sub">素材：展翅 × 玩轉《交友大作戰》網路誘拐議題式遊戲</p></div></div>
+    <p>網路誘拐（grooming）是加害者<strong>先建立信任與情感依賴，再逐步提出性要求或控制</strong>的過程。孩子往往覺得「他是真的懂我」，因此很難自己察覺。</p>
+    <div class="stage-steps">
+      <div class="ss"><b>① 鎖定</b>找寂寞、想被肯定的孩子</div>
+      <div class="ss"><b>② 信任</b>共同興趣、大量讚美</div>
+      <div class="ss"><b>③ 好處</b>遊戲點數、禮物、幫忙</div>
+      <div class="ss"><b>④ 孤立</b>「這是我們的祕密」</div>
+      <div class="ss"><b>⑤ 性化</b>話題變調、要照片</div>
+      <div class="ss"><b>⑥ 控制</b>威脅散布、勒索更多</div>
+    </div>
+    <p class="src-line">六階段為常見的教學模型整理，用來幫助辨識；實際案例不一定依序發生。</p>
+    <div class="canvas-section">
+      <div class="canvas-title">🎮 互動 4：找出聊天室裡的紅旗</div>
+      <div class="canvas-hint">這是一段虛構的遊戲聊天。點一下您覺得是「警訊」的訊息，看看說明。目標：找出全部 5 個紅旗。</div>
+      <div class="chat" id="chatBox"></div>
+      <div class="result" id="chatResult"></div>
+    </div>
+    <div class="two-col" style="margin-top:16px">
+      <div class="card"><h4>🗣️ 可以教孩子的三句話</h4><ul>
+        <li>「網路上要我<strong>保守祕密</strong>的人，就是要告訴大人的人。」</li>
+        <li>「不管對方給過我什麼，我都<strong>可以拒絕、可以封鎖</strong>。」</li>
+        <li>「被威脅不是我的錯，<strong>說出來</strong>才能被保護。」</li>
+      </ul></div>
+      <div class="card"><h4>🎲 課堂可用：《交友大作戰》</h4><p style="margin:0">台灣展翅協會與玩轉合作的議題式遊戲，讓學生在遊戲情境中練習辨識誘拐手法、做出選擇並討論。教材包可自網路下載使用。</p><p class="src-line"><a href="https://pley.click/l6bvl9" target="_blank" rel="noopener">下載《交友大作戰》教材包 ↗</a>（來源：台灣展翅協會）</p></div>
+    </div>
+    <div class="teacher-note">👩‍🏫 講師提示：請學員兩人一組，一人念「對方訊息」，另一人說出自己會怎麼回應或怎麼求助，練習把「拒絕」講出口。</div>
+    <div class="quiz-section" id="quiz3"></div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="level-section" id="sec4" style="--sc:var(--c2)">
+    <div class="section-header"><span class="stage-badge">STAGE 4</span><div><h2 class="section-title">性私密影像防治：不責怪、不轉傳、留證據、找協助</h2><p class="section-sub">素材：台灣展翅協會 兒少性影像轉碼比對移除計畫、倖存者篇影片、展翅 × 放伴議題模組課程</p></div></div>
+    <div class="canvas-section" style="margin-top:0">
+      <div class="canvas-title">🎮 互動 5-1：迷思翻翻卡</div>
+      <div class="canvas-hint">點卡片翻面，看看常見迷思背後的事實。</div>
+      <div class="flip-grid" id="flipGrid"></div>
+    </div>
+    <div class="two-col" style="margin-top:18px">
+      <div class="card"><h4>⚖️ 老師需要知道的法律重點</h4><ul>
+        <li>拍攝、製造、散布、持有兒少性影像都違法——<strong>就算是孩子自己拍、自願傳的</strong>，接收者與轉傳者仍可能觸法（兒少性剝削防制條例）。</li>
+        <li>用 AI 或深偽技術製作他人的不實性影像，同樣可能構成犯罪。</li>
+        <li><strong>老師不要要求學生把影像傳給你「看證據」</strong>，也不要自行下載保存影像本身；記錄網址、帳號、時間即可，交由專業單位處理。</li>
+      </ul></div>
+      <div class="card"><h4>🧹 影像外流後，可以怎麼移除？</h4><ul>
+        <li>台灣展翅協會「<strong>兒少性影像轉碼比對移除計畫</strong>」：協助將兒少性影像轉成可比對的數位特徵，請平台辨識並移除（詳細流程以官網為準）。</li>
+        <li>「性私密影像被害人服務」與 <strong>Web885 網路幫幫我</strong>可提供諮詢與陪伴。</li>
+        <li>觀看影片《私密影像被散布該怎麼辦？＿倖存者篇》，理解被害者的感受。</li>
+      </ul><p class="src-line"><a href="https://www.ecpat.org.tw/Service.aspx?ID=51" target="_blank" rel="noopener">轉碼比對移除計畫官網 ↗</a>　<a href="https://www.youtube.com/watch?v=sxjgo_XtUxg&list=PLHSMQhhsbtSg-7aUcofgGV6tTYWpn3wgi" target="_blank" rel="noopener">倖存者篇影片 ↗</a></p></div>
+    </div>
+    <div class="canvas-section">
+      <div class="canvas-title">🎮 互動 5-2：學生來找您時，第一句話怎麼說？</div>
+      <div class="canvas-hint">情境：下課時，五年級的小安紅著眼眶說：「老師，我之前傳給網友的照片，他說要放到群組……」請選出您覺得最適合的回應。</div>
+      <div id="respBox"></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h4>📚 想上完整課程？展翅 × 放伴《性私密影像》議題模組</h4><p style="margin:0">共 7 堂、每堂 45 分鐘：前 3 堂為「數位公民素養」，後 4 堂為「性私密影像」（案件、影響與法律責任），可選單元或整套使用。原設計對象為國高中，國小高年級老師可挑選數位公民素養單元改編。</p><p class="src-line"><a href="https://parents.smartkid.org.tw/main/resource_download/700" target="_blank" rel="noopener">免費下載教材 ↗</a>（來源：台灣展翅協會 × 台灣放伴教育協會）</p></div>
+    <div class="teacher-note">👩‍🏫 講師提示：互動 5-2 是本研習最重要的練習。請強調「先接住情緒，再處理事情」，並提醒學員：保密不等於不通報，要誠實告訴孩子「我會找能幫忙的人一起處理」。</div>
+    <div class="quiz-section" id="quiz4"></div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section class="level-section" id="sec5" style="--sc:var(--c4)">
+    <div class="section-header"><span class="stage-badge">STAGE 5</span><div><h2 class="section-title">教師行動：通報流程、求助管道與課程設計</h2><p class="section-sub">把今天學到的變成可以做的事</p></div></div>
+    <h3 style="margin:0 0 6px">🧭 疑似兒少性剝削事件：老師的五個步驟</h3>
+    <div class="flow">
+      <div class="flow-step"><span class="no">1</span><h5>接住孩子</h5><p>不責怪、不追問細節、肯定孩子說出來的勇氣。</p></div>
+      <div class="flow-step"><span class="no">2</span><h5>確保安全</h5><p>請孩子先不要回應、不要再傳任何東西給對方。</p></div>
+      <div class="flow-step"><span class="no">3</span><h5>記錄線索</h5><p>記下帳號、網址、時間；不要轉傳或保存影像本身。</p></div>
+      <div class="flow-step"><span class="no">4</span><h5>立即通報</h5><p>依法知悉後立即通報主管機關（最遲 24 小時內），並依校內程序進行校安通報、會同輔導室。</p></div>
+      <div class="flow-step"><span class="no">5</span><h5>持續陪伴</h5><p>與輔導、社工合作，留意同儕轉傳與二度傷害。</p></div>
+    </div>
+    <p class="src-line">通報依據：兒童及少年性剝削防制條例、兒童及少年福利與權益保障法之責任通報規定；細節請依所屬縣市與學校程序辦理。</p>
+    <h3 style="margin:22px 0 8px">📞 求助管道</h3>
+    <div class="hotlines">
+      <div class="hot"><div class="num">113</div>保護專線<small>24 小時，兒少保護通報與諮詢</small></div>
+      <div class="hot"><div class="num">110</div>報案專線<small>遭威脅、勒索或立即危險</small></div>
+      <div class="hot"><div class="num" style="font-size:1.25rem">02-2562-1233</div>台灣展翅協會／Web885<small>FB 私訊：週一至週五 09:00–17:30</small></div>
+      <div class="hot"><div class="num" style="font-size:1.25rem">Web885</div>線上諮詢單<small>專員預計五個工作天內回覆</small></div>
+    </div>
+    <div class="canvas-section">
+      <div class="canvas-title">📝 實作：一鍵產生一節課的教學草案</div>
+      <div class="canvas-hint">選年段、主題與時間，系統依今天的資源組出一份教學流程，您可以再自行修改。</div>
+      <div class="planner-row">
+        <label>年段<select id="plGrade" onchange="buildPlan()"><option value="low">低年級</option><option value="mid">中年級</option><option value="high" selected>高年級</option></select></label>
+        <label>主題<select id="plTopic" onchange="buildPlan()"><option value="ai">生成式 AI 安全使用</option><option value="groom">網路交友與誘拐</option><option value="image">身體界線與私密影像</option></select></label>
+        <label>時間<select id="plTime" onchange="buildPlan()"><option value="40" selected>40 分鐘</option><option value="80">80 分鐘（兩節）</option></select></label>
+      </div>
+      <div class="plan-out" id="planOut"></div>
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="copyPlan()">📋 複製教學草案</button><span class="result" id="planMsg" style="margin:0"></span></div>
+    </div>
+    <div class="quiz-section" id="quiz5"></div>
+  </section>
+
+  <!-- Resources -->
+  <section class="level-section" id="resources" style="--sc:var(--ink)">
+    <div class="section-header"><span class="stage-badge">RESOURCES</span><div><h2 class="section-title">📚 研習資源清單（完整連結）</h2><p class="section-sub">台灣展翅協會 × 台灣微軟研習提供；所有連結另開新分頁</p></div></div>
+    <div class="res-group">
+      <h3 style="color:var(--c1)">Microsoft 專用的數位安全須知 教學資源</h3>
+      <div class="by">來源：台灣微軟</div>
+      <div class="res-grid">
+        <a class="res" style="--rc:var(--c1)" href="https://drive.google.com/drive/folders/1CTkK4kND4U6NVuMWwoC8BEze2gcWxnQ_?usp=sharing" target="_blank" rel="noopener"><em>台灣微軟</em><b>【安全且負責任地運用生成式 AI】完整教材包</b><span>教師指南國小版／國中版、好提示要素、班級約定範本</span></a>
+      </div>
+    </div>
+    <div class="res-group">
+      <h3 style="color:var(--c3)">台灣展翅協會 教學資源</h3>
+      <div class="by">來源：台灣展翅協會 ECPAT Taiwan</div>
+      <div class="res-grid">
+        <a class="res" style="--rc:var(--c3)" href="https://www.ecpat.org.tw/Service.aspx?ID=51" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【兒少性影像轉碼比對移除計畫】官方網站</b><span>協助兒少性影像辨識與移除</span></a>
+        <a class="res" style="--rc:var(--c3)" href="https://www.smartkid.org.tw/" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【網路新國民】教育資源網站</b><span>兒童版、青少年版、家長版教材</span></a>
+        <a class="res" style="--rc:var(--c3)" href="https://www.web885.org.tw/" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【Web885 網路諮詢熱線】網站</b><span>線上諮詢單，專員回覆</span></a>
+        <a class="res" style="--rc:var(--c3)" href="https://www.facebook.com/web885helpline" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【Web885 網路幫幫我】Facebook 粉絲專頁</b><span>私訊快速諮詢（週一至週五 09:00–17:30）</span></a>
+        <a class="res" style="--rc:var(--c3)" href="https://www.youtube.com/@ecpattw" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【台灣展翅協會 ECPAT Taiwan】YouTube 頻道</b><span>宣導影片與講座</span></a>
+        <a class="res" style="--rc:var(--c3)" href="https://www.youtube.com/watch?v=sxjgo_XtUxg&list=PLHSMQhhsbtSg-7aUcofgGV6tTYWpn3wgi" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【私密影像被散布該怎麼辦？＿倖存者篇】影片</b><span>從被害者視角理解傷害與求助</span></a>
+        <a class="res" style="--rc:var(--c3)" href="https://pley.click/l6bvl9" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【展翅 X 玩轉《交友大作戰》網路誘拐議題式遊戲】教材包</b><span>課堂遊戲化練習</span></a>
+        <a class="res" style="--rc:var(--c3)" href="https://parents.smartkid.org.tw/main/resource_download/700" target="_blank" rel="noopener"><em>台灣展翅協會</em><b>【展翅 X 放伴《性私密影像》議題模組課程】教材</b><span>7 堂 × 45 分鐘，免費下載</span></a>
+      </div>
+    </div>
+    <div class="res-group">
+      <h3 style="color:var(--c2)">國內外教學資源綜整</h3>
+      <div class="by">研習資源清單整理；各連結標示原發布單位</div>
+      <div class="res-grid">
+        <a class="res" style="--rc:var(--c2)" href="https://dep.mohw.gov.tw/DOPS/lp-1303-105-xCat-cat05.html" target="_blank" rel="noopener"><em>衛福部保護服務司</em><b>【兒童及少年性剝削防制】統計專區</b><span>歷年案件辦理情形</span></a>
+        <a class="res" style="--rc:var(--c2)" href="https://www.children.org.tw/publication_research/research_report/3112" target="_blank" rel="noopener"><em>兒福聯盟</em><b>【2026 台灣國中生手機及網路使用概況調查】</b><span>11,920 份有效問卷</span></a>
+        <a class="res" style="--rc:var(--c2)" href="https://www.parenting.com.tw/article/6002287" target="_blank" rel="noopener"><em>親子天下</em><b>【2026 國中小學生學習與生活調查】</b><span>國中小學生學習與生活現況</span></a>
+        <a class="res" style="--rc:var(--c2)" href="https://www.youtube.com/watch?v=VeCaxVKEvjI" target="_blank" rel="noopener"><em>青春發言人</em><b>【當 AI 成為青少年最深依賴】影片</b><span>青少年與 AI 陪伴的反思</span></a>
+        <a class="res" style="--rc:var(--c2)" href="https://www.childlight.org/into-the-light-2024/" target="_blank" rel="noopener"><em>Childlight</em><b>【Into the Light Index 2024】</b><span>全球兒少性剝削與虐待指標（英文）</span></a>
+        <a class="res" style="--rc:var(--c2)" href="https://globalinitiative.net/analysis/organized-child-sexual-exploitation/" target="_blank" rel="noopener"><em>Global Initiative</em><b>【Organized child sexual exploitation】</b><span>東南亞組織性兒少性剝削政策簡報（英文）</span></a>
+      </div>
+    </div>
+    <div class="card reflect">
+      <h4>🪞 研習回饋：我回到班上，第一件想做的事是…</h4>
+      <textarea id="reflectBox" placeholder="例：下週班會先和孩子一起訂 AI 使用約定，並把 113 與 Web885 寫在教室公告欄。（內容只存在您這台裝置的瀏覽器）"></textarea>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fb-icon" aria-hidden="true">🛡️</div>
+      <div><strong>數位素養與網路安全｜教師研習</strong><span>做孩子出事時，第一個敢說的大人。</span></div>
+    </div>
+    <ul class="footer-points">
+      <li><span class="fp-icon">🔒</span><div><strong>不收集個資</strong><small>本頁不需登入，回饋文字只存在您的瀏覽器。</small></div></li>
+      <li><span class="fp-icon">📘</span><div><strong>教材來源</strong><small>台灣展翅協會、台灣微軟研習資源清單及國內外公開資料。</small></div></li>
+      <li><span class="fp-icon">🤖</span><div><strong>AI 協作說明</strong><small>由 Claude Code 整理公開網頁資料製作，內容經人工設計審閱。</small></div></li>
+    </ul>
+    <nav class="footer-links">
+      <a class="footer-link" href="../index.html">🏠 IT COCKPIT 主頁</a>
+      <a class="footer-link" href="lecture-slides.html">🎬 演講簡報模式</a>
+      <a class="footer-link" href="#resources">📚 資源清單</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p class="site-credit">Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+      <a href="https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+      <span class="footer-school"><span class="footer-dot" aria-hidden="true">・</span>桃園市龍潭區石門國民小學</span></p>
+    <p class="version-tag">v1.0 · 2026-10-30</p>
+  </div>
+</footer>
+
+<div class="float-tools">
+  <button class="float-btn red" onclick="togglePanel('lottery')" title="抽號">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn green" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn purple" onclick="goTop()" title="回頂部">⬆️</button>
+</div>
+<div class="float-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <button class="close" onclick="togglePanel('lottery')">✕</button></h4>
+  <div style="display:flex;gap:8px;align-items:center;font-size:.9rem;flex-wrap:wrap">
+    <span>範圍</span><input type="number" id="lot-min" value="1" min="1"><span>～</span><input type="number" id="lot-max" value="30" min="1"><span>號</span>
+    <label style="margin-left:auto;display:flex;gap:4px;align-items:center"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:10px"><button class="btn" style="flex:1" onclick="doLottery()">🎰 抽一個</button><button class="btn alt" onclick="resetLottery()">↻</button></div>
+  <div class="big-out" id="lot-out">—</div>
+</div>
+<div class="float-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <button class="close" onclick="togglePanel('timer')">✕</button></h4>
+  <div style="display:flex;gap:8px;align-items:center;font-size:.9rem"><span>分鐘</span><input type="number" id="timer-min" value="5" min="0" max="90"></div>
+  <div class="big-out" id="timer-display">05:00</div>
+  <div style="display:flex;gap:6px;margin-top:10px"><button class="btn" style="flex:1" onclick="startTimer()">▶ 開始</button><button class="btn alt" style="flex:1" onclick="pauseTimer()">⏸ 暫停</button><button class="btn alt" onclick="resetTimer()">↻</button></div>
+</div>
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <button class="color-dot active" style="background:#e0644f" onclick="setPenColor('#e0644f',this)"></button>
+  <button class="color-dot" style="background:#e9a23b" onclick="setPenColor('#e9a23b',this)"></button>
+  <button class="color-dot" style="background:#0f8b8d" onclick="setPenColor('#0f8b8d',this)"></button>
+  <button class="color-dot" style="background:#1f4e79" onclick="setPenColor('#1f4e79',this)"></button>
+  <button class="color-dot" style="background:#222" onclick="setPenColor('#222',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<script>
+function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
+
+/* ---------- 互動 1：猜數據 ---------- */
+const GUESS = [
+  {q:'國中生有自己的手機', a:91.6},
+  {q:'曾遭遇網路風險', a:20.1},
+  {q:'自己或看過同學遭遇 AI 相關問題', a:31.4},
+  {q:'曾收到令人不舒服的性相關照片或影片', a:5.1},
+  {q:'曾看過 AI 生成「同學」的色情影像', a:2.5}
+];
+function initGuess(){
+  const box = document.getElementById('guessBox');
+  box.innerHTML = GUESS.map((g,i)=>`<div class="guess-row" id="gr${i}"><div class="q">${g.q}</div><input type="range" min="0" max="100" value="50" oninput="document.getElementById('gv${i}').textContent=this.value+'%'"><div class="gv" id="gv${i}">50%</div><div class="av">實際 ${g.a}%</div></div>`).join('');
+}
+function revealGuess(){
+  let diff = 0;
+  GUESS.forEach((g,i)=>{
+    const row = document.getElementById('gr'+i);
+    row.classList.add('show');
+    diff += Math.abs(parseFloat(row.querySelector('input').value) - g.a);
+  });
+  const avg = (diff/GUESS.length).toFixed(1);
+  document.getElementById('guessResult').textContent = `您的猜測平均差了 ${avg} 個百分點。請特別注意：2.5% 代表每 40 位國中生就有 1 位看過 AI 生成同學的色情影像。`;
+}
+function resetGuess(){ initGuess(); document.getElementById('guessResult').textContent=''; }
+
+/* ---------- 互動 2：AI 紅綠燈 ---------- */
+const TL = [
+  {t:'學生用 AI 幫忙把自然課筆記整理成重點摘要，再對照課本修正。', a:'g', fb:'很好的用法：AI 協助整理，學生仍負責查證與修正。'},
+  {t:'學生把同學的生活照上傳到 AI，請它改成搞笑或曝露的樣子再傳到群組。', a:'r', fb:'不可以：未經同意使用他人影像，可能構成霸凌，製作不實性影像更可能觸法。'},
+  {t:'學生問 AI：「我家住在哪裡附近有好吃的？」並輸入完整地址與學校班級。', a:'y', fb:'要小心：問題本身沒錯，但不需要輸入完整地址與學校班級等個資。'},
+  {t:'學生把 AI 寫的作文直接交出去，沒有說明使用了 AI。', a:'r', fb:'不可以：作品要誠實標示 AI 協助的部分，並以自己的想法為主。'},
+  {t:'老師帶全班一起比較兩個 AI 對同一題的回答，討論誰說錯了。', a:'g', fb:'很好的用法：培養「AI 會虛構、要查證」的習慣。'},
+  {t:'學生心情不好時，每天找 AI 聊天聊到很晚，覺得「AI 才是最懂我的朋友」。', a:'y', fb:'要小心：AI 可以陪伴但不是真朋友，需要關心孩子的人際支持與作息，必要時轉介輔導。'},
+  {t:'學生用 AI 生成一張「海底城市」想像圖，作為美術課發想參考。', a:'g', fb:'很好的用法：用於創意發想，記得標示 AI 生成。'},
+  {t:'學生把自己的帳號密碼貼給 AI，請它「幫我檢查安不安全」。', a:'r', fb:'不可以：帳號密碼不能輸入任何 AI 或網站對話框。'}
+];
+const tlPick = {};
+function initTL(){
+  document.getElementById('tlList').innerHTML = TL.map((x,i)=>`<div class="tl-item"><div>${i+1}. ${x.t}</div><div class="tl-btns"><button class="g" onclick="pickTL(${i},'g',this)">🟢 可以</button><button class="y" onclick="pickTL(${i},'y',this)">🟡 小心</button><button class="r" onclick="pickTL(${i},'r',this)">🔴 不行</button></div><div class="tl-fb" id="tlfb${i}"></div></div>`).join('');
+}
+function pickTL(i,c,btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('picked'));
+  btn.classList.add('picked');
+  tlPick[i]=c;
+  const fb=document.getElementById('tlfb'+i);
+  fb.classList.add('show');
+  fb.innerHTML=(c===TL[i].a?'✅ ':'💡 建議答案是「'+({g:'🟢 可以',y:'🟡 小心',r:'🔴 不行'})[TL[i].a]+'」：')+TL[i].fb;
+  const done=Object.keys(tlPick).length, ok=Object.entries(tlPick).filter(([k,v])=>TL[k].a===v).length;
+  document.getElementById('tlResult').textContent=`已判斷 ${done}/${TL.length} 題，與建議相同 ${ok} 題。`+(done===TL.length?' 🎉 完成！可以和旁邊的老師討論意見不同的題目。':'');
+}
+
+/* ---------- 互動 3：班級約定 ---------- */
+const AGREE = [
+  '我不在 AI 裡輸入自己或別人的真實姓名、照片、學校、住址、電話和密碼。',
+  '我會先想自己的想法，再請 AI 幫忙。',
+  'AI 給的答案，我會用課本或可信的網站查證。',
+  '作業有用到 AI，我會寫出哪裡用了 AI。',
+  '沒有經過同意，我不會用 AI 改別人的照片或聲音。',
+  '看到讓我不舒服的內容，我會立刻關掉並告訴老師或家人。',
+  'AI 可以陪我聊天，但真正的煩惱我會找信任的大人說。',
+  '使用 AI 要在老師或家長同意的時間與網站上。'
+];
+function initAgree(){
+  document.getElementById('agreeGrid').innerHTML = AGREE.map((t,i)=>`<label><input type="checkbox" ${i<5?'checked':''} onchange="buildAgree()" data-i="${i}">${t}</label>`).join('');
+  buildAgree();
+}
+function buildAgree(){
+  const picked=[...document.querySelectorAll('#agreeGrid input:checked')].map(c=>AGREE[c.dataset.i]);
+  document.getElementById('agreeOut').textContent = picked.length? '📜 我們班的 AI 使用約定\n'+picked.map((t,i)=>`${i+1}. ${t}`).join('\n')+'\n\n簽名：＿＿＿＿＿＿　日期：＿＿＿＿' : '（請至少勾選一條）';
+}
+function copyText(text,msgId){
+  const done=()=>{document.getElementById(msgId).textContent='✅ 已複製';setTimeout(()=>document.getElementById(msgId).textContent='',2000);};
+  if(navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done)); else fallbackCopy(text,done);
+}
+function fallbackCopy(text,done){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');done();}catch(e){}t.remove();}
+function copyAgree(){ copyText(document.getElementById('agreeOut').textContent,'agreeMsg'); }
+
+/* ---------- 互動 4：聊天紅旗 ---------- */
+const CHAT = [
+  {w:'them',t:'你剛剛那場打得超強！我玩三年都沒你厲害 😮',flag:true,why:'② 建立信任：大量讚美，讓孩子覺得被肯定。'},
+  {w:'me',t:'真的嗎？哈哈謝謝'},
+  {w:'them',t:'我也是五年級喔，我們學校也很無聊',flag:false,why:'這句本身不一定是警訊，但網路上年齡無法確認，要提醒孩子對方可能不是自稱的身分。'},
+  {w:'them',t:'我送你 500 點遊戲幣，當作交朋友的禮物～',flag:true,why:'③ 給好處：送點數、禮物，製造「欠人情」的感覺。'},
+  {w:'them',t:'你爸媽會看你手機嗎？我們聊天的事不要跟他們說喔',flag:true,why:'④ 孤立與保密：要求祕密、探問大人監督程度，是非常重要的警訊。'},
+  {w:'them',t:'我們換到另一個 App 聊吧，那邊比較好玩',flag:true,why:'轉移到私密平台：離開有管理的公開空間，方便進一步控制。'},
+  {w:'them',t:'傳一張你的照片給我看看嘛，只有我會看到',flag:true,why:'⑤ 性化前兆：索取照片，並以「只有我看得到」降低戒心。'}
+];
+let chatFound=0;
+function initChat(){
+  chatFound=0;
+  document.getElementById('chatBox').innerHTML = CHAT.map((m,i)=>m.w==='me'?`<div class="msg me"><span class="who">小安</span>${m.t}</div>`:`<div class="msg them" onclick="flagMsg(${i},this)"><span class="who">遊戲好友 Leo</span>${m.t}<div class="why">${m.why}</div></div>`).join('');
+}
+function flagMsg(i,el){
+  if(el.classList.contains('flag-ok')||el.classList.contains('flag-no')) return;
+  el.classList.add(CHAT[i].flag?'flag-ok':'flag-no');
+  if(CHAT[i].flag) chatFound++;
+  document.getElementById('chatResult').textContent = chatFound>=5 ? '🎉 5 個紅旗全部找到！真實情況中，這些訊息可能分散在好幾週，所以更難察覺。' : `已找到 ${chatFound} / 5 個紅旗`;
+}
+
+/* ---------- 互動 5-1：迷思卡 ---------- */
+const MYTH = [
+  ['「是孩子自己傳的，自己要負責。」','孩子是被誘騙、被利用的一方。責怪只會讓孩子不敢求助，責任在誘騙與散布的人。'],
+  ['「刪掉就沒事了，不用告訴大人。」','影像可能已被保存或轉傳。越早求助，越有機會止血、移除與追究。'],
+  ['「AI 做的假圖，不是真的就不嚴重。」','不實性影像一樣會造成傷害與霸凌，製作與散布也可能觸法。'],
+  ['「只有壞孩子才會遇到。」','加害者常鎖定渴望被肯定的孩子，任何孩子都可能遇到。'],
+  ['「先叫學生把照片傳給我看，我才好處理。」','老師不應索取或保存影像，記錄帳號、網址與時間即可，交給專業單位。'],
+  ['「轉傳只是讓大家知道，不算加害。」','轉傳就是散布，會擴大傷害，也可能觸法。看到要停止、不轉傳、檢舉。']
+];
+function initFlip(){
+  document.getElementById('flipGrid').innerHTML = MYTH.map(m=>`<div class="flip" onclick="this.classList.toggle('on')"><div class="flip-in"><div class="flip-f"><b>迷思</b>${m[0]}<small style="color:var(--dim);margin-top:8px">（點我翻面）</small></div><div class="flip-b"><b>事實</b>${m[1]}</div></div></div>`).join('');
+}
+
+/* ---------- 互動 5-2：回應選擇 ---------- */
+const RESP = [
+  {t:'「你怎麼會把照片傳給網友？不是跟你說過很多次了嗎！」', good:false, fb:'責備會讓孩子後悔說出來，下次就不敢再求助。'},
+  {t:'「謝謝你願意告訴老師，這不是你的錯。我們一起想辦法，我會找能幫忙的人一起處理。」', good:true, fb:'最適合：先接住情緒、去除罪惡感，並誠實說明會找專業協助（保密≠不通報）。'},
+  {t:'「先把照片和對話傳給我，我看看有多嚴重。」', good:false, fb:'不應索取影像。請孩子保留對話紀錄即可，由專業單位處理證據。'},
+  {t:'「別擔心，我不會跟任何人說，這是我們的祕密。」', good:false, fb:'老師有責任通報，不能承諾保密；而且「祕密」正是加害者常用的手法。'}
+];
+function initResp(){
+  document.getElementById('respBox').innerHTML = `<div class="resp-opts">${RESP.map((r,i)=>`<button onclick="pickResp(${i},this)">${'ABCD'[i]}. ${r.t}<div class="quiz-fb" id="rfb${i}"></div></button>`).join('')}</div>`;
+}
+function pickResp(i,btn){
+  btn.classList.add(RESP[i].good?'good':'bad');
+  document.getElementById('rfb'+i).textContent=(RESP[i].good?'✅ ':'⚠️ ')+RESP[i].fb;
+}
+
+/* ---------- 課程設計 ---------- */
+const PLAN = {
+  ai:{name:'生成式 AI 安全使用',res:'台灣微軟生成式 AI 教材包（教師指南國小版、Elements of a Good Prompt、Classroom Agreement）',
+    act:{low:'老師示範問 AI，學生判斷「AI 說的對不對」，學習「不輸入名字和照片」。',mid:'分組玩「AI 紅綠燈」情境卡，討論哪些事可以交給 AI。',high:'用好提示五要素改寫提示，比較兩個 AI 的回答並查證錯誤。'}},
+  groom:{name:'網路交友與誘拐',res:'展翅 × 玩轉《交友大作戰》教材包、網路新國民兒童版',
+    act:{low:'繪本或情境故事：「網路上的陌生人說要送禮物，我該怎麼辦？」練習說「不要、離開、告訴大人」。',mid:'閱讀虛構聊天紀錄，圈出「要保密」「送禮物」「換 App」等警訊。',high:'進行《交友大作戰》議題式遊戲，討論誘拐的六個階段與拒絕技巧。'}},
+  image:{name:'身體界線與私密影像',res:'網路新國民、展翅 × 放伴《性私密影像》模組（數位公民素養單元）、倖存者篇影片（教師先看）',
+    act:{low:'身體界線教育：泳衣蓋住的地方不給別人看、不拍照，不舒服要告訴大人。',mid:'討論「哪些照片可以傳、哪些不能」，練習拒絕索取照片的說法。',high:'改編放伴模組數位公民素養單元，討論轉傳的傷害與法律責任、求助管道。'}}
+};
+function buildPlan(){
+  const g=document.getElementById('plGrade').value, tp=document.getElementById('plTopic').value, tm=document.getElementById('plTime').value;
+  const p=PLAN[tp], gName={low:'低年級',mid:'中年級',high:'高年級'}[g];
+  const steps = tm==='40'
+    ? [['5 分','引起動機','分享一則生活情境或第 1 關數據，問學生「你遇過類似的事嗎？」'],['20 分','主要活動',p.act[g]],['10 分','歸納','整理三句保護自己的話，寫在學習單上'],['5 分','求助管道','認識 113 與信任的大人名單，帶回家和家長分享']]
+    : [['10 分','引起動機','情境故事或短片，引發討論'],['30 分','主要活動',p.act[g]],['15 分','延伸練習','角色扮演：遇到狀況時怎麼拒絕、怎麼求助'],['15 分','共同約定','全班訂出班級約定或海報'],['10 分','總結與求助','認識 113、Web885 與校內求助對象，完成反思']];
+  const html = `<h5>📘 ${gName}｜${p.name}｜${tm} 分鐘</h5><p style="margin:0 0 8px"><strong>參考資源：</strong>${p.res}</p><ol style="margin:0;padding-left:1.3em">${steps.map(s=>`<li><strong>${s[1]}（${s[0]}）</strong>：${s[2]}</li>`).join('')}</ol><p class="src-line">提醒：談到身體界線與私密影像時，避免讓孩子分享自身經驗細節；課後留意有反應的孩子，必要時會同輔導室。</p>`;
+  document.getElementById('planOut').innerHTML=html;
+}
+function copyPlan(){ copyText(document.getElementById('planOut').innerText,'planMsg'); }
+
+/* ---------- 評量 ---------- */
+const QUIZ = {
+  1:[{q:'依兒福聯盟 2026 調查，國中生擁有第一支手機的平均年齡約是？',o:['8 歲','約 10 歲（9.98 歲）','12 歲','14 歲'],a:1,e:'平均 9.98 歲，比 2024 年的 10.8 歲更早，預防教育要在國小開始。'},
+     {q:'「2.5% 國中生曾看過 AI 生成同學的色情影像」最適合帶出哪個教學重點？',o:['禁止學生使用手機','AI 生成不實影像也會造成真實傷害','只有國中才需要教','這是極少數，可以忽略'],a:1,e:'傷害不必「真的拍過」才會發生，要教學生不製作、不轉傳、會求助。'}],
+  2:[{q:'下列哪一項最符合「安全且負責任地使用生成式 AI」？',o:['把作業全部交給 AI','輸入完整個資讓 AI 更了解我','AI 結果用課本或可信網站查證','用 AI 改同學照片開玩笑'],a:2,e:'AI 會虛構，查證是關鍵素養。'},
+     {q:'「答案不要超過 200 字，語氣要友善」屬於好提示的哪一個要素？',o:['角色','對象','背景','範圍'],a:3,e:'字數、語氣、格式等限制屬於「範圍」。'}],
+  3:[{q:'網路上的人要求孩子「我們聊天的事不要跟爸媽說」，這屬於誘拐的哪個階段？',o:['鎖定','給好處','孤立與保密','正常交友'],a:2,e:'要求保密、切斷大人支持，是非常重要的警訊。'},
+     {q:'教孩子面對網路誘拐，哪一句話最關鍵？',o:['要你保密的人，就是要告訴大人的人','只要不見面就安全','收了禮物就要回報對方','先確認對方是不是同年齡'],a:0,e:'把「祕密」轉成「求助訊號」，是最容易記住的保護原則。'}],
+  4:[{q:'學生說自己的私密照被威脅散布，老師第一步最適合？',o:['要學生把照片傳給你確認','責備學生不該傳照片','先接住情緒、肯定他說出來，並說明會找人協助','答應學生完全保密'],a:2,e:'先接住、不責怪；同時誠實說明保密不等於不通報。'},
+     {q:'關於老師處理證據，下列何者正確？',o:['下載影像存在自己的手機','轉傳給同事一起判斷','記錄帳號、網址、時間，不保存影像本身','請其他同學截圖'],a:2,e:'保存或轉傳影像本身可能觸法並造成二度傷害。'}],
+  5:[{q:'教育人員知悉疑似兒少性剝削事件，應如何處理？',o:['先自行調查清楚再說','依法立即通報（最遲 24 小時內）並進行校安通報','等家長同意才能通報','只告訴導師就好'],a:1,e:'責任通報不需確認屬實，也不需家長同意。'},
+     {q:'學生遭威脅勒索、有立即危險時，應優先撥打？',o:['110','104','166','1999'],a:0,e:'有立即危險先報警（110），兒少保護通報與諮詢可撥 113。'}]
+};
+let quizScore=0, quizDone=0;
+function initQuiz(){
+  Object.entries(QUIZ).forEach(([s,qs])=>{
+    document.getElementById('quiz'+s).innerHTML='<h3 style="margin:0 0 10px">✅ 自我檢核</h3>'+qs.map((x,i)=>`<div class="quiz-q"><div class="quiz-q-text">Q${i+1}：${x.q}</div><div class="quiz-opts">${x.o.map((o,j)=>`<button class="quiz-opt" onclick="ansQ(this,${s},${i},${j})">${'ABCD'[j]}. ${o}</button>`).join('')}</div><div class="quiz-fb"></div></div>`).join('');
+  });
+}
+function ansQ(btn,s,i,j){
+  const wrap=btn.closest('.quiz-q');
+  if(wrap.dataset.done) return;
+  wrap.dataset.done=1;
+  const x=QUIZ[s][i], opts=wrap.querySelectorAll('.quiz-opt');
+  opts[x.a].classList.add('correct');
+  if(j!==x.a) btn.classList.add('wrong'); else quizScore++;
+  quizDone++;
+  const praise=['🎉 答對了！','✨ 完全正確！','🌟 很棒！'];
+  wrap.querySelector('.quiz-fb').textContent=(j===x.a?praise[Math.floor(Math.random()*3)]+' ':'💡 正確答案是 '+'ABCD'[x.a]+'。')+x.e;
+  updateProgress();
+}
+function updateProgress(){ document.getElementById('progressFill').style.width=(quizDone/10*100)+'%'; }
+
+/* ---------- 講師模式 / 回饋 ---------- */
+function toggleLecturer(){
+  const on=document.body.classList.toggle('lecturer');
+  const b=document.getElementById('modeBtn'); b.classList.toggle('on',on); b.textContent='👩‍🏫 講師提示：'+(on?'開':'關');
+}
+function initReflect(){
+  const t=document.getElementById('reflectBox');
+  try{ t.value=localStorage.getItem('tds-reflect')||''; }catch(e){}
+  t.addEventListener('input',()=>{ try{ localStorage.setItem('tds-reflect',t.value); }catch(e){} });
+}
+
+/* ---------- 浮動工具 ---------- */
+function togglePanel(n){
+  document.querySelectorAll('.float-panel').forEach(p=>{ if(p.id!=='panel-'+n) p.classList.remove('show'); });
+  document.getElementById('panel-'+n).classList.toggle('show');
+}
+let lotPool=[];
+function refillLotPool(){
+  const min=parseInt(document.getElementById('lot-min').value)||1, max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max) return false; lotPool=[]; for(let i=min;i<=max;i++) lotPool.push(i); return true;
+}
+function doLottery(){
+  const unique=document.getElementById('lot-unique').checked;
+  const min=parseInt(document.getElementById('lot-min').value)||1, max=parseInt(document.getElementById('lot-max').value)||30;
+  if(min>max){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length===0) refillLotPool();
+  const out=document.getElementById('lot-out');
+  const tm=setInterval(()=>{ out.textContent=(Math.floor(Math.random()*(max-min+1))+min)+' 號'; },60);
+  setTimeout(()=>{
+    clearInterval(tm);
+    let num;
+    if(unique){ if(lotPool.length===0) refillLotPool(); num=lotPool.splice(Math.floor(Math.random()*lotPool.length),1)[0]; }
+    else num=Math.floor(Math.random()*(max-min+1))+min;
+    out.textContent='🌟 '+num+' 號';
+  },1200);
+}
+function resetLottery(){ refillLotPool(); document.getElementById('lot-out').textContent='—'; }
+let timerLeft=300, timerId=null;
+function showTimer(){ const m=Math.floor(timerLeft/60), s=timerLeft%60; document.getElementById('timer-display').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
+function startTimer(){
+  if(timerId) return;
+  if(timerLeft<=0) timerLeft=(parseInt(document.getElementById('timer-min').value)||5)*60;
+  timerId=setInterval(()=>{ timerLeft--; showTimer(); if(timerLeft<=0){ clearInterval(timerId); timerId=null; document.getElementById('timer-display').textContent='⏰ 時間到'; } },1000);
+}
+function pauseTimer(){ clearInterval(timerId); timerId=null; }
+function resetTimer(){ pauseTimer(); timerLeft=(parseInt(document.getElementById('timer-min').value)||5)*60; showTimer(); }
+let drawActive=false, penColor='#e0644f', drawCanvas, drawCtx, isDrawing=false, dX, dY;
+function initDraw(){
+  drawCanvas=document.getElementById('drawCanvas'); drawCtx=drawCanvas.getContext('2d');
+  const size=()=>{ drawCanvas.width=window.innerWidth; drawCanvas.height=window.innerHeight; };
+  size(); window.addEventListener('resize',size);
+  const line=(x,y)=>{ drawCtx.strokeStyle=penColor; drawCtx.lineWidth=4; drawCtx.lineCap='round'; drawCtx.beginPath(); drawCtx.moveTo(dX,dY); drawCtx.lineTo(x,y); drawCtx.stroke(); dX=x; dY=y; };
+  drawCanvas.addEventListener('mousedown',e=>{ if(!drawActive) return; isDrawing=true; dX=e.clientX; dY=e.clientY; });
+  drawCanvas.addEventListener('mousemove',e=>{ if(drawActive&&isDrawing) line(e.clientX,e.clientY); });
+  window.addEventListener('mouseup',()=>isDrawing=false);
+  drawCanvas.addEventListener('touchstart',e=>{ if(!drawActive) return; e.preventDefault(); const t=e.touches[0]; isDrawing=true; dX=t.clientX; dY=t.clientY; },{passive:false});
+  drawCanvas.addEventListener('touchmove',e=>{ if(!drawActive||!isDrawing) return; e.preventDefault(); const t=e.touches[0]; line(t.clientX,t.clientY); },{passive:false});
+  drawCanvas.addEventListener('touchend',()=>isDrawing=false);
+}
+function toggleDraw(){
+  drawActive=!drawActive;
+  drawCanvas.classList.toggle('active',drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show',drawActive);
+  document.getElementById('drawToggleBtn').style.background=drawActive?'var(--c4)':'';
+}
+function setPenColor(c,el){ penColor=c; document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active')); el.classList.add('active'); }
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+function goTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+document.addEventListener('DOMContentLoaded',()=>{
+  safeInit('initGuess',initGuess);
+  safeInit('initTL',initTL);
+  safeInit('initAgree',initAgree);
+  safeInit('initChat',initChat);
+  safeInit('initFlip',initFlip);
+  safeInit('initResp',initResp);
+  safeInit('buildPlan',buildPlan);
+  safeInit('initQuiz',initQuiz);
+  safeInit('initReflect',initReflect);
+  safeInit('initDraw',initDraw);
+});
+</script>
+</body>
+</html>
