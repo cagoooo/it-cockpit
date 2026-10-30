@@ -76,6 +76,34 @@ a{color:var(--c1)}
 .video-meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 16px;font-size:.92rem;color:var(--dim)}
 .video-meta a{margin-left:auto;font-weight:700;text-decoration:none}
 .nlm-badge{background:var(--c3);color:#fff;font-weight:700;padding:3px 10px;border-radius:6px;font-size:.85rem}
+/* slide player */
+.slide-block{margin-bottom:30px}
+.slide-player{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;border-top:5px solid var(--c1);max-width:1100px}
+.slide-main{position:relative;background:#eef2f6;border-radius:10px;overflow:hidden;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block;transition:opacity .25s}
+.slide-main.loading img{opacity:.4;filter:blur(6px)}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.92);border:2px solid var(--border);border-radius:50%;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;z-index:3}
+.slide-nav-btn:hover{background:var(--c1);color:#fff}
+.slide-nav-btn.prev{left:10px}.slide-nav-btn.next{right:10px}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#fff;border:none;padding:8px 14px;font-size:.95rem;cursor:pointer;border-radius:20px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:5;font-family:inherit}
+.slide-fs-btn:hover{transform:translateY(-2px)}
+.slide-counter{position:absolute;bottom:12px;left:14px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:16px;font-size:.85rem;z-index:3}
+.slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 4px}
+.strip-thumb{flex-shrink:0;width:104px;height:58px;border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;opacity:.6;transition:.2s;background:#e9e3d6}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb:hover{opacity:1}
+.strip-thumb.active{opacity:1;border-color:var(--c1);box-shadow:0 0 0 2px var(--c1)}
+.slide-fs{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9999;align-items:center;justify-content:center}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:100%;max-height:100vh;object-fit:contain}
+.slide-fs-close{position:fixed;top:16px;right:16px;background:var(--c3);color:#fff;border:none;width:44px;height:44px;font-size:1.4rem;cursor:pointer;border-radius:50%;z-index:10000}
+.slide-fs-counter{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.92);padding:5px 18px;border-radius:20px;font-size:.9rem;z-index:10000}
+.fs-nav{position:fixed;top:50%;transform:translateY(-50%);width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--c2);color:var(--c2);font-size:2rem;font-weight:900;cursor:pointer;z-index:10000;display:flex;align-items:center;justify-content:center;border-radius:12px}
+.fs-nav.prev{left:20px}.fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--c2);color:#fff}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar,body.slides-fullscreen .float-panel{display:none !important}
+@media (max-width:720px){.fs-nav{width:46px;height:64px;font-size:1.6rem}.fs-nav.prev{left:8px}.fs-nav.next{right:8px}.slide-fs-close{width:40px;height:40px;top:12px;right:12px}.slide-nav-btn{width:36px;height:36px;font-size:1.1rem}}
 /* objectives & pills */
 .block-title{font-size:1.4rem;font-weight:900;color:var(--ink);margin:0 0 14px}
 .obj-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
@@ -315,6 +343,20 @@ body.lecturer .teacher-note{display:block}
     <div class="video-wrap">
       <div class="video-ratio"><iframe src="https://www.youtube.com/embed/lwIXM2Dbl70?rel=0&modestbranding=1" title="數位素養與網路安全 教師研習導讀影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
       <div class="video-meta"><span class="nlm-badge">🤖 NotebookLM AI 生成</span><span>CC 字幕：中文／English・可先看影片再進入五大關卡</span><a href="https://www.youtube.com/watch?v=lwIXM2Dbl70" target="_blank" rel="noopener">↗ 在 YouTube 開啟</a></div>
+    </div>
+  </section>
+
+  <section class="slide-block">
+    <h2 class="block-title">📊 研習簡報（NotebookLM × 阿凱老師，15 頁）</h2>
+    <div class="slide-player">
+      <div class="slide-main" id="slide-main" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="" alt="研習簡報" decoding="async">
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁" aria-label="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁" aria-label="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 1</div>
+      </div>
+      <div class="slide-strip" id="slide-strip"></div>
     </div>
   </section>
 
@@ -569,7 +611,7 @@ body.lecturer .teacher-note{display:block}
     <p class="site-credit">Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
       <a href="https://www.smes.tyc.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=2&content_id=11&type=news&from_op=all_news#a5" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
       <span class="footer-school"><span class="footer-dot" aria-hidden="true">・</span>桃園市龍潭區石門國民小學</span></p>
-    <p class="version-tag">v1.1 · 2026-10-30</p>
+    <p class="version-tag">v1.2 · 2026-10-30</p>
   </div>
 </footer>
 
@@ -594,6 +636,13 @@ body.lecturer .teacher-note{display:block}
   <div class="big-out" id="timer-display">05:00</div>
   <div style="display:flex;gap:6px;margin-top:10px"><button class="btn" style="flex:1" onclick="startTimer()">▶ 開始</button><button class="btn alt" style="flex:1" onclick="pauseTimer()">⏸ 暫停</button><button class="btn alt" onclick="resetTimer()">↻</button></div>
 </div>
+<div class="slide-fs" id="slide-fs">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="簡報全螢幕">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="slide-fs-counter" id="slide-fs-counter">1 / 1</div>
+</div>
 <canvas id="drawCanvas"></canvas>
 <div class="draw-toolbar" id="drawToolbar">
   <button class="color-dot active" style="background:#e0644f" onclick="setPenColor('#e0644f',this)"></button>
@@ -606,6 +655,81 @@ body.lecturer .teacher-note{display:block}
 
 <script>
 function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
+
+/* ---------- NotebookLM 簡報播放器 ---------- */
+const SLIDE_COUNT = 15;
+const SLIDE_LIST = [], SLIDE_THUMBS = [];
+for(let i=1;i<=SLIDE_COUNT;i++){
+  const n = String(i).padStart(2,'0');
+  SLIDE_LIST.push('assets/slide_' + n + '.webp');
+  SLIDE_THUMBS.push('assets/thumbs/slide_' + n + '.webp');
+}
+let slideIdx = 0;
+const slideLoaded = new Set();
+function preloadSlide(n, done){
+  if(slideLoaded.has(n)){ if(done) done(); return; }
+  const img = new Image();
+  img.onload = img.onerror = ()=>{ slideLoaded.add(n); if(done) done(); };
+  img.src = SLIDE_LIST[n];
+}
+function initSlidePlayer(){
+  const strip = document.getElementById('slide-strip');
+  strip.innerHTML = '';
+  SLIDE_THUMBS.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0 ? ' active' : '');
+    t.onclick = ()=>goSlide(i);
+    const img = document.createElement('img');
+    img.alt = '第 ' + (i+1) + ' 頁'; img.loading = 'lazy'; img.src = src;
+    t.appendChild(img); strip.appendChild(t);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n < 0 || n >= SLIDE_COUNT) return;
+  slideIdx = n;
+  const cur = document.getElementById('slide-current');
+  const main = document.getElementById('slide-main');
+  if(!slideLoaded.has(n)){
+    main.classList.add('loading');
+    cur.src = SLIDE_THUMBS[n];
+    preloadSlide(n, ()=>{ if(slideIdx === n){ cur.src = SLIDE_LIST[n]; main.classList.remove('loading'); } });
+  } else {
+    cur.src = SLIDE_LIST[n]; main.classList.remove('loading');
+  }
+  preloadSlide((n + 1) % SLIDE_COUNT);
+  document.getElementById('slide-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  }
+  // 只捲動縮圖列本身，不動整個頁面
+  const strip = document.getElementById('slide-strip');
+  const active = document.querySelectorAll('.strip-thumb')[n];
+  if(active && strip){
+    const left = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, left), behavior: 'smooth'});
+  }
+}
+function slideNav(dir){ goSlide((slideIdx + dir + SLIDE_COUNT) % SLIDE_COUNT); }
+function openSlideFullscreen(){
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[slideIdx];
+  document.getElementById('slide-fs-counter').textContent = (slideIdx+1) + ' / ' + SLIDE_COUNT;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('slide-fs').classList.contains('show')) return;
+  if(e.key === 'ArrowRight'){ slideNav(1); e.preventDefault(); }
+  else if(e.key === 'ArrowLeft'){ slideNav(-1); e.preventDefault(); }
+  else if(e.key === 'Escape'){ closeSlideFullscreen(); e.preventDefault(); }
+});
 
 /* ---------- 互動 1：猜數據 ---------- */
 const GUESS = [
@@ -856,6 +980,7 @@ function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,draw
 function goTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  safeInit('initSlidePlayer',initSlidePlayer);
   safeInit('initGuess',initGuess);
   safeInit('initTL',initTL);
   safeInit('initAgree',initAgree);
