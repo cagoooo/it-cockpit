@@ -10,7 +10,7 @@
 
 IT Cockpit 是一套為國小資訊科技課程設計的互動式教學入口。它將三至六年級、創造能力資賦優異課程與教師研習教材，整理成可直接投影、操作、練習與複習的獨立教學艙。
 
-本專案目前整理 **40 個課程入口**，其中 39 個教學艙已上線，Tinkercad 3D 列印課程仍在規劃中。內容從電腦操作、網路搜尋、影像設計、Scratch、micro:bit，到 AI 素養、媒體識讀、生成式 AI 創作與專題實作。
+本專案目前整理 **43 個課程入口**，其中 42 個教學艙已上線，Tinkercad 3D 列印課程仍在規劃中。內容從電腦操作、網路搜尋、影像設計、Scratch、micro:bit，到 AI 素養、媒體識讀、生成式 AI 創作與專題實作。
 
 ## 快速入口
 
@@ -79,6 +79,7 @@ Tinkercad 3D 列印（規劃中） ·
 [故事生圖 Gem](https://cagoooo.github.io/it-cockpit/gem-storymaker/) ·
 [Deepfake 偵探](https://cagoooo.github.io/it-cockpit/deepfake-detective/) ·
 [事實查核](https://cagoooo.github.io/it-cockpit/fact-check/) ·
+[數位真相調查局](https://cagoooo.github.io/it-cockpit/misinformation-lab/) ·
 [Gemini 引導式學習](https://cagoooo.github.io/it-cockpit/gemini-guided-learning/) ·
 [AI 訓練師](https://cagoooo.github.io/it-cockpit/ai-trainer/) ·
 [AR／VR 穿戴科技](https://cagoooo.github.io/it-cockpit/ar-vr-wearables/) ·
@@ -88,12 +89,14 @@ Tinkercad 3D 列印（規劃中） ·
 [畢業紀念影片](https://cagoooo.github.io/it-cockpit/grad-film-ai/) ·
 [痞客邦部落格](https://cagoooo.github.io/it-cockpit/pixnet-blog/) ·
 [AI 公平性與偏誤](https://cagoooo.github.io/it-cockpit/ai-fairness/) ·
-[網路守門員特訓營](https://cagoooo.github.io/it-cockpit/net-guardians/)
+[網路守門員特訓營](https://cagoooo.github.io/it-cockpit/net-guardians/) ·
+[AI 小機長：安全又負責任地使用生成式 AI](https://cagoooo.github.io/it-cockpit/ai-copilot-captain/)
 
 ### 教師研習
 
 [A2 PaGamO 遊戲化教學](https://cagoooo.github.io/it-cockpit/pagamo-gamified-learning/) ·
-[AI 素養教學引導](https://cagoooo.github.io/it-cockpit/teaching/)
+[AI 素養教學引導](https://cagoooo.github.io/it-cockpit/teaching/) ·
+[數位素養與網路安全：守護孩子的數位生活](https://cagoooo.github.io/it-cockpit/teacher-digital-safety/)
 
 ## 教學艙分層
 
@@ -105,6 +108,8 @@ Tinkercad 3D 列印（規劃中） ·
 4. **投影簡報**：支援全螢幕、鍵盤或觸控切換，方便課堂共學。
 5. **形成性評量**：用題目、提示、重試與學習證據確認是否理解。
 6. **延伸資源**：依需要串接 NotebookLM、YouTube、Google Drive 與外部教學網站。
+
+部分教學艙會直接在頁面中嵌入 NotebookLM 製作的 YouTube 影片與可翻頁簡報，例如「AI 小機長」的自學影片與授課簡報，以及教師研習「數位素養與網路安全」的導讀影片與阿凱老師研習簡報。
 
 ## 資優班數位整合
 
