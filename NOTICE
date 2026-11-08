@@ -1,0 +1,6 @@
+授權範圍說明（NOTICE）
+
+本 repo 的 MIT 授權（見 LICENSE）只涵蓋黃凱揚（阿凱老師）自行撰寫的程式碼與自製內容。
+
+本 repo 另包含改編教材（例如 Day of AI 等外部單位的課程內容）與外部服務入口。這些內容的著作權與使用條件屬於原作者或原提供單位，不因本 repo 的 MIT 授權而改變。引用或再利用前，請先查看各教材的來源與授權：
+https://cagoooo.github.io/it-cockpit/gifted-ai-lab/source-credits.html
