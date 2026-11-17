@@ -1,7 +1,7 @@
 // IT Cockpit Service Worker
 // 策略：HTML network-first（永遠拿最新）、靜態資源 cache-first（offline 友善）
 // 新版本部署時 bump CACHE_VERSION，舊快取會被自動清掉
-const CACHE_VERSION = '2026-11-17-own-cache-only';
+const CACHE_VERSION = '2026-11-17-clear-old-by-sw';
 // 同網域（cagoooo.github.io）其他工具也共用 Cache Storage，只能清除本站自己的快取
 const CACHE_PREFIX = 'it-cockpit-';
 const HTML_CACHE = `it-cockpit-html-${CACHE_VERSION}`;
@@ -28,9 +28,18 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+async function clearOldCaches() {
+  const keys = await caches.keys();
+  const old = keys.filter(k => k.startsWith(CACHE_PREFIX) && !k.endsWith(CACHE_VERSION));
+  await Promise.all(old.map(k => caches.delete(k)));
+  return old.length;
+}
+
 self.addEventListener('message', (e) => {
   if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
   if (e.data && e.data.type === 'CACHE_GIFTED_CORE') e.waitUntil(cacheGiftedCore({ background: Boolean(e.data.background) }));
+  // 資優班頁面的「清除舊快取」按鈕：由 SW 用自己的版本判斷哪些是舊的，頁面不再寫死版本
+  if (e.data && e.data.type === 'CLEAR_OLD_CACHES') e.waitUntil(clearOldCaches().then((count) => e.ports[0]?.postMessage({ count, version: CACHE_VERSION })));
 });
 
 self.addEventListener('fetch', (e) => {
