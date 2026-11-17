@@ -216,7 +216,7 @@
   "files": [
     {
       "file": "index.html",
-      "sha256": "c826fbc63bc5d1939e5d8af44b477f98e720b47b12c1eb3657da762db0b0bf90",
+      "sha256": "62197e7d73d2e18c6d8073dd89123b2d65c100b2f4e420add5ec716d23f51402",
       "bytes": 54007,
       "scope": "core"
     },
@@ -234,7 +234,7 @@
     },
     {
       "file": "week-cockpit.js",
-      "sha256": "09b9080287c85a8c38cffb007d289efd65cb0232865e52c659d95585f990b4b3",
+      "sha256": "dbca5197f14cab64fdd8ef600ac0c86caaa96b159595e61e3ae06509b7398a1d",
       "bytes": 24935,
       "scope": "core"
     },
