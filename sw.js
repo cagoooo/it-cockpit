@@ -1,7 +1,9 @@
 // IT Cockpit Service Worker
 // 策略：HTML network-first（永遠拿最新）、靜態資源 cache-first（offline 友善）
 // 新版本部署時 bump CACHE_VERSION，舊快取會被自動清掉
-const CACHE_VERSION = '2026-11-17-footer-akai-link';
+const CACHE_VERSION = '2026-11-17-own-cache-only';
+// 同網域（cagoooo.github.io）其他工具也共用 Cache Storage，只能清除本站自己的快取
+const CACHE_PREFIX = 'it-cockpit-';
 const HTML_CACHE = `it-cockpit-html-${CACHE_VERSION}`;
 const ASSET_CACHE = `it-cockpit-asset-${CACHE_VERSION}`;
 const GIFTED_CORE_CACHE = `it-cockpit-gifted-core-${CACHE_VERSION}`;
@@ -19,7 +21,7 @@ self.addEventListener('activate', (e) => {
     caches.keys()
       .then(keys => Promise.all(
         keys
-          .filter(k => !k.endsWith(CACHE_VERSION))
+          .filter(k => k.startsWith(CACHE_PREFIX) && !k.endsWith(CACHE_VERSION))
           .map(k => caches.delete(k))
       ))
       .then(() => self.clients.claim())
