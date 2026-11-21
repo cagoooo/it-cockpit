@@ -78,9 +78,11 @@
   .wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
   @media (max-width: 720px) { .wrap { padding: 0 22px; } }
 
-  /* ===== Nav ===== */
-  .nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; gap: 18px; flex-wrap: wrap; }
-  .logo { display: flex; align-items: center; gap: 14px; }
+  /* ===== Nav（桌機：整列黏在頂端；手機：品牌列捲走、年級列黏在頂端可左右滑） ===== */
+  .topbar { position: sticky; top: 0; z-index: 50; background: #f1ebdcd9; -webkit-backdrop-filter: saturate(1.4) blur(12px); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
+  .topbar.is-stuck { border-bottom-color: #1b24381a; box-shadow: 0 8px 24px -18px #1b243855; }
+  .nav { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; padding-bottom: 16px; gap: 18px; }
+  .logo { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
   .logo-mark {
     width: 48px; height: 48px; background: #1b2438; color: #f1ebdc;
     display: flex; align-items: center; justify-content: center;
@@ -90,23 +92,56 @@
   .logo-mark::after { content: ""; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 18px; height: 2px; background: #f4a623; }
   .logo-title { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
   .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #1b243899; margin-top: 3px; text-transform: uppercase; }
-  .nav-right { display: flex; gap: 4px; align-items: center; padding: 5px; background: #ffffff66; border-radius: 999px; border: 1.5px solid #1b243822; flex-wrap: wrap; }
-  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: #1b2438; border-radius: 999px; transition: background .15s; }
+  .nav-right { display: flex; gap: 4px; align-items: center; padding: 5px; background: #ffffff66; border-radius: 999px; border: 1.5px solid #1b243822; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .nav-right::-webkit-scrollbar { display: none; }
+  .gradebar { min-width: 0; }
+  .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: #1b2438; border-radius: 999px; transition: background .15s, color .15s, box-shadow .15s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
   .nav-link:hover { background: #f1ebdc; }
-  .nav-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .nav-link.is-active { background: #1b2438; color: #f1ebdc; }
+  .nav-link.is-active .nav-num { color: #f1ebdcaa; }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .nav-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1b243866; }
+  section[id], #tracks { scroll-margin-top: 96px; }
+
+  @media (max-width: 1100px) {
+    /* 外框拆開：品牌列跟著頁面捲走，只有年級列黏在頂端 */
+    .topbar, .topbar > .nav { display: contents; }
+    .logo { padding: 16px 48px 10px; gap: 12px; }
+    .logo-mark { width: 42px; height: 42px; border-radius: 11px; font-size: 13px; }
+    .logo-mark::after { bottom: 5px; width: 16px; }
+    .logo-title { font-size: 17px; }
+    .gradebar { position: sticky; top: 0; z-index: 50; background: #f1ebdce6; -webkit-backdrop-filter: saturate(1.4) blur(12px); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
+    .gradebar.is-stuck { border-bottom-color: #1b24381a; box-shadow: 0 8px 20px -16px #1b243866; }
+    .nav-right {
+      flex-wrap: nowrap; justify-content: flex-start; gap: 8px;
+      overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none;
+      background: none; border: 0; border-radius: 0; padding: 10px 48px;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 28px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 28px), transparent 100%);
+    }
+    .nav-right::-webkit-scrollbar { display: none; }
+    .nav-link { flex-shrink: 0; scroll-snap-align: start; scroll-margin-inline: 20px; padding: 9px 14px; min-height: 40px; font-size: 14px; background: #fffcf3; border: 1.5px solid #1b24381f; }
+    .nav-link:hover { background: #fffcf3; }
+    .nav-link.is-active { background: #1b2438; border-color: #1b2438; }
+    section[id], #tracks { scroll-margin-top: 72px; }
+  }
+  @media (max-width: 720px) {
+    .logo { padding: 16px 20px 10px; }
+    .nav-right { padding: 10px 20px; }
+  }
 
   /* ===== Hero ===== */
-  .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; padding: 36px 0 48px; align-items: start; }
+  /* 只設上下留白，左右留白交給 .wrap（之前寫 padding: 36px 0 把手機左右留白蓋成 0） */
+  .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; padding-top: 36px; padding-bottom: 48px; align-items: start; }
   @media (max-width: 960px) { .hero { grid-template-columns: 1fr; gap: 40px; } }
 
   .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 13px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #c2410c; background: #c2410c14; border-radius: 999px; margin-bottom: 32px; text-transform: uppercase; }
   .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #c2410c; box-shadow: 0 0 0 4px #c2410c22; }
 
   .title { font-size: clamp(48px, 7vw, 92px); font-weight: 800; line-height: 0.96; letter-spacing: -0.035em; margin: 0 0 22px; color: #1b2438; }
-  .title-row { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
-  .title-tag { display: inline-flex; align-items: center; padding: 4px 18px; background: #f4a623; color: #1b2438; font-size: 0.42em; font-weight: 700; letter-spacing: 0.08em; border-radius: 999px; transform: translateY(-18%); }
-  .title em { font-style: italic; font-weight: 700; color: #c2410c; }
+  .title-row { display: flex; align-items: baseline; gap: 0; flex-wrap: wrap; }
+  .title-tag { display: inline-flex; align-items: center; padding: 4px 18px; margin-left: 18px; background: #f4a623; color: #1b2438; font-size: 0.42em; font-weight: 700; letter-spacing: 0.08em; border-radius: 999px; transform: translateY(-18%); }
+  .title em { font-style: italic; font-weight: 700; color: #c2410c; padding: 0 0.08em 0 0.04em; }
 
   .lead { font-size: 18px; line-height: 1.65; color: #1b2438cc; margin: 0 0 32px; max-width: 540px; }
   .lead strong { font-weight: 800; color: #1b2438; }
@@ -151,7 +186,7 @@
   .dstat-bar-fill { height: 100%; border-radius: 2px; }
 
   /* ===== Tracks ===== */
-  .tracks-row { padding: 56px 0 22px; display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+  .tracks-row { padding-top: 56px; padding-bottom: 22px; display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
   .tracks-h { font-size: clamp(28px, 4.4vw, 44px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin: 0; }
   .tracks-h em { font-style: italic; color: #c2410c; font-weight: 700; }
   .tracks-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: #1b243899; text-transform: uppercase; text-align: right; line-height: 1.6; }
@@ -210,6 +245,57 @@
   .footer-cred-row { display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; }
 
   a:focus-visible { outline: 2px solid #c2410c; outline-offset: 4px; border-radius: 4px; }
+
+  /* ===== 手機版整體排版 ===== */
+  @media (max-width: 720px) {
+    .wrap { padding: 0 20px; }
+    .hero { padding-top: 22px; padding-bottom: 36px; gap: 32px; }
+    .eyebrow { margin-bottom: 20px; font-size: 10px; letter-spacing: 0.14em; }
+    .title { font-size: clamp(40px, 12.5vw, 58px); line-height: 1.04; margin-bottom: 20px; }
+    .lead { font-size: 16px; line-height: 1.75; margin-bottom: 24px; }
+    .ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 26px; }
+    .cta, .cta-ghost { justify-content: center; padding: 15px 12px; font-size: 15px; }
+    .creds { gap: 8px 16px; font-size: 10px; padding-top: 18px; }
+    .dash { padding: 16px; border-radius: 20px; }
+    .h-pill { display: none; } /* 手機上會跟年級標籤疊在一起 */
+    .h-label { font-size: 8px; padding: 2px 6px; }
+    .dstat { padding: 12px 10px 10px; }
+    .dstat-v { font-size: 24px; }
+
+    .tracks-row { padding-top: 40px; padding-bottom: 16px; gap: 10px; }
+    .tracks-meta { text-align: left; }
+    .tracks { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .track:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .track { padding: 16px 14px 14px; border-radius: 16px; }
+    .track-top { margin-bottom: 14px; }
+    .track-tag { font-size: 10px; padding: 3px 8px; }
+    .track-num { font-size: 9px; }
+    .track-grade { font-size: 24px; }
+    .track-name { font-size: 14px; }
+    .track-cap { font-size: 12px; min-height: 0; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .track-foot { font-size: 10px; padding-top: 10px; }
+
+    .section { padding: 36px 20px 8px; }
+    .section-head { gap: 10px 12px; margin-bottom: 18px; }
+    .section-title { font-size: 22px; }
+    .section-rule { display: none; }
+    .section-meta { margin-left: auto; }
+    .cards { grid-template-columns: 1fr; gap: 12px; }
+    .card { padding: 18px 18px 16px; border-radius: 16px; }
+    .card-head { margin-bottom: 12px; }
+    .card-title { font-size: 17px; }
+    .card-desc { min-height: 0; margin-bottom: 14px; }
+
+    .footer { margin-top: 40px; padding: 28px 0 32px; }
+    .footer-cred { align-items: flex-start; }
+  }
+  @media (max-width: 520px) {
+    .title-tag { margin-left: 0; margin-top: 14px; transform: none; font-size: 0.4em; }
+  }
+  /* 觸控裝置不做滑過上浮，避免點一下卡片卡在浮起狀態 */
+  @media (hover: none) {
+    .track:hover, .card:hover, .cta:hover { transform: none; }
+  }
 </style>
 <script src="assets/webp-fallback.js" defer></script>
 </head>
@@ -457,23 +543,78 @@
   const modulesByGrade = g => MODULES.filter(m => m.grade === g);
 
   function renderNav() {
-    return el("nav", { class: "wrap nav" }, [
-      el("a", { class: "logo", href: "#top" }, [
-        el("div", { class: "logo-mark", text: "IT" }),
-        el("div", {}, [
-          el("div", { class: "logo-title", text: "IT Cockpit" }),
-          el("div", { class: "logo-sub", text: "教學駕駛艙 · v2026" }),
+    return el("div", { class: "topbar" }, [
+      el("div", { class: "wrap nav" }, [
+        el("a", { class: "logo", href: "#top" }, [
+          el("div", { class: "logo-mark", text: "IT" }),
+          el("div", {}, [
+            el("div", { class: "logo-title", text: "IT Cockpit" }),
+            el("div", { class: "logo-sub", text: "教學駕駛艙 · v2026" }),
+          ]),
+        ]),
+        el("nav", { class: "gradebar", "aria-label": "年級導覽" }, [
+          el("div", { class: "nav-right" }, GRADES.map(g => {
+            const count = modulesByGrade(g.grade).length;
+            return el("a", { class: "nav-link", href: `#g${g.grade}`, "data-grade": String(g.grade) }, [
+              el("span", { class: "nav-dot", style: { background: g.color } }),
+              document.createTextNode(g.label),
+              el("span", { class: "nav-num", text: String(count) }),
+            ]);
+          })),
         ]),
       ]),
-      el("div", { class: "nav-right" }, GRADES.map(g => {
-        const count = modulesByGrade(g.grade).length;
-        return el("a", { class: "nav-link", href: `#g${g.grade}` }, [
-          el("span", { class: "nav-dot", style: { background: g.color } }),
-          document.createTextNode(g.label),
-          el("span", { class: "nav-num", text: String(count) }),
-        ]);
-      })),
     ]);
+  }
+
+  /* 導覽列：黏住時加陰影、捲到哪個年級就亮哪個按鈕，手機上自動把亮的按鈕滑進畫面 */
+  function setupNavState() {
+    const topbar = document.querySelector(".topbar");
+    const gradebar = document.querySelector(".gradebar");
+    const logo = document.querySelector(".logo");
+    const scroller = document.querySelector(".nav-right");
+    const links = [...document.querySelectorAll(".nav-link")];
+    const sections = GRADES.map(g => document.getElementById(`g${g.grade}`)).filter(Boolean);
+    const mobile = window.matchMedia("(max-width: 1100px)"); // 與 CSS 拆開導覽列的斷點一致
+    let current = null;
+
+    function setActive(grade) {
+      if (grade === current) return;
+      current = grade;
+      links.forEach(a => {
+        const on = a.dataset.grade === grade;
+        a.classList.toggle("is-active", on);
+        if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        if (on && mobile.matches && scroller.scrollWidth > scroller.clientWidth) {
+          const left = a.offsetLeft - (scroller.clientWidth - a.offsetWidth) / 2;
+          scroller.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+        }
+      });
+    }
+
+    let ticking = false;
+    function update() {
+      ticking = false;
+      const stuckEl = mobile.matches ? gradebar : topbar;
+      const otherEl = mobile.matches ? topbar : gradebar;
+      otherEl.classList.remove("is-stuck");
+      // 手機上年級列原本位在品牌列下方，捲過品牌列高度才算「黏住」（黏住時 offsetTop 會跟著變，不能拿來判斷）
+      stuckEl.classList.toggle("is-stuck", window.scrollY > (mobile.matches ? logo.offsetHeight : 0) + 2);
+      // 以導覽列下緣再往下一點當判斷線，最後一個越過判斷線的年級就是「目前位置」
+      const line = (mobile.matches ? gradebar.offsetHeight : topbar.offsetHeight) + 40;
+      let active = null;
+      for (const s of sections) {
+        if (s.getBoundingClientRect().top <= line) active = s.id.slice(1);
+      }
+      // 捲到最底時，最後一區還沒越過判斷線也要亮起來
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4 && sections.length) {
+        active = sections[sections.length - 1].id.slice(1);
+      }
+      setActive(active);
+    }
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
   }
 
   function renderHero() {
@@ -624,6 +765,7 @@
   root.appendChild(renderTracks());
   GRADES.forEach(g => root.appendChild(renderSection(g)));
   root.appendChild(renderFooter());
+  setupNavState();
 
   /* ===== Service Worker：自動更新機制 ===== */
   (function registerSW() {

@@ -1,7 +1,7 @@
 // IT Cockpit Service Worker
 // 策略：HTML network-first（永遠拿最新）、靜態資源 cache-first（offline 友善）
 // 新版本部署時 bump CACHE_VERSION，舊快取會被自動清掉
-const CACHE_VERSION = '2026-11-17-clear-old-by-sw';
+const CACHE_VERSION = '2026-11-21-mobile-nav';
 // 同網域（cagoooo.github.io）其他工具也共用 Cache Storage，只能清除本站自己的快取
 const CACHE_PREFIX = 'it-cockpit-';
 const HTML_CACHE = `it-cockpit-html-${CACHE_VERSION}`;
