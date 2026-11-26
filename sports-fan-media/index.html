@@ -838,7 +838,24 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
     </div>
   </section>
 
-  <!--INFOGRAPHICS-->
+  <!-- 資訊圖表 -->
+  <section class="infographic-section">
+    <h3>🗂️ 三張球迷偵探懶人包</h3>
+    <div class="info-grid">
+      <a class="info-card" href="./assets/01_info.webp" target="_blank">
+        <img data-fallback-src="assets/01_info.jpg" src="./assets/thumbs/01_info.webp" alt="相信的四條捷徑資訊圖表" decoding="async" loading="lazy">
+        <div class="cap" style="color:#e8590c">① 相信的四條捷徑：情緒 × 認同 × 同儕 × 平台</div>
+      </a>
+      <a class="info-card" href="./assets/02_info.webp" target="_blank">
+        <img data-fallback-src="assets/02_info.jpg" src="./assets/thumbs/02_info.webp" alt="一場比賽五種內容與事實感受猜測資訊圖表" decoding="async" loading="lazy">
+        <div class="cap" style="color:#e03131">② 一場比賽五種內容：我看到／我覺得／我還要查</div>
+      </a>
+      <a class="info-card" href="./assets/03_info.webp" target="_blank">
+        <img data-fallback-src="assets/03_info.jpg" src="./assets/thumbs/03_info.webp" alt="停看問查負責五步驟資訊圖表" decoding="async" loading="lazy">
+        <div class="cap" style="color:#2b8a3e">③ 停・看・問・查・負責：把 AI 當成可以質疑的同學</div>
+      </a>
+    </div>
+  </section>
 
   <!-- 影片 -->
   <section class="video-section">
@@ -860,7 +877,7 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
   <section class="nb-section">
     <h3>🧭 NotebookLM 資源站 & 查證工具</h3>
     <div class="nb-grid">
-      <a class="nb-card" id="nb-link" href="https://notebooklm.google.com/" target="_blank" rel="noopener">
+      <a class="nb-card" id="nb-link" href="https://notebooklm.google.com/notebook/51986c07-3d8d-42c4-982f-dcb66b40b819" target="_blank" rel="noopener">
         <h4>📚 本單元筆記本</h4><p>講義改寫的六年級學習精華 + 阿凱老師主講者插畫，簡報與資訊圖表的生成來源。</p><span class="link">前往 NotebookLM →</span>
       </a>
       <a class="nb-card" href="https://tfc-taiwan.org.tw/" target="_blank" rel="noopener">
@@ -979,7 +996,7 @@ body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.sli
 
 <script>
 // ========== CONFIG ==========
-const SLIDE_COUNT = 0;           // NotebookLM 授課簡報頁數（生成後填入）
+const SLIDE_COUNT = 12;          // NotebookLM 授課簡報 12 頁
 const YOUTUBE_VIDEO_ID = '';     // NotebookLM 教學影片（上傳後填入）
 const SLIDE_LIST = [], SLIDE_THUMBS = [];
 for(let i=1;i<=SLIDE_COUNT;i++){
