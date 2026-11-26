@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>球迷偵探社：AI 時代，你還相信什麼？｜六年級資訊科技教學駕駛艙</title>
+<meta name="description" content="從運動迷文化學媒體素養：相信的四條捷徑、一場比賽五種內容、AI 假圖假截圖與名人深偽、停看問查負責五步驟。4 大關卡 × 4 個互動 × 12 題評量。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cagoooo.github.io/it-cockpit/sports-fan-media/">
+<meta property="og:title" content="球迷偵探社：AI 時代，你還相信什麼？｜六年級資訊科技">
+<meta property="og:description" content="從運動迷文化學媒體素養：相信的四條捷徑、一場比賽五種內容、AI 假圖假截圖與名人深偽、停看問查負責五步驟。4 大關卡 × 4 個互動 × 12 題評量。">
+<meta property="og:image" content="https://cagoooo.github.io/it-cockpit/sports-fan-media/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IT COCKPIT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cagoooo.github.io/it-cockpit/sports-fan-media/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;family=Fredoka:wght@500;700&amp;display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;family=Fredoka:wght@500;700&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;family=Bangers&amp;family=Fredoka:wght@500;700&amp;display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#fef9f0;--surface:#fff3e0;--panel:#ffffff;
+  --c1:#ff6b6b;--c2:#ffa94d;--c3:#51cf66;--c4:#339af0;--c5:#9775fa;
+  --text:#2c2c2c;--dim:#6f6f6f;--border:#2c2c2c;
+  --shadow-soft:0 4px 14px rgba(0,0,0,.08);
+  --shadow-pop:4px 4px 0 var(--border);
+}
+html{font-size:18px;scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;padding-bottom:80px;
+  background-image:radial-gradient(rgba(44,44,44,.07) 1.2px,transparent 1.2px);background-size:18px 18px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(254,249,240,.97);backdrop-filter:blur(6px);border-bottom:3px solid var(--border);padding:12px 24px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.home-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:2px solid var(--c1);background:var(--panel);color:var(--c1);font-weight:700;font-size:.85rem;letter-spacing:1px;border-radius:24px;transition:.2s;white-space:nowrap;box-shadow:var(--shadow-pop)}
+.home-btn:hover{background:var(--c1);color:#fff;transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--border)}
+.header-title{font-size:1.4rem;font-weight:900;color:var(--text);letter-spacing:.5px}
+.header-title .hl{color:var(--c1)}
+.header-sub{font-size:.95rem;color:var(--dim)}
+.grade-chip{display:inline-block;padding:4px 12px;background:var(--c2);color:#fff;font-size:.85rem;border-radius:16px;font-weight:700;border:2px solid var(--border)}
+.mode-toggle{margin-left:auto;display:flex;gap:8px}
+.mode-btn{padding:6px 14px;border:2px solid var(--border);background:var(--panel);font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:16px;transition:.2s;box-shadow:2px 2px 0 var(--border)}
+.mode-btn.active{background:var(--c4);color:#fff}
+.progress-wrap{max-width:1400px;margin:8px auto 0;padding:0 4px}
+.progress-label{font-size:.8rem;color:var(--dim);margin-bottom:4px;display:flex;justify-content:space-between}
+.progress-bar{height:10px;background:var(--surface);border:2px solid var(--border);border-radius:8px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));width:0%;transition:width .4s}
+
+.container{max-width:1400px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:stretch;margin-bottom:32px}
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+.hero-main{background:var(--panel);border:3px solid var(--border);border-radius:18px;padding:26px;box-shadow:6px 6px 0 var(--border);position:relative;overflow:hidden}
+.sfx{font-family:'Bangers','Noto Sans TC',sans-serif;letter-spacing:2px;display:inline-block;background:var(--c1);color:#fff;border:3px solid var(--border);padding:4px 16px;font-size:1.5rem;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--border);margin-bottom:12px}
+.hero-title{font-size:1.9rem;font-weight:900;line-height:1.35;margin-bottom:10px}
+.hero-title .hl{background:linear-gradient(transparent 58%,#ffe066 58%);padding:0 4px}
+.hero-desc{font-size:1.05rem;color:#444}
+.hero-panels{display:grid;grid-template-columns:1fr;gap:12px}
+.comic-panel{background:var(--panel);border:3px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:4px 4px 0 var(--border);display:flex;gap:14px;align-items:center}
+.comic-panel .ic{font-size:2.2rem;flex-shrink:0;width:60px;height:60px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.comic-panel h4{font-size:1.05rem;font-weight:900}
+.comic-panel p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.comic-panel.p1 .ic{background:#fff0f0}.comic-panel.p1 h4{color:var(--c1)}
+.comic-panel.p2 .ic{background:#f3f0ff}.comic-panel.p2 h4{color:var(--c5)}
+.comic-panel.p3 .ic{background:#e7f5ff}.comic-panel.p3 h4{color:var(--c4)}
+
+/* Speech bubble (阿凱老師) */
+.akai-say{display:flex;gap:12px;align-items:flex-start;margin:16px 0 0}
+.akai-say .ava{width:52px;height:52px;border-radius:50%;background:#ffe066;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.akai-say .bub{position:relative;background:#fff;border:3px solid var(--border);border-radius:16px;padding:10px 16px;font-size:1rem;font-weight:700;box-shadow:3px 3px 0 var(--border)}
+.akai-say .bub::before{content:'';position:absolute;left:-14px;top:14px;border-width:8px 14px 8px 0;border-style:solid;border-color:transparent var(--border) transparent transparent}
+.akai-say .bub::after{content:'';position:absolute;left:-9px;top:16px;border-width:6px 10px 6px 0;border-style:solid;border-color:transparent #fff transparent transparent}
+.akai-say .bub small{display:block;font-size:.78rem;color:var(--dim);font-weight:400}
+
+/* Objective chips */
+.obj-section{margin-bottom:28px}
+.obj-title{font-size:1.1rem;font-weight:900;color:var(--c1);margin-bottom:12px}
+.obj-chips{display:flex;gap:10px;flex-wrap:wrap}
+.obj-chip{display:inline-flex;align-items:center;gap:8px;font-size:1rem;padding:9px 18px;background:var(--panel);border:2px solid var(--border);border-radius:24px;box-shadow:var(--shadow-pop);font-weight:700}
+.obj-chip.red{color:#e03131}.obj-chip.orange{color:#e8590c}.obj-chip.green{color:#2b8a3e}.obj-chip.blue{color:#1c7ed6}.obj-chip.purple{color:#7048e8}
+
+.lecture-cta{display:block;margin:18px 0 0;padding:18px 22px;background:var(--c1);color:#fff;border:3px solid var(--border);box-shadow:6px 6px 0 var(--border);transition:.2s;border-radius:14px}
+.lecture-cta:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--border)}
+.lecture-cta .cta-tag{display:inline-block;background:#fff;color:var(--c1);font-size:.8rem;padding:2px 10px;border:2px solid var(--border);margin-bottom:6px;font-weight:700;border-radius:10px}
+.lecture-cta .cta-title{display:block;font-size:1.4rem;font-weight:900}
+.lecture-cta .cta-sub{display:block;font-size:.9rem;opacity:.95}
+
+/* Stage nav */
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:16px}
+.stage-pill{padding:10px 20px;background:var(--panel);border:2px solid var(--border);border-radius:24px;font-size:.95rem;font-weight:700;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.stage-pill:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.stage-pill.done{background:var(--c3);color:#fff}
+
+/* Stage */
+.level-section{margin-bottom:60px;scroll-margin-top:130px}
+.section-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.stage-badge{font-family:'Bangers','Fredoka',sans-serif;font-size:1.05rem;letter-spacing:2px;padding:6px 16px;background:var(--border);color:#ffe066;border-radius:10px;white-space:nowrap;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--c1)}
+.section-title{font-size:1.4rem;font-weight:900}
+.section-sub{font-size:1rem;color:var(--dim);margin-top:4px}
+
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:900px){.card-grid{grid-template-columns:1fr}}
+.steps-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.steps-card h4{font-size:1.05rem;margin-bottom:12px;color:var(--c1)}
+.steps-list{list-style:none;counter-reset:step}
+.steps-list li{counter-increment:step;position:relative;padding:9px 0 9px 48px;font-size:1rem;line-height:1.7;border-bottom:1px dashed #bbb}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(step);position:absolute;left:0;top:10px;width:34px;height:34px;background:var(--c2);color:#fff;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.steps-list li.green::before{background:var(--c3)}.steps-list li.blue::before{background:var(--c4)}.steps-list li.purple::before{background:var(--c5)}.steps-list li.red::before{background:var(--c1)}
+
+.gate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+@media (max-width:700px){.gate-row{grid-template-columns:1fr}}
+.gate{border:3px solid var(--border);border-radius:14px;padding:12px;background:#fff;box-shadow:3px 3px 0 var(--border)}
+.gate .n{font-family:'Bangers',sans-serif;font-size:1rem;letter-spacing:1px;color:#fff;background:var(--border);display:inline-block;padding:0 8px;border-radius:6px}
+.gate h5{font-size:1.05rem;margin:4px 0 2px}
+.gate .q{font-size:.92rem;font-weight:700;color:var(--dim)}
+.gate.g1{background:#fff5f5}.gate.g1 h5{color:#e03131}
+.gate.g2{background:#e7f5ff}.gate.g2 h5{color:#1c7ed6}
+.gate.g3{background:#ebfbee}.gate.g3 h5{color:#2b8a3e}
+
+.tip-box{margin-top:14px;padding:14px 18px;background:#fff3cd;border:2px solid var(--c2);border-radius:12px;font-size:.95rem;color:#5c4a1b}
+.warn-box{margin-top:14px;padding:14px 18px;background:#ffe3e3;border:2px solid var(--c1);border-radius:12px;font-size:.95rem;color:#7a1e2b}
+
+.compare{width:100%;border-collapse:separate;border-spacing:0;border:3px solid var(--border);border-radius:14px;overflow:hidden;font-size:.95rem;margin-top:6px}
+.compare th{padding:10px;font-size:1rem;border-bottom:3px solid var(--border)}
+.compare th.good{background:#d3f9d8;color:#2b8a3e}.compare th.bad{background:#ffe3e3;color:#c92a2a}
+.compare td{padding:9px 12px;border-bottom:1px dashed #bbb;vertical-align:top;background:#fff}
+.compare td:first-child{border-right:2px solid var(--border)}
+.compare tr:last-child td{border-bottom:none}
+
+/* Canvas */
+.canvas-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop)}
+.canvas-title{font-size:1.05rem;font-weight:900;margin-bottom:8px;color:#1c7ed6}
+.canvas-hint{font-size:.92rem;color:var(--dim);margin-bottom:12px}
+.game-canvas{width:100%;background:var(--panel);border:2px solid var(--border);border-radius:12px;display:block;touch-action:manipulation}
+.game-controls{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+.ctrl-btn{padding:9px 16px;background:var(--c4);color:#fff;border:2px solid var(--border);border-radius:24px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;transition:.2s;box-shadow:3px 3px 0 var(--border)}
+.ctrl-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--border)}
+.ctrl-btn.red{background:var(--c1)}.ctrl-btn.green{background:#40c057}.ctrl-btn.orange{background:#fd7e14}.ctrl-btn.purple{background:var(--c5)}
+.ctrl-btn.outline{background:var(--panel);color:var(--text)}
+.game-result{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:.98rem;font-weight:700;display:none}
+.game-result.show{display:block}
+.game-result.ok{background:#d3f9d8;color:#2b8a3e;border:2px solid var(--c3)}
+.game-result.bad{background:#fff3cd;color:#8a5a00;border:2px solid var(--c2)}
+
+.pass-card{margin-top:16px;background:#fff;border:3px dashed var(--c5);border-radius:14px;padding:16px}
+.pass-card h5{font-size:1.02rem;color:#7048e8;margin-bottom:8px}
+.pass-card select,.pass-card input{font-family:inherit;font-size:.95rem;padding:7px 10px;border:2px solid var(--border);border-radius:8px;width:100%;margin-bottom:8px;background:#fff}
+.pass-out{margin-top:6px;padding:12px;background:#f3f0ff;border:2px solid var(--c5);border-radius:10px;font-weight:700;display:none}
+.pass-out.show{display:block}
+
+/* Quiz */
+.quiz-section{background:var(--panel);border:3px solid var(--c5);border-radius:16px;padding:22px;box-shadow:var(--shadow-pop);margin-top:20px}
+.quiz-title{font-size:1.1rem;font-weight:900;color:#7048e8;margin-bottom:14px}
+.quiz-q{margin-bottom:18px;padding-bottom:18px;border-bottom:2px dashed #ccc}
+.quiz-q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.quiz-q-text{font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:700px){.quiz-opts{grid-template-columns:1fr}}
+.quiz-opt{padding:10px 16px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:.98rem;cursor:pointer;text-align:left;transition:.2s;color:var(--text)}
+.quiz-opt:hover{background:#fff;transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border)}
+.quiz-opt.correct{background:#d3f9d8;border-color:#2b8a3e;color:#2b8a3e}
+.quiz-opt.wrong{background:#ffe3e3;border-color:#e03131;color:#c92a2a}
+.quiz-fb{margin-top:10px;font-size:.95rem;padding:10px 14px;border-radius:10px;display:none}
+.quiz-fb.show{display:block}.quiz-fb.ok{background:#d3f9d8;color:#2b8a3e}.quiz-fb.bad{background:#fff3cd;color:#856404}
+
+.teacher-only{display:none;background:#ede7f6;border:3px dashed var(--c5);border-radius:14px;padding:16px 20px;margin-top:18px;position:relative}
+body.teacher-mode .teacher-only{display:block}
+.teacher-only::before{content:'教師備註';position:absolute;top:-12px;left:16px;background:var(--c5);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:10px}
+.teacher-only ul{margin-top:6px;padding-left:22px;font-size:.95rem;color:#3a2d6b}
+
+/* Project */
+.project-section{background:linear-gradient(135deg,#fff3e0 0%,#ffe8f0 100%);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px;box-shadow:var(--shadow-pop)}
+.project-section h3{font-size:1.3rem;color:#e03131;margin-bottom:8px}
+.project-tasks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media (max-width:900px){.project-tasks{grid-template-columns:1fr}}
+.task-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.task-card h4{font-size:1rem;color:#1c7ed6;margin-bottom:6px}
+.task-card p{font-size:.95rem;line-height:1.6}
+
+/* NLM */
+.nb-section{background:var(--surface);border:3px solid var(--border);border-radius:16px;padding:24px;margin-bottom:48px}
+.nb-section h3{font-size:1.3rem;color:#7048e8;margin-bottom:14px}
+.nb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+@media (max-width:1000px){.nb-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.nb-grid{grid-template-columns:1fr}}
+.nb-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border);transition:.2s;display:block}
+.nb-card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--border)}
+.nb-card h4{font-size:1rem;color:#7048e8;margin-bottom:6px}
+.nb-card p{font-size:.9rem;color:var(--dim);line-height:1.5}
+.nb-card .link{display:inline-block;margin-top:8px;color:#1c7ed6;font-weight:700;font-size:.9rem}
+.flow-box{background:var(--panel);border:2px dashed var(--c5);border-radius:12px;padding:14px 18px;margin-bottom:20px}
+.flow-box h4{font-size:1rem;color:#7048e8;margin-bottom:8px}
+.flow-steps{display:flex;gap:10px;flex-wrap:wrap;font-size:.9rem}
+.flow-step{background:var(--surface);padding:5px 12px;border:1px solid var(--c5);border-radius:16px;color:#7048e8;font-weight:700}
+.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:900px){.faq-list{grid-template-columns:1fr}}
+.faq-item{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:16px;box-shadow:2px 2px 0 var(--border)}
+.faq-q{font-size:1rem;font-weight:700;color:#e03131;margin-bottom:8px}
+.faq-a{font-size:.97rem;line-height:1.7}
+
+/* Slides */
+.slide-section,.video-section,.infographic-section{margin-bottom:48px}
+.slide-section h3,.video-section h3,.infographic-section h3{font-size:1.3rem;margin-bottom:14px}
+.slide-player{background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-pop)}
+.slide-main{position:relative;background:#f1ece2;border:2px solid var(--border);border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+.slide-main img{width:100%;height:100%;object-fit:contain;display:block;transition:opacity .25s}
+.slide-main.loading img{opacity:.35;filter:blur(6px)}
+.slide-main .slide-loading{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-weight:700;color:#555;z-index:2;pointer-events:none}
+.slide-main.loading .slide-loading{display:flex}
+.slide-loading span{background:rgba(255,255,255,.9);border:2px solid var(--border);border-radius:20px;padding:6px 16px}
+.slide-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.92);border:2px solid var(--border);border-radius:50%;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;z-index:3}
+.slide-nav-btn:hover{background:var(--c4);color:#fff}
+.slide-nav-btn.prev{left:10px}.slide-nav-btn.next{right:10px}
+.slide-fs-btn{position:absolute;top:12px;right:12px;background:var(--c1);color:#fff;border:2px solid var(--border);padding:7px 14px;font-size:.95rem;cursor:pointer;border-radius:20px;font-weight:700;box-shadow:2px 2px 0 var(--border);z-index:5;font-family:inherit}
+.slide-fs-btn:hover{transform:translateY(-2px)}
+.slide-counter{position:absolute;bottom:12px;left:14px;background:rgba(0,0,0,.6);color:#fff;padding:4px 12px;border-radius:16px;font-size:.85rem;z-index:3}
+.slide-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 4px}
+.strip-thumb{flex-shrink:0;width:96px;height:54px;border:2px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;opacity:.6;transition:.2s;background:#e9e3d6}
+.strip-thumb img{width:100%;height:100%;object-fit:cover}
+.strip-thumb:hover{opacity:1}
+.strip-thumb.active{opacity:1;border-color:var(--c1);box-shadow:0 0 0 2px var(--c1)}
+.slide-fs{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:9999;align-items:center;justify-content:center}
+.slide-fs.show{display:flex}
+.slide-fs img{max-width:100%;max-height:100vh;object-fit:contain}
+.slide-fs-close{position:fixed;top:16px;right:16px;background:var(--c1);color:#fff;border:none;width:44px;height:44px;font-size:1.4rem;cursor:pointer;border-radius:50%;z-index:10000}
+.slide-fs-counter{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.92);padding:5px 18px;border-radius:20px;font-size:.9rem;z-index:10000}
+.fs-nav{position:fixed;top:50%;transform:translateY(-50%);width:56px;height:80px;background:rgba(0,0,0,.6);border:2px solid var(--c1);color:var(--c1);font-size:2rem;font-weight:900;cursor:pointer;z-index:10000;display:flex;align-items:center;justify-content:center;border-radius:12px}
+.fs-nav.prev{left:20px}.fs-nav.next{right:20px}
+.fs-nav:hover{background:var(--c1);color:#fff;box-shadow:0 0 16px var(--c1)}
+@media (max-width:720px){.fs-nav{width:46px;height:64px;font-size:1.6rem}.fs-nav.prev{left:8px}.fs-nav.next{right:8px}}
+.slide-placeholder,.video-placeholder{padding:50px 20px;text-align:center;color:var(--dim);font-size:1rem;background:var(--surface);border-radius:12px;border:2px dashed #aaa}
+body.slides-fullscreen{overflow:hidden}
+body.slides-fullscreen .site-header,body.slides-fullscreen .float-tools,body.slides-fullscreen .draw-toolbar{display:none !important}
+
+.video-wrap{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop)}
+.video-ratio{position:relative;padding-top:56.25%;background:#000}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border-top:2px solid var(--border)}
+.nlm-badge{background:var(--c5);color:#fff;font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:14px}
+.video-hint{font-size:.9rem;color:var(--dim)}
+.video-yt-link{margin-left:auto;color:#e03131;font-size:.9rem;font-weight:700}
+
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:1000px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:var(--panel);border:3px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-pop);transition:.2s;display:block}
+.info-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--border)}
+.info-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-bottom:2px solid var(--border);background:var(--surface)}
+.info-card .cap{padding:10px 14px;font-size:.92rem;font-weight:700}
+
+/* Footer */
+.footer{padding:28px 24px;text-align:center;color:var(--dim);font-size:.88rem;border-top:3px solid var(--border);background:var(--surface);margin-top:40px}
+.footer p{margin:3px 0}
+.footer a{color:#1c7ed6;font-weight:700}
+.site-credit{margin-top:10px;font-size:.9rem;color:#555}
+.site-credit__heart{display:inline-block;margin:0 2px}
+.site-credit .site-credit__author{color:inherit;font-weight:700;border-bottom:1px dotted currentColor;padding-bottom:1px}
+.site-credit .site-credit__author:hover{color:#e03131}
+
+/* Floating tools */
+.float-tools{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:400}
+.float-btn{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);background:var(--c2);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:var(--shadow-pop);transition:.2s}
+.float-btn:hover{transform:translate(-2px,-2px)}
+.float-btn.red{background:var(--c1)}.float-btn.green{background:var(--c3)}.float-btn.purple{background:var(--c5)}.float-btn.blue{background:var(--c4)}
+.float-panel{position:fixed;bottom:90px;right:84px;background:var(--panel);border:3px solid var(--border);border-radius:16px;padding:16px;width:290px;box-shadow:var(--shadow-pop);display:none;z-index:400}
+.float-panel.show{display:block}
+.float-panel h4{font-size:1rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;color:#e03131}
+.float-panel .close{cursor:pointer;font-size:1.2rem;color:var(--dim);background:none;border:none}
+.btn-primary{background:var(--c1);color:#fff;border:2px solid var(--border);padding:9px 14px;border-radius:10px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.95rem;box-shadow:2px 2px 0 var(--border)}
+.lottery-result{margin-top:12px;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:10px;font-size:1.5rem;font-weight:900;text-align:center;color:#e03131;min-height:60px;display:flex;align-items:center;justify-content:center}
+.timer-display{font-size:2rem;font-weight:900;text-align:center;color:#1c7ed6;padding:14px;background:var(--surface);border:2px solid var(--border);border-radius:10px;margin:10px 0}
+@media (max-width:600px){.float-panel{right:12px;left:12px;width:auto}}
+
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:250;pointer-events:none;background:transparent}
+#drawCanvas.active{pointer-events:all;cursor:crosshair}
+.draw-toolbar{position:fixed;left:20px;bottom:20px;z-index:300;background:var(--panel);border:3px solid var(--border);padding:10px 14px;display:none;gap:8px;align-items:center;box-shadow:var(--shadow-pop);border-radius:16px}
+.draw-toolbar.show{display:flex}
+.draw-toolbar .color-dot{width:28px;height:28px;border:2px solid var(--border);cursor:pointer;padding:0;border-radius:50%}
+.draw-toolbar .color-dot.active{transform:scale(1.2)}
+.draw-toolbar .draw-clear{background:var(--panel);border:2px solid var(--c1);color:#e03131;padding:5px 12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.85rem;border-radius:14px}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+.pulse{animation:pop .5s ease-in-out}
+
+/* ===== 球迷偵探社：本單元專屬樣式 ===== */
+:root{--c1:#f76707;--c2:#fab005;--c4:#1c7ed6;--c5:#7048e8}
+.header-title .hl{color:#e8590c}
+.home-btn{color:#e8590c}
+.comic-panel.p4 .ic{background:#ebfbee}.comic-panel.p4 h4{color:#2b8a3e}
+.comic-panel.p1 h4{color:#e8590c}.comic-panel.p1 .ic{background:#fff4e6}
+
+.scoreboard{margin:16px 0 4px;display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;background:#212529;border:3px solid var(--border);border-radius:14px;padding:12px 16px;box-shadow:4px 4px 0 var(--border);color:#fff}
+.sb-team{display:flex;flex-direction:column;align-items:center}
+.sb-name{font-size:.9rem;font-weight:700;color:#ffd43b}
+.sb-score{font-family:'Bangers','Fredoka',sans-serif;font-size:2.4rem;line-height:1;color:#69db7c;letter-spacing:2px}
+.sb-team:first-child .sb-score{color:#ff8787}
+.sb-mid{font-family:'Bangers',sans-serif;font-size:1.4rem;color:#adb5bd}
+.sb-note{grid-column:1/-1;text-align:center;font-size:.85rem;color:#ced4da}
+.sb-score.bump{animation:pop .5s ease-in-out}
+
+.shortcut-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:600px){.shortcut-grid{grid-template-columns:1fr}}
+.shortcut{border:3px solid var(--border);border-radius:14px;padding:12px 14px;box-shadow:3px 3px 0 var(--border)}
+.shortcut .n{display:inline-block;font-weight:900;font-size:1.05rem;color:#fff;padding:2px 12px;border-radius:12px;border:2px solid var(--border);margin-bottom:6px}
+.shortcut p{font-size:.95rem;line-height:1.6}
+.shortcut.s1{background:#fff4e6}.shortcut.s1 .n{background:#f76707}
+.shortcut.s2{background:#f3f0ff}.shortcut.s2 .n{background:#7048e8}
+.shortcut.s3{background:#ebfbee}.shortcut.s3 .n{background:#2b8a3e}
+.shortcut.s4{background:#e7f5ff}.shortcut.s4 .n{background:#1c7ed6}
+
+.case-note{font-size:.92rem;color:var(--dim);margin:4px 0 10px}
+.headline-list{display:flex;flex-direction:column;gap:8px}
+.headline{background:#fff;border:2px solid var(--border);border-radius:10px;padding:9px 12px 9px 52px;position:relative;font-weight:700;font-size:1rem;line-height:1.5;box-shadow:2px 2px 0 var(--border)}
+.headline .tag{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:#212529;color:#ffd43b;display:flex;align-items:center;justify-content:center;font-family:'Bangers',sans-serif;font-size:1.05rem}
+.headline small{display:block;font-weight:400;color:var(--dim);font-size:.85rem}
+
+.case-list{display:flex;flex-direction:column;gap:10px}
+.case{background:#fff;border:2px solid var(--border);border-radius:12px;padding:10px 14px;font-size:.96rem;line-height:1.65;box-shadow:2px 2px 0 var(--border)}
+.case strong{display:block;font-size:1.02rem;margin:2px 0}
+.case-tag{display:inline-block;font-size:.8rem;font-weight:700;color:#fff;padding:1px 10px;border-radius:10px;border:2px solid var(--border)}
+.case-tag.red{background:#e03131}.case-tag.purple{background:#7048e8}.case-tag.blue{background:#1c7ed6}.case-tag.orange{background:#f76707}.case-tag.green{background:#2b8a3e}
+
+.math-box{margin-top:20px;background:linear-gradient(135deg,#e7f5ff,#f3f0ff);border:3px solid var(--border);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow-pop)}
+.math-box h4{font-size:1.15rem;color:#1c7ed6;margin-bottom:12px}
+.math-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+@media (max-width:900px){.math-grid{grid-template-columns:1fr 1fr}}
+.math-n{background:#fff;border:2px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.math-n b{display:block;font-size:1.5rem;color:#e8590c;font-weight:900}
+.math-n span{font-size:.9rem;color:#495057}
+.math-box p{font-size:1rem;margin:6px 0}
+.discuss{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.discuss span{background:#fff;border:2px dashed var(--c5);border-radius:10px;padding:8px 12px;font-weight:700;font-size:.98rem}
+
+.five-steps{display:flex;flex-direction:column;gap:8px}
+.fs-step{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--border);border-radius:12px;padding:8px 12px;box-shadow:2px 2px 0 var(--border)}
+.fs-step b{flex-shrink:0;min-width:58px;height:44px;border-radius:12px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;font-weight:900}
+.fs-step span{font-size:.98rem;line-height:1.55}
+.fs-step.f1 b{background:#e03131}.fs-step.f2 b{background:#f76707}.fs-step.f3 b{background:#fab005;color:#2c2c2c}.fs-step.f4 b{background:#2b8a3e}.fs-step.f5 b{background:#1c7ed6}
+
+.cm-opts{display:flex;flex-direction:column;gap:8px}
+.cm-opts .quiz-opt{width:100%}
+
+/* ===== 完整頁尾（akai-author-footer 規範） ===== */
+.site-footer{margin-top:40px;background:linear-gradient(180deg,#f6eddc,#efe3cc);border-top:1px solid #d9c9a8;position:relative}
+.site-footer::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#f76707,#fab005,#1c7ed6)}
+.footer-inner{max-width:1400px;margin:0 auto;padding:30px 24px 20px;display:grid;grid-template-columns:1.1fr 2fr 1fr;gap:24px;align-items:start}
+@media (max-width:1000px){.footer-inner{grid-template-columns:1fr 1fr}.footer-points{grid-column:1/-1;order:3}}
+@media (max-width:640px){.footer-inner{grid-template-columns:1fr}}
+.footer-brand{display:flex;gap:12px;align-items:center}
+.fb-icon{width:52px;height:52px;border-radius:14px;background:#fff;border:2px solid var(--border);box-shadow:3px 3px 0 var(--border);display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0}
+.footer-brand strong{display:block;font-size:1.15rem;font-weight:900}
+.footer-brand span{font-size:.92rem;color:#5c5340}
+.footer-points{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:640px){.footer-points{grid-template-columns:1fr}}
+.footer-points li{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.6);border:1px solid #d9c9a8;border-radius:12px;padding:10px 12px}
+.fp-icon{font-size:1.3rem}
+.footer-points strong{display:block;font-size:.95rem}
+.footer-points small{font-size:.86rem;color:#5c5340;line-height:1.5;display:block}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-link{display:inline-block;padding:7px 14px;background:#fff;border:2px solid var(--border);border-radius:20px;font-weight:700;font-size:.92rem;box-shadow:2px 2px 0 var(--border);text-align:center}
+.footer-link:hover{background:#fff4e6}
+@media (max-width:640px){.footer-links{flex-direction:row;flex-wrap:wrap}}
+.footer-bottom{max-width:1400px;margin:0 auto;padding:12px 24px 22px;border-top:1px dashed #c9b78f;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.site-credit{font-size:.92rem;color:#4a4232}
+.site-credit__heart{display:inline-block;margin:0 2px}
+.site-credit .site-credit__author{color:inherit;font-weight:700;border-bottom:1px dotted currentColor;padding-bottom:1px}
+.site-credit .site-credit__author:hover{color:#e8590c}
+.version-tag{font-size:.85rem;background:rgba(255,255,255,.7);border:1px solid #c9b78f;border-radius:14px;padding:2px 12px}
+@media (max-width:640px){.footer-bottom{flex-direction:column;text-align:center}.footer-school{display:block}.footer-dot{display:none}}
+</style>
+<script src="../assets/webp-fallback.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="home-btn" title="回到 IT COCKPIT 主頁">← IT COCKPIT</a>
+    <div>
+      <div class="header-title">🏟️ 球迷偵探社：<span class="hl">AI 時代，你還相信什麼？</span></div>
+      <div class="header-sub">六年級 · 資訊科技 · 媒體素養 × AI 素養 × 數位公民</div>
+    </div>
+    <span class="grade-chip">六年級</span>
+    <div class="mode-toggle">
+      <button class="mode-btn active" onclick="switchMode('student',this)">學生模式</button>
+      <button class="mode-btn" onclick="switchMode('teacher',this)">教師模式 🔒</button>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>偵探社闖關進度</span><span id="progTxt">0 / 4 關完成</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-main">
+      <span class="sfx">TIME OUT! 暫停一下！</span>
+      <h1 class="hero-title">「老師，AI 都這樣說了！」<br>先別急著相信，<span class="hl">我們來當三分鐘的球迷偵探</span></h1>
+      <p class="hero-desc">一場比賽結束後，網路上會冒出精華剪輯、新聞標題、迷因、留言大戰，還有 AI 做的圖和假帳號。媒體素養不是叫你「什麼都不要相信」，而是練習想清楚三件事：<strong>我為什麼相信？我根據什麼相信？我的相信和分享會影響誰？</strong></p>
+      <div class="scoreboard" aria-label="今日比分板">
+        <div class="sb-team"><span class="sb-name">情緒隊</span><span class="sb-score">0</span></div>
+        <div class="sb-mid">VS</div>
+        <div class="sb-team"><span class="sb-name">證據隊</span><span class="sb-score" id="evidenceScore">0</span></div>
+        <div class="sb-note">每答對一題，「證據隊」就得 1 分！</div>
+      </div>
+      <div class="akai-say">
+        <div class="ava">😄</div>
+        <div class="bub">嗨！我是阿凱老師。今天不用懂運動也沒關係，運動只是我們觀察網路的「放大鏡」。準備好當偵探了嗎？<small>— 你的球迷偵探社社長</small></div>
+      </div>
+    </div>
+    <div class="hero-panels">
+      <div class="comic-panel p1"><div class="ic">💓</div><div><h4>第一格：我為什麼會相信？</h4><p>情緒、認同、同儕、平台——四條讓人「秒信」的捷徑。</p></div></div>
+      <div class="comic-panel p2"><div class="ic">🎬</div><div><h4>第二格：一場比賽，五種內容</h4><p>剪輯、標題、迷因都在「選擇」：分清事實、感受與猜測。</p></div></div>
+      <div class="comic-panel p3"><div class="ic">🤖</div><div><h4>第三格：AI 做的就是真的嗎？</h4><p>假截圖、假紀錄片、名人深偽：逼真≠真實，要追原始來源。</p></div></div>
+      <div class="comic-panel p4"><div class="ic">🛑</div><div><h4>第四格：停・看・問・查・負責</h4><p>把 AI 當成「可以質疑的同學」，分享前先負責任。</p></div></div>
+    </div>
+  </section>
+
+  <section class="obj-section">
+    <div class="obj-title">🎯 今天你會學到</div>
+    <div class="obj-chips">
+      <span class="obj-chip red">💓 認出四條「相信的捷徑」</span>
+      <span class="obj-chip orange">🎬 分清事實、感受、猜測</span>
+      <span class="obj-chip blue">📰 比較同一件事的不同標題</span>
+      <span class="obj-chip purple">🤖 不靠肉眼，用來源查證 AI 內容</span>
+      <span class="obj-chip green">🛑 熟練「停看問查負責」五步驟</span>
+      <span class="obj-chip red">💬 留言與分享：同理不攻擊</span>
+    </div>
+    <a href="lecture-slides.html" class="lecture-cta" title="老師上課用：全螢幕投影模式">
+      <span class="cta-tag">老師上課用 ⮕</span>
+      <span class="cta-title">🎬 進入演講簡報模式</span>
+      <span class="cta-sub">14 張漫畫風投影片 · 全螢幕投影 · 鍵盤翻頁 · 純離線可用</span>
+    </a>
+  </section>
+
+  <nav class="stage-nav">
+    <a href="#sec1" class="stage-pill" id="pill1">💓 1. 我為什麼會相信？</a>
+    <a href="#sec2" class="stage-pill" id="pill2">🎬 2. 一場比賽，五種內容</a>
+    <a href="#sec3" class="stage-pill" id="pill3">🤖 3. AI 做的就是真的嗎？</a>
+    <a href="#sec4" class="stage-pill" id="pill4">🛑 4. 停・看・問・查・負責</a>
+  </nav>
+
+  <!-- STAGE 1 -->
+  <section id="sec1" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 01</div>
+      <div>
+        <div class="section-title">💓 我為什麼會相信？四條「相信的捷徑」</div>
+        <div class="section-sub">被騙不一定是因為不夠聰明。就算知道要查證，強烈的情緒和「大家都這樣說」還是會推著我們按下分享。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🏃 相信的四條捷徑（球迷版）</h4>
+        <div class="shortcut-grid">
+          <div class="shortcut s1"><span class="n">情緒</span><p>「太感動了！」「太氣了！」「裁判太誇張！」心跳加速時，最容易不想查證。</p></div>
+          <div class="shortcut s2"><span class="n">認同</span><p>「我是這隊的球迷！」只要訊息出現在自己支持的球隊粉專，就覺得一定是真的。</p></div>
+          <div class="shortcut s3"><span class="n">同儕</span><p>「大家都在傳」「群組都這樣講」，朋友轉傳的東西，好像不用懷疑。</p></div>
+          <div class="shortcut s4"><span class="n">平台</span><p>「它一直出現在我的推薦頁」。愈容易引起吵架的內容，常常被推得愈多。</p></div>
+        </div>
+        <div class="tip-box"><strong>🔍 真實案例：</strong>澳洲事實查核單位（AAP FactCheck）發現，臉書上有很多<strong>假裝成球迷社團</strong>的粉絲專頁，一直發布「球員過世」「得了重病」這類假新聞。它們利用的不是大家「不懂」，而是球迷的<strong>關心與認同</strong>。</div>
+        <div class="warn-box"><strong>🧠 核心想法：</strong>媒體素養不是教你「永遠不要相信」，而是知道：<strong>我為何相信、我根據什麼相信、我的相信與分享會影響誰。</strong></div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 1：這則訊息在拉哪一條捷徑？</div>
+        <div class="canvas-hint">讀手機上的球迷群組訊息，選出它最想利用你的哪一條「相信捷徑」。（情境都是虛構的）</div>
+        <canvas id="game1" class="game-canvas" width="600" height="380"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn red" onclick="game1Pick('emo')">💓 情緒</button>
+          <button class="ctrl-btn purple" onclick="game1Pick('id')">🧢 認同</button>
+          <button class="ctrl-btn green" onclick="game1Pick('peer')">👥 同儕</button>
+          <button class="ctrl-btn" onclick="game1Pick('plat')">📱 平台</button>
+          <button class="ctrl-btn outline" onclick="game1Next()">下一則 ➜</button>
+        </div>
+        <div class="game-result" id="game1Result"></div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 1 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：同學說「老師，AI 都這樣說了！」下面哪一個回應最能幫他「自己想」？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,1,'A')">A. AI 都是錯的，不要用</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'B')">B. AI 很厲害，照抄就對了</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'C')">C. 它的根據是什麼？還有其他資料嗎？你自己怎麼想？</button>
+          <button class="quiz-opt" onclick="q(this,1,1,'D')">D. 問最多人按讚的那個答案</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：「我最愛的球員好像生重病了！是我們隊的粉專發的！」這則訊息主要利用了哪兩條捷徑？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,2,'A')">A. 情緒 ＋ 認同</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'B')">B. 數學 ＋ 科學</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'C')">C. 平台 ＋ 天氣</button>
+          <button class="quiz-opt" onclick="q(this,1,2,'D')">D. 它沒有利用任何捷徑</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：連續三天，你的推薦頁都只出現稱讚某位球員的影片，最合理的想法是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,1,3,'A')">A. 全世界的人都這樣想</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'B')">B. 可能是平台依我的喜好推送，「我一直看到」不等於「大家都看到」</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'C')">C. 這位球員一定完全沒有爭議</button>
+          <button class="quiz-opt" onclick="q(this,1,3,'D')">D. 按讚很多，所以內容一定可靠</button>
+        </div>
+        <div class="quiz-fb" id="fb-1-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>教材來源：吳裕勝老師（國立體育大學休閒產業經營學系）〈AI 時代，學生還相信什麼？從運動迷文化談教師的媒體素養課〉講義第 4～16 頁，改寫為六年級版本。</li>
+        <li>暖身（3 分鐘）：投影「老師，AI 都這樣說了」，請學生寫一句回應，再比較「你查過來源嗎？／你自己怎麼想？／還有其他資料嗎？」哪句最能讓人思考。</li>
+        <li>強調：不懂運動的學生不吃虧——運動只是「觀察媒體現象」的場景，不是考運動知識。</li>
+        <li>AAP 案例原文：<a href="https://www.aap.com.au/factcheck/foreign-disinformation-operation-targeting-footy-fans/" target="_blank" rel="noopener">AAP FactCheck（2026-06-29）</a>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section id="sec2" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 02</div>
+      <div>
+        <div class="section-title">🎬 一場比賽，五種內容：媒體在「選擇」世界</div>
+        <div class="section-sub">媒體不是把世界原封不動搬進螢幕，而是選擇、剪輯、重新組合。剪輯不一定是造假，但選了哪一段，會影響你怎麼想。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>📺 一場比賽，會變成五種媒體內容</h4>
+        <ol class="steps-list">
+          <li class="red"><strong>比賽事件：</strong>真正發生的事。但「事件本身」和「我們看到的事件」不一定相同。</li>
+          <li><strong>精華剪輯與慢動作：</strong>只選幾秒鐘最精彩的片段，其他的都被剪掉了。</li>
+          <li class="green"><strong>球評、新聞與社群貼文：</strong>要分清楚「可以查證的事實」「推論」和「個人意見」。</li>
+          <li class="blue"><strong>迷因、短影音、留言攻防：</strong>好笑、嘲諷和「我們這一群」的感覺，會改變大家對當事人的態度。</li>
+          <li class="purple"><strong>AI 摘要、生成圖與假帳號：</strong>畫面逼真、文字完整，不代表有事實根據。</li>
+        </ol>
+        <h4 style="margin-top:16px">📰 同一場比賽，五個標題（2026 名古屋亞運桌球男團）</h4>
+        <p class="case-note">情境：林昀儒對戰王楚欽，前兩局落後、連追兩局，決勝局一度拿到賽末點，最後 13 比 15 輸球，台灣男團拿到銅牌。</p>
+        <div class="headline-list">
+          <div class="headline"><span class="tag">A</span>林昀儒錯失兩賽末點 男團負陸銅牌作收<small>中時新聞網</small></div>
+          <div class="headline"><span class="tag">B</span>小林差點扳倒球王 男團連 4 屆「桌」銅<small>自由體育</small></div>
+          <div class="headline"><span class="tag">C</span>台灣桌球男團無緣亞運金牌戰 0 比 3 不敵中國摘銅<small>公視新聞</small></div>
+          <div class="headline"><span class="tag">D</span>差點上演輸二贏三大逆轉！林昀儒苦戰五局不敵王楚欽<small>緯來新聞網</small></div>
+          <div class="headline"><span class="tag">E</span>台灣一哥 vs. 世界一哥終極對決 台灣男團惜敗中國連四屆收銅<small>麗台運動</small></div>
+        </div>
+        <div class="tip-box"><strong>💡 偵探發現：</strong>五個標題<strong>都沒有說謊</strong>，但各自讓你先注意到不同的事：A 讓人注意「失誤」、B 注意「差一點贏」、C 注意「結果」、D 注意「過程驚險」、E 注意「對決」。<strong>誰被放在故事中心？誰被省略了？</strong></div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 2：我看到 / 我覺得 / 我還要查</div>
+        <div class="canvas-hint">一句一句讀球場新聞與留言，判斷它是「事實（我看到）」「感受（我覺得）」還是「猜測（我還要查）」。</div>
+        <canvas id="game2" class="game-canvas" width="600" height="360"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn green" onclick="game2Pick('fact')">👀 事實：我看到</button>
+          <button class="ctrl-btn red" onclick="game2Pick('feel')">💓 感受：我覺得</button>
+          <button class="ctrl-btn purple" onclick="game2Pick('guess')">❓ 猜測：我還要查</button>
+          <button class="ctrl-btn outline" onclick="game2Next()">下一句 ➜</button>
+        </div>
+        <div class="game-result" id="game2Result"></div>
+        <div class="pass-card">
+          <h5>✍️ 標題改寫王：同一場比賽，換你下標題</h5>
+          <p style="font-size:.92rem;margin-bottom:8px">情境：閃電隊 2 比 3 輸給海浪隊，閃電隊投手投了 9 局、最後一局被打出全壘打。（虛構）</p>
+          <select id="hl-angle">
+            <option value="blame">讓人想怪罪某個人</option>
+            <option value="effort">讓人想鼓勵努力</option>
+            <option value="neutral">只寫結果、最中立</option>
+          </select>
+          <input id="hl-text" type="text" maxlength="40" placeholder="在這裡寫下你的標題">
+          <button class="ctrl-btn purple" onclick="checkHeadline()">看看我的標題</button>
+          <div class="pass-out" id="hl-out"></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 2 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：精華影片只剪了選手失誤的那一球，下面哪個說法最正確？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,1,'A')">A. 剪輯一定是造假</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'B')">B. 剪輯不一定造假，但選了哪一段，會影響觀眾怎麼理解</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'C')">C. 影片就是整場比賽的全部</button>
+          <button class="quiz-opt" onclick="q(this,2,1,'D')">D. 只要有慢動作就一定公平</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：「這位選手根本不想贏，一定是故意的！」這句話屬於？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,2,'A')">A. 可以查證的事實</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'B')">B. 官方公布的比分</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'C')">C. 新聞的原始來源</button>
+          <button class="quiz-opt" onclick="q(this,2,2,'D')">D. 猜測，沒有證據之前不能當成事實</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：上面五個亞運標題「都沒說謊」，為什麼讀者感覺還是不一樣？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,2,3,'A')">A. 每個標題選擇先讓你注意不同的事實</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'B')">B. 因為有的標題比較長</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'C')">C. 因為比分不一樣</button>
+          <button class="quiz-opt" onclick="q(this,2,3,'D')">D. 因為只有一家是真的</button>
+        </div>
+        <div class="quiz-fb" id="fb-2-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>講義第 7～8、25、31～32 頁。國小學段建議：分辨事實、感受與猜測，練習停一下——「我看到／我覺得／我還要查」。</li>
+        <li>標題比較活動：把 A～E 印成紙條，請各組依「讓人想責怪誰／同情誰」排序，再討論「誰被放在故事中心？誰被省略？」。</li>
+        <li>五則標題原始報導：<a href="https://www.chinatimes.com/realtimenews/20260923004780-260403" target="_blank" rel="noopener">中時</a>、<a href="https://sports.ltn.com.tw/news/paper/1771887" target="_blank" rel="noopener">自由體育</a>、<a href="https://news.pts.org.tw/article/828382" target="_blank" rel="noopener">公視</a>、<a href="https://news.videoland.com.tw/article/c977ed20-ecce-4fd4-af22-280ad41bed38.html" target="_blank" rel="noopener">緯來</a>、<a href="https://www.ltsports.com.tw/article/186558" target="_blank" rel="noopener">麗台運動</a>。</li>
+        <li>注意：討論時避免讓學生把選手當成「該被責怪的人」，回到「標題如何影響我們」。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section id="sec3" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 03</div>
+      <div>
+        <div class="section-title">🤖 AI 做的就是真的嗎？逼真不等於真實</div>
+        <div class="section-sub">看不出破綻，不代表可信；看起來怪怪的，也不一定是假的。比「用眼睛找破綻」更可靠的，是追查來源。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🗂️ 偵探檔案：五個真實案例</h4>
+        <div class="case-list">
+          <div class="case"><span class="case-tag red">感人≠真實</span><strong>美式足球員捐款 330 萬美元？</strong>網路瘋傳美國球員 Travis Kelce 捐大錢幫助無家者，他本人在節目中澄清：這是假消息，請粉絲看他基金會的真正公益活動。</div>
+          <div class="case"><span class="case-tag purple">AI 生成圖</span><strong>巴黎鐵塔旁全變紫色？</strong>2024 巴黎奧運主場館的跑道真的是紫色，但網路上「塞納河兩岸都塗成紫色」的照片是 AI 生成的（法新社查核）。</div>
+          <div class="case"><span class="case-tag blue">假截圖</span><strong>一張「看起來像官方」的貼文</strong>2024 世界棒球 12 強賽台灣勝日本後，社群流傳一張疑似官媒微博截圖。法新社查核：官方帳號找不到這則貼文，圖片格式也不符。</div>
+          <div class="case"><span class="case-tag orange">假紀錄片</span><strong>用 AI 聲音、模仿影音平台畫面</strong>微軟揭露，有組織製作批評巴黎奧運的假紀錄片，用 AI 配音、模仿知名影音平台的視覺風格，再加上捏造的媒體好評。</div>
+          <div class="case"><span class="case-tag green">名人深偽</span><strong>「網球名將推薦你投資」？</strong>有人用 AI 冒用 Nadal 的臉和聲音推銷投資，他本人公開提醒：那不是他發的，也不是他背書。</div>
+        </div>
+        <div class="tip-box"><strong>🔄 反過來也要小心：</strong>挪威足球國家隊 2026 年拍的一系列帥氣形象照，看起來很像 AI 做的，其實是專業攝影加後製。<strong>「看起來怪」不代表一定是假的！</strong></div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 3：偵探工具箱——最可靠的查法是哪一個？</div>
+        <div class="canvas-hint">每張案件卡都選出「最可靠的查證方法」。記得：按讚數和肉眼都不是好證據！</div>
+        <canvas id="game3" class="game-canvas" width="600" height="380"></canvas>
+        <div class="game-controls" id="g3opts"></div>
+        <div class="game-controls"><button class="ctrl-btn outline" onclick="game3Next()">下一個案件 ➜</button></div>
+        <div class="game-result" id="game3Result"></div>
+      </div>
+    </div>
+    <div class="math-box">
+      <h4>🧮 數學偵探：AI 抓壞留言，抓得準嗎？（巴黎奧運的雙面 AI）</h4>
+      <div class="math-grid">
+        <div class="math-n"><b>240 萬+</b><span>則貼文和留言由 AI 分析</span></div>
+        <div class="math-n"><b>15.2 萬</b><span>則被 AI 標記「可能有攻擊性」</span></div>
+        <div class="math-n"><b>約 1.03 萬</b><span>則經人工確認是辱罵，通報平台</span></div>
+        <div class="math-n"><b>353</b><span>位運動員或官員被直接攻擊</span></div>
+      </div>
+      <p>算算看：10,284 ÷ 152,000 ≈ <strong>6.8%</strong>。這是「被 AI 標記的留言裡，最後確認是辱罵的比例」，<strong>不等於 AI 的準確率</strong>——因為我們不知道 AI 漏掉了多少。</p>
+      <div class="discuss">
+        <span>💬 討論 1：如果 AI 標記 100 則疑似霸凌留言，學校可以不經過人看，就說這 100 則都違規嗎？</span>
+        <span>💬 討論 2：AI 沒有標記的留言，就一定沒有攻擊性嗎？</span>
+      </div>
+      <p class="case-note">資料來源：國際奧會（IOC）2024 年線上暴力防護計畫。AI 可以幫忙發現問題，但<strong>不應取代人的判斷與責任</strong>。</p>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 3 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：一張球隊照片看起來超逼真、完全看不出破綻，所以？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,1,'A')">A. 一定是真的，可以放心轉傳</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'B')">B. 一定是 AI 做的</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'C')">C. 看不出來不等於可信，要追原始來源、比對其他可信來源</button>
+          <button class="quiz-opt" onclick="q(this,3,1,'D')">D. 放大十倍看就能確定</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：一張「看起來像官方帳號」的截圖在群組瘋傳，最好的查證方式是？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,2,'A')">A. 到那個官方帳號或官網，看看是不是真的有這則貼文</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'B')">B. 看群組裡有多少人說是真的</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'C')">C. 截圖的字體很像，所以是真的</button>
+          <button class="quiz-opt" onclick="q(this,3,2,'D')">D. 先轉傳再說，錯了再刪</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：影片裡「名人親口說」推薦你投資，為什麼要特別小心？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,3,3,'A')">A. 名人說的話一定比證據可靠</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'B')">B. AI 可以冒用臉和聲音；要看名人本人的原始帳號有沒有這樣說</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'C')">C. 只要影片很清楚就沒問題</button>
+          <button class="quiz-opt" onclick="q(this,3,3,'D')">D. 名人不會被冒用</button>
+        </div>
+        <div class="quiz-fb" id="fb-3-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>講義第 11～24 頁。共同結構：這些事件都不是「學生不夠聰明」，教育的任務是教會學生「暫停一下」。</li>
+        <li>案例原始出處：<a href="https://www.tmz.com/2025/04/09/travis-kelce-addresses-fake-donation-new-heights-podcast/" target="_blank" rel="noopener">TMZ（Kelce）</a>、<a href="https://factcheck.afp.com/doc.afp.com.362D8G4" target="_blank" rel="noopener">AFP（巴黎紫色）</a>、<a href="https://factcheck.afp.com/doc.afp.com.36PJ4KQ" target="_blank" rel="noopener">AFP（12 強截圖）</a>、<a href="https://blogs.microsoft.com/on-the-issues/2024/06/02/russia-cyber-bots-disinformation-2024-paris-olympics/" target="_blank" rel="noopener">Microsoft（假紀錄片）</a>、<a href="https://apnews.com/article/rafael-nadal-fake-videos-alert-6bc8dc78c8c65fcca8ef09a6c22d7d0b" target="_blank" rel="noopener">AP（Nadal）</a>、<a href="https://petapixel.com/2026/06/05/did-norway-just-take-the-greatest-world-cup-team-photo-ever/" target="_blank" rel="noopener">PetaPixel（挪威隊）</a>。</li>
+        <li>IOC 資料：<a href="https://www.olympics.com/ioc/news/world-mental-health-day-how-the-ioc-ran-the-largest-online-abuse-prevention-programme-ever-conducted-in-sport-at-paris-2024" target="_blank" rel="noopener">IOC 2024-10-10 新聞稿</a>。數學偵探可與數學課「百分率」連結；強調 6.8% 不是準確率，也算不出誤判率（缺人工審查與漏判資料）。</li>
+        <li>課堂上不要播放 Nadal 深偽影片本身，用新聞報導文字即可，避免二次散布。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section id="sec4" class="level-section">
+    <div class="section-header">
+      <div class="stage-badge">STAGE 04</div>
+      <div>
+        <div class="section-title">🛑 停・看・問・查・負責：把 AI 當成「可以質疑的同學」</div>
+        <div class="section-sub">在快速生成、快速推播、快速引發情緒的世界裡，練習<strong>慢一點相信、快一點提問</strong>。</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div class="steps-card">
+        <h4>🧭 AI 時代的媒體素養五問</h4>
+        <div class="five-steps">
+          <div class="fs-step f1"><b>停</b><span>我現在為什麼想立刻相信、生氣或轉傳？</span></div>
+          <div class="fs-step f2"><b>看</b><span>我看到的是新聞、評論、廣告、迷因、剪輯，還是 AI 生成的內容？</span></div>
+          <div class="fs-step f3"><b>問</b><span>誰做的？誰得到好處？它希望我怎麼想、怎麼做？</span></div>
+          <div class="fs-step f4"><b>查</b><span>原始來源在哪裡？其他可信來源怎麼說？什麼被省略了？</span></div>
+          <div class="fs-step f5"><b>負責</b><span>如果我分享、留言或二創，可能影響誰？怎麼做才更準確、更尊重？</span></div>
+        </div>
+        <h4 style="margin-top:16px">🤝 把 AI 當成「可以質疑的同學」</h4>
+        <ol class="steps-list">
+          <li class="blue"><strong>請 AI 回答</strong>一個課程問題。</li>
+          <li class="purple"><strong>逐句標記：</strong>✅ 可採用／🔍 須查證／✏️ 不同意或需補充。</li>
+          <li class="green"><strong>用至少兩個可信來源</strong>驗證或修正。</li>
+          <li class="red"><strong>寫修訂聲明：</strong>「AI 說＿＿；我查證後發現＿＿；我保留＿＿，修正了＿＿。」</li>
+        </ol>
+        <div class="tip-box"><strong>🎙️ 專業主播也這樣做：</strong>華視主播陳亞理準備亞運轉播時會用 AI 整理選手資料，但他強調一定要<strong>親自核實</strong>——他就曾抓到 AI 把世界盃足球賽的淘汰賽制講錯。</div>
+      </div>
+      <div class="canvas-section">
+        <div class="canvas-title">🎮 互動 4：AI 同學的答案，你怎麼標記？</div>
+        <div class="canvas-hint">AI 回答了「棒球比賽為什麼會延長賽？」點選每一句，再按下方按鈕標記。全部標完就能產生你的「修訂聲明」。</div>
+        <canvas id="game4" class="game-canvas" width="600" height="400"></canvas>
+        <div class="game-controls">
+          <button class="ctrl-btn green" onclick="game4Mark('ok')">✅ 可採用</button>
+          <button class="ctrl-btn" onclick="game4Mark('check')">🔍 須查證</button>
+          <button class="ctrl-btn red" onclick="game4Mark('fix')">✏️ 需修正</button>
+          <button class="ctrl-btn outline" onclick="game4Reset()">↻ 重來</button>
+        </div>
+        <div class="game-result" id="game4Result"></div>
+        <div class="pass-card">
+          <h5>💬 留言前的「負責」練習：哪一句比較好？</h5>
+          <p style="font-size:.92rem;margin-bottom:8px">你支持的隊伍輸了，你很失望。選一句你會發的留言：</p>
+          <div class="cm-opts">
+            <button class="quiz-opt" onclick="pickComment(this,0)">「都是 8 號害的，他不配上場！」</button>
+            <button class="quiz-opt" onclick="pickComment(this,1)">「好可惜！最後一局真的很緊張，下次再加油！」</button>
+            <button class="quiz-opt" onclick="pickComment(this,2)">「聽說 8 號收錢故意輸，大家快轉！」</button>
+          </div>
+          <div class="pass-out" id="cm-out"></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-title">📝 關卡 4 檢定</div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q1：「停・看・問・查・負責」的第一步「停」，是要問自己什麼？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,1,'A')">A. 這則訊息有幾個讚？</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'B')">B. 我現在為什麼想立刻相信、生氣或轉傳？</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'C')">C. 我要轉給幾個群組？</button>
+          <button class="quiz-opt" onclick="q(this,4,1,'D')">D. 這是不是我喜歡的球隊？</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-1"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q2：用 AI 找資料寫報告，下面哪個做法最負責？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,2,'A')">A. 整段複製貼上，AI 說的一定對</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'B')">B. 完全不用 AI 比較安全</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'C')">C. 讓 AI 幫我決定結論</button>
+          <button class="quiz-opt" onclick="q(this,4,2,'D')">D. 逐句標記可採用／須查證，用兩個可信來源核對，再寫出自己的說明</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-2"></div>
+      </div>
+      <div class="quiz-q">
+        <div class="quiz-q-text">Q3：喜歡一位選手，下面哪個想法最健康？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="q(this,4,3,'A')">A. 支持一位選手，也可以理性地討論他的表現；不同意的人不是敵人</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'B')">B. 只要有人批評我的偶像，就要一起去罵他</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'C')">C. 我喜歡的選手不能被任何人質疑</button>
+          <button class="quiz-opt" onclick="q(this,4,3,'D')">D. 對手的球迷都是壞人</button>
+        </div>
+        <div class="quiz-fb" id="fb-4-3"></div>
+      </div>
+    </div>
+    <div class="teacher-only">
+      <ul>
+        <li>講義第 6、26～30、33 頁。理論整合：媒體素養 × AI 素養 × 數位公民 × 社會情緒學習（SEL）——只教查證可能少了同理；只教同理可能少了證據；只教工具可能少了判斷。</li>
+        <li>實作二延伸：教師可現場請 Gemini 回答一題課程問題，全班一起逐句標記，再用兩個來源核對，完成修訂聲明句型。</li>
+        <li>迷文化討論：「當喜歡變成不能質疑、不同意變成必須攻擊」時發生了什麼？可連結 SEL「覺察情緒 → 理解他人 → 負責任的決定」。</li>
+        <li>陳亞理報導：<a href="https://www.ydn.com.tw/tw/News/ugC_News_Detail.aspx?ID=644008" target="_blank" rel="noopener">青年日報（2026-08-27）</a>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 今日實作任務 -->
+  <section class="project-section">
+    <h3>🎒 今日實作任務：球迷偵探結業挑戰</h3>
+    <p>三選一（或全部挑戰），下次上課分享你的偵查報告！</p>
+    <div class="project-tasks">
+      <div class="task-card"><h4>🔎 任務 A：一則貼文，五問判讀</h4><p>找一則和運動有關的貼文（請大人陪同），回答：這是什麼類型？要我相信什麼？給了什麼證據、缺什麼？想引發什麼情緒？如果分享，我要補上什麼來源或「目前還不確定」？</p></div>
+      <div class="task-card"><h4>📰 任務 B：三種標題大挑戰</h4><p>選一場你看過的比賽（或班際比賽），寫出三個「都沒說謊」的標題：一個讓人想責怪、一個讓人想鼓勵、一個最中立。再說說哪一個最公平。</p></div>
+      <div class="task-card"><h4>🏠 任務 C：家庭查證小隊</h4><p>問問家人最近收到或轉傳過什麼訊息，一起用「停・看・問・查・負責」檢查一次，把結果寫成三句話的心得。</p></div>
+    </div>
+  </section>
+
+  <!-- 簡報 -->
+  <section class="slide-section">
+    <h3>📊 授課簡報（NotebookLM × 阿凱老師）</h3>
+    <div class="slide-player">
+      <div class="slide-placeholder" id="slide-placeholder">📑 簡報生成中…<br><small>NotebookLM AI 製作中，完成後此區會顯示完整簡報。也可以先使用上方「演講簡報模式」。</small></div>
+      <div class="slide-main" id="slide-main" style="display:none" ondblclick="openSlideFullscreen()">
+        <img id="slide-current" src="" alt="授課簡報" decoding="async" fetchpriority="high">
+        <div class="slide-loading"><span>⏳ 簡報載入中…</span></div>
+        <button class="slide-nav-btn prev" onclick="slideNav(-1)" title="上一頁">‹</button>
+        <button class="slide-nav-btn next" onclick="slideNav(1)" title="下一頁">›</button>
+        <button class="slide-fs-btn" onclick="openSlideFullscreen()" title="全螢幕">⛶ 全螢幕</button>
+        <div class="slide-counter" id="slide-counter">1 / 1</div>
+      </div>
+      <div class="slide-strip" id="slide-strip" style="display:none"></div>
+    </div>
+  </section>
+
+  <!--INFOGRAPHICS-->
+
+  <!-- 影片 -->
+  <section class="video-section">
+    <h3>▶ 學生自學影片</h3>
+    <div class="video-wrap">
+      <div class="video-ratio" id="video-ratio" style="display:none">
+        <iframe id="nlm-video-iframe" src="" title="球迷偵探社 NotebookLM 教學影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-placeholder" id="video-placeholder">🎬 自學影片由 NotebookLM AI 自動生成中，完成後會在這裡播放。</div>
+      <div class="video-meta">
+        <span class="nlm-badge">🤖 NotebookLM AI 生成</span>
+        <span class="video-hint">💡 可開啟 CC 字幕（中文／English），搭配上方簡報一起複習</span>
+        <a href="#" target="_blank" rel="noopener" class="video-yt-link" id="yt-link" style="display:none">↗ 在 YouTube 開啟</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NLM 資源站 -->
+  <section class="nb-section">
+    <h3>🧭 NotebookLM 資源站 & 查證工具</h3>
+    <div class="nb-grid">
+      <a class="nb-card" id="nb-link" href="https://notebooklm.google.com/" target="_blank" rel="noopener">
+        <h4>📚 本單元筆記本</h4><p>講義改寫的六年級學習精華 + 阿凱老師主講者插畫，簡報與資訊圖表的生成來源。</p><span class="link">前往 NotebookLM →</span>
+      </a>
+      <a class="nb-card" href="https://tfc-taiwan.org.tw/" target="_blank" rel="noopener">
+        <h4>✅ 台灣事實查核中心</h4><p>查查看網路謠言是不是已經被查核過了。</p><span class="link">前往網站 →</span>
+      </a>
+      <a class="nb-card" href="https://cofacts.tw/" target="_blank" rel="noopener">
+        <h4>💬 Cofacts 真的假的</h4><p>收到可疑的 LINE 訊息，可以搜尋看看有沒有人回應過。</p><span class="link">前往網站 →</span>
+      </a>
+      <a class="nb-card" href="https://factcheck.afp.com/" target="_blank" rel="noopener">
+        <h4>🌐 法新社事實查核</h4><p>本課巴黎奧運紫色跑道、棒球 12 強截圖都是它查核的。</p><span class="link">前往網站 →</span>
+      </a>
+    </div>
+    <div class="flow-box">
+      <h4>🔄 本頁怎麼來的？（NLM × Claude 流程）</h4>
+      <div class="flow-steps">
+        <span class="flow-step">1. 吳裕勝老師媒體素養講座講義</span>
+        <span class="flow-step">2. 改寫成六年級學習精華</span>
+        <span class="flow-step">3. NotebookLM 精簡筆記本 + 主講者插畫</span>
+        <span class="flow-step">4. 生成簡報 / 影片 / 資訊圖表</span>
+        <span class="flow-step">5. Claude 編寫互動駕駛艙</span>
+        <span class="flow-step">6. GitHub Pages 上線</span>
+      </div>
+    </div>
+    <h4 style="font-size:1.1rem;color:#e03131;margin-bottom:12px">❓ 常見問題 FAQ</h4>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Q：我不懂運動，也能學這一課嗎？</div><div class="faq-a">當然可以！運動只是一個「放大鏡」：一場比賽會被做成剪輯、新聞、迷因、AI 圖，正好讓我們看清楚媒體怎麼運作。你學到的方法，看任何新聞都能用。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：AI 說的話可以相信嗎？</div><div class="faq-a">可以參考，但不能直接當答案。把 AI 當成「可以質疑的同學」：逐句標記<strong>可採用／須查證／需修正</strong>，再用兩個可信來源核對。專業主播都會抓到 AI 講錯呢！</div></div>
+      <div class="faq-item"><div class="faq-q">Q：用眼睛仔細看，就能看出是不是 AI 做的圖嗎？</div><div class="faq-a">不一定。AI 圖愈來愈逼真，「看不出來」不代表可信；真照片有時也看起來很怪。更可靠的是<strong>追原始來源、比對發布時間、看帳號可不可信、找其他獨立來源</strong>。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：剪輯過的影片就是假的嗎？</div><div class="faq-a">剪輯不一定是造假，幾乎所有影片都有剪輯。但「選了哪一段、剪掉哪一段」會影響你怎麼想，所以要問：<strong>它省略了什麼？</strong></div></div>
+      <div class="faq-item"><div class="faq-q">Q：大家都在傳的消息，應該是真的吧？</div><div class="faq-a">「很多人傳」「很多人按讚」都不等於可靠。平台常常把容易引起情緒的內容推得更多，而且「我一直看到」不代表「大家都看到」。</div></div>
+      <div class="faq-item"><div class="faq-q">Q：我支持的隊伍被罵，我可以罵回去嗎？</div><div class="faq-a">可以表達不同意見，但不要變成人身攻擊。先<strong>停一下</strong>，想想這句話會影響誰；選手和其他球迷也是有感受的人。支持一個隊，不代表別人就是敵人。</div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="fb-icon" aria-hidden="true">🏟️</span>
+      <div><strong>球迷偵探社</strong><span>AI 時代，你還相信什麼？六年級媒體素養駕駛艙</span></div></div>
+    <ul class="footer-points">
+      <li><span class="fp-icon">📚</span><div><strong>教材來源</strong><small>改寫自國立體育大學 吳裕勝老師媒體素養講座講義</small></div></li>
+      <li><span class="fp-icon">🤖</span><div><strong>AI 製作說明</strong><small>簡報與影片由 NotebookLM 生成，Claude Code 整合</small></div></li>
+      <li><span class="fp-icon">🎭</span><div><strong>情境說明</strong><small>互動遊戲中的隊伍與留言皆為虛構；案例均附原始出處</small></div></li>
+    </ul>
+    <nav class="footer-links" aria-label="快速連結">
+      <a class="footer-link" href="../index.html">🏠 IT COCKPIT 主頁</a>
+      <a class="footer-link" href="lecture-slides.html">🎬 演講簡報</a>
+      <a class="footer-link" href="#sec1">🔝 回到第一關</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p class="site-credit">Made with <span class="site-credit__heart" aria-label="愛心">❤️</span> by
+      <a href="https://cagoooo.github.io/Akai/" target="_blank" rel="noopener noreferrer" class="site-credit__author">阿凱老師</a>
+      <span class="footer-school"><span class="footer-dot" aria-hidden="true">・</span>桃園市龍潭區石門國民小學</span></p>
+    <p class="version-tag">IT COCKPIT · 2026</p>
+  </div>
+</footer>
+
+<div class="float-tools">
+  <button class="float-btn red" onclick="togglePanel('lottery')" title="抽號">🎲</button>
+  <button class="float-btn blue" onclick="togglePanel('timer')" title="計時器">⏱️</button>
+  <button class="float-btn green" onclick="toggleDraw()" title="畫筆標註" id="drawToggleBtn">✏️</button>
+  <button class="float-btn purple" onclick="goTop()" title="回頂部">⬆️</button>
+</div>
+
+<div class="float-panel" id="panel-lottery">
+  <h4>🎲 隨機抽號 <button class="close" onclick="togglePanel('lottery')">✕</button></h4>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim);flex-wrap:wrap">
+    <span>號碼範圍</span>
+    <input type="number" id="lot-min" value="1" min="1" style="width:55px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+    <span>～</span>
+    <input type="number" id="lot-max" value="30" min="1" style="width:55px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+    <span>號</span>
+    <label style="display:flex;align-items:center;gap:4px;margin-left:auto;cursor:pointer"><input type="checkbox" id="lot-unique" checked>不重複</label>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="doLottery()" style="flex:1">🎰 抽一個</button>
+    <button class="btn-primary" onclick="resetLottery()" style="background:var(--c2)">↻</button>
+  </div>
+  <div class="lottery-result" id="lot-out">等待抽號...</div>
+</div>
+
+<div class="float-panel" id="panel-timer">
+  <h4>⏱️ 計時器 <button class="close" onclick="togglePanel('timer')">✕</button></h4>
+  <div class="timer-display" id="timer-display">00:00</div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--dim)">
+    <span>設定分鐘</span>
+    <input type="number" id="timer-min" value="5" min="0" max="60" style="width:60px;padding:4px 6px;border:2px solid var(--border);font-family:inherit;border-radius:6px">
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn-primary" onclick="startTimer()" style="flex:1;background:#40c057">▶ 開始</button>
+    <button class="btn-primary" onclick="pauseTimer()" style="flex:1;background:var(--c2)">⏸ 暫停</button>
+    <button class="btn-primary" onclick="resetTimer()">↻</button>
+  </div>
+</div>
+
+<canvas id="drawCanvas"></canvas>
+<div class="draw-toolbar" id="drawToolbar">
+  <span style="font-size:.85rem;color:var(--dim)">🖊️</span>
+  <button class="color-dot active" style="background:#ff6b6b" onclick="setPenColor('#ff6b6b',this)"></button>
+  <button class="color-dot" style="background:#ffa94d" onclick="setPenColor('#ffa94d',this)"></button>
+  <button class="color-dot" style="background:#51cf66" onclick="setPenColor('#51cf66',this)"></button>
+  <button class="color-dot" style="background:#339af0" onclick="setPenColor('#339af0',this)"></button>
+  <button class="color-dot" style="background:#2c2c2c" onclick="setPenColor('#2c2c2c',this)"></button>
+  <button class="draw-clear" onclick="clearDrawing()">清除</button>
+</div>
+
+<div class="slide-fs" id="slide-fs">
+  <button class="slide-fs-close" onclick="closeSlideFullscreen()" title="關閉 (Esc)">✕</button>
+  <button class="fs-nav prev" onclick="slideNav(-1)" aria-label="上一頁">‹</button>
+  <img id="slide-fs-img" src="" alt="簡報全螢幕">
+  <button class="fs-nav next" onclick="slideNav(1)" aria-label="下一頁">›</button>
+  <div class="slide-fs-counter" id="slide-fs-counter">1 / 1</div>
+</div>
+
+<script>
+// ========== CONFIG ==========
+const SLIDE_COUNT = 0;           // NotebookLM 授課簡報頁數（生成後填入）
+const YOUTUBE_VIDEO_ID = '';     // NotebookLM 教學影片（上傳後填入）
+const SLIDE_LIST = [], SLIDE_THUMBS = [];
+for(let i=1;i<=SLIDE_COUNT;i++){
+  const n = String(i).padStart(2,'0');
+  SLIDE_LIST.push('assets/slide_' + n + '.webp');
+  SLIDE_THUMBS.push('assets/thumbs/slide_' + n + '.webp');
+}
+function safeInit(name, fn){ try{ fn(); }catch(e){ console.error('[init error] ' + name + ':', e); } }
+// ========== MODE ==========
+function switchMode(mode, btn){
+  if(mode === 'teacher'){
+    const pwd = prompt('請輸入教師密碼：');
+    if(pwd !== 'it2026'){ alert('密碼錯誤'); return; }
+  }
+  document.body.classList.toggle('teacher-mode', mode === 'teacher');
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ========== PROGRESS & SCOREBOARD ==========
+const doneStages = new Set();
+function markStageDone(n){
+  if(doneStages.has(n)) return;
+  doneStages.add(n);
+  const pill = document.getElementById('pill'+n);
+  if(pill) pill.classList.add('done');
+  document.getElementById('progFill').style.width = (doneStages.size/4*100) + '%';
+  document.getElementById('progTxt').textContent = doneStages.size + ' / 4 關完成';
+}
+let evidencePts = 0;
+function addEvidence(){
+  evidencePts++;
+  const el = document.getElementById('evidenceScore');
+  if(!el) return;
+  el.textContent = evidencePts;
+  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+}
+
+// ========== QUIZ ==========
+const ANS = {'1-1':'C','1-2':'A','1-3':'B','2-1':'B','2-2':'D','2-3':'A','3-1':'C','3-2':'A','3-3':'B','4-1':'B','4-2':'D','4-3':'A'};
+const EXPLAIN = {
+  '1-1':'不是叫他「不准用 AI」，而是請他說出根據、找其他資料、說出自己的想法。',
+  '1-2':'「生重病」讓人震驚擔心（情緒），又出現在自己支持的球隊粉專（認同）。',
+  '1-3':'平台會依你的喜好推送相似內容，「我一直看到」不等於「大家都看到」。',
+  '2-1':'剪輯不一定造假，但選擇哪個畫面，會影響觀眾怎麼理解事件。',
+  '2-2':'「一定是故意的」是猜測，沒有證據之前，不能當成事實轉傳。',
+  '2-3':'五個標題都沒說謊，但各自選擇先讓你注意失誤、努力、結果或驚險過程。',
+  '3-1':'看不出來不等於可信。要追原始來源、比對時間脈絡、找獨立的可信來源。',
+  '3-2':'直接到官方帳號或官網查有沒有這則貼文，是最可靠的查證方法。',
+  '3-3':'AI 可以冒用臉和聲音；名人說的也要看證據，到本人原始帳號查證。',
+  '4-1':'「停」就是先覺察自己的情緒：我為什麼這麼想馬上相信或轉傳？',
+  '4-2':'把 AI 當成可以質疑的同學：逐句標記、兩個來源核對，最後由自己說明。',
+  '4-3':'支持一個人不等於不能討論；當「不同意」變成「必須攻擊」，就需要停一下。'
+};
+const PRAISE = ['🎉 太棒了！','✨ 答對囉！','🌟 偵探正解！','💪 你真厲害！','🔥 證據隊得分！'];
+function q(btn, stage, num, choice){
+  const key = stage + '-' + num, correct = ANS[key], box = btn.parentElement;
+  box.querySelectorAll('.quiz-opt').forEach(o=>{o.disabled=true;o.style.cursor='default';});
+  const fb = document.getElementById('fb-' + key);
+  fb.classList.add('show');
+  if(choice === correct){
+    btn.classList.add('correct','pulse'); fb.classList.add('ok'); addEvidence();
+    fb.textContent = PRAISE[Math.floor(Math.random()*PRAISE.length)] + ' ' + EXPLAIN[key];
+  } else {
+    btn.classList.add('wrong');
+    box.querySelectorAll('.quiz-opt').forEach(o=>{ if(o.textContent.trim().startsWith(correct + '.')) o.classList.add('correct'); });
+    fb.classList.add('bad');
+    fb.textContent = '💡 正確答案是 ' + correct + '。' + EXPLAIN[key];
+  }
+  const answered = document.getElementById('sec'+stage).querySelectorAll('.quiz-section .quiz-fb.show').length;
+  if(answered >= 3) markStageDone(stage);
+}
+
+// ========== helpers ==========
+function wrapText(ctx, text, maxW){
+  const out=[]; let line='';
+  for(const ch of text){
+    const t = line + ch;
+    if(ctx.measureText(t).width > maxW && line !== ''){ out.push(line); line = ch; } else line = t;
+  }
+  if(line) out.push(line);
+  return out;
+}
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+function mouseEvt(e, cv){
+  const r = cv.getBoundingClientRect();
+  return { x:(e.clientX - r.left) * (cv.width / r.width), y:(e.clientY - r.top) * (cv.height / r.height) };
+}
+function showResult(id, ok, text){
+  const el = document.getElementById(id);
+  el.className = 'game-result show ' + (ok ? 'ok' : 'bad');
+  el.textContent = text;
+}
+const FONT = '"Noto Sans TC", "Microsoft JhengHei", sans-serif';
+
+// ========== GAME 1：相信的捷徑 ==========
+const G1 = [
+  {from:'閃電隊加油團 ⚡', msg:'太扯了！！裁判根本是故意的！氣死我了，大家快把這段影片轉出去讓全世界看清楚！！！', a:'emo', e:'一堆驚嘆號和「氣死我了」，就是要點燃你的怒氣，讓你來不及查證就轉傳。'},
+  {from:'海浪隊鐵粉後援會 🌊', msg:'真正的海浪隊球迷都知道，對手的說法全是假的。是自己人就不要懷疑，相信我們就對了！', a:'id', e:'用「是自己人就要相信」綁住你的球迷身分，這是利用認同。'},
+  {from:'六年三班群組', msg:'欸你們看到了嗎？大家都在傳這張圖耶，我已經轉給五個群組了，你也快轉吧～', a:'peer', e:'「大家都在傳」讓人覺得不轉就跟不上，這是同儕壓力，但轉傳的人多≠內容正確。'},
+  {from:'短影音推薦', msg:'（你已經連續看了 12 支）「這位球員又被罵爆了！」系統為你推薦更多相似影片 ▶▶', a:'plat', e:'一直出現在推薦頁，是平台依你的觀看紀錄推送，不代表全世界都這樣想。'},
+  {from:'球星消息站（粉專）', msg:'【震驚】你最喜歡的選手傳出重病住院！心碎……請為他祈禱並分享，讓更多人知道！', a:'emo', e:'用震驚、心碎、擔心推你分享。真實案例中，就有假冒球迷粉專一直發「球員重病」假新聞。'},
+  {from:'我們隊的應援帳號', msg:'作為死忠球迷，一定要幫我們隊護航！別隊說什麼都不用聽，跟我們站在同一邊！', a:'id', e:'「死忠球迷就要護航」是用身分認同取代證據，支持一隊也可以理性思考。'},
+  {from:'班級好友小傑', msg:'我哥、我表姐、隔壁班的人都說是真的，那一定是真的啦，不用查了！', a:'peer', e:'很多認識的人都這樣說，會讓人懶得查證；但「很多人說」不等於「有證據」。'},
+  {from:'熱門趨勢 🔥', msg:'這則貼文已有 10 萬人按讚、正在瘋狂擴散中！演算法熱門第 1 名！', a:'plat', e:'按讚數和熱門排行只代表「很多人互動」，不代表內容更可靠。爭議內容常被推得更多。'}
+];
+const G1LABEL = {emo:'💓 情緒', id:'🧢 認同', peer:'👥 同儕', plat:'📱 平台'};
+let g1i = 0, g1s = {ok:0,bad:0}, g1Done = false;
+function drawG1(){
+  const c = document.getElementById('game1'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fff4e6'; ctx.fillRect(0,0,c.width,c.height);
+  const px=130, py=12, pw=340, ph=356;
+  ctx.fillStyle='#2c2c2c'; roundRect(ctx,px,py,pw,ph,30); ctx.fill();
+  ctx.fillStyle='#f8f9fa'; roundRect(ctx,px+12,py+28,pw-24,ph-56,14); ctx.fill();
+  ctx.fillStyle='#495057'; roundRect(ctx,px+pw/2-30,py+10,60,8,4); ctx.fill();
+  const it = G1[g1i];
+  ctx.fillStyle='#fff'; ctx.fillRect(px+12,py+28,pw-24,44);
+  ctx.fillStyle='#2c2c2c'; ctx.font='bold 15px '+FONT; ctx.textAlign='left';
+  ctx.fillText('💬 ' + it.from, px+26, py+56);
+  ctx.fillStyle='#adb5bd'; ctx.font='12px '+FONT; ctx.fillText((g1i+1) + '/' + G1.length, px+pw-58, py+56);
+  ctx.font='16px '+FONT;
+  const lines = wrapText(ctx, it.msg, pw-84);
+  const bh = lines.length*26 + 22;
+  ctx.fillStyle='#fff'; ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=2;
+  roundRect(ctx,px+26,py+90,pw-52,bh,14); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#2c2c2c';
+  lines.forEach((l,i)=>ctx.fillText(l, px+40, py+117 + i*26));
+  if(g1Done){
+    ctx.save(); ctx.translate(px+pw/2, py+ph-58); ctx.rotate(-0.1);
+    ctx.fillStyle = g1Done === 'ok' ? '#51cf66' : '#fab005';
+    roundRect(ctx,-120,-24,240,48,10); ctx.fill(); ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 21px '+FONT; ctx.textAlign='center';
+    ctx.fillText('捷徑：' + G1LABEL[it.a].slice(2).trim(), 0, 8);
+    ctx.restore(); ctx.textAlign='left';
+  }
+  ctx.fillStyle='#495057'; ctx.font='14px '+FONT;
+  ctx.fillText('✅ ' + g1s.ok, 24, 330); ctx.fillText('❌ ' + g1s.bad, 24, 352);
+}
+function game1Pick(choice){
+  if(g1Done) return;
+  const it = G1[g1i];
+  if(choice === it.a){ g1s.ok++; g1Done='ok'; addEvidence(); showResult('game1Result', true, '🎉 看穿了！' + it.e); }
+  else { g1s.bad++; g1Done='bad'; showResult('game1Result', false, '💡 這則主要在拉「' + G1LABEL[it.a] + '」。' + it.e); }
+  drawG1();
+}
+function game1Next(){ g1i = (g1i+1) % G1.length; g1Done = false; document.getElementById('game1Result').className='game-result'; drawG1(); }
+
+// ========== GAME 2：事實 / 感受 / 猜測 ==========
+const G2 = [
+  {s:'閃電隊今天以 2 比 3 輸給海浪隊。', a:'fact', e:'比分是可以查證的事實（我看到）。'},
+  {s:'這是我看過最令人心碎的一場比賽。', a:'feel', e:'「心碎」是說話的人的感受（我覺得），每個人感受可能不同。'},
+  {s:'投手一定是昨晚沒睡好才會被打全壘打。', a:'guess', e:'「一定是…才會…」是沒有證據的猜測（我還要查）。'},
+  {s:'閃電隊投手這場投了 9 局。', a:'fact', e:'投球局數可以從官方紀錄查到，是事實。'},
+  {s:'裁判好像偏心海浪隊，可能有收好處。', a:'guess', e:'「好像、可能」都是猜測，沒有證據就說別人收好處，可能傷害他人。'},
+  {s:'看到最後那一球，我緊張到手都在發抖。', a:'feel', e:'緊張發抖是自己的感受，很真實，但不是比賽的事實。'},
+  {s:'海浪隊下一場一定會輸，因為他們運氣用完了。', a:'guess', e:'未來的事和「運氣用完」都是猜測。'},
+  {s:'這場比賽有超過一萬名觀眾進場。', a:'fact', e:'進場人數可以從主辦單位公布的數字查證。'}
+];
+const G2LABEL = {fact:'👀 事實（我看到）', feel:'💓 感受（我覺得）', guess:'❓ 猜測（我還要查）'};
+let g2i = 0, g2s = {ok:0,bad:0}, g2Done = false;
+function drawG2(){
+  const c = document.getElementById('game2'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#fffdf7'; ctx.fillRect(0,0,c.width,c.height);
+  // 球場
+  ctx.fillStyle='#69db7c'; roundRect(ctx,16,16,c.width-32,120,14); ctx.fill();
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; roundRect(ctx,16,16,c.width-32,120,14); ctx.stroke();
+  ctx.fillStyle='#c0eb75'; ctx.beginPath(); ctx.moveTo(300,124); ctx.lineTo(210,60); ctx.lineTo(300,30); ctx.lineTo(390,60); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#fff'; [[300,124],[210,60],[300,30],[390,60]].forEach(p=>{ctx.fillRect(p[0]-6,p[1]-6,12,12);});
+  ctx.fillStyle='#212529'; roundRect(ctx,30,28,150,52,8); ctx.fill();
+  ctx.fillStyle='#ffd43b'; ctx.font='bold 14px '+FONT; ctx.fillText('閃電隊  2', 44, 50); ctx.fillText('海浪隊  3', 44, 72);
+  ctx.fillStyle='#fff'; ctx.font='bold 15px '+FONT; ctx.fillText('第 ' + (g2i+1) + ' / ' + G2.length + ' 句', 470, 46);
+  // 句子卡
+  ctx.fillStyle='#fff'; roundRect(ctx,36,156,c.width-72,110,16); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#2c2c2c'; ctx.font='bold 20px '+FONT;
+  wrapText(ctx, '「' + G2[g2i].s + '」', c.width-120).forEach((l,i)=>ctx.fillText(l, 58, 200 + i*32));
+  ctx.fillStyle='#7048e8'; ctx.font='bold 15px '+FONT;
+  ctx.fillText('🕵️ 這句是 事實？感受？還是猜測？', 40, 300);
+  ctx.fillStyle='#6f6f6f'; ctx.font='14px '+FONT;
+  ctx.fillText('✅ 答對 ' + g2s.ok + '　｜　❌ 再想想 ' + g2s.bad, 40, 330);
+}
+function game2Pick(choice){
+  if(g2Done) return;
+  g2Done = true;
+  const it = G2[g2i];
+  if(choice === it.a){ g2s.ok++; addEvidence(); showResult('game2Result', true, '🎉 正確！' + it.e); }
+  else { g2s.bad++; showResult('game2Result', false, '💡 這句是「' + G2LABEL[it.a] + '」。' + it.e); }
+  drawG2();
+}
+function game2Next(){ g2i = (g2i+1) % G2.length; g2Done = false; document.getElementById('game2Result').className='game-result'; drawG2(); }
+
+function checkHeadline(){
+  const angle = document.getElementById('hl-angle').value;
+  const txt = (document.getElementById('hl-text').value || '').trim();
+  const out = document.getElementById('hl-out');
+  out.classList.add('show');
+  if(txt.length < 4){ out.textContent = '✏️ 先寫一個至少 4 個字的標題吧！'; return; }
+  const safe = txt.replace(/[<>&"']/g,'');
+  const has = arr => arr.some(w => safe.includes(w));
+  let msg = '📰 你的標題：「' + safe + '」\n';
+  if(angle === 'blame'){
+    msg += has(['害','都是','罪','失','敗給','被打爆','崩']) ? '你成功寫出「讓人想怪罪」的標題了。想想看：被放在故事中心的人讀到會有什麼感受？' : '提示：讓人想怪罪的標題常用「害、失手、崩盤」這類字。寫完想想它對當事人公平嗎？';
+  } else if(angle === 'effort'){
+    msg += has(['拚','努力','力投','9 局','九局','加油','完投','苦戰','盡力']) ? '很棒！你把「努力」放在故事中心。這個標題省略了哪些事實呢？' : '提示：讓人想鼓勵的標題常寫出「力投 9 局、苦戰到最後」這類努力的過程。';
+  } else {
+    msg += /2\s*[比:：]\s*3|3\s*[比:：]\s*2/.test(safe) ? '中立的標題寫出了比分與結果，不加形容詞，讀者可以自己判斷。' : '提示：最中立的標題通常會寫出比分（2 比 3）和結果，少用情緒字眼。';
+  }
+  msg += '\n🤔 偵探提問：三種標題都沒說謊嗎？哪一種最公平？';
+  out.style.whiteSpace = 'pre-line';
+  out.textContent = msg;
+}
+
+// ========== GAME 3：偵探工具箱 ==========
+const G3 = [
+  {t:'網路瘋傳：某位球星捐了一大筆錢給慈善團體，貼文說「太感人了，快分享！」', tag:'感人訊息',
+   opts:[['看看有多少人按讚','x'],['到球星本人或他的基金會官方網站查證','o'],['越感人就越可能是真的','x'],['問群組大家相不相信','x']],
+   e:'真實案例：Travis Kelce 本人澄清捐款消息不實，請粉絲看他基金會公布的公益活動。'},
+  {t:'一張照片：運動會場外整條河兩岸都被塗成紫色，看起來超壯觀。', tag:'可能是 AI 圖',
+   opts:[['放大照片用眼睛找破綻就夠了','x'],['看起來很真，所以一定是真的','x'],['找事實查核網站或可信新聞，比對拍攝地點與時間','o'],['轉給朋友問他覺得呢','x']],
+   e:'真實案例：法新社查核，巴黎奧運「河岸塗成紫色」的照片是 AI 生成；只有主場館跑道是紫色。'},
+  {t:'群組傳來一張截圖，看起來是某國官方媒體發文，內容讓人很生氣。', tag:'可疑截圖',
+   opts:[['到那個官方帳號頁面找找看有沒有這則貼文','o'],['截圖格式很像官方，應該是真的','x'],['太生氣了，先轉傳再說','x'],['看留言大家怎麼說','x']],
+   e:'真實案例：法新社查核 12 強賽後的「官媒微博截圖」，官方帳號和網站都找不到該貼文。'},
+  {t:'影片中網球名將親口說：「跟著我投資，保證賺大錢！」畫面和聲音都很像他。', tag:'名人背書',
+   opts:[['名人說的一定可信','x'],['到他本人經過認證的官方帳號，確認是否真的發布','o'],['影片很清楚，所以是真的','x'],['先投資一點點試試看','x']],
+   e:'真實案例：Nadal 公開提醒，冒用他臉和聲音的投資影片不是他發的，也不是他背書。'},
+  {t:'一部「紀錄片」批評某場國際運動會，畫面很像知名影音平台，還有一堆媒體好評。', tag:'假紀錄片',
+   opts:[['有知名平台的畫面，一定是正式作品','x'],['好評很多，所以內容可靠','x'],['查製作者是誰、那些好評是不是真的出自那些媒體','o'],['影片很長，應該很用心','x']],
+   e:'真實案例：微軟揭露有組織用 AI 配音、模仿平台視覺、捏造媒體好評，製作假紀錄片。'},
+  {t:'一組國家隊形象照帥到不像真的，有人留言：「這一定是 AI 做的，假的！」', tag:'看起來怪',
+   opts:[['看起來怪，所以一定是假的','x'],['查球隊官方或可信媒體的說明，再下結論','o'],['跟著大家說是假的','x'],['用肉眼找到一個怪的地方就確定了','x']],
+   e:'真實案例：挪威國家隊 2026 年世界盃前拍的形象照，是專業攝影加後製。看起來怪≠假的！'}
+];
+let g3i = 0, g3Done = false, g3s = {ok:0,bad:0};
+function drawG3(){
+  const c = document.getElementById('game3'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#e7f5ff'; ctx.fillRect(0,0,c.width,c.height);
+  // 檔案夾
+  ctx.fillStyle='#ffd8a8'; roundRect(ctx,30,26,180,40,10); ctx.fill();
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.stroke();
+  ctx.fillStyle='#ffe8cc'; roundRect(ctx,30,52,c.width-60,300,16); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#2c2c2c'; ctx.font='bold 16px '+FONT; ctx.fillText('📁 案件 ' + (g3i+1) + ' / ' + G3.length, 46, 50);
+  const it = G3[g3i];
+  ctx.fillStyle='#e8590c'; roundRect(ctx,c.width-200,70,150,34,8); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#fff'; ctx.font='bold 15px '+FONT; ctx.textAlign='center'; ctx.fillText(it.tag, c.width-125, 93); ctx.textAlign='left';
+  ctx.fillStyle='#fff'; roundRect(ctx,50,118,c.width-100,150,12); ctx.fill(); ctx.lineWidth=2; ctx.stroke();
+  ctx.fillStyle='#2c2c2c'; ctx.font='18px '+FONT;
+  wrapText(ctx, it.t, c.width-140).forEach((l,i)=>ctx.fillText(l, 70, 152 + i*30));
+  // 印章
+  if(g3Done){
+    ctx.save(); ctx.translate(c.width-150, 300); ctx.rotate(-0.18);
+    ctx.strokeStyle = g3Done === 'ok' ? '#2b8a3e' : '#e03131'; ctx.lineWidth=4;
+    roundRect(ctx,-90,-26,180,52,8); ctx.stroke();
+    ctx.fillStyle = ctx.strokeStyle; ctx.font='bold 22px '+FONT; ctx.textAlign='center';
+    ctx.fillText(g3Done === 'ok' ? '查證成功' : '再想想', 0, 8);
+    ctx.restore(); ctx.textAlign='left';
+  }
+  ctx.fillStyle='#495057'; ctx.font='14px '+FONT;
+  ctx.fillText('🔎 選出下方「最可靠的查證方法」　✅ ' + g3s.ok + '　❌ ' + g3s.bad, 50, 300);
+}
+function renderG3Opts(){
+  const box = document.getElementById('g3opts');
+  box.innerHTML = '';
+  const colors = ['', 'purple', 'green', 'orange'];
+  G3[g3i].opts.forEach((o,i)=>{
+    const b = document.createElement('button');
+    b.className = 'ctrl-btn ' + colors[i];
+    b.textContent = o[0];
+    b.onclick = ()=>game3Pick(i);
+    box.appendChild(b);
+  });
+}
+function game3Pick(i){
+  if(g3Done) return;
+  const it = G3[g3i];
+  const best = it.opts.find(o=>o[1]==='o')[0];
+  if(it.opts[i][1] === 'o'){ g3s.ok++; g3Done='ok'; addEvidence(); showResult('game3Result', true, '🎉 好工具！' + it.e); }
+  else { g3s.bad++; g3Done='bad'; showResult('game3Result', false, '💡 最可靠的是「' + best + '」。' + it.e); }
+  drawG3();
+}
+function game3Next(){ g3i = (g3i+1) % G3.length; g3Done = false; document.getElementById('game3Result').className='game-result'; renderG3Opts(); drawG3(); }
+function initGame3(){ renderG3Opts(); drawG3(); }
+
+// ========== GAME 4：AI 同學的答案 ==========
+const G4 = [
+  {s:'棒球比賽打完規定的局數還平手，就會進入延長賽。', a:['ok'], e:'這是延長賽的基本意思，可以採用。'},
+  {s:'有些比賽在延長賽時，會讓跑者一開始就站在壘上，加快分出勝負。', a:['check','ok'], e:'大致正確，但每個賽事規則不同，要用時必須查「該場比賽的官方規章」。'},
+  {s:'延長賽一定要打到第 20 局才可以結束。', a:['fix'], e:'錯誤！只要某一局結束時分出勝負，比賽就結束了，不必打到第 20 局。'},
+  {s:'某聯盟去年有一場比賽打了 30 局，是世界紀錄。', a:['check'], e:'AI 沒有給來源，這種「數字＋紀錄」最需要查證，不能直接寫進報告。'}
+];
+const G4LABEL = {ok:'✅ 可採用', check:'🔍 須查證', fix:'✏️ 需修正'};
+let g4Sel = 0, g4Marks = [];
+function g4Layout(){ return G4.map((_,i)=>({x:30, y:96 + i*68, w:540, h:60})); }
+function drawG4(){
+  const c = document.getElementById('game4'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#f3f0ff'; ctx.fillRect(0,0,c.width,c.height);
+  // AI 頭像
+  ctx.fillStyle='#7048e8'; roundRect(ctx,24,18,60,60,16); ctx.fill();
+  ctx.strokeStyle='#2c2c2c'; ctx.lineWidth=3; ctx.stroke();
+  ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(44,44,7,0,Math.PI*2); ctx.arc(64,44,7,0,Math.PI*2); ctx.fill();
+  ctx.fillRect(42,58,24,5);
+  ctx.fillStyle='#2c2c2c'; ctx.font='bold 17px '+FONT; ctx.fillText('AI 同學：「我來說明延長賽！」', 98, 44);
+  ctx.fillStyle='#6f6f6f'; ctx.font='14px '+FONT; ctx.fillText('點一句 → 按下方按鈕標記（已標 ' + g4Marks.filter(Boolean).length + ' / 4）', 98, 68);
+  g4Layout().forEach((b,i)=>{
+    const m = g4Marks[i];
+    ctx.fillStyle = m ? (m==='ok' ? '#d3f9d8' : m==='check' ? '#d0ebff' : '#ffe3e3') : '#fff';
+    ctx.strokeStyle = i === g4Sel ? '#f76707' : '#2c2c2c'; ctx.lineWidth = i === g4Sel ? 4 : 2;
+    roundRect(ctx,b.x,b.y,b.w,b.h,10); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#2c2c2c'; ctx.font='15px '+FONT;
+    const lines = wrapText(ctx, (i+1) + '. ' + G4[i].s, b.w - (m ? 130 : 30));
+    lines.slice(0,2).forEach((l,k)=>ctx.fillText(l, b.x+14, b.y + (lines.length>1 ? 25 : 36) + k*22));
+    if(m){
+      ctx.fillStyle = m==='ok' ? '#2b8a3e' : m==='check' ? '#1c7ed6' : '#e03131';
+      ctx.font='bold 15px '+FONT; ctx.fillText(G4LABEL[m], b.x+b.w-112, b.y+36);
+    }
+  });
+}
+function game4Click(p){
+  const idx = g4Layout().findIndex(b=>p.x>=b.x && p.x<=b.x+b.w && p.y>=b.y && p.y<=b.y+b.h);
+  if(idx < 0) return;
+  g4Sel = idx; drawG4();
+}
+function game4Mark(m){
+  const prev = g4Marks[g4Sel];
+  g4Marks[g4Sel] = m;
+  const it = G4[g4Sel];
+  if(it.a.includes(m)){ if(!(prev && it.a.includes(prev))) addEvidence(); showResult('game4Result', true, '👍 第 ' + (g4Sel+1) + ' 句標得好！' + it.e); }
+  else showResult('game4Result', false, '🤔 第 ' + (g4Sel+1) + ' 句再想想：' + it.e);
+  const next = G4.findIndex((_,i)=>!g4Marks[i]);
+  if(next >= 0) g4Sel = next;
+  drawG4();
+  if(G4.every((_,i)=>g4Marks[i])){
+    const right = G4.filter((g,i)=>g.a.includes(g4Marks[i])).length;
+    showResult('game4Result', right >= 3, '📝 我的修訂聲明（答對 ' + right + ' / 4）：AI 把延長賽描述為「打完規定局數仍平手時繼續比賽」。我查證後發現「一定要打到第 20 局」是錯的。我保留它對延長賽的基本說明，但修正了結束的條件；「30 局世界紀錄」沒有來源，還要再查兩個可信來源才能使用。');
+  }
+}
+function game4Reset(){ g4Sel = 0; g4Marks = []; document.getElementById('game4Result').className='game-result'; drawG4(); }
+function initGame4(){
+  const c = document.getElementById('game4');
+  c.addEventListener('click', e=>game4Click(mouseEvt(e, c)));
+  drawG4();
+}
+
+const CM_FB = [
+  {ok:false, t:'🛑 停一下！這是人身攻擊。輸球很失望是真的，但把責任全推給一個人，還說他「不配」，會傷害選手，也可能引來更多攻擊。'},
+  {ok:true, t:'👏 很棒的「負責」！你說出自己的感受（可惜、緊張），也給了鼓勵，沒有攻擊任何人。'},
+  {ok:false, t:'🚫 危險！「聽說」就是沒有證據的猜測，再叫大家轉傳，可能讓謠言傷害一個人。沒查證就不要分享。'}
+];
+let cmScored=false;
+function pickComment(btn, i){
+  const box = btn.parentElement;
+  box.querySelectorAll('.quiz-opt').forEach(o=>o.classList.remove('correct','wrong'));
+  btn.classList.add(CM_FB[i].ok ? 'correct' : 'wrong');
+  if(CM_FB[i].ok && !cmScored){ addEvidence(); cmScored=true; }
+  const out = document.getElementById('cm-out');
+  out.textContent = CM_FB[i].t; out.classList.add('show');
+}
+
+// ========== SLIDE PLAYER ==========
+let slideIdx = 0;
+const slideLoaded = new Set(), slidePending = {};
+function preloadSlide(n, done){
+  if(slideLoaded.has(n)){ if(done) done(); return; }
+  if(slidePending[n]){ if(done) slidePending[n].push(done); return; }
+  slidePending[n] = done ? [done] : [];
+  const load = src => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = ()=>finish();
+    img.onerror = ()=>{
+      // WebP 失敗改用 JPG；JPG 也失敗就結束等待，避免一直顯示載入中
+      if(src.endsWith('.webp')){ SLIDE_LIST[n] = src.replace('.webp','.jpg'); load(SLIDE_LIST[n]); }
+      else finish();
+    };
+    img.src = src;
+  };
+  const finish = ()=>{
+    slideLoaded.add(n);
+    const cbs = slidePending[n] || []; delete slidePending[n];
+    cbs.forEach(cb=>cb());
+  };
+  load(SLIDE_LIST[n]);
+}
+function initSlidePlayer(){
+  if(SLIDE_COUNT === 0) return;
+  document.getElementById('slide-placeholder').style.display = 'none';
+  document.getElementById('slide-main').style.display = 'block';
+  const strip = document.getElementById('slide-strip');
+  strip.style.display = 'flex'; strip.innerHTML = '';
+  SLIDE_LIST.forEach((src,i)=>{
+    const t = document.createElement('div');
+    t.className = 'strip-thumb' + (i===0 ? ' active' : '');
+    t.onclick = ()=>goSlide(i);
+    const img = document.createElement('img');
+    img.alt = '第 ' + (i+1) + ' 頁'; img.loading = 'lazy'; img.decoding = 'async';
+    img.setAttribute('data-fallback-src', src.replace('.webp','.jpg'));
+    img.src = SLIDE_THUMBS[i];
+    t.appendChild(img); strip.appendChild(t);
+  });
+  goSlide(0);
+}
+function goSlide(n){
+  if(n < 0 || n >= SLIDE_COUNT) return;
+  slideIdx = n;
+  const cur = document.getElementById('slide-current');
+  const main = document.getElementById('slide-main');
+  if(!slideLoaded.has(n)){
+    // 先放小縮圖當模糊預覽，大圖下載完再換上
+    main.classList.add('loading');
+    cur.removeAttribute('data-webp-fallback-index');
+    cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
+    cur.src = SLIDE_THUMBS[n];
+    preloadSlide(n, ()=>{ if(slideIdx === n){ cur.src = SLIDE_LIST[n]; main.classList.remove('loading'); } });
+  } else {
+    cur.setAttribute('data-fallback-src', SLIDE_LIST[n].replace('.webp','.jpg'));
+    cur.src = SLIDE_LIST[n];
+    main.classList.remove('loading');
+  }
+  // 預先載入前後頁，翻頁不再等待
+  preloadSlide((n + 1) % SLIDE_COUNT);
+  preloadSlide((n - 1 + SLIDE_COUNT) % SLIDE_COUNT);
+  document.getElementById('slide-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  document.querySelectorAll('.strip-thumb').forEach((t,i)=>t.classList.toggle('active', i===n));
+  const fs = document.getElementById('slide-fs');
+  if(fs && fs.classList.contains('show')){
+    document.getElementById('slide-fs-img').src = SLIDE_LIST[n];
+    document.getElementById('slide-fs-counter').textContent = (n+1) + ' / ' + SLIDE_COUNT;
+  }
+  const strip = document.getElementById('slide-strip');
+  const active = document.querySelectorAll('.strip-thumb')[n];
+  if(active && strip){
+    const left = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2;
+    strip.scrollTo({left: Math.max(0, left), behavior: 'smooth'});
+  }
+}
+function slideNav(dir){ if(SLIDE_COUNT === 0) return; goSlide((slideIdx + dir + SLIDE_COUNT) % SLIDE_COUNT); }
+function openSlideFullscreen(){
+  if(SLIDE_COUNT === 0) return;
+  document.getElementById('slide-fs-img').src = SLIDE_LIST[slideIdx];
+  document.getElementById('slide-fs-counter').textContent = (slideIdx+1) + ' / ' + SLIDE_COUNT;
+  document.getElementById('slide-fs').classList.add('show');
+  document.body.classList.add('slides-fullscreen');
+}
+function closeSlideFullscreen(){
+  document.getElementById('slide-fs').classList.remove('show');
+  document.body.classList.remove('slides-fullscreen');
+}
+
+// ========== VIDEO ==========
+function initVideo(){
+  if(!YOUTUBE_VIDEO_ID) return;
+  document.getElementById('video-placeholder').style.display = 'none';
+  document.getElementById('video-ratio').style.display = 'block';
+  document.getElementById('nlm-video-iframe').src = 'https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID + '?rel=0&modestbranding=1&cc_load_policy=1';
+  const yt = document.getElementById('yt-link');
+  yt.href = 'https://www.youtube.com/watch?v=' + YOUTUBE_VIDEO_ID;
+  yt.style.display = 'inline';
+}
+
+// ========== FLOAT TOOLS ==========
+function togglePanel(name){
+  ['lottery','timer'].forEach(p=>{
+    const el = document.getElementById('panel-'+p);
+    if(p === name) el.classList.toggle('show'); else el.classList.remove('show');
+  });
+}
+let lotPool = [];
+function refillLotPool(){
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max) return false;
+  lotPool = []; for(let i=min;i<=max;i++) lotPool.push(i);
+  return true;
+}
+function doLottery(){
+  const unique = document.getElementById('lot-unique').checked;
+  const min = parseInt(document.getElementById('lot-min').value) || 1;
+  const max = parseInt(document.getElementById('lot-max').value) || 30;
+  if(min > max){ alert('最小號必須 ≤ 最大號！'); return; }
+  if(unique && lotPool.length === 0) refillLotPool();
+  const out = document.getElementById('lot-out');
+  const tm = setInterval(()=>{ out.textContent = (Math.floor(Math.random()*(max-min+1)) + min) + ' 號'; }, 60);
+  setTimeout(()=>{
+    clearInterval(tm);
+    let num;
+    if(unique){ if(lotPool.length === 0) refillLotPool(); num = lotPool.splice(Math.floor(Math.random()*lotPool.length), 1)[0]; }
+    else num = Math.floor(Math.random()*(max-min+1)) + min;
+    out.textContent = '🌟 ' + num + ' 號 🌟';
+  }, 1500);
+}
+function resetLottery(){ refillLotPool(); document.getElementById('lot-out').textContent = '等待抽號...'; }
+let timerInt = null, timerSec = 0;
+function renderTimer(){
+  const m = Math.floor(timerSec/60), s = timerSec % 60;
+  document.getElementById('timer-display').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+function startTimer(){
+  if(timerInt) return;
+  if(timerSec <= 0) timerSec = (parseInt(document.getElementById('timer-min').value) || 5) * 60;
+  renderTimer();
+  timerInt = setInterval(()=>{
+    timerSec--; renderTimer();
+    if(timerSec <= 0){ clearInterval(timerInt); timerInt = null; alert('⏰ 時間到！'); }
+  }, 1000);
+}
+function pauseTimer(){ if(timerInt){ clearInterval(timerInt); timerInt = null; } }
+function resetTimer(){ pauseTimer(); timerSec = 0; renderTimer(); }
+
+// ========== DRAW ==========
+let drawActive = false, penColor = '#f76707', penSize = 4;
+let drawCanvas, drawCtx, isDrawing = false, dLastX, dLastY;
+function initDraw(){
+  drawCanvas = document.getElementById('drawCanvas');
+  drawCtx = drawCanvas.getContext('2d');
+  drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight;
+  const line = (x,y)=>{
+    drawCtx.strokeStyle = penColor; drawCtx.lineWidth = penSize; drawCtx.lineCap = 'round';
+    drawCtx.beginPath(); drawCtx.moveTo(dLastX, dLastY); drawCtx.lineTo(x, y); drawCtx.stroke();
+    dLastX = x; dLastY = y;
+  };
+  drawCanvas.addEventListener('mousedown', e=>{ if(!drawActive) return; isDrawing = true; dLastX = e.clientX; dLastY = e.clientY; });
+  drawCanvas.addEventListener('mousemove', e=>{ if(drawActive && isDrawing) line(e.clientX, e.clientY); });
+  drawCanvas.addEventListener('mouseup', ()=>isDrawing = false);
+  drawCanvas.addEventListener('touchstart', e=>{ if(!drawActive) return; e.preventDefault(); const t=e.touches[0]; isDrawing = true; dLastX = t.clientX; dLastY = t.clientY; }, {passive:false});
+  drawCanvas.addEventListener('touchmove', e=>{ if(!drawActive || !isDrawing) return; e.preventDefault(); const t=e.touches[0]; line(t.clientX, t.clientY); }, {passive:false});
+  drawCanvas.addEventListener('touchend', ()=>isDrawing = false);
+  window.addEventListener('resize', ()=>{ drawCanvas.width = window.innerWidth; drawCanvas.height = window.innerHeight; });
+}
+function toggleDraw(){
+  drawActive = !drawActive;
+  drawCanvas.classList.toggle('active', drawActive);
+  document.getElementById('drawToolbar').classList.toggle('show', drawActive);
+  document.getElementById('drawToggleBtn').style.background = drawActive ? 'var(--c1)' : '';
+}
+function setPenColor(c, el){
+  penColor = c;
+  document.querySelectorAll('.draw-toolbar .color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+function clearDrawing(){ if(drawCtx) drawCtx.clearRect(0,0,drawCanvas.width,drawCanvas.height); }
+function goTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
+
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('slide-fs').classList.contains('show')){
+    if(e.key === 'ArrowLeft') slideNav(-1);
+    else if(e.key === 'ArrowRight') slideNav(1);
+    else if(e.key === 'Escape') closeSlideFullscreen();
+  }
+});
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  safeInit('initDraw', initDraw);
+  safeInit('initSlidePlayer', initSlidePlayer);
+  safeInit('initVideo', initVideo);
+  safeInit('drawG1', drawG1);
+  safeInit('drawG2', drawG2);
+  safeInit('initGame3', initGame3);
+  safeInit('initGame4', initGame4);
+});
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(()=>{ safeInit('redraw', ()=>{ drawG1(); drawG2(); drawG3(); drawG4(); }); });
+}
+</script>
+</body>
+</html>

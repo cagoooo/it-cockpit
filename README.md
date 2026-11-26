@@ -90,6 +90,7 @@ Tinkercad 3D 列印（規劃中） ·
 [痞客邦部落格](https://cagoooo.github.io/it-cockpit/pixnet-blog/) ·
 [AI 公平性與偏誤](https://cagoooo.github.io/it-cockpit/ai-fairness/) ·
 [網路守門員特訓營](https://cagoooo.github.io/it-cockpit/net-guardians/) ·
+[球迷偵探社：AI 時代，你還相信什麼？](https://cagoooo.github.io/it-cockpit/sports-fan-media/) ·
 [AI 小機長：安全又負責任地使用生成式 AI](https://cagoooo.github.io/it-cockpit/ai-copilot-captain/)
 
 ### 教師研習
